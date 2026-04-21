@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Are Language Models Efficient Reasoners? A Perspective from Logic Programming
 description: >-
@@ -114,6 +114,6 @@ tags:
 - [EnCompass: Enhancing Agent Programming with Search Over Program Execution Paths](encompass_enhancing_agent_programming_with_search_over_program_execution_paths.md)
 - [Perspective Transition of Large Language Models for Solving Subjective Tasks](../../ACL2025/llm_nlp/perspective_transition_of_large_language_models_for_solving_subjective_tasks.md)
 - [Understanding the Repeat Curse in Large Language Models from a Feature Perspective](../../ACL2025/llm_nlp/understanding_the_repeat_curse_in_large_language_models_from_a_feature_perspecti.md)
-- [RoCoFT: Efficient Finetuning of Large Language Models with Row-Column Updates](../../ACL2025/llm_nlp/rocoft_efficient_finetuning_of_large_language_models_with_row-column_updates.md)
+- [Evaluating Implicit Bias in Large Language Models by Attacking from a Psychometric Perspective](../../ACL2025/llm_nlp/evaluating_implicit_bias_in_large_language_models_by_attacking_from_a_psychometr.md)
 
 <!-- RELATED:END -->

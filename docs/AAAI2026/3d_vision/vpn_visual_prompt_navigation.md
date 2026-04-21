@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VPN: Visual Prompt Navigation
 description: >-
@@ -178,10 +178,10 @@ VPN 在 val unseen 达 96.68% SR，远超 DUET 的 81%，且仅用 1/3 的 Scale
 
 ## 相关论文
 
-- [FALIP: Visual Prompt as Foveal Attention Boosts CLIP Zero-Shot Performance](../../ECCV2024/3d_vision/falip_visual_prompt_as_foveal_attention_boosts_clip_zero-shot_performance.md)
+- [FALIP: Visual Prompt as Foveal Attention Boosts CLIP Zero-Shot Performance](../../ECCV2024/3d_vision/falip_visual_prompt_as_foveal_attention_boosts_clip_zer.md)
 - [VirPro: Visual-referred Probabilistic Prompt Learning for Weakly-Supervised Monocular 3D Detection](../../CVPR2026/3d_vision/virpro_visual-referred_probabilistic_prompt_learning_for_weakly-supervised_monoc.md)
 - [CtrlFuse: Mask-Prompt Guided Controllable Infrared and Visible Image Fusion](ctrlfuse_mask-prompt_guided_controllable_infrared_and_visible_image_fusion.md)
+- [Vid2Sim: Realistic and Interactive Simulation from Video for Urban Navigation](../../CVPR2025/3d_vision/vid2sim_realistic_and_interactive_simulation_from_video_for_urban_navigation.md)
 - [OpenFly: A Comprehensive Platform for Aerial Vision-Language Navigation](../../ICLR2026/3d_vision/openfly_a_comprehensive_platform_for_aerial_vision-language_navigation.md)
-- [MR-CoSMo: Visual-Text Memory Recall and Direct Cross-Modal Alignment Method for Query-Driven 3D Segmentation](mr-cosmo_visual-text_memory_recall_and_direct_cross-modal_alignment_method_for_q.md)
 
 <!-- RELATED:END -->

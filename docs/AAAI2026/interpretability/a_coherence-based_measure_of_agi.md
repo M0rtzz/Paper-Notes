@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Coherence-Based Measure of AGI
 description: >-
@@ -120,10 +120,10 @@ $$\text{AGI}_{\text{AUC}} = \frac{1}{p_{\max} - p_{\min}} \int_{p_{\min}}^{p_{\m
 
 ## 相关论文
 
-- [HSKBenchmark: Modeling and Benchmarking Chinese Second Language Acquisition in Large Language Models through Curriculum Tuning](hskbenchmark_modeling_and_benchmarking_chinese_second_language_acquisition_in_la.md)
+- [SOM Directions are Better than One: Multi-Directional Refusal Suppression in Language Models](som_directions_are_better_than_one_multi-directional_refusal_suppression_in_lang.md)
+- [Enhancing Binary Encoded Crime Linkage Analysis Using Siamese Network](enhancing_binary_encoded_crime_linkage_analysis_using_siamese_network.md)
+- [SCoPe: Intrinsic Semantic Space Control for Mitigating Copyright Infringement in LLMs](scope_intrinsic_semantic_space_control_for_mitigating_copyright_infringement_in_.md)
+- [DR.Experts: Differential Refinement of Distortion-Aware Experts for Blind Image Quality Assessment](drexperts_differential_refinement_of_distortion-aware_experts_for_blind_image_qu.md)
 - [iMAD: Intelligent Multi-Agent Debate for Efficient and Accurate LLM Inference](imad_intelligent_multi-agent_debate_for_efficient_and_accura.md)
-- [Finding the Translation Switch: Discovering and Exploiting the Task-Initiation Features in LLMs](finding_the_translation_switch_discovering_and_exploiting_the_task-initiation_fe.md)
-- [GenePheno: Interpretable Gene Knockout-Induced Phenotype Abnormality Prediction Framework](genepheno_interpretable_gene_knockout-induced_phenotype_abnormality_prediction_f.md)
-- [ElementaryNet: A Non-Strategic Neural Network for Predicting Human Behavior in Normal-Form Games](elementarynet_a_non-strategic_neural_network_for_predicting_human_behavior_in_no.md)
 
 <!-- RELATED:END -->

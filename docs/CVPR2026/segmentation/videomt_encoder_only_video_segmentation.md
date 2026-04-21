@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VidEoMT: Your ViT is Secretly Also a Video Segmentation Model
 description: >-

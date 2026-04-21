@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Extremely Simple Multimodal Outlier Synthesis for Out-of-Distribution Detection and Segmentation
 description: >-
@@ -142,6 +142,6 @@ tags:
 - [Layer-wise Modality Decomposition for Interpretable Multimodal Sensor Fusion](layer-wise_modality_decomposition_for_interpretable_multimodal_sensor_fusion.md)
 - [Leveraging Depth and Language for Open-Vocabulary Domain-Generalized Semantic Segmentation](leveraging_depth_and_language_for_open-vocabulary_domain-generalized_semantic_se.md)
 - [SimWorld-Robotics: Synthesizing Photorealistic and Dynamic Urban Environments for Multimodal Robot Navigation and Collaboration](simworld-robotics_synthesizing_photorealistic_and_dynamic_urban_environments_for.md)
-- [Generating Multimodal Driving Scenes via Next-Scene Prediction](../../CVPR2025/autonomous_driving/generating_multimodal_driving_scenes_via_next-scene_prediction.md)
+- [Self-Supervised Learning of Graph Representations for Network Intrusion Detection](self-supervised_learning_of_graph_representations_for_network_intrusion_detectio.md)
 
 <!-- RELATED:END -->

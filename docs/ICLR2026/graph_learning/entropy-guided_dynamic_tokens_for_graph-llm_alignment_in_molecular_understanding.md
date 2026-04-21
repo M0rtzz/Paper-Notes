@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Entropy-Guided Dynamic Tokens for Graph-LLM Alignment in Molecular Understanding
 description: >-

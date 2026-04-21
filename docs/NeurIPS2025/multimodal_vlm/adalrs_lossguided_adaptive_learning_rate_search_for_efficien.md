@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdaLRS: Loss-Guided Adaptive Learning Rate Search for Efficient Foundation Model Pretraining
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] IOPO: Empowering LLMs with Complex Instruction Following via Input-Output Preference Optimization
 description: >-
@@ -192,8 +192,8 @@ $$\mathcal{L}_{\text{IOPO}}(\pi_\theta) = -\mathbb{E}_{i \sim D}\left\{\log\left
 
 - [Reverse Preference Optimization for Complex Instruction Following](reverse_preference_optimization_for_complex_instruction_following.md)
 - [Optimal Transport-Based Token Weighting for Enhanced Preference Optimization](otpo_token_weighting.md)
+- [Whose Boat Does it Float? Improving Personalization in Preference Tuning via Inferred User Personas](personalized_preference_opt.md)
 - [Probability-Consistent Preference Optimization for Enhanced LLM Reasoning](probability-consistent_preference_optimization_for_enhanced_llm_reasoning.md)
 - [On Extending Direct Preference Optimization to Accommodate Ties](../../NeurIPS2025/llm_alignment/on_extending_direct_preference_optimization_to_accommodate_ties.md)
-- [RPO: Retrieval Preference Optimization for Robust Retrieval-Augmented Generation](rpo_retrieval_preference_optimization_for_robust_retrieval-augmented_generation.md)
 
 <!-- RELATED:END -->

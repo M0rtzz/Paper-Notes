@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SciArena: An Open Evaluation Platform for Non-Verifiable Scientific Literature-Grounded Tasks
 description: >-
@@ -124,6 +124,6 @@ SciArena 采用"人类偏好投票 + 自动评估元基准"的双层框架。底
 - [Investigating Non-Transitivity in LLM-as-a-Judge](../../ICML2025/dialogue/investigating_non-transitivity_in_llm-as-a-judge.md)
 - [Non-Collaborative User Simulators for Tool Agents](../../ICLR2026/dialogue/non-collaborative_user_simulators_for_tool_agents.md)
 - [Canoe: Teaching LLMs to Maintain Contextual Faithfulness via Synthetic Tasks and RL](../../AAAI2026/dialogue/teaching_large_language_models_to_maintain_contextual_faithfulness_via_synthetic.md)
-- [Bridging Human and LLM Judgments: Understanding and Narrowing the Gap](bridging_human_and_llm_judgments_understanding_and_narrowing_the_gap.md)
+- [MetaMind: Modeling Human Social Thoughts with Metacognitive Multi-Agent Systems](metamind_modeling_human_social_thoughts_with_metacognitive_multi-agent_systems.md)
 
 <!-- RELATED:END -->

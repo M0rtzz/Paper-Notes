@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MonoCLUE: Object-Aware Clustering Enhances Monocular 3D Object Detection
 description: >-
@@ -226,10 +226,10 @@ $$\mathcal{L}_{total} = \mathcal{L}_{2D} + \mathcal{L}_{3D} + \lambda \mathcal{L
 
 ## 相关论文
 
+- [Towards Intrinsic-Aware Monocular 3D Object Detection](../../CVPR2026/3d_vision/towards_intrinsic-aware_monocular_3d_object_detection.md)
 - [Exploring Surround-View Fisheye Camera 3D Object Detection](exploring_surround-view_fisheye_camera_3d_object_detection.md)
 - [Distilling Future Temporal Knowledge with Masked Feature Reconstruction for 3D Object Detection](distilling_future_temporal_knowledge_with_masked_feature_reconstruction_for_3d_o.md)
-- [MonoPlace3D: Learning 3D-Aware Object Placement for 3D Monocular Detection](../../CVPR2025/3d_vision/monoplace3d_learning_3d-aware_object_placement_for_3d_monocular_detection.md)
-- [MonoSAOD: Monocular 3D Object Detection with Sparsely Annotated Label](../../CVPR2026/3d_vision/monosaod_monocular_3d_object_detection_with_sparsely_annotated_label.md)
+- [Multi-Modal Assistance for Unsupervised Domain Adaptation on Point Cloud 3D Object Detection](multi-modal_assistance_for_unsupervised_domain_adaptation_on_point_cloud_3d_obje.md)
 - [SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection](../../CVPR2026/3d_vision/span_spatial-projection_alignment_for_monocular_3d_object_detection.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MixRI: Mixing Features of Reference Images for Novel Object Pose Estimation
 description: >-

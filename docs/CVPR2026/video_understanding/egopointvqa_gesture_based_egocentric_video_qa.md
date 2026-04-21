@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EgoPointVQA: Gesture-Based Egocentric Video Question Answering
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling with Collapse: Efficient and Predictable Training of LLM Families
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mouse-Guided Gaze: Semi-Supervised Learning of Intention-Aware Representations for Reading Detection
 description: >-
@@ -154,6 +154,6 @@ tags:
 - [Pose-Aware Self-Supervised Learning with Viewpoint Trajectory Regularization](../../ECCV2024/human_understanding/pose-aware_self-supervised_learning_with_viewpoint_trajectory_regularization.md)
 - [SPROD: Spurious-Aware Prototype Refinement for Reliable Out-of-Distribution Detection](spurious-aware_prototype_refinement_for_reliable_out-of-distribution_detection.md)
 - [Bi-Level Optimization for Self-Supervised AI-Generated Face Detection](../../ICCV2025/human_understanding/bi-level_optimization_for_self-supervised_ai-generated_face_detection.md)
-- [DevFD: Developmental Face Forgery Detection by Learning Shared and Orthogonal LoRA Subspaces](devfd_developmental_face_forgery_detection_by_learning_shared_and_orthogonal_lor.md)
+- [Enhancing 3D Gaze Estimation in the Wild Using Weak Supervision with Gaze Following Labels](../../CVPR2025/human_understanding/enhancing_3d_gaze_estimation_in_the_wild_using_weak_supervision_with_gaze_follow.md)
 
 <!-- RELATED:END -->

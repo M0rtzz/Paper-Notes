@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Editing Away the Evidence: Diffusion-Based Image Manipulation and the Failure Modes of Robust Watermarking
 description: >-
@@ -130,8 +130,8 @@ tags:
 
 - [EmoEdit: Evoking Emotions through Image Manipulation](emoedit_evoking_emotions_through_image_manipulation.md)
 - [Trust Your Critic: Robust Reward Modeling and Reinforcement Learning for Faithful Image Editing and Generation](trust_your_critic_robust_reward_modeling_and_reinforcement_learning_for_faithful.md)
+- [SleeperMark: Towards Robust Watermark against Fine-Tuning Text-to-Image Diffusion Models](sleepermark_towards_robust_watermark_against_fine-tuning_text-to-image_diffusion.md)
 - [DreamOmni: Unified Image Generation and Editing](dreamomni_unified_image_generation_and_editing.md)
-- [Concept Lancet: Image Editing with Compositional Representation Transplant](concept_lancet_image_editing_with_compositional_representation_transplant.md)
-- [Hiding Images in Diffusion Models by Editing Learned Score Functions](hiding_images_in_diffusion_models_by_editing_learned_score_functions.md)
+- [SwiftEdit: Lightning Fast Text-Guided Image Editing via One-Step Diffusion](swiftedit_lightning_fast_text-guided_image_editing_via_one-step_diffusion.md)
 
 <!-- RELATED:END -->

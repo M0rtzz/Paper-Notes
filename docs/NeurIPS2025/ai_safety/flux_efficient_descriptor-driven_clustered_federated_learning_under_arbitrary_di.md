@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FLUX: Efficient Descriptor-Driven Clustered Federated Learning under Arbitrary Distribution Shifts
 description: >-
@@ -158,6 +158,6 @@ $$\{\theta^{(k),*}\}, \psi^*, \lambda^* = \arg\max \sum_{k=1}^{K} \left[ \log P(
 - [DictPFL: Efficient and Private Federated Learning on Encrypted Gradients](dictpfl_efficient_and_private_federated_learning_on_encrypted_gradients.md)
 - [Cost Efficient Fairness Audit Under Partial Feedback](cost_efficient_fairness_audit_under_partial_feedback.md)
 - [A Simple Data Augmentation for Feature Distribution Skewed Federated Learning](../../CVPR2025/ai_safety/a_simple_data_augmentation_for_feature_distribution_skewed_federated_learning.md)
-- [FedRW: Efficient Privacy-Preserving Data Reweighting for Enhancing Federated Learning of Language Models](fedrw_efficient_privacy-preserving_data_reweighting_for_enhancing_federated_lear.md)
+- [Rethinking the Bias of Foundation Model under Long-tailed Distribution](../../ICML2025/ai_safety/rethinking_the_bias_of_foundation_model_under_long-tailed_distribution.md)
 
 <!-- RELATED:END -->

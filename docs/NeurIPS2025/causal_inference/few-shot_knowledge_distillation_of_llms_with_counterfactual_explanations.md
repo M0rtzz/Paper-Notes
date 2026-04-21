@@ -167,6 +167,6 @@ $$\mathcal{L} = \mathcal{L}_{\text{hard}} + \alpha \cdot \mathcal{L}_{\text{KD}}
 - [Root Cause Analysis of Outliers with Missing Structural Knowledge](root_cause_analysis_of_outliers_with_missing_structural_knowledge.md)
 - [Performative Validity of Recourse Explanations](performative_validity_of_recourse_explanations.md)
 - [On the Eligibility of LLMs for Counterfactual Reasoning: A Decompositional Study](../../ICLR2026/causal_inference/on_the_eligibility_of_llms_for_counterfactual_reasoning_a_decompositional_study.md)
-- [Towards Fine-Grained Interpretability: Counterfactual Explanations for Misclassification](../../CVPR2025/causal_inference/towards_fine-grained_interpretability_counterfactual_explanations_for_misclassif.md)
+- [Practical do-Shapley Explanations with Estimand-Agnostic Causal Inference](practical_do-shapley_explanations_with_estimand-agnostic_causal_inference.md)
 
 <!-- RELATED:END -->

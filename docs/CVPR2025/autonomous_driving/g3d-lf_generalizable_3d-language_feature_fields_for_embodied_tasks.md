@@ -2,15 +2,16 @@
 title: >-
   [论文解读] g3D-LF: Generalizable 3D-Language Feature Fields for Embodied Tasks
 description: >-
-  [CVPR 2025][自动驾驶][具身智能] 本文提出g3D-LF，一个在大规模3D-语言数据上预训练的可泛化3D特征场模型，通过多级对比学习对齐多尺度表示与多粒度语言，在视觉-语言导航、零样本物体导航和情境问答等任务上取得SOTA表现。
+  [CVPR 2025][自动驾驶][3D特征场] 本文提出g3D-LF，通过在约5K室内3D场景和近100万语言描述上进行多级对比学习预训练，构建了可泛化到未知环境的3D-语言特征场，在VLN（单目/全景）、零样本物体导航和情境问答四种具身任务上均取得SOTA或接近SOTA表现。
 tags:
   - CVPR 2025
-  - 具身智能
+  - 自动驾驶
   - 3D特征场
   - 视觉-语言导航
   - 对比学习
-  - BEV
-  - 零样本导航
+  - BEV地图
+  - 零样本物体导航
+  - 情境问答
 ---
 
 # g3D-LF: Generalizable 3D-Language Feature Fields for Embodied Tasks
@@ -146,9 +147,9 @@ SR提升2.3%，首次超越LLM方法NaVid。
 ## 相关论文
 
 - [EmbodiedOcc: Embodied 3D Occupancy Prediction for Vision-based Online Scene Understanding](../../ICCV2025/autonomous_driving/embodiedocc_embodied_3d_occupancy_prediction_for_vision-based_online_scene_under.md)
+- [Uncertainty-Instructed Structure Injection for Generalizable HD Map Construction](uncertainty-instructed_structure_injection_for_generalizable_hd_map_construction.md)
 - [Modeling Thousands of Human Annotators for Generalizable Text-to-Image Person Re-identification](modeling_thousands_of_human_annotators_for_generalizable_text-to-image_person_re.md)
 - [CCL-LGS: Contrastive Codebook Learning for 3D Language Gaussian Splatting](../../ICCV2025/autonomous_driving/ccl-lgs_contrastive_codebook_learning_for_3d_language_gaussian_splatting.md)
 - [Spectral-Geometric Neural Fields for Pose-Free LiDAR View Synthesis](spectral-geometric_neural_fields_for_pose-free_lidar_view_synthesis.md)
-- [Wavelet Policy: Lifting Scheme for Policy Learning in Long-Horizon Tasks](../../ICCV2025/autonomous_driving/wavelet_policy_lifting_scheme_for_policy_learning_in_long-horizon_tasks.md)
 
 <!-- RELATED:END -->

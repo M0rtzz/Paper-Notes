@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution
 description: >-
@@ -132,10 +132,10 @@ tags:
 
 ## 相关论文
 
+- [Iterative Predictor-Critic Code Decoding for Real-World Image Dehazing](iterative_predictor-critic_code_decoding_for_real-world_image_dehazing.md)
 - [FIPER: Factorized Features for Robust Image Super-Resolution and Compression](../../NeurIPS2025/image_restoration/fiper_factorized_features_for_robust_image_super-resolution_and_compression.md)
 - [Pairwise Distance Distillation for Unsupervised Real-World Image Super-Resolution](../../ECCV2024/image_restoration/pairwise_distance_distillation_for_unsupervised_real-world_image_super-resolutio.md)
-- [Augmenting Perceptual Super-Resolution via Image Quality Predictors](augmenting_perceptual_super-resolution_via_image_quality_predictors.md)
-- [Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](../../CVPR2026/image_restoration/toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
-- [Iterative Predictor-Critic Code Decoding for Real-World Image Dehazing](iterative_predictor-critic_code_decoding_for_real-world_image_dehazing.md)
+- [Pixel-level and Semantic-level Adjustable Super-resolution: A Dual-LoRA Approach](pixel-level_and_semantic-level_adjustable_super-resolution_a_dual-lora_approach.md)
+- [PIDSR: Complementary Polarized Image Demosaicing and Super-Resolution](pidsr_complementary_polarized_image_demosaicing_and_super-resolution.md)
 
 <!-- RELATED:END -->

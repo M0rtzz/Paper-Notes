@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Systematic Reward Gap Optimization for Mitigating VLM Hallucinations
 description: >-

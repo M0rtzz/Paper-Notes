@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RDFace: A Benchmark Dataset for Rare Disease Facial Image Analysis under Extreme Data Scarcity and Phenotype-Aware Synthetic Generation
 description: >-

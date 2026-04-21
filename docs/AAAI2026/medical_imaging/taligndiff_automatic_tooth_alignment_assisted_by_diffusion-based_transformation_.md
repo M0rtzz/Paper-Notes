@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TAlignDiff: Automatic Tooth Alignment assisted by Diffusion-based Transformation Learning
 description: >-

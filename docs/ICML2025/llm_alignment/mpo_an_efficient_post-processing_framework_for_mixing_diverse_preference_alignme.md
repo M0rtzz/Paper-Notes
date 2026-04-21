@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MPO: An Efficient Post-Processing Framework for Mixing Diverse Preference Alignment
 description: >-
@@ -167,9 +167,9 @@ MPO 在两个 β 设定下均取得最高 Min Win Rate，验证了 max-min 目�
 ## 相关论文
 
 - [MPO: Multilingual Safety Alignment via Reward Gap Optimization](../../ACL2025/llm_alignment/mpo_multilingual_safety_alignment.md)
+- [InPO: Inversion Preference Optimization with Reparametrized DDIM for Efficient Diffusion Model Alignment](../../CVPR2025/llm_alignment/inpo_inversion_preference_optimization_with_reparametrized_ddim_for_efficient_di.md)
 - [AutoMixAlign: Adaptive Data Mixing for Multi-Task Preference Optimization in LLMs](../../ACL2025/llm_alignment/automixalign_adaptive_data_mixing.md)
 - [HAF-RM: A Hybrid Alignment Framework for Reward Model Training](../../ACL2025/llm_alignment/haf-rm_a_hybrid_alignment_framework_for_reward_model_training.md)
-- [InPO: Inversion Preference Optimization with Reparametrized DDIM for Efficient Diffusion Model Alignment](../../CVPR2025/llm_alignment/inpo_inversion_preference_optimization_with_reparametrized_ddim_for_efficient_di.md)
 - [Bounded Rationality for LLMs: Satisficing Alignment at Inference-Time](bounded_rationality_for_llms_satisficing_alignment_at_inference-time.md)
 
 <!-- RELATED:END -->

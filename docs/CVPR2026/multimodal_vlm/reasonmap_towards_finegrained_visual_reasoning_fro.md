@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ReasonMap: Towards Fine-Grained Visual Reasoning from Transit Maps
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Factor(U,T): Controlling Untrusted AI by Monitoring their Plans
 description: >-
@@ -100,7 +100,7 @@ tags:
 - [Policy-as-Prompt: Turning AI Governance Rules into Guardrails for AI Agents](../../NeurIPS2025/social_computing/policy-as-prompt_turning_ai_governance_rules_into_guardrails_for_ai_agents.md)
 - [Propaganda AI: An Analysis of Semantic Divergence in Large Language Models](../../ICLR2026/social_computing/propaganda_ai_an_analysis_of_semantic_divergence_in_large_language_models.md)
 - [Position Paper: If Innovation in AI Systematically Violates Fundamental Rights, Is It Innovation at All?](../../NeurIPS2025/social_computing/position_paper_if_innovation_in_ai_systematically_violates_fundamental_rights_is.md)
-- [Cross-modal Prompting for Balanced Incomplete Multi-modal Emotion Recognition](cross-modal_prompting_for_balanced_incomplete_multi-modal_emotion_recognition.md)
 - [Fact2Fiction: Targeted Poisoning Attack to Agentic Fact-checking System](fact2fiction_targeted_poisoning_attack_to_agentic_fact-check.md)
+- [Beyond Detection: Exploring Evidence-based Multi-Agent Debate for Misinformation Intervention and Persuasion](beyond_detection_exploring_evidence-based_multi-agent_debate_for_misinformation_.md)
 
 <!-- RELATED:END -->

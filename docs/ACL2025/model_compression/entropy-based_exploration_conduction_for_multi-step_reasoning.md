@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Entropy-based Exploration Conduction for Multi-step Reasoning
 description: >-
@@ -183,7 +183,7 @@ $$\pi_j(a|\mathbf{s}_j) = \begin{cases} 1 - \epsilon, & a = a_j^* \\ \frac{\epsi
 - [RISE: Reasoning Enhancement via Iterative Self-Exploration in Multi-hop Question Answering](rise_reasoning_enhancement_via_iterative_self-exploration_in_multi-hop_question_.md)
 - [Graph Counselor: Adaptive Graph Exploration via Multi-Agent Synergy to Enhance LLM Reasoning](graph_counselor_multiagent_graphrag.md)
 - [MARGE: Improving Math Reasoning for LLMs with Guided Exploration](../../ICML2025/model_compression/marge_improving_math_reasoning_for_llms_with_guided_exploration.md)
-- [Pre-training Distillation for Large Language Models: A Design Space Exploration](pre-training_distillation_for_large_language_models_a_design_space_exploration.md)
 - [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](see_strategic_exploration_exploitation_prompt_optimization.md)
+- [Pre-training Distillation for Large Language Models: A Design Space Exploration](pre-training_distillation_for_large_language_models_a_design_space_exploration.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking VLMs for Image Forgery Detection and Localization
 description: >-

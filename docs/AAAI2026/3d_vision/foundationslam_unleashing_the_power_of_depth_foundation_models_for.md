@@ -119,9 +119,9 @@ tags:
 ## 相关论文
 
 - [DROID-W: DROID-SLAM in the Wild](../../CVPR2026/3d_vision/droid-slam_in_the_wild.md)
+- [Unblur-SLAM: Dense Neural SLAM for Blurry Inputs](../../CVPR2026/3d_vision/unblur-slam_dense_neural_slam_for_blurry_inputs.md)
+- [VGGT-SLAM++: Visual SLAM with DEM-Based Covisibility and Local Bundle Adjustment](../../CVPR2026/3d_vision/vggt-slam.md)
 - [MASt3R-SLAM: Real-Time Dense SLAM with 3D Reconstruction Priors](../../CVPR2025/3d_vision/mast3r-slam_real-time_dense_slam_with_3d_reconstruction_priors.md)
 - [SGAD-SLAM: Splatting Gaussians at Adjusted Depth for Better Radiance Fields in RGBD SLAM](../../CVPR2026/3d_vision/sgad-slam_splatting_gaussians_at_adjusted_depth_for_better_radiance_fields_in_rg.md)
-- [SGS-SLAM: Semantic Gaussian Splatting for Neural Dense SLAM](../../ECCV2024/3d_vision/sgs-slam_semantic_gaussian_splatting_for_neural_dense_slam.md)
-- [I²-SLAM: Inverting Imaging Process for Robust Photorealistic Dense SLAM](../../ECCV2024/3d_vision/i2-slam_inverting_imaging_process_for_robust_photorealistic_dense_slam.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] External Knowledge Enhanced 3D Scene Generation from Sketch
 description: >-

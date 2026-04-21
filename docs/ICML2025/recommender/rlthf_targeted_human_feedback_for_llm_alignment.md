@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RLTHF: Targeted Human Feedback for LLM Alignment
 description: >-

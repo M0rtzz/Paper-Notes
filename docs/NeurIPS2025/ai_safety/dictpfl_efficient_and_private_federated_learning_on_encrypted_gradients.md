@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DictPFL: Efficient and Private Federated Learning on Encrypted Gradients
 description: >-

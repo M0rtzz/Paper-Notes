@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fair Lung Disease Diagnosis from Chest CT via Gender-Adversarial Attention Multiple Instance Learning
 description: >-

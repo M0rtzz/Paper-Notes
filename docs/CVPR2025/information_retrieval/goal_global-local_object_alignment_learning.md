@@ -1,15 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] GOAL: Global-Local Object Alignment Learning
 description: >-
-  [CVPR 2025][多模态VLM] 通过全局-局部对象对齐学习增强CLIP处理长文本的能力，提出LISM和TSL两个核心组件
+  [CVPR 2025][全局-局部对齐] 提出GOAL方法，通过局部图-句匹配（LISM）和Token相似性学习（TSL）两个模块增强CLIP对长文本描述的理解能力，在全局对齐的基础上引入局部语义对齐，大幅提升图文检索性能。
 tags:
   - CVPR 2025
-  - 多模态学习
+  - 全局-局部对齐
   - CLIP微调
-  - 图文检索
-  - 局部对齐
-  - 长文本理解
+  - 长文本图文检索
+  - SAM分割
+  - Token相似性学习
 ---
 
 # GOAL: Global-Local Object Alignment Learning
@@ -149,9 +149,9 @@ GOAL包含两个核心组件：(1) LISM（Local Image-Sentence Matching）用于
 ## 相关论文
 
 - [Preserving Clusters in Prompt Learning for Unsupervised Domain Adaptation](preserving_clusters_in_prompt_learning_for_unsupervised_domain_adaptation.md)
-- [Beyond Global Similarity: Towards Fine-Grained, Multi-Condition Multimodal Retrieval](../../CVPR2026/information_retrieval/beyond_global_similarity_towards_fine-grained_multi-condition_multimodal_retriev.md)
 - [Divide-Then-Align: Honest Alignment based on the Knowledge Boundary of RAG](../../ACL2025/information_retrieval/divide_then_align_rag_knowledge_boundary.md)
-- [STRUCTURE: With Limited Data for Multimodal Alignment, Let the Structure Guide You](../../NeurIPS2025/information_retrieval/with_limited_data_for_multimodal_alignment_let_the_structure_guide_you.md)
+- [Beyond Global Similarity: Towards Fine-Grained, Multi-Condition Multimodal Retrieval](../../CVPR2026/information_retrieval/beyond_global_similarity_towards_fine-grained_multi-condition_multimodal_retriev.md)
 - [GainRAG: Preference Alignment in Retrieval-Augmented Generation through Gain Signal Synthesis](../../ACL2025/information_retrieval/gainrag_preference_alignment.md)
+- [OAD-Promoter: Enhancing Zero-shot VQA using Large Language Models with Object Attribute Description](../../AAAI2026/information_retrieval/oad-promoter_enhancing_zero-shot_vqa_using_large_language_models_with_object_att.md)
 
 <!-- RELATED:END -->

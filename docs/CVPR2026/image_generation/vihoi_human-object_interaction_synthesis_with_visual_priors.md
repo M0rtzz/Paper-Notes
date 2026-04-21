@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ViHOI: Human-Object Interaction Synthesis with Visual Priors
 description: >-

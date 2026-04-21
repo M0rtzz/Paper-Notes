@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Emergence of Superposition: Unveiling the Training Dynamics of Chain of Continuous Thought
 description: >-

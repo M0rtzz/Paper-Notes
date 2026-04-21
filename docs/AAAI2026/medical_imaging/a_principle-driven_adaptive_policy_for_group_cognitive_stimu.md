@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Principle-Driven Adaptive Policy for Group Cognitive Stimulation Dialogue for Elderly with Cognitive Impairment
 description: >-
@@ -179,6 +179,6 @@ $$\mathcal{L}_{\text{SFT}} = \gamma_1 \cdot \mathcal{L}_{\text{Gen}} + \gamma_2 
 - [ATPO: Adaptive Tree Policy Optimization for Multi-Turn Medical Dialogue](../../ICLR2026/medical_imaging/atpo_adaptive_tree_policy_optimization_for_multi-turn_medical_dialogue.md)
 - [EgoEMS: A High-Fidelity Multimodal Egocentric Dataset for Cognitive Assistance in Emergency Medical Services](egoems_a_high-fidelity_multimodal_egocentric_dataset_for_cognitive_assistance_in.md)
 - [From Policy to Logic for Efficient and Interpretable Coverage Assessment](from_policy_to_logic_for_efficient_and_interpretable_coverage_assessment.md)
-- [MultiCogEval: Evaluating LLMs Across Multi-Cognitive Levels](../../ICML2025/medical_imaging/evaluating_llms_across_multi-cognitive_levels_from_medical_knowledge_mastery_to_.md)
+- [Training-Free Policy Violation Detection via Activation-Space Whitening in LLMs](training-free_policy_violation_detection_via_activation-space_whitening_in_llms.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLaVA-CoT: Let Vision Language Models Reason Step-by-Step
 description: >-

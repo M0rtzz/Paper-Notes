@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Disease-Aware Dual-Stage Framework for Chest X-ray Report Generation
 description: >-

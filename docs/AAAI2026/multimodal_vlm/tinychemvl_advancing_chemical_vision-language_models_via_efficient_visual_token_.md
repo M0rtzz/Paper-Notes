@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TinyChemVL: Advancing Chemical Vision-Language Models via Efficient Visual Token Reduction and Complex Reaction Tasks
 description: >-

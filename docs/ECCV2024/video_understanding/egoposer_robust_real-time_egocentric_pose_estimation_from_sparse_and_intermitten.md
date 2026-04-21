@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EgoPoser: Robust Real-Time Egocentric Pose Estimation from Sparse and Intermittent Observations Everywhere
 description: >-

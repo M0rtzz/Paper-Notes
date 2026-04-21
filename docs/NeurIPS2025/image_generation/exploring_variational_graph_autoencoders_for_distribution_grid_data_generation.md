@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploring Variational Graph Autoencoders for Distribution Grid Data Generation
 description: >-
@@ -125,10 +125,10 @@ tags:
 
 ## 相关论文
 
-- [Contextual Thompson Sampling via Generation of Missing Data](contextual_thompson_sampling_via_generation_of_missing_data.md)
 - [Toward a Unified Geometry Understanding: Riemannian Diffusion Framework for Graph Generation and Prediction](toward_a_unified_geometry_understanding_riemannian_diffusion_framework_for_graph.md)
+- [Contextual Thompson Sampling via Generation of Missing Data](contextual_thompson_sampling_via_generation_of_missing_data.md)
 - [Learning Interpretable Features in Audio Latent Spaces via Sparse Autoencoders](learning_interpretable_features_in_audio_latent_spaces_via_sparse_autoencoders.md)
-- [Graph Diffusion that can Insert and Delete](graph_diffusion_that_can_insert_and_delete.md)
 - [Graph-based Neural Space Weather Forecasting](graph-based_neural_space_weather_forecasting.md)
+- [Graph Diffusion that can Insert and Delete](graph_diffusion_that_can_insert_and_delete.md)
 
 <!-- RELATED:END -->

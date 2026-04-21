@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-supervised Synthetic Pretraining for Inference of Stellar Mass Embedded in Dense Gas
 description: >-
@@ -163,8 +163,8 @@ tags:
 
 - [Exploring Structural Degradation in Dense Representations for Self-supervised Learning](exploring_structural_degradation_in_dense_representations_for_self-supervised_le.md)
 - [SCLIP: Rethinking Self-Attention for Dense Vision-Language Inference](../../ECCV2024/segmentation/sclip_rethinking_self-attention_for_dense_vision-language_inference.md)
+- [ResCLIP: Residual Attention for Training-free Dense Vision-language Inference](../../CVPR2025/segmentation/resclip_residual_attention_for_training-free_dense_vision-language_inference.md)
 - [Joint Self-Supervised Video Alignment and Action Segmentation](../../ICCV2025/segmentation/joint_self-supervised_video_alignment_and_action_segmentation.md)
 - [SiLC: Improving Vision Language Pretraining with Self-Distillation](../../ECCV2024/segmentation/silc_improving_vision_language_pretraining_with_self-distillation.md)
-- [Vision Transformers with Self-Distilled Registers](vision_transformers_with_self-distilled_registers.md)
 
 <!-- RELATED:END -->

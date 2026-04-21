@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generative Video Compression with One-Dimensional Latent Representation
 description: >-

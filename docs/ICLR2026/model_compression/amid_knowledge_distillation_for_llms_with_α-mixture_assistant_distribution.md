@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AMiD: Knowledge Distillation for LLMs with α-mixture Assistant Distribution
 description: >-

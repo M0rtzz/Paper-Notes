@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RoboTron-Mani: All-in-One Multimodal Large Model for Robotic Manipulation
 description: >-
@@ -261,7 +261,7 @@ $$l = l_a + \lambda_{\text{image}}(l_{simg} + l_{gimg}) + \lambda_{\text{occ}} l
 - [Matrix3D: Large Photogrammetry Model All-in-One](../../CVPR2025/3d_vision/matrix3d_large_photogrammetry_model_all-in-one.md)
 - [RoboPearls: Editable Video Simulation for Robot Manipulation](robopearls_editable_video_simulation_for_robot_manipulation.md)
 - [RayZer: A Self-supervised Large View Synthesis Model](rayzer_a_self-supervised_large_view_synthesis_model.md)
+- [One Diffusion to Generate Them All](../../CVPR2025/3d_vision/one_diffusion_to_generate_them_all.md)
 - [Mani-GS: Gaussian Splatting Manipulation with Triangular Mesh](../../CVPR2025/3d_vision/mani-gs_gaussian_splatting_manipulation_with_triangular_mesh.md)
-- [HyperMVP: Hyperbolic Multiview Pretraining for Robotic Manipulation](../../CVPR2026/3d_vision/hyperbolic_multiview_pretraining_for_robotic_manipulation.md)
 
 <!-- RELATED:END -->

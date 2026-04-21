@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Ada3Drift: Adaptive Training-Time Drifting for One-Step 3D Visuomotor Robotic Manipulation
 description: >-
@@ -122,9 +122,9 @@ Ada3Drift 的输入是机器人本体状态和 3D 点云观测，输出是未来
 ## 相关论文
 
 - [HyperMVP: Hyperbolic Multiview Pretraining for Robotic Manipulation](hyperbolic_multiview_pretraining_for_robotic_manipulation.md)
+- [Foundry: Distilling 3D Foundation Models for the Edge](foundry_distilling_3d_foundation_models_for_the_edge.md)
 - [tttLRM: Test-Time Training for Long Context and Autoregressive 3D Reconstruction](tttlrm_test-time_training_for_long_context_and_autoregressive_3d_reconstruction.md)
+- [Real2Edit2Real: Generating Robotic Demonstrations via a 3D Control Interface](real2edit2real_generating_robotic_demonstrations_via_a_3d_control_interface.md)
 - [SonoWorld: From One Image to a 3D Audio-Visual Scene](sonoworld_from_one_image_to_a_3d_audio-visual_scene.md)
-- [Efficient Hybrid SE(3)-Equivariant Visuomotor Flow Policy via Spherical Harmonics](efficient_hybrid_se3-equivariant_visuomotor_flow_policy_via_spherical_harmonics_.md)
-- [Fast3Dcache: Training-free 3D Geometry Synthesis Acceleration](fast3dcache_training-free_3d_geometry_synthesis_acceleration.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HiDe-LLaVA: Hierarchical Decoupling for Continual Instruction Tuning of Multimodal Large Language Model
 description: >-

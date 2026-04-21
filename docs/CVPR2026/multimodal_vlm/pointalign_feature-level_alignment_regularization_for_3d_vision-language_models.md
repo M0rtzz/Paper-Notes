@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PointAlign: Feature-Level Alignment Regularization for 3D Vision-Language Models
 description: >-
@@ -130,6 +130,6 @@ Stage 2 用 $\mathcal{L}_{total} = \mathcal{L}_{ntp} + \lambda \mathcal{L}_{alig
 - [Predictive Regularization Against Visual Representation Degradation in Multimodal Large Language Models](predictive_regularization_against_visual_representation_degradation_in_multimoda.md)
 - [AGFT: Alignment-Guided Fine-Tuning for Zero-Shot Adversarial Robustness of Vision-Language Models](agft_alignment-guided_fine-tuning_for_zero-shot_adversarial_robustness_of_vision.md)
 - [BridgeVLA: Input-Output Alignment for Efficient 3D Manipulation Learning with Vision-Language Models](../../NeurIPS2025/multimodal_vlm/bridgevla_input-output_alignment_for_efficient_3d_manipulation_learning_with_vis.md)
-- [DSCA: Dynamic Subspace Concept Alignment for Lifelong VLM Editing](dsca_dynamic_subspace_concept_alignment_for_lifelong_vlm_editing.md)
+- [Multi-Modal Image Fusion via Intervention-Stable Feature Learning](multi-modal_image_fusion_via_intervention-stable_feature_learning.md)
 
 <!-- RELATED:END -->

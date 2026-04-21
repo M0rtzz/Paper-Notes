@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Language Models Resist Alignment: Evidence From Data Compression
 description: >-
@@ -139,7 +139,7 @@ tags:
 - [500xCompressor: Generalized Prompt Compression for Large Language Models](500xcompressor_generalized_prompt_compression_for_large_language_models.md)
 - [AlignDistil: Token-Level Language Model Alignment as Adaptive Policy Distillation](aligndistil_token_level_alignment.md)
 - [UniQuanF: Unifying Uniform and Binary-coding Quantization for Accurate Compression of Large Language Models](uniquanf_unified_quantization.md)
-- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](../../NeurIPS2025/model_compression/data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
 - [From Language Models over Tokens to Language Models over Characters](../../ICML2025/model_compression/from_language_models_over_tokens_to_language_models_over_characters.md)
+- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](../../NeurIPS2025/model_compression/data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
 
 <!-- RELATED:END -->

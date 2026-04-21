@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AVerImaTeC: A Dataset for Automatic Verification of Image-Text Claims with Evidence from the Web
 description: >-

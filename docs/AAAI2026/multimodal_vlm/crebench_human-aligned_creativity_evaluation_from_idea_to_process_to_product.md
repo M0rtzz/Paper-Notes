@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CreBench: Human-Aligned Creativity Evaluation from Idea to Process to Product
 description: >-

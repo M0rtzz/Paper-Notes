@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MP1: MeanFlow Tames Policy Learning in 1-step for Robotic Manipulation
 description: >-

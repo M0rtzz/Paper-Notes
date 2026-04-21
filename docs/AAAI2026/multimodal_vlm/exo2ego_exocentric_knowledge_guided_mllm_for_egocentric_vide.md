@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exo2Ego: Exocentric Knowledge Guided MLLM for Egocentric Video Understanding
 description: >-

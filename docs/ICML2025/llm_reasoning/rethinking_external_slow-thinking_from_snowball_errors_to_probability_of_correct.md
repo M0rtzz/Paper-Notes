@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking External Slow-Thinking: From Snowball Errors to Probability of Correct Reasoning
 description: >-

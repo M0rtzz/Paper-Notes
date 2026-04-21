@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] D-GARA: A Dynamic Benchmarking Framework for GUI Agent Robustness in Real-World Anomalies
 description: >-

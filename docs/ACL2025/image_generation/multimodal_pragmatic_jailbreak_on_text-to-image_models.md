@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multimodal Pragmatic Jailbreak on Text-to-image Models
 description: >-

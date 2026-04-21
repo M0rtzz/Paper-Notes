@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Multiagent Planning via Shared Action Suggestions
 description: >-

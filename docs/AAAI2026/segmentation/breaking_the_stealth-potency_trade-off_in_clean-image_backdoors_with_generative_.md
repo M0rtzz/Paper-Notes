@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Breaking the Stealth-Potency Trade-off in Clean-Image Backdoors with Generative Trigger Optimization
 description: >-

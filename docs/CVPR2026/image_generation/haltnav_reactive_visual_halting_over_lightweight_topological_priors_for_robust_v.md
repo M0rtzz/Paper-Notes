@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HaltNav: Reactive Visual Halting over Lightweight Topological Priors for Robust Vision-Language Navigation
 description: >-
@@ -168,8 +168,8 @@ tags:
 
 - [ViHOI: Human-Object Interaction Synthesis with Visual Priors](vihoi_human-object_interaction_synthesis_with_visual_priors.md)
 - [Language-Free Generative Editing from One Visual Example](language-free_generative_editing_from_one_visual_example.md)
-- [Towards Robust Content Watermarking Against Removal and Forgery Attacks](towards_robust_content_watermarking_against_removal_and_forgery_attacks.md)
 - [SPDMark: Selective Parameter Displacement for Robust Video Watermarking](spdmark_selective_parameter_displacement_for_robust_video_watermarking.md)
-- [V-Bridge: Bridging Video Generative Priors to Versatile Few-shot Image Restoration](v-bridge_bridging_video_generative_priors_to_versatile_few-shot_image_restoratio.md)
+- [Towards Robust Content Watermarking Against Removal and Forgery Attacks](towards_robust_content_watermarking_against_removal_and_forgery_attacks.md)
+- [Organizing Unstructured Image Collections using Natural Language](organizing_unstructured_image_collections_using_natural_language.md)
 
 <!-- RELATED:END -->

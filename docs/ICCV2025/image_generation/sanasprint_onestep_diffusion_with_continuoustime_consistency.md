@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SANA-Sprint: One-Step Diffusion with Continuous-Time Consistency Distillation
 description: >-

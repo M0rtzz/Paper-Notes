@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SCALE: Selective Resource Allocation for Overcoming Performance Bottlenecks in Mathematical Test-time Scaling
 description: >-

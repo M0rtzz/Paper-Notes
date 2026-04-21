@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tab-PET: Graph-Based Positional Encodings for Tabular Transformers
 description: >-
@@ -162,7 +162,7 @@ FT-Transformer+PET 在分类上 rank 2.44 排名第一，SAINT+PET 在回归上 
 
 - [Why Are Positional Encodings Nonessential for Deep Autoregressive Transformers? Revisiting a Petroglyph](../../ACL2025/others/why_are_positional_encodings_nonessential_for_deep_autoregressive_transformers_r.md)
 - [Structure-Aware Encodings of Argumentation Properties for Clique-width](structure-aware_encodings_of_argumentation_properties_for_clique-width.md)
-- [A Graph-Theoretical Perspective on Law Design for Multiagent Systems](a_graph-theoretical_perspective_on_law_design_for_multiagent.md)
+- [A Graph-Theoretical Perspective on Law Design for Multiagent Systems](a_graph-theoretical_perspective_on_law_design_for_multiagent_systems.md)
 - [The Counting Power of Transformers](../../ICLR2026/others/the_counting_power_of_transformers.md)
 - [LeanRAG: Knowledge-Graph-Based Generation with Semantic Aggregation and Hierarchical Retrieval](leanrag_knowledge-graph-based_generation_with_semantic_aggregation_and_hierarchi.md)
 

@@ -2,14 +2,16 @@
 title: >-
   [论文解读] MMAR: Towards Lossless Multi-Modal Auto-Regressive Probabilistic Modeling
 description: >-
-  [CVPR 2025][多模态生成] 提出 MMAR 框架，首次将连续图像 token 与离散文本 token 整合到统一自回归概率建模中，通过轻量扩散头和 v-prediction 参数化解决信息损失和数值稳定性问题，在 18 个视觉理解基准上显著超越其他联合概率模型。
+  [CVPR 2025][图像生成][多模态] 首次将连续图像表示与离散文本表示整合到统一自回归概率建模框架中，通过轻量扩散头替代 VQ 离散化避免信息损失，并推导出 v-prediction 为最优参数化以解决低精度训练下的数值误差问题。
 tags:
   - CVPR 2025
-  - multi-modal generation
-  - auto-regressive
-  - diffusion model
-  - continuous tokens
-  - visual understanding
+  - 图像生成
+  - 多模态
+  - continuous image tokens
+  - 扩散模型
+  - v-prediction
+  - joint probability modeling
+  - lossless compression
 ---
 
 # MMAR: Towards Lossless Multi-Modal Auto-Regressive Probabilistic Modeling
@@ -155,8 +157,8 @@ MMAR-7B（无 CLIP，仅 256×256）几乎追平使用预训练 CLIP 的 LLaVA-1
 
 - [Collaborative Decoding Makes Visual Auto-Regressive Modeling Efficient](collaborative_decoding_makes_visual_auto-regressive_modeling_efficient.md)
 - [HMAR: Efficient Hierarchical Masked Auto-Regressive Image Generation](hmar_efficient_hierarchical_masked_auto-regressive_image_generation.md)
-- [DiffSensei: Bridging Multi-Modal LLMs and Diffusion Models for Customized Manga Generation](diffsensei_bridging_multi-modal_llms_and_diffusion_models_for_customized_manga_g.md)
 - [Unified Uncertainty-Aware Diffusion for Multi-Agent Trajectory Modeling](unified_uncertainty-aware_diffusion_for_multi-agent_trajectory_modeling.md)
-- [Distilled Decoding 2: One-step Sampling of Image Auto-regressive Models with Conditional Score Distillation](../../NeurIPS2025/image_generation/distilled_decoding_2_onestep_sampling_of_image_autoregressiv.md)
+- [SyncVP: Joint Diffusion for Synchronous Multi-Modal Video Prediction](syncvp_joint_diffusion_for_synchronous_multi-modal_video_prediction.md)
+- [StyleMotif: Multi-Modal Motion Stylization using Style-Content Cross Fusion](../../ICCV2025/image_generation/stylemotif_multi-modal_motion_stylization_using_style-content_cross_fusion.md)
 
 <!-- RELATED:END -->

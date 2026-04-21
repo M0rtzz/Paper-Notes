@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GG-BBQ: German Gender Bias Benchmark for Question Answering
 description: >-

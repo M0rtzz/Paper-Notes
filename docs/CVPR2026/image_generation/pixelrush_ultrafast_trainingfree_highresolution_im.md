@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion
 description: >-

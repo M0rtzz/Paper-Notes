@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Statistical and Computational Guarantees of Kernel Max-Sliced Wasserstein Distances
 description: >-

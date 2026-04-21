@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Concept-RuleNet: Grounded Multi-Agent Neurosymbolic Reasoning in Vision Language Models
 description: >-
@@ -200,6 +200,6 @@ CRN++平均再提升1-2%。
 - [InEx: Hallucination Mitigation via Introspection and Cross-Modal Multi-Agent Collaboration](inex_hallucination_mitigation_via_introspection_and_cross-mo.md)
 - [Multi-Agent VLMs Guided Self-Training with PNU Loss for Low-Resource Offensive Content Detection](multi-agent_vlms_guided_self-training_with_pnu_loss_for_low-resource_offensive_c.md)
 - [Verb Mirage: Unveiling and Assessing Verb Concept Hallucinations in Multimodal Large Language Models](verb_mirage_unveiling_and_assessing_verb_concept_hallucinations_in_multimodal_la.md)
-- [RMAdapter: Reconstruction-based Multi-Modal Adapter for Vision-Language Models (Oral)](rmadapter_reconstructionbased_multimodal_adapter_for_visionlanguage.md)
+- [Thinking Diffusion: Penalize and Guide Visual-Grounded Reasoning in Diffusion Multimodal Language Models](../../CVPR2026/multimodal_vlm/thinking_diffusion_penalize_and_guide_visual-grounded_reasoning_in_diffusion_mul.md)
 
 <!-- RELATED:END -->

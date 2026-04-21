@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Behavior Injection: Preparing Language Models for Reinforcement Learning
 description: >-

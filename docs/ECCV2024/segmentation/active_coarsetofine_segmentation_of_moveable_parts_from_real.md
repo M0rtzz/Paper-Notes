@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Active Coarse-to-Fine Segmentation of Moveable Parts from Real Images
 description: >-

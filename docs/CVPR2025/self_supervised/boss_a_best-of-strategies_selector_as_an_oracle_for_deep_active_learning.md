@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BoSS: A Best-of-Strategies Selector as an Oracle for Deep Active Learning
 description: >-
@@ -137,9 +137,9 @@ BoSS将最优批次选择问题$\mathcal{B}^* = \arg\min_{\mathcal{B} \subset \m
 ## 相关论文
 
 - [Do Your Best and Get Enough Rest for Continual Learning](do_your_best_and_get_enough_rest_for_continual_learning.md)
+- [ScaleLSD: Scalable Deep Line Segment Detection Streamlined](scalelsd_scalable_deep_line_segment_detection_streamlined.md)
+- [UniSTD: Towards Unified Spatio-Temporal Learning Across Diverse Disciplines](unistd_towards_unified_spatio-temporal_learning_across_diverse_disciplines.md)
 - [Learning to Normalize on the SPD Manifold under Bures-Wasserstein Geometry](learning_to_normalize_on_the_spd_manifold_under_bures-wasserstein_geometry.md)
 - [SMILE: Infusing Spatial and Motion Semantics in Masked Video Learning](smile_infusing_spatial_and_motion_semantics_in_masked_video_learning.md)
-- [Spectral State Space Model for Rotation-Invariant Visual Representation Learning](spectral_state_space_model_for_rotation-invariant_visual_representation_learning.md)
-- [Transformers without Normalization](transformers_without_normalization.md)
 
 <!-- RELATED:END -->

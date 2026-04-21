@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Predicting Any Human Trajectory in Context
 description: >-

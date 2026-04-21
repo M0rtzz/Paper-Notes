@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improved Generalization Bounds for Transductive Learning by Transductive Local Complexity and Its Applications
 description: >-

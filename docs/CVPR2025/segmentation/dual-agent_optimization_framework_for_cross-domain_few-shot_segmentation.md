@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Dual-Agent Optimization framework for Cross-Domain Few-Shot Segmentation
 description: >-
-  [CVPR 2025][图像分割][跨域小样本] 提出 DATO 框架，通过双代理学习域不变特征并修正跨域匹配，提升跨域小样本分割性能
+  [CVPR 2025][图像分割][跨域小样本分割] 提出 Dual-Agent Optimization (DATO) 框架，包含一致性互聚合（CMA）模块学习跨域不变特征以增强表示，以及相关性修正策略（CRS）将 support-query 匹配转移到域不敏感的特征空间，有效提升跨域小样本分割的泛化能力。
 tags:
   - CVPR 2025
   - 图像分割
-  - 小样本学习
-  - 跨域泛化
-  - 特征对齐
+  - 跨域小样本分割
+  - 域不变特征
+  - 一致性互聚合
+  - 相关性修正
+  - 特征适配
 ---
 
 # Dual-Agent Optimization framework for Cross-Domain Few-Shot Segmentation
@@ -104,10 +106,10 @@ DATO 建立在标准 FSS pipeline 之上（backbone 特征提取 → support-que
 
 ## 相关论文
 
+- [The Devil is in Low-Level Features for Cross-Domain Few-Shot Segmentation](the_devil_is_in_low-level_features_for_cross-domain_few-shot_segmentation.md)
 - [Self-Disentanglement and Re-Composition for Cross-Domain Few-Shot Segmentation](../../ICML2025/segmentation/self-disentanglement_and_re-composition_for_cross-domain_few-shot_segmentation.md)
 - [Adapter Naturally Serves as Decoupler for Cross-Domain Few-Shot Semantic Segmentation](../../ICML2025/segmentation/adapter_naturally_serves_as_decoupler_for_cross-domain_few-shot_semantic_segment.md)
 - [Bridging Granularity Gaps: Hierarchical Semantic Learning for Cross-Domain Few-Shot Segmentation](../../AAAI2026/segmentation/bridging_granularity_gaps_hierarchical_semantic_learning_for_cross-domain_few-sh.md)
-- [Object-level Correlation for Few-Shot Segmentation](../../ICCV2025/segmentation/object-level_correlation_for_few-shot_segmentation.md)
-- [DPSeg: Dual-Prompt Cost Volume Learning for Open-Vocabulary Semantic Segmentation](dpseg_dual-prompt_cost_volume_learning_for_open-vocabulary_semantic_segmentation.md)
+- [SANSA: Unleashing the Hidden Semantics in SAM2 for Few-Shot Segmentation](../../NeurIPS2025/segmentation/sansa_unleashing_the_hidden_semantics_in_sam2_for_few-shot_segmentation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reversal of Thought: Enhancing Large Language Models with Preference-Guided Reverse Reasoning Warm-up
 description: >-

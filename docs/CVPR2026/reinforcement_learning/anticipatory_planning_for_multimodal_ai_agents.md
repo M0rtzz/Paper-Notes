@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Anticipatory Planning for Multimodal AI Agents
 description: >-

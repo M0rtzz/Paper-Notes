@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MIDAS: Misalignment-based Data Augmentation Strategy for Imbalanced Multimodal Learning
 description: >-
@@ -147,8 +147,8 @@ MIDAS: 74.00% Acc / 73.64 F1 vs Joint: 71.13% Acc / 70.86 F1，证明可扩展�
 ## 相关论文
 
 - [On the Value of Cross-Modal Misalignment in Multimodal Representation Learning](on_the_value_of_cross-modal_misalignment_in_multimodal_representation_learning.md)
-- [Learning Shared Representations from Unpaired Data](learning_shared_representations_from_unpaired_data.md)
 - [Panda: Test-Time Adaptation with Negative Data Augmentation](../../AAAI2026/multimodal_vlm/panda_test-time_adaptation_with_negative_data_augmentation.md)
+- [Learning Shared Representations from Unpaired Data](learning_shared_representations_from_unpaired_data.md)
 - [Rethinking Multimodal Learning from the Perspective of Mitigating Classification Ability Disproportion](rethinking_multimodal_learning_from_the_perspective_of_mitig.md)
 - [Multimodal Negative Learning](multimodal_negative_learning.md)
 

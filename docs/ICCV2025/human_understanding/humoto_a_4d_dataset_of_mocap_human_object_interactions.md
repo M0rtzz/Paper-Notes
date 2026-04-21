@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HUMOTO: A 4D Dataset of Mocap Human Object Interactions
 description: >-

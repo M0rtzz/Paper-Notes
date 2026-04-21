@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Of Mice and Machines: A Comparison of Learning Between Real World Mice and RL Agents
 description: >-

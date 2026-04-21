@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Optimality and NP-Hardness of Transformers in Learning Markovian Dynamical Functions
 description: >-

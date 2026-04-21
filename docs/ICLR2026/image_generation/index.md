@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICLR2026 图像生成方向 151篇论文解读
+  ICLR2026 图像生成方向 152篇论文解读
 description: >-
-  151篇ICLR2026 图像生成方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  152篇ICLR2026 图像生成方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🔬 ICLR2026** · **151** 篇论文解读
+**🔬 ICLR2026** · **152** 篇论文解读
 
 **[A Hidden Semantic Bottleneck in Conditional Embeddings of Diffusion Transformers](a_hidden_semantic_bottleneck_in_conditional_embeddings_of_diffusion_transformers.md)**
 
@@ -267,6 +267,10 @@ description: >-
 :   提出GenDR——面向生成式细节复原的轻量单步扩散超分模型：识别T2I和SR任务目标的根本分歧（T2I需多步+4通道 vs SR需少步+16通道）→构建定制SD2.1-VAE16基础模型（0.9B，通过REPA表示对齐扩展潜在空间而不增加模型规模）→提出CiD/CiDA一致性分数恒等蒸馏（将SR特定先验融入score distillation + 对抗学习 + 表示对齐）→极简pipeline仅含UNet+VAE→77ms推理在所有质量和效率指标上超越现有SOTA。
 
 **[Generalization of Diffusion Models Arises with a Balanced Representation Space](generalization_of_diffusion_models_arises_with_a_balanced_representation_space.md)**
+
+**[Generate Any Scene: Scene Graph Driven Data Synthesis for Visual Generation Training](generate_any_scene_scene_graph_driven_data_synthesis_for_visual_generation_train.md)**
+
+:   提出 Generate Any Scene 数据引擎，基于 28K 物体×1.5K 属性×10K 关系的视觉元素分类法系统枚举场景图并转化为标题+VQA 对，支持四种应用：自我改进（SD1.5 +4%）、定向蒸馏（<800 条数据 TIFA +10%）、场景图奖励模型（DPG-Bench +5% vs CLIP）和内容审核增强。
 
 **[Generating Directed Graphs with Dual Attention and Asymmetric Encoding](generating_directed_graphs_with_dual_attention_and_asymmetric_encoding.md)**
 

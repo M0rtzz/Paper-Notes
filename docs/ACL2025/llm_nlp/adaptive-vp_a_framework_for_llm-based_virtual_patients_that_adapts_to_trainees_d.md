@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adaptive-VP: A Framework for LLM-Based Virtual Patients that Adapts to Trainees' Dialogue
 description: >-

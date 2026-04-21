@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CycleBEV: Regularizing View Transformation Networks via View Cycle Consistency for Bird's-Eye-View Semantic Segmentation
 description: >-

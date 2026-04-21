@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] vMFCoOp: Towards Equilibrium on a Unified Hyperspherical Manifold for Prompting Biomedical VLMs
 description: >-

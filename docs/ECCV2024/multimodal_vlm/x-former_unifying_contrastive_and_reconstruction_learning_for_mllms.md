@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] X-Former: Unifying Contrastive and Reconstruction Learning for MLLMs
 description: >-
@@ -158,10 +158,10 @@ X-Former采用两阶段训练：
 
 ## 相关论文
 
-- [CLAP: Isolating Content from Style through Contrastive Learning with Augmented Prompts](clap_isolating_content_from_style_through_contrastive_learning_with_augmented_pr.md)
-- [Continual Multimodal Contrastive Learning](../../NeurIPS2025/multimodal_vlm/continual_multimodal_contrastive_learning.md)
-- [DisenQ: Disentangling Q-Former for Activity-Biometrics](../../ICCV2025/multimodal_vlm/disenq_disentangling_q-former_for_activity-biometrics.md)
-- [BioCLIP 2: Emergent Properties from Scaling Hierarchical Contrastive Learning](../../NeurIPS2025/multimodal_vlm/bioclip_2_emergent_properties_from_scaling_hierarchical_contrastive_learning.md)
-- [READ: Enhancing Compositional Reasoning in CLIP via Reconstruction and Alignment of Text Descriptions](../../NeurIPS2025/multimodal_vlm/enhancing_compositional_reasoning_in_clip_via_reconstruction.md)
+- [CLAP: Isolating Content from Style Through Contrastive Learning with Augmented Prompts](clap_isolating_content_from_style_through_contrastive_learni.md)
+- [Self-Adapting Large Visual-Language Models to Edge Devices across Visual Modalities](self-adapting_large_visual-language_models_to_edge_devices_across_visual_modalit.md)
+- [BRAVE: Broadening the Visual Encoding of Vision-Language Models](brave_broadening_the_visual_encoding_of_visionlanguage_model.md)
+- [CAT: Enhancing Multimodal Large Language Model to Answer Questions in Dynamic Audio-Visual Scenarios](cat_enhancing_multimodal_large_language_model_to_answer_questions_in_dynamic_aud.md)
+- [Merlin: Empowering Multimodal LLMs with Foresight Minds](merlin_empowering_multimodal_llms_with_foresight_minds.md)
 
 <!-- RELATED:END -->

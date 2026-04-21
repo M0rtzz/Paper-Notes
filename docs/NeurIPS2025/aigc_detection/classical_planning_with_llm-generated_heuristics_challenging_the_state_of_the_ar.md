@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Classical Planning with LLM-Generated Heuristics: Challenging the State of the Art with Python Code
 description: >-

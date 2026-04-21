@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection
 description: >-
@@ -160,9 +160,9 @@ $$\mathcal{L}_{LSFA} = \mathcal{L}_{IFC} + \lambda \mathcal{L}_{CLC}$$
 ## 相关论文
 
 - [VideoClusterNet: Self-Supervised and Adaptive Face Clustering for Videos](videoclusternet_self-supervised_and_adaptive_face_clustering_for_videos.md)
-- [Interleaving One-Class and Weakly-Supervised Models with Adaptive Thresholding for Unsupervised Video Anomaly Detection](interleaving_one-class_and_weakly-supervised_models_with_adaptive_thresholding_f.md)
 - [Pose-Aware Self-Supervised Learning with Viewpoint Trajectory Regularization](pose-aware_self-supervised_learning_with_viewpoint_trajectory_regularization.md)
-- [Bi-Level Optimization for Self-Supervised AI-Generated Face Detection](../../ICCV2025/human_understanding/bi-level_optimization_for_self-supervised_ai-generated_face_detection.md)
-- [SignRep: Enhancing Self-Supervised Sign Representations](../../ICCV2025/human_understanding/signrep_enhancing_self-supervised_sign_representations.md)
+- [Interleaving One-Class and Weakly-Supervised Models with Adaptive Thresholding for Unsupervised Video Anomaly Detection](interleaving_one-class_and_weakly-supervised_models_with_adaptive_thresholding_f.md)
+- [Human Motion Forecasting in Dynamic Domain Shifts: A Homeostatic Continual Test-Time Adaptation Framework](human_motion_forecasting_in_dynamic_domain_shifts_a_homeostatic_continual_test-t.md)
+- [3DSA: Multi-view 3D Human Pose Estimation With 3D Space Attention Mechanisms](3dsa_multi-view_3d_human_pose_estimation_with_3d_space_attention_mechanisms.md)
 
 <!-- RELATED:END -->

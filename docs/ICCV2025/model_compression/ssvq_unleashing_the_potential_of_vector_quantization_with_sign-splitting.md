@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SSVQ: Unleashing the Potential of Vector Quantization with Sign-Splitting
 description: >-

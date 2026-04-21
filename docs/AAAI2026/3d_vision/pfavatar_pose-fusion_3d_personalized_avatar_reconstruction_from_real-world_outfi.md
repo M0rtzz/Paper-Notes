@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PFAvatar: Pose-Fusion 3D Personalized Avatar Reconstruction from Real-World Outfit-of-the-Day Photos
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Center-Outward q-Dominance: A Sample-Computable Proxy for Strong Stochastic Dominance in Multi-Objective Optimisation
 description: >-

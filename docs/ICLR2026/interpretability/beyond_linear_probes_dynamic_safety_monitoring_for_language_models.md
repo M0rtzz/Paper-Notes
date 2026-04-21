@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Linear Probes: Dynamic Safety Monitoring for Language Models
 description: >-
@@ -137,9 +137,9 @@ tags:
 ## 相关论文
 
 - [GAVEL: Towards Rule-Based Safety through Activation Monitoring](gavel_towards_rule-based_safety_through_activation_monitoring.md)
-- [Dynamic Reflections: Probing Video Representations with Text Alignment](dynamic_reflections_probing_video_representations_with_text_alignment.md)
 - [Emergence of Linear Truth Encodings in Language Models](../../NeurIPS2025/interpretability/emergence_of_linear_truth_encodings_in_language_models.md)
+- [Dynamic Reflections: Probing Video Representations with Text Alignment](dynamic_reflections_probing_video_representations_with_text_alignment.md)
+- [Dynamic Reflections: Probing Video Representations with Text-Driven Reasoning](dynamic_reflections_probing_video_representations_with_text_driven_reasoning.md)
 - [Internal Planning in Language Models: Characterizing Horizon and Branch Awareness](internal_planning_in_language_models_characterizing_horizon_and_branch_awareness.md)
-- [Beyond Token Probes: Hallucination Detection via Activation Tensors with ACT-ViT](../../NeurIPS2025/interpretability/beyond_token_probes_hallucination_detection_via_activation_tensors_with_act-vit.md)
 
 <!-- RELATED:END -->

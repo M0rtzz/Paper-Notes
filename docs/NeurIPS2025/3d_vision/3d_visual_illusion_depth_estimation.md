@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3D Visual Illusion Depth Estimation
 description: >-
@@ -156,6 +156,6 @@ tags:
 - [Jasmine: Harnessing Diffusion Prior for Self-Supervised Depth Estimation](jasmine_harnessing_diffusion_prior_for_self-supervised_depth_estimation.md)
 - [Amodal Depth Anything: Amodal Depth Estimation in the Wild](../../ICCV2025/3d_vision/amodal_depth_anything_amodal_depth_estimation_in_the_wild.md)
 - [Depth AnyEvent: A Cross-Modal Distillation Paradigm for Event-Based Monocular Depth Estimation](../../ICCV2025/3d_vision/depth_anyevent_a_cross-modal_distillation_paradigm_for_event-based_monocular_dep.md)
-- [Efficient Depth Estimation for Unstable Stereo Camera Systems on AR Glasses](../../CVPR2025/3d_vision/efficient_depth_estimation_for_unstable_stereo_camera_systems_on_ar_glasses.md)
+- [Scalable Autoregressive Monocular Depth Estimation](../../CVPR2025/3d_vision/scalable_autoregressive_monocular_depth_estimation.md)
 
 <!-- RELATED:END -->

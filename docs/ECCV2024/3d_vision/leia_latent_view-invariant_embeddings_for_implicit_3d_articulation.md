@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LEIA: Latent View-Invariant Embeddings for Implicit 3D Articulation
 description: >-
@@ -144,10 +144,10 @@ LEIA在多部件铰接物体上的优势尤其显著（Storage2-4, Sunglasses, B
 
 ## 相关论文
 
+- [SV3D: Novel Multi-view Synthesis and 3D Generation from a Single Image using Latent Video Diffusion](sv3d_novel_multi-view_synthesis_and_3d_generation_from_a_single_image_using_late.md)
 - [Compress3D: a Compressed Latent Space for 3D Generation from a Single Image](compress3d_a_compressed_latent_space_for_3d_generation_from_a_single_image.md)
 - [RISurConv: Rotation Invariant Surface Attention-Augmented Convolutions for 3D Point Cloud Classification and Segmentation](risurconv_rotation_invariant_surface_attention-augmented_convolutions_for_3d_poi.md)
 - [LN3Diff: Scalable Latent Neural Fields Diffusion for Speedy 3D Generation](ln3diff_scalable_latent_neural_fields_diffusion_for_speedy_3d_generation.md)
 - [Particulate: Feed-Forward 3D Object Articulation](../../CVPR2026/3d_vision/particulate_feed-forward_3d_object_articulation.md)
-- [Implicit Filtering for Learning Neural Signed Distance Functions from 3D Point Clouds](implicit_filtering_for_learning_neural_signed_distance_functions_from_3d_point_c.md)
 
 <!-- RELATED:END -->

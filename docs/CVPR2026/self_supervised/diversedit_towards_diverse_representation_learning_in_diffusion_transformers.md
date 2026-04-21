@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers
 description: >-
@@ -196,6 +196,6 @@ DiverseDiT 包含两个互补组件：
 - [Vision Transformers Need More Than Registers](vision_transformers_need_more_than_registers.md)
 - [Representation Learning for Spatiotemporal Physical Systems](representation_learning_for_spatiotemporal_physical_systems.md)
 - [TrackMAE: Video Representation Learning via Track, Mask, and Predict](trackmae_video_representation_learning_via_track_mask_and_predict.md)
-- [D2Dewarp: Dual Dimensions Geometric Representation Learning Based Document Image Dewarping](d2dewarp_dual_dimensions_geometric_representation_learning_based_document_image_.md)
+- [UniSTD: Towards Unified Spatio-Temporal Learning Across Diverse Disciplines](../../CVPR2025/self_supervised/unistd_towards_unified_spatio-temporal_learning_across_diverse_disciplines.md)
 
 <!-- RELATED:END -->

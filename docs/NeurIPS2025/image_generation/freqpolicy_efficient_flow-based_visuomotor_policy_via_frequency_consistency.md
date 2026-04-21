@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FreqPolicy: Efficient Flow-based Visuomotor Policy via Frequency Consistency
 description: >-

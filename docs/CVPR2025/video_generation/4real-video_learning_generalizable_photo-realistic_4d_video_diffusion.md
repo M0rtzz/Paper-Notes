@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 4Real-Video: Learning Generalizable Photo-Realistic 4D Video Diffusion
 description: >-
@@ -147,6 +147,6 @@ tags:
 - [Learning from Streaming Video with Orthogonal Gradients](learning_from_streaming_video_with_orthogonal_gradients.md)
 - [NormalCrafter: Learning Temporally Consistent Normals from Video Diffusion Priors](../../ICCV2025/video_generation/normalcrafter_learning_temporally_consistent_normals_from_video_diffusion_priors.md)
 - [Reangle-A-Video: 4D Video Generation as Video-to-Video Translation](../../ICCV2025/video_generation/reangle-a-video_4d_video_generation_as_video-to-video_translation.md)
-- [Goal-Driven Reward by Video Diffusion Models for Reinforcement Learning](../../CVPR2026/video_generation/goal-driven_reward_by_video_diffusion_models_for_reinforcement_learning.md)
+- [Geometry-aware 4D Video Generation for Robot Manipulation](../../ICLR2026/video_generation/geometry-aware_4d_video_generation_for_robot_manipulation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ViDia2Std: A Parallel Corpus and Methods for Low-Resource Vietnamese Dialect-to-Standard Translation
 description: >-
@@ -150,7 +150,7 @@ ViDia2Std 构建了首个覆盖越南全部 63 个省份的手工标注越南语
 - [STELLAR: Scene Text Editor for Low-Resource Languages and Real-World Data](stellar_scene_text_editor_for_low-resource_languages_and_real-world_data.md)
 - [The Esethu Framework: Reimagining Sustainable Dataset Governance and Curation for Low-Resource Languages](../../ACL2025/multilingual_mt/the_esethu_framework_reimagining_sustainable_dataset_governance_and_curation_for.md)
 - [Dictionaries to the Rescue: Cross-Lingual Vocabulary Transfer for Low-Resource Languages Using Bilingual Dictionaries](../../ACL2025/multilingual_mt/dictionaries_to_the_rescue_cross-lingual_vocabulary_transfer_for_low-resource_la.md)
-- [Multilingual Encoder Knows More Than You Realize: Shared Weights Pretraining for Extremely Low-Resource Languages](../../ACL2025/multilingual_mt/multilingual_encoder_knows_more_than_you_realize_shared_weights_pretraining_for_.md)
 - [Read it in Two Steps: Translating Extremely Low-Resource Languages with Code-Augmented Grammar Books](../../ACL2025/multilingual_mt/low_resource_translation.md)
+- [COSMMIC: Comment-Sensitive Multimodal Multilingual Indian Corpus](../../ACL2025/multilingual_mt/cosmmic_commentsensitive_multimodal_multilingual_indian_corpus.md)
 
 <!-- RELATED:END -->

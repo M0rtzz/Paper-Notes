@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generating Diverse Training Samples for Relation Extraction with Large Language Models
 description: >-

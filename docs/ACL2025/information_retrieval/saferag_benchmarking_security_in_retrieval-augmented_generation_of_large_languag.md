@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SafeRAG: Benchmarking Security in Retrieval-Augmented Generation of Large Language Model
 description: >-

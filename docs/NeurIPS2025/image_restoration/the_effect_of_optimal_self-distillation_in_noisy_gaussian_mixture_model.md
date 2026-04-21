@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Effect of Optimal Self-Distillation in Noisy Gaussian Mixture Model
 description: >-

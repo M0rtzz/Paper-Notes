@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cross-Architecture Distillation Made Simple with Redundancy Suppression
 description: >-

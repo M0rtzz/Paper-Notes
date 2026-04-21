@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A TRIANGLE Enables Multimodal Alignment Beyond Cosine Similarity
 description: >-
@@ -129,8 +129,8 @@ TRIANGLE提出用高维空间中三模态嵌入向量构成的三角形面积作
 
 - [LeVo: High-Quality Song Generation with Multi-Preference Alignment](levo_high-quality_song_generation_with_multi-preference_alignment.md)
 - [Advancing Zero-shot Text-to-Speech Intelligibility across Diverse Domains via Preference Alignment](../../ACL2025/audio_speech/advancing_zero-shot_text-to-speech_intelligibility_across_diverse_domains_via_pr.md)
-- [When Style Breaks Safety: Defending LLMs Against Superficial Style Alignment](../../ICLR2026/audio_speech/when_style_breaks_safety_defending_llms_against_superficial_style_alignment.md)
 - [Benchmarking Egocentric Multimodal Goal Inference for Assistive Wearable Agents](benchmarking_egocentric_multimodal_goal_inference_for_assist.md)
+- [When Style Breaks Safety: Defending LLMs Against Superficial Style Alignment](../../ICLR2026/audio_speech/when_style_breaks_safety_defending_llms_against_superficial_style_alignment.md)
 - [Contextual AD Narration with Interleaved Multimodal Sequence](../../CVPR2025/audio_speech/contextual_ad_narration_with_interleaved_multimodal_sequence.md)
 
 <!-- RELATED:END -->

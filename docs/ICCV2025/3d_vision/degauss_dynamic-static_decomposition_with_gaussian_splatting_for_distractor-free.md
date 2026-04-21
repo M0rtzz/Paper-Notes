@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DeGauss: Dynamic-Static Decomposition with Gaussian Splatting for Distractor-free 3D Reconstruction
 description: >-

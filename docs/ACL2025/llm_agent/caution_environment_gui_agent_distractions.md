@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Caution for the Environment: Multimodal LLM Agents are Susceptible to Environmental Distractions
 description: >-
@@ -125,6 +125,6 @@ tags:
 - [SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home LLM Agents](../../ICLR2026/llm_agent/simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_llm_agents.md)
 - [OS Agents: A Survey on MLLM-based Agents for General Computing Devices Use](os_agents_a_survey_on_mllm-based_agents_for_general_computing_devices_use.md)
 - [Multiple LLM Agents Debate for Equitable Cultural Alignment](multiple_llm_agents_debate_for_equitable.md)
-- [Sketchtopia: A Dataset and Foundational Agents for Benchmarking Asynchronous Multimodal Communication with Iconic Feedback](../../CVPR2025/llm_agent/sketchtopia_a_dataset_and_foundational_agents_for_benchmarking_asynchronous_mult.md)
+- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
 
 <!-- RELATED:END -->

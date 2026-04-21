@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Unseen Threat: Residual Knowledge in Machine Unlearning under Perturbed Samples
 description: >-
@@ -132,7 +132,7 @@ tags:
 - [Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
 - [Position: Bridge the Gaps between Machine Unlearning and AI Regulation](position_bridge_the_gaps_between_machine_unlearning_and_ai_regulation.md)
 - [Efficient Verified Machine Unlearning for Distillation](efficient_verified_machine_unlearning_for_distillation.md)
+- [Towards Source-Free Machine Unlearning](../../CVPR2025/ai_safety/towards_source-free_machine_unlearning.md)
 - [Machine Unlearning Doesn't Do What You Think: Lessons for Generative AI Policy and Research](machine_unlearning_doesnt_do_what_you_think_lessons_for_generative_ai_policy_and.md)
-- [OFMU: Optimization-Driven Framework for Machine Unlearning](../../ICLR2026/ai_safety/ofmu_optimization-driven_framework_for_machine_unlearning.md)
 
 <!-- RELATED:END -->

@@ -131,6 +131,6 @@ $$\lambda_i = \frac{1/d_i}{\sum_{k=1}^L 1/d_k} \cdot (\mathbf{n}_i \cdot \mathbf
 - [Egocentric Action-aware Inertial Localization in Point Clouds with Vision-Language Guidance](egocentric_action-aware_inertial_localization_in_point_clouds_with_vision-langua.md)
 - [AnyI2V: Animating Any Conditional Image with Motion Control](anyi2v_animating_any_conditional_image_with_motion_control.md)
 - [SAS: Segment Any 3D Scene with Integrated 2D Priors](sas_segment_any_3d_scene_with_integrated_2d_priors.md)
-- [RayletDF: Raylet Distance Fields for Generalizable 3D Surface Reconstruction from Point Clouds or Gaussians](rayletdf_raylet_distance_fields_for_generalizable_3d_surface_reconstruction_from.md)
+- [Find Any Part in 3D](find_any_part_in_3d.md)
 
 <!-- RELATED:END -->

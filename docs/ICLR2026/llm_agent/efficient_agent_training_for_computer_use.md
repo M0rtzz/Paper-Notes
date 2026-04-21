@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Agent Training for Computer Use
 description: >-

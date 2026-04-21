@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Imagine How To Change: Explicit Procedure Modeling for Change Captioning
 description: >-

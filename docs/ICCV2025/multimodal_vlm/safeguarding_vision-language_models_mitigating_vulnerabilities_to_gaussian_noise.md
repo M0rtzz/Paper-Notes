@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Safeguarding Vision-Language Models: Mitigating Vulnerabilities to Gaussian Noise in Perturbation-based Attacks
 description: >-

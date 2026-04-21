@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Certified Branch-and-Bound MaxSAT Solving (Extended Version)
 description: >-

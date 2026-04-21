@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Parameters to Behaviors: Unsupervised Compression of the Policy Space
 description: >-
@@ -138,8 +138,8 @@ HalfCheetah 上增大潜在维度一致性地提升性能恢复率（5D→16D）
 
 - [Unsupervised Conformal Inference: Bootstrapping and Alignment to Control LLM Uncertainty](unsupervised_conformal_inference_bootstrapping_and_alignment_to_control_llm_unce.md)
 - [Diffusion Fine-Tuning via Reparameterized Policy Gradient of the Soft Q-Function](diffusion_fine-tuning_via_reparameterized_policy_gradient_of_the_soft_q-function.md)
-- [WebRPG: Automatic Web Rendering Parameters Generation for Visual Presentation](../../ECCV2024/image_generation/webrpg_automatic_web_rendering_parameters_generation_for_visual_presentation.md)
 - [PCPO: Proportionate Credit Policy Optimization for Aligning Image Generation Models](pcpo_proportionate_credit_policy_optimization_for_aligning_image_generation_mode.md)
 - [Translate Policy to Language: Flow Matching Generated Rewards for LLM Explanations](translate_policy_to_language_flow_matching_generated_rewards_for_llm_explanation.md)
+- [SSCP: Flow-Based Single-Step Completion for Efficient and Expressive Policy Learning](flow-based_single-step_completion_for_efficient_and_expressive_policy_learning.md)
 
 <!-- RELATED:END -->

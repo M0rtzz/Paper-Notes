@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Golden Noise for Diffusion Models: A Learning Framework
 description: >-

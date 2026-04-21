@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UrbanVerse: Scaling Urban Simulation by Watching City-Tour Videos
 description: >-

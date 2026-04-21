@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Simplicity Prevails: Rethinking Negative Preference Optimization for LLM Unlearning
 description: >-

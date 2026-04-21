@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CURE: Cultural Gaps in the Long Tail of Text-to-Image Systems
 description: >-
@@ -143,8 +143,8 @@ $$\phi_{DIV} = LPIPS(n, \{n,c\}, \{n,r\}, \{n,c,r\})$$
 
 - [Fix-CLIP: Dual-Branch Hierarchical Contrastive Learning via Synthetic Captions for Better Understanding of Long Text](fix-clip_dual-branch_hierarchical_contrastive_learning_via_synthetic_captions_fo.md)
 - [Long-Context State-Space Video World Models](long-context_state-space_video_world_models.md)
-- [CoMPaSS: Enhancing Spatial Understanding in Text-to-Image Diffusion Models](compass_enhancing_spatial_understanding_in_text-to-image_diffusion_models.md)
 - [InfiniDreamer: Arbitrarily Long Human Motion Generation via Segment Score Distillation](infinidreamer_arbitrarily_long_human_motion_generation_via_segment_score_distill.md)
+- [CoMPaSS: Enhancing Spatial Understanding in Text-to-Image Diffusion Models](compass_enhancing_spatial_understanding_in_text-to-image_diffusion_models.md)
 - [LongT2IBench: A Benchmark for Evaluating Long Text-to-Image Generation with Graph-structured Annotations](../../AAAI2026/image_generation/longt2ibench_a_benchmark_for_evaluating_long_text-to-image_generation_with_graph.md)
 
 <!-- RELATED:END -->

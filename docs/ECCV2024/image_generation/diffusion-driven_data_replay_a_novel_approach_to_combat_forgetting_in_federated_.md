@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Diffusion-Driven Data Replay: A Novel Approach to Combat Forgetting in Federated Class Continual Learning
 description: >-

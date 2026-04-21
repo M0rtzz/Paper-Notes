@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Impact of Token Granularity on the Predictive Power of Language Model Surprisal
 description: >-
@@ -124,8 +124,8 @@ tags:
 
 - [Large Language Models for Predictive Analysis: How Far Are They?](large_language_models_for_predictive_analysis_how_far_are_they.md)
 - [Deontological Keyword Bias: The Impact of Modal Expressions on Normative Judgments of Language Models](deontological_keyword_bias.md)
-- [Enhancing Character-Level Understanding in LLMs through Token Internal Structure Learning](character_level_understanding.md)
-- [Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs](token_prepending_training_free.md)
-- [Representation Bending for Large Language Model Safety](repbend_representation_bending_safety.md)
+- [Circuit Stability Characterizes Language Model Generalization](circuit_stability_characterizes_language_model_generalization.md)
+- [Training Language Model to Critique for Better Refinement](training_language_model_to_critique_for_better_refinement.md)
+- [Convert Language Model into a Value-based Strategic Planner](convert_language_model_into_a_value-based_strategic_planner.md)
 
 <!-- RELATED:END -->

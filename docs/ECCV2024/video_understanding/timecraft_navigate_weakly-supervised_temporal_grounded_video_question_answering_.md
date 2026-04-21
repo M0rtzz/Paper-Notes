@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TimeCraft: Navigate Weakly-Supervised Temporal Grounded Video Question Answering via Bi-directional Reasoning
 description: >-

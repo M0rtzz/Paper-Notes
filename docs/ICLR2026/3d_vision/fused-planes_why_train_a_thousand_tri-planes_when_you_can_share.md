@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fused-Planes: Why Train a Thousand Tri-Planes When You Can Share?
 description: >-
@@ -112,6 +112,6 @@ Fused-Planes 比 Tri-Planes: 7.2× 快，3.2× 省存储，PSNR 高 2.32dB，渲
 - [Where, What, Why: Toward Explainable 3D-GS Watermarking](../../CVPR2026/3d_vision/where_what_why_toward_explainable_3d-gs_watermarking.md)
 - [Can Protective Watermarking Safeguard the Copyright of 3D Gaussian Splatting?](../../AAAI2026/3d_vision/can_protective_watermarking_safeguard_the_copyright_of_3d_gaussian_splatting.md)
 - [EgoNight: Towards Egocentric Vision Understanding at Night with a Challenging Benchmark](egonight_towards_egocentric_vision_understanding_at_night_with_a_challenging_ben.md)
-- [Weight Space Representation Learning on Diverse NeRF Architectures](weight_space_representation_learning_on_diverse_nerf_architectures.md)
+- [You See it, You Got it: Learning 3D Creation on Pose-Free Videos at Scale](../../CVPR2025/3d_vision/you_see_it_you_got_it_learning_3d_creation_on_pose-free_videos_at_scale.md)
 
 <!-- RELATED:END -->

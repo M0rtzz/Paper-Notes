@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] SymDPO: Boosting In-Context Learning of Large Multimodal Models with Symbol Demonstration Direct Preference Optimization
 description: >-
-  [CVPR 2025][LLM对齐] SymDPO通过将ICL示例中的文本答案替换为无语义符号，迫使多模态大模型真正利用视觉上下文而非仅跟随文本模式，用DPO训练实现了多模态ICL的显著提升
+  [CVPR 2025][LLM对齐][上下文学习] SymDPO 发现LMM在多模态ICL中存在"视觉上下文忽视"问题（用空白图替换示例图不影响性能），提出将示例中的文本答案替换为无语义随机符号，迫使模型必须理解视觉内容才能正确匹配符号与答案，通过DPO训练在OpenFlamingo和IDEFICS上一致提升了多模态ICL效果。
 tags:
   - CVPR 2025
   - LLM对齐
   - 上下文学习
-  - 偏好优化
-  - 多模态对齐
+  - 符号示例
+  - DPO
+  - 多模态大模型
+  - 视觉上下文利用
 ---
 
 # SymDPO: Boosting In-Context Learning of Large Multimodal Models with Symbol Demonstration Direct Preference Optimization
@@ -148,8 +150,8 @@ SymDPO + RICES（检索式示例选择）叠加效果：
 
 - [Debiasing Multimodal Large Language Models via Noise-Aware Preference Optimization](debiasing_multimodal_large_language_models_via_noise-aware_preference_optimizati.md)
 - [Curriculum Direct Preference Optimization for Diffusion and Consistency Models](curriculum_direct_preference_optimization_for_diffusion_and_consistency_models.md)
-- [Task Preference Optimization: Improving Multimodal Large Language Models with Vision Task Alignment](task_preference_optimization_improving_multimodal_large_language_models_with_vis.md)
-- [MMedPO: Aligning Medical Vision-Language Models with Clinical-Aware Multimodal Preference Optimization](../../ICML2025/llm_alignment/mmedpo_aligning_medical_vision-language_models_with_clinical-aware_multimodal_pr.md)
 - [$\varphi$-DPO: Fairness Direct Preference Optimization Approach to Continual Learning in Large Multimodal Models](../../CVPR2026/llm_alignment/φ-dpo_fairness_direct_preference_optimization_approach_to_continual_learning_in_.md)
+- [Task Preference Optimization: Improving Multimodal Large Language Models with Vision Task Alignment](task_preference_optimization_improving_multimodal_large_language_models_with_vis.md)
+- [Continual SFT Matches Multimodal RLHF with Negative Supervision](continual_sft_matches_multimodal_rlhf_with_negative_supervision.md)
 
 <!-- RELATED:END -->

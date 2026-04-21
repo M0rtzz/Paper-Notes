@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Pragmatic Heterogeneous Collaborative Perception via Generative Communication Mechanism
 description: >-
@@ -131,10 +131,10 @@ $$\mathcal{L}_{gen} = \sum_{j \in \mathcal{G}_i} \|\hat{\mathcal{F}}_j - \mathca
 
 ## 相关论文
 
+- [Traversing Distortion-Perception Tradeoff Using a Single Score-Based Generative Model](../../CVPR2025/image_generation/traversing_distortion-perception_tradeoff_using_a_single_score-based_generative_.md)
 - [Multimodal Pragmatic Jailbreak on Text-to-image Models](../../ACL2025/image_generation/multimodal_pragmatic_jailbreak_on_text-to-image_models.md)
 - [Janus-Pro-R1: Advancing Collaborative Visual Comprehension and Generation via Reinforcement Learning](janus-pro-r1_advancing_collaborative_visual_comprehension_and_generation_via_rei.md)
 - [Bridging Generalization Gap of Heterogeneous Federated Clients Using Generative Models](../../ICLR2026/image_generation/bridging_generalization_gap_of_heterogeneous_federated_clients_using_generative_.md)
-- [Heterogeneous Decentralized Diffusion Models](../../CVPR2026/image_generation/heterogeneous_decentralized_diffusion_models.md)
-- [Multimodal Generative Flows for LHC Jets](multimodal_generative_flows_for_lhc_jets.md)
+- [Multi-party Collaborative Attention Control for Image Customization](../../CVPR2025/image_generation/multi-party_collaborative_attention_control_for_image_customization.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CAD-Assistant: Tool-Augmented VLLMs as Generic CAD Task Solvers
 description: >-

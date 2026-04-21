@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] M2rc-Eval: Massively Multilingual Repository-level Code Completion Evaluation
 description: >-

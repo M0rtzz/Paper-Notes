@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TACLR: A Scalable and Efficient Retrieval-Based Method for Industrial Product Attribute Value Identification
 description: >-

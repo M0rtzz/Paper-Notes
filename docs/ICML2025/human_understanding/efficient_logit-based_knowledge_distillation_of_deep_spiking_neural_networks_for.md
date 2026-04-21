@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Logit-based Knowledge Distillation of Deep Spiking Neural Networks for Full-Range Timestep Deployment
 description: >-

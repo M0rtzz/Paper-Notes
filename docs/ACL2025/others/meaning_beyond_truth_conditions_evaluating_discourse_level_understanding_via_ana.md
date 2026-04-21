@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Meaning Beyond Truth Conditions: Evaluating Discourse Level Understanding via Anaphora Accessibility
 description: >-

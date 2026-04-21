@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bridging Modalities via Progressive Re-alignment for Multimodal Test-Time Adaptation (BriMPR)
 description: >-

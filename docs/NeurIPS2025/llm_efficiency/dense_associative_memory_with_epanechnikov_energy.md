@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dense Associative Memory with Epanechnikov Energy
 description: >-
@@ -126,8 +126,8 @@ tags:
 
 - [Associative Transformer](../../CVPR2025/llm_efficiency/associative_transformer.md)
 - [MixANT: Observation-dependent Memory Propagation for Stochastic Dense Action Anticipation](../../ICCV2025/llm_efficiency/mixant_observation-dependent_memory_propagation_for_stochastic_dense_action_anti.md)
-- [PENCIL: Long Thoughts with Short Memory](../../ICML2025/llm_efficiency/pencil_long_thoughts_with_short_memory.md)
 - [Hardware-aligned Hierarchical Sparse Attention for Efficient Long-term Memory Access](hardware-aligned_hierarchical_sparse_attention_for_efficient_long-term_memory_ac.md)
+- [PENCIL: Long Thoughts with Short Memory](../../ICML2025/llm_efficiency/pencil_long_thoughts_with_short_memory.md)
 - [Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference](../../ACL2025/llm_efficiency/smarter_better_faster_longer_a_modern_bidirectional_encoder_for_fast_memory_effi.md)
 
 <!-- RELATED:END -->

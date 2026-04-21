@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving Gaussian Splatting with Localized Points Management
 description: >-
@@ -136,10 +136,10 @@ LPM 作为插件一致性提升所有基线方法（3DGS、2DGS、MipGS、PixelG
 
 ## 相关论文
 
-- [Difix3D+: Improving 3D Reconstructions with Single-Step Diffusion Models](difix3d_improving_3d_reconstructions_with_single-step_diffusion_models.md)
-- [CoCoGaussian: Leveraging Circle of Confusion for Gaussian Splatting from Defocused Images](cocogaussian_leveraging_circle_of_confusion_for_gaussian_splatting_from_defocuse.md)
+- [Seurat: From Moving Points to Depth](seurat_from_moving_points_to_depth.md)
+- [SfM-Free 3D Gaussian Splatting via Hierarchical Training](sfm-free_3d_gaussian_splatting_via_hierarchical_training.md)
+- [S2Gaussian: Sparse-View Super-Resolution 3D Gaussian Splatting](s2gaussian_sparse-view_super-resolution_3d_gaussian_splatting.md)
 - [HybridGS: Decoupling Transients and Statics with 2D and 3D Gaussian Splatting](hybridgs_decoupling_transients_and_statics_with_2d_and_3d_gaussian_splatting.md)
-- [Hardware-Rasterized Ray-Based Gaussian Splatting](hardware-rasterized_ray-based_gaussian_splatting.md)
-- [FruitNinja: 3D Object Interior Texture Generation with Gaussian Splatting](fruitninja_3d_object_interior_texture_generation_with_gaussian_splatting.md)
+- [CoCoGaussian: Leveraging Circle of Confusion for Gaussian Splatting from Defocused Images](cocogaussian_leveraging_circle_of_confusion_for_gaussian_splatting_from_defocuse.md)
 
 <!-- RELATED:END -->

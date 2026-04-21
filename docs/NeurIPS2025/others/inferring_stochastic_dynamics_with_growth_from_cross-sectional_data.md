@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Inferring Stochastic Dynamics with Growth from Cross-Sectional Data
 description: >-

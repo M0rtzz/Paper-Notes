@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SAFER: A Calibrated Risk-Aware Multimodal Recommendation Model for Dynamic Treatment Regimes
 description: >-

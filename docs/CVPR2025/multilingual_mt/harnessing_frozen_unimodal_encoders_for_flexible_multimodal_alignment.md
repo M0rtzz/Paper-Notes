@@ -1,16 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Harnessing Frozen Unimodal Encoders for Flexible Multimodal Alignment
 description: >-
-  [CVPR 2025][多模态VLM] 冻结单模态编码器仅训练轻量投影层实现视觉-语言对齐，数据量减少20倍、计算量减少65倍，达到CLIP级别性能
+  [CVPR 2025][冻结编码器] 提出一种新的视觉-语言对齐框架：冻结预训练好的单模态视觉编码器（DINOv2）和语言编码器（All-Roberta-Large），仅训练轻量MLP投影层实现多模态对齐，以20倍数据缩减和65倍计算缩减达到了CLIP级别甚至超越的性能。
 tags:
   - CVPR 2025
-  - 多模态对齐
-  - CLIP
-  - 投影层
-  - DINOv2
-  - 高效训练
-  - 零样本学习
+  - 冻结编码器
+  - 投影层对齐
+  - CKA
+  - 概念平衡数据集
+  - 多模态学习
 ---
 
 # Harnessing Frozen Unimodal Encoders for Flexible Multimodal Alignment

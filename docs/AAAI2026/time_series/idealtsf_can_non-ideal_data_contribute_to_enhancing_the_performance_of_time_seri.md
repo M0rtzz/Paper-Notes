@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] IdealTSF: Can Non-Ideal Data Contribute to Enhancing Time Series Forecasting?
 description: >-

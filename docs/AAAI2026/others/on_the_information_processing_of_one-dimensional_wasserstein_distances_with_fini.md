@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the Information Processing of One-Dimensional Wasserstein Distances with Finite Samples
 description: >-

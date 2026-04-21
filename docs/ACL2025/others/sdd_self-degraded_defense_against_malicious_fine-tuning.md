@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SDD: Self-Degraded Defense against Malicious Fine-tuning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards a More Generalized Approach in Open Relation Extraction
 description: >-
@@ -179,6 +179,6 @@ $$\mathcal{L}_c = -\frac{1}{D_c}\sum_{i=1}^{D_c}\sum_{r=1}^{|\mathcal{C}_u|} y_r
 - [Generating Diverse Training Samples for Relation Extraction with Large Language Models](generating_diverse_training_samples_for_relation_extraction_with_large_language_.md)
 - [Beyond Prompting: An Efficient Embedding Framework for Open-Domain Question Answering](embqa_embedding_odqa.md)
 - [Hierarchical Retrieval with Evidence Curation for Open-Domain Financial QA](hierarchical_retrieval_with_evidence_curation_for_open-domain_financial_question.md)
-- [Dynamic Order Template Prediction for Generative Aspect-Based Sentiment Analysis](dot_absa_template.md)
+- [Automatic Generation of Inference Making Questions for Reading Comprehension Assessments](automatic_generation_of_inference_making_questions_for_reading_comprehension_ass.md)
 
 <!-- RELATED:END -->

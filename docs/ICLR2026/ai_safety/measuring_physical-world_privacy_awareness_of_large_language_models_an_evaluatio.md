@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Measuring Physical-World Privacy Awareness of Large Language Models: An Evaluation Benchmark
 description: >-
@@ -138,10 +138,10 @@ tags:
 
 ## 相关论文
 
-- [SecP-Tuning: Efficient Privacy-Preserving Prompt Tuning for Large Language Models via MPC](secp-tuning_efficient_privacy-preserving_prompt_tuning_for_large_language_models.md)
 - [SproutBench: A Benchmark for Safe and Ethical Large Language Models for Youth](../../AAAI2026/ai_safety/sproutbench_a_benchmark_for_safe_and_ethical_large_language_models_for_youth.md)
+- [SecP-Tuning: Efficient Privacy-Preserving Prompt Tuning for Large Language Models via MPC](secp-tuning_efficient_privacy-preserving_prompt_tuning_for_large_language_models.md)
 - [AudioTrust: Benchmarking the Multifaceted Trustworthiness of Audio Large Language Models](audiotrust_benchmarking_the_multifaceted_trustworthiness_of_audio_large_language.md)
-- [BiasBusters: Uncovering and Mitigating Tool Selection Bias in Large Language Models](biasbusters_uncovering_and_mitigating_tool_selection_bias_in_large_language_mode.md)
 - [ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](../../ACL2025/ai_safety/elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)
+- [BiasBusters: Uncovering and Mitigating Tool Selection Bias in Large Language Models](biasbusters_uncovering_and_mitigating_tool_selection_bias_in_large_language_mode.md)
 
 <!-- RELATED:END -->

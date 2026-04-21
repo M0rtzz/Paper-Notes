@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AMPED: Adaptive Multi-objective Projection for balancing Exploration and skill Diversification
 description: >-

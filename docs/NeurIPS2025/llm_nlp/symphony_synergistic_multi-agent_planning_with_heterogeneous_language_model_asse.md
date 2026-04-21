@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SYMPHONY: Synergistic Multi-agent Planning with Heterogeneous Language Model Assemblies
 description: >-

@@ -182,6 +182,6 @@ $$\mathcal{L}_n = \bar{\Phi}(\nu, h) + V_{n+1}(\bar{F}(\nu, h))$$
 - [Machine Learning from Explanations](machine_learning_from_explanations.md)
 - [Understanding Prompt Tuning and In-Context Learning via Meta-Learning](../../NeurIPS2025/robotics/understanding_prompt_tuning_and_in-context_learning_via_meta-learning.md)
 - [BiAssemble: Learning Collaborative Affordance for Bimanual Geometric Assembly](biassemble_learning_collaborative_affordance_for_bimanual_geometric_assembly.md)
-- [Efficient Robotic Policy Learning via Latent Space Backward Planning](efficient_robotic_policy_learning_via_latent_space_backward_planning.md)
+- [Certifiably Optimal Anisotropic Rotation Averaging](../../ICCV2025/robotics/certifiably_optimal_anisotropic_rotation_averaging.md)
 
 <!-- RELATED:END -->

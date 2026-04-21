@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Riemannian Consistency Model
 description: >-
@@ -128,9 +128,9 @@ SO(3) 数据集 MMD↓（×10⁻²）：
 ## 相关论文
 
 - [Toward a Unified Geometry Understanding: Riemannian Diffusion Framework for Graph Generation and Prediction](toward_a_unified_geometry_understanding_riemannian_diffusion_framework_for_graph.md)
+- [See Further When Clear: Curriculum Consistency Model](../../CVPR2025/image_generation/see_further_when_clear_curriculum_consistency_model.md)
 - [How to Build a Consistency Model: Learning Flow Maps via Self-Distillation](how_to_build_a_consistency_model_learning_flow_maps_via_self-distillation.md)
-- [MotionLCM: Real-time Controllable Motion Generation via Latent Consistency Model](../../ECCV2024/image_generation/motionlcm_real-time_controllable_motion_generation_via_latent_consistency_model.md)
+- [PCM: Picard Consistency Model for Fast Parallel Sampling of Diffusion Models](../../CVPR2025/image_generation/pcm_picard_consistency_model_for_fast_parallel_sampling_of_diffusion_models.md)
 - [SceneDecorator: Towards Scene-Oriented Story Generation with Scene Planning and Scene Consistency](scenedecorator_towards_scene-oriented_story_generation_with_scene_planning_and_s.md)
-- [FreqPolicy: Efficient Flow-based Visuomotor Policy via Frequency Consistency](freqpolicy_efficient_flow-based_visuomotor_policy_via_frequency_consistency.md)
 
 <!-- RELATED:END -->

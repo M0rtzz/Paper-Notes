@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mesh Mamba: A Unified State Space Model for Saliency Prediction in Non-Textured and Textured Meshes
 description: >-
@@ -138,9 +138,9 @@ tags:
 ## 相关论文
 
 - [UST-SSM: Unified Spatio-Temporal State Space Models for Point Cloud Video Modeling](../../ICCV2025/3d_vision/ust-ssm_unified_spatio-temporal_state_space_models_for_point_cloud_video_modelin.md)
+- [PMA: Towards Parameter-Efficient Point Cloud Understanding via Point Mamba Adapter](pma_towards_parameter-efficient_point_cloud_understanding_via_point_mamba_adapte.md)
 - [MeshMamba: State Space Models for Articulated 3D Mesh Generation and Reconstruction](../../ICCV2025/3d_vision/meshmamba_state_space_models_for_articulated_3d_mesh_generation_and_reconstructi.md)
 - [CRM: Single Image to 3D Textured Mesh with Convolutional Reconstruction Model](../../ECCV2024/3d_vision/crm_single_image_to_3d_textured_mesh_with_convolutional_reconstruction_model.md)
 - [Continuous 3D Perception Model with Persistent State](continuous_3d_perception_model_with_persistent_state.md)
-- [Global-Aware Monocular Semantic Scene Completion with State Space Models](../../ICCV2025/3d_vision/global-aware_monocular_semantic_scene_completion_with_state_space_models.md)
 
 <!-- RELATED:END -->

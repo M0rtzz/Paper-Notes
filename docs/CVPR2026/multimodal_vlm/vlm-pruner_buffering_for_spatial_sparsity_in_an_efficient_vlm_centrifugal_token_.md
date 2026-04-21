@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VLM-Pruner: Buffering for Spatial Sparsity in an Efficient VLM Centrifugal Token Pruning Paradigm
 description: >-

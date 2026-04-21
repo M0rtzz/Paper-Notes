@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] L-DiffER: Single Image Reflection Removal with Language-Based Diffusion Model
 description: >-
@@ -135,7 +135,7 @@ L-DiffER 基于预训练的语言引导扩散模型（如 Stable Diffusion）构
 - [NL2Contact: Natural Language Guided 3D Hand-Object Contact Modeling with Diffusion Model](nl2contact_natural_language_guided_3d_hand-object_contact_modeling_with_diffusio.md)
 - [StyleTokenizer: Defining Image Style by a Single Instance for Controlling Diffusion Models](styletokenizer_defining_image_style_by_a_single_instance_for_controlling_diffusi.md)
 - [DCDM: Diffusion-Conditioned-Diffusion Model for Scene Text Image Super-Resolution](dcdm_diffusion-conditioned-diffusion_model_for_scene_text_image_super-resolution.md)
-- [OmniSSR: Zero-shot Omnidirectional Image Super-Resolution using Stable Diffusion Model](omnissr_zero-shot_omnidirectional_image_super-resolution_using_stable_diffusion_.md)
 - [Continuous Diffusion Model for Language Modeling](../../NeurIPS2025/image_generation/continuous_diffusion_model_for_language_modeling.md)
+- [OmniSSR: Zero-shot Omnidirectional Image Super-Resolution using Stable Diffusion Model](omnissr_zero-shot_omnidirectional_image_super-resolution_using_stable_diffusion_.md)
 
 <!-- RELATED:END -->

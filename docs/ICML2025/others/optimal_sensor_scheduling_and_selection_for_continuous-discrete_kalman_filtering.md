@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Optimal Sensor Scheduling and Selection for Continuous-Discrete Kalman Filtering with Auxiliary Dynamics
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Anchor Token Matching: Implicit Structure Locking for Training-free AR Image Editing
 description: >-
@@ -131,8 +131,8 @@ ISLock（Implicit Structure Locking）不依赖显式注意力操纵或微调，
 
 - [Is Less More? Exploring Token Condensation as Training-free Test-time Adaptation](is_less_more_exploring_token_condensation_as_training-free_test-time_adaptation.md)
 - [A Bias-Free Training Paradigm for More General AI-generated Image Detection](../../CVPR2025/object_detection/a_bias-free_training_paradigm_for_more_general_ai-generated_image_detection.md)
-- [Few-Shot Pattern Detection via Template Matching and Regression](few-shot_pattern_detection_via_template_matching_and_regression.md)
 - [Thinking in Latents: Adaptive Anchor Refinement for Implicit Reasoning in LLMs](../../ICLR2026/object_detection/thinking_in_latents_adaptive_anchor_refinement_for_implicit_reasoning_in_llms.md)
+- [Few-Shot Pattern Detection via Template Matching and Regression](few-shot_pattern_detection_via_template_matching_and_regression.md)
 - [Dolphin: Document Image Parsing via Heterogeneous Anchor Prompting](../../ACL2025/object_detection/dolphin_document_image_parsing_via_heterogeneous_anchor_prompting.md)
 
 <!-- RELATED:END -->

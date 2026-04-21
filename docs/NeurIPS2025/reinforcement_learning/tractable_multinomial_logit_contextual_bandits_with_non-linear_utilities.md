@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tractable Multinomial Logit Contextual Bandits with Non-Linear Utilities
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gaze Beyond the Frame: Forecasting Egocentric 3D Visual Span
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Interaction-Merged Motion Planning: Effectively Leveraging Diverse Motion Datasets for Robust Planning
 description: >-
@@ -175,6 +175,6 @@ IMMP 分为两个阶段：
 - [Moto: Latent Motion Token as the Bridging Language for Learning Robot Manipulation from Videos](moto_latent_motion_token_as_the_bridging_language_for_learning_robot_manipulatio.md)
 - [Experience-based Knowledge Correction for Robust Planning in Minecraft](../../ICLR2026/robotics/experience-based_knowledge_correction_for_robust_planning_in_minecraft.md)
 - [Phoenix: A Motion-based Self-Reflection Framework for Fine-grained Robotic Action Correction](../../CVPR2025/robotics/phoenix_a_motion-based_self-reflection_framework_for_fine-grained_robotic_action.md)
-- [Efficient Robotic Policy Learning via Latent Space Backward Planning](../../ICML2025/robotics/efficient_robotic_policy_learning_via_latent_space_backward_planning.md)
+- [MineAnyBuild: Benchmarking Spatial Planning for Open-world AI Agents](../../NeurIPS2025/robotics/mineanybuild_benchmarking_spatial_planning_for_openworld_ai.md)
 
 <!-- RELATED:END -->

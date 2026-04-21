@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Aligning Text to Image in Diffusion Models is Easier Than You Think
 description: >-
@@ -130,8 +130,8 @@ tags:
 ## 相关论文
 
 - [Understand Before You Generate: Self-Guided Training for Autoregressive Image Generation](understand_before_you_generate_self-guided_training_for_autoregressive_image_gen.md)
-- [Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
 - [Easier Painting Than Thinking: Can Text-to-Image Models Set the Stage, but Not Direct the Play?](../../ICLR2026/image_generation/easier_painting_than_thinking_can_text-to-image_models_set_the_stage_but_not_dir.md)
+- [Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
 - [Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models](training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)
 - [Asynchronous Denoising Diffusion Models for Aligning Text-to-Image Generation](../../ICLR2026/image_generation/asynchronous_denoising_diffusion_models_for_aligning_text-to-image_generation.md)
 

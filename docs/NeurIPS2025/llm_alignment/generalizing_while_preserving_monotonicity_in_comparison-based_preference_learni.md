@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generalizing while Preserving Monotonicity in Comparison-based Preference Learning Models
 description: >-

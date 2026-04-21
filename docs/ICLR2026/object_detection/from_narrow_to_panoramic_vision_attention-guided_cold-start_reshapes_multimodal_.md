@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Narrow to Panoramic Vision: Attention-Guided Cold-Start Reshapes Multimodal Reasoning
 description: >-
@@ -113,10 +113,10 @@ tags:
 
 ## 相关论文
 
-- [Long-Context Generalization with Sparse Attention](long-context_generalization_with_sparse_attention.md)
 - [VidGuard-R1: AI-Generated Video Detection and Explanation via Reasoning MLLMs and RL](vidguard-r1_ai-generated_video_detection_and_explanation_via_reasoning_mllms_and.md)
-- [TTF-VLA: Temporal Token Fusion via Pixel-Attention Integration for Vision-Language-Action Models](../../AAAI2026/object_detection/ttf-vla_temporal_token_fusion_via_pixel-attention_integratio.md)
+- [Long-Context Generalization with Sparse Attention](long-context_generalization_with_sparse_attention.md)
 - [Saliency-R1: Enforcing Interpretable and Faithful Vision-language Reasoning via Saliency-map Alignment Reward](../../CVPR2026/object_detection/saliency-r1_enforcing_interpretable_and_faithful_vision-language_reasoning_via_s.md)
+- [TTF-VLA: Temporal Token Fusion via Pixel-Attention Integration for Vision-Language-Action Models](../../AAAI2026/object_detection/ttf-vla_temporal_token_fusion_via_pixel-attention_integratio.md)
 - [CGSA: Class-Guided Slot-Aware Adaptation for Source-Free Object Detection](cgsa_class-guided_slot-aware_adaptation_for_source-free_object_detection.md)
 
 <!-- RELATED:END -->

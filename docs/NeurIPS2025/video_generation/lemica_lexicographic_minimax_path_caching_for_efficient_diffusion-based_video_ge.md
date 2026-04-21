@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] LeMiCa: Lexicographic Minimax Path Caching for Efficient Diffusion-Based Video Generation
 description: >-
-  [NeurIPS 2025][视频理解][扩散模型] 提出 LeMiCa，一种免训练的扩散视频生成加速框架，将缓存调度建模为有向无环图上的字典序极小极大路径优化问题，通过全局误差控制实现速度和质量的双重提升（Latte 上 2.9× 加速，Open-Sora 上 LPIPS 低至 0.05）。
+  [NeurIPS 2025][扩散模型] 提出 LeMiCa，一种免训练的扩散视频生成加速框架，将缓存调度建模为有向无环图上的字典序极小极大路径优化问题，通过全局误差控制实现速度和质量的双重提升（Latte 上 2.9× 加速，Open-Sora 上 LPIPS 低至 0.05）。
 tags:
   - NeurIPS 2025
-  - 视频理解
   - 扩散模型
   - video generation
   - caching
@@ -152,8 +151,8 @@ LeMiCa 在所有模型上一致超越 TeaCache。LeMiCa-slow 在 Open-Sora 上 L
 
 - [VORTA: Efficient Video Diffusion via Routing Sparse Attention](vorta_efficient_video_diffusion_via_routing_sparse_attention.md)
 - [PreciseCache: Precise Feature Caching for Efficient and High-fidelity Video Generation](../../ICLR2026/video_generation/precisecache_precise_feature_caching_for_efficient_and_high-fidelity_video_gener.md)
-- [Training-Free Efficient Video Generation via Dynamic Token Carving (Jenga)](training-free_efficient_video_generation_via_dynamic_token_carving.md)
-- [Force Prompting: Video Generation Models Can Learn and Generalize Physics-based Control Signals](force_prompting_video_generation_models_can_learn_and_generalize_physics-based_c.md)
 - [Ca2-VDM: Efficient Autoregressive Video Diffusion Model with Causal Generation and Cache Sharing](../../ICML2025/video_generation/ca2-vdm_efficient_autoregressive_video_diffusion_model_with_causal_generation_an.md)
+- [V.I.P.: Iterative Online Preference Distillation for Efficient Video Diffusion Models](../../ICCV2025/video_generation/vip_iterative_online_preference_distillation_for_efficient_video_diffusion_model.md)
+- [LeanVAE: An Ultra-Efficient Reconstruction VAE for Video Diffusion Models](../../ICCV2025/video_generation/leanvae_an_ultra-efficient_reconstruction_vae_for_video_diffusion_models.md)
 
 <!-- RELATED:END -->

@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Grounding 3D Object Affordance with Language Instructions, Visual Observations and Interactions
 description: >-
-  [CVPR 2025][3D affordance] 提出 LMAffordance3D 框架和 AGPIL 数据集，通过视觉-语言模型融合 2D 图像、3D 点云和语言指令实现多模态、多视角的 3D 物体功能区域定位。
+  [CVPR 2025][3D视觉][3D affordance grounding] 提出首个多模态多视角 3D 功能区域定位任务和 AGPIL 数据集（30,972 对点云-图像-语言三元组），并设计基于 VLM 的 LMAffordance3D 框架，融合 2D/3D 空间特征与语言语义实现从 full-view 到 partial/rotation-view 的泛化。
 tags:
   - CVPR 2025
-  - 3D affordance
+  - 3D视觉
+  - 3D affordance grounding
+  - 多模态
   - 点云
-  - 视觉语言模型
-  - 多模态融合
-  - 具身智能
+  - VLM
+  - embodied intelligence
 ---
 
 # Grounding 3D Object Affordance with Language Instructions, Visual Observations and Interactions
@@ -129,8 +130,8 @@ Unseen 设定下优势更明显：Full-view AUC 0.774 vs PointRefer 0.755，MAE 
 
 - [GREAT: Geometry-Intention Collaborative Inference for Open-Vocabulary 3D Object Affordance Grounding](great_geometry-intention_collaborative_inference_for_open-vocabulary_3d_object_a.md)
 - [HOI3DGen: Generating High-Quality Human-Object-Interactions in 3D](hoi3dgen_generating_high-quality_human-object-interactions_in_3d.md)
-- [Empowering Large Language Models with 3D Situation Awareness](empowering_large_language_models_with_3d_situation_awareness.md)
-- [IAAO: Interactive Affordance Learning for Articulated Objects in 3D Environments](iaao_interactive_affordance_learning_for_articulated_objects_in_3d_environments.md)
-- [GEAL: Generalizable 3D Affordance Learning with Cross-Modal Consistency](geal_generalizable_3d_affordance_learning_with_cross-modal_consistency.md)
+- [Text-Guided Sparse Voxel Pruning for Efficient 3D Visual Grounding](text-guided_sparse_voxel_pruning_for_efficient_3d_visual_grounding.md)
+- [Reconstructing In-the-Wild Open-Vocabulary Human-Object Interactions](reconstructing_in-the-wild_open-vocabulary_human-object_interactions.md)
+- [SeeGround: See and Ground for Zero-Shot Open-Vocabulary 3D Visual Grounding](seeground_see_and_ground_for_zero-shot_open-vocabulary_3d_visual_grounding.md)
 
 <!-- RELATED:END -->

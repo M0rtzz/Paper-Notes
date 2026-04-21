@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Listen Like a Teacher: Mitigating Whisper Hallucinations using Adaptive Layer Attention and Knowledge Distillation
 description: >-

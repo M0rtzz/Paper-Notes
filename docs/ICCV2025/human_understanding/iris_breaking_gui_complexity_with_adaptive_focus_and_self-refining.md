@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Iris: Breaking GUI Complexity with Adaptive Focus and Self-Refining
 description: >-

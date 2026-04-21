@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rectifying Shortcut Behaviors in Preference-based Reward Learning
 description: >-

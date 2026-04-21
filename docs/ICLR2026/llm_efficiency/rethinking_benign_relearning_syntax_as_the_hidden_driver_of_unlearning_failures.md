@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking Benign Relearning: Syntax as the Hidden Driver of Unlearning Failures
 description: >-
@@ -120,9 +120,9 @@ tags:
 ## 相关论文
 
 - [Rethinking Uncertainty Estimation in LLMs: A Principled Single-Sequence Measure](rethinking_uncertainty_estimation_in_llms_a_principled_single-sequence_measure.md)
-- [Harnessing the Unseen: The Hidden Influence of Intrinsic Knowledge in Long-Context Language Models](../../AAAI2026/llm_efficiency/harnessing_the_unseen_the_hidden_influence_of_intrinsic_knowledge_in_long-contex.md)
-- [Not All Splits Are Equal: Rethinking Attribute Generalization Across Unrelated Categories](../../NeurIPS2025/llm_efficiency/not_all_splits_are_equal_rethinking_attribute_generalization_across_unrelated_ca.md)
 - [Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models](understanding_and_improving_length_generalization_in_hierarchical_sparse_attenti.md)
-- [SwingArena: Adversarial Programming Arena for Long-context GitHub Issue Solving](swingarena_competitive_programming_arena_for_long-context_github_issue_solving.md)
+- [Universe Routing: Why Self-Evolving Agents Need Epistemic Control](universe_routing_why_self-evolving_agents_need_epistemic_control.md)
+- [TokenSeek: Memory Efficient Fine Tuning via Instance-Aware Token Selection](tokenseek_memory_efficient_fine_tuning_via_instance-aware_token_selection.md)
+- [Fast Catch-Up, Late Switching: Optimal Batch Size Scheduling via Functional Scaling Laws](fast_catch-up_late_switching_optimal_batch_size_scheduling_via_functional_scalin.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Distillation of Discrete Diffusion through Dimensional Correlations (Di4C)
 description: >-

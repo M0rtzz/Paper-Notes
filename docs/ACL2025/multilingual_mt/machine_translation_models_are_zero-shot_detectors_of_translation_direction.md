@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Machine Translation Models are Zero-Shot Detectors of Translation Direction
 description: >-
@@ -164,6 +164,6 @@ $B=0$ 表示无偏差，$B=1$ 表示完全偏向一个方向。
 - [Trans-Zero: Self-Play Incentivizes Large Language Models for Multilingual Translation](trans-zero_self-play_incentivizes_large_language_models_for_multilingual_transla.md)
 - [A Case Study of Cross-Lingual Zero-Shot Generalization for Classical Languages in LLMs](a_case_study_of_cross-lingual_zero-shot_generalization_for_classical_languages_i.md)
 - [Exploring In-context Example Generation for Machine Translation](exploring_in-context_example_generation_for_machine_translation.md)
-- [Exploring In-Image Machine Translation with Real-World Background](exploring_in-image_machine_translation_with_real-world_background.md)
+- [Has Machine Translation Evaluation Achieved Human Parity?](mt_eval_human_parity.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Training Dynamics Underlying Language Model Scaling Laws: Loss Deceleration and Zero-Sum Learning
 description: >-

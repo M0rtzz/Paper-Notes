@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GaussReg: Fast 3D Registration with Gaussian Splatting
 description: >-

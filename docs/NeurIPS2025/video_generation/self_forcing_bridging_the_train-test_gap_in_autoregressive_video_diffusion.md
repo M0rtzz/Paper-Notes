@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] Self Forcing: Bridging the Train-Test Gap in Autoregressive Video Diffusion
 description: >-
-  [NeurIPS 2025][图像生成][自回归视频生成] 提出 Self Forcing 训练范式，通过在训练时执行自回归自展开（self-rollout）并使用整体视频级分布匹配损失（DMD/SiD/GAN），消除了 Teacher Forcing 和 Diffusion Forcing 中训练-推理分布不匹配导致的暴露偏差问题，基于 Wan2.1-1.3B 实现了单 GPU 上 17 FPS 实时流式视频生成，同时质量匹敌甚至超越慢几十倍的双向扩散模型。
+  [NeurIPS 2025][自回归视频生成] 提出 Self Forcing 训练范式，通过在训练时执行自回归自展开（self-rollout）并使用整体视频级分布匹配损失（DMD/SiD/GAN），消除了 Teacher Forcing 和 Diffusion Forcing 中训练-推理分布不匹配导致的暴露偏差问题，基于 Wan2.1-1.3B 实现了单 GPU 上 17 FPS 实时流式视频生成，同时质量匹敌甚至超越慢几十倍的双向扩散模型。
 tags:
   - NeurIPS 2025
-  - 图像生成
   - 自回归视频生成
   - 暴露偏差
   - 分布匹配
@@ -129,10 +128,10 @@ Self Forcing 在 VBench 上超越了初始化权重 Wan2.1（一个速度慢 150
 
 ## 相关论文
 
-- [FreeInit: Bridging Initialization Gap in Video Diffusion Models](../../ECCV2024/video_generation/freeinit_bridging_initialization_gap_in_video_diffusion_models.md)
-- [Infinity-RoPE: Action-Controllable Infinite Video Generation Emerges From Autoregressive Self-Rollout](../../CVPR2026/video_generation/infinity-rope_action-controllable_infinite_video_generation_emerges_from_autoreg.md)
+- [FreeInit: Bridging Initialization Gap in Video Diffusion Models](../../ECCV2024/video_generation/freeinit_bridging_initialization_gap_in_video_diffusion.md)
+- [Taming Teacher Forcing for Masked Autoregressive Video Generation](../../CVPR2025/video_generation/taming_teacher_forcing_for_masked_autoregressive_video_generation.md)
 - [From Slow Bidirectional to Fast Autoregressive Video Diffusion Models](../../CVPR2025/video_generation/from_slow_bidirectional_to_fast_autoregressive_video_diffusion_models.md)
-- [VSA: Faster Video Diffusion with Trainable Sparse Attention](vsa_faster_video_diffusion_with_trainable_sparse_attention.md)
-- [Autoregressive Adversarial Post-Training for Real-Time Interactive Video Generation](autoregressive_adversarial_posttraining_for_realtime_interac.md)
+- [Infinity-RoPE: Action-Controllable Infinite Video Generation Emerges From Autoregressive Self-Rollout](../../CVPR2026/video_generation/infinity-rope_action-controllable_infinite_video_generation_emerges_from_autoreg.md)
+- [One-Minute Video Generation with Test-Time Training](../../CVPR2025/video_generation/one-minute_video_generation_with_test-time_training.md)
 
 <!-- RELATED:END -->

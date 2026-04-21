@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ProofSketch: Efficient Verified Reasoning for Large Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Deep Hierarchical Learning with Nested Subspace Networks for Large Language Models
 description: >-
@@ -130,9 +130,9 @@ tags:
 ## 相关论文
 
 - [Tracing Pharmacological Knowledge in Large Language Models](tracing_pharmacological_knowledge_in_large_language_models.md)
+- [Knowledgeable Language Models as Black-Box Optimizers for Personalized Medicine](knowledgeable_language_models_as_black-box_optimizers_for_personalized_medicine.md)
 - [Position: Thematic Analysis of Unstructured Clinical Transcripts with Large Language Models](../../NeurIPS2025/medical_imaging/position_thematic_analysis_of_unstructured_clinical_transcripts_with_large_langu.md)
 - [Coarse-to-Fine Open-Set Graph Node Classification with Large Language Models](../../AAAI2026/medical_imaging/coarse-to-fine_open-set_graph_node_classification_with_large_language_models.md)
-- [Knowledgeable Language Models as Black-Box Optimizers for Personalized Medicine](knowledgeable_language_models_as_black-box_optimizers_for_personalized_medicine.md)
 - [Controlling Repetition in Protein Language Models](controlling_repetition_in_protein_language_models.md)
 
 <!-- RELATED:END -->

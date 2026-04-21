@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stake the Points: Structure-Faithful Instance Unlearning
 description: >-
@@ -150,8 +150,8 @@ Structguard 是首个同时满足"无需保留集"和"结构保持"的实例级�
 
 - [Adaptive Auxiliary Prompt Blending for Target-Faithful Diffusion Generation](adaptive_auxiliary_prompt_blending_for_target-faithful_diffusion_generation.md)
 - [SDF-Net: Structure-Aware Disentangled Feature Learning for Optical–SAR Ship Re-Identification](sdf-net_structure-aware_disentangled_feature_learning_for_opticall-sar_ship_re-i.md)
-- [Mining Instance-Centric Vision-Language Contexts for Human-Object Interaction Detection](mining_instance-centric_vision-language_contexts_for_human-object_interaction_de.md)
 - [Toward Faithful Retrieval-Augmented Generation with Sparse Autoencoders](../../ICLR2026/object_detection/toward_faithful_retrieval-augmented_generation_with_sparse_autoencoders.md)
+- [Mining Instance-Centric Vision-Language Contexts for Human-Object Interaction Detection](mining_instance-centric_vision-language_contexts_for_human-object_interaction_de.md)
 - [Saliency-R1: Enforcing Interpretable and Faithful Vision-language Reasoning via Saliency-map Alignment Reward](saliency-r1_enforcing_interpretable_and_faithful_vision-language_reasoning_via_s.md)
 
 <!-- RELATED:END -->

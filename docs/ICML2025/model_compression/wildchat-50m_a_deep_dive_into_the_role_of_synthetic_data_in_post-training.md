@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WildChat-50m: A Deep Dive Into the Role of Synthetic Data in Post-Training
 description: >-

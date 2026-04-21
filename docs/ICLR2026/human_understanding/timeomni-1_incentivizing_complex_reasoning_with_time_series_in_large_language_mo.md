@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TimeOmni-1: Incentivizing Complex Reasoning with Time Series in Large Language Models
 description: >-

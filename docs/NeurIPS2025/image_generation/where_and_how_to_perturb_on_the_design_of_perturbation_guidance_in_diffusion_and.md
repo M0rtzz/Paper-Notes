@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Where and How to Perturb: On the Design of Perturbation Guidance in Diffusion and Flow Models
 description: >-
@@ -128,7 +128,7 @@ Classifier-Free Guidance (CFG) 是扩散模型生成质量的关键，但有两�
 - [Token Perturbation Guidance for Diffusion Models](token_perturbation_guidance_for_diffusion_models.md)
 - [Entropy Rectifying Guidance for Diffusion and Flow Models](entropy_rectifying_guidance_for_diffusion_and_flow_models.md)
 - [Perturb a Model, Not an Image: Towards Robust Privacy Protection via Anti-Personalized Diffusion Models](perturb_a_model_not_an_image_towards_robust_privacy_protection_via_anti-personal.md)
-- [Value Gradient Guidance for Flow Matching Alignment](value_gradient_guidance_for_flow_matching_alignment.md)
 - [How to Build a Consistency Model: Learning Flow Maps via Self-Distillation](how_to_build_a_consistency_model_learning_flow_maps_via_self-distillation.md)
+- [Value Gradient Guidance for Flow Matching Alignment](value_gradient_guidance_for_flow_matching_alignment.md)
 
 <!-- RELATED:END -->

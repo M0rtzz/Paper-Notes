@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video
 description: >-

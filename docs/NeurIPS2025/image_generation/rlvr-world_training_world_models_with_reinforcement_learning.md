@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RLVR-World: Training World Models with Reinforcement Learning
 description: >-

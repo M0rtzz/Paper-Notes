@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdaptiveAD: Decoupling Scene Perception and Ego Status for End-to-End Autonomous Driving
 description: >-

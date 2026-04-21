@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dataset Distillation with Neural Characteristic Function: A Minmax Perspective
 description: >-

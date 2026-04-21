@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Personalization of Quantized Diffusion Model without Backpropagation (ZOODiP)
 description: >-
@@ -135,6 +135,6 @@ ZOODiP 基于 Textual Inversion 框架：输入是少量参考图片和包含新
 - [CleanDIFT: Diffusion Features without Noise](cleandift_diffusion_features_without_noise.md)
 - [Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
 - [Data-Free Group-Wise Fully Quantized Winograd Convolution via Learnable Scales](data-free_group-wise_fully_quantized_winograd_convolution_via_learnable_scales.md)
-- [Hierarchical Flow Diffusion for Efficient Frame Interpolation](hierarchical_flow_diffusion_for_efficient_frame_interpolation.md)
+- [MLLM-as-a-Judge for Image Safety without Human Labeling](mllm-as-a-judge_for_image_safety_without_human_labeling.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the Reliability of Large Language Models for Causal Discovery
 description: >-
@@ -112,10 +112,10 @@ tags:
 
 ## 相关论文
 
-- [Alignment of Large Language Models with Constrained Learning](../../NeurIPS2025/causal_inference/alignment_of_large_language_models_with_constrained_learning.md)
 - [Revealing Multimodal Causality with Large Language Models](../../NeurIPS2025/causal_inference/revealing_multimodal_causality_with_large_language_models.md)
 - [Counterfactual Reasoning for Steerable Pluralistic Value Alignment of Large Language Models](../../NeurIPS2025/causal_inference/counterfactual_reasoning_for_steerable_pluralistic_value_alignment_of_large_lang.md)
 - [Hallucinate Less by Thinking More: Aspect-Based Causal Abstention for Large Language Models](../../AAAI2026/causal_inference/hallucinate_less_by_thinking_more_aspect-based_causal_absten.md)
 - [IRIS: An Iterative and Integrated Framework for Verifiable Causal Discovery](iris_an_iterative_and_integrated_framework.md)
+- [Causal Discovery of Latent Variables in Galactic Archaeology](../../ICML2025/causal_inference/causal_discovery_of_latent_variables_in_galactic_archaeology.md)
 
 <!-- RELATED:END -->

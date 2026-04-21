@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers
 description: >-

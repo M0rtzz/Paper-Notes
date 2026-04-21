@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoIR: A Comprehensive Benchmark for Code Information Retrieval Models
 description: >-

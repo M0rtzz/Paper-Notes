@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cross-Document Contextual Coreference Resolution in Knowledge Graphs
 description: >-
@@ -166,6 +166,6 @@ $$\mathbf{h}_i^{(t+1)} = \sum_{v_j \in \mathcal{N}(v_i)} \mathbf{W} \cdot \mathb
 - [Extending Complex Logical Queries on Uncertain Knowledge Graphs](extending_complex_logical_queries_uncertain_knowledge_graphs.md)
 - [SimGRAG: Leveraging Similar Subgraphs for Knowledge Graphs Driven Retrieval-Augmented Generation](simgrag_leveraging_similar_subgraphs_for_knowledge_graphs_driven_retrieval-augme.md)
 - [Can Knowledge Graphs Make Large Language Models More Trustworthy? An Empirical Study Over Open-ended Question Answering](kg_llm_trustworthy_qa.md)
-- [Deliberation on Priors: Trustworthy Reasoning of LLMs on Knowledge Graphs](../../NeurIPS2025/graph_learning/deliberation_on_priors_trustworthy_reasoning_of_large_language_models_on_knowled.md)
+- [Deliberation on Priors: Trustworthy Reasoning of Large Language Models on Knowledge Graphs](../../NeurIPS2025/graph_learning/deliberation_on_priors_trustworthy_reasoning_of_large_language_models_on_knowled.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GaussianGrow: Geometry-aware Gaussian Growing from 3D Point Clouds with Text Guidance
 description: >-
@@ -125,6 +125,6 @@ tags:
 - [Egocentric Action-aware Inertial Localization in Point Clouds with Vision-Language Guidance](../../ICCV2025/3d_vision/egocentric_action-aware_inertial_localization_in_point_clouds_with_vision-langua.md)
 - [GS-CLIP: Zero-shot 3D Anomaly Detection by Geometry-Aware Prompt and Synergistic View Representation Learning](gs-clip_zero-shot_3d_anomaly_detection_by_geometry-aware_prompt_and_synergistic_.md)
 - [Motion-Aware Animatable Gaussian Avatars Deblurring](motion-aware_animatable_gaussian_avatars_deblurring.md)
-- [GGPT: Geometry-Grounded Point Transformer](ggpt_geometry_grounded_point_transformer.md)
+- [Cross-Instance Gaussian Splatting Registration via Geometry-Aware Feature-Guided Alignment](cross-instance_gaussian_splatting_registration_via_geometry-aware_feature-guided.md)
 
 <!-- RELATED:END -->

@@ -2,9 +2,15 @@
 title: >-
   [论文解读] Detecting Referring Expressions in Visually Grounded Dialogue with Autoregressive Language Models
 description: >-
-  [LLM/NLP] 本文将视觉对话中的指称表达检测建模为自回归 token 预测任务，通过对 Llama 3.1-8B 进行参数高效微调 (QLoRA)，证明仅使用文本上下文即可有效检测视觉对话中的 mention span，在 AGOS 和 PhotoBook 数据集上 F1 达 0.90 和 0.94。
+  [ACL 2025][LLM/NLP][mention detection] 本文将视觉对话中的指称表达检测建模为自回归 token 预测任务，通过对 Llama 3.1-8B 进行参数高效微调 (QLoRA)，证明仅使用文本上下文即可有效检测视觉对话中的 mention span，在 AGOS 和 PhotoBook 数据集上 F1 达 0.90 和 0.94。
 tags:
+  - ACL 2025
   - LLM/NLP
+  - mention detection
+  - referring expressions
+  - visually grounded dialogue
+  - 自回归语言模型
+  - 参数高效微调
 ---
 
 # Detecting Referring Expressions in Visually Grounded Dialogue with Autoregressive Language Models
@@ -115,10 +121,10 @@ tags:
 
 ## 相关论文
 
-- [Classifying Unreliable Narrators with Large Language Models](classifying_unreliable_narrators.md)
-- [SConU: Selective Conformal Uncertainty in Large Language Models](sconu_selective_conformal_uncertainty_in_large_language_models.md)
-- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
-- [DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models](difflm_controllable_synthetic_data_generation_via_diffusion_language_models.md)
-- [Large Language Models for Predictive Analysis: How Far Are They?](large_language_models_for_predictive_analysis_how_far_are_they.md)
+- [Beyond Dialogue: A Profile-Dialogue Alignment Framework Towards General Role-Playing Language Model](beyond_dialogue_a_profile-dialogue_alignment_framework_towards_general_role-play.md)
+- [Deontological Keyword Bias: The Impact of Modal Expressions on Normative Judgments of Language Models](deontological_keyword_bias.md)
+- [Towards Geo-Culturally Grounded LLM Generations](geocultural_grounded_llm.md)
+- [B-score: Detecting biases in large language models using response history](../../ICML2025/llm_nlp/b-score_detecting_biases_in_large_language_models_using_response_history.md)
+- [LLM-Powered Test Case Generation for Detecting Bugs in Plausible Programs](llm_test_case_gen_bugs.md)
 
 <!-- RELATED:END -->

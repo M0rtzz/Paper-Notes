@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SynapticRAG: Enhancing Temporal Memory Retrieval in Large Language Models through Synaptic Mechanisms
 description: >-

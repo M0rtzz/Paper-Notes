@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Connection Between Score Matching and Local Intrinsic Dimension
 description: >-

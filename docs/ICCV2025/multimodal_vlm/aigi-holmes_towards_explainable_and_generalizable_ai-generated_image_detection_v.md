@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AIGI-Holmes: Towards Explainable and Generalizable AI-Generated Image Detection via Multimodal Large Language Models
 description: >-

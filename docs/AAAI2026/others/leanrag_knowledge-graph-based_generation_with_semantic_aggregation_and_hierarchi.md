@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LeanRAG: Knowledge-Graph-Based Generation with Semantic Aggregation and Hierarchical Retrieval
 description: >-

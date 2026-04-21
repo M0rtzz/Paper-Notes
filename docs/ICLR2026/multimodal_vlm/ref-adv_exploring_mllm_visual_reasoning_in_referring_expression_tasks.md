@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Ref-Adv: Exploring MLLM Visual Reasoning in Referring Expression Tasks
 description: >-
@@ -170,7 +170,7 @@ Ref-Adv 在表达式长度、词汇多样性、否定推理比例上全面超越
 - [CodeDance: A Dynamic Tool-integrated MLLM for Executable Visual Reasoning](../../CVPR2026/multimodal_vlm/codedance_a_dynamic_tool-integrated_mllm_for_executable_visual_reasoning.md)
 - [DOGR: Towards Versatile Visual Document Grounding and Referring](../../ICCV2025/multimodal_vlm/dogr_towards_versatile_visual_document_grounding_and_referring.md)
 - [Downscaling Intelligence: Exploring Perception and Reasoning Bottlenecks in Small VLMs](../../CVPR2026/multimodal_vlm/downscaling_intelligence_exploring_perception_and_reasoning_bottlenecks_in_small.md)
+- [RoboRefer: Towards Spatial Referring with Reasoning in Vision-Language Models for Robotics](../../NeurIPS2025/multimodal_vlm/roborefer_towards_spatial_referring_with_reasoning_in_vision-language_models_for.md)
 - [Insight-V: Exploring Long-Chain Visual Reasoning with Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/insight-v_exploring_long-chain_visual_reasoning_with_multimodal_large_language_m.md)
-- [Through the Lens of Contrast: Self-Improving Visual Reasoning in VLMs](through_the_lens_of_contrast_self-improving_visual_reasoning_in_vlms.md)
 
 <!-- RELATED:END -->

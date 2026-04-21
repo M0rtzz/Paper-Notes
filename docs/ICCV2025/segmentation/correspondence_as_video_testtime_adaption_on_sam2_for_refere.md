@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Correspondence as Video: Test-Time Adaption on SAM2 for Reference Segmentation in the Wild
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DepthCrafter: Generating Consistent Long Depth Sequences for Open-world Videos
 description: >-
@@ -133,10 +133,10 @@ DepthCrafter 是一个条件扩散模型，建模 $p(\mathbf{d}|\mathbf{v})$，�
 
 ## 相关论文
 
+- [Video Depth Anything: Consistent Depth Estimation for Super-Long Videos](video_depth_anything_consistent_depth_estimation_for_super-long_videos.md)
 - [Generating 3D-Consistent Videos from Unposed Internet Photos](generating_3d-consistent_videos_from_unposed_internet_photos.md)
+- [Open-World Amodal Appearance Completion](open-world_amodal_appearance_completion.md)
 - [Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)
 - [HaWoR: World-Space Hand Motion Reconstruction from Egocentric Videos](hawor_world-space_hand_motion_reconstruction_from_egocentric_videos.md)
-- [EA3D: Online Open-World 3D Object Extraction from Streaming Videos](../../NeurIPS2025/3d_vision/ea3d_online_open-world_3d_object_extraction_from_streaming_videos.md)
-- [Material Anything: Generating Materials for Any 3D Object via Diffusion](material_anything_generating_materials_for_any_3d_object_via_diffusion.md)
 
 <!-- RELATED:END -->

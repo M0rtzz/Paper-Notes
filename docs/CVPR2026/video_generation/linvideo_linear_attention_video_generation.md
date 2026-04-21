@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] LinVideo: A Post-Training Framework towards O(n) Attention in Efficient Video Generation
 description: >-
-  [CVPR 2026][图像生成][视频扩散模型] 首个data-free后训练框架LinVideo，通过选择性转移自动选择最适合替换为线性注意力的层+任意时刻分布匹配(ADM)目标函数高效恢复性能，实现Wan 1.3B/14B的1.43-1.71×加速且质量无损，叠加4步蒸馏后达15.9-20.9×加速。
+  [CVPR 2026][视频扩散模型] 首个data-free后训练框架LinVideo，通过选择性转移自动选择最适合替换为线性注意力的层+任意时刻分布匹配(ADM)目标函数高效恢复性能，实现Wan 1.3B/14B的1.43-1.71×加速且质量无损，叠加4步蒸馏后达15.9-20.9×加速。
 tags:
   - CVPR 2026
-  - 图像生成
   - 视频扩散模型
   - 线性注意力
   - 后训练
@@ -104,9 +103,9 @@ CogVideoX-2B：同样无损加速1.40×（41.35→29.64s），VBench持平。
 ## 相关论文
 
 - [SwitchCraft: Training-Free Multi-Event Video Generation with Attention Controls](switchcraft_training-free_multi-event_video_generation_with_attention_controls.md)
-- [When to Lock Attention: Training-Free KV Control in Video Diffusion](when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
-- [FastLightGen: Fast and Light Video Generation with Fewer Steps and Parameters](fastlightgen_fast_and_light_video_generation_with_fewer_steps_and_parameters.md)
+- [Physical Simulator In-the-Loop Video Generation](physical_simulator_in-the-loop_video_generation.md)
 - [Diff4Splat: Repurposing Video Diffusion Models for Dynamic Scene Generation](diff4splat_controllable_4d_scene_generation_with_latent_dynamic_reconstruction_m.md)
+- [FastLightGen: Fast and Light Video Generation with Fewer Steps and Parameters](fastlightgen_fast_and_light_video_generation_with_fewer_steps_and_parameters.md)
 - [Anti-I2V: Safeguarding your photos from malicious image-to-video generation](anti-i2v_safeguarding_your_photos_from_malicious_image-to-video_generation.md)
 
 <!-- RELATED:END -->

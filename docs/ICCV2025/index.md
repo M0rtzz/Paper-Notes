@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICCV2025 1313篇论文解读
+  ICCV2025 1321篇论文解读
 description: >-
-  1313篇ICCV2025论文深度解读，每篇5分钟读懂核心思想，含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  1321篇ICCV2025论文深度解读，每篇5分钟读懂核心思想，含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📹 ICCV2025 论文笔记
 
-**1313** 篇论文解读，覆盖 **41** 个领域。
+**1321** 篇论文解读，覆盖 **41** 个领域。
 
 <div class="conf-index" markdown>
 
@@ -244,6 +244,10 @@ description: >-
 
 :   提出DM-Calib——基于扩散模型的单目相机内参估计方法：设计Camera Image表示（将内参无损编码为3通道图像=方位角+仰角+灰度图），微调Stable Diffusion生成Camera Image，用RANSAC提取内参，在5个零样本数据集上超越所有基线，并将相机标定扩展到度量深度估计、位姿估计和稀疏视角3D重建。
 
+**[Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction](3d_vision/boosting_multi-view_indoor_3d_object_detection_via_adaptive_3d_volume.md)**
+
+:   提出SGCDet框架，通过几何与上下文感知聚合模块（自适应特征提升）和稀疏体素构建策略（粗到细的自适应体素选择），在不依赖GT场景几何的前提下，实现了高效且高精度的多视图室内3D目标检测。
+
 **[SGCDet: Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction](3d_vision/boosting_multi-view_indoor_3d_object_detection_via_adaptive_3d_volume_constructi.md)**
 
 :   SGCDet 通过自适应稀疏3D体素构建和几何-上下文感知聚合，实现了高效精准的多视图室内3D目标检测，无需真实几何监督即超越现有方法。
@@ -268,6 +272,10 @@ description: >-
 
 :   提出 BoxDreamer，以 3D 包围盒角点作为中间表示，通过基于参考视角的点合成器预测查询图像中的 2D 角点投影，建立 2D-3D 对应关系后用 PnP 算法恢复物体位姿，在稀疏视角和严重遮挡场景下显著优于现有方法。
 
+**[Bridging 3D Anomaly Localization and Repair via High-Quality Continuous Geometric Representation](3d_vision/bridging_3d_anomaly_localization_and_repair_via_high-qualit.md)**
+
+:   提出 PASDF 框架，通过姿态感知的签名距离函数（SDF）实现连续几何表征，统一了3D异常检测与修复任务，在 Real3D-AD 和 Anomaly-ShapeNet 上取得 SOTA。
+
 **[Bridging 3D Anomaly Localization and Repair via High-Quality Continuous Geometric Representation](3d_vision/bridging_3d_anomaly_localization_and_repair_via_high-quality_continuous_geometri.md)**
 
 :   提出 PASDF 框架，通过姿态感知的签名距离函数（SDF）实现连续几何表征，统一了3D异常检测与修复任务，在 Real3D-AD 和 Anomaly-ShapeNet 上取得 SOTA。
@@ -275,10 +283,6 @@ description: >-
 **[PASDF: Bridging 3D Anomaly Localization and Repair via High-Quality Continuous Geometric Representation](3d_vision/bridging_3d_anomaly_localization_and_repair_via_highquality.md)**
 
 :   提出PASDF框架，通过姿态对齐模块(PAM)将点云对齐到标准姿态 + 神经SDF网络学习连续几何表示 + 基于SDF偏差的异常评分，统一实现3D点云异常检测与异常修复(Marching Cubes提取零等值面作为修复模板)，在Real3D-AD上O-AUROC 80.2%、Anomaly-ShapeNet上90.0%均达SOTA。
-
-**[3DSR: Bridging Diffusion Models and 3D Representations for 3D Consistent Super-Resolution](3d_vision/bridging_diffusion_models_and_3d_representations_a_3d_consis.md)**
-
-:   提出3DSR——将扩散超分模型与3DGS表示交替迭代实现3D一致超分：每步去噪后将SR图像训练到3DGS中获得3D一致渲染→重编码回潜在空间引导下一步去噪，无需微调任何模型即显式保证跨视角一致性，在LLFF上PSNR提升1.16dB+FID降低50%(vs StableSR)。
 
 **[Bridging Diffusion Models and 3D Representations: A 3D Consistent Super-Resolution Framework](3d_vision/bridging_diffusion_models_and_3d_representations_a_3d_consistent_super-resolutio.md)**
 
@@ -375,6 +379,10 @@ description: >-
 **[CutS3D: Cutting Semantics in 3D for 2D Unsupervised Instance Segmentation](3d_vision/cuts3d_cutting_semantics_in_3d_for_2d_unsupervised_instance_segmentation.md)**
 
 :   提出CutS3D方法，首次将3D信息（单目深度估计）引入无监督实例分割，通过在3D点云中切割语义区域来分离2D中重叠的实例，并引入空间置信度机制提升伪标签质量，在多个基准上超越CutLER等SoTA。
+
+**[DAP-MAE: Domain-Adaptive Point Cloud Masked Autoencoder for Effective Cross-Domain Learning](3d_vision/dap-mae_domain-adaptive_point_cloud_masked_autoencoder_for_e.md)**
+
+:   提出 DAP-MAE，通过异构域适配器（HDA）和域特征生成器（DFG）协同学习多域点云数据，仅需一次预训练即可适配物体分类、表情识别、部件分割和3D检测等多种下游任务。
 
 **[DAP-MAE: Domain-Adaptive Point Cloud Masked Autoencoder for Effective Cross-Domain Learning](3d_vision/dap-mae_domain-adaptive_point_cloud_masked_autoencoder_for_effective_cross-domai.md)**
 
@@ -679,10 +687,6 @@ description: >-
 **[Learning 3D Scene Analogies with Neural Contextual Scene Maps](3d_vision/learning_3d_scene_analogies_with_neural_contextual_scene_maps.md)**
 
 :   提出3D场景类比任务，通过神经上下文场景映射（neural contextual scene maps）在共享相似语义上下文的场景区域间建立稠密三维映射，支持轨迹迁移与物体放置迁移等下游应用。
-
-**[TesserAct: Learning 4D Embodied World Models](3d_vision/learning_4d_embodied_world_models.md)**
-
-:   提出 TesserAct——一种 4D 具身世界模型，通过训练视频生成模型联合预测 RGB、深度和法线视频，再转换为高质量 4D 场景，实现空间-时间一致的 3D 世界动态模拟和机器人动作规划。
 
 **[Learning Robust Stereo Matching in the Wild with Selective Mixture-of-Experts](3d_vision/learning_robust_stereo_matching_in_the_wild_with_selective_mixture-of-experts.md)**
 
@@ -1220,7 +1224,15 @@ description: >-
 
 :   提出BCD（Bitrate-Controlled Diffusion），一种通用的自监督视频解耦框架，通过低码率矢量量化作为信息瓶颈来分离视频中的逐帧运动特征和全局内容特征，并以条件扩散模型重建视频，在说话人头部视频和像素风格卡通数据集上展示了高质量的运动迁移和自回归视频生成能力。
 
+**[3DSR: Bridging Diffusion Models and 3D Representations for 3D Consistent Super-Resolution](image_generation/bridging_diffusion_models_and_3d_representations_a_3d_consis.md)**
+
+:   提出3DSR——将扩散超分模型与3DGS表示交替迭代实现3D一致超分：每步去噪后将SR图像训练到3DGS中获得3D一致渲染→重编码回潜在空间引导下一步去噪，无需微调任何模型即显式保证跨视角一致性，在LLFF上PSNR提升1.16dB+FID降低50%(vs StableSR)。
+
 **[Bridging the Skeleton-Text Modality Gap: Diffusion-Powered Modality Alignment for Zero-shot Skeleton-based Action Recognition](image_generation/bridging_the_skeleton-text_modality_gap_diffusion-powered_modality_alignment_for.md)**
+
+:   提出TDSM（Triplet Diffusion for Skeleton-Text Matching），首次将扩散模型应用于零样本骨骼动作识别，通过反向扩散过程实现骨骼特征与文本prompt的隐式对齐，并引入triplet diffusion损失增强判别力，在NTU-60/120和PKU-MMD上大幅超越SOTA（2.36%到13.05%的提升幅度）。
+
+**[Bridging the Skeleton-Text Modality Gap: Diffusion-Powered Modality Alignment for Zero-shot Skeleton-based Action Recognition](image_generation/bridging_the_skeleton_text_modality_gap_diffusion_powered_modality_alignment_for.md)**
 
 :   提出TDSM（Triplet Diffusion for Skeleton-Text Matching），首次将扩散模型应用于零样本骨骼动作识别，通过反向扩散过程实现骨骼特征与文本prompt的隐式对齐，并引入triplet diffusion损失增强判别力，在NTU-60/120和PKU-MMD上大幅超越SOTA（2.36%到13.05%的提升幅度）。
 
@@ -1247,6 +1259,10 @@ description: >-
 **[CHORDS: Diffusion Sampling Accelerator with Multi-Core Hierarchical ODE Solvers](image_generation/chords_diffusion_sampling_accelerator_with_multi-core_hierarchical_ode_solvers.md)**
 
 :   提出 Chords，一种基于多核层次 ODE 求解器的扩散采样加速框架，通过慢到快的核间纠正机制（inter-core rectification），在 4-8 个 GPU 上实现 2.1×~2.9× 加速，且不牺牲生成质量。
+
+**[CHORDS: Diffusion Sampling Accelerator with Multi-Core Hierarchical ODE Solvers](image_generation/chords_diffusion_sampling_accelerator_with_multi_core_hierarchical_ode_solvers.md)**
+
+:   提出 Chords，一种基于多核层级 ODE 求解器的无训练、模型无关扩散采样加速框架，通过慢到快的求解器层级和核间纠偏机制，在 4~8 个 GPU 核上实现最高 2.9× 加速而不损失生成质量。
 
 **[CNS-Bench: Benchmarking Image Classifier Robustness Under Continuous Nuisance Shifts](image_generation/cns-bench_benchmarking_image_classifier_robustness_under_continuous_nuisance_shi.md)**
 
@@ -2864,6 +2880,10 @@ description: >-
 
 :   本文提出从人类活动视频中自动提取精确的双手可操作区域(affordance)数据集 2HANDS，并训练基于 VLM 的 2HandedAfforder 模型，实现根据文本提示预测双手抓握的精确物体区域分割，在新提出的 ActAffordance 基准上显著优于现有方法。
 
+**[A Plug-and-Play Physical Motion Restoration Approach for In-the-Wild High-Difficulty Motions](segmentation/a_plug-and-play_physical_motion_restoration_approach_for_in-.md)**
+
+:   提出即插即用的物理动作恢复方法，通过Mask条件运动修正模块（MCM）修复视频动捕中的瑕疵帧，以及基于预训练+测试时适应的物理运动迁移模块（PTM）实现高难度野外动作的物理仿真，显著提升动作的物理真实性。
+
 **[A Plug-and-Play Physical Motion Restoration Approach for In-the-Wild High-Difficulty Motions](segmentation/a_plug-and-play_physical_motion_restoration_approach_for_in-the-wild_high-diffic.md)**
 
 :   提出即插即用的物理动作恢复方法，通过Mask条件运动修正模块（MCM）修复视频动捕中的瑕疵帧，以及基于预训练+测试时适应的物理运动迁移模块（PTM）实现高难度野外动作的物理仿真，显著提升动作的物理真实性。
@@ -2983,6 +3003,10 @@ description: >-
 **[Latent Expression Generation for Referring Image Segmentation and Grounding](segmentation/latent_expression_generation_for_referring_image_segmentation_and_grounding.md)**
 
 :   提出 Latent-VG 框架，通过从单个文本描述生成多个潜在表达式（共享同一主语、但具有不同视觉属性），利用互补的视觉细节弥补稀疏文本与丰富视觉信息之间的语义差距，在指代图像分割和指代表达理解任务上同时达到 SOTA。
+
+**[LawDIS: Language-Window-based Controllable Dichotomous Image Segmentation](segmentation/lawdis_language-window-based_controllable_dichotomous_image_segmentati.md)**
+
+:   提出LawDIS，一种基于Stable Diffusion的语言-窗口双控可控二分图像分割框架，在宏观模式下通过语言提示指导目标分割，在微观模式下通过可变尺寸窗口精细化局部细节，在DIS5K上全面超越11种SOTA方法。
 
 **[LawDIS: Language-Window-based Controllable Dichotomous Image Segmentation](segmentation/lawdis_language-window-based_controllable_dichotomous_image_segmentation.md)**
 
@@ -3184,6 +3208,10 @@ description: >-
 
 :   提出CarGait，一种基于交叉注意力的步态识别重排序方法，通过probe与候选序列之间的strip-wise交叉注意力学习细粒度的步态对应关系，将预训练单阶段模型的全局特征映射到新的判别性嵌入空间，在Gait3D、GREW和OU-MVLP三大基准上对七种步态模型均取得一致的Rank-1/5精度提升。
 
+**[CarGait: Cross-Attention based Re-ranking for Gait Recognition](human_understanding/cargait_cross_attention_based_re_ranking_for_gait_recognition.md)**
+
+:   提出CarGait，一种基于交叉注意力的步态识别重排序方法，通过probe与候选序列之间的strip-wise交叉注意力学习细粒度的步态对应关系，将预训练单阶段模型的全局特征映射到新的判别性嵌入空间，在Gait3D、GREW和OU-MVLP三大基准上对七种步态模型均取得一致的Rank-1/5精度提升。
+
 **[CarGait: Cross-Attention based Re-ranking for Gait Recognition](human_understanding/cargait_crossattention_based_reranking_for_gait_recognition.md)**
 
 :   提出CarGait——基于cross-attention的步态识别重排序方法：对任意单阶段步态模型的top-K检索结果，通过probe与候选间步态条带(gait strip)的cross-attention学习细粒度pair-wise交互，生成新的条件化表征并重新计算距离进行重排序。在Gait3D/GREW/OU-MVLP三个数据集、7种基线模型上一致提升Rank-1/5准确率，推理速度6.5ms/probe远超现有重排序方法。
@@ -3323,10 +3351,6 @@ description: >-
 **[MDD: A Dataset for Text-and-Music Conditioned Duet Dance Generation](human_understanding/mdd_a_dataset_for_text-and-music_conditioned_duet_dance_generation.md)**
 
 :   介绍 Multimodal DuetDance (MDD)，首个同时整合动作、音乐和文本描述的大规模专业级双人舞蹈数据集，包含 620 分钟动捕数据、15 种舞蹈类型和超过 10K 条细粒度文本标注，并提出 Text-to-Duet 和 Text-to-Dance Accompaniment 两个新任务。
-
-**[Mitigating Object Hallucinations via Sentence-Level Early Intervention](human_understanding/mitigating_object_hallucinations_via_sentence-level_early_intervention.md)**
-
-:   提出 SENTINEL 框架，通过句子级早期干预和域内偏好学习有效缓解 MLLM 的物体幻觉，在 Object HalBench 上将幻觉率降低超过 90%，同时保持甚至提升通用能力。
 
 **[MixRI: Mixing Features of Reference Images for Novel Object Pose Estimation](human_understanding/mixri_mixing_features_of_reference_images_for_novel_object_pose_estimation.md)**
 
@@ -3583,6 +3607,10 @@ description: >-
 **[OVG-HQ: Online Video Grounding with Hybrid-modal Queries](video_understanding/ovg-hq_online_video_grounding_with_hybrid-modal_queries.md)**
 
 :   提出在线视频定位新任务 OVG-HQ，支持文本/图像/视频片段等混合模态查询，通过参数化记忆块（PMB）保留历史信息和混合蒸馏策略缓解模态不平衡，在流式视频中实时定位目标片段。
+
+**[PriOr-Flow: Enhancing Primitive Panoramic Optical Flow with Orthogonal View](video_understanding/prior-flow_enhancing_primitive_panoramic_optical_flow_with_o.md)**
+
+:   提出双分支框架 PriOr-Flow，利用正交视图的低畸变先验来补偿 ERP 全景图像极区的严重畸变，从而显著提升全景光流估计精度，在 MPFDataset 和 FlowScape 上分别降低 EPE 30.0% 和 29.6%。
 
 **[PriOr-Flow: Enhancing Primitive Panoramic Optical Flow with Orthogonal View](video_understanding/prior-flow_enhancing_primitive_panoramic_optical_flow_with_orthogonal_view.md)**
 
@@ -4490,6 +4518,106 @@ description: >-
 
 ---
 
+## 🤖 具身智能 { #robotics }
+
+**[Adaptive Articulated Object Manipulation On The Fly with Foundation Model Reasoning and Part Grounding](robotics/adaptive_articulated_object_manipulation_on_the_fly_with_foundation_model_reason.md)**
+
+:   本文提出 AdaRPG 框架，利用基础视觉-语言模型对铰接物体进行零件级分割和可操作性推理，并借助 GPT-4o 生成高层控制代码以自适应调度原子操作技能，在仿真和真实环境中实现了跨类别零样本泛化操作。
+
+**[AnyBimanual: Transferring Unimanual Policy for General Bimanual Manipulation](robotics/anybimanual_transferring_unimanual_policy_for_general_bimanual_manipulation.md)**
+
+:   提出 AnyBimanual，一个即插即用的框架，通过技能管理器和视觉对齐器将预训练的单臂操控策略迁移到通用双臂操控场景，在仅有少量双臂示范的情况下实现显著的多任务泛化能力。
+
+**[Beyond Losses Reweighting: Empowering Multi-Task Learning via the Generalization Perspective](robotics/beyond_losses_reweighting_empowering_multi-task_learning_via_the_generalization_.md)**
+
+:   从泛化角度出发，将锐度感知最小化（SAM）引入多任务学习，通过分解每个任务的 SAM 梯度为"低损失方向"和"平坦方向"并分别聚合，减少梯度冲突并引导模型进入跨任务共同平坦低损失区域。
+
+**[Bridging Domain Generalization to Multimodal Domain Generalization via Unified Representations](robotics/bridging_domain_generalization_to_multimodal_domain_generalization_via_unified_r.md)**
+
+:   提出URMMDG框架，通过监督对比学习构建跨模态统一表示空间，并利用互信息最小化解耦类别通用信息与模态/域特定信息，将传统单模态域泛化方法（Mixup、JiGen、IBN-Net）有效迁移到多模态域泛化场景，在EPIC-Kitchens和HAC基准上取得SOTA。
+
+**[Certifiably Optimal Anisotropic Rotation Averaging](robotics/certifiably_optimal_anisotropic_rotation_averaging.md)**
+
+:   提出了一种新的SDP松弛方法，通过强制解落在SO(3)的凸包conv(SO(3))内，首次实现了各向异性代价下的可证明全局最优旋转平均，解决了传统O(3)松弛在各向异性场景下完全失效的问题。
+
+**[CombatVLA: An Efficient Vision-Language-Action Model for Combat Tasks in 3D Action Role-Playing Games](robotics/combatvla_an_efficient_vision-language-action_model_for_combat_tasks_in_3d_actio.md)**
+
+:   提出CombatVLA，一个针对3D动作角色扮演游戏战斗任务的高效3B参数VLA模型，通过Action-of-Thought数据格式和截断推理策略，实现比现有VLM游戏框架快50倍的推理速度，且战斗成功率超越人类玩家。
+
+**[COSMO: Combination of Selective Memorization for Low-cost Vision-and-Language Navigation](robotics/cosmo_combination_of_selective_memorization_for_low-cost_vision-and-language_nav.md)**
+
+:   提出 COSMO，一种结合选择性记忆的低成本 VLN 架构，通过两个定制化的选择性状态空间模块——Round Selective Scan（RSS，单轮扫描捕获全局上下文）和 Cross-modal Selective State Space Module（CS3，双流跨模态交互）——替代 Transformer 中的高成本注意力机制，以仅 15.5% 参数和 9.3% FLOPs 实现超越基线 DUET 的导航性能。
+
+**[DexVLG: Dexterous Vision-Language-Grasp Model at Scale](robotics/dexvlg_dexterous_vision-language-grasp_model_at_scale.md)**
+
+:   提出DexVLG——首个大规模视觉-语言-灵巧抓取模型，构建了包含174K物体、1.7亿抓取姿态的DexGraspNet 3.0数据集（带部件级语义标注），结合VLM和Flow Matching姿态预测头，在仿真中实现76%+零样本执行成功率，并在真实世界中完成语义对齐的灵巧抓取。
+
+**[Embodied Representation Alignment with Mirror Neurons](robotics/embodied_representation_alignment_with_mirror_neurons.md)**
+
+:   本文受镜像神经元启发，通过对比学习将动作理解（观察他人行为）和具身执行（自主执行动作）的中间表征对齐到共享潜在空间，发现两类模型的表征存在自发对齐现象且与任务成功率相关，显式对齐后在动作识别（+3.3%）和机器人操作（+3.5%）上均获提升。
+
+**[EvolvingGrasp: Evolutionary Grasp Generation via Efficient Preference Alignment](robotics/evolvinggrasp_evolutionary_grasp_generation_via_efficient_preference_alignment.md)**
+
+:   提出 EvolvingGrasp，通过 Handpose-wise Preference Optimization (HPO) 和 Physics-Aware Consistency Model (PCM) 实现灵巧抓取姿态的高效进化式生成与人类偏好对齐，在四个基准数据集上取得 SOTA，并实现 30 倍加速。
+
+**[iManip: Skill-Incremental Learning for Robotic Manipulation](robotics/imanip_skill-incremental_learning_for_robotic_manipulation.md)**
+
+:   提出 iManip 框架，通过时序回放策略和可扩展 PerceiverIO 架构，使机器人能够在不重新训练的情况下持续学习新的操作技能，同时缓解对已学技能的灾难性遗忘，在 RLBench 上比传统增量基线平均提升 9.4%。
+
+**[Interaction-Merged Motion Planning: Effectively Leveraging Diverse Motion Datasets for Robust Planning](robotics/interaction-merged_motion_planning_effectively_leveraging_diverse_motion_dataset.md)**
+
+:   提出 IMMP（Interaction-Merged Motion Planning），通过两阶段策略——交互保持预合并（构建多指标检查点池）和交互迁移合并（按交互模块分组的任务向量加权合并）——将来自不同轨迹数据集的智能体行为和交互知识迁移到目标域，有效提升运动规划的跨域适应性。
+
+**[TesserAct: Learning 4D Embodied World Models](robotics/learning_4d_embodied_world_models.md)**
+
+:   提出 TesserAct——一种 4D 具身世界模型，通过训练视频生成模型联合预测 RGB、深度和法线视频，再转换为高质量 4D 场景，实现空间-时间一致的 3D 世界动态模拟和机器人动作规划。
+
+**[Moto: Latent Motion Token as the Bridging Language for Learning Robot Manipulation from Videos](robotics/moto_latent_motion_token_as_the_bridging_language_for_learning_robot_manipulatio.md)**
+
+:   提出 Moto 框架，通过无监督学习的潜在运动 Token（Latent Motion Token）将视频帧间的视觉运动编码为离散序列，利用 GPT 式自回归预训练学习运动先验，再通过 co-fine-tuning 策略将学到的运动知识迁移到真实机器人操作，在 SIMPLER 和 CALVIN 基准上取得与 55B 参数大模型匹敌的性能（仅 98M 参数）。
+
+**[NavMorph: A Self-Evolving World Model for Vision-and-Language Navigation in Continuous Environments](robotics/navmorph_a_self-evolving_world_model_for_vision-and-language_navigation_in_conti.md)**
+
+:   提出 NavMorph，一种基于 RSSM 的**自进化世界模型**，通过 World-aware Navigator 和 Foresight Action Planner 在隐空间建模连续环境动态，并引入上下文进化记忆（CEM）实现在线测试时的快速适应。
+
+**[PacGDC: Label-Efficient Generalizable Depth Completion with Projection Ambiguity and Consistency](robotics/pacgdc_label-efficient_generalizable_depth_completion_with_projection_ambiguity_.md)**
+
+:   提出 PacGDC，利用 2D 到 3D 投影中固有的形状歧义和位置歧义来合成大量伪几何数据（通过多个深度基础模型作为尺度操纵器），以最小的标注代价实现可泛化的深度补全，在零样本和少样本设置中均达到 SOTA。
+
+**[Rep-MTL: Unleashing the Power of Representation-Level Task Saliency for Multi-Task Learning](robotics/rep-mtl_unleashing_the_power_of_representation-level_task_saliency_for_multi-tas.md)**
+
+:   提出 Rep-MTL，一种基于表示空间任务显著性（task saliency）的多任务优化方法，通过熵正则化保留任务特定学习模式（TSR）和样本级跨任务对比对齐（CSA）来缓解负迁移并显式促进任务互补性，无需修改优化器或网络架构。
+
+**[Resolving Token-Space Gradient Conflicts: Token Space Manipulation for Transformer-Based Multi-Task Learning](robotics/resolving_token-space_gradient_conflicts_token_space_manipulation_for_transforme.md)**
+
+:   提出 DTME-MTL 框架，通过在 token 空间中识别和分类梯度冲突（值域空间冲突 vs 零空间冲突），分别采用 Token Modulation（仿射变换）和 Token Expansion（添加任务特定token）来缓解 Transformer 多任务学习中的负迁移问题，以极低参数开销实现一致性能提升。
+
+**[Selective Contrastive Learning for Weakly Supervised Affordance Grounding](robotics/selective_contrastive_learning_for_weakly_supervised_affordance_grounding.md)**
+
+:   提出选择性对比学习方法用于弱监督可供性定位，通过原型级对比学习和像素级对比学习，在目标和部件两个粒度上自适应学习可供性相关线索，有效避免模型关注与动作无关的显著特征，在 AGD20K 和 HICO-IIF 上全面超越了使用更强基础模型（GPT-4、LLAVA 等）的竞争方法。
+
+**[SITE: towards Spatial Intelligence Thorough Evaluation](robotics/site_towards_spatial_intelligence_thorough_evaluation.md)**
+
+:   本文提出 SITE，一个基于认知科学三重分类体系的空间智能综合基准，涵盖 8,068 个多选 VQA 任务（覆盖 31 个数据集、图像+视频），评估结果显示当前最强 VLM（GPT-4o）在整体空间推理上仍落后人类专家约 32%，且 VLM 的空间智能与机器人操控任务的成功率呈高度正相关（Pearson $r=0.902$）。
+
+**[TransiT: Transient Transformer for Non-line-of-sight Videography](robotics/transit_transient_transformer_for_non-line-of-sight_videography.md)**
+
+:   设计了 TransiT 架构，通过瞬态信号压缩、帧间特征融合和时空 Transformer，实现从稀疏快速扫描（16×16、0.4ms/点）的 NLOS 瞬态信号实时重建 64×64 分辨率的隐藏场景视频（10 FPS），并提出基于 MMD 的迁移学习方法弥合合成与真实数据的分布差距。
+
+**[UnZipLoRA: Separating Content and Style from a Single Image](robotics/unziplora_separating_content_and_style_from_a_single_image.md)**
+
+:   提出 UnZipLoRA 方法，从单张图像中同时训练两个解耦且兼容的 LoRA（内容 LoRA 和风格 LoRA），通过 prompt 分离、列分离和块分离三种策略实现内容与风格的有效解耦，支持独立操控和自由重组，用户偏好率全面超越 DreamBooth-LoRA、Inspiration Tree 和 B-LoRA。
+
+**[VQ-VLA: Improving Vision-Language-Action Models via Scaling Vector-Quantized Action Tokenizers](robotics/vq-vla_improving_vision-language-action_models_via_scaling_vector-quantized_acti.md)**
+
+:   本文提出基于卷积残差 VQ-VAE 的动作 tokenizer，在比先前方法多 100 倍的训练数据（含大量合成数据）上训练后可零样本迁移到各种下游 VLA 任务，在真实机器人上将长时域任务成功率提升最高 30%，推理速度提升近 3 倍。
+
+**[Weakly-Supervised Learning of Dense Functional Correspondences](robotics/weakly-supervised_learning_of_dense_functional_correspondences.md)**
+
+:   定义了"稠密功能对应"（Dense Functional Correspondence）任务——基于物体功能（如"倒水"）在不同类别物体之间建立像素级稠密对应，并提出一种弱监督学习框架，通过 VLM 伪标注功能部件 + 多视角对比学习来蒸馏功能和结构知识到新模型中。
+
+---
+
 ## 🛡️ AI安全 { #ai_safety }
 
 **[A Framework for Double-Blind Federated Adaptation of Foundation Models](ai_safety/a_framework_for_double-blind_federated_adaptation_of_foundation_models.md)**
@@ -4583,102 +4711,6 @@ description: >-
 **[Vulnerability-Aware Spatio-Temporal Learning for Generalizable Deepfake Video Detection](ai_safety/vulnerability-aware_spatio-temporal_learning_for_generalizable_deepfake_video_de.md)**
 
 :   本文提出FakeSTormer，一个细粒度的生成式深度伪造视频检测框架，通过多任务学习同时建模时间和空间脆弱性区域，配合自混合视频（SBV）数据合成策略生成高质量伪造样本，仅用真实数据训练即可在多个跨数据集基准上达到SOTA泛化性能。
-
----
-
-## 🤖 具身智能 { #robotics }
-
-**[Adaptive Articulated Object Manipulation On The Fly with Foundation Model Reasoning and Part Grounding](robotics/adaptive_articulated_object_manipulation_on_the_fly_with_foundation_model_reason.md)**
-
-:   本文提出 AdaRPG 框架，利用基础视觉-语言模型对铰接物体进行零件级分割和可操作性推理，并借助 GPT-4o 生成高层控制代码以自适应调度原子操作技能，在仿真和真实环境中实现了跨类别零样本泛化操作。
-
-**[AnyBimanual: Transferring Unimanual Policy for General Bimanual Manipulation](robotics/anybimanual_transferring_unimanual_policy_for_general_bimanual_manipulation.md)**
-
-:   提出 AnyBimanual，一个即插即用的框架，通过技能管理器和视觉对齐器将预训练的单臂操控策略迁移到通用双臂操控场景，在仅有少量双臂示范的情况下实现显著的多任务泛化能力。
-
-**[Beyond Losses Reweighting: Empowering Multi-Task Learning via the Generalization Perspective](robotics/beyond_losses_reweighting_empowering_multi-task_learning_via_the_generalization_.md)**
-
-:   从泛化角度出发，将锐度感知最小化（SAM）引入多任务学习，通过分解每个任务的 SAM 梯度为"低损失方向"和"平坦方向"并分别聚合，减少梯度冲突并引导模型进入跨任务共同平坦低损失区域。
-
-**[Bridging Domain Generalization to Multimodal Domain Generalization via Unified Representations](robotics/bridging_domain_generalization_to_multimodal_domain_generalization_via_unified_r.md)**
-
-:   提出URMMDG框架，通过监督对比学习构建跨模态统一表示空间，并利用互信息最小化解耦类别通用信息与模态/域特定信息，将传统单模态域泛化方法（Mixup、JiGen、IBN-Net）有效迁移到多模态域泛化场景，在EPIC-Kitchens和HAC基准上取得SOTA。
-
-**[Certifiably Optimal Anisotropic Rotation Averaging](robotics/certifiably_optimal_anisotropic_rotation_averaging.md)**
-
-:   提出了一种新的SDP松弛方法，通过强制解落在SO(3)的凸包conv(SO(3))内，首次实现了各向异性代价下的可证明全局最优旋转平均，解决了传统O(3)松弛在各向异性场景下完全失效的问题。
-
-**[CombatVLA: An Efficient Vision-Language-Action Model for Combat Tasks in 3D Action Role-Playing Games](robotics/combatvla_an_efficient_vision-language-action_model_for_combat_tasks_in_3d_actio.md)**
-
-:   提出CombatVLA，一个针对3D动作角色扮演游戏战斗任务的高效3B参数VLA模型，通过Action-of-Thought数据格式和截断推理策略，实现比现有VLM游戏框架快50倍的推理速度，且战斗成功率超越人类玩家。
-
-**[COSMO: Combination of Selective Memorization for Low-cost Vision-and-Language Navigation](robotics/cosmo_combination_of_selective_memorization_for_low-cost_vision-and-language_nav.md)**
-
-:   提出 COSMO，一种结合选择性记忆的低成本 VLN 架构，通过两个定制化的选择性状态空间模块——Round Selective Scan（RSS，单轮扫描捕获全局上下文）和 Cross-modal Selective State Space Module（CS3，双流跨模态交互）——替代 Transformer 中的高成本注意力机制，以仅 15.5% 参数和 9.3% FLOPs 实现超越基线 DUET 的导航性能。
-
-**[DexVLG: Dexterous Vision-Language-Grasp Model at Scale](robotics/dexvlg_dexterous_vision-language-grasp_model_at_scale.md)**
-
-:   提出DexVLG——首个大规模视觉-语言-灵巧抓取模型，构建了包含174K物体、1.7亿抓取姿态的DexGraspNet 3.0数据集（带部件级语义标注），结合VLM和Flow Matching姿态预测头，在仿真中实现76%+零样本执行成功率，并在真实世界中完成语义对齐的灵巧抓取。
-
-**[Embodied Representation Alignment with Mirror Neurons](robotics/embodied_representation_alignment_with_mirror_neurons.md)**
-
-:   本文受镜像神经元启发，通过对比学习将动作理解（观察他人行为）和具身执行（自主执行动作）的中间表征对齐到共享潜在空间，发现两类模型的表征存在自发对齐现象且与任务成功率相关，显式对齐后在动作识别（+3.3%）和机器人操作（+3.5%）上均获提升。
-
-**[EvolvingGrasp: Evolutionary Grasp Generation via Efficient Preference Alignment](robotics/evolvinggrasp_evolutionary_grasp_generation_via_efficient_preference_alignment.md)**
-
-:   提出 EvolvingGrasp，通过 Handpose-wise Preference Optimization (HPO) 和 Physics-Aware Consistency Model (PCM) 实现灵巧抓取姿态的高效进化式生成与人类偏好对齐，在四个基准数据集上取得 SOTA，并实现 30 倍加速。
-
-**[iManip: Skill-Incremental Learning for Robotic Manipulation](robotics/imanip_skill-incremental_learning_for_robotic_manipulation.md)**
-
-:   提出 iManip 框架，通过时序回放策略和可扩展 PerceiverIO 架构，使机器人能够在不重新训练的情况下持续学习新的操作技能，同时缓解对已学技能的灾难性遗忘，在 RLBench 上比传统增量基线平均提升 9.4%。
-
-**[Interaction-Merged Motion Planning: Effectively Leveraging Diverse Motion Datasets for Robust Planning](robotics/interaction-merged_motion_planning_effectively_leveraging_diverse_motion_dataset.md)**
-
-:   提出 IMMP（Interaction-Merged Motion Planning），通过两阶段策略——交互保持预合并（构建多指标检查点池）和交互迁移合并（按交互模块分组的任务向量加权合并）——将来自不同轨迹数据集的智能体行为和交互知识迁移到目标域，有效提升运动规划的跨域适应性。
-
-**[Moto: Latent Motion Token as the Bridging Language for Learning Robot Manipulation from Videos](robotics/moto_latent_motion_token_as_the_bridging_language_for_learning_robot_manipulatio.md)**
-
-:   提出 Moto 框架，通过无监督学习的潜在运动 Token（Latent Motion Token）将视频帧间的视觉运动编码为离散序列，利用 GPT 式自回归预训练学习运动先验，再通过 co-fine-tuning 策略将学到的运动知识迁移到真实机器人操作，在 SIMPLER 和 CALVIN 基准上取得与 55B 参数大模型匹敌的性能（仅 98M 参数）。
-
-**[NavMorph: A Self-Evolving World Model for Vision-and-Language Navigation in Continuous Environments](robotics/navmorph_a_self-evolving_world_model_for_vision-and-language_navigation_in_conti.md)**
-
-:   提出 NavMorph，一种基于 RSSM 的**自进化世界模型**，通过 World-aware Navigator 和 Foresight Action Planner 在隐空间建模连续环境动态，并引入上下文进化记忆（CEM）实现在线测试时的快速适应。
-
-**[PacGDC: Label-Efficient Generalizable Depth Completion with Projection Ambiguity and Consistency](robotics/pacgdc_label-efficient_generalizable_depth_completion_with_projection_ambiguity_.md)**
-
-:   提出 PacGDC，利用 2D 到 3D 投影中固有的形状歧义和位置歧义来合成大量伪几何数据（通过多个深度基础模型作为尺度操纵器），以最小的标注代价实现可泛化的深度补全，在零样本和少样本设置中均达到 SOTA。
-
-**[Rep-MTL: Unleashing the Power of Representation-Level Task Saliency for Multi-Task Learning](robotics/rep-mtl_unleashing_the_power_of_representation-level_task_saliency_for_multi-tas.md)**
-
-:   提出 Rep-MTL，一种基于表示空间任务显著性（task saliency）的多任务优化方法，通过熵正则化保留任务特定学习模式（TSR）和样本级跨任务对比对齐（CSA）来缓解负迁移并显式促进任务互补性，无需修改优化器或网络架构。
-
-**[Resolving Token-Space Gradient Conflicts: Token Space Manipulation for Transformer-Based Multi-Task Learning](robotics/resolving_token-space_gradient_conflicts_token_space_manipulation_for_transforme.md)**
-
-:   提出 DTME-MTL 框架，通过在 token 空间中识别和分类梯度冲突（值域空间冲突 vs 零空间冲突），分别采用 Token Modulation（仿射变换）和 Token Expansion（添加任务特定token）来缓解 Transformer 多任务学习中的负迁移问题，以极低参数开销实现一致性能提升。
-
-**[Selective Contrastive Learning for Weakly Supervised Affordance Grounding](robotics/selective_contrastive_learning_for_weakly_supervised_affordance_grounding.md)**
-
-:   提出选择性对比学习方法用于弱监督可供性定位，通过原型级对比学习和像素级对比学习，在目标和部件两个粒度上自适应学习可供性相关线索，有效避免模型关注与动作无关的显著特征，在 AGD20K 和 HICO-IIF 上全面超越了使用更强基础模型（GPT-4、LLAVA 等）的竞争方法。
-
-**[SITE: towards Spatial Intelligence Thorough Evaluation](robotics/site_towards_spatial_intelligence_thorough_evaluation.md)**
-
-:   本文提出 SITE，一个基于认知科学三重分类体系的空间智能综合基准，涵盖 8,068 个多选 VQA 任务（覆盖 31 个数据集、图像+视频），评估结果显示当前最强 VLM（GPT-4o）在整体空间推理上仍落后人类专家约 32%，且 VLM 的空间智能与机器人操控任务的成功率呈高度正相关（Pearson $r=0.902$）。
-
-**[TransiT: Transient Transformer for Non-line-of-sight Videography](robotics/transit_transient_transformer_for_non-line-of-sight_videography.md)**
-
-:   设计了 TransiT 架构，通过瞬态信号压缩、帧间特征融合和时空 Transformer，实现从稀疏快速扫描（16×16、0.4ms/点）的 NLOS 瞬态信号实时重建 64×64 分辨率的隐藏场景视频（10 FPS），并提出基于 MMD 的迁移学习方法弥合合成与真实数据的分布差距。
-
-**[UnZipLoRA: Separating Content and Style from a Single Image](robotics/unziplora_separating_content_and_style_from_a_single_image.md)**
-
-:   提出 UnZipLoRA 方法，从单张图像中同时训练两个解耦且兼容的 LoRA（内容 LoRA 和风格 LoRA），通过 prompt 分离、列分离和块分离三种策略实现内容与风格的有效解耦，支持独立操控和自由重组，用户偏好率全面超越 DreamBooth-LoRA、Inspiration Tree 和 B-LoRA。
-
-**[VQ-VLA: Improving Vision-Language-Action Models via Scaling Vector-Quantized Action Tokenizers](robotics/vq-vla_improving_vision-language-action_models_via_scaling_vector-quantized_acti.md)**
-
-:   本文提出基于卷积残差 VQ-VAE 的动作 tokenizer，在比先前方法多 100 倍的训练数据（含大量合成数据）上训练后可零样本迁移到各种下游 VLA 任务，在真实机器人上将长时域任务成功率提升最高 30%，推理速度提升近 3 倍。
-
-**[Weakly-Supervised Learning of Dense Functional Correspondences](robotics/weakly-supervised_learning_of_dense_functional_correspondences.md)**
-
-:   定义了"稠密功能对应"（Dense Functional Correspondence）任务——基于物体功能（如"倒水"）在不同类别物体之间建立像素级稠密对应，并提出一种弱监督学习框架，通过 VLM 伪标注功能部件 + 多视角对比学习来蒸馏功能和结构知识到新模型中。
 
 ---
 

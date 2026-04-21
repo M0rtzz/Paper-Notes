@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoA: Towards Real Image Dehazing via Compression-and-Adaptation
 description: >-
@@ -116,10 +116,10 @@ tags:
 
 ## 相关论文
 
+- [Towards Practical Real-Time Neural Video Compression](towards_practical_real-time_neural_video_compression.md)
 - [Learned Image Compression with Dictionary-based Entropy Model](learned_image_compression_with_dictionary-based_entropy_model.md)
 - [LALIC: Linear Attention Modeling for Learned Image Compression](linear_attention_modeling_for_learned_image_compression.md)
-- [Binary Quadratic Quantization: Beyond First-Order Quantization for Real-Valued Matrix Compression](../../NeurIPS2025/model_compression/binary_quadratic_quantization_beyond_first-order_quantization_for_real-valued_ma.md)
 - [MambaIC: State Space Models for High-Performance Learned Image Compression](mambaic_state_space_models_for_high-performance_learned_image_compression.md)
-- [One-Step Diffusion-Based Image Compression with Semantic Distillation](../../NeurIPS2025/model_compression/one-step_diffusion-based_image_compression_with_semantic_distillation.md)
+- [Layered Image Vectorization via Semantic Simplification](layered_image_vectorization_via_semantic_simplification.md)
 
 <!-- RELATED:END -->

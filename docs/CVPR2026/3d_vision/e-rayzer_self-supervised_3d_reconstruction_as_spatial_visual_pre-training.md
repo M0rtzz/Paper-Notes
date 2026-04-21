@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] E-RayZer: Self-supervised 3D Reconstruction as Spatial Visual Pre-training
 description: >-
@@ -167,6 +167,6 @@ E-RayZer在frozen-backbone设置下大幅领先所有基线，深度估计AbsRel
 - [3D sans 3D Scans: Scalable Pre-training from Video-Generated Point Clouds](3d_sans_3d_scans_scalable_pre-training_from_video-generated_point_clouds.md)
 - [Regularizing INR with Diffusion Prior for Self-Supervised 3D Reconstruction of Neutron Computed Tomography Data](regularizing_inr_with_diffusion_prior_self-supervised_3d_reconstruction_of_neutr.md)
 - [RayZer: A Self-supervised Large View Synthesis Model](../../ICCV2025/3d_vision/rayzer_a_self-supervised_large_view_synthesis_model.md)
-- [4D Visual Pre-training for Robot Learning](../../ICCV2025/3d_vision/4d_visual_pretraining_for_robot_learning.md)
+- [Towards More Diverse and Challenging Pre-training for Point Cloud Learning: Self-Supervised Cross Reconstruction with Decoupled Views](../../ICCV2025/3d_vision/towards_more_diverse_and_challenging_pre-training_for_point_cloud_learning_self-.md)
 
 <!-- RELATED:END -->

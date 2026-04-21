@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Controlling the World by Sleight of Hand
 description: >-

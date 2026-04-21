@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FeatSharp: Your Vision Model Features, Sharper
 description: >-
@@ -177,6 +177,6 @@ FeatSharp 在小目标检测上提升尤为显著：RADIO 上 AP_Sm +6.0 pts，S
 - [VidEoMT: Your ViT is Secretly Also a Video Segmentation Model](../../CVPR2026/segmentation/videomt_encoder_only_video_segmentation.md)
 - [Know Your Attention Maps: Class-specific Token Masking for Weakly Supervised Semantic Segmentation](../../ICCV2025/segmentation/know_your_attention_maps_class-specific_token_masking_for_weakly_supervised_sema.md)
 - [SToFM: a Multi-scale Foundation Model for Spatial Transcriptomics](stofm_a_multi-scale_foundation_model_for_spatial_transcriptomics.md)
-- [Vision Transformers with Self-Distilled Registers](../../NeurIPS2025/segmentation/vision_transformers_with_self-distilled_registers.md)
+- [The Devil is in Low-Level Features for Cross-Domain Few-Shot Segmentation](../../CVPR2025/segmentation/the_devil_is_in_low-level_features_for_cross-domain_few-shot_segmentation.md)
 
 <!-- RELATED:END -->

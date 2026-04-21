@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Human-Like RL Agents through Trajectory Optimization with Action Quantization
 description: >-

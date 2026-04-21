@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tighter CMI-Based Generalization Bounds via Stochastic Projection and Quantization
 description: >-

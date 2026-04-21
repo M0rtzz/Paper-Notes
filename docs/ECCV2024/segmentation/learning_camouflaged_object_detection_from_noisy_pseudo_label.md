@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Camouflaged Object Detection from Noisy Pseudo Label
 description: >-

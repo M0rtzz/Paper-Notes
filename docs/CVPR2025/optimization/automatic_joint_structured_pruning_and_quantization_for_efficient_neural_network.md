@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Automatic Joint Structured Pruning and Quantization for Efficient Neural Network Training and Compression
 description: >-

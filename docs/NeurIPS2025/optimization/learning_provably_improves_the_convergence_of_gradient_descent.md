@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Provably Improves the Convergence of Gradient Descent
 description: >-
@@ -143,8 +143,8 @@ $$F(W^k) \leq \left(1 - 4\eta \frac{\beta_0^2}{\beta^2} \delta_4 \alpha_0^2\righ
 
 - [Multi-head Transformers Provably Learn Symbolic Multi-step Reasoning via Gradient Descent](multi-head_transformers_provably_learn_symbolic_multi-step_reasoning_via_gradien.md)
 - [Optimal Rates for Generalization of Gradient Descent for Deep ReLU Classification](optimal_rates_for_generalization_of_gradient_descent_for_deep_relu_classificatio.md)
-- [Gradient Descent as Loss Landscape Navigation: a Normative Framework for Deriving Learning Rules](gradient_descent_as_loss_landscape_navigation_a_normative_framework_for_deriving.md)
 - [OrthoGrad Improves Neural Calibration](orthograd_improves_neural_calibration.md)
+- [Gradient Descent as Loss Landscape Navigation: a Normative Framework for Deriving Learning Rules](gradient_descent_as_loss_landscape_navigation_a_normative_framework_for_deriving.md)
 - [Large Stepsizes Accelerate Gradient Descent for Regularized Logistic Regression](large_stepsizes_accelerate_gradient_descent_for_regularized_logistic_regression.md)
 
 <!-- RELATED:END -->

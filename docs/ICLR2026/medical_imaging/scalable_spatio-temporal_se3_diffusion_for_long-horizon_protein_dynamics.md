@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scalable Spatio-Temporal SE(3) Diffusion for Long-Horizon Protein Dynamics
 description: >-

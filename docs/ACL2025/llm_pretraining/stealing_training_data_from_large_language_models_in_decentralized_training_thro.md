@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stealing Training Data from Large Language Models in Decentralized Training through Activation Inversion Attack
 description: >-

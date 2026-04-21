@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PerTouch: VLM-Driven Agent for Personalized and Semantic Image Retouching
 description: >-

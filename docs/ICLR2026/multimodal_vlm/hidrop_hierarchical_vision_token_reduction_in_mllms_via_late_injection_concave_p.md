@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HiDrop: Hierarchical Vision Token Reduction in MLLMs via Late Injection, Concave Pyramid Pruning, and Early Exit
 description: >-

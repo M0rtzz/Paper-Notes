@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] JAMUN: Bridging Smoothed Molecular Dynamics and Score-Based Learning for Conformational Ensembles
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3iGS: Factorised Tensorial Illumination for 3D Gaussian Splatting
 description: >-
@@ -144,8 +144,8 @@ $$\mathcal{F}: \{\rho_i, L_i, \omega_o\} \mapsto \mathbf{c_s}$$
 
 - [MIGS: Multi-Identity Gaussian Splatting via Tensor Decomposition](migs_multi-identity_gaussian_splatting_via_tensor_decomposition.md)
 - [Analytic-Splatting: Anti-Aliased 3D Gaussian Splatting via Analytic Integration](analytic-splatting_anti-aliased_3d_gaussian_splatting_via_analytic_integration.md)
-- [HeadGaS: Real-Time Animatable Head Avatars via 3D Gaussian Splatting](headgas_real-time_animatable_head_avatars_via_3d_gaussian_splatting.md)
-- [MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images](mvsplat_efficient_3d_gaussian_splatting_from_sparse_multi-view_images.md)
 - [Learning 3D Geometry and Feature Consistent Gaussian Splatting for Object Removal](learning_3d_geometry_and_feature_consistent_gaussian_splatting_for_object_remova.md)
+- [HAC: Hash-grid Assisted Context for 3D Gaussian Splatting Compression](hac_hash-grid_assisted_context_for_3d_gaussian_splatting_compression.md)
+- [HeadGaS: Real-Time Animatable Head Avatars via 3D Gaussian Splatting](headgas_real-time_animatable_head_avatars_via_3d_gaussian_splatting.md)
 
 <!-- RELATED:END -->

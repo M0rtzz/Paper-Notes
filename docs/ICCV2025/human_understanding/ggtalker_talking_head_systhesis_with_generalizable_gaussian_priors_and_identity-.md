@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GGTalker: Talking Head Synthesis with Generalizable Gaussian Priors and Identity-Specific Adaptation
 description: >-
@@ -162,9 +162,9 @@ GGTalker 不仅在自重演表现最佳，在跨身份和跨语言的 OOD 场景
 ## 相关论文
 
 - [Avat3r: Large Animatable Gaussian Reconstruction Model for High-fidelity 3D Head Avatars](avat3r_large_animatable_gaussian_reconstruction_model_for_hi.md)
-- [FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video](../../CVPR2025/human_understanding/fate_full-head_gaussian_avatar_with_textural_editing_from_monocular_video.md)
-- [VASA-3D: Lifelike Audio-Driven Gaussian Head Avatars from a Single Image](../../NeurIPS2025/human_understanding/vasa-3d_lifelike_audio-driven_gaussian_head_avatars_from_a_single_image.md)
 - [DualTalk: Dual-Speaker Interaction for 3D Talking Head Conversations](../../CVPR2025/human_understanding/dualtalk_dual-speaker_interaction_for_3d_talking_head_conversations.md)
-- [Avatar Fingerprinting for Authorized Use of Synthetic Talking-Head Videos](../../ECCV2024/human_understanding/avatar_fingerprinting_for_authorized_use_of_synthetic_talking-head_videos.md)
+- [FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video](../../CVPR2025/human_understanding/fate_full-head_gaussian_avatar_with_textural_editing_from_monocular_video.md)
+- [RGBAvatar: Reduced Gaussian Blendshapes for Online Modeling of Head Avatars](../../CVPR2025/human_understanding/rgbavatar_reduced_gaussian_blendshapes_for_online_modeling_of_head_avatars.md)
+- [VASA-3D: Lifelike Audio-Driven Gaussian Head Avatars from a Single Image](../../NeurIPS2025/human_understanding/vasa-3d_lifelike_audio-driven_gaussian_head_avatars_from_a_single_image.md)
 
 <!-- RELATED:END -->

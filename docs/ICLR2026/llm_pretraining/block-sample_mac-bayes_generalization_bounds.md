@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Block-Sample MAC-Bayes Generalization Bounds
 description: >-

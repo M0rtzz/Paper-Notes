@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] I Am Big, You Are Little; I Am Right, You Are Wrong
 description: >-

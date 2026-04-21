@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RAPTR: Radar-Based 3D Pose Estimation Using Transformer
 description: >-
@@ -123,7 +123,7 @@ RAPTR接收多视角雷达热图（水平-深度 $\mathbf{Y}_{\text{hor}} \in \m
 - [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](../../CVPR2025/human_understanding/hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
 - [In-Context Compositional Learning via Sparse Coding Transformer](in-context_compositional_learning_via_sparse_coding_transformer.md)
 - [3D Face Reconstruction From Radar Images](../../CVPR2025/human_understanding/3d_face_reconstruction_from_radar_images.md)
+- [Discovering Transformer Circuits via a Hybrid Attribution and Pruning Framework](discovering_transformer_circuits_via_a_hybrid_attribution_and_pruning_framework.md)
 - [Cycle-Sync: Robust Global Camera Pose Estimation through Enhanced Cycle-Consistent Synchronization](cycle-sync_robust_global_camera_pose_estimation_through_enhanced_cycle-consisten.md)
-- [Analyzing the Synthetic-to-Real Domain Gap in 3D Hand Pose Estimation](../../CVPR2025/human_understanding/analyzing_the_synthetic-to-real_domain_gap_in_3d_hand_pose_estimation.md)
 
 <!-- RELATED:END -->

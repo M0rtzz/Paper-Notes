@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CaesarNeRF: Calibrated Semantic Representation for Few-Shot Generalizable Neural Rendering
 description: >-

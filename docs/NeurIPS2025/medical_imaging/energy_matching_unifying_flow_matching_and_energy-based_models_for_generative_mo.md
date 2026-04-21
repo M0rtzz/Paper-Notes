@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Energy Matching: Unifying Flow Matching and Energy-Based Models for Generative Modeling
 description: >-

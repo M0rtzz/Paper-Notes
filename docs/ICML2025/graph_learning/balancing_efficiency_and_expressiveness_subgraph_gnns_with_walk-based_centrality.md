@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Balancing Efficiency and Expressiveness: Subgraph GNNs with Walk-Based Centrality
 description: >-

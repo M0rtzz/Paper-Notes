@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] One-Shot Knowledge Transfer for Scalable Person Re-Identification
 description: >-

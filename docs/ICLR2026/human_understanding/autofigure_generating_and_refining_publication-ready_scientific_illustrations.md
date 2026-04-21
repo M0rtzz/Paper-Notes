@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AutoFigure: Generating and Refining Publication-Ready Scientific Illustrations
 description: >-
@@ -157,8 +157,8 @@ AutoFigure采用"推理渲染"（Reasoned Rendering）范式，分为两个阶�
 
 - [Think-While-Generating: On-the-Fly Reasoning for Personalized Long-Form Generation](think-while-generating_on-the-fly_reasoning_for_personalized_long-form_generatio.md)
 - [Inverse Virtual Try-On: Generating Multi-Category Product-Style Images from Clothed Individuals](inverse_virtual_try-on_generating_multi-category_product-style_images_from_cloth.md)
+- [MagicArticulate: Make Your 3D Models Articulation-Ready](../../CVPR2025/human_understanding/magicarticulate_make_your_3d_models_articulation-ready.md)
 - [Generating Attribute-Aware Human Motions from Textual Prompt](../../AAAI2026/human_understanding/generating_attribute-aware_human_motions_from_textual_prompt.md)
-- [NegRefine: Refining Negative Label-Based Zero-Shot OOD Detection](../../ICCV2025/human_understanding/negrefine_refining_negative_label-based_zero-shot_ood_detection.md)
 - [Iris: Breaking GUI Complexity with Adaptive Focus and Self-Refining](../../ICCV2025/human_understanding/iris_breaking_gui_complexity_with_adaptive_focus_and_self-refining.md)
 
 <!-- RELATED:END -->

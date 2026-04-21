@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Semantic Space is Worth 256 Language Descriptions: Make Stronger Segmentation Models with Descriptive Properties
 description: >-

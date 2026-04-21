@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Instruction-based Image Manipulation by Watching How Things Move
 description: >-
@@ -121,10 +121,10 @@ tags:
 
 ## 相关论文
 
+- [Robotic Visual Instruction](robotic_visual_instruction.md)
 - [Rolling the DICE on Idiomaticity: How LLMs Fail to Grasp Context](../../ACL2025/robotics/dice_idiomaticity.md)
 - [UnZipLoRA: Separating Content and Style from a Single Image](../../ICCV2025/robotics/unziplora_separating_content_and_style_from_a_single_image.md)
 - [UrbanVerse: Scaling Urban Simulation by Watching City-Tour Videos](../../ICLR2026/robotics/urbanverse_scaling_urban_simulation_by_watching_city-tour_videos.md)
 - [From Passive Perception to Active Memory: A Weakly Supervised Image Manipulation Localization Framework Driven by Coarse-Grained Annotations](../../AAAI2026/robotics/from_passive_perception_to_active_memory_a_weakly_supervised_image_manipulation_.md)
-- [MIP against Agent: Malicious Image Patches Hijacking Multimodal OS Agents](../../NeurIPS2025/robotics/mip_against_agent_malicious_image_patches_hijacking_multimod.md)
 
 <!-- RELATED:END -->

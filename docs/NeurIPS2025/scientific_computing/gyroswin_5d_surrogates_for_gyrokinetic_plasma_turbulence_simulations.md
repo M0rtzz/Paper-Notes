@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GyroSwin: 5D Surrogates for Gyrokinetic Plasma Turbulence Simulations
 description: >-

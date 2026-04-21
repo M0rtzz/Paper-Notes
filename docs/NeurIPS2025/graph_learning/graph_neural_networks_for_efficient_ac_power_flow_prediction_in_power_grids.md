@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Graph Neural Networks for Efficient AC Power Flow Prediction in Power Grids
 description: >-

@@ -1,7 +1,17 @@
-﻿---
-title: "Efficient Long Video Tokenization via Coordinate-based Patch Reconstruction"
-description: "基于坐标的patch重建实现高效长视频tokenization，通过Triplane表示和随机坐标采样直接训练128帧视频tokenizer"
-tags: ["视频tokenizer", "Triplane", "坐标重建", "视频生成", "图像生成"]
+---
+title: >-
+  [论文解读] Efficient Long Video Tokenization via Coordinate-based Patch Reconstruction
+description: >-
+  [CVPR 2025][图像生成][视频tokenizer] 提出 CoordTok，一种可扩展的视频 tokenizer，将视频编码为因子化 triplane 表示，解码器学习从随机采样的 $(x,y,t)$ 坐标到对应 patch 像素的映射（而非一次重建所有帧），使得可以直接在 128 帧长视频上训练大型 tokenizer，将 128 帧视频编码为仅 1280 个 token（基线需要 6144-8192 个），并驱动 DiT 实现 128 帧一次性视频生成（FVD 369.3 SOTA）。
+tags:
+  - CVPR 2025
+  - 图像生成
+  - 视频tokenizer
+  - Triplane表示
+  - 坐标重建
+  - 长视频编码
+  - 视频压缩
+  - 扩散生成
 ---
 
 # Efficient Long Video Tokenization via Coordinate-based Patch Reconstruction
@@ -132,10 +142,10 @@ CoordTok 包含编码器和解码器：编码器将视频 $\mathbf{x}$ 分为时
 
 ## 相关论文
 
+- [Language-Guided Image Tokenization for Generation](language-guided_image_tokenization_for_generation.md)
 - [EVATok: Adaptive Length Video Tokenization for Efficient Visual Autoregressive Generation](../../CVPR2026/image_generation/evatok_adaptive_length_video_tokenization_for_eff.md)
 - [Efficient Autoregressive Shape Generation via Octree-Based Adaptive Tokenization](../../ICCV2025/image_generation/efficient_autoregressive_shape_generation_via_octree-based_adaptive_tokenization.md)
+- [OFER: Occluded Face Expression Reconstruction](ofer_occluded_face_expression_reconstruction.md)
 - [Long-Context State-Space Video World Models](../../ICCV2025/image_generation/long-context_state-space_video_world_models.md)
-- [Language-Guided Image Tokenization for Generation](language-guided_image_tokenization_for_generation.md)
-- [PatchScaler: An Efficient Patch-Independent Diffusion Model for Image Super-Resolution](../../ICCV2025/image_generation/patchscaler_an_efficient_patch-independent_diffusion_model_for_image_super-resol.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spatial-Aware Decision-Making with Ring Attractors in Reinforcement Learning Systems
 description: >-

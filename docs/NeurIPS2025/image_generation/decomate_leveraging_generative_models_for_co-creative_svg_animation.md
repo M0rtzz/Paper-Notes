@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Decomate: Leveraging Generative Models for Co-Creative SVG Animation
 description: >-
@@ -137,10 +137,10 @@ tags:
 
 ## 相关论文
 
+- [Redefining <Creative> in Dictionary: Towards an Enhanced Semantic Understanding of Creative Generation](../../CVPR2025/image_generation/redefining_creative_in_dictionary_towards_an_enhanced_semantic_understanding_of_.md)
 - [Co-Reinforcement Learning for Unified Multimodal Understanding and Generation](coreinforcement_learning_for_unified_multimodal_understandin.md)
 - [Revelio: Interpreting and Leveraging Semantic Information in Diffusion Models](../../ICCV2025/image_generation/revelio_interpreting_and_leveraging_semantic_information_in_diffusion_models.md)
 - [Consistent and Controllable Image Animation with Motion Diffusion Models](../../CVPR2025/image_generation/consistent_and_controllable_image_animation_with_motion_diffusion_models.md)
 - [CAP: Evaluation of Persuasive and Creative Image Generation](../../ICCV2025/image_generation/cap_evaluation_of_persuasive_and_creative_image_generation.md)
-- [Compositional Flows for 3D Molecule and Synthesis Pathway Co-design](../../ICML2025/image_generation/compositional_flows_for_3d_molecule_and_synthesis_pathway_co-design.md)
 
 <!-- RELATED:END -->

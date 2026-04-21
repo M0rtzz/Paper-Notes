@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Blending Complementary Memory Systems in Hybrid Quadratic-Linear Transformers
 description: >-

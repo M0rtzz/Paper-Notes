@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Small Batch Size Training for Language Models: When Vanilla SGD Works, and Why Gradient Accumulation Is Wasteful
 description: >-

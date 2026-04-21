@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ALE-Bench: A Benchmark for Long-Horizon Objective-Driven Algorithm Engineering
 description: >-
@@ -126,6 +126,6 @@ ALE-Bench由三部分组成：(1) 数据集——40道AHC赛题（含问题描�
 - [Quantum Algorithms for Finite-horizon Markov Decision Processes](../../ICML2025/image_generation/quantum_algorithms_for_finite-horizon_markov_decision_processes.md)
 - [CORAL: Disentangling Latent Representations in Long-Tailed Diffusion](coral_disentangling_latent_representations_in_longtailed_dif.md)
 - [OVERT: A Benchmark for Over-Refusal Evaluation on Text-to-Image Models](overt_a_benchmark_for_over-refusal_evaluation_on_text-to-image_models.md)
-- [Efficient Long Video Tokenization via Coordinate-based Patch Reconstruction](../../CVPR2025/image_generation/efficient_long_video_tokenization_via_coordinate-based_patch_reconstruction.md)
+- [IDEA-Bench: How Far are Generative Models from Professional Designing?](../../CVPR2025/image_generation/idea-bench_how_far_are_generative_models_from_professional_designing.md)
 
 <!-- RELATED:END -->

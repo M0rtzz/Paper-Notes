@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LiTo: Surface Light Field Tokenization
 description: >-
@@ -125,10 +125,10 @@ tags:
 
 ## 相关论文
 
-- [Neural Field-Based 3D Surface Reconstruction of Microstructures from Multi-Detector Signals in Scanning Electron Microscopy](../../CVPR2026/3d_vision/neural_field-based_3d_surface_reconstruction_of_microstructures_from_multi-detec.md)
-- [From Pixels to Views: Learning Angular-Aware and Physics-Consistent Representations for Light Field Microscopy](../../NeurIPS2025/3d_vision/from_pixels_to_views_learning_angular-aware_and_physics-consistent_representatio.md)
+- [ProbeSDF: Light Field Probes for Neural Surface Reconstruction](../../CVPR2025/3d_vision/probesdf_light_field_probes_for_neural_surface_reconstruction.md)
 - [Station2Radar: Query-Conditioned Gaussian Splatting for Precipitation Field](station2radar_query_conditioned_gaussian_splatting_for_precipitation_field.md)
 - [Augmented Radiance Field: A General Framework for Enhanced Gaussian Splatting](augmented_radiance_field_a_general_framework_for_enhanced_gaussian_splatting.md)
 - [SurfSplat: Conquering Feedforward 2D Gaussian Splatting with Surface Continuity Priors](surfsplat_conquering_feedforward_2d_gaussian_splatting_with_surface_continuity_p.md)
+- [Learning Part-Aware Dense 3D Feature Field for Generalizable Articulated Object Manipulation](learning_part-aware_dense_3d_feature_field_for_generalizable_articulated_object_.md)
 
 <!-- RELATED:END -->

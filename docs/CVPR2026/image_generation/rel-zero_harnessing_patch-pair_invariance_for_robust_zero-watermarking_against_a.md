@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rel-Zero: Harnessing Patch-Pair Invariance for Robust Zero-Watermarking Against AI Editing
 description: >-

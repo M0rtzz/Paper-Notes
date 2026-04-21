@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bidirectional Channel-selective Semantic Interaction for Semi-Supervised Medical Segmentation
 description: >-

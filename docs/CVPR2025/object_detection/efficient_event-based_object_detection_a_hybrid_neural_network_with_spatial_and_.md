@@ -1,7 +1,16 @@
-﻿---
-title: "Efficient Event-Based Object Detection: A Hybrid Neural Network with Spatial and Temporal Attention"
-description: "提出混合SNN-ANN骨干网络用于事件相机目标检测，通过注意力桥接模块将脉冲特征转为密集表示"
-tags: ["事件相机", "目标检测", "SNN", "混合网络", "神经形态硬件"]
+---
+title: >-
+  [论文解读] Efficient Event-Based Object Detection: A Hybrid Neural Network with Spatial and Temporal Attention
+description: >-
+  [CVPR 2025][目标检测][事件相机] 提出首个面向大规模基准的混合 SNN-ANN 目标检测模型，设计注意力桥接模块（ASAB）将 SNN 的稀疏脉冲表示通过时空注意力转换为 ANN 可处理的密集特征，在 Gen1/Gen4 数据集上以仅 6.6M 参数大幅超越 SNN 方法并接近 ANN/RNN 方法的精度，同时 SNN 部分可部署在 Intel Loihi 2 神经形态芯片上实现低功耗推理。
+tags:
+  - CVPR 2025
+  - 目标检测
+  - 事件相机
+  - 混合SNN-ANN
+  - 注意力桥接
+  - 神经形态硬件
+  - 高效推理
 ---
 
 # Efficient Event-Based Object Detection: A Hybrid Neural Network with Spatial and Temporal Attention
@@ -124,10 +133,10 @@ Gen1 和 Gen4 自动驾驶检测数据集 mAP 对比：
 
 ## 相关论文
 
+- [Object Detection using Event Camera: A MoE Heat Conduction based Detector and A New Benchmark Dataset](object_detection_using_event_camera_a_moe_heat_conduction_based_detector_and_a_n.md)
+- [Efficient Test-Time Adaptive Object Detection via Sensitivity-Guided Pruning](efficient_test-time_adaptive_object_detection_via_sensitivity-guided_pruning.md)
 - [FlexEvent: Towards Flexible Event-Frame Object Detection at Varying Operational Frequencies](../../NeurIPS2025/object_detection/flexevent_towards_flexible_event-frame_object_detection_at_varying_operational_f.md)
 - [Intervening in Black Box: Concept Bottleneck Model for Enhancing Human-Neural Network Mutual Understanding](../../ICCV2025/object_detection/intervening_in_black_box_concept_bottleneck_model_for_enhancing_human_neural_net.md)
-- [Efficient Test-Time Adaptive Object Detection via Sensitivity-Guided Pruning](efficient_test-time_adaptive_object_detection_via_sensitivity-guided_pruning.md)
 - [Training-free Detection of Generated Videos via Spatial-Temporal Likelihoods](../../CVPR2026/object_detection/training-free_detection_of_generated_videos_via_spatial-temporal_likelihoods.md)
-- [Attention to Neural Plagiarism: Diffusion Models Can Plagiarize Your Copyrighted Images!](../../ICCV2025/object_detection/attention_to_neural_plagiarism_diffusion_models_can_plagiarize_your_copyrighted_.md)
 
 <!-- RELATED:END -->

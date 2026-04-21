@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DeFine: Decision-Making with Analogical Reasoning over Factor Profiles
 description: >-

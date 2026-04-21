@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unleashing Video Language Models for Fine-grained HRCT Report Generation
 description: >-

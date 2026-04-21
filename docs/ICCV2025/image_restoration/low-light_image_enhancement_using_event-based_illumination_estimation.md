@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Low-Light Image Enhancement using Event-Based Illumination Estimation (RetinEV)
 description: >-
@@ -148,8 +148,8 @@ RetinEV 基于 Retinex 理论：观察图像 = 反射率 × 光照（$I = R \cdo
 
 - [CWNet: Causal Wavelet Network for Low-Light Image Enhancement](cwnet_causal_wavelet_network_for_low-light_image_enhancement.md)
 - [Towards Real-world Event-guided Low-light Video Enhancement and Deblurring](../../ECCV2024/image_restoration/towards_real-world_event-guided_low-light_video_enhancement_and_deblurring.md)
+- [DarkIR: Robust Low-Light Image Restoration](../../CVPR2025/image_restoration/darkir_robust_low-light_image_restoration.md)
 - [Luminance-Aware Statistical Quantization: Unsupervised Hierarchical Learning for Illumination Enhancement](../../NeurIPS2025/image_restoration/luminance-aware_statistical_quantization_unsupervised_hierarchical_learning_for_.md)
-- [Generic Event Boundary Detection via Denoising Diffusion (DiffGEBD)](generic_event_boundary_detection_via_denoising_diffusion.md)
-- [Efficient Diffusion as Low Light Enhancer (ReDDiT)](../../CVPR2025/image_restoration/efficient_diffusion_as_low_light_enhancer.md)
+- [Unrolled Decomposed Unpaired Learning for Controllable Low-Light Video Enhancement](../../ECCV2024/image_restoration/unrolled_decomposed_unpaired_learning_for_controllable_low-light_video_enhanceme.md)
 
 <!-- RELATED:END -->

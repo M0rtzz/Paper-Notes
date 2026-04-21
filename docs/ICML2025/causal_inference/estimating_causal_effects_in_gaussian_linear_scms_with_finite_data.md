@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Estimating Causal Effects in Gaussian Linear SCMs with Finite Data
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FRET: Feature Redundancy Elimination for Test Time Adaptation
 description: >-
@@ -150,7 +150,7 @@ FRET框架分为两个层次：
 - [Controllable Feature Whitening for Hyperparameter-Free Bias Mitigation](controllable_feature_whitening_for_hyperparameter-free_bias_mitigation.md)
 - [A Framework for Double-Blind Federated Adaptation of Foundation Models](a_framework_for_doubleblind_federated_adaptation_of_foundati.md)
 - [Inoculation Prompting: Eliciting Traits from LLMs during Training Can Suppress Them at Test-Time](../../ICLR2026/ai_safety/inoculation_prompting_eliciting_traits_from_llms_during_training_can_suppress_th.md)
-- [Active Membership Inference Test (aMINT): Enhancing Model Auditability with Multi-Task Learning](active_membership_inference_test_amint_enhancing_model_auditability_with_multi-t.md)
+- [Active Membership Inference Test (aMINT): Enhancing Model Auditability with Multi-Task Learning](active_membership_inference_test_amint_enhancing_model_audit.md)
 - [Incentivizing Time-Aware Fairness in Data Sharing](../../NeurIPS2025/ai_safety/incentivizing_time-aware_fairness_in_data_sharing.md)
 
 <!-- RELATED:END -->

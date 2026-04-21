@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CrossSDF: 3D Reconstruction of Thin Structures From Cross-Sections
 description: >-
@@ -132,9 +132,9 @@ $$\mathcal{L}_{eik} = \mathbb{E}_{\mathbf{x}}[(|\nabla f(\mathbf{x})| - 1)^2]$$
 ## 相关论文
 
 - [Marker-Based 3D Reconstruction of Aggregates with a Comparative Analysis of 2D and 3D Morphologies](../../CVPR2026/medical_imaging/marker-based_3d_reconstruction_of_aggregates_with_a_comparative_analysis_of_2d_a.md)
-- [MindCross: Fast New Subject Adaptation with Limited Data for Cross-subject Video Reconstruction from Brain Signals](../../AAAI2026/medical_imaging/mindcross_fast_new_subject_adaptation_with_limited_data_for_cross-subject_video_.md)
-- [Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](../../ICML2025/medical_imaging/scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
-- [CryoFastAR: Fast Cryo-EM Ab initio Reconstruction Made Easy](../../ICCV2025/medical_imaging/cryofastar_fast_cryoem_ab_initio_reconstruction_made_easy.md)
-- [Developing Foundation Models for Universal Segmentation from 3D Whole-Body Positron Emission Tomography](developing_foundation_models_for_universal_segmentation_from_3d_whole-body_posit.md)
+- [vesselFM: A Foundation Model for Universal 3D Blood Vessel Segmentation](vesselfm_a_foundation_model_for_universal_3d_blood_vessel_segmentation.md)
+- [VISTA3D: A Unified Segmentation Foundation Model For 3D Medical Imaging](vista3d_a_unified_segmentation_foundation_model_for_3d_medical_imaging.md)
+- [Revisiting MAE Pre-Training for 3D Medical Image Segmentation](revisiting_mae_pre-training_for_3d_medical_image_segmentation.md)
+- [SeaLion: Semantic Part-Aware Latent Point Diffusion Models for 3D Generation](sealion_semantic_part-aware_latent_point_diffusion_models_for_3d_generation.md)
 
 <!-- RELATED:END -->

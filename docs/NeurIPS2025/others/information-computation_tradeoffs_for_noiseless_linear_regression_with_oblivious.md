@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Information-Computation Tradeoffs for Noiseless Linear Regression with Oblivious Contamination
 description: >-

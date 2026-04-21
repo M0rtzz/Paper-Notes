@@ -1,11 +1,10 @@
 ---
-title: "Multi-view Reconstruction via SfM-guided Monocular Depth Estimation"
-conference: "CVPR 2025"
-arxiv: "2503.14483"
-arxiv_url: "https://arxiv.org/abs/2503.14483"
-code: "https://zju3dv.github.io/murre/"
-domain: "3d_vision"
-keywords: ["multi-view reconstruction", "monocular depth estimation", "SfM", "diffusion model", "depth completion", "3D reconstruction"]
+title: >-
+  [论文解读] Multi-view Reconstruction via SfM-guided Monocular Depth Estimation
+description: >-
+  [3D视觉] 提出 Murre，将 SfM 稀疏点云作为条件注入扩散模型单目深度估计，生成多视角一致的度量深度图后进行 TSDF 融合，在仅用少量合成数据微调后即可在室内、街景、航拍等多种真实场景中超越 SOTA MVS 和神经隐式重建方法。
+tags:
+  - 3D视觉
 ---
 
 # Multi-view Reconstruction via SfM-guided Monocular Depth Estimation
@@ -167,10 +166,10 @@ LCM 蒸馏后单步推理仅需 0.84 秒/视图，F-Score 仍达 0.828。
 
 ## 相关论文
 
-- [3D Gaussian Inpainting with Depth-Guided Cross-View Consistency](3d_gaussian_inpainting_with_depth-guided_cross-view_consistency.md)
-- [MP-SfM: Monocular Surface Priors for Robust Structure-from-Motion](mp-sfm_monocular_surface_priors_for_robust_structure-from-motion.md)
 - [Depth AnyEvent: A Cross-Modal Distillation Paradigm for Event-Based Monocular Depth Estimation](../../ICCV2025/3d_vision/depth_anyevent_a_cross-modal_distillation_paradigm_for_event-based_monocular_dep.md)
-- [IMFine: 3D Inpainting via Geometry-guided Multi-view Refinement](imfine_3d_inpainting_via_geometry-guided_multi-view_refinement.md)
-- [Depth Any Camera: Zero-Shot Metric Depth Estimation from Any Camera](depth_any_camera_zero-shot_metric_depth_estimation_from_any_camera.md)
+- [One Look is Enough: Seamless Patchwise Refinement for Zero-Shot Monocular Depth Estimation on High-Resolution Images](../../ICCV2025/3d_vision/one_look_is_enough_seamless_patchwise_refinement_for_zero-shot_monocular_depth_e.md)
+- [Multi-View Pose-Agnostic Change Localization with Zero Labels](multi-view_pose-agnostic_change_localization_with_zero_labels.md)
+- [HORT: Monocular Hand-held Objects Reconstruction with Transformers](../../ICCV2025/3d_vision/hort_monocular_hand-held_objects_reconstruction_with_transformers.md)
+- [FLARE: Feed-forward Geometry, Appearance and Camera Estimation from Uncalibrated Sparse Views](flare_feed-forward_geometry_appearance_and_camera_estimation_from_uncalibrated_s.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Pixel-level Scene Understanding in One Token: Visual States Need What-is-Where Composition
 description: >-

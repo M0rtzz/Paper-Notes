@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Velocitune: A Velocity-based Dynamic Domain Reweighting Method for Continual Pre-training
 description: >-
@@ -117,8 +117,8 @@ Velocitune 的核心思路是用"学习速度"而非"距离"来衡量各域的�
 
 ## 相关论文
 
-- [Improving Continual Pre-training Through Seamless Data Packing](improving_continual_pre-training_through_seamless_data_packing.md)
 - [Towards Effective and Efficient Continual Pre-training of Large Language Models](towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+- [Improving Continual Pre-training Through Seamless Data Packing](improving_continual_pre-training_through_seamless_data_packing.md)
 - [How Do LLMs Acquire New Knowledge? A Knowledge Circuits Perspective on Continual Pre-Training](how_do_llms_acquire_new_knowledge_a_knowledge_circuits_perspective_on_continual_.md)
 - [Meta-rater: A Multi-dimensional Data Selection Method for Pre-training Language Models](metarater_a_multidimensional_data_selection_method.md)
 - [Incorporating Domain Knowledge into Materials Tokenization](incorporating_domain_knowledge_into_materials_tokenization.md)

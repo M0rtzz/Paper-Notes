@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Windsock is Dancing: Adaptive Multimodal Retrieval-Augmented Generation
 description: >-

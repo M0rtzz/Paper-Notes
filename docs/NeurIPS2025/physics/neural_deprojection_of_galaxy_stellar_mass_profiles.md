@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neural Deprojection of Galaxy Stellar Mass Profiles
 description: >-

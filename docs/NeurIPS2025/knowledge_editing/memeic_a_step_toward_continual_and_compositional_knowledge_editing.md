@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MemEIC: A Step Toward Continual and Compositional Knowledge Editing
 description: >-
@@ -160,8 +160,8 @@ MemEIC 相比 WISE 在视觉可靠性上 +16.94，组合可靠性上 +32.35；�
 
 ## 相关论文
 
-- [ScEdit: Script-based Assessment of Knowledge Editing](../../ACL2025/knowledge_editing/scedit_script-based_assessment_of_knowledge_editing.md)
 - [SAKE: Steering Activations for Knowledge Editing](../../ACL2025/knowledge_editing/sake_steering_activations_for_knowledge_editing.md)
+- [ScEdit: Script-based Assessment of Knowledge Editing](../../ACL2025/knowledge_editing/scedit_script-based_assessment_of_knowledge_editing.md)
 - [Revealing the Deceptiveness of Knowledge Editing: A Mechanistic Analysis of Superficial Editing](../../ACL2025/knowledge_editing/revealing_the_deceptiveness_of_knowledge_editing_a_mechanistic_analysis_of_super.md)
 - [Context-Robust Knowledge Editing for Language Models](../../ACL2025/knowledge_editing/context-robust_knowledge_editing_for_language_models.md)
 - [CompKe: Complex Question Answering under Knowledge Editing](../../ACL2025/knowledge_editing/compke_complex_question_answering_under_knowledge_editing.md)

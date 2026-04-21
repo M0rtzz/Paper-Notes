@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Constrained Hamiltonian Systems on Observation-Induced Fiber Bundles: Theory of Symmetry and Integrability
 description: >-

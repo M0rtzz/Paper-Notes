@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Plan and Budget: Effective and Efficient Test-Time Scaling on Reasoning LLMs
 description: >-

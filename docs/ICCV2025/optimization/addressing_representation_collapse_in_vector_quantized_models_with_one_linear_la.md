@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Addressing Representation Collapse in Vector Quantized Models with One Linear Layer
 description: >-

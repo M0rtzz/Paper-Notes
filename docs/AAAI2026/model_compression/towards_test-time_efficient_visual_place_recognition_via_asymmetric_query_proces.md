@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Test-time Efficient Visual Place Recognition via Asymmetric Query Processing
 description: >-

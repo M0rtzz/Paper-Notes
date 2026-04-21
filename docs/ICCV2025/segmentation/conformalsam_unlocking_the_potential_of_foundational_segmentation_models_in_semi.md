@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ConformalSAM: Unlocking the Potential of Foundational Segmentation Models in Semi-Supervised Semantic Segmentation with Conformal Prediction
 description: >-

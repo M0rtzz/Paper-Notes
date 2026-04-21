@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reasoned Safety Alignment: Ensuring Jailbreak Defense via Answer-Then-Check
 description: >-

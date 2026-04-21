@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Outdoor Monocular SLAM with Global Scale-Consistent 3D Gaussian Pointmaps
 description: >-
@@ -151,10 +151,10 @@ NVS 在所有数据集上 PSNR 提升 +2.73/+4.42/+4.98；跟踪在 KITTI、DL3D
 
 ## 相关论文
 
+- [WildGS-SLAM: Monocular Gaussian Splatting SLAM in Dynamic Environments](../../CVPR2025/3d_vision/wildgs-slam_monocular_gaussian_splatting_slam_in_dynamic_environments.md)
 - [Benchmarking Egocentric Visual-Inertial SLAM at City Scale](benchmarking_egocentric_visualinertial_slam_at_city_scale.md)
+- [MAGiC-SLAM: Multi-Agent Gaussian Globally Consistent SLAM](../../CVPR2025/3d_vision/magic-slam_multi-agent_gaussian_globally_consistent_slam.md)
 - [4D Gaussian Splatting SLAM](4d_gaussian_splatting_slam.md)
 - [Global-Aware Monocular Semantic Scene Completion with State Space Models](global-aware_monocular_semantic_scene_completion_with_state_space_models.md)
-- [MAGiC-SLAM: Multi-Agent Gaussian Globally Consistent SLAM](../../CVPR2025/3d_vision/magic-slam_multi-agent_gaussian_globally_consistent_slam.md)
-- [VTGaussian-SLAM: RGBD SLAM for Large Scale Scenes with Splatting View-Tied 3D Gaussians](../../ICML2025/3d_vision/vtgaussian-slam_rgbd_slam_for_large_scale_scenes_with_splatting_view-tied_3d_gau.md)
 
 <!-- RELATED:END -->

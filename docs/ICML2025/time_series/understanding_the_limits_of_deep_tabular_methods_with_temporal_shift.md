@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Understanding the Limits of Deep Tabular Methods with Temporal Shift
 description: >-
@@ -194,8 +194,8 @@ $$\text{Fourier}(t, T) = [\sin(\frac{2\pi k t}{T}), \cos(\frac{2\pi k t}{T})] \i
 
 - [SynTSBench: Rethinking Temporal Pattern Learning in Deep Learning Models for Time Series](../../NeurIPS2025/time_series/syntsbench_rethinking_temporal_pattern_learning_in_deep_learning_models_for_time.md)
 - [Selective Learning for Deep Time Series Forecasting](../../NeurIPS2025/time_series/selective_learning_for_deep_time_series_forecasting.md)
-- [IonCast: A Deep Learning Framework for Forecasting Ionospheric Dynamics](../../NeurIPS2025/time_series/ioncast_a_deep_learning_framework_for_forecasting_ionospheric_dynamics.md)
 - [TQNet: Temporal Query Network for Efficient Multivariate Time Series Forecasting](temporal_query_network_for_efficient_multivariate_time_series_forecasting.md)
+- [IonCast: A Deep Learning Framework for Forecasting Ionospheric Dynamics](../../NeurIPS2025/time_series/ioncast_a_deep_learning_framework_for_forecasting_ionospheric_dynamics.md)
 - [scits scientific time series understanding and generation with llms](../../ICLR2026/time_series/scits_scientific_time_series_understanding_and_generation_with_llms.md)
 
 <!-- RELATED:END -->

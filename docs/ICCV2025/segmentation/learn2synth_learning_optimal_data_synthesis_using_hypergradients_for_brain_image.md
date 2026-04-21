@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learn2Synth: Learning Optimal Data Synthesis Using Hypergradients for Brain Image Segmentation
 description: >-

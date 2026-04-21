@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Do LLMs Give Psychometrically Plausible Responses in Educational Assessments?
 description: >-

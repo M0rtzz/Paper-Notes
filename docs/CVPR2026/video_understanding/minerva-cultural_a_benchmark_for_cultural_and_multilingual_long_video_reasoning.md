@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MINERVA-Cultural: A Benchmark for Cultural and Multilingual Long Video Reasoning
 description: >-

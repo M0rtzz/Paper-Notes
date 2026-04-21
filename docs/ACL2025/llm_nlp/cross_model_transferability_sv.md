@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cross-model Transferability among Large Language Models on the Platonic Representations of Concepts
 description: >-

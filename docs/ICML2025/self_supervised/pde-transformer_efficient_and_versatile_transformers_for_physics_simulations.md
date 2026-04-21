@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PDE-Transformer: Efficient and Versatile Transformers for Physics Simulations
 description: >-
@@ -212,7 +212,7 @@ $$\mathcal{L}_S = \mathbb{E} \left[ \| \mathcal{M}_\Theta(\mathbf{u}_{\text{in}}
 - [Test-Time Training Provably Improves Transformers as In-Context Learners](test-time_training_provably_improves_transformers_as_in-context_learners.md)
 - [Transformers without Normalization](../../CVPR2025/self_supervised/transformers_without_normalization.md)
 - [Update Your Transformer to the Latest Release: Re-Basin of Task Vectors](update_your_transformer_to_the_latest_release_re-basin_of_task_vectors.md)
+- [MAP: Unleashing Hybrid Mamba-Transformer Vision Backbone's Potential with Masked Autoregressive Pretraining](../../CVPR2025/self_supervised/map_unleashing_hybrid_mamba-transformer_vision_backbones_potential_with_masked_a.md)
 - [From Prototypes to General Distributions: An Efficient Curriculum for Masked Image Modeling](../../CVPR2025/self_supervised/from_prototypes_to_general_distributions_an_efficient_curriculum_for_masked_imag.md)
-- [DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers](../../CVPR2026/self_supervised/diversedit_towards_diverse_representation_learning_in_diffusion_transformers.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mixing Expert Knowledge: Bring Human Thoughts Back to the Game of Go
 description: >-

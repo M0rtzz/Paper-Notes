@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Probability Calibration for Precipitation Nowcasting
 description: >-
@@ -160,8 +160,8 @@ $$\hat{p} = \begin{cases} \sigma_{\text{softmax}}(z), & \text{if } \hat{y} = y \
 
 - [Learning with Calibration: Exploring Test-Time Computing of Spatio-Temporal Forecasting](learning_with_calibration_exploring_test-time_computing_of_spatio-temporal_forec.md)
 - [Time-O1: Time-Series Forecasting Needs Transformed Label Alignment](time-o1_time-series_forecasting_needs_transformed_label_alignment.md)
-- [In-Context Learning of Stochastic Differential Equations with Foundation Inference Models](in-context_learning_of_stochastic_differential_equations_with_foundation_inferen.md)
-- [Improving Time Series Forecasting via Instance-aware Post-hoc Revision (PIR)](improving_time_series_forecasting_via_instance-aware_post-hoc_revision.md)
-- [TimePerceiver: An Encoder-Decoder Framework for Generalized Time-Series Forecasting](timeperceiver_an_encoder-decoder_framework_for_generalized_time-series_forecasti.md)
+- [Selective Learning for Deep Time Series Forecasting](selective_learning_for_deep_time_series_forecasting.md)
+- [Connecting the Dots: 面向电离层预测的机器学习数据集](connecting_the_dots_a_machine_learning_ready_dataset_for_ionospheric_forecasting.md)
+- [PlanU: Large Language Model Reasoning through Planning under Uncertainty](planu_large_language_model_reasoning_through_planning_under_uncertainty.md)
 
 <!-- RELATED:END -->

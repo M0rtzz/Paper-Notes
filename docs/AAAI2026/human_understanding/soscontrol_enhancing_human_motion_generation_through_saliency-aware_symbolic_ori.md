@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SOSControl: Enhancing Human Motion Generation through Saliency-Aware Symbolic Orientation and Timing Control
 description: >-

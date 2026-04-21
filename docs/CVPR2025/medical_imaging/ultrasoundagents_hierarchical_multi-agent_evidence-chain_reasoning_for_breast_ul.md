@@ -123,9 +123,9 @@ $$R_M = \lambda_1 \cdot \mathbb{I}[y_{mal}^{pred} = y_{mal}^{gt}] + \lambda_2 \c
 ## 相关论文
 
 - [A Semi-Supervised Framework for Breast Ultrasound Segmentation with Training-Free Pseudo-Label Generation and Label Refinement](a_semi-supervised_framework_for_breast_ultrasound_segmentation_with_training-fre.md)
-- [H-DDx: A Hierarchical Evaluation Framework for Differential Diagnosis](../../NeurIPS2025/medical_imaging/h-ddx_a_hierarchical_evaluation_framework_for_differential_diagnosis.md)
 - [LungNoduleAgent: A Collaborative Multi-Agent System for Precision Diagnosis of Lung Nodules](../../AAAI2026/medical_imaging/lungnoduleagent_a_collaborative_multi-agent_system_for_precision_diagnosis_of_lu.md)
+- [H-DDx: A Hierarchical Evaluation Framework for Differential Diagnosis](../../NeurIPS2025/medical_imaging/h-ddx_a_hierarchical_evaluation_framework_for_differential_diagnosis.md)
 - [MMedAgent-RL: Optimizing Multi-Agent Collaboration for Multimodal Medical Reasoning](../../ICLR2026/medical_imaging/mmedagent-rl_optimizing_multi-agent_collaboration_for_multimodal_medical_reasoni.md)
-- [GIIM: Graph-based Learning of Inter- and Intra-view Dependencies for Multi-view Medical Image Diagnosis](giim_graph-based_learning_of_inter-_and_intra-view_dependencies_for_multi-view_m.md)
+- [Resp-Agent: An Agent-Based System for Multimodal Respiratory Sound Generation and Disease Diagnosis](../../ICLR2026/medical_imaging/resp-agent_an_agent-based_system_for_multimodal_respiratory_sound_generation_and.md)
 
 <!-- RELATED:END -->

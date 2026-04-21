@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Pharmacophore-Guided Generative Design of Novel Drug-Like Molecules
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PoSh: Using Scene Graphs to Guide LLMs-as-a-Judge for Detailed Image Descriptions
 description: >-
@@ -127,7 +127,7 @@ PoSh是推理时指标，无训练过程。QA评分器Ψ使用Qwen3-14B，存在
 ## 相关论文
 
 - [RADAR: Reasoning-Ability and Difficulty-Aware Routing for Reasoning LLMs](radar_reasoning-ability_and_difficulty-aware_routing_for_reasoning_llms.md)
-- [On the Possible Detectability of Image-in-Image Steganography](../../CVPR2026/interpretability/on_the_possible_detectability_of_image-in-image_steganography.md)
+- [On the Possible Detectability of Image-in-Image Steganography](../../CVPR2026/interpretability/on_the_possible_detectability_of_imageinimage_steg.md)
 - [Enhancing Automated Interpretability with Output-Centric Feature Descriptions](../../ACL2025/interpretability/output_centric_interpretability.md)
 - [Edit-As-Act: Goal-Regressive Planning for Open-Vocabulary 3D Indoor Scene Editing](../../CVPR2026/interpretability/edit-as-act_goal-regressive_planning_for_open-vocabulary_3d_indoor_scene_editing.md)
 - [Recursive Think-Answer Process for LLMs and VLMs](../../CVPR2026/interpretability/recursive_think-answer_process_for_llms_and_vlms.md)

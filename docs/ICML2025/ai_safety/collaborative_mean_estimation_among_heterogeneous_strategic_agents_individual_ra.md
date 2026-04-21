@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Collaborative Mean Estimation Among Heterogeneous Strategic Agents: Individual Rationality, Fairness, and Truthful Contribution
 description: >-

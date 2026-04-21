@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Measuring the Impact of Rotation Equivariance on Aerial Object Detection
 description: >-

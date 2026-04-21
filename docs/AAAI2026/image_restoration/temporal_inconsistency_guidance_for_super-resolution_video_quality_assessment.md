@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Temporal Inconsistency Guidance for Super-resolution Video Quality Assessment
 description: >-
@@ -179,8 +179,8 @@ TIG-SVQA 在 FLOPs 上仅次于 FAST-VQA，参数量与 VSR-QAD 相当，但性�
 
 - [SpatioTemporal Difference Network for Video Depth Super-Resolution](spatiotemporal_difference_network_for_video_depth_super-resolution.md)
 - [Augmenting Perceptual Super-Resolution via Image Quality Predictors](../../CVPR2025/image_restoration/augmenting_perceptual_super-resolution_via_image_quality_predictors.md)
-- [Trust but Verify: Adaptive Conditioning for Reference-Based Diffusion Super-Resolution](../../ICLR2026/image_restoration/trust_but_verify_adaptive_conditioning_for_reference-based_diffusion_super-resol.md)
+- [Progressive Focused Transformer for Single Image Super-Resolution](../../CVPR2025/image_restoration/progressive_focused_transformer_for_single_image_super-resolution.md)
 - [HQ-SVC: Towards High-Quality Zero-Shot Singing Voice Conversion in Low-Resource Scenarios](hq-svc_towards_high-quality_zero-shot_singing_voice_conversion_in_low-resource_s.md)
-- [RAW-Domain Degradation Models for Realistic Smartphone Super-Resolution](../../CVPR2026/image_restoration/raw-domain_degradation_models_for_realistic_smartphone_super-resolution.md)
+- [Trust but Verify: Adaptive Conditioning for Reference-Based Diffusion Super-Resolution](../../ICLR2026/image_restoration/trust_but_verify_adaptive_conditioning_for_reference-based_diffusion_super-resol.md)
 
 <!-- RELATED:END -->

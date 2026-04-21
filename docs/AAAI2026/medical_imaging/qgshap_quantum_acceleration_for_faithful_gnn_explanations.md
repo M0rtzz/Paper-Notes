@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] QGShap: Quantum Acceleration for Faithful GNN Explanations
 description: >-

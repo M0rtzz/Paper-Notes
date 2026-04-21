@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LightSplat: Fast and Memory-Efficient Open-Vocabulary 3D Scene Understanding in Five Seconds
 description: >-

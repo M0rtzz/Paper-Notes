@@ -1,7 +1,17 @@
-﻿---
-title: "DoF-Gaussian: Controllable Depth-of-Field for 3D Gaussian Splatting"
-description: "为3DGS引入基于几何光学的透镜成像模型，实现从浅景深输入图像重建清晰场景并支持可控景深渲染"
-tags: ["3D高斯", "景深控制", "散焦去模糊", "透镜模型", "深度先验", "新视角合成"]
+---
+title: >-
+  [论文解读] DoF-Gaussian: Controllable Depth-of-Field for 3D Gaussian Splatting
+description: >-
+  [CVPR 2025][3D视觉][3D高斯] 提出 DoF-Gaussian，为 3D 高斯表示引入基于几何光学的可学习透镜成像模型，通过逐场景深度先验调整和离焦-对焦自适应策略，实现从浅景深（散焦模糊）输入图像重建清晰 3D 场景，并支持可控景深渲染（重对焦、光圈调节、散焦形状变换等交互应用）。
+tags:
+  - CVPR 2025
+  - 3D视觉
+  - 3D高斯
+  - 景深控制
+  - 散焦去模糊
+  - 透镜成像模型
+  - 深度先验
+  - 弥散圆
 ---
 
 # DoF-Gaussian: Controllable Depth-of-Field for 3D Gaussian Splatting
@@ -129,9 +139,9 @@ DoF-Gaussian 在去模糊指标上全面最优或次优，且是唯一基于 3DG
 ## 相关论文
 
 - [DepthSplat: Connecting Gaussian Splatting and Depth](depthsplat_connecting_gaussian_splatting_and_depth.md)
-- [3D Convex Splatting: Radiance Field Rendering with 3D Smooth Convexes](3d_convex_splatting_radiance_field_rendering_with_3d_smooth_convexes.md)
-- [FantasyStyle: Controllable Stylized Distillation for 3D Gaussian Splatting](../../AAAI2026/3d_vision/fantasystyle_controllable_stylized_distillation_for_3d_gaussian_splatting.md)
 - [DashGaussian: Optimizing 3D Gaussian Splatting in 200 Seconds](dashgaussian_optimizing_3d_gaussian_splatting_in_200_seconds.md)
-- [Hardware-Rasterized Ray-Based Gaussian Splatting](hardware-rasterized_ray-based_gaussian_splatting.md)
+- [3D Gaussian Inpainting with Depth-Guided Cross-View Consistency](3d_gaussian_inpainting_with_depth-guided_cross-view_consistency.md)
+- [HyperGS: Hyperspectral 3D Gaussian Splatting](hypergs_hyperspectral_3d_gaussian_splatting.md)
+- [3D-HGS: 3D Half-Gaussian Splatting](3d-hgs_3d_half-gaussian_splatting.md)
 
 <!-- RELATED:END -->

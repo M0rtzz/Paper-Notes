@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GardenDesigner: Encoding Aesthetic Principles into Jiangnan Garden Construction via a Chain of Agents
 description: >-

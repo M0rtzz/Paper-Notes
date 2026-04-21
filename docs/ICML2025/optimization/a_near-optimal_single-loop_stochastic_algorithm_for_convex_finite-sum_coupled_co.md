@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Near-Optimal Single-Loop Stochastic Algorithm for Convex Finite-Sum Coupled Compositional Optimization
 description: >-

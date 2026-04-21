@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Toward a Dynamic Stackelberg Game-Theoretic Framework for Agentic AI Defense Against LLM Jailbreaking
 description: >-

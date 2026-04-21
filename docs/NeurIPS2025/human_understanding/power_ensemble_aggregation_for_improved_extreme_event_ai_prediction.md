@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Power Ensemble Aggregation for Improved Extreme Event AI Prediction
 description: >-
@@ -134,9 +134,9 @@ tags:
 ## 相关论文
 
 - [TensorRL-QAS: Reinforcement Learning with Tensor Networks for Improved Quantum Architecture Search](tensorrl-qas_reinforcement_learning_with_tensor_networks_for_improved_quantum_ar.md)
-- [Conformal Prediction for Zero-Shot Models](../../CVPR2025/human_understanding/conformal_prediction_for_zero-shot_models.md)
+- [Remote Photoplethysmography in Real-World and Extreme Lighting Scenarios](../../CVPR2025/human_understanding/remote_photoplethysmography_in_real-world_and_extreme_lighting_scenarios.md)
 - [AAAR-1.0: Assessing AI's Potential to Assist Research](../../ICML2025/human_understanding/aaar-10_assessing_ais_potential_to_assist_research.md)
+- [Conformal Prediction for Zero-Shot Models](../../CVPR2025/human_understanding/conformal_prediction_for_zero-shot_models.md)
 - [Two is Better than One: Efficient Ensemble Defense for Robust and Compact Models](../../CVPR2025/human_understanding/two_is_better_than_one_efficient_ensemble_defense_for_robust_and_compact_models.md)
-- [Maximizing Asynchronicity in Event-based Neural Networks](../../ICLR2026/human_understanding/maximizing_asynchronicity_in_event-based_neural_networks.md)
 
 <!-- RELATED:END -->

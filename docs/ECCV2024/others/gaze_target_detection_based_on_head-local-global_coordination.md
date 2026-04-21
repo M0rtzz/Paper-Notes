@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gaze Target Detection Based on Head-Local-Global Coordination
 description: >-

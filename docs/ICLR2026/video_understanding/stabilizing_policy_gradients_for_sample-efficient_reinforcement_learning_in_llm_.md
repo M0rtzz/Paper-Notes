@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stabilizing Policy Gradients for Sample-Efficient Reinforcement Learning in LLM Reasoning
 description: >-

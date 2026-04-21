@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Counteractive RL: Rethinking Core Principles for Efficient and Scalable Deep Reinforcement Learning
 description: >-

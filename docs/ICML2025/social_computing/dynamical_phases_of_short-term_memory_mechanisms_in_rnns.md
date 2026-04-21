@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamical Phases of Short-Term Memory Mechanisms in RNNs
 description: >-
@@ -135,10 +135,10 @@ tags:
 
 ## 相关论文
 
-- [OR-Bench: An Over-Refusal Benchmark for Large Language Models](or-bench_an_over-refusal_benchmark_for_large_language_models.md)
-- [DEFAME: Dynamic Evidence-based FAct-checking with Multimodal Experts](defame_dynamic_evidence-based_fact-checking_with_multimodal_experts.md)
-- [When Bad Data Leads to Good Models](when_bad_data_leads_to_good_models.md)
 - [Raising the Bar: Investigating the Values of Large Language Models via Generative Evolving Testing](raising_the_bar_investigating_the_values_of_large_language_models_via_generative.md)
+- [OR-Bench: An Over-Refusal Benchmark for Large Language Models](or-bench_an_over-refusal_benchmark_for_large_language_models.md)
+- [When Bad Data Leads to Good Models](when_bad_data_leads_to_good_models.md)
+- [DEFAME: Dynamic Evidence-based FAct-checking with Multimodal Experts](defame_dynamic_evidence-based_fact-checking_with_multimodal_experts.md)
 - [Learning Survival Distributions with the Asymmetric Laplace Distribution](learning_survival_distributions_with_the_asymmetric_laplace_distribution.md)
 
 <!-- RELATED:END -->

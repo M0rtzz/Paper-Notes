@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Comprehensive Scene Understanding: Integrating First and Third-Person Views for LVLMs
 description: >-

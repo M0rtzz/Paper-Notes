@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Expressive Temporal Specifications for Reward Monitoring
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MicroEvoEval: A Systematic Evaluation Framework for Image-Based Microstructure Evolution Prediction
 description: >-
@@ -129,6 +129,6 @@ VMamba 在保持最优精度的同时推理效率极高，是实用替代模型�
 - [EvoEngineer: Mastering Automated CUDA Kernel Code Evolution with Large Language Models](../../ICLR2026/llm_efficiency/evoengineer_mastering_automated_cuda_kernel_code_evolution_with_large_language_m.md)
 - [When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework](../../ICLR2026/llm_efficiency/when_does_divide_and_conquer_work_for_long_context_llm_a_noise_decomposition_fra.md)
 - [A Unified Framework for Establishing the Universal Approximation of Transformer-Type Architectures](../../NeurIPS2025/llm_efficiency/a_unified_framework_for_establishing_the_universal_approxima.md)
-- [Dynamics of Spontaneous Topic Changes in Next Token Prediction with Self-Attention](../../NeurIPS2025/llm_efficiency/dynamics_of_spontaneous_topic_changes_in_next_token_prediction_with_self-attenti.md)
+- [LOCORE: Image Re-ranking with Long-Context Sequence Modeling](../../CVPR2025/llm_efficiency/locore_image_re-ranking_with_long-context_sequence_modeling.md)
 
 <!-- RELATED:END -->

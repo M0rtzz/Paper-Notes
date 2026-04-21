@@ -1,7 +1,16 @@
-﻿---
-title: "Mosaic of Modalities: A Comprehensive Benchmark for Multimodal Graph Learning"
-description: "首个同时包含文本和视觉节点属性的多模态图学习基准MM-Graph，涵盖7个数据集和3类图任务"
-tags: ["multimodal graph learning", "benchmark", "GNN", "knowledge graph", "CVPR2025"]
+---
+title: >-
+  [论文解读] Mosaic of Modalities: A Comprehensive Benchmark for Multimodal Graph Learning
+description: >-
+  [CVPR 2025][多模态][多模态图学习] 本文提出MM-Graph——首个同时包含文本和视觉节点属性的综合性图学习基准，涵盖7个不同规模的真实数据集和3类图任务（链接预测/节点分类/知识图谱补全），系统评估了视觉信息对图学习的影响，揭示了"多模态GNN不如传统GNN"和"特征对齐至关重要"等关键发现。
+tags:
+  - CVPR 2025
+  - 多模态
+  - 多模态图学习
+  - 基准测试
+  - 图神经网络
+  - 知识图谱补全
+  - 特征对齐
 ---
 
 # Mosaic of Modalities: A Comprehensive Benchmark for Multimodal Graph Learning
@@ -119,10 +128,10 @@ MM-Graph包含7个数据集（3个链接预测+2个节点分类+2个知识图谱
 
 ## 相关论文
 
-- [GRAB: A Challenging GRaph Analysis Benchmark for Large Multimodal Models](../../ICCV2025/multimodal_vlm/grab_a_challenging_graph_analysis_benchmark_for_large_multimodal_models.md)
-- [GraphVLM: Benchmarking Vision Language Models for Multimodal Graph Learning](../../CVPR2026/multimodal_vlm/graphvlm_benchmark_vlm_graph_learning.md)
+- [GraphVLM: Benchmarking Vision Language Models for Multimodal Graph Learning](../../CVPR2026/multimodal_vlm/graphvlm_benchmarking_vision_language_models_for_multimodal_graph_learning.md)
 - [OpenING: A Comprehensive Benchmark for Judging Open-ended Interleaved Image-Text Generation](opening_a_comprehensive_benchmark_for_judging_open-ended_interleaved_image-text_.md)
+- [GRAB: A Challenging GRaph Analysis Benchmark for Large Multimodal Models](../../ICCV2025/multimodal_vlm/grab_a_challenging_graph_analysis_benchmark_for_large_multimodal_models.md)
+- [ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](../../ACL2025/multimodal_vlm/reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)
 - [LongDocURL: a Comprehensive Multimodal Long Document Benchmark Integrating Understanding, Reasoning, and Locating](../../ACL2025/multimodal_vlm/longdocurl_multimodal_long_doc.md)
-- [MMPerspective: Do MLLMs Understand Perspective? A Comprehensive Benchmark for Perspective Perception, Reasoning, and Robustness](../../NeurIPS2025/multimodal_vlm/mmperspective_do_mllms_understand_perspective_a_comprehensive_benchmark_for_pers.md)
 
 <!-- RELATED:END -->

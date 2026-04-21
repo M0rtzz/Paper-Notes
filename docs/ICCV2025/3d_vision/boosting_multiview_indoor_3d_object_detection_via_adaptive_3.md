@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction
 description: >-

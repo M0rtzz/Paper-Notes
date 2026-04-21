@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] "sudo rm -rf agentic_security" | SUDO: Screen-based Universal Detox2tox Offense
 description: >-
@@ -158,9 +158,9 @@ SUDO相比最优基线Superior Model提升了**5.7倍**。
 ## 相关论文
 
 - [AgentAuditor: Human-Level Safety and Security Evaluation for LLM Agents](../../NeurIPS2025/llm_agent/agentauditor_humanlevel_safety_and_security_evaluation_for_l.md)
+- [REPRO-Bench: Can Agentic AI Systems Assess the Reproducibility of Social Science Research?](repro-bench_can_agentic_ai_systems_assess_the_reproducibility_of_research_claims.md)
 - [Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools](agentic_reasoning_tools.md)
 - [Agentic Knowledgeable Self-Awareness](agentic_knowledgeable_self-awareness.md)
 - [Self-Taught Agentic Long-Context Understanding](self_taught_agentic_long_ctx.md)
-- [SynWorld: Virtual Scenario Synthesis for Agentic Action Knowledge Refinement](synworld_agentic_action_knowledge.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SmartWilds: Multimodal Wildlife Monitoring Dataset
 description: >-

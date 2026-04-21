@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamic-DINO: Fine-Grained Mixture of Experts Tuning for Real-time Open-Vocabulary Object Detection
 description: >-

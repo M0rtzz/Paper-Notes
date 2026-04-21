@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Knowledge Distillation Detection for Open-weights Models
 description: >-
@@ -150,9 +150,9 @@ tags:
 ## 相关论文
 
 - [Why Knowledge Distillation Works in Generative Models: A Minimal Working Explanation](why_knowledge_distillation_works_in_generative_models_a_minimal_working_explanat.md)
+- [DKDM: Data-Free Knowledge Distillation for Diffusion Models with Any Architecture](../../CVPR2025/image_generation/dkdm_data-free_knowledge_distillation_for_diffusion_models_with_any_architecture.md)
 - [Learnable Sampler Distillation for Discrete Diffusion Models](learnable_sampler_distillation_for_discrete_diffusion_models.md)
 - [Epistemic Uncertainty for Generated Image Detection](epistemic_uncertainty_for_generated_image_detection.md)
 - [Distilled Decoding 2: One-step Sampling of Image Auto-regressive Models with Conditional Score Distillation](distilled_decoding_2_onestep_sampling_of_image_autoregressiv.md)
-- [Can Knowledge-Graph-based Retrieval Augmented Generation Really Retrieve What You Need?](can_knowledge-graph-based_retrieval_augmented_generation_really_retrieve_what_yo.md)
 
 <!-- RELATED:END -->

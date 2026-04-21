@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Ctrl-D: Controllable Dynamic 3D Scene Editing with Personalized 2D Diffusion
 description: >-
@@ -122,9 +122,9 @@ tags:
 ## 相关论文
 
 - [Instruct-4DGS: Efficient Dynamic Scene Editing via 4D Gaussian-based Static-Dynamic Separation](efficient_dynamic_scene_editing_via_4d_gaussian-based_static-dynamic_separation.md)
+- [SceneFactor: Factored Latent 3D Diffusion for Controllable 3D Scene Generation](scenefactor_factored_latent_3d_diffusion_for_controllable_3d_scene_generation.md)
 - [Color3D: Controllable and Consistent 3D Colorization with Personalized Colorizer](../../ICLR2026/3d_vision/color3d_controllable_and_consistent_3d_colorization_with_personalized_colorizer.md)
-- [GaussHDR: High Dynamic Range Gaussian Splatting via Learning Unified 3D and 2D Local Tone Mapping](gausshdr_high_dynamic_range_gaussian_splatting_via_learning_unified_3d_and_2d_lo.md)
-- [FreeScene: Mixed Graph Diffusion for 3D Scene Synthesis from Free Prompts](freescene_mixed_graph_diffusion_for_3d_scene_synthesis_from_free_prompts.md)
-- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
+- [Rethinking End-to-End 2D to 3D Scene Segmentation in Gaussian Splatting](rethinking_end-to-end_2d_to_3d_scene_segmentation_in_gaussian_splatting.md)
+- [SpectroMotion: Dynamic 3D Reconstruction of Specular Scenes](spectromotion_dynamic_3d_reconstruction_of_specular_scenes.md)
 
 <!-- RELATED:END -->

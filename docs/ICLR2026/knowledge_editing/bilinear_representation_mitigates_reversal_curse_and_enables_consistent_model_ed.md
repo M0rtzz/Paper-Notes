@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bilinear Representation Mitigates Reversal Curse and Enables Consistent Model Editing
 description: >-
@@ -158,8 +158,8 @@ tags:
 
 ## 相关论文
 
-- [Energy-Regularized Sequential Model Editing on Hyperspheres](energy-regularized_sequential_model_editing_on_hyperspheres.md)
 - [Fine-tuning Done Right in Model Editing](fine-tuning_done_right_in_model_editing.md)
+- [Energy-Regularized Sequential Model Editing on Hyperspheres](energy-regularized_sequential_model_editing_on_hyperspheres.md)
 - [Representation Shattering in Transformers: A Synthetic Study with Knowledge Editing](../../ICML2025/knowledge_editing/representation_shattering_in_transformers_a_synthetic_study_with_knowledge_editi.md)
 - [EAMET: Robust Massive Model Editing via Embedding Alignment Optimization](eamet_robust_massive_model_editing_via_embedding_alignment_optimization.md)
 - [GOT-Edit: Geometry-Aware Generic Object Tracking via Online Model Editing](got-edit_geometry-aware_generic_object_tracking_via_online_model_editing.md)

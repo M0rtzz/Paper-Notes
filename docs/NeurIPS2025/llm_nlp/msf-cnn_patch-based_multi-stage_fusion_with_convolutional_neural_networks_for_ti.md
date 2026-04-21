@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] msf-CNN: Patch-based Multi-Stage Fusion with Convolutional Neural Networks for TinyML
 description: >-
@@ -174,6 +174,6 @@ RAM 压缩比：msf-CNN 相比 Vanilla 减少 87%–96%，相比 MCUNetV2/Stream
 - [CAT: Circular-Convolutional Attention for Sub-Quadratic Transformers](cat_circular-convolutional_attention_for_sub-quadratic_transformers.md)
 - [Opinion Maximization in Social Networks by Modifying Internal Opinions](opinion_maximization_in_social_networks_by_modifying_internal_opinions.md)
 - [Large Language Models Miss the Multi-Agent Mark](large_language_models_miss_the_multi-agent_mark.md)
-- [PluralisticBehaviorSuite: Stress-Testing Multi-Turn Adherence to Custom Behavioral Policies](pluralistic_behavior_suite_stress-testing_multi-turn_adherence_to_custom_behavio.md)
+- [SYMPHONY: Synergistic Multi-agent Planning with Heterogeneous Language Model Assemblies](symphony_synergistic_multi-agent_planning_with_heterogeneous_language_model_asse.md)
 
 <!-- RELATED:END -->

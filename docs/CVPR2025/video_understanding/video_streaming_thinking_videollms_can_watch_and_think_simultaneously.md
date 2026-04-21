@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Video Streaming Thinking: VideoLLMs Can Watch and Think Simultaneously
 description: >-

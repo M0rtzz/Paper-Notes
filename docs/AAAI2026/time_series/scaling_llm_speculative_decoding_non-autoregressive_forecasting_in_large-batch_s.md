@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling LLM Speculative Decoding: Non-Autoregressive Forecasting in Large-Batch Scenarios
 description: >-

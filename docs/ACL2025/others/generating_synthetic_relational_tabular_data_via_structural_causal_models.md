@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generating Synthetic Relational Tabular Data via Structural Causal Models
 description: >-

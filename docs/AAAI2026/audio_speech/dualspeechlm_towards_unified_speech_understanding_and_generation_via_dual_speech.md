@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DualSpeechLM: Towards Unified Speech Understanding and Generation via Dual Speech Token Modeling
 description: >-
@@ -158,7 +158,7 @@ DualSpeechLM 包含两个核心模块：
 - [HPSU: A Benchmark for Human-Level Perception in Real-World Spoken Speech Understanding](hpsu_a_benchmark_for_human-level_perception_in_real-world_spoken_speech_understa.md)
 - [Efficient Speech Language Modeling via Energy Distance in Continuous Latent Space](../../NeurIPS2025/audio_speech/efficient_speech_language_modeling_via_energy_distance_in_continuous_latent_spac.md)
 - [Pay Attention to CTC: Fast and Robust Pseudo-Labelling for Unified Speech Recognition](../../ICLR2026/audio_speech/pay_attention_to_ctc_fast_and_robust_pseudo-labelling_for_unified_speech_recogni.md)
-- [Chain-Talker: Chain Understanding and Rendering for Empathetic Conversational Speech Synthesis](../../ACL2025/audio_speech/chain-talker_chain_understanding_and_rendering_for_empathetic_conversational_spe.md)
+- [Cross-Space Synergy: A Unified Framework for Multimodal Emotion Recognition in Conversation](cross-space_synergy_a_unified_framework_for_multimodal_emotion_recognition_in_co.md)
 - [Crab: A Unified Audio-Visual Scene Understanding Model with Explicit Cooperation](../../CVPR2025/audio_speech/crab_a_unified_audio-visual_scene_understanding_model_with_explicit_cooperation.md)
 
 <!-- RELATED:END -->

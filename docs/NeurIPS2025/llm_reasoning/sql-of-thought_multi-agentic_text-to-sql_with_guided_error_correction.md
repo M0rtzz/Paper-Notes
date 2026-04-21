@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SQL-of-Thought: Multi-agentic Text-to-SQL with Guided Error Correction
 description: >-

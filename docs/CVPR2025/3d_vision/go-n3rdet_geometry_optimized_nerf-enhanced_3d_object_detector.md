@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GO-N3RDet: Geometry Optimized NeRF-enhanced 3D Object Detector
 description: >-
@@ -124,9 +124,9 @@ ScanNet mAP@0.25，基于R50：
 ## 相关论文
 
 - [Flow-NeRF: Joint Learning of Geometry, Poses, and Dense Flow within Unified Neural Representations](flow-nerf_joint_learning_of_geometry_poses_and_dense_flow_within_unified_neural_.md)
+- [PBR-NeRF: Inverse Rendering with Physics-Based Neural Fields](pbr-nerf_inverse_rendering_with_physics-based_neural_fields.md)
 - [On Geometry-Enhanced Parameter-Efficient Fine-Tuning for 3D Scene Segmentation](../../NeurIPS2025/3d_vision/on_geometry-enhanced_parameter-efficient_fine-tuning_for_3d_scene_segmentation.md)
+- [RDD: Robust Feature Detector and Descriptor Using Deformable Transformer](rdd_robust_feature_detector_and_descriptor_using_deformable_transformer.md)
 - [LookCloser: Frequency-aware Radiance Field for Tiny-Detail Scene (FA-NeRF)](lookcloser_frequency-aware_radiance_field_for_tiny-detail_scene.md)
-- [3DEgo: 3D Editing on the Go!](../../ECCV2024/3d_vision/3dego_3d_editing_on_the_go.md)
-- [DAGSM: Disentangled Avatar Generation with GS-enhanced Mesh](dagsm_disentangled_avatar_generation_with_gs-enhanced_mesh.md)
 
 <!-- RELATED:END -->

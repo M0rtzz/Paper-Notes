@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Judging by the Rules: Compliance-Aligned Framework for Modern Slavery Statement Monitoring
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Convolutional Monge Mapping between EEG Datasets to Support Independent Component Labeling
 description: >-

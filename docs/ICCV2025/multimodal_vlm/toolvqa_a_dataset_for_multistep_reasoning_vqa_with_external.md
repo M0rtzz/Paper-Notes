@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ToolVQA: A Dataset for Multi-step Reasoning VQA with External Tools
 description: >-

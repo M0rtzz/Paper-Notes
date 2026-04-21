@@ -158,6 +158,6 @@ AOI 在无法获取模型参数的黑盒场景同样有效：
 - [Wanda++: Pruning Large Language Models via Regional Gradients](wanda_pruning_large_language_models_via_regional_gradients.md)
 - [STUN: Structured-Then-Unstructured Pruning for Scalable MoE Pruning](stun_moe_pruning.md)
 - [LongReD: Mitigating Short-Text Degradation of Long-Context Large Language Models via Restoration Distillation](longred_mitigating_short-text_degradation_of_long-context_large_language_models_.md)
-- [Best Subset Selection: Optimal Pursuit for Feature Selection and Elimination](../../ICML2025/model_compression/best_subset_selection_optimal_pursuit_for_feature_selection_and_elimination.md)
+- [EAC-MoE: Expert-Selection Aware Compressor for Mixture-of-Experts Large Language Models](eac_moe_expert_aware_compression.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploring How Generative MLLMs Perceive More Than CLIP with the Same Vision Encoder
 description: >-

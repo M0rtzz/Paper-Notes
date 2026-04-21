@@ -1,12 +1,10 @@
-﻿---
-title: "Dual Prompting Image Restoration with Diffusion Transformers"
-conference: "CVPR 2025"
-arxiv: "2504.17825"
-code: ""
-project: ""
-领域: "图像生成"
-关键词: ["图像修复", "扩散Transformer", "SD3", "视觉提示", "超分辨率"]
-评分: "⭐⭐⭐⭐"
+---
+title: >-
+  [论文解读] Dual Prompting Image Restoration with Diffusion Transformers (DPIR)
+description: >-
+  [图像生成] 提出 DPIR，基于 SD3 (Diffusion Transformer) 的图像修复模型，通过轻量级低质量图像条件分支和全局-局部视觉双提示(dual prompting)分支，从多角度引入退化图像信息，首次系统性地将 DiT 应用于图像修复并取得 SOTA 性能。
+tags:
+  - 图像生成
 ---
 
 # Dual Prompting Image Restoration with Diffusion Transformers (DPIR)
@@ -125,9 +123,9 @@ VAE 微调损失：$\|\mathcal{D}(\mathcal{E}_{dr}(x_{\text{LQ}})) - x_{\text{HQ
 ## 相关论文
 
 - [Dual Diffusion for Unified Image Generation and Understanding](dual_diffusion_for_unified_image_generation_and_understanding.md)
-- [GenDeg: Diffusion-based Degradation Synthesis for Generalizable All-In-One Image Restoration](gendeg_diffusion-based_degradation_synthesis_for_generalizable_all-in-one_image_.md)
-- [Navigating Image Restoration with VAR's Distribution Alignment Prior](navigating_image_restoration_with_vars_distribution_alignment_prior.md)
-- [Enhancing Image Aesthetics with Dual-Conditioned Diffusion Models Guided by Multimodal Perception](enhancing_image_aesthetics_with_dual-conditioned_diffusion_models_guided_by_mult.md)
 - [DualAnoDiff: Dual-Interrelated Diffusion Model for Few-Shot Anomaly Image Generation](dual-interrelated_diffusion_model_for_few-shot_anomaly_image_generation.md)
+- [EDiT: Efficient Diffusion Transformers with Linear Compressed Attention](../../ICCV2025/image_generation/edit_efficient_diffusion_transformers_with_linear_compressed_attention.md)
+- [Lay-Your-Scene: Natural Scene Layout Generation with Diffusion Transformers](../../ICCV2025/image_generation/lay-your-scene_natural_scene_layout_generation_with_diffusion_transformers.md)
+- [Multi-party Collaborative Attention Control for Image Customization](multi-party_collaborative_attention_control_for_image_customization.md)
 
 <!-- RELATED:END -->

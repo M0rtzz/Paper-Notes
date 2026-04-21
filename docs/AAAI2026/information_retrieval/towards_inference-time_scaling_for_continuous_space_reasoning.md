@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Inference-Time Scaling for Continuous Space Reasoning
 description: >-

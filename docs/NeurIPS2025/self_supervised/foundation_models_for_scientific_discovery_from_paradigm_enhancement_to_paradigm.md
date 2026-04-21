@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Foundation Models for Scientific Discovery: From Paradigm Enhancement to Paradigm Transition
 description: >-

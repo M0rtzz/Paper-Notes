@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stress-testing Machine Generated Text Detection: Shifting Language Models Writing Style to Fool Detectors
 description: >-
@@ -155,7 +155,7 @@ MAGE 通过 27 个 LLM + 7 种任务的大规模训练集提升泛化性，但�
 - [On the Risk of Evidence Pollution for Malicious Social Text Detection in the Era of LLMs](on_the_risk_of_evidence_pollution_for_malicious_social_text_detection_in_the_era.md)
 - [PluralisticBehaviorSuite: Stress-Testing Multi-Turn Adherence to Custom Behavioral Policies](../../NeurIPS2025/llm_nlp/pluralistic_behavior_suite_stress-testing_multi-turn_adherence_to_custom_behavio.md)
 - [Aligning Large Language Models with Implicit Preferences from User-Generated Content](pugc_align_implicit_pref_ugc.md)
-- [EdiText: Controllable Coarse-to-Fine Text Editing with Diffusion Language Models](editext_diffusion_text_editing.md)
 - [Investigating Context-Faithfulness in Large Language Models: The Roles of Memory Strength and Evidence Style](investigating_context-faithfulness_in_large_language_models_the_roles_of_memory_.md)
+- [EdiText: Controllable Coarse-to-Fine Text Editing with Diffusion Language Models](editext_diffusion_text_editing.md)
 
 <!-- RELATED:END -->

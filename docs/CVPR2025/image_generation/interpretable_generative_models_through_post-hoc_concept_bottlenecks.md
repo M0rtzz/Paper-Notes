@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Interpretable Generative Models through Post-hoc Concept Bottlenecks
 description: >-
@@ -143,9 +143,9 @@ tags:
 ## 相关论文
 
 - [Interpretable and Steerable Concept Bottleneck Sparse Autoencoders](../../CVPR2026/image_generation/interpretable_and_steerable_concept_bottleneck_sparse_autoencoders.md)
+- [Q-DiT: Accurate Post-Training Quantization for Diffusion Transformers](q-dit_accurate_post-training_quantization_for_diffusion_transformers.md)
 - [Emergence and Evolution of Interpretable Concepts in Diffusion Models](../../NeurIPS2025/image_generation/emergence_and_evolution_of_interpretable_concepts_in_diffusi.md)
-- [Concept-TRAK: Understanding how diffusion models learn concepts through concept-level attribution](../../ICLR2026/image_generation/concept-trak_understanding_how_diffusion_models_learn_concepts_through_concept-l.md)
-- [Concept Replacer: Replacing Sensitive Concepts in Diffusion Models via Precision Localization](concept_replacer_replacing_sensitive_concepts_in_diffusion_models_via_precision_.md)
-- [EmoEdit: Evoking Emotions through Image Manipulation](emoedit_evoking_emotions_through_image_manipulation.md)
+- [ICE: Intrinsic Concept Extraction from a Single Image via Diffusion Models](ice_intrinsic_concept_extraction_from_a_single_image_via_diffusion_models.md)
+- [Efficient Fine-Tuning and Concept Suppression for Pruned Diffusion Models](efficient_fine-tuning_and_concept_suppression_for_pruned_diffusion_models.md)
 
 <!-- RELATED:END -->

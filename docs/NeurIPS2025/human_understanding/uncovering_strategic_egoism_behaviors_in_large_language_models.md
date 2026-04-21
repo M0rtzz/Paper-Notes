@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Uncovering Strategic Egoism Behaviors in Large Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Grounding-IQA: Grounding Multimodal Language Models for Image Quality Assessment
 description: >-

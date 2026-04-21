@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] H-GAR: A Hierarchical Interaction Framework via Goal-Driven Observation-Action Refinement for Robotic Manipulation
 description: >-

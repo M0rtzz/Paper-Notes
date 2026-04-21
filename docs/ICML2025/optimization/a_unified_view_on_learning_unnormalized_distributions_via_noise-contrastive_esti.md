@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Unified View on Learning Unnormalized Distributions via Noise-Contrastive Estimation
 description: >-

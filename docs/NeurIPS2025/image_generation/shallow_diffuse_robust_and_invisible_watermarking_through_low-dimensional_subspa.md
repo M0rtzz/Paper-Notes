@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Shallow Diffuse: Robust and Invisible Watermarking through Low-Dimensional Subspaces in Diffusion Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stress-Testing Alignment Audits with Prompt-Level Strategic Deception
 description: >-

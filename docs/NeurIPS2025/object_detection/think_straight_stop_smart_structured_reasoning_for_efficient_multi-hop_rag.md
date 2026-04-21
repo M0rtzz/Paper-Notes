@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Think Straight, Stop Smart: Structured Reasoning for Efficient Multi-Hop RAG
 description: >-

@@ -165,9 +165,9 @@ $$R_{\text{QMA}} = \text{InsFollowing} \cdot (0.4 + 0.6 \cdot \text{Quality})$$
 ## 相关论文
 
 - [Visual-ERM: Reward Modeling for Visual Equivalence](visual-erm_reward_modeling_for_visual_equivalence.md)
+- [UniReal: Universal Image Generation and Editing via Learning Real-world Dynamics](unireal_universal_image_generation_and_editing_via_learning_real-world_dynamics.md)
 - [Towards Robust Zero-Shot Reinforcement Learning](../../NeurIPS2025/image_generation/towards_robust_zero-shot_reinforcement_learning.md)
-- [Enhancing Spatial Understanding in Image Generation via Reward Modeling](../../CVPR2026/image_generation/enhancing_spatial_understanding_in_image_generation_via_reward_modeling.md)
-- [Editing Away the Evidence: Diffusion-Based Image Manipulation and the Failure Modes of Robust Watermarking](editing_away_the_evidence_diffusion-based_image_manipulation_and_the_failure_mod.md)
-- [DreamOmni: Unified Image Generation and Editing](dreamomni_unified_image_generation_and_editing.md)
+- [Reward Fine-Tuning Two-Step Diffusion Models via Learning Differentiable Latent-Space Surrogate Reward](reward_fine-tuning_two-step_diffusion_models_via_learning_differentiable_latent-.md)
+- [ReNeg: Learning Negative Embedding with Reward Guidance](reneg_learning_negative_embedding_with_reward_guidance.md)
 
 <!-- RELATED:END -->

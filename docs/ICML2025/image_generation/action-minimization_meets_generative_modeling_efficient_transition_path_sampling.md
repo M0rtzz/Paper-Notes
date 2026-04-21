@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Action-Minimization Meets Generative Modeling: Efficient Transition Path Sampling with the Onsager-Machlup Functional
 description: >-
@@ -155,10 +155,10 @@ OM 优化在所有三个指标上均优于或匹配 100μs 的无偏 MD 模拟�
 
 ## 相关论文
 
-- [Efficient Generative Modeling with Residual Vector Quantization-Based Tokens](efficient_generative_modeling_with_residual_vector_quantization-based_tokens.md)
+- [Multidimensional Adaptive Coefficient for Inference Trajectory Optimization in Flow and Diffusion](multidimensional_adaptive_coefficient_for_inference_trajectory_optimization_in_f.md)
 - [DCTdiff: Intriguing Properties of Image Generative Modeling in the DCT Space](dctdiff_intriguing_properties_of_image_generative_modeling_in_the_dct_space.md)
 - [Compositional Scene Understanding through Inverse Generative Modeling](compositional_scene_understanding_through_inverse_generative_modeling.md)
-- [Accelerating Diffusion Sampling via Exploiting Local Transition Coherence](../../ICCV2025/image_generation/accelerating_diffusion_sampling_via_exploiting_local_transition_coherence.md)
-- [SummDiff: Generative Modeling of Video Summarization with Diffusion](../../ICCV2025/image_generation/summdiff_generative_modeling_of_video_summarization_with_diffusion.md)
+- [DDIS: When Model Knowledge Meets Diffusion Model](when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_synthesis.md)
+- [IMPACT: Iterative Mask-based Parallel Decoding for Text-to-Audio Generation with Diffusion Modeling](impact_iterative_mask-based_parallel_decoding_for_text-to-audio_generation_with_.md)
 
 <!-- RELATED:END -->

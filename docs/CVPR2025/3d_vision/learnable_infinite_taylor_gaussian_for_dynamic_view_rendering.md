@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Learnable Infinite Taylor Gaussian for Dynamic View Rendering
 description: >-
-  [CVPR 2025][dynamic scene] 提出可学习无穷 Taylor 级数建模动态高斯基元的时变变换场，将三阶 Taylor 展开（建模大运动）与 Peano 余项（由 MLP+LBS 学习）结合，构成无近似误差的完整 Taylor 级数，在动态新视角渲染任务上实现 SOTA。
+  [CVPR 2025][3D视觉][dynamic scene] 提出可学习无穷 Taylor 级数（Learnable Infinite Taylor Formula）建模动态场景中高斯基元的位置/旋转/缩放随时间的演化，用三阶 Taylor 展开捕捉大运动、MLP+LBS 构造 Peano 余项补偿高阶项，实现无近似误差的运动建模，N3DV 和 Technicolor 数据集上超越 SOTA。
 tags:
   - CVPR 2025
-  - dynamic scene reconstruction
+  - 3D视觉
+  - dynamic scene
   - 3D Gaussian Splatting
   - Taylor series
+  - Peano remainder
   - novel view synthesis
-  - deformation field
 ---
 
 # Learnable Infinite Taylor Gaussian for Dynamic View Rendering
@@ -148,7 +149,7 @@ Technicolor Birthday 上相比 4DGS 提升 **58.25%**。
 - [ActiveGAMER: Active GAussian Mapping through Efficient Rendering](activegamer_active_gaussian_mapping_through_efficient_rendering.md)
 - [IRIS: Inverse Rendering of Indoor Scenes from Low Dynamic Range Images](iris_inverse_rendering_of_indoor_scenes_from_low_dynamic_range_images.md)
 - [DropoutGS: Dropping Out Gaussians for Better Sparse-view Rendering](dropoutgs_dropping_out_gaussians_for_better_sparse-view_rendering.md)
+- [WildGS-SLAM: Monocular Gaussian Splatting SLAM in Dynamic Environments](wildgs-slam_monocular_gaussian_splatting_slam_in_dynamic_environments.md)
 - [BillBoard Splatting (BBSplat): Learnable Textured Primitives for Novel View Synthesis](../../ICCV2025/3d_vision/billboard_splatting_bbsplat_learnable_textured_primitives_fo.md)
-- [MoSca: Dynamic Gaussian Fusion from Casual Videos via 4D Motion Scaffolds](mosca_dynamic_gaussian_fusion_from_casual_videos_via_4d_motion_scaffolds.md)
 
 <!-- RELATED:END -->

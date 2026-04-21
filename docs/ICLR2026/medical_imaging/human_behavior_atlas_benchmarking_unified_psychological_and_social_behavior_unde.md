@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Human Behavior Atlas: Benchmarking Unified Psychological and Social Behavior Understanding
 description: >-
@@ -164,10 +164,10 @@ SFT 和 BAM 在 10 项中 8 项超越通用多模态 LLM。
 
 ## 相关论文
 
+- [Unlocking Multi-Site Clinical Data: A Federated Approach to Privacy-First Child Autism Behavior Analysis](../../CVPR2026/medical_imaging/unlocking_multi-site_clinical_data_a_federated_approach_to_privacy-first_child_a.md)
 - [MedXpertQA: Benchmarking Expert-Level Medical Reasoning and Understanding](../../ICML2025/medical_imaging/medxpertqa_benchmarking_expert-level_medical_reasoning_and_understanding.md)
-- [A Unified Solution to Video Fusion: From Multi-Frame Learning to Benchmarking](../../NeurIPS2025/medical_imaging/a_unified_solution_to_video_fusion_from_multi-frame_learning_to_benchmarking.md)
 - [DM4CT: Benchmarking Diffusion Models for Computed Tomography Reconstruction](dm4ct_benchmarking_diffusion_models_for_computed_tomography_reconstruction.md)
-- [Unified Biomolecular Trajectory Generation via Pretrained Variational Bridge](unified_biomolecular_trajectory_generation_via_pretrained_variational_bridge.md)
 - [Boosting Medical Visual Understanding From Multi-Granular Language Learning](boosting_medical_visual_understanding_from_multi-granular_language_learning.md)
+- [Unified Biomolecular Trajectory Generation via Pretrained Variational Bridge](unified_biomolecular_trajectory_generation_via_pretrained_variational_bridge.md)
 
 <!-- RELATED:END -->

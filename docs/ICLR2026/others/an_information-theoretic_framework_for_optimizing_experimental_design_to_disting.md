@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] An Information-Theoretic Framework For Optimizing Experimental Design To Distinguish Probabilistic Neural Codes
 description: >-

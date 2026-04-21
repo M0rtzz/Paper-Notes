@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CleanDIFT: Diffusion Features without Noise
 description: >-
@@ -122,10 +122,10 @@ tags:
 
 ## 相关论文
 
+- [Visual Lexicon: Rich Image Features in Language Space](visual_lexicon_rich_image_features_in_language_space.md)
 - [Efficient Personalization of Quantized Diffusion Model without Backpropagation (ZOODiP)](efficient_personalization_of_quantized_diffusion_model_without_backpropagation.md)
 - [Improving Diffusion Inverse Problem Solving with Decoupled Noise Annealing](improving_diffusion_inverse_problem_solving_with_decoupled_noise_annealing.md)
-- [Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
-- [Channel-wise Noise Scheduled Diffusion for Inverse Rendering in Indoor Scenes](channel-wise_noise_scheduled_diffusion_for_inverse_rendering_in_indoor_scenes.md)
-- [IntroStyle: Training-Free Introspective Style Attribution using Diffusion Features](../../ICCV2025/image_generation/introstyle_training-free_introspective_style_attribution_using_diffusion_feature.md)
+- [Divide and Conquer: Heterogeneous Noise Integration for Diffusion-based Adversarial Purification](divide_and_conquer_heterogeneous_noise_integration_for_diffusion-based_adversari.md)
+- [Noise Diffusion for Enhancing Semantic Faithfulness in Text-to-Image Synthesis](noise_diffusion_for_enhancing_semantic_faithfulness_in_text-to-image_synthesis.md)
 
 <!-- RELATED:END -->

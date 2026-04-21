@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploring and Leveraging Class Vectors for Classifier Editing
 description: >-
@@ -143,8 +143,8 @@ Class Vector 通过消除排版文本引起的分类偏移来防御排版攻击�
 
 - [Robust or Suggestible? Exploring Non-Clinical Induction in LLM Drug-Safety Decisions](robust_or_suggestible_exploring_non-clinical_induction_in_llm_drug-safety_decisi.md)
 - [STARC-9: A Large-scale Dataset for Multi-Class Tissue Classification for CRC Histopathology](starc-9_a_large-scale_dataset_for_multi-class_tissue_classification_for_crc_hist.md)
+- [MoEdit: On Learning Quantity Perception for Multi-Object Image Editing](../../CVPR2025/medical_imaging/moedit_on_learning_quantity_perception_for_multi-object_image_editing.md)
+- [FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields](../../CVPR2025/medical_imaging/ffacenerf_few-shot_face_editing_in_neural_radiance_fields.md)
 - [Leveraging Partial SMILES Validation Scheme for Enhanced Drug Design in Reinforcement Learning Frameworks](../../ICML2025/medical_imaging/leveraging_partial_smiles_validation_scheme_for_enhanced_drug_design_in_reinforc.md)
-- [Controllable Sequence Editing for Biological and Clinical Trajectories](../../ICLR2026/medical_imaging/controllable_sequence_editing_for_biological_and_clinical_trajectories.md)
-- [Toward Long-Tailed Online Anomaly Detection through Class-Agnostic Concepts](../../ICCV2025/medical_imaging/toward_long-tailed_online_anomaly_detection_through_class-agnostic_concepts.md)
 
 <!-- RELATED:END -->

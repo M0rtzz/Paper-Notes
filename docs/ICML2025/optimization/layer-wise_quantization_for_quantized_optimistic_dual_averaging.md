@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Layer-wise Quantization for Quantized Optimistic Dual Averaging
 description: >-

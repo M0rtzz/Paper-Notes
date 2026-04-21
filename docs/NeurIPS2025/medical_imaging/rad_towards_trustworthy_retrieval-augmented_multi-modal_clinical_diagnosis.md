@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RAD: Towards Trustworthy Retrieval-Augmented Multi-modal Clinical Diagnosis
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VI3NR: Variance Informed Initialization for Implicit Neural Representations
 description: >-
@@ -92,8 +92,8 @@ tags:
 
 - [A Probability-guided Sampler for Neural Implicit Surface Rendering](../../ECCV2024/human_understanding/a_probabilityguided_sampler_for_neural_implicit_surface_rend.md)
 - [PISR: Polarimetric Neural Implicit Surface Reconstruction for Textureless and Specular Objects](../../ECCV2024/human_understanding/pisr_polarimetric_neural_implicit_surface_reconstruction_for_textureless_and_spe.md)
-- [Refine Now, Query Fast: A Decoupled Refinement Paradigm for Implicit Neural Fields](../../ICLR2026/human_understanding/refine_now_query_fast_a_decoupled_refinement_paradigm_for_implicit_neural_fields.md)
 - [WIR3D: Visually-Informed and Geometry-Aware 3D Shape Abstraction](../../ICCV2025/human_understanding/wir3d_visually-informed_and_geometry-aware_3d_shape_abstraction.md)
-- [SignRep: Enhancing Self-Supervised Sign Representations](../../ICCV2025/human_understanding/signrep_enhancing_self-supervised_sign_representations.md)
+- [Refine Now, Query Fast: A Decoupled Refinement Paradigm for Implicit Neural Fields](../../ICLR2026/human_understanding/refine_now_query_fast_a_decoupled_refinement_paradigm_for_implicit_neural_fields.md)
+- [NN-Former: Rethinking Graph Structure in Neural Architecture Representation](nn-former_rethinking_graph_structure_in_neural_architecture_representation.md)
 
 <!-- RELATED:END -->

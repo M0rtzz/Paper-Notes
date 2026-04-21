@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning to Sample Effective and Diverse Prompts for Text-to-Image Generation
 description: >-
@@ -113,9 +113,9 @@ tags:
 ## 相关论文
 
 - [DiverseFlow: Sample-Efficient Diverse Mode Coverage in Flows](diverseflow_sample-efficient_diverse_mode_coverage_in_flows.md)
+- [ShapeWords: Guiding Text-to-Image Synthesis with 3D Shape-Aware Prompts](shapewords_guiding_text-to-image_synthesis_with_3d_shape-aware_prompts.md)
 - [A Comprehensive Study of Decoder-Only LLMs for Text-to-Image Generation](a_comprehensive_study_of_decoder-only_llms_for_text-to-image_generation.md)
-- [LumiCtrl: Learning Illuminant Prompts for Lighting Control in Personalized Text-to-Image Models](../../CVPR2026/image_generation/lumictrl_learning_illuminant_prompts_for_lighting_control_in_personalized_text-t.md)
-- [Evolve to Inspire: Novelty Search for Diverse Image Generation](../../NeurIPS2025/image_generation/evolve_to_inspire_novelty_search_for_diverse_image_generation.md)
-- [Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
+- [Towards Understanding and Quantifying Uncertainty for Text-to-Image Generation](towards_understanding_and_quantifying_uncertainty_for_text-to-image_generation.md)
+- [Learning Flow Fields in Attention for Controllable Person Image Generation](learning_flow_fields_in_attention_for_controllable_person_image_generation.md)
 
 <!-- RELATED:END -->

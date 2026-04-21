@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PGR-Net: Prior-Guided ROI Reasoning Network for Brain Tumor MRI Segmentation
 description: >-
@@ -147,7 +147,7 @@ BraTS-2019 / BraTS-2023 Dice (%) 消融：
 ## 相关论文
 
 - [Federated Modality-specific Encoders and Partially Personalized Fusion Decoder for Multimodal Brain Tumor Segmentation](federated_modality-specific_encoders_and_partially_personalized_fusion_decoder_f.md)
-- [Diffusion-Based Feature Denoising and Using NNMF for Robust Brain Tumor Classification](diffusion-based_feature_denoising_and_using_nnmf_for_robust_brain_tumor_classifi.md)
+- [Diffusion-Based Feature Denoising and Using NNMF for Robust Brain Tumor Classification](diffusionbased_feature_denoising_and_using_nnmf_fo.md)
 - [Multiscale Structure-Guided Latent Diffusion for Multimodal MRI Translation](multiscale_structureguided_latent_diffusion_for_mu.md)
 - [Virtual Full-stack Scanning of Brain MRI via Imputing Any Quantised Code](virtual_full-stack_scanning_of_brain_mri_via_imputing_any_quantised_code.md)
 - [CodeBrain: Virtual Full-stack Scanning of Brain MRI via Imputing Any Quantised Code](virtual_fullstack_scanning_of_brain_mri_via_imputi.md)

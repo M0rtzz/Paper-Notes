@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation
 description: >-

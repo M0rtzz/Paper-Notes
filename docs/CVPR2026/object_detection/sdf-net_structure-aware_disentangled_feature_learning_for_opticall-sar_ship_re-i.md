@@ -153,8 +153,8 @@ $$\mathcal{L} = \mathcal{L}_{id} + \lambda_{orth} \mathcal{L}_{orth} + \lambda_{
 ## 相关论文
 
 - [AR²-4FV: Anchored Referring and Re-identification for Long-Term Grounding in Fixed-View Videos](ar2-4fv_anchored_referring_and_re-identification_for_long-term_grounding_in_fixe.md)
-- [TIACam: Text-Anchored Invariant Feature Learning with Auto-Augmentation for Camera-Robust Zero-Watermarking](tiacam_text-anchored_invariant_feature_learning_with_auto-augmentation_for_camer.md)
 - [Stake the Points: Structure-Faithful Instance Unlearning](stake_the_points_structure-faithful_instance_unlearning.md)
+- [TIACam: Text-Anchored Invariant Feature Learning with Auto-Augmentation for Camera-Robust Zero-Watermarking](tiacam_text-anchored_invariant_feature_learning_with_auto-augmentation_for_camer.md)
 - [SSTAG: Structure-Aware Self-Supervised Learning Method for Text-Attributed Graphs](../../NeurIPS2025/object_detection/sstag_structure-aware_self-supervised_learning_method_for_text-attributed_graphs.md)
 - [Semantic Discrepancy-aware Detector for Image Forgery Identification](../../ICCV2025/object_detection/semantic_discrepancy-aware_detector_for_image_forgery_identification.md)
 

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GaussianFlowOcc: Sparse and Weakly Supervised Occupancy Estimation using Gaussian Splatting and Temporal Flow
 description: >-
@@ -164,6 +164,6 @@ $$\vec{v}(t) = \text{MLP}_v(\mathcal{G}_f \oplus \Psi(t))$$
 - [AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving](ad-gs_object-aware_b-spline_gaussian_splatting_for_self-supervised_autonomous_dr.md)
 - [GS-Occ3D: Scaling Vision-only Occupancy Reconstruction with Gaussian Splatting](gs-occ3d_scaling_vision-only_occupancy_reconstruction_with_gaussian_splatting.md)
 - [Self-Supervised Sparse Sensor Fusion for Long Range Perception](self-supervised_sparse_sensor_fusion_for_long_range_perception.md)
-- [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multi-view_robust_physical_adversarial_camouflage_g.md)
+- [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multiview_robust_physical_adver.md)
 
 <!-- RELATED:END -->

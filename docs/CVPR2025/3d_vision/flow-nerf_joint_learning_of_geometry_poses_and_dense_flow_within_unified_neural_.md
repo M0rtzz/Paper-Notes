@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Flow-NeRF: Joint Learning of Geometry, Poses, and Dense Flow within Unified Neural Representations
 description: >-
@@ -115,9 +115,9 @@ tags:
 ## 相关论文
 
 - [Floxels: Fast Unsupervised Voxel Based Scene Flow Estimation](floxels_fast_unsupervised_voxel_based_scene_flow_estimation.md)
+- [Zero-Shot Monocular Scene Flow Estimation in the Wild](zero-shot_monocular_scene_flow_estimation_in_the_wild.md)
 - [End-to-End Implicit Neural Representations for Classification](end-to-end_implicit_neural_representations_for_classification.md)
 - [A Unified Image-Dense Annotation Generation Model for Underwater Scenes](a_unified_image-dense_annotation_generation_model_for_underwater_scenes.md)
-- [GO-N3RDet: Geometry Optimized NeRF-enhanced 3D Object Detector](go-n3rdet_geometry_optimized_nerf-enhanced_3d_object_detector.md)
-- [E-MoFlow: Learning Egomotion and Optical Flow from Event Data via Implicit Regularization](../../NeurIPS2025/3d_vision/e-moflow_learning_egomotion_and_optical_flow_from_event_data_via_implicit_regula.md)
+- [PBR-NeRF: Inverse Rendering with Physics-Based Neural Fields](pbr-nerf_inverse_rendering_with_physics-based_neural_fields.md)
 
 <!-- RELATED:END -->

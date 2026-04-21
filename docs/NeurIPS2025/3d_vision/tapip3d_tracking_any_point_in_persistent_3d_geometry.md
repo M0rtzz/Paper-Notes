@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TAPIP3D: Tracking Any Point in Persistent 3D Geometry
 description: >-

@@ -1,15 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Golden Cudgel Network for Real-Time Semantic Segmentation
 description: >-
-  [CVPR 2025][semantic segmentation] 提出 GCNet，通过 Golden Cudgel Block 在训练时垂直堆叠多卷积+水平展开多路径，在推理时重参数化为单个 3×3 卷积，无需教师模型即可兼顾精度与速度。
+  [CVPR 2025][图像分割][图像分割] 提出 GCNet，核心是 Golden Cudgel Block (GCBlock)，训练时自膨胀（多卷积多路径）提升学习能力，推理时自收缩（重参数化为单个 3×3 卷积）加速推理，无需外部教师模型即成为"自蒸馏"方案，在 Cityscapes 上以 77.3% mIoU / 193.3 FPS 超越现有实时分割模型。
 tags:
   - CVPR 2025
-  - semantic segmentation
+  - 图像分割
   - reparameterization
-  - real-time
-  - 结构重参数化
-  - 自监督蒸馏
+  - GCBlock
+  - dual-branch
+  - Cityscapes
 ---
 
 # Golden Cudgel Network for Real-Time Semantic Segmentation
@@ -164,8 +164,8 @@ $$L = L_{sh} + \alpha L_{ash}$$
 
 - [PicoSAM3: Real-Time In-Sensor Region-of-Interest Segmentation](picosam3_real-time_in-sensor_region-of-interest_segmentation.md)
 - [The Golden Subspace: Where Efficiency Meets Generalization in Continual Test-Time Adaptation](../../CVPR2026/segmentation/the_golden_subspace_where_efficiency_meets_generalization_in_continual_test-time.md)
-- [Condensing Action Segmentation Datasets via Generative Network Inversion](condensing_action_segmentation_datasets_via_generative_network_inversion.md)
+- [Universal Domain Adaptation for Semantic Segmentation](universal_domain_adaptation_for_semantic_segmentation.md)
+- [Semantic Library Adaptation: LoRA Retrieval and Fusion for Open-Vocabulary Semantic Segmentation](semantic_library_adaptation_lora_retrieval_and_fusion_for_open-vocabulary_semant.md)
 - [MaSS13K: A Matting-level Semantic Segmentation Benchmark](mass13k_a_matting-level_semantic_segmentation_benchmark.md)
-- [Effective SAM Combination for Open-Vocabulary Semantic Segmentation](effective_sam_combination_for_open-vocabulary_semantic_segmentation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GACD: Mitigating Multimodal Hallucinations via Gradient-based Self-Reflection
 description: >-

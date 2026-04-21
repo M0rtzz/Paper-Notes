@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improve Rule Retrieval and Reasoning with Self-Induction and Relevance ReEstimate
 description: >-

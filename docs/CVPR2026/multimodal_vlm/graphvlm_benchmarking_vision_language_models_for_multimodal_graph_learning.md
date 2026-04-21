@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GraphVLM: Benchmarking Vision Language Models for Multimodal Graph Learning
 description: >-

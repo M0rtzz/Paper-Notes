@@ -1,7 +1,7 @@
 <!-- 由 src/gen_todo.py 自动生成 -->
 # AAAI2026 论文笔记 TODO
 
-总计: 1379 篇 | 已完成: 1341 | 待更新: 38
+总计: 1379 篇 | 已完成: 1342 | 待更新: 37
 
 ---
 
@@ -1380,7 +1380,7 @@
 - [x] [x2edit revisiting arbitrary-instruction image editing through self-constructed d](image_generation/x2edit_revisiting_arbitrary-instruction_image_editing_through_self-constructed_d.md) | arXiv: 2508.07607
 - [x] [xlinear a lightweight and accurate mlp-based model for long-term time series for](human_understanding/xlinear_a_lightweight_and_accurate_mlp-based_model_for_long-term_time_series_for.md) | arXiv: 2601.09237
 - [x] [yes florence i will do better next time agentic feedback reasoning for humorous ](human_understanding/yes_florence_i_will_do_better_next_time_agentic_feedback_reasoning_for_humorous_.md) | arXiv: 2601.07232
-- [ ] [yolo-iod towards real time incremental object detection](object_detection/yolo-iod_towards_real_time_incremental_object_detection.md) | arXiv: 2512.22973
+- [x] [yolo-iod towards real time incremental object detection](object_detection/yolo-iod_towards_real_time_incremental_object_detection.md) | arXiv: 2512.22973
 - [x] [your ai-generated image detector can secretly achieve sota accuracy if calibrate](object_detection/your_ai-generated_image_detector_can_secretly_achieve_sota_accuracy_if_calibrate.md) | arXiv: 2602.01973
 - [x] [yours or mine overwriting attacks against neural audio watermarking](ai_safety/yours_or_mine_overwriting_attacks_against_neural_audio_watermarking.md) | arXiv: 2509.05835
 - [x] [zero-reference joint low-light enhancement and deblurring via visual autoregress](image_restoration/zero-reference_joint_low-light_enhancement_and_deblurring_via_visual_autoregress.md) | arXiv: 2511.18591

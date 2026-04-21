@@ -2,14 +2,17 @@
 title: >-
   [论文解读] MotionMap: Representing Multimodality in Human Pose Forecasting
 description: >-
-  [CVPR 2025][pose forecasting] 提出MotionMap热力图表示用于编码人体姿态预测中的多模态未来，结合codebook实现可变数量模式预测、模式置信度估计和采样高效性。
+  [CVPR 2025][人体理解][human pose forecasting] 提出MotionMap——用热力图表示运动空间分布的新范式，通过t-SNE降维+codebook实现可变数量模式预测和置信度量化，以最少采样实现最佳模式覆盖。
 tags:
   - CVPR 2025
-  - pose forecasting
-  - multimodality
+  - 人体理解
+  - human pose forecasting
+  - 多模态
   - heatmap
   - codebook
-  - 不确定性
+  - t-SNE
+  - uncertainty estimation
+  - mode coverage
 ---
 
 # MotionMap: Representing Multimodality in Human Pose Forecasting
@@ -147,9 +150,9 @@ MotionMap在多模态度量MMADE/MMFDE上全面最优。
 ## 相关论文
 
 - [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
+- [UniPose: A Unified Multimodal Framework for Human Pose Comprehension, Generation and Editing](unipose_a_unified_multimodal_framework_for_human_pose_comprehension_generation_a.md)
 - [PoseBH: Prototypical Multi-Dataset Training Beyond Human Pose Estimation](posebh_prototypical_multi-dataset_training_beyond_human_pose_estimation.md)
 - [BubbleFormer: Forecasting Boiling with Transformers](../../NeurIPS2025/human_understanding/bubbleformer_forecasting_boiling_with_transformers.md)
 - [Human Motion Forecasting in Dynamic Domain Shifts: A Homeostatic Continual Test-Time Adaptation Framework](../../ECCV2024/human_understanding/human_motion_forecasting_in_dynamic_domain_shifts_a_homeostatic_continual_test-t.md)
-- [PoseSOR: Human Pose Can Guide Our Attention](../../ECCV2024/human_understanding/posesor_human_pose_can_guide_our_attention.md)
 
 <!-- RELATED:END -->

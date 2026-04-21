@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Multiple Missing Values-Resistant Unsupervised Graph Anomaly Detection
 description: >-
@@ -215,7 +215,7 @@ M2V-UGAD 在缺失率从 10% 到 50% 的范围内性能几乎不变（0.93→0.9
 - [Sim-to-Real: An Unsupervised Noise Layer for Screen-Camera Watermarking Robustness](sim-to-real_an_unsupervised_noise_layer_for_screen-camera_watermarking_robustnes.md)
 - [Generalizing Fair Clustering to Multiple Groups: Algorithms and Applications](generalizing_fair_clustering_to_multiple_groups_algorithms_and_applications.md)
 - [From Static Benchmarks to Dynamic Protocol: Agent-Centric Text Anomaly Detection for Evaluating LLM Reasoning](../../ICLR2026/ai_safety/from_static_benchmarks_to_dynamic_protocol_agent-centric_text_anomaly_detection_.md)
-- [Argumentative Debates for Transparent Bias Detection](argumentative_debates_for_transparent_bias_detection_technic.md)
 - [Privacy-protected Retrieval-Augmented Generation for Knowledge Graph Question Answering](privacy-protected_retrieval-augmented_generation_for_knowledge_graph_question_an.md)
+- [FairGSE: Fairness-Aware Graph Neural Network without High False Positive Rates](fairgse_fairness-aware_graph_neural_network_without_high_false_positive_rates.md)
 
 <!-- RELATED:END -->

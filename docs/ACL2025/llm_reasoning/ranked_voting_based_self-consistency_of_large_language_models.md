@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Ranked Voting based Self-Consistency of Large Language Models
 description: >-

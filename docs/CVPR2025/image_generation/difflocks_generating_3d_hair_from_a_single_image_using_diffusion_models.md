@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiffLocks: Generating 3D Hair from a Single Image using Diffusion Models
 description: >-
@@ -78,10 +78,10 @@ F-score 提升 11%，速度快 8-23×。在自身评估集上更是达到 91.17 
 
 ## 相关论文
 
-- [ICE: Intrinsic Concept Extraction from a Single Image via Diffusion Models](ice_intrinsic_concept_extraction_from_a_single_image_via_diffusion_models.md)
-- [FaceCraft4D: Animated 3D Facial Avatar Generation from a Single Image](../../ICCV2025/image_generation/facecraft4d_animated_3d_facial_avatar_generation_from_a_single_image.md)
 - [DeClotH: Decomposable 3D Cloth and Human Body Reconstruction from a Single Image](decloth_decomposable_3d_cloth_and_human_body_reconstruction_from_a_single_image.md)
-- [Generating 3D House Wireframes with Semantics](../../ECCV2024/image_generation/generating_3d_house_wireframes_with_semantics.md)
-- [CustAny: Customizing Anything from A Single Example](custany_customizing_anything_from_a_single_example.md)
+- [ICE: Intrinsic Concept Extraction from a Single Image via Diffusion Models](ice_intrinsic_concept_extraction_from_a_single_image_via_diffusion_models.md)
+- [StdGEN: Semantic-Decomposed 3D Character Generation from Single Images](stdgen_semantic-decomposed_3d_character_generation_from_single_images.md)
+- [ScribbleLight: Single Image Indoor Relighting with Scribbles](scribblelight_single_image_indoor_relighting_with_scribbles.md)
+- [FaceCraft4D: Animated 3D Facial Avatar Generation from a Single Image](../../ICCV2025/image_generation/facecraft4d_animated_3d_facial_avatar_generation_from_a_single_image.md)
 
 <!-- RELATED:END -->

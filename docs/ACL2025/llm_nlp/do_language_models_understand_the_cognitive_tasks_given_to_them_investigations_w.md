@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Do Language Models Understand the Cognitive Tasks Given to Them?
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GuardAgent: Safeguard LLM Agents via Knowledge-Enabled Reasoning
 description: >-
@@ -120,9 +120,9 @@ LLM 分析安全规则和目标 Agent 的动作日志，生成结构化的检查
 ## 相关论文
 
 - [LLM Agents for Knowledge Discovery in Atomic Layer Processing](../../NeurIPS2025/llm_agent/llm_agents_for_knowledge_discovery_in_atomic_layer_processing.md)
+- [Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning in Web Agents](../../ICLR2026/llm_agent/web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_in_web_agents.md)
 - [Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents](../../ICLR2026/llm_agent/web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_for_web_agents.md)
 - [Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools](../../ACL2025/llm_agent/agentic_reasoning_tools.md)
 - [From Debate to Equilibrium: Belief-Driven Multi-Agent LLM Reasoning via Bayesian Nash Equilibrium](from_debate_to_equilibrium_belief-driven_multi-agent_llm_reasoning_via_bayesian_.md)
-- [Automating Complex Document Workflows via Stepwise and Rollback-Enabled Operations](../../AAAI2026/llm_agent/automating_complex_document_workflows_via_stepwise_and_rollback-enabled_operatio.md)
 
 <!-- RELATED:END -->

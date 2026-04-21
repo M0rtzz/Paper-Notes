@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Brain-tuning Improves Generalizability and Efficiency of Brain Alignment in Speech Models
 description: >-
@@ -133,8 +133,8 @@ tags:
 
 ## 相关论文
 
-- [The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning](../../ICML2025/medical_imaging/the_brains_bitter_lesson_scaling_speech_decoding_with_self-supervised_learning.md)
 - [The Human Brain as a Combinatorial Complex](the_human_brain_as_a_combinatorial_complex.md)
+- [The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning](../../ICML2025/medical_imaging/the_brains_bitter_lesson_scaling_speech_decoding_with_self-supervised_learning.md)
 - [Riemannian Flow Matching for Brain Connectivity Matrices via Pullback Geometry](riemannian_flow_matching_for_brain_connectivity_matrices_via_pullback_geometry.md)
 - [Brain Harmony: A Multimodal Foundation Model Unifying Morphology and Function into 1D Tokens](brain_harmony_a_multimodal_foundation_model_unifying_morphology_and_function_int.md)
 - [From Black Box to Biomarker: Sparse Autoencoders for Interpreting Speech Models of Parkinson's Disease](from_black_box_to_biomarker_sparse_autoencoders_for_interpreting_speech_models_o.md)

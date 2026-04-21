@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] An Empirical Investigation of Neural ODEs and Symbolic Regression for Dynamical Systems
 description: >-

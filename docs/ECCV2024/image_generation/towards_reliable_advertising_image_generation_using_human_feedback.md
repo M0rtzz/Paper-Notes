@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Reliable Advertising Image Generation Using Human Feedback
 description: >-
@@ -222,6 +222,6 @@ RFFT 可用率比原始模型提升 29.1 个百分点（56.4→85.5%），人工
 - [Text2Place: Affordance-aware Text Guided Human Placement](text2place_affordance-aware_text_guided_human_placement.md)
 - [Learning Semantic Latent Directions for Accurate and Controllable Human Motion Prediction](learning_semantic_latent_directions_for_accurate_and_controllable_human_motion_p.md)
 - [Latent Guard: a Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_text-to-image_generation.md)
-- [TRCE: Towards Reliable Malicious Concept Erasure in Text-to-Image Diffusion Models](../../ICCV2025/image_generation/trce_towards_reliable_malicious_concept_erasure_in_text-to-image_diffusion_model.md)
+- [Powerful and Flexible: Personalized Text-to-Image Generation via Reinforcement Learning](powerful_and_flexible_personalized_text-to-image_generation_via_reinforcement_le.md)
 
 <!-- RELATED:END -->

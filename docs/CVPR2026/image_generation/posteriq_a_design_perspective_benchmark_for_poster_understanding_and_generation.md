@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PosterIQ: A Design Perspective Benchmark for Poster Understanding and Generation
 description: >-

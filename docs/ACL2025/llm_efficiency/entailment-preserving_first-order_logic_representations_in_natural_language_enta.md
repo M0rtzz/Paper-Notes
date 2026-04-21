@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Entailment-Preserving First-order Logic Representations in Natural Language Entailment
 description: >-
@@ -143,7 +143,7 @@ tags:
 - [Robust Utility-Preserving Text Anonymization Based on Large Language Models](robust_utility-preserving_text_anonymization_based_on_large_language_models.md)
 - [GradOT: Training-free Gradient-preserving Offsite-tuning for Large Language Models](gradot_offsite_tuning.md)
 - [How to Train Long-Context Language Models (Effectively)](train_long_context_effectively.md)
-- [A Content-Preserving Secure Linguistic Steganography](../../AAAI2026/llm_efficiency/a_content-preserving_secure_linguistic_steganography.md)
+- [Literary Evidence Retrieval via Long-Context Language Models](literary_evidence_retrieval_via_long-context_language_models.md)
 - [LongSafety: Evaluating Long-Context Safety of Large Language Models](longsafety_evaluating_long-context_safety_of_large_language_models.md)
 
 <!-- RELATED:END -->

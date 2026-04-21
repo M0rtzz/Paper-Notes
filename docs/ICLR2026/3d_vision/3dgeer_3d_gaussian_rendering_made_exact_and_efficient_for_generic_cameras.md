@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3DGEER: 3D Gaussian Rendering Made Exact and Efficient for Generic Cameras
 description: >-

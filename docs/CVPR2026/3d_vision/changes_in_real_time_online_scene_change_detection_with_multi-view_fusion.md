@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Changes in Real Time: Online Scene Change Detection with Multi-View Fusion
 description: >-
@@ -163,7 +163,7 @@ tags:
 - [LTGS: Long-Term Gaussian Scene Chronology From Sparse View Updates](ltgs_long-term_gaussian_scene_chronology_from_sparse_view_updates.md)
 - [R4Det: 4D Radar-Camera Fusion for High-Performance 3D Object Detection# R4Det: 4D Radar-Camera Fusion for High-Performance 3D Object Detection](r4det_4d_radar_camera_fusion_3d_detection.md)
 - [EmbodiedSplat: Online Feed-Forward Semantic 3DGS for Open-Vocabulary 3D Scene Understanding](embodiedsplat_online_feed-forward_semantic_3dgs_for_open-vocabulary_3d_scene_und.md)
-- [Coherent Human-Scene Reconstruction from Multi-Person Multi-View Video in a Single Pass](coherent_humanscene_reconstruction_from_multiperso.md)
-- [Real-Time 3D Object Detection with Inference-Aligned Learning](../../AAAI2026/3d_vision/real-time_3d_object_detection_with_inference-aligned_learning.md)
+- [Multi-View Pose-Agnostic Change Localization with Zero Labels](../../CVPR2025/3d_vision/multi-view_pose-agnostic_change_localization_with_zero_labels.md)
+- [Coherent Human-Scene Reconstruction from Multi-Person Multi-View Video in a Single Pass](coherent_human-scene_reconstruction_from_multi-person_multi-view_video_in_a_sing.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Dialogue: A Profile-Dialogue Alignment Framework Towards General Role-Playing Language Model
 description: >-
@@ -123,8 +123,8 @@ Beyond Dialogue 框架包含三个核心阶段：
 
 - [Adaptive-VP: A Framework for LLM-Based Virtual Patients that Adapts to Trainees' Dialogue to Facilitate Nurse Communication Training](adaptive-vp_a_framework_for_llm-based_virtual_patients_that_adapts_to_trainees_d.md)
 - [Detecting Referring Expressions in Visually Grounded Dialogue with Autoregressive Language Models](detecting_referring_expressions_in_visually_grounded_dialogue_with_autoregressiv.md)
-- [Beyond Profile: From Surface-Level Facts to Deep Persona Simulation in LLMs](beyond_profile_from_surface-level_facts_to_deep_persona_simulation_in_llms.md)
 - [Chat-based Person Retrieval via Dialogue-Refined Cross-Modal Alignment](../../CVPR2025/llm_nlp/chat-based_person_retrieval_via_dialogue-refined_cross-modal_alignment.md)
+- [Beyond Profile: From Surface-Level Facts to Deep Persona Simulation in LLMs](beyond_profile_from_surface-level_facts_to_deep_persona_simulation_in_llms.md)
 - [Binary Classifier Optimization for Large Language Model Alignment](bco_binary_classifier_alignment.md)
 
 <!-- RELATED:END -->

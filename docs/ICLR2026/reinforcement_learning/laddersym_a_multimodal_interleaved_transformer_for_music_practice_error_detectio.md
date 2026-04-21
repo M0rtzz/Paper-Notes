@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LadderSym: A Multimodal Interleaved Transformer for Music Practice Error Detection
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PALM: Progress-Aware Policy Learning via Affordance Reasoning for Long-Horizon Robotic Manipulation
 description: >-

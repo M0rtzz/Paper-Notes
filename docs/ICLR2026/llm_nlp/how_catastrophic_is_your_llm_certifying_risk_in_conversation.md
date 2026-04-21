@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How Catastrophic is Your LLM? Certifying Risk in Conversation
 description: >-
@@ -148,7 +148,7 @@ tags:
 - [A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?](../../ACL2025/llm_nlp/a_survey_of_llm-based_agents_in_medicine_how_far_are_we_from_baymax.md)
 - [Are Your LLMs Capable of Stable Reasoning?](../../ACL2025/llm_nlp/are_your_llms_capable_of_stable_reasoning.md)
 - [On the Risk of Evidence Pollution for Malicious Social Text Detection in the Era of LLMs](../../ACL2025/llm_nlp/on_the_risk_of_evidence_pollution_for_malicious_social_text_detection_in_the_era.md)
-- [SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence](../../ACL2025/llm_nlp/selfelicit_evidence_highlighting.md)
 - [IPO: Your Language Model is Secretly a Preference Classifier](../../ACL2025/llm_nlp/ipo_your_language_model_is_secretly_a_preference_classifier.md)
+- [ConflictScope: Generative Value Conflicts Reveal LLM Priorities](quamo_quaternion_motions_for_vision-based_3d_human_kinematics_capture.md)
 
 <!-- RELATED:END -->

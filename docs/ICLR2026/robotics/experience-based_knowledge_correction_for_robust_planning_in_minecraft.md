@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Experience-based Knowledge Correction for Robust Planning in Minecraft
 description: >-

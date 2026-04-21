@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MultiHuman-Testbench: Benchmarking Image Generation for Multiple Humans
 description: >-

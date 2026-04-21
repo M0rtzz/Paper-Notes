@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Inner Speech as Behavior Guides: Steerable Imitation of Diverse Behaviors for Human-AI Coordination
 description: >-

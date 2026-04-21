@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unveiling Chain of Step Reasoning for Vision-Language Models with Fine-grained Rewards
 description: >-

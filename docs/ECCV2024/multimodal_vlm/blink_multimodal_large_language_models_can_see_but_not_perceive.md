@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BLINK: Multimodal Large Language Models Can See but Not Perceive
 description: >-

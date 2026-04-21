@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SPHINX: Structural Prediction using Hypergraph Inference Network
 description: >-

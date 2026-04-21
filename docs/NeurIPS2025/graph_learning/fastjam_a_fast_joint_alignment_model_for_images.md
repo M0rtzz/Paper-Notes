@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FastJAM: a Fast Joint Alignment Model for Images
 description: >-

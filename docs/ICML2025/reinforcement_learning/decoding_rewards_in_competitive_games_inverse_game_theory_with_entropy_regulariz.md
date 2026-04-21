@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Decoding Rewards in Competitive Games: Inverse Game Theory with Entropy Regularization
 description: >-
@@ -148,7 +148,7 @@ $$D(\mathcal{R}, \hat{\mathcal{R}}) \lesssim \frac{1}{\sqrt{T}}\left(\sqrt{S(m+n
 - [Learning to Trust Bellman Updates: Selective State-Adaptive Regularization for Offline RL](learning_to_trust_bellman_updates_selective_state-adaptive_regularization_for_of.md)
 - [Robust Offline Reinforcement Learning with Linearly Structured f-Divergence Regularization](robust_offline_reinforcement_learning_with_linearly_structured_f-divergence_regu.md)
 - [Convergence Theorems for Entropy-Regularized and Distributional Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/convergence_theorems_for_entropy-regularized_and_distributional_reinforcement_le.md)
-- [Learning Interestingness in Automated Mathematical Theory Formation](../../NeurIPS2025/reinforcement_learning/learning_interestingness_in_automated_mathematical_theory_formation.md)
 - [A Theory of Multi-Agent Generative Flow Networks](../../NeurIPS2025/reinforcement_learning/a_theory_of_multi-agent_generative_flow_networks.md)
+- [Learning Interestingness in Automated Mathematical Theory Formation](../../NeurIPS2025/reinforcement_learning/learning_interestingness_in_automated_mathematical_theory_formation.md)
 
 <!-- RELATED:END -->

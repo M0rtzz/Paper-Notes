@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] IRIS: Inverse Rendering of Indoor Scenes from Low Dynamic Range Images
 description: >-
@@ -122,10 +122,10 @@ IRIS的定性评估主要通过可视化对比：
 
 ## 相关论文
 
+- [PBR-NeRF: Inverse Rendering with Physics-Based Neural Fields](pbr-nerf_inverse_rendering_with_physics-based_neural_fields.md)
+- [SVG-IR: Spatially-Varying Gaussian Splatting for Inverse Rendering](svg-ir_spatially-varying_gaussian_splatting_for_inverse_rendering.md)
 - [GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering](../../ICCV2025/3d_vision/geosplatting_towards_geometry_guided_gaussian_splatting_for_physically-based_inv.md)
-- [Flash Cache: Reducing Bias in Radiance Cache Based Inverse Rendering](../../ECCV2024/3d_vision/flash_cache_reducing_bias_in_radiance_cache_based_inverse_rendering.md)
-- [Event Fields: Capturing Light Fields at High Speed, Resolution, and Dynamic Range](event_fields_capturing_light_fields_at_high_speed_resolution_and_dynamic_range.md)
-- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
 - [MOVIS: Enhancing Multi-Object Novel View Synthesis for Indoor Scenes](movis_enhancing_multi-object_novel_view_synthesis_for_indoor_scenes.md)
+- [SpectroMotion: Dynamic 3D Reconstruction of Specular Scenes](spectromotion_dynamic_3d_reconstruction_of_specular_scenes.md)
 
 <!-- RELATED:END -->

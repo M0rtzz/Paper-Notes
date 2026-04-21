@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Judging the Judges: Can Large Vision-Language Models Fairly Evaluate Chart Comprehension and Reasoning?
 description: >-

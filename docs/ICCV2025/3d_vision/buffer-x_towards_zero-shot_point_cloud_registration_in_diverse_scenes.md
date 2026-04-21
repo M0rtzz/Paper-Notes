@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BUFFER-X: Towards Zero-Shot Point Cloud Registration in Diverse Scenes
 description: >-

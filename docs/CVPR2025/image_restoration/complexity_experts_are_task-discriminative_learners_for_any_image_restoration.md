@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Complexity Experts are Task-Discriminative Learners for Any Image Restoration
 description: >-
@@ -121,7 +121,7 @@ $\mathcal{L} = \mathcal{L}_{pixel} + \lambda \mathcal{L}_{aux}$，像素损失 +
 - [Exploiting Diffusion Prior for Task-driven Image Restoration](../../ICCV2025/image_restoration/exploiting_diffusion_prior_for_task-driven_image_restoration.md)
 - [Devil is in the Uniformity: Exploring Diverse Learners within Transformer for Image Restoration](../../ICCV2025/image_restoration/devil_is_in_the_uniformity_exploring_diverse_learners_within_transformer_for_ima.md)
 - [MoE-DiffIR: Task-customized Diffusion Priors for Universal Compressed Image Restoration](../../ECCV2024/image_restoration/moe-diffir_task-customized_diffusion_priors_for_universal_compressed_image_resto.md)
-- [MaIR: A Locality- and Continuity-Preserving Mamba for Image Restoration](mair_a_locality-_and_continuity-preserving_mamba_for_image_restoration.md)
-- [FiRe: Fixed-points of Restoration Priors for Solving Inverse Problems](fire_fixed-points_of_restoration_priors_for_solving_inverse_problems.md)
+- [DarkIR: Robust Low-Light Image Restoration](darkir_robust_low-light_image_restoration.md)
+- [Visual-Instructed Degradation Diffusion for All-in-One Image Restoration](visual-instructed_degradation_diffusion_for_all-in-one_image_restoration.md)
 
 <!-- RELATED:END -->

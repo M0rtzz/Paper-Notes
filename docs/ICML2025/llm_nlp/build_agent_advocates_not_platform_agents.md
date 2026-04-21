@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Build Agent Advocates, Not Platform Agents
 description: >-
@@ -142,6 +142,6 @@ Position paper，指出LMA（语言模型代理）若被平台公司控制将成
 - [Culture is Not Trivia: Sociocultural Theory for Cultural NLP](../../ACL2025/llm_nlp/culture_is_not_trivia_sociocultural_theory_for_cultural_nlp.md)
 - [MemBench: Towards More Comprehensive Evaluation on the Memory of LLM-based Agents](../../ACL2025/llm_nlp/membench_towards_more_comprehensive_evaluation_on_the_memory_of_llm-based_agents.md)
 - [Embracing Imperfection: Simulating Students with Diverse Cognitive Levels Using LLM-based Agents](../../ACL2025/llm_nlp/simulating_diverse_students.md)
-- [Large Language Models Miss the Multi-Agent Mark](../../NeurIPS2025/llm_nlp/large_language_models_miss_the_multi-agent_mark.md)
+- [LLMs Can Simulate Standardized Patients via Agent Coevolution](../../ACL2025/llm_nlp/evopatient_standardized_patient.md)
 
 <!-- RELATED:END -->

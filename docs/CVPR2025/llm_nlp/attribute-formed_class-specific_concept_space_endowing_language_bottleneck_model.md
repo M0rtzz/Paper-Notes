@@ -1,13 +1,14 @@
-﻿---
+---
 title: >-
   [论文解读] Attribute-formed Class-specific Concept Space: Endowing Language Bottleneck Model with Better Generalization
 description: >-
-  [CVPR 2025][可解释分类][概念瓶颈] 提出属性构成的类特定概念空间，解决语言瓶颈模型中概念混淆和零样本泛化问题
+  [CVPR 2025][LLM/NLP][语言瓶颈模型] 针对语言瓶颈模型（LBM）中所有概念混合在一起导致的虚假线索推理和零样本泛化差的问题，提出属性构成的类特定概念空间，将概念按属性维度为每个类别组织独立空间。
 tags:
   - CVPR 2025
+  - LLM/NLP
   - 语言瓶颈模型
-  - 可解释性
-  - 概念空间
+  - 属性概念空间
+  - 可解释分类
   - 零样本泛化
 ---
 
@@ -65,10 +66,10 @@ tags:
 
 ## 相关论文
 
-- [Making Old Film Great Again: Degradation-aware State Space Model for Old Film Restoration](making_old_film_great_again_degradation-aware_state_space_model_for_old_film_res.md)
 - [Training Language Model to Critique for Better Refinement](../../ACL2025/llm_nlp/training_language_model_to_critique_for_better_refinement.md)
+- [Making Old Film Great Again: Degradation-aware State Space Model for Old Film Restoration](making_old_film_great_again_degradation-aware_state_space_model_for_old_film_res.md)
 - [Circuit Stability Characterizes Language Model Generalization](../../ACL2025/llm_nlp/circuit_stability_characterizes_language_model_generalization.md)
-- [TIDE: Training Locally Interpretable Domain Generalization Models Enables Test-time Correction](tide_training_locally_interpretable_domain_generalization_models_enables_test-ti.md)
 - [An Invariant Latent Space Perspective on Language Model Inversion](../../AAAI2026/llm_nlp/an_invariant_latent_space_perspective_on_language_model_inve.md)
+- [SEC-Prompt: SEmantic Complementary Prompting for Few-Shot Class-Incremental Learning](sec-promptsemantic_complementary_prompting_for_few-shot_class-incremental_learni.md)
 
 <!-- RELATED:END -->

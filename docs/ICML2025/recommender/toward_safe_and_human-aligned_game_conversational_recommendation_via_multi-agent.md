@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MATCHA: Toward Safe and Human-Aligned Game Conversational Recommendation via Multi-Agent Decomposition
 description: >-

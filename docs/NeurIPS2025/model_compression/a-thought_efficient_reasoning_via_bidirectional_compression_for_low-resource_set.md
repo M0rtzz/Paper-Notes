@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A*-Thought: Efficient Reasoning via Bidirectional Compression for Low-Resource Settings
 description: >-

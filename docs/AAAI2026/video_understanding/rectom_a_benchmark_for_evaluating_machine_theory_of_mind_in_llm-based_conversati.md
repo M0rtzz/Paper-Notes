@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RecToM: A Benchmark for Evaluating Machine Theory of Mind in LLM-based Conversational Recommender Systems
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SimulMEGA: MoE Routers are Advanced Policy Makers for Simultaneous Speech Translation
 description: >-

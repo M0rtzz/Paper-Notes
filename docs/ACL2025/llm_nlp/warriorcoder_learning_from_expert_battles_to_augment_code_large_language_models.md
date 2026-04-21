@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WarriorCoder: Learning from Expert Battles to Augment Code Large Language Models
 description: >-

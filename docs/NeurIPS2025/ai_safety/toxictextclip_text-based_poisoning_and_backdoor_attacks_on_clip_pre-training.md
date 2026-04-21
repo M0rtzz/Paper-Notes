@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ToxicTextCLIP: Text-Based Poisoning and Backdoor Attacks on CLIP Pre-training
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SparseMM: Head Sparsity Emerges from Visual Concept Responses in MLLMs
 description: >-

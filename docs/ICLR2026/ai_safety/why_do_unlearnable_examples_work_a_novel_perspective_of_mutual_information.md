@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Why Do Unlearnable Examples Work: A Novel Perspective of Mutual Information
 description: >-
@@ -184,7 +184,7 @@ MI-UE 在所有架构上均最优。值得注意的是 AP、AR、TUE 等方法�
 
 - [Generalization in Federated Learning: A Conditional Mutual Information Framework](../../ICML2025/ai_safety/generalization_in_federated_learning_a_conditional_mutual_information_framework.md)
 - [Adaptive Methods Are Preferable in High Privacy Settings: An SDE Perspective](adaptive_methods_are_preferable_in_high_privacy_settings_an_sde_perspective.md)
-- [An Information Theoretic Evaluation Metric for Strong Unlearning](../../AAAI2026/ai_safety/an_information_theoretic_evaluation_metric_for_strong_unlear.md)
+- [An Information Theoretic Evaluation Metric for Strong Unlearning](../../AAAI2026/ai_safety/an_information_theoretic_evaluation_metric_for_strong_unlearning.md)
 - [InfoDecom: Decomposing Information for Defending Against Privacy Leakage in Split Inference](../../AAAI2026/ai_safety/infodecom_decomposing_information_for_defending_against_privacy_leakage_in_split.md)
 - [A Unified Perspective on Adversarial Membership Manipulation in Vision Models](../../CVPR2026/ai_safety/a_unified_perspective_on_adversarial_membership_manipulation_in_vision_models.md)
 

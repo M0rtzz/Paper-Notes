@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Linearity in Attention Projections: The Case for Nonlinear Queries
 description: >-

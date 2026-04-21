@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VowelPrompt: Hearing Speech Emotions from Text via Vowel-level Prosodic Augmentation
 description: >-

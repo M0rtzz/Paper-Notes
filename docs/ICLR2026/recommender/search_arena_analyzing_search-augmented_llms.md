@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Search Arena: Analyzing Search-Augmented LLMs
 description: >-

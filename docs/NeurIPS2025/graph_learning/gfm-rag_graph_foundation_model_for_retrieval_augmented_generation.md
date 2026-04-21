@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GFM-RAG: Graph Foundation Model for Retrieval Augmented Generation
 description: >-

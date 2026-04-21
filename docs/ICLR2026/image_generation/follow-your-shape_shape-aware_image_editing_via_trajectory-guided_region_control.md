@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Follow-Your-Shape: Shape-Aware Image Editing via Trajectory-Guided Region Control
 description: >-

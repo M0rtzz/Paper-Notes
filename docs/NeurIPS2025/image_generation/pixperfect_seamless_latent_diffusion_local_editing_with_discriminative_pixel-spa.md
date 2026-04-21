@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PixPerfect: Seamless Latent Diffusion Local Editing with Discriminative Pixel-Space Refinement
 description: >-

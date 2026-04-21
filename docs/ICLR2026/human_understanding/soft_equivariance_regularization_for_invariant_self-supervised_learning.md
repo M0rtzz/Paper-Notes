@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Soft Equivariance Regularization for Invariant Self-Supervised Learning
 description: >-
@@ -148,6 +148,6 @@ $$\mathcal{L}_{\text{equiv}}^{i,j} = -\log \frac{\exp(s(z_{ij}, z'_{ij}))}{\exp(
 - [Supervised Metric Regularization Through Alternating Optimization for Multi-Regime PINNs](supervised_metric_regularization_through_alternating_optimization_for_multi-regi.md)
 - [SignRep: Enhancing Self-Supervised Sign Representations](../../ICCV2025/human_understanding/signrep_enhancing_self-supervised_sign_representations.md)
 - [VideoClusterNet: Self-Supervised and Adaptive Face Clustering for Videos](../../ECCV2024/human_understanding/videoclusternet_self-supervised_and_adaptive_face_clustering_for_videos.md)
-- [Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection](../../ECCV2024/human_understanding/self-supervised_feature_adaptation_for_3d_industrial_anomaly_detection.md)
+- [Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection](../../ECCV2024/human_understanding/selfsupervised_feature_adaptation_for_3d_industrial_ano.md)
 
 <!-- RELATED:END -->

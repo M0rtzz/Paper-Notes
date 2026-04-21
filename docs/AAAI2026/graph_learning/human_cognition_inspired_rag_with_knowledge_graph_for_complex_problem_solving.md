@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Human Cognition Inspired RAG with Knowledge Graph for Complex Problem Solving
 description: >-

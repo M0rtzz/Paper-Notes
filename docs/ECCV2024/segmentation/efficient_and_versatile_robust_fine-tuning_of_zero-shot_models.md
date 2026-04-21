@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient and Versatile Robust Fine-Tuning of Zero-shot Models
 description: >-
@@ -206,10 +206,10 @@ R-Adapter 以 **1/4 的参数量** 超越所有鲁棒微调方法的 OOD 性能�
 
 ## 相关论文
 
+- [Robust 3D Shape Reconstruction in Zero-Shot from a Single Image in the Wild](../../CVPR2025/segmentation/robust_3d_shape_reconstruction_in_zero-shot_from_a_single_image_in_the_wild.md)
 - [Fast and Fluent Diffusion Language Models via Convolutional Decoding and Rejective Fine-tuning](../../NeurIPS2025/segmentation/fast_and_fluent_diffusion_language_models_via_convolutional_decoding_and_rejecti.md)
 - [InfoSAM: Fine-Tuning the Segment Anything Model from An Information-Theoretic Perspective](../../ICML2025/segmentation/infosam_fine-tuning_the_segment_anything_model_from_an_information-theoretic_per.md)
 - [ZIM: Zero-Shot Image Matting for Anything](../../ICCV2025/segmentation/zim_zero-shot_image_matting_for_anything.md)
-- [Eliminating Feature Ambiguity for Few-Shot Segmentation](eliminating_feature_ambiguity_for_few-shot_segmentation.md)
 - [Active Coarse-to-Fine Segmentation of Moveable Parts from Real Images](active_coarsetofine_segmentation_of_moveable_parts_from_real.md)
 
 <!-- RELATED:END -->

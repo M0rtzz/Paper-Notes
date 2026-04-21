@@ -2,9 +2,15 @@
 title: >-
   [论文解读] ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models
 description: >-
-  [AI安全] 建立了 ELBA-Bench——一个涵盖 12 种攻击方法、18 个数据集和 12 个 LLM 的综合后门攻击基准，系统评估 PEFT 和无微调两种范式下 LLM 后门攻击的有效性和隐蔽性。
+  [ACL 2025][AI安全][Backdoor Attack] 建立了 ELBA-Bench——一个涵盖 12 种攻击方法、18 个数据集和 12 个 LLM 的综合后门攻击基准，系统评估 PEFT 和无微调两种范式下 LLM 后门攻击的有效性和隐蔽性。
 tags:
+  - ACL 2025
   - AI安全
+  - Backdoor Attack
+  - LLM Security
+  - Benchmark
+  - PEFT Attack
+  - In-Context Learning Attack
 ---
 
 # ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models
@@ -193,10 +199,10 @@ $$\mathcal{D}_p = (\mathbf{x_1}, y_1), \dots, (\mathbf{x_k}, y_k) \oplus (\mathb
 
 ## 相关论文
 
-- [Multi-task Adversarial Attacks against Black-box Model with Few-shot Queries](multi-task_adversarial_attacks_against_black-box_model_with_few-shot_queries.md)
-- [Learning to Collaborate: An Orchestrated-Decentralized Framework for Peer-to-Peer Collaborative Learning](../../AAAI2026/ai_safety/learning_to_collaborate_an_orchestrated-decentralized_framework_for_peer-to-peer.md)
-- [Rethinking Target Label Conditioning in Adversarial Attacks: A 2D Tensor-Guided Generative Approach](../../AAAI2026/ai_safety/rethinking_target_label_conditioning_in_adversarial_attacks_a_2d_tensor-guided_g.md)
-- [Retraining with Predicted Hard Labels Provably Increases Model Accuracy](../../ICML2025/ai_safety/retraining_with_predicted_hard_labels_provably_increases_model_accuracy.md)
-- [Can One Safety Loop Guard Them All? Agentic Guard Rails for Federated Computing](../../ICML2025/ai_safety/can_one_safety_loop_guard_them_all_agentic_guard_rails_for_federated_computing.md)
+- [Ensemble Watermarks for Large Language Models](ensemble_watermarks_llm.md)
+- [ReDial: Assessing Dialect Fairness and Robustness of Large Language Models in Reasoning Tasks](dialect_fairness_robustness.md)
+- [Improved Unbiased Watermark for Large Language Models](improved_unbiased_watermark_for_large_language.md)
+- [MorphMark: Flexible Adaptive Watermarking for Large Language Models](morphmark_adaptive_watermarking.md)
+- [Improving Fairness of Large Language Models in Multi-document Summarization](improving_fairness_of_large_language_models_in_multi-document_summarization.md)
 
 <!-- RELATED:END -->

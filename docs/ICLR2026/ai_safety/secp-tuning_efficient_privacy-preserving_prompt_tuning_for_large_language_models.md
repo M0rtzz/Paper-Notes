@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SecP-Tuning: Efficient Privacy-Preserving Prompt Tuning for Large Language Models via MPC
 description: >-
@@ -137,10 +137,10 @@ LAN环境（3Gbps，0.8ms延迟）下RoBERTa-LARGE效率对比：
 
 ## 相关论文
 
-- [FedRW: Efficient Privacy-Preserving Data Reweighting for Enhancing Federated Learning of Language Models](../../NeurIPS2025/ai_safety/fedrw_efficient_privacy-preserving_data_reweighting_for_enhancing_federated_lear.md)
 - [SHE-LoRA: Selective Homomorphic Encryption for Federated Tuning with Heterogeneous LoRA](she-lora_selective_homomorphic_encryption_for_federated_tuning_with_heterogeneou.md)
 - [Measuring Physical-World Privacy Awareness of Large Language Models: An Evaluation Benchmark](measuring_physical-world_privacy_awareness_of_large_language_models_an_evaluatio.md)
-- [Plug-and-Play Parameter-Efficient Tuning of Embeddings for Federated Recommendation](../../AAAI2026/ai_safety/plug-and-play_parameter-efficient_tuning_of_embeddings_for_federated_recommendat.md)
-- [Ferret: Federated Full-Parameter Tuning at Scale for Large Language Models](../../ICML2025/ai_safety/ferret_federated_full-parameter_tuning_at_scale_for_large_language_models.md)
+- [FedRW: Efficient Privacy-Preserving Data Reweighting for Enhancing Federated Learning of Language Models](../../NeurIPS2025/ai_safety/fedrw_efficient_privacy-preserving_data_reweighting_for_enhancing_federated_lear.md)
+- [BiasBusters: Uncovering and Mitigating Tool Selection Bias in Large Language Models](biasbusters_uncovering_and_mitigating_tool_selection_bias_in_large_language_mode.md)
+- [Attention Smoothing Is All You Need For Unlearning](attention_smoothing_is_all_you_need_for_unlearning.md)
 
 <!-- RELATED:END -->

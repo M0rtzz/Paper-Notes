@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SMTPD: A New Benchmark for Temporal Prediction of Social Media Popularity
 description: >-
@@ -134,8 +134,8 @@ Adam优化器，L2正则1e-3，batch size 64，lr=1e-3 + ReduceLROnPlateau，5�
 ## 相关论文
 
 - [Zero-Shot Performance Prediction for Probabilistic Scaling Laws](../../NeurIPS2025/multilingual_mt/zero-shot_performance_prediction_for_probabilistic_scaling_laws.md)
-- [MergeBench: A Benchmark for Merging Domain-Specialized LLMs](../../NeurIPS2025/multilingual_mt/mergebench_a_benchmark_for_merging_domain-specialized_llms.md)
 - [EXECUTE: A Multilingual Benchmark for LLM Token Understanding](../../ACL2025/multilingual_mt/execute_a_multilingual_benchmark_for_llm_token_understanding.md)
+- [MergeBench: A Benchmark for Merging Domain-Specialized LLMs](../../NeurIPS2025/multilingual_mt/mergebench_a_benchmark_for_merging_domain-specialized_llms.md)
 - [CruxEval-X: A Benchmark for Multilingual Code Reasoning, Understanding and Execution](../../ACL2025/multilingual_mt/cruxeval-x_a_benchmark_for_multilingual_code_reasoning_understanding_and_executi.md)
 - [X-MuTest: A Multilingual Benchmark for Explainable Hate Speech Detection](../../AAAI2026/multilingual_mt/x-mutest_a_multilingual_benchmark_for_explainable_hate_speech_detection_and_a_no.md)
 

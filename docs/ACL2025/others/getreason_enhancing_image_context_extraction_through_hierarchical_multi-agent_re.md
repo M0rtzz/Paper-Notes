@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GETReason: Enhancing Image Context Extraction through Hierarchical Multi-Agent Reasoning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Robust Egocentric Referring Video Object Segmentation via Dual-Modal Causal Intervention
 description: >-
@@ -136,8 +136,8 @@ CERES 是一个即插即用的因果框架，建立在预训练的 RVOS 模型�
 
 - [CoLA: Conditional Dropout and Language-Driven Robust Dual-Modal Salient Object Detection](../../ECCV2024/segmentation/cola_conditional_dropout_and_language-driven_robust_dual-modal_salient_object_de.md)
 - [UniPixel: Unified Object Referring and Segmentation for Pixel-Level Visual Reasoning](unipixel_unified_object_referring_and_segmentation_for_pixel-level_visual_reason.md)
-- [ReferDINO: Referring Video Object Segmentation with Visual Grounding Foundations](../../ICCV2025/segmentation/referdino_referring_video_object_segmentation_with_visual_grounding_foundations.md)
 - [OmniSegmentor: A Flexible Multi-Modal Learning Framework for Semantic Segmentation](omnisegmentor_a_flexible_multi-modal_learning_framework_for_semantic_segmentatio.md)
+- [ReferDINO: Referring Video Object Segmentation with Visual Grounding Foundations](../../ICCV2025/segmentation/referdino_referring_video_object_segmentation_with_visual_grounding_foundations.md)
 - [Towards Robust Pseudo-Label Learning in Semantic Segmentation: An Encoding Perspective](towards_robust_pseudo-label_learning_in_semantic_segmentation_an_encoding_perspe.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CureAgent: A Training-Free Executor-Analyst Framework for Clinical Reasoning
 description: >-

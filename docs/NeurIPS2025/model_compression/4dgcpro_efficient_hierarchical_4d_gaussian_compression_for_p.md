@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 4DGCPro: Efficient Hierarchical 4D Gaussian Compression for Progressive Volumetric Video Streaming
 description: >-
@@ -157,6 +157,6 @@ $$\mathcal{L}_{key} = \sum_{l=1}^{L} \lambda_l \left( \mathcal{L}_{color}^l + \l
 - [Eyes Wide Open: Ego Proactive Video-LLM for Streaming Video](eyes_wide_open_ego_proactive_videollm_for_streaming_video.md)
 - [Smooth Regularization for Efficient Video Recognition](smooth_regularization_for_efficient_video_recognition.md)
 - [Twilight: Adaptive Attention Sparsity with Hierarchical Top-p Pruning](twilight_adaptive_attention_sparsity_with_hierarchical_top-p_pruning.md)
-- [A*-Thought: Efficient Reasoning via Bidirectional Compression for Low-Resource Settings](a-thought_efficient_reasoning_via_bidirectional_compression_for_low-resource_set.md)
+- [FGFP: A Fractional Gaussian Filter and Pruning for DNN Compression](../../ICML2025/model_compression/fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compression.md)
 
 <!-- RELATED:END -->

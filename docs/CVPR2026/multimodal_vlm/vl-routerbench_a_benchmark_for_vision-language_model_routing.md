@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VL-RouterBench: A Benchmark for Vision-Language Model Routing
 description: >-

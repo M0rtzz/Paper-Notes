@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SketchSplat: 3D Edge Reconstruction via Differentiable Multi-view Sketch Splatting
 description: >-
@@ -149,6 +149,6 @@ tags:
 - [3D-MOOD: Lifting 2D to 3D for Monocular Open-Set Object Detection](3dmood_lifting_2d_to_3d_for_monocular_openset_object_detecti.md)
 - [YOLO-Count: Differentiable Object Counting for Text-to-Image Generation](yolo-count_differentiable_object_counting_for_text-to-image_generation.md)
 - [REXO: Indoor Multi-View Radar Object Detection via 3D Bounding Box Diffusion](../../AAAI2026/object_detection/rexo_indoor_multi-view_radar_object_detection_via_3d_bounding_box_diffusion.md)
-- [VOccl3D: A Video Benchmark Dataset for 3D Human Pose and Shape Estimation under Real Occlusions](voccl3d_a_video_benchmark_dataset_for_3d_human_pose_and_shape_estimation_under_r.md)
+- [Pippo: High-Resolution Multi-View Humans from a Single Image](../../CVPR2025/object_detection/pippo_high-resolution_multi-view_humans_from_a_single_image.md)
 
 <!-- RELATED:END -->

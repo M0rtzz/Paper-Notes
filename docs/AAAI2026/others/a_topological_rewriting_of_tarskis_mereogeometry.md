@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Topological Rewriting of Tarski's Mereogeometry
 description: >-
@@ -129,7 +129,7 @@ tags:
 - [On Topological Descriptors for Graph Products](../../NeurIPS2025/others/on_topological_descriptors_for_graph_products.md)
 - [Unlocking Speech Instruction Data Potential with Query Rewriting](../../ACL2025/others/unlocking_speech_instruction_data_potential_with_query_rewriting.md)
 - [GeNRe: A French Gender-Neutral Rewriting System Using Collective Nouns](../../ACL2025/others/genre_a_french_gender-neutral_rewriting_system_using_collective_nouns.md)
-- [RcAE: Recursive Reconstruction Framework for Unsupervised Industrial Anomaly Detection](rcae_recursive_reconstruction_framework_for_unsupervised_industrial_anomaly_dete.md)
-- [Learning Compact Latent Space for Representing Neural Signed Distance Functions with High-fidelity Geometry Details](learning_compact_latent_space_for_representing_neural_signed_distance_functions_.md)
+- [Reward Redistribution via Gaussian Process Likelihood Estimation](reward_redistribution_via_gaussian_process_likelihood_estimation.md)
+- [A New Strategy for Verifying Reach-Avoid Specifications in Neural Feedback Systems](a_new_strategy_for_verifying_reach-avoid_specifications_in_neural_feedback_syste.md)
 
 <!-- RELATED:END -->

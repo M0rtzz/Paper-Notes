@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mostly Text, Smart Visuals: Asymmetric Text-Visual Pruning for Large Vision-Language Models
 description: >-

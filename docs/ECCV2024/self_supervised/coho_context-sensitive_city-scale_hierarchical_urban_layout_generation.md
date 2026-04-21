@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] COHO: Context-Sensitive City-Scale Hierarchical Urban Layout Generation
 description: >-
@@ -167,9 +167,9 @@ tags:
 ## 相关论文
 
 - [Few-Shot Implicit Function Generation via Equivariance](../../CVPR2025/self_supervised/few-shot_implicit_function_generation_via_equivariance.md)
-- [Contrastive Learning on LLM Back Generation Treebank for Cross-domain Constituency Parsing](../../ACL2025/self_supervised/llm_back_gen_treebank.md)
 - [SEAL: Semantic-Aware Hierarchical Learning for Generalized Category Discovery](../../NeurIPS2025/self_supervised/seal_semantic-aware_hierarchical_learning_for_generalized_category_discovery.md)
-- [Improving Region Representation Learning from Urban Imagery with Noisy Long-Caption Supervision](../../AAAI2026/self_supervised/improving_region_representation_learning_from_urban_imagery_with_noisy_long-capt.md)
 - [Towards Reliable and Holistic Visual In-Context Learning Prompt Selection](../../NeurIPS2025/self_supervised/towards_reliable_and_holistic_visual_in-context_learning_prompt_selection.md)
+- [Improving Region Representation Learning from Urban Imagery with Noisy Long-Caption Supervision](../../AAAI2026/self_supervised/improving_region_representation_learning_from_urban_imagery_with_noisy_long-capt.md)
+- [Test-Time Training Provably Improves Transformers as In-Context Learners](../../ICML2025/self_supervised/test-time_training_provably_improves_transformers_as_in-context_learners.md)
 
 <!-- RELATED:END -->

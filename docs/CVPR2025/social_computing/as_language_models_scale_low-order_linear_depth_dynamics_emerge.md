@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] As Language Models Scale, Low-order Linear Depth Dynamics Emerge
 description: >-
@@ -131,7 +131,7 @@ Pipeline: 估计概念方向 $v_\ell$ → 局部线性化获得 Jacobian $A_\ell
 - [Classifier-guided CLIP Distillation for Unsupervised Multi-label Classification](classifier-guided_clip_distillation_for_unsupervised_multi-label_classification.md)
 - [Learning from Neighbors: Category Extrapolation for Long-Tail Learning](learning_from_neighbors_category_extrapolation_for_long-tail_learning.md)
 - [A Multi-Task Benchmark for Abusive Language Detection in Low-Resource Settings](../../NeurIPS2025/social_computing/a_multitask_benchmark_for_abusive_language_detection_in_lowr.md)
-- [OR-Bench: An Over-Refusal Benchmark for Large Language Models](../../ICML2025/social_computing/or-bench_an_over-refusal_benchmark_for_large_language_models.md)
 - [Active Slice Discovery in Large Language Models](../../NeurIPS2025/social_computing/active_slice_discovery_in_large_language_models.md)
+- [OR-Bench: An Over-Refusal Benchmark for Large Language Models](../../ICML2025/social_computing/or-bench_an_over-refusal_benchmark_for_large_language_models.md)
 
 <!-- RELATED:END -->

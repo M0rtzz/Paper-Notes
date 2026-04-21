@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PanSt3R: Multi-view Consistent Panoptic Segmentation
 description: >-

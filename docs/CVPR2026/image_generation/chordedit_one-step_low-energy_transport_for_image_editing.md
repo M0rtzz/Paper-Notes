@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ChordEdit: One-Step Low-Energy Transport for Image Editing
 description: >-
@@ -200,7 +200,7 @@ ChordEdit 是**完全无训练**的方法。其核心公式（Eq. 4.5）来自�
 - [Language-Free Generative Editing from One Visual Example](language-free_generative_editing_from_one_visual_example.md)
 - [Low-Resolution Editing is All You Need for High-Resolution Editing](low-resolution_editing_is_all_you_need_for_high-resolution_editing.md)
 - [WaDi: Weight Direction-aware Distillation for One-step Image Synthesis](wadi_weight_direction-aware_distillation_for_one-step_image_synthesis.md)
-- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
 - [COT-FM: Cluster-wise Optimal Transport Flow Matching](cot-fm_cluster-wise_optimal_transport_flow_matching.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
 
 <!-- RELATED:END -->

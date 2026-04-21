@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] An OpenMind for 3D Medical Vision Self-Supervised Learning
 description: >-
@@ -157,7 +157,7 @@ Sawtooth 策略总体最优；Frozen 策略大幅下降说明当前 SSL 表征�
 ## 相关论文
 
 - [Vector Contrastive Learning for Pixel-wise Pretraining in Medical Vision](vector_contrastive_learning_for_pixel-wise_pretraining_in_medical_vision.md)
-- [Boosting Vision Semantic Density with Anatomy Normality Modeling for Medical Vision-language Pre-training](boosting_vision_semantic_density_with_anatomy_normality_modeling_for_medical_vis.md)
+- [Boosting Vision Semantic Density with Anatomy Normality Modeling for Medical Vision-language Pre-training](boosting_vision_semantic_density_with_anatomy_normality_mode.md)
 - [scSSL-Bench: Benchmarking Self-Supervised Learning for Single-Cell Data](../../ICML2025/medical_imaging/scssl-bench_benchmarking_self-supervised_learning_for_single-cell_data.md)
 - [UKBOB: One Billion MRI Labeled Masks for Generalizable 3D Medical Image Segmentation](ukbob_one_billion_mri_labeled_masks_for_generalizable_3d_medical_image_segmentat.md)
 - [SegAnyPET: Universal Promptable Segmentation from Positron Emission Tomography Images](seganypet_universal_promptable_segmentation_from_positron_emission_tomography_im.md)

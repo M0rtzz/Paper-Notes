@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sightation Counts: Leveraging Sighted User Feedback in Building a BLV-aligned Dataset of Diagram Descriptions
 description: >-

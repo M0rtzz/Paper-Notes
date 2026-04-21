@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BézierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting
 description: >-

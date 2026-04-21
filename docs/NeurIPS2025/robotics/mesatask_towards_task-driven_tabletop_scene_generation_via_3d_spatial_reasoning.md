@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MesaTask: Towards Task-Driven Tabletop Scene Generation via 3D Spatial Reasoning
 description: >-

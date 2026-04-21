@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Induce, Align, Predict: Zero-Shot Stance Detection via Cognitive Inductive Reasoning
 description: >-

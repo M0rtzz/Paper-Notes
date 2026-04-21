@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GeoComplete: Geometry-Aware Diffusion for Reference-Driven Image Completion
 description: >-
@@ -186,6 +186,6 @@ $\mathbf{w}_j$ 为有效区域权重，仅在可见区域计算损失。
 - [PR-IQA: Partial-Reference Image Quality Assessment for Diffusion-Based Novel View Synthesis](../../CVPR2026/3d_vision/pr-iqa_partial-reference_image_quality_assessment_for_diffusion-based_novel_view.md)
 - [WildCAT3D: Appearance-Aware Multi-View Diffusion in the Wild](wildcat3d_appearance-aware_multi-view_diffusion_in_the_wild.md)
 - [SingRef6D: Monocular Novel Object Pose Estimation with a Single RGB Reference](singref6d_monocular_novel_object_pose_estimation_with_a_single_rgb_reference.md)
-- [PolarAnything: Diffusion-based Polarimetric Image Synthesis](../../ICCV2025/3d_vision/polaranything_diffusion-based_polarimetric_image_synthesis.md)
+- [Ouroboros3D: Image-to-3D Generation via 3D-aware Recursive Diffusion](../../CVPR2025/3d_vision/ouroboros3d_image-to-3d_generation_via_3d-aware_recursive_diffusion.md)
 
 <!-- RELATED:END -->

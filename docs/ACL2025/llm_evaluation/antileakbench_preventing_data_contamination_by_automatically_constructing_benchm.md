@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AntiLeakBench: Preventing Data Contamination by Automatically Constructing Benchmarks with Updated Real-World Knowledge
 description: >-

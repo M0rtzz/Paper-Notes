@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Residual SODAP: Residual Self-Organizing Domain-Adaptive Prompting with Structural Knowledge Preservation for Continual Learning
 description: >-

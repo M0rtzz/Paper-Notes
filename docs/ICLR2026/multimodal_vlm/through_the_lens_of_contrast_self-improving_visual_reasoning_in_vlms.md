@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Through the Lens of Contrast: Self-Improving Visual Reasoning in VLMs
 description: >-

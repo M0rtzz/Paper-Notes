@@ -2,14 +2,15 @@
 title: >-
   [论文解读] Mosaic3D: Foundation Dataset and Model for Open-Vocabulary 3D Segmentation
 description: >-
-  [CVPR 2025][3D segmentation] 构建大规模3D mask-text对数据集Mosaic3D-5.6M（30K场景、560万对），训练contrastive 3D encoder实现开放词汇3D语义与实例分割SOTA。
+  [CVPR 2025][3D视觉][图像分割] 提出自动化数据生成管线构建大规模3D mask-text数据集Mosaic3D-5.6M（5.6M对、30K场景），训练语言对齐3D编码器+mask decoder，实现首个单阶段开放词汇3D实例分割。
 tags:
   - CVPR 2025
-  - 3D segmentation
-  - open-vocabulary
-  - contrastive learning
+  - 3D视觉
+  - 图像分割
   - foundation model
-  - 数据引擎
+  - 对比学习
+  - data engine
+  - mask decoder
 ---
 
 # Mosaic3D: Foundation Dataset and Model for Open-Vocabulary 3D Segmentation
@@ -139,9 +140,9 @@ $$\mathcal{L}_{mask} = \lambda_{obj}\mathcal{L}_{obj} + \lambda_{dice}\mathcal{L
 ## 相关论文
 
 - [JOPP-3D: Joint Open Vocabulary Semantic Segmentation on Point Clouds and Panoramas](jopp-3d_joint_open_vocabulary_semantic_segmentation_on_point_clouds_and_panorama.md)
-- [GREAT: Geometry-Intention Collaborative Inference for Open-Vocabulary 3D Object Affordance Grounding](great_geometry-intention_collaborative_inference_for_open-vocabulary_3d_object_a.md)
 - [Masked Point-Entity Contrast for Open-Vocabulary 3D Scene Understanding](masked_point-entity_contrast_for_open-vocabulary_3d_scene_understanding.md)
-- [Segment then Splat: Unified 3D Open-Vocabulary Segmentation via Gaussian Splatting](../../NeurIPS2025/3d_vision/segment_then_splat_unified_3d_open-vocabulary_segmentation_via_gaussian_splattin.md)
 - [3D Dental Model Segmentation with Geometrical Boundary Preserving](3d_dental_model_segmentation_with_geometrical_boundary_preserving.md)
+- [Reconstructing In-the-Wild Open-Vocabulary Human-Object Interactions](reconstructing_in-the-wild_open-vocabulary_human-object_interactions.md)
+- [Open-Vocabulary Functional 3D Scene Graphs for Real-World Indoor Spaces](open-vocabulary_functional_3d_scene_graphs_for_real-world_indoor_spaces.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Emergent World Beliefs: Exploring Transformers in Stochastic Games
 description: >-
@@ -154,6 +154,6 @@ $$\Pr_\pi(F | H_t) = \sum_{s \in \mathcal{S}} b_t(s) v_F(s) = \langle b_t, v_F \
 - [Vision Transformers for Cosmological Fields: Application to Weak Lensing Mass Maps](vision_transformers_for_cosmological_fields_application_to_weak_lensing_mass_map.md)
 - [nnterp: A Standardized Interface for Mechanistic Interpretability of Transformers](nnterp_a_standardized_interface_for_mechanistic_interpretability_of_transformers.md)
 - [LLM Unlearning with LLM Beliefs](../../ICLR2026/human_understanding/llm_unlearning_with_llm_beliefs.md)
-- [Enhancing Parallelism in Decentralized Stochastic Convex Optimization](../../ICML2025/human_understanding/enhancing_parallelism_in_decentralized_stochastic_convex_optimization.md)
+- [Lay2Story: Extending Diffusion Transformers for Layout-Togglable Story Generation](../../ICCV2025/human_understanding/lay2story_extending_diffusion_transformers_for_layout-togglable_story_generation.md)
 
 <!-- RELATED:END -->

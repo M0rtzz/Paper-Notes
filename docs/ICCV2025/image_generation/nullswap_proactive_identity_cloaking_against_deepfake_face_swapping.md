@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NullSwap: Proactive Identity Cloaking Against Deepfake Face Swapping
 description: >-

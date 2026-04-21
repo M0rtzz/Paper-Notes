@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Time-Scale Invariant Population-Level Neural Representations
 description: >-

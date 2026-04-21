@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improved Regret and Contextual Linear Extension for Pandora's Box and Prophet Inequality
 description: >-

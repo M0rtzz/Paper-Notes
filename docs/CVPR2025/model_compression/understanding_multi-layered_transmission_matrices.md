@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Understanding Multi-Layered Transmission Matrices
 description: >-
@@ -86,7 +86,7 @@ tags:
 - [Layered Image Vectorization via Semantic Simplification](layered_image_vectorization_via_semantic_simplification.md)
 - [mPLUG-DocOwl2: High-resolution Compressing for OCR-free Multi-page Document Understanding](../../ACL2025/model_compression/mplug_docowl2_doc_compress.md)
 - [Assigning Distinct Roles to Quantized and Low-Rank Matrices Toward Optimal Weight Decomposition](../../ACL2025/model_compression/assigning_distinct_roles_to_quantized_and_low-rank_matrices_toward_optimal_weigh.md)
-- [PrunNet: Learning Compatible Multi-Prize Subnetworks for Asymmetric Retrieval](learning_compatible_multi-prize_subnetworks_for_asymmetric_retrieval.md)
-- [HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers](hiap_a_multi-granular_stochastic_auto-pruning_framework_for_vision_transformers.md)
+- [NADER: Neural Architecture Design via Multi-Agent Collaboration](nader_neural_architecture_design_via_multi-agent_collaboration.md)
+- [MobileMamba: Lightweight Multi-Receptive Visual Mamba Network](mobilemamba_lightweight_multi-receptive_visual_mamba_network.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FirstAidQA: A Synthetic Dataset for First Aid and Emergency Response in Low-Connectivity Settings
 description: >-

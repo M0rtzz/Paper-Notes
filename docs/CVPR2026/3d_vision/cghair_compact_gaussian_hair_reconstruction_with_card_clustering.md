@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CGHair: Compact Gaussian Hair Reconstruction with Card Clustering
 description: >-

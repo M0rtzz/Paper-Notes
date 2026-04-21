@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LIVS: A Pluralistic Alignment Dataset for Inclusive Public Spaces
 description: >-
@@ -132,8 +132,8 @@ $$\mathcal{L}_{\text{DPO}}(\theta) = -\mathbb{E}_{(x_w, x_l)} \left[ \log \sigma
 
 ## 相关论文
 
-- [Taming Diffusion for Dataset Distillation with High Representativeness (D³HR)](taming_diffusion_for_dataset_distillation_with_high_representativeness.md)
 - [Diffuse Everything: Multimodal Diffusion Models on Arbitrary State Spaces](diffuse_everything_multimodal_diffusion_models_on_arbitrary_state_spaces.md)
+- [Taming Diffusion for Dataset Distillation with High Representativeness (D³HR)](taming_diffusion_for_dataset_distillation_with_high_representativeness.md)
 - [BioVITA: Biological Dataset, Model, and Benchmark for Visual-Textual-Acoustic Alignment](../../CVPR2026/image_generation/biovita_biological_dataset_model_and_benchmark_for_visual-textual-acoustic_align.md)
 - [Guided Diffusion Sampling on Function Spaces with Applications to PDEs](../../NeurIPS2025/image_generation/guided_diffusion_sampling_on_function_spaces_with_applications_to_pdes.md)
 - [Theoretical Guarantees on the Best-of-n Alignment Policy](theoretical_guarantees_on_the_best-of-n_alignment_policy.md)

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Recurrent Reasoning with Vision-Language Models for Estimating Long-Horizon Embodied Task Progress
 description: >-

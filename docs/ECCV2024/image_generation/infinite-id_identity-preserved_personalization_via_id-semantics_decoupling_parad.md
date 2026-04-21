@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Infinite-ID: Identity-preserved Personalization via ID-semantics Decoupling Paradigm
 description: >-
@@ -214,10 +214,10 @@ AdaIN-mean 消融：
 
 ## 相关论文
 
-- [DynamicID: Zero-Shot Multi-ID Image Personalization with Flexible Facial Editability](../../ICCV2025/image_generation/dynamicid_zero-shot_multi-id_image_personalization_with_flexible_facial_editabil.md)
 - [LCM-Lookahead for Encoder-based Text-to-Image Personalization](lcm-lookahead_for_encoder-based_text-to-image_personalization.md)
 - [MagicEraser: Erasing Any Objects via Semantics-Aware Control](magiceraser_erasing_any_objects_via_semantics-aware_control.md)
 - [Unveiling Advanced Frequency Disentanglement Paradigm for Low-Light Image Enhancement](unveiling_advanced_frequency_disentanglement_paradigm_for_low-light_image_enhanc.md)
-- [Generating 3D House Wireframes with Semantics](generating_3d_house_wireframes_with_semantics.md)
+- [Learning Trimodal Relation for Audio-Visual Question Answering with Missing Modality](learning_trimodal_relation_for_audio-visual_question_answering_with_missing_moda.md)
+- [ShapeFusion: A 3D Diffusion Model for Localized Shape Editing](shapefusion_a_3d_diffusion_model_for_localized_shape_editing.md)
 
 <!-- RELATED:END -->

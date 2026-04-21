@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Randomized Dimensionality Reduction for Euclidean Maximization and Diversity Measures
 description: >-

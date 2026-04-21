@@ -2,9 +2,15 @@
 title: >-
   [论文解读] RoCoFT: Efficient Finetuning of Large Language Models with Row-Column Updates
 description: >-
-  [LLM/NLP] 提出 RoCoFT，一种极简的参数高效微调方法：仅更新 Transformer 权重矩阵中少量行或列的参数，在 GLUE、QA、摘要生成和常识/数学推理等任务上达到与 LoRA 等 SOTA PEFT 方法相当的精度，同时更省内存和计算，并通过 Neural Tangent Kernel 理论解释了其有效性。
+  [ACL 2025][LLM/NLP][PEFT] 提出 RoCoFT，一种极简的参数高效微调方法：仅更新 Transformer 权重矩阵中少量行或列的参数，在 GLUE、QA、摘要生成和常识/数学推理等任务上达到与 LoRA 等 SOTA PEFT 方法相当的精度，同时更省内存和计算，并通过 Neural Tangent Kernel 理论解释了其有效性。
 tags:
+  - ACL 2025
   - LLM/NLP
+  - PEFT
+  - LoRA
+  - row-column updates
+  - NTK
+  - parameter-efficient finetuning
 ---
 
 # RoCoFT: Efficient Finetuning of Large Language Models with Row-Column Updates
@@ -154,10 +160,10 @@ RoCoFT3 以仅 0.249M 参数（约 LoRA 的 28%）达到所有方法的最高平
 
 ## 相关论文
 
+- [Efficient Ensemble for Fine-tuning Language Models on Multiple Datasets](efficient_ensemble_for_fine-tuning_language_models_on_multiple_datasets.md)
 - [A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](a_survey_on_efficient_large_language.md)
-- [Classifying Unreliable Narrators with Large Language Models](classifying_unreliable_narrators.md)
-- [SConU: Selective Conformal Uncertainty in Large Language Models](sconu_selective_conformal_uncertainty_in_large_language_models.md)
-- [Large Language Models for Predictive Analysis: How Far Are They?](large_language_models_for_predictive_analysis_how_far_are_they.md)
-- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
+- [A Semantic-Aware Layer-Freezing Approach to Computation-Efficient Fine-Tuning of Language Models](a_semantic-aware_layer-freezing_approach_to_computation-efficient_fine-tuning_of.md)
+- [LLM Braces: Straightening Out LLM Predictions with Relevant Sub-Updates](llm_braces_straightening.md)
+- [Are Language Models Efficient Reasoners? A Perspective from Logic Programming](../../NeurIPS2025/llm_nlp/are_language_models_efficient_reasoners_a_perspective_from_logic_programming.md)
 
 <!-- RELATED:END -->

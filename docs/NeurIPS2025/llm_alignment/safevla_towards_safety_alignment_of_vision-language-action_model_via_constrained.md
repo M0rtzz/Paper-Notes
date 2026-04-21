@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SafeVLA: Towards Safety Alignment of Vision-Language-Action Model via Constrained Learning
 description: >-

@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] GuardSplat: Efficient and Robust Watermarking for 3D Gaussian Splatting
 description: >-
-  [CVPR 2025][3DGS watermark] 提出 GuardSplat 框架，通过 CLIP 引导的解耦优化训练消息解码器，并在 SH 特征上嵌入水印实现 3DGS 资产的高效版权保护。
+  [CVPR 2025][3D视觉][3DGS] 提出 GuardSplat，通过 CLIP 引导的消息解耦优化（仅训练解码器 5 分钟）和 SH-aware 水印嵌入（仅修改球谐偏移量），实现对 3DGS 资产的高容量、高保真、鲁棒版权保护，总优化时间仅 15 分钟。
 tags:
   - CVPR 2025
-  - 3D Gaussian Splatting
-  - 数字水印
+  - 3D视觉
+  - 3DGS
+  - watermarking
   - CLIP
-  - 版权保护
-  - 球谐函数
+  - spherical harmonics
+  - copyright protection
+  - anti-distortion
 ---
 
 # GuardSplat: Efficient and Robust Watermarking for 3D Gaussian Splatting
@@ -149,9 +151,9 @@ PSNR 比 GaussianMarker 高 5.4 dB，LPIPS 低 87%。
 ## 相关论文
 
 - [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
+- [Robust and Efficient 3D Gaussian Splatting for Urban Scene Reconstruction](../../ICCV2025/3d_vision/robust_and_efficient_3d_gaussian_splatting_for_urban_scene_reconstruction.md)
 - [VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM](varsplat_uncertainty-aware_3d_gaussian_splatting_for_robust_rgb-d_slam.md)
-- [HyperGS: Hyperspectral 3D Gaussian Splatting](hypergs_hyperspectral_3d_gaussian_splatting.md)
 - [DroneSplat: 3D Gaussian Splatting for Robust 3D Reconstruction from In-the-Wild Drone Imagery](dronesplat_3d_gaussian_splatting_for_robust_3d_reconstruction_from_in-the-wild_d.md)
-- [Where, What, Why: Toward Explainable 3D-GS Watermarking](../../CVPR2026/3d_vision/where_what_why_toward_explainable_3d-gs_watermarking.md)
+- [Gaussian Splatting for Efficient Satellite Image Photogrammetry (EOGS)](gaussian_splatting_for_efficient_satellite_image_photogrammetry.md)
 
 <!-- RELATED:END -->

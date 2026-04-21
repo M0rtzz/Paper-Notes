@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] An Expanded Massive Multilingual Dataset for High-Performance Language Technologies (HPLT)
 description: >-

@@ -123,9 +123,9 @@ $\mathcal{L} = \mathcal{L}_{\text{recon}} + \mathcal{L}_{\text{match}} + \mathca
 ## 相关论文
 
 - [Spectral-Geometric Neural Fields for Pose-Free LiDAR View Synthesis](spectral-geometric_neural_fields_for_pose-free_lidar_view_synthesis.md)
+- [PIDLoc: Cross-View Pose Optimization Network Inspired by PID Controllers](pidloc_cross-view_pose_optimization_network_inspired_by_pid_controllers.md)
 - [ProtoOcc: 3D Occupancy Prediction with Low-Resolution Queries via Prototype-aware View Transformation](3d_occupancy_prediction_with_low-resolution_queries_via_prototype-aware_view_tra.md)
 - [Cubify Anything: Scaling Indoor 3D Object Detection](cubify_anything_scaling_indoor_3d_object_detection.md)
-- [6DOPE-GS: Online 6D Object Pose Estimation using Gaussian Splatting](../../ICCV2025/autonomous_driving/6dopegs_online_6d_object_pose_estimation_using_gaussian_spla.md)
-- [EVolSplat: Efficient Volume-based Gaussian Splatting for Urban View Synthesis](evolsplat_efficient_volume-based_gaussian_splatting_for_urban_view_synthesis.md)
+- [Trajectory Mamba: Efficient Attention-Mamba Forecasting Model Based on Selective SSM](trajectory_mamba_efficient_attention-mamba_forecasting_model_based_on_selective_.md)
 
 <!-- RELATED:END -->

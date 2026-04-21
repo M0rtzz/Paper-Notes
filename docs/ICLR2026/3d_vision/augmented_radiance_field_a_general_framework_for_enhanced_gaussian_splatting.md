@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Augmented Radiance Field: A General Framework for Enhanced Gaussian Splatting
 description: >-

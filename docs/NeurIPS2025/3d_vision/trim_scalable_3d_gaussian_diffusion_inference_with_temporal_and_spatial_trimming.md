@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TRIM: Scalable 3D Gaussian Diffusion Inference with Temporal and Spatial Trimming
 description: >-

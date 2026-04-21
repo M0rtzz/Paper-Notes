@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Nautilus: A Large Multimodal Model for Underwater Scene Understanding
 description: >-

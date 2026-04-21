@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3D Convex Splatting: Radiance Field Rendering with 3D Smooth Convexes
 description: >-
@@ -122,10 +122,10 @@ tags:
 
 ## 相关论文
 
+- [Sparse Voxels Rasterization: Real-time High-fidelity Radiance Field Rendering](sparse_voxels_rasterization_real-time_high-fidelity_radiance_field_rendering.md)
 - [Augmented Radiance Field: A General Framework for Enhanced Gaussian Splatting](../../ICLR2026/3d_vision/augmented_radiance_field_a_general_framework_for_enhanced_gaussian_splatting.md)
+- [NeRFPrior: Learning Neural Radiance Field as a Prior for Indoor Scene Reconstruction](nerfprior_learning_neural_radiance_field_as_a_prior_for_indoor_scene_reconstruct.md)
 - [DoF-Gaussian: Controllable Depth-of-Field for 3D Gaussian Splatting](dof-gaussian_controllable_depth-of-field_for_3d_gaussian_splatting.md)
 - [LookCloser: Frequency-aware Radiance Field for Tiny-Detail Scene (FA-NeRF)](lookcloser_frequency-aware_radiance_field_for_tiny-detail_scene.md)
-- [Dynamic Neural Radiance Field from Defocused Monocular Video](../../ECCV2024/3d_vision/dynamic_neural_radiance_field_from_defocused_monocular_video.md)
-- [Exploiting Deblurring Networks for Radiance Fields](exploiting_deblurring_networks_for_radiance_fields.md)
 
 <!-- RELATED:END -->

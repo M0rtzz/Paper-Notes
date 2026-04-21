@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] K-DeCore: Facilitating Knowledge Transfer in Continual Structured Knowledge Reasoning
 description: >-

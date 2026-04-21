@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hybrid Deep Searcher: Scalable Parallel and Sequential Search Reasoning
 description: >-

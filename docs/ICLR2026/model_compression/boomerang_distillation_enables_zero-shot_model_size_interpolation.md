@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Boomerang Distillation Enables Zero-Shot Model Size Interpolation
 description: >-

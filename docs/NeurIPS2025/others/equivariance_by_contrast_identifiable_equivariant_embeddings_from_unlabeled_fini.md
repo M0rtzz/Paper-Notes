@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Equivariance by Contrast: Identifiable Equivariant Embeddings from Unlabeled Finite Group Actions
 description: >-

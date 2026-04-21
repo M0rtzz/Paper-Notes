@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Paradigm Shift: Fully End-to-End Training for Temporal Sentence Grounding in Videos
 description: >-

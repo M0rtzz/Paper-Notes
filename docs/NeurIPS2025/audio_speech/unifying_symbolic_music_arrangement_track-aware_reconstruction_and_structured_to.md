@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unifying Symbolic Music Arrangement: Track-Aware Reconstruction and Structured Tokenization
 description: >-

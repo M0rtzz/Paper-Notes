@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Latent Diffusion Model without Variational Autoencoder
 description: >-

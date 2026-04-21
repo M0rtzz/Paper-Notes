@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Breaking the Limits of Open-Weight CLIP: An Optimization Framework for Self-supervised Fine-tuning of CLIP
 description: >-

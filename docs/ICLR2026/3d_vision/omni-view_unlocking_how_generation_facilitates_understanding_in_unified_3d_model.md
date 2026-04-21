@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Omni-View: Unlocking How Generation Facilitates Understanding in Unified 3D Model based on Multiview images
 description: >-

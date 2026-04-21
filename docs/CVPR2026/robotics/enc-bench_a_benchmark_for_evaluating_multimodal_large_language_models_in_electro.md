@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ENC-Bench: A Benchmark for Evaluating MLLMs in Electronic Navigational Chart Understanding
 description: >-

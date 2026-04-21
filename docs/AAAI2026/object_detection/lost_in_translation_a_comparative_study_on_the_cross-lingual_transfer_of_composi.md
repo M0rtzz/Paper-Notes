@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Lost in Translation? A Comparative Study on the Cross-Lingual Transfer of Composite Harms
 description: >-

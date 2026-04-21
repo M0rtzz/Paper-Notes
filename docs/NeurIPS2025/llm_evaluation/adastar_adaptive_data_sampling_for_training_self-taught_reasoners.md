@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdaSTaR: Adaptive Data Sampling for Training Self-Taught Reasoners
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gaussian Eigen Models for Human Heads
 description: >-
@@ -131,8 +131,8 @@ CNN 模型训练：$\mathcal{L}_{Color}=(1-\omega)\mathcal{L}_1+\omega\mathcal{L
 
 - [ViT-Split: Unleashing the Power of Vision Foundation Models via Efficient Splitting Heads](../../ICCV2025/3d_vision/vit-split_unleashing_the_power_of_vision_foundation_models_via_efficient_splitti.md)
 - [Sapiens: Foundation for Human Vision Models](../../ECCV2024/3d_vision/sapiens_foundation_for_human_vision_models.md)
-- [MEGA: Masked Generative Autoencoder for Human Mesh Recovery](mega_masked_generative_autoencoder_for_human_mesh_recovery.md)
-- [HeatFormer: A Neural Optimizer for Multiview Human Mesh Recovery](heatformer_a_neural_optimizer_for_multiview_human_mesh_recovery.md)
-- [SyncHuman: Synchronizing 2D and 3D Generative Models for Single-View Human Reconstruction](../../NeurIPS2025/3d_vision/synchuman_synchronizing_2d_and_3d_generative_models_for_single-view_human_recons.md)
+- [PromptHMR: Promptable Human Mesh Recovery](prompthmr_promptable_human_mesh_recovery.md)
+- [UniPre3D: Unified Pre-training of 3D Point Cloud Models with Cross-Modal Gaussian Splatting](unipre3d_unified_pre-training_of_3d_point_cloud_models_with_cross-modal_gaussian.md)
+- [Video Depth Without Video Models](video_depth_without_video_models.md)
 
 <!-- RELATED:END -->

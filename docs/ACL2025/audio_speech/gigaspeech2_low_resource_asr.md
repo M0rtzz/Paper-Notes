@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GigaSpeech 2: An Evolving, Large-Scale and Multi-domain ASR Corpus for Low-Resource Languages
 description: >-

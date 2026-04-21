@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Plain-Det: A Plain Multi-Dataset Object Detector
 description: >-

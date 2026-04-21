@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cross-Instance Gaussian Splatting Registration via Geometry-Aware Feature-Guided Alignment
 description: >-

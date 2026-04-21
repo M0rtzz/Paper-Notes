@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SGD Jittering: A Training Strategy for Robust and Accurate Model-Based Architectures
 description: >-
@@ -136,10 +136,10 @@ $$\text{regularization} = \mathbb{E}\left\|\sum_{i=0}^{K-1} \eta(1-\eta)^{K-1-i}
 
 ## 相关论文
 
-- [Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling](../../AAAI2026/medical_imaging/hierarchical_schedule_optimization_for_fast_and_robust_diffusion_model_sampling.md)
 - [DiN: Diffusion Model for Robust Medical VQA with Semantic Noisy Labels](../../CVPR2025/medical_imaging/din_diffusion_model_for_robust_medical_vqa_with_semantic_noisy_labels.md)
-- [Certification for Differentially Private Prediction in Gradient-Based Training](certification_for_differentially_private_prediction_in_gradient-based_training.md)
-- [Doctor Approved: Generating Medically Accurate Skin Disease Images through AI-Expert Feedback](../../NeurIPS2025/medical_imaging/doctor_approved_generating_medically_accurate_skin_disease_images_through_ai-exp.md)
+- [Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling](../../AAAI2026/medical_imaging/hierarchical_schedule_optimization_for_fast_and_robust_diffusion_model_sampling.md)
 - [Multi-Resolution Pathology-Language Pre-training Model with Text-Guided Visual Representation](../../CVPR2025/medical_imaging/multi-resolution_pathology-language_pre-training_model_with_text-guided_visual_r.md)
+- [UniVAD: A Training-free Unified Model for Few-shot Visual Anomaly Detection](../../CVPR2025/medical_imaging/univad_a_training-free_unified_model_for_few-shot_visual_anomaly_detection.md)
+- [Certification for Differentially Private Prediction in Gradient-Based Training](certification_for_differentially_private_prediction_in_gradient-based_training.md)
 
 <!-- RELATED:END -->

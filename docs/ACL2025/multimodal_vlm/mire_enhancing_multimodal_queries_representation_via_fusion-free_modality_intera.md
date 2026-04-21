@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MIRe: Enhancing Multimodal Queries Representation via Fusion-Free Modality Interaction
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ChartNet: A Million-Scale, High-Quality Multimodal Dataset for Robust Chart Understanding
 description: >-

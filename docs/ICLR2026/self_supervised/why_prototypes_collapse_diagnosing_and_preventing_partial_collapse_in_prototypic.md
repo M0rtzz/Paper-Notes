@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Why Prototypes Collapse: Diagnosing and Preventing Partial Collapse in Prototypical Self-Supervised Learning
 description: >-

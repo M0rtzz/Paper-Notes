@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TDATR: Improving End-to-End Table Recognition via Table Detail-Aware Learning and Cell-Level Visual Alignment
 description: >-

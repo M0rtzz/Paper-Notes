@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Can Large Vision-Language Models Correct Semantic Grounding Errors By Themselves?
 description: >-
@@ -147,6 +147,6 @@ tags:
 - [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](continual_learning_with_vision-language_models_via_semantic-geometry_preservatio.md)
 - [IDEATOR: Jailbreaking and Benchmarking Large Vision-Language Models Using Themselves](../../ICCV2025/multimodal_vlm/ideator_jailbreaking_and_benchmarking_large_visionlanguage_m.md)
 - [Your Large Vision-Language Model Only Needs a Few Attention Heads for Visual Grounding](your_large_vision-language_model_only_needs_a_few_attention_heads_for_visual_gro.md)
-- [Critic-V: VLM Critics Help Catch VLM Errors in Multimodal Reasoning](critic-v_vlm_critics_help_catch_vlm_errors_in_multimodal_reasoning.md)
+- [Visual and Semantic Prompt Collaboration for Generalized Zero-Shot Learning](visual_and_semantic_prompt_collaboration_for_generalized_zero-shot_learning.md)
 
 <!-- RELATED:END -->

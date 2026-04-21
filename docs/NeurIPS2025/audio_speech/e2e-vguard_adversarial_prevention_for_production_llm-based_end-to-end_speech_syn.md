@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] E2E-VGuard: Adversarial Prevention for Production LLM-based End-To-End Speech Synthesis
 description: >-

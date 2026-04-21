@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SlimLLM: Accurate Structured Pruning for Large Language Models
 description: >-
@@ -120,10 +120,10 @@ SlimLLM的结构化剪枝可与SparseGPT等非结构化方法叠加——先移�
 
 ## 相关论文
 
-- [NeedleInATable: Exploring Long-Context Capability of Large Language Models towards Long-Structured Tables](../../NeurIPS2025/multimodal_vlm/needleinatable_exploring_long-context_capability_of_large_language_models_toward.md)
 - [Teaching Large Language Models to Regress Accurate Image Quality Scores Using Score Distribution](../../CVPR2025/multimodal_vlm/teaching_large_language_models_to_regress_accurate_image_quality_scores_using_sc.md)
+- [NeedleInATable: Exploring Long-Context Capability of Large Language Models towards Long-Structured Tables](../../NeurIPS2025/multimodal_vlm/needleinatable_exploring_long-context_capability_of_large_language_models_toward.md)
 - [Token Pruning in Multimodal Large Language Models: Are We Solving the Right Problem?](../../ACL2025/multimodal_vlm/token_pruning_in_multimodal_large_language_models_are_we_solving_the_right_probl.md)
 - [Modality-Aware Neuron Pruning for Unlearning in Multimodal Large Language Models](../../ACL2025/multimodal_vlm/manu_modality_aware_unlearning.md)
-- [IVTP: Instruction-Guided Visual Token Pruning for Large Vision-Language Models](../../ECCV2024/multimodal_vlm/ivtp_instruction-guided_visual_token_pruning_for_large_vision-language_models.md)
+- [CoreMatching: A Co-adaptive Sparse Inference Framework with Token and Neuron Pruning for Comprehensive Acceleration of Vision-Language Models](corematching_a_co-adaptive_sparse_inference_framework_with_token_and_neuron_prun.md)
 
 <!-- RELATED:END -->

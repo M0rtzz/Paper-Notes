@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Astral: Training Physics-Informed Neural Networks with Error Majorants
 description: >-

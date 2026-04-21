@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Triplets Better Than Pairs: Towards Stable and Effective Self-Play Fine-Tuning for LLMs
 description: >-

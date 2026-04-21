@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NewsInterview: a Dataset and a Playground to Evaluate LLMs' Grounding Gap via Informational Interviews
 description: >-
@@ -139,8 +139,8 @@ tags:
 
 ## 相关论文
 
-- [Mind the Belief Gap: Group Identity in the World of LLMs](mind_the_belief_gap_group_identity_in_the_world_of_llms.md)
 - [AutoGUI: Scaling GUI Grounding with Automatic Functionality Annotations from LLMs](autogui_scaling_gui_grounding_with_automatic.md)
+- [Mind the (Belief) Gap: Group Identity in the World of LLMs](mind_the_belief_gap_group_identity_in_the_world_of_llms.md)
 - [Palm: A Culturally Inclusive and Linguistically Diverse Dataset for Arabic LLMs](palm_a_culturally_inclusive_and_linguistically_diverse_dataset_for_arabic_llms.md)
 - [Growing Through Experience: Scaling Episodic Grounding in Language Models](episodic_grounding_experience.md)
 - [A Modular Dataset to Demonstrate LLM Abstraction Capability](a_modular_dataset_to_demonstrate_llm_abstraction_capability.md)

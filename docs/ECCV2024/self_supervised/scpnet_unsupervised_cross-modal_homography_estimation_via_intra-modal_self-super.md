@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SCPNet: Unsupervised Cross-modal Homography Estimation via Intra-modal Self-supervised Learning
 description: >-

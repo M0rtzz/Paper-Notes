@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Pedagogically-Inspired Data Synthesis for Language Model Knowledge Distillation
 description: >-

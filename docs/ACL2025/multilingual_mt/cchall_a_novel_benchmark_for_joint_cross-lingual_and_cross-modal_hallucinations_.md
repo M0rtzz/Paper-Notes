@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CCHall: A Novel Benchmark for Joint Cross-Lingual and Cross-Modal Hallucinations Detection in Large Language Models
 description: >-

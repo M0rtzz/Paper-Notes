@@ -2,10 +2,9 @@
 title: >-
   [论文解读] SAW: Toward a Surgical Action World Model via Controllable and Scalable Video Generation
 description: >-
-  [CVPR2025][医学图像][surgical video generation] 提出 SAW（Surgical Action World），通过四种轻量级条件信号（语言提示、参考帧、组织功能图、工具轨迹）驱动视频扩散模型，实现可控、可扩展的手术动作视频生成，用于罕见动作增强和手术仿真。
+  [CVPR2025][surgical video generation] 提出 SAW（Surgical Action World），通过四种轻量级条件信号（语言提示、参考帧、组织功能图、工具轨迹）驱动视频扩散模型，实现可控、可扩展的手术动作视频生成，用于罕见动作增强和手术仿真。
 tags:
   - CVPR2025
-  - 医学图像
   - surgical video generation
   - world model
   - 扩散模型

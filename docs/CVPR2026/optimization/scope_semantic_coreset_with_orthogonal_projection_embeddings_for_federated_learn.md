@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SCOPE: Semantic Coreset with Orthogonal Projection Embeddings for Federated learning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RSONet: Region-guided Selective Optimization Network for RGB-T Salient Object Detection
 description: >-
@@ -118,10 +118,10 @@ RSONet 分为**区域引导阶段**和**显著性生成阶段**两个阶段。
 
 ## 相关论文
 
+- [Visual Consensus Prompting for Co-Salient Object Detection](visual_consensus_prompting_for_co-salient_object_detection.md)
 - [RDNet: Region Proportion-Aware Dynamic Adaptive Salient Object Detection Network in Optical Remote Sensing Images](rdnet_region_proportion-aware_dynamic_adaptive_salient_object_detection_network_.md)
 - [G2HFNet: GeoGran-Aware Hierarchical Feature Fusion Network for Salient Object Detection in Optical Remote Sensing Images](binwang2hfnet_geogran-aware_hierarchical_feature_fusion_network_for_salient_obje.md)
+- [DA-VPT: Semantic-Guided Visual Prompt Tuning for Vision Transformers](da-vpt_semantic-guided_visual_prompt_tuning_for_vision_transformers.md)
 - [Fractal Calibration for Long-Tailed Object Detection](fractal_calibration_for_long-tailed_object_detection.md)
-- [Dynamic Derivation and Elimination: Audio Visual Segmentation with Enhanced Audio Semantics](dynamic_derivation_and_elimination_audio_visual_segmentation_with_enhanced_audio.md)
-- [MambaVision: A Hybrid Mamba-Transformer Vision Backbone](mambavision_a_hybrid_mamba-transformer_vision_backbone.md)
 
 <!-- RELATED:END -->

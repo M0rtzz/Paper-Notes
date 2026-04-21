@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaffold Diffusion: Sparse Multi-Category Voxel Structure Generation with Discrete Diffusion
 description: >-
@@ -118,10 +118,10 @@ Scaffold Diffusion的pipeline分为两步：给定一个布尔占用图O ∈ Z^{
 
 ## 相关论文
 
+- [ShapeShifter: 3D Variations Using Multiscale and Sparse Point-Voxel Diffusion](../../CVPR2025/3d_vision/shapeshifter_3d_variations_using_multiscale_and_sparse_point-voxel_diffusion.md)
 - [WildCAT3D: Appearance-Aware Multi-View Diffusion in the Wild](wildcat3d_appearance-aware_multi-view_diffusion_in_the_wild.md)
 - [More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
-- [SpinMeRound: Consistent Multi-View Identity Generation Using Diffusion Models](../../ICCV2025/3d_vision/spinmeround_consistent_multi-view_identity_generation_using_diffusion_models.md)
-- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](../../CVPR2025/3d_vision/midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
-- [MaterialMVP: Illumination-Invariant Material Generation via Multi-view PBR Diffusion](../../ICCV2025/3d_vision/materialmvp_illumination-invariant_material_generation_via_multi-view_pbr_diffus.md)
+- [TRIM: Scalable 3D Gaussian Diffusion Inference with Temporal and Spatial Trimming](trim_scalable_3d_gaussian_diffusion_inference_with_temporal_and_spatial_trimming.md)
+- [GauDP: Reinventing Multi-Agent Collaboration through Gaussian-Image Synergy in Diffusion Policies](gaudp_reinventing_multi-agent_collaboration_through_gaussian-image_synergy_in_di.md)
 
 <!-- RELATED:END -->

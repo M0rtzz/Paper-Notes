@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation
 description: >-

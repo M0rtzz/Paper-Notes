@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AFreeCA: Annotation-Free Counting for All
 description: >-
@@ -139,10 +139,10 @@ tags:
 
 ## 相关论文
 
-- [YOLO-Count: Differentiable Object Counting for Text-to-Image Generation](../../ICCV2025/object_detection/yolo-count_differentiable_object_counting_for_text-to-image_generation.md)
+- [Can OOD Object Detectors Learn from Foundation Models?](can_ood_object_detectors_learn_from_foundation_models.md)
+- [Implicit Concept Removal of Diffusion Models](implicit_concept_removal_of_diffusion_models.md)
+- [Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](be_yourself_bounded_attention_for_multisubject_texttoimage_g.md)
+- [ReGround: Improving Textual and Spatial Grounding at No Cost](reground_improving_textual_and_spatial_grounding_at_no_cost.md)
 - [Learn from the Learnt: Source-Free Active Domain Adaptation via Contrastive Sampling and Visual Persistence](learn_from_the_learnt_source-free_active_domain_adaptation_via_contrastive_sampl.md)
-- [All You Need is One: Capsule Prompt Tuning with a Single Vector](../../NeurIPS2025/object_detection/all_you_need_is_one_capsule_prompt_tuning_with_a_single_vector.md)
-- [Boosting Domain Incremental Learning: Selecting the Optimal Parameters Is All You Need](../../CVPR2025/object_detection/boosting_domain_incremental_learning_selecting_the_optimal_parameters_is_all_you.md)
-- [DISTIL: Data-Free Inversion of Suspicious Trojan Inputs via Latent Diffusion](../../ICCV2025/object_detection/distil_data-free_inversion_of_suspicious_trojan_inputs_via_latent_diffusion.md)
 
 <!-- RELATED:END -->

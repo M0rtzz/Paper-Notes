@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Wizard of Shopping: Target-Oriented E-commerce Dialogue Generation with Decision Tree Branching
 description: >-
@@ -155,6 +155,6 @@ TRACER 分三步生成对话：(1) 顾客偏好采样——从商品目录中采
 - [When Harry Meets Superman: The Role of The Interlocutor in Persona-Based Dialogue Generation](when_harry_meets_superman_the_role_of_the_interlocutor_in_persona-based_dialogue.md)
 - [Exploring Persona Sentiment Sensitivity in Personalized Dialogue Generation](persona_sentiment_dialogue.md)
 - [Dialogue Systems for Emotional Support via Value Reinforcement](dialogue_systems_for_emotional_support_via_value_reinforcement.md)
-- [BI-MDRG: Bridging Image History in Multimodal Dialogue Response Generation](../../ECCV2024/dialogue/bi-mdrg_bridging_image_history_in_multimodal_dialogue_response_generation.md)
+- [BI-MDRG: Bridging Image History in Multimodal Dialogue Response Generation](../../ECCV2024/dialogue/bimdrg_bridging_image_history_in_multimodal_dialogue_respons.md)
 
 <!-- RELATED:END -->

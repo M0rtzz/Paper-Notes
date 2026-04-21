@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Performance Gap in Entity Knowledge Extraction Across Modalities in Vision Language Models
 description: >-

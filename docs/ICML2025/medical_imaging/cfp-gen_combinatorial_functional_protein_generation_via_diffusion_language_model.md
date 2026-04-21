@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CFP-Gen: Combinatorial Functional Protein Generation via Diffusion Language Models
 description: >-
@@ -151,9 +151,9 @@ CFP-Gen 基于 ESM 架构的扩散语言模型：
 ## 相关论文
 
 - [Steering Protein Language Models](steering_protein_language_models.md)
+- [Training Flexible Models of Genetic Variant Effects from Functional Annotations using Accelerated Linear Algebra](training_flexible_models_of_genetic_variant_effects_from_functional_annotations.md)
 - [Elucidating the Design Space of Multimodal Protein Language Models](elucidating_the_design_space_of_multimodal_protein_language_models.md)
 - [Aligning Protein Conformation Ensemble Generation with Physical Feedback](aligning_protein_conformation_ensemble_generation_with_physical_feedback.md)
-- [Training Flexible Models of Genetic Variant Effects from Functional Annotations using Accelerated Linear Algebra](training_flexible_models_of_genetic_variant_effects_from_functional_annotations_.md)
 - [Controlling Repetition in Protein Language Models](../../ICLR2026/medical_imaging/controlling_repetition_in_protein_language_models.md)
 
 <!-- RELATED:END -->

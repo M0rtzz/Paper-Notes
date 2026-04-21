@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] G-Sim: Generative Simulations with Large Language Models and Gradient-Free Calibration
 description: >-
@@ -193,6 +193,6 @@ G-Sim-SBI 在全部三个环境中均取得最佳性能，特别是在复杂的 
 - [Generative Zoo](../../ICCV2025/llm_evaluation/generative_zoo.md)
 - [CodeMEnv: Benchmarking Large Language Models on Code Migration](../../ACL2025/llm_evaluation/codemenv_benchmarking_large_language_models_on_code_migration.md)
 - [Can Large Language Models Master Complex Card Games?](../../NeurIPS2025/llm_evaluation/can_large_language_models_master_complex_card_games.md)
-- [Batayan: A Filipino NLP Benchmark for Evaluating Large Language Models](../../ACL2025/llm_evaluation/batayan_a_filipino_nlp_benchmark_for_evaluating_large_language_models.md)
+- [AD-LLM: Benchmarking Large Language Models for Anomaly Detection](../../ACL2025/llm_evaluation/ad-llm_benchmarking_large_language_models_for_anomaly_detection.md)
 
 <!-- RELATED:END -->

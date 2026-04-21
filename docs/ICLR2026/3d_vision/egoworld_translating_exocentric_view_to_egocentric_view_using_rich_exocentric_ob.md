@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EgoWorld: Translating Exocentric View to Egocentric View using Rich Exocentric Observations
 description: >-

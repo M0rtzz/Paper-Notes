@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Competition-Aware CPC Forecasting with Near-Market Coverage
 description: >-
@@ -135,8 +135,8 @@ STGNN 的输入为时空张量 $X \in \mathbb{R}^{N \times T \times F}$，输出
 ## 相关论文
 
 - [STCast: Adaptive Boundary Alignment for Global and Regional Weather Forecasting](stcast_adaptive_boundary_alignment_for_global_and_regional_weather_forecasting.md)
-- [PFGNet: A Fully Convolutional Frequency-Guided Peripheral Gating Network for Efficient Spatiotemporal Predictive Learning](pfgnet_a_fully_convolutional_frequency-guided_peripheral_gating_network_for_effi.md)
 - [A Frame is Worth One Token: Efficient Generative World Modeling with Delta Tokens](a_frame_is_worth_one_token_efficient_generative_world_modeling_with_delta_tokens.md)
+- [PFGNet: A Fully Convolutional Frequency-Guided Peripheral Gating Network for Efficient Spatiotemporal Predictive Learning](pfgnet_a_fully_convolutional_frequency-guided_peripheral_gating_network_for_effi.md)
 - [Test-Time Efficient Pretrained Model Portfolios for Time Series Forecasting](../../ICLR2026/time_series/test-time_efficient_pretrained_model_portfolios_for_time_series_forecasting.md)
 - [ReCast: Reliability-aware Codebook Assisted Lightweight Time Series Forecasting](../../AAAI2026/time_series/recast_reliability-aware_codebook_assisted_lightweight_time_series_forecasting.md)
 

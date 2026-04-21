@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Red-Teaming LLM Multi-Agent Systems via Communication Attacks
 description: >-

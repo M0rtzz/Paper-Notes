@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Elastic Weight Consolidation for Knowledge Graph Continual Learning: An Empirical Evaluation
 description: >-

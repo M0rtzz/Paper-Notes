@@ -1,15 +1,18 @@
-﻿---
+---
 title: >-
   [论文解读] GraphGPT-o: Synergistic Multimodal Comprehension and Generation on Graphs
 description: >-
-  [CVPR 2025][multimodal generation] 提出 GraphGPT-o，面向多模态属性图 (MMAG) 的理解与生成，通过 PPR 采样、层次化图对齐器和多策略推理，将图结构信息融入 MLLM 实现图条件的文本-图像联合生成。
+  [CVPR 2025][图像生成][多模态] 提出 GraphGPT-o，将多模态属性图（MMAG，节点含图像+文本，边表示关系）的结构信息注入多模态大语言模型（MLLM），通过 PPR 采样、层次化 Q-Former 对齐器和灵活推理策略，实现基于图上下文的文本-图像联合生成。
 tags:
   - CVPR 2025
-  - multimodal generation
-  - graph neural network
+  - 图像生成
+  - 多模态
   - MLLM
-  - 图结构推理
-  - 多模态属性图
+  - graph linearization
+  - hierarchical aligner
+  - Q-Former
+  - DreamLLM
+  - 扩散模型
 ---
 
 # GraphGPT-o: Synergistic Multimodal Comprehension and Generation on Graphs
@@ -165,8 +168,8 @@ $$\mathcal{L} = \mathcal{L}_{MLLM}^{GraphGPT-o} + \mathcal{L}_{SD}^{GraphGPT-o}$
 
 - [DiVoT: Diffusion Powers Video Tokenizer for Comprehension and Generation](divot_diffusion_powers_video_tokenizer_for_comprehension_and_generation.md)
 - [Janus-Pro-R1: Advancing Collaborative Visual Comprehension and Generation via Reinforcement Learning](../../NeurIPS2025/image_generation/janus-pro-r1_advancing_collaborative_visual_comprehension_and_generation_via_rei.md)
-- [Video Motion Graphs](../../ICCV2025/image_generation/video_motion_graphs.md)
 - [JanusFlow: Harmonizing Autoregression and Rectified Flow for Unified Multimodal Understanding and Generation](janusflow_harmonizing_autoregression_and_rectified_flow_for_unified_multimodal_u.md)
-- [Generative Multimodal Pretraining with Discrete Diffusion Timestep Tokens](generative_multimodal_pretraining_with_discrete_diffusion_timestep_tokens.md)
+- [Video Motion Graphs](../../ICCV2025/image_generation/video_motion_graphs.md)
+- [WeGen: A Unified Model for Interactive Multimodal Generation as We Chat](wegen_a_unified_model_for_interactive_multimodal_generation_as_we_chat.md)
 
 <!-- RELATED:END -->

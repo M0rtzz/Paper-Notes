@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Curvature-Aware Hypergradient Approximation for Bilevel Optimization
 description: >-
@@ -150,6 +150,6 @@ $$\min_{0 \leq k \leq K-1} \|\nabla\Phi(x^k)\|^2 \leq O(\kappa^3 / K)$$
 - [ScaleBiO: Scalable Bilevel Optimization for LLM Data Reweighting](../../ACL2025/optimization/scalebio_bilevel_data_reweighting.md)
 - [Learning Theory for Kernel Bilevel Optimization](../../NeurIPS2025/optimization/learning_theory_for_kernel_bilevel_optimization.md)
 - [Efficient Adaptive Federated Optimization](../../NeurIPS2025/optimization/efficient_adaptive_federated_optimization.md)
-- [Problem-Parameter-Free Decentralized Bilevel Optimization](../../NeurIPS2025/optimization/problem-parameter-free_decentralized_bilevel_optimization.md)
+- [An Adaptive Algorithm for Bilevel Optimization on Riemannian Manifolds](../../NeurIPS2025/optimization/an_adaptive_algorithm_for_bilevel_optimization_on_riemannian_manifolds.md)
 
 <!-- RELATED:END -->

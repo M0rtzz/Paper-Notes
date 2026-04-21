@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OpenLex3D: A Tiered Evaluation Benchmark for Open-Vocabulary 3D Scene Representations
 description: >-

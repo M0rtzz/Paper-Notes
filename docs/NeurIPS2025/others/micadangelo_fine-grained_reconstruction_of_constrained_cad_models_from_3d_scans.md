@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MiCADangelo: Fine-Grained Reconstruction of Constrained CAD Models from 3D Scans
 description: >-

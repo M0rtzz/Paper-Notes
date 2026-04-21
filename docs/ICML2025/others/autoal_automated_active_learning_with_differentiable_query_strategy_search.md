@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AutoAL: Automated Active Learning with Differentiable Query Strategy Search
 description: >-

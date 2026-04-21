@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EEG-DLite: Dataset Distillation for Efficient Large EEG Model Training
 description: >-

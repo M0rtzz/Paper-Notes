@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] CARE Transformer: Mobile-Friendly Linear Visual Transformer via Decoupled Dual Interaction
 description: >-
-  [CVPR 2025][高效Transformer] 提出解耦双交互线性注意力CARE机制，通过非对称特征解耦和双向交互模块同时提升线性视觉Transformer的效率和精度
+  [CVPR 2025][LLM效率][线性注意力] 本文提出CARE（deCoupled duAl-interactive lineaR attEntion）机制，通过非对称特征解耦策略将局部归纳偏置和长程依赖的学习过程分而治之，配合动态记忆单元和双交互模块充分利用跨特征互补性，在ImageNet-1K上以0.7/1.9 GMACs达到78.4/82.1% top-1精度，在移动端实现极低延迟。
 tags:
   - CVPR 2025
-  - 高效Transformer
+  - LLM效率
   - 线性注意力
+  - 非对称解耦
+  - 双交互模块
   - 移动端部署
-  - 模型效率
+  - 动态记忆单元
 ---
 
 # CARE Transformer: Mobile-Friendly Linear Visual Transformer via Decoupled Dual Interaction
@@ -151,6 +153,6 @@ ImageNet-1K分类：
 - [Spiking Transformer: Introducing Accurate Addition-Only Spiking Self-Attention for Transformer](spiking_transformer_introducing_accurate_addition-only_spiking_self-attention_fo.md)
 - [Learning in Compact Spaces with Approximately Normalized Transformer](../../NeurIPS2025/llm_efficiency/learning_in_compact_spaces_with_approximately_normalized_transformer.md)
 - [Frequency-Aware Token Reduction for Efficient Vision Transformer](../../NeurIPS2025/llm_efficiency/frequency-aware_token_reduction_for_efficient_vision_transformer.md)
-- [LayerTracer: Cognitive-Aligned Layered SVG Synthesis via Diffusion Transformer](../../ICCV2025/llm_efficiency/layertracer_cognitive-aligned_layered_svg_synthesis_via_diffusion_transformer.md)
+- [A Unified Framework for Establishing the Universal Approximation of Transformer-Type Architectures](../../NeurIPS2025/llm_efficiency/a_unified_framework_for_establishing_the_universal_approxima.md)
 
 <!-- RELATED:END -->

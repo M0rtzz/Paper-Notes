@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adaptive Spectral Feature Forecasting for Diffusion Sampling Acceleration
 description: >-

@@ -1,15 +1,18 @@
-﻿---
+---
 title: >-
   [论文解读] LT3SD: Latent Trees for 3D Scene Diffusion
 description: >-
-  [CVPR 2025][3D generation][diffusion] 提出 LT3SD，利用潜在树表征将 3D 场景分层分解为几何（低频）和潜在特征（高频）体积，结合基于 patch 的扩散模型，实现高质量、可扩展的无限 3D 场景生成。
+  [CVPR 2025][3D视觉][3D scene generation] 提出 LT3SD，将 3D 场景渐进分解为潜在树（每层包含几何体积 + 高频潜在特征体积），在此表征上训练基于 patch 的扩散模型，实现从粗到细、逐 patch 的高质量无限 3D 场景生成，FID 相对 SOTA 提升 70%。
 tags:
   - CVPR 2025
+  - 3D视觉
   - 3D scene generation
-  - diffusion model
+  - 扩散模型
   - latent tree
+  - TUDF
   - coarse-to-fine
-  - patch-based generation
+  - patch-based
+  - unconditional generation
 ---
 
 # LT3SD: Latent Trees for 3D Scene Diffusion
@@ -137,10 +140,10 @@ FID 13.39 远超第二名 45.55（提升 70%+），同时 COV/1-NNA 等全局结
 
 ## 相关论文
 
-- [Representing 3D Shapes with 64 Latent Vectors for 3D Diffusion Models](../../ICCV2025/3d_vision/representing_3d_shapes_with_64_latent_vectors_for_3d_diffusion_models.md)
-- [Ctrl-D: Controllable Dynamic 3D Scene Editing with Personalized 2D Diffusion](ctrl-d_controllable_dynamic_3d_scene_editing_with_personalized_2d_diffusion.md)
+- [SceneFactor: Factored Latent 3D Diffusion for Controllable 3D Scene Generation](scenefactor_factored_latent_3d_diffusion_for_controllable_3d_scene_generation.md)
 - [FreeScene: Mixed Graph Diffusion for 3D Scene Synthesis from Free Prompts](freescene_mixed_graph_diffusion_for_3d_scene_synthesis_from_free_prompts.md)
+- [Ctrl-D: Controllable Dynamic 3D Scene Editing with Personalized 2D Diffusion](ctrl-d_controllable_dynamic_3d_scene_editing_with_personalized_2d_diffusion.md)
 - [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
-- [Decompositional Neural Scene Reconstruction with Generative Diffusion Prior](decompositional_neural_scene_reconstruction_with_generative_diffusion_prior.md)
+- [Representing 3D Shapes with 64 Latent Vectors for 3D Diffusion Models](../../ICCV2025/3d_vision/representing_3d_shapes_with_64_latent_vectors_for_3d_diffusion_models.md)
 
 <!-- RELATED:END -->

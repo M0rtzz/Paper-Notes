@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adaptive Social Learning via Mode Policy Optimization for Language Agents
 description: >-

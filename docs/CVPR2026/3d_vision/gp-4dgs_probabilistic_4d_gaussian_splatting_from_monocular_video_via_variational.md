@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GP-4DGS: Probabilistic 4D Gaussian Splatting from Monocular Video via Variational Gaussian Processes
 description: >-

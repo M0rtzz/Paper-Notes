@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoCoLex: Confidence-guided Copy-based Decoding for Grounded Legal Text Generation
 description: >-

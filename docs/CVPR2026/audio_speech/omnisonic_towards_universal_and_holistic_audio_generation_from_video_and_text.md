@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OmniSonic: Towards Universal and Holistic Audio Generation from Video and Text
 description: >-
@@ -142,6 +142,6 @@ OmniSonic 基于 Flow Matching 扩散框架，在音频 VAE 的潜空间中进�
 - [Echoes Over Time: Unlocking Length Generalization in Video-to-Audio Generation Models](echoes_over_time_unlocking_length_generalization_in_video-to-audio_generation_mo.md)
 - [Talking Together: Synthesizing Co-Located 3D Conversations from Audio](talking_together_synthesizing_co-located_3d_conversations_from_audio.md)
 - [Semantic Audio-Visual Navigation in Continuous Environments](semantic_audio-visual_navigation_in_continuous_environments.md)
-- [MultiFoley: Video-Guided Foley Sound Generation with Multimodal Controls](../../CVPR2025/audio_speech/video-guided_foley_sound_generation_with_multimodal_controls.md)
+- [Unlocking Strong Supervision: A Data-Centric Study of General-Purpose Audio Pre-Training Methods](unlocking_strong_supervision_a_data-centric_study_of_general-purpose_audio_pre-t.md)
 
 <!-- RELATED:END -->

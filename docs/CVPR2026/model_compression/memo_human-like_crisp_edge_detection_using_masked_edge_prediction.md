@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MEMO: Human-like Crisp Edge Detection Using Masked Edge Prediction
 description: >-

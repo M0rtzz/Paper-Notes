@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Extragradient Method for $(L_0, L_1)$-Lipschitz Root-finding Problems
 description: >-

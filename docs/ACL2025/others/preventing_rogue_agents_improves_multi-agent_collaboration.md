@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Preventing Rogue Agents Improves Multi-Agent Collaboration
 description: >-

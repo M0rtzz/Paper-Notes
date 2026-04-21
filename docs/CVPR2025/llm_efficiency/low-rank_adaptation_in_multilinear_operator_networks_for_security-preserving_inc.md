@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Low-Rank Adaptation in Multilinear Operator Networks for Security-Preserving Incremental Learning
 description: >-
-  [CVPR 2025][安全增量学习] 提出面向全同态加密兼容多线性算子网络的低秩适应方法，解决加密数据增量学习中的灾难性遗忘问题
+  [CVPR 2025][LLM效率][多线性算子网络] 针对全同态加密（Leveled FHE）场景下多线性算子网络的灾难性遗忘问题，提出了一种结合低秩适应（LoRA）和梯度投影记忆（GPM）机制的增量学习方法，在保障数据安全的前提下实现持续学习。
 tags:
   - CVPR 2025
-  - 增量学习
+  - LLM效率
+  - 多线性算子网络
   - 全同态加密
   - 低秩适应
-  - 隐私保护
+  - 灾难性遗忘
+  - 梯度投影记忆
 ---
 
 # Low-Rank Adaptation in Multilinear Operator Networks for Security-Preserving Incremental Learning
@@ -126,7 +128,7 @@ tags:
 - [Efficient Data Driven Mixture-of-Expert Extraction from Trained Networks](efficient_data_driven_mixture-of-expert_extraction_from_trained_networks.md)
 - [Addressing Imbalanced Domain-Incremental Learning through Dual-Balance Collaborative Experts (DCE)](../../ICML2025/llm_efficiency/addressing_imbalanced_domain-incremental_learning_through_dual-balance_collabora.md)
 - [Learning from the Undesirable: Robust Adaptation of Language Models without Forgetting](../../AAAI2026/llm_efficiency/learning_from_the_undesirable_robust_adaptation_of_language_models_without_forge.md)
-- [Improving Accuracy and Calibration via Differentiated Deep Mutual Learning](improving_accuracy_and_calibration_via_differentiated_deep_mutual_learning.md)
+- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
 - [KAC: Kolmogorov-Arnold Classifier for Continual Learning](kac_kolmogorov-arnold_classifier_for_continual_learning.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stable Minima of ReLU Neural Networks Suffer from the Curse of Dimensionality: The Neural Shattering Phenomenon
 description: >-

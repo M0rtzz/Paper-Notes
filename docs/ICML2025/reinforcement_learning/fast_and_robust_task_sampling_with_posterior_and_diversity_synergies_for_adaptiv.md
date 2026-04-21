@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fast and Robust: Task Sampling with Posterior and Diversity Synergies for Adaptive Decision-Makers in Randomized Environments
 description: >-

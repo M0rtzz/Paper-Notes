@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AVERE: Improving Audiovisual Emotion Reasoning with Preference Optimization
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-Consistency for LLM-Based Motion Trajectory Generation and Verification
 description: >-

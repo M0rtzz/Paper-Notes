@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BioBench: A Blueprint to Move Beyond ImageNet for Scientific ML Benchmarks
 description: >-

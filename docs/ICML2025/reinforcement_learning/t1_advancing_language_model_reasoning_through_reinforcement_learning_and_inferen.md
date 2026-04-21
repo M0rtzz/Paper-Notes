@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] T1: Advancing Language Model Reasoning through Reinforcement Learning and Inference Scaling
 description: >-

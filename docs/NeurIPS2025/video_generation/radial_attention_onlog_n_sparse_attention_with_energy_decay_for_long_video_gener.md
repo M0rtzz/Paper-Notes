@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] Radial Attention: O(n log n) Sparse Attention with Energy Decay for Long Video Generation
 description: >-
-  [NeurIPS 2025][视频理解][稀疏注意力] Radial Attention 发现了视频扩散模型中注意力分数随时空距离指数衰减的"时空能量衰减"现象，据此设计了一种 O(n log n) 复杂度的静态稀疏注意力掩码，在 HunyuanVideo/Wan2.1 等模型上实现最高 3.7× 推理加速，并通过 LoRA 微调支持 4× 更长视频生成。
+  [NeurIPS 2025][稀疏注意力] Radial Attention 发现了视频扩散模型中注意力分数随时空距离指数衰减的"时空能量衰减"现象，据此设计了一种 O(n log n) 复杂度的静态稀疏注意力掩码，在 HunyuanVideo/Wan2.1 等模型上实现最高 3.7× 推理加速，并通过 LoRA 微调支持 4× 更长视频生成。
 tags:
   - NeurIPS 2025
-  - 视频理解
   - 稀疏注意力
   - 时空能量衰减
   - O(n log n)
@@ -148,8 +147,8 @@ Radial Attention 是一种静态稀疏注意力机制，使用预定义的掩码
 
 ## 相关论文
 
-- [VORTA: Efficient Video Diffusion via Routing Sparse Attention](vorta_efficient_video_diffusion_via_routing_sparse_attention.md)
 - [VSA: Faster Video Diffusion with Trainable Sparse Attention](vsa_faster_video_diffusion_with_trainable_sparse_attention.md)
+- [VORTA: Efficient Video Diffusion via Routing Sparse Attention](vorta_efficient_video_diffusion_via_routing_sparse_attention.md)
 - [Presto: Long Video Diffusion Generation with Segmented Cross-Attention and Content-Rich Video Data Curation](../../CVPR2025/video_generation/long_video_diffusion_generation_with_segmented_cross-attention_and_content-rich_.md)
 - [S²Q-VDiT: Accurate Quantized Video Diffusion Transformer with Salient Data and Sparse Token Distillation](s2q-vdit_accurate_quantized_video_diffusion_transformer_with_salient_data_and_sp.md)
 - [Scaling RL to Long Videos](scaling_rl_to_long_videos.md)

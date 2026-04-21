@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unlocking Efficient Vehicle Dynamics Modeling via Analytic World Models
 description: >-

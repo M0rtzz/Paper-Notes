@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Last Vote: A Multi-Stakeholder Framework for Language Model Governance
 description: >-

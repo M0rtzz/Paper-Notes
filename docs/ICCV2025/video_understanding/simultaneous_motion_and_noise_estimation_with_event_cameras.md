@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Simultaneous Motion And Noise Estimation with Event Cameras
 description: >-
@@ -195,6 +195,6 @@ DND21 去噪基准（AUC↑）：
 - [EMoTive: Event-Guided Trajectory Modeling for 3D Motion Estimation](emotive_event-guided_trajectory_modeling_for_3d_motion_estimation.md)
 - [egoPPG: Heart Rate Estimation from Eye-Tracking Cameras in Egocentric Systems to Benefit Downstream Vision Tasks](egoppg_heart_rate_estimation_from_eye-tracking_cameras_in_egocentric_systems_to_.md)
 - [EDCFlow: Exploring Temporally Dense Difference Maps for Event-based Optical Flow Estimation](../../CVPR2025/video_understanding/edcflow_exploring_temporally_dense_difference_maps_for_event-based_optical_flow_.md)
-- [Estimating 2D Camera Motion with Hybrid Motion Basis](estimating_2d_camera_motion_with_hybrid_motion_basis.md)
+- [Motion-prior Contrast Maximization for Dense Continuous-Time Motion Estimation](../../ECCV2024/video_understanding/motion-prior_contrast_maximization_for_dense_continuous-time_motion_estimation.md)
 
 <!-- RELATED:END -->

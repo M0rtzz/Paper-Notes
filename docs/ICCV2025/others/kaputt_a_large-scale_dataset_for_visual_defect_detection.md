@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Kaputt: A Large-Scale Dataset for Visual Defect Detection
 description: >-
@@ -155,8 +155,8 @@ Kaputt 发布了一个包含 23 万+ 图像、4.8 万+ 独立商品的大规模�
 
 - [SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](../../CVPR2025/others/sldprtnet_a_large-scale_multimodal_dataset_for_cad_generation_in_language-driven.md)
 - [Cover Learning for Large-Scale Topology Representation](../../ICML2025/others/cover_learning_for_large-scale_topology_representation.md)
-- [Learning Visual Hierarchies in Hyperbolic Space for Image Retrieval](learning_visual_hierarchies_in_hyperbolic_space_for_image_retrieval.md)
 - [Zero-Shot Conversational Stance Detection: Dataset and Approaches](../../ACL2025/others/zero-shot_conversational_stance_detection_dataset_and_approaches.md)
-- [Power Variable Projection for Initialization-Free Large-Scale Bundle Adjustment](../../ECCV2024/others/power_variable_projection_for_initialization-free_large-scale_bundle_adjustment.md)
+- [Learning Visual Hierarchies in Hyperbolic Space for Image Retrieval](learning_visual_hierarchies_in_hyperbolic_space_for_image_retrieval.md)
+- [UniSpector: Towards Universal Open-set Defect Recognition via Spectral-Contrastive Visual Prompting](../../CVPR2026/others/unispector_towards_universal_open-set_defect_recognition_via_spectral-contrastiv.md)
 
 <!-- RELATED:END -->

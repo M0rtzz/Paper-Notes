@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HieraMamba: Video Temporal Grounding via Hierarchical Anchor-Mamba Pooling
 description: >-
@@ -144,8 +144,8 @@ HieraMamba 是唯一一个同时避免了所有四种不良特性的方法。
 
 - [SHINE: Saliency-aware HIerarchical NEgative Ranking for Compositional Temporal Grounding](../../ECCV2024/object_detection/shine_saliency-aware_hierarchical_negative_ranking_for_compositional_temporal_gr.md)
 - [Sparse-Dense Side-Tuner for Efficient Video Temporal Grounding](../../ICCV2025/object_detection/sparse-dense_side-tuner_for_efficient_video_temporal_grounding.md)
-- [DA-Mamba: Learning Domain-Aware State Space Model for Global-Local Alignment in Domain Adaptive Object Detection](da-mamba_learning_domain-aware_state_space_model_for_global-local_alignment_in_d.md)
 - [TubeRMC: Tube-conditioned Reconstruction with Mutual Constraints for Weakly-supervised Spatio-Temporal Video Grounding](../../AAAI2026/object_detection/tubermc_tube-conditioned_reconstruction_with_mutual_constraints_for_weakly-super.md)
+- [DA-Mamba: Learning Domain-Aware State Space Model for Global-Local Alignment in Domain Adaptive Object Detection](da-mamba_learning_domain-aware_state_space_model_for_global-local_alignment_in_d.md)
 - [Drift-Resilient Temporal Priors for Visual Tracking](drift-resilient_temporal_priors_for_visual_tracking.md)
 
 <!-- RELATED:END -->

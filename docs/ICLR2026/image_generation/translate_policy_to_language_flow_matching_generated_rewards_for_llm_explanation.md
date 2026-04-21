@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Translate Policy to Language: Flow Matching Generated Rewards for LLM Explanations
 description: >-
@@ -136,8 +136,8 @@ tags:
 
 - [Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
 - [SSCP: Flow-Based Single-Step Completion for Efficient and Expressive Policy Learning](flow-based_single-step_completion_for_efficient_and_expressive_policy_learning.md)
-- [Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
 - [FlowCast: Advancing Precipitation Nowcasting with Conditional Flow Matching](flowcast_advancing_precipitation_nowcasting_with_conditional_flow_matching.md)
+- [Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
 - [Purrception: Variational Flow Matching for Vector-Quantized Image Generation](purrception_variational_flow_matching_for_vector-quantized_image_generation.md)
 
 <!-- RELATED:END -->

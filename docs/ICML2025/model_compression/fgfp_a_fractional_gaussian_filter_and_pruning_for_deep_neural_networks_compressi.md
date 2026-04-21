@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FGFP: A Fractional Gaussian Filter and Pruning for Deep Neural Networks Compression
 description: >-
@@ -129,10 +129,10 @@ tags:
 
 ## 相关论文
 
-- [QuadEnhancer: Leveraging Quadratic Transformations to Enhance Deep Neural Networks](../../NeurIPS2025/model_compression/quadenhancer_leveraging_quadratic_transformations_to_enhance_deep_neural_network.md)
+- [FGFP: A Fractional Gaussian Filter and Pruning for DNN Compression](fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compression.md)
 - [Improved Exploration in GFlowNets via Enhanced Epistemic Neural Networks](improved_exploration_in_gflownets_via_enhanced_epistemic_neural_networks.md)
-- [Spiking Brain Compression: Post-Training Second-Order Compression for Spiking Neural Networks](../../NeurIPS2025/model_compression/spiking_brain_compression_post-training_second-order_compression_for_spiking_neu.md)
 - [An Efficient Matrix Multiplication Algorithm for Accelerating Inference in Binary and Ternary Neural Networks](an_efficient_matrix_multiplication_algorithm_for_accelerating_inference_in_binar.md)
-- [Alternating Gradient Flow Utility: A Unified Metric for Structural Pruning and Dynamic Routing in Deep Networks](../../CVPR2025/model_compression/alternating_gradient_flow_utility_a_unified_metric_for_structural_pruning_and_dy.md)
+- [Spiking Brain Compression: Post-Training Second-Order Compression for Spiking Neural Networks](../../NeurIPS2025/model_compression/spiking_brain_compression_post-training_second-order_compression_for_spiking_neu.md)
+- [WildChat-50m: A Deep Dive Into the Role of Synthetic Data in Post-Training](wildchat-50m_a_deep_dive_into_the_role_of_synthetic_data_in_post-training.md)
 
 <!-- RELATED:END -->

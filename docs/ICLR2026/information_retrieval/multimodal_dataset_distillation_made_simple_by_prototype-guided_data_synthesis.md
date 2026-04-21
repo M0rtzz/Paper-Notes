@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multimodal Dataset Distillation Made Simple by Prototype-Guided Data Synthesis
 description: >-

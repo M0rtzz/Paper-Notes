@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] G2S: A General-to-Specific Learning Framework for Temporal Knowledge Graph Forecasting with Large Language Models
 description: >-

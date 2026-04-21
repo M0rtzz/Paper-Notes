@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EPHAD: An Evidence-Based Post-Hoc Adjustment Framework for Anomaly Detection Under Data Contamination
 description: >-

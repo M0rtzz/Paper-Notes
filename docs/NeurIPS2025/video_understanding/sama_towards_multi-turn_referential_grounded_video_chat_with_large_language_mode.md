@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SAMA: Towards Multi-Turn Referential Grounded Video Chat with Large Language Models
 description: >-
@@ -152,6 +152,6 @@ SAMA 从三个核心维度——数据集、模型、基准——全面解决上
 - [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
 - [Steering When Necessary: Flexible Steering Large Language Models with Backtracking](steering_when_necessary_flexible_steering_large_language_models_with_backtrackin.md)
 - [Factorized Learning for Temporally Grounded Video-Language Models](../../ICCV2025/video_understanding/factorized_learning_for_temporally_grounded_video-language_models.md)
-- [Seeing the Arrow of Time in Large Multimodal Models](seeing_the_arrow_of_time_in_large_multimodal_models.md)
+- [Video Summarization with Large Language Models](../../CVPR2025/video_understanding/video_summarization_with_large_language_models.md)
 
 <!-- RELATED:END -->

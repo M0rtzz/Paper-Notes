@@ -1,15 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] LiVOS: Light Video Object Segmentation with Gated Linear Matching
 description: >-
-  [CVPR 2025][VOS] 提出用门控线性注意力替代 softmax 注意力进行内存匹配，将 VOS 的注意力矩阵压缩为常量大小的 2D 状态，实现任意长视频的恒定内存占用和 4096p 高分辨率推理。
+  [CVPR 2025][图像分割][图像分割] 提出 LiVOS——首个使用门控线性注意力替代 softmax 注意力进行内存匹配的轻量 VOS 网络，将时空注意力矩阵压缩为恒定大小的 2D 状态矩阵，实现任意长视频的恒定内存占用，并在 32G 消费级 GPU 上支持 4096p 推理。
 tags:
   - CVPR 2025
-  - video object segmentation
-  - linear attention
-  - gated linear attention
+  - 图像分割
+  - 注意力机制
+  - gated linear matching
   - memory network
-  - 高分辨率推理
+  - 4096p inference
 ---
 
 # LiVOS: Light Video Object Segmentation with Gated Linear Matching
@@ -135,8 +135,8 @@ tags:
 
 - [ELVIS: Enhance Low-Light for Video Instance Segmentation in the Dark](../../CVPR2026/segmentation/elvis_enhance_low-light_for_video_instance_segmentation_in_the_dark.md)
 - [O-MaMa: Learning Object Mask Matching between Egocentric and Exocentric Views](../../ICCV2025/segmentation/o-mama_learning_object_mask_matching_between_egocentric_and_exocentric_views.md)
+- [Hierarchical Compact Clustering Attention (COCA) for Unsupervised Object-Centric Learning](hierarchical_compact_clustering_attention_coca_for_unsupervised_object-centric_l.md)
+- [Using Diffusion Priors for Video Amodal Segmentation](using_diffusion_priors_for_video_amodal_segmentation.md)
 - [MOVE: Motion-Guided Few-Shot Video Object Segmentation](../../ICCV2025/segmentation/move_motion-guided_few-shot_video_object_segmentation.md)
-- [ReferDINO: Referring Video Object Segmentation with Visual Grounding Foundations](../../ICCV2025/segmentation/referdino_referring_video_object_segmentation_with_visual_grounding_foundations.md)
-- [Generative Video Propagation](generative_video_propagation.md)
 
 <!-- RELATED:END -->

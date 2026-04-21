@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Efficient Medical Reasoning with Minimal Fine-Tuning Data
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MaxSup: Overcoming Representation Collapse in Label Smoothing
 description: >-

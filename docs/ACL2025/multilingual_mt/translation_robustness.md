@@ -130,8 +130,8 @@ tags:
 
 - [Machine Translation Models are Zero-Shot Detectors of Translation Direction](machine_translation_models_are_zero-shot_detectors_of_translation_direction.md)
 - [Exploring the Translation Mechanism of Large Language Models](../../NeurIPS2025/multilingual_mt/exploring_the_translation_mechanism_of_large_language_models.md)
-- [Multilingual Encoder Knows More Than You Realize: Shared Weights Pretraining for Extremely Low-Resource Languages](multilingual_encoder_knows_more_than_you_realize_shared_weights_pretraining_for_.md)
 - [Trans-Zero: Self-Play Incentivizes Large Language Models for Multilingual Translation](trans-zero_self-play_incentivizes_large_language_models_for_multilingual_transla.md)
 - [M-RewardBench: Evaluating Reward Models in Multilingual Settings](m_rewardbench.md)
+- [ZIPA: A Family of Efficient Models for Multilingual Phone Recognition](zipa_a_family_of_efficient_models_for_multilingual_phone_recognition.md)
 
 <!-- RELATED:END -->

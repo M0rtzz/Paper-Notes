@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PFGNet: A Fully Convolutional Frequency-Guided Peripheral Gating Network for Efficient Spatiotemporal Predictive Learning
 description: >-

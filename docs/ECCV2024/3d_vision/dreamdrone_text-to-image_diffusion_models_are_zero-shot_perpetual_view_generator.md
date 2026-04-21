@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DreamDrone: Text-to-Image Diffusion Models are Zero-shot Perpetual View Generators
 description: >-
@@ -161,8 +161,8 @@ tags:
 
 - [Open-Vocabulary 3D Semantic Segmentation with Text-to-Image Diffusion Models](open-vocabulary_3d_semantic_segmentation_with_text-to-image_diffusion_models.md)
 - [ZeST: Zero-Shot Material Transfer from a Single Image](zest_zero-shot_material_transfer_from_a_single_image.md)
+- [DreamScene360: Unconstrained Text-to-3D Scene Generation with Panoramic Gaussian Splatting](dreamscene360_unconstrained_text-to-3d_scene_generation_with_panoramic_gaussian_.md)
 - [MVDD: Multi-View Depth Diffusion Models](mvdd_multi-view_depth_diffusion_models.md)
 - [Zero-Shot Multi-Object Scene Completion](zero-shot_multi-object_scene_completion.md)
-- [DreamView: Injecting View-specific Text Guidance into Text-to-3D Generation](dreamview_injecting_view-specific_text_guidance_into_text-to-3d_generation.md)
 
 <!-- RELATED:END -->

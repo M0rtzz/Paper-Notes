@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Capture the Key in Reasoning to Enhance CoT Distillation Generalization
 description: >-

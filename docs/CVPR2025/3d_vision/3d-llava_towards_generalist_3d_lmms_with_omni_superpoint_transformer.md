@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3D-LLaVA: Towards Generalist 3D LMMs with Omni Superpoint Transformer
 description: >-
@@ -121,9 +121,9 @@ tags:
 ## 相关论文
 
 - [LLaVA-3D: A Simple yet Effective Pathway to Empowering LMMs with 3D Capabilities](../../ICCV2025/3d_vision/llava-3d_a_simple_yet_effective_pathway_to_empowering_lmms_with_3d_capabilities.md)
+- [VGGT: Visual Geometry Grounded Transformer](vggt_visual_geometry_grounded_transformer.md)
 - [GA3CE: Unconstrained 3D Gaze Estimation with Gaze-Aware 3D Context Encoding](ga3ce_unconstrained_3d_gaze_estimation_with_gaze-aware_3d_context_encoding.md)
-- [End-to-End HOI Reconstruction Transformer with Graph-based Encoding](end-to-end_hoi_reconstruction_transformer_with_graph-based_encoding.md)
-- [GaussianProperty: Integrating Physical Properties to 3D Gaussians with LMMs](../../ICCV2025/3d_vision/gaussianproperty_integrating_physical_properties_to_3d_gaussians_with_lmms.md)
-- [FASTer: Focal Token Acquiring-and-Scaling Transformer for Long-term 3D Object Detection](faster_focal_token_acquiring-and-scaling_transformer_for_long-term_3d_objection_.md)
+- [SphereUFormer: A U-Shaped Transformer for Spherical 360 Perception](sphereuformer_a_u-shaped_transformer_for_spherical_360_perception.md)
+- [RDD: Robust Feature Detector and Descriptor Using Deformable Transformer](rdd_robust_feature_detector_and_descriptor_using_deformable_transformer.md)
 
 <!-- RELATED:END -->

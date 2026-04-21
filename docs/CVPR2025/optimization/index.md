@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 优化/理论方向 7篇论文解读
+  CVPR2025 优化/理论方向 8篇论文解读
 description: >-
-  7篇CVPR2025 优化/理论方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  8篇CVPR2025 优化/理论方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**📷 CVPR2025** · **7** 篇论文解读
+**📷 CVPR2025** · **8** 篇论文解读
 
 **[Automatic Joint Structured Pruning and Quantization for Efficient Neural Network Training and Compression](automatic_joint_structured_pruning_and_quantization_for_efficient_neural_network.md)**
 
@@ -37,3 +37,7 @@ description: >-
 **[Stop Walking in Circles! Bailing Out Early in Projected Gradient Descent](stop_walking_in_circles_bailing_out_early_in_projected_gradient_descent.md)**
 
 :   发现 PGD 攻击在 L∞ 球上对鲁棒样本会产生循环行为，通过哈希检测循环实现提前终止（PGD_CD），在保持完全相同鲁棒性评估结果的前提下实现最高 96% 的迭代次数减少。
+
+**[Towards Stable and Storage-efficient Dataset Distillation: Matching Convexified Trajectory](towards_stable_and_storage-efficient_dataset_distillation_matching_convexified_t.md)**
+
+:   提出 MCT (Matching Convexified Trajectory) 方法，通过将 SGD 专家轨迹替换为从随机初始化到最优点的凸组合线性轨迹，同时解决了传统 MTT 方法的轨迹不稳定、收敛慢和存储消耗高三大问题。

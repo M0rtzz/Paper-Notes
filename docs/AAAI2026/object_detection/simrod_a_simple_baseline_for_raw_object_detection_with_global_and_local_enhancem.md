@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SimROD: A Simple Baseline for Raw Object Detection with Global and Local Enhancements
 description: >-
@@ -196,9 +196,9 @@ SimROD在ROD上比DIAP提升+2.4 AP，在LOD上提升+0.8 AP，在Pascal-Raw上�
 ## 相关论文
 
 - [DA-Mamba: Learning Domain-Aware State Space Model for Global-Local Alignment in Domain Adaptive Object Detection](../../CVPR2026/object_detection/da-mamba_learning_domain-aware_state_space_model_for_global-local_alignment_in_d.md)
+- [Towards RAW Object Detection in Diverse Conditions](../../CVPR2025/object_detection/towards_raw_object_detection_in_diverse_conditions.md)
 - [Token Reduction via Local and Global Contexts Optimization for Efficient Video Large Language Models](../../CVPR2026/object_detection/token_reduction_via_local_and_global_contexts_optimization_for_efficient_video_l.md)
 - [Temporal Object-Aware Vision Transformer for Few-Shot Video Object Detection](temporal_object-aware_vision_transformer_for_few-shot_video_object_detection.md)
-- [Mitigating Error Accumulation in Co-Speech Motion Generation via Global Rotation Diffusion and Multi-Level Constraints](mitigating_error_accumulation_in_co-speech_motion_generation_via_global_rotation.md)
-- [T-Rex-Omni: Integrating Negative Visual Prompt in Generic Object Detection](t-rex-omni_integrating_negative_visual_prompt_in_generic_object_detection.md)
+- [SimLTD: Simple Supervised and Semi-Supervised Long-Tailed Object Detection](../../CVPR2025/object_detection/simltd_simple_supervised_and_semi-supervised_long-tailed_object_detection.md)
 
 <!-- RELATED:END -->

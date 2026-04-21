@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Words That Unite The World: A Unified Framework for Deciphering Central Bank Communications Globally
 description: >-
@@ -131,10 +131,10 @@ PLM 使用标准微调流程（分类头 + 交叉熵损失）。LLM 基于 promp
 
 ## 相关论文
 
+- [UniPose: A Unified Multimodal Framework for Human Pose Comprehension, Generation and Editing](../../CVPR2025/human_understanding/unipose_a_unified_multimodal_framework_for_human_pose_comprehension_generation_a.md)
 - [MG-MotionLLM: A Unified Framework for Motion Comprehension and Generation across Multiple Granularities](../../CVPR2025/human_understanding/mg-motionllm_a_unified_framework_for_motion_comprehension_and_generation_across_.md)
 - [FreeMotion: A Unified Framework for Number-free Text-to-Motion Synthesis](../../ECCV2024/human_understanding/freemotion_a_unified_framework_for_number-free_text-to-motion_synthesis.md)
 - [Emergent World Beliefs: Exploring Transformers in Stochastic Games](emergent_world_beliefs_exploring_transformers_in_stochastic_games.md)
-- [On Large Multimodal Models as Open-World Image Classifiers](../../ICCV2025/human_understanding/on_large_multimodal_models_as_open-world_image_classifiers.md)
-- [GeoWorld: Geometric World Models](../../CVPR2026/human_understanding/geoworld_geometric_world_models.md)
+- [Remote Photoplethysmography in Real-World and Extreme Lighting Scenarios](../../CVPR2025/human_understanding/remote_photoplethysmography_in_real-world_and_extreme_lighting_scenarios.md)
 
 <!-- RELATED:END -->

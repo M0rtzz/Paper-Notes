@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MAD-Avatar: Motion-Aware Animatable Gaussian Avatars Deblurring
 description: >-
@@ -108,6 +108,6 @@ L = L1(合成模糊帧, 观测模糊帧) + L_reg(帧间位姿连续性正则)。
 - [BluRef: Unsupervised Image Deblurring with Dense-Matching References](bluref_unsupervised_image_deblurring_with_dense-matching_references.md)
 - [BAMM: Bidirectional Autoregressive Motion Model](../../ECCV2024/image_restoration/bamm_bidirectional_autoregressive_motion_model.md)
 - [Sharpness-Aware Machine Unlearning](../../ICLR2026/image_restoration/sharpness-aware_machine_unlearning.md)
-- [The Effect of Optimal Self-Distillation in Noisy Gaussian Mixture Model](../../NeurIPS2025/image_restoration/the_effect_of_optimal_self-distillation_in_noisy_gaussian_mixture_model.md)
+- [DiTFlow: Video Motion Transfer with Diffusion Transformers](../../CVPR2025/image_restoration/video_motion_transfer_with_diffusion_transformers.md)
 
 <!-- RELATED:END -->

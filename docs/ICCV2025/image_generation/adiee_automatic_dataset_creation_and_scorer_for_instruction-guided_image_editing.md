@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ADIEE: Automatic Dataset Creation and Scorer for Instruction-Guided Image Editing Evaluation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CL-Splats: Continual Learning of Gaussian Splatting with Local Optimization
 description: >-

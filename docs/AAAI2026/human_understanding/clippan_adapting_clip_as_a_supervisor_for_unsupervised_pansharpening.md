@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CLIPPan: Adapting CLIP as A Supervisor for Unsupervised Pansharpening
 description: >-

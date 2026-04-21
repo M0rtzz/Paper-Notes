@@ -147,9 +147,9 @@ Indoor6数据集上扩散先验效果尤为突出：注册率从57.1%提升到61
 ## 相关论文
 
 - [SAS: Segment Any 3D Scene with Integrated 2D Priors](sas_segment_any_3d_scene_with_integrated_2d_priors.md)
+- [Pow3R: Empowering Unconstrained 3D Reconstruction with Camera and Scene Priors](../../CVPR2025/3d_vision/pow3r_empowering_unconstrained_3d_reconstruction_with_camera_and_scene_priors.md)
 - [Proactive Scene Decomposition and Reconstruction](proactive_scene_decomposition_and_reconstruction.md)
 - [Back on Track: Bundle Adjustment for Dynamic Scene Reconstruction](back_on_track_bundle_adjustment_for_dynamic_scene_reconstruction.md)
 - [Event-boosted Deformable 3D Gaussians for Dynamic Scene Reconstruction](event-boosted_deformable_3d_gaussians_for_dynamic_scene_reconstruction.md)
-- [Robust and Efficient 3D Gaussian Splatting for Urban Scene Reconstruction](robust_and_efficient_3d_gaussian_splatting_for_urban_scene_reconstruction.md)
 
 <!-- RELATED:END -->

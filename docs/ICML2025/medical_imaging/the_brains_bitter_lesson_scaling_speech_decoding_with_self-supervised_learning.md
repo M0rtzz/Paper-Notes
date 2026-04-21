@@ -2,9 +2,17 @@
 title: >-
   [论文解读] The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning
 description: >-
-  [医学图像] 开发神经科学启发的自监督 pretext 任务和异构脑信号处理架构，将 MEG 语音解码扩展至约 400 小时/900 名被试，超越 SOTA 15-27%，首次以非侵入式数据匹配手术级解码性能，并展现跨数据集、跨被试、跨任务的泛化能力。
+  [ICML 2025][医学图像][MEG] 开发神经科学启发的自监督 pretext 任务和异构脑信号处理架构，将 MEG 语音解码扩展至约 400 小时/900 名被试，超越 SOTA 15-27%，首次以非侵入式数据匹配手术级解码性能，并展现跨数据集、跨被试、跨任务的泛化能力。
 tags:
+  - ICML 2025
   - 医学图像
+  - MEG
+  - 自监督学习
+  - pretext task
+  - 语音解码
+  - 跨被试泛化
+  - 脑信号
+  - scaling
 ---
 
 # The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning
@@ -140,10 +148,10 @@ $$\mathcal{L}_{SSL} = w_1 \mathcal{L}_{band} + w_2 \mathcal{L}_{phase} + w_3 \ma
 
 ## 相关论文
 
-- [Scaling Laws and Pathologies of Single-Layer PINNs: Network Width and PDE Nonlinearity](../../NeurIPS2025/medical_imaging/scaling_laws_and_pathologies_of_single-layer_pinns_network_width_and_pde_nonline.md)
-- [DeltaSHAP: Explaining Prediction Evolutions in Online Patient Monitoring with Shapley Values](deltashap_explaining_prediction_evolutions_in_online_patient_monitoring_with_sha.md)
-- [The Four Color Theorem for Cell Instance Segmentation](the_four_color_theorem_for_cell_instance_segmentation.md)
-- [Protein Structure Tokenization: Benchmarking and New Recipe](protein_structure_tokenization_benchmarking_and_new_recipe.md)
-- [Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
+- [scSSL-Bench: Benchmarking Self-Supervised Learning for Single-Cell Data](scssl-bench_benchmarking_self-supervised_learning_for_single-cell_data.md)
+- [An OpenMind for 3D Medical Vision Self-supervised Learning](../../ICCV2025/medical_imaging/an_openmind_for_3d_medical_vision_selfsupervised_learning.md)
+- [Brain-tuning Improves Generalizability and Efficiency of Brain Alignment in Speech Models](../../NeurIPS2025/medical_imaging/brain-tuning_improves_generalizability_and_efficiency_of_brain_alignment_in_spee.md)
+- [Self-supervised Learning of Echocardiographic Video Representations via Online Cluster Distillation](../../NeurIPS2025/medical_imaging/self-supervised_learning_of_echocardiographic_video_representations_via_online_c.md)
+- [Network Sparsity Unlocks the Scaling Potential of Deep Reinforcement Learning](network_sparsity_unlocks_the_scaling_potential_of_deep_reinforcement_learning.md)
 
 <!-- RELATED:END -->

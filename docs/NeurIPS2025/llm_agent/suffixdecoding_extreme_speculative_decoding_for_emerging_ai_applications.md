@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SuffixDecoding: Extreme Speculative Decoding for Emerging AI Applications
 description: >-

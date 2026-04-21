@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CogVLA: Cognition-Aligned Vision-Language-Action Model via Instruction-Driven Routing & Sparsification
 description: >-

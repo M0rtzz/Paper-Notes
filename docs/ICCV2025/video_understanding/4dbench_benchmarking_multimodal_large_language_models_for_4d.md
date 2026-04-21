@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 4D-Bench: Benchmarking Multi-modal Large Language Models for 4D Object Understanding
 description: >-

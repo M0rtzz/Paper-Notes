@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PhysSkin: Real-Time and Generalizable Physics-Based Skin Simulation
 description: >-

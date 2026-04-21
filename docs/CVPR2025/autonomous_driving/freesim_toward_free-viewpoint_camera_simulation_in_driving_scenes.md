@@ -2,15 +2,16 @@
 title: >-
   [论文解读] FreeSim: Toward Free-Viewpoint Camera Simulation in Driving Scenes
 description: >-
-  [CVPR 2025][自动驾驶][仿真] 本文提出FreeSim，通过将偏离轨迹视角的图像生成任务重新表述为生成式图像增强任务，配合渐进式重建策略和匹配数据构造管线，在Waymo数据集上实现了超过3米偏移的高质量自由视角渲染，FID显著优于所有基线方法。
+  [CVPR 2025][自动驾驶][自由视角仿真] 本文提出FreeSim，通过将挑战性的偏离轨迹新视角生成问题重新表述为生成式图像增强问题，配合piece-wise高斯重建的训练数据构造和渐进式视角扩展策略，首次实现了驾驶场景中超过3米横向偏移的高质量自由视角渲染。
 tags:
   - CVPR 2025
   - 自动驾驶
-  - 仿真
-  - 高斯溅射
+  - 自由视角仿真
+  - 3D高斯溅射
   - 扩散模型
-  - 自由视角
-  - 新视角合成
+  - 渐进式重建
+  - 图像增强
+  - 驾驶仿真
 ---
 
 # FreeSim: Toward Free-Viewpoint Camera Simulation in Driving Scenes
@@ -148,7 +149,7 @@ FreeSim在3m偏移时FID仅18.6，相比PVG baseline降低了**60.8%**。
 - [Generating Multimodal Driving Scenes via Next-Scene Prediction](generating_multimodal_driving_scenes_via_next-scene_prediction.md)
 - [Scenario Dreamer: Vectorized Latent Diffusion for Generating Driving Simulation Environments](scenario_dreamer_vectorized_latent_diffusion_for_generating_driving_simulation_e.md)
 - [SceneDiffuser++: City-Scale Traffic Simulation via a Generative World Model](scenediffuser_city-scale_traffic_simulation_via_a_generative_world_model.md)
-- [LiDAR-RT: Gaussian-based Ray Tracing for Dynamic LiDAR Re-Simulation](lidar-rt_gaussian-based_ray_tracing_for_dynamic_lidar_re-simulation.md)
 - [M²-Occ: Resilient 3D Semantic Occupancy Prediction for Autonomous Driving with Incomplete Camera Inputs](m2-occ_resilient_3d_semantic_occupancy_prediction_for_autonomous_driving_with_in.md)
+- [LiMoE: Mixture of LiDAR Representation Learners from Automotive Scenes](limoe_mixture_of_lidar_representation_learners_from_automotive_scenes.md)
 
 <!-- RELATED:END -->

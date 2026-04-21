@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fair Generation without Unfair Distortions: Debiasing Text-to-Image Generation with Entanglement-Free Attention
 description: >-
@@ -171,7 +171,7 @@ WinoBias 36 种职业评估（$\mathcal{T}_{basic}$ / $\mathcal{T}_{complex}$ �
 - [LaRender: Training-Free Occlusion Control in Image Generation via Latent Rendering](larender_training-free_occlusion_control_in_image_generation_via_latent_renderin.md)
 - [Dense2MoE: Restructuring Diffusion Transformer to MoE for Efficient Text-to-Image Generation](dense2moe_restructuring_diffusion_transformer_to_moe_for_efficient_text-to-image.md)
 - [VIGFace: Virtual Identity Generation for Privacy-Free Face Recognition Dataset](vigface_virtual_identity_generation_for_privacy-free_face_recognition_dataset.md)
+- [Learning Flow Fields in Attention for Controllable Person Image Generation](../../CVPR2025/image_generation/learning_flow_fields_in_attention_for_controllable_person_image_generation.md)
 - [Addressing Text Embedding Leakage in Diffusion-Based Image Editing](addressing_text_embedding_leakage_in_diffusion-based_image_editing.md)
-- [Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences](cycle_consistency_as_reward_learning_image-text_alignment_without_human_preferen.md)
 
 <!-- RELATED:END -->

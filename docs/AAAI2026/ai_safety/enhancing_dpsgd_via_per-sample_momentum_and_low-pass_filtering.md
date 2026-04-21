@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing DPSGD via Per-Sample Momentum and Low-Pass Filtering
 description: >-
@@ -161,6 +161,6 @@ $$\mathcal{O}\!\left(\frac{f(x_0)-f^*}{\eta T} + L\eta C^2 + \frac{L\eta \, d\si
 - [InvisibleInk: High-Utility and Low-Cost Text Generation with Differential Privacy](../../NeurIPS2025/ai_safety/invisibleink_high-utility_and_low-cost_text_generation_with_differential_privacy.md)
 - [Sample-Efficient Distributionally Robust Multi-Agent Reinforcement Learning via Online Interaction](../../ICLR2026/ai_safety/sample-efficient_distributionally_robust_multi-agent_reinforcement_learning_via_.md)
 - [Toward Enhancing Representation Learning in Federated Multi-Task Settings](../../ICLR2026/ai_safety/toward_enhancing_representation_learning_in_federated_multi-task_settings.md)
-- [Bits Leaked per Query: Information-Theoretic Bounds on Adversarial Attacks Against LLMs](../../NeurIPS2025/ai_safety/bits_leaked_per_query_information-theoretic_bounds_on_adversarial_attacks_agains.md)
+- [Spectral Perturbation Bounds for Low-Rank Approximation with Applications to Privacy](../../NeurIPS2025/ai_safety/spectral_perturbation_bounds_for_low-rank_approximation_with_applications_to_pri.md)
 
 <!-- RELATED:END -->

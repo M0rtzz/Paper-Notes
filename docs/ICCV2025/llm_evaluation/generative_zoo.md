@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generative Zoo
 description: >-
@@ -138,9 +138,9 @@ S-MPJPE 从 374.9 降至 160.1（降幅 57%），仅使用合成数据训练。
 ## 相关论文
 
 - [G-Sim: Generative Simulations with Large Language Models and Gradient-Free Calibration](../../ICML2025/llm_evaluation/g-sim_generative_simulations_with_large_language_models_and_gradient-free_calibr.md)
-- [ShadowHack: Hacking Shadows via Luminance-Color Divide and Conquer](shadowhack_hacking_shadows_via_luminance-color_divide_and_conquer.md)
+- [A Real-world Display Inverse Rendering Dataset](a_real-world_display_inverse_rendering_dataset.md)
+- [OmniDiff: A Comprehensive Benchmark for Fine-grained Image Difference Captioning](omnidiff_a_comprehensive_benchmark_for_fine-grained_image_difference_captioning.md)
+- [HiERO: Understanding the Hierarchy of Human Behavior Enhances Reasoning on Egocentric Videos](hiero_understanding_the_hierarchy_of_human_behavior_enhances_reasoning_on_egocen.md)
 - [A Conditional Probability Framework for Compositional Zero-shot Learning](a_conditional_probability_framework_for_compositional_zerosh.md)
-- [Imbalance in Balance: Online Concept Balancing in Generation Models](imbalance_in_balance_online_concept_balancing_in_generation_models.md)
-- [A Real-world Display Inverse Rendering Dataset](a_realworld_display_inverse_rendering_dataset.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CustAny: Customizing Anything from A Single Example
 description: >-
@@ -83,9 +83,9 @@ tags:
 ## 相关论文
 
 - [DexGrasp Anything: Towards Universal Robotic Dexterous Grasping with Physics Awareness](dexgrasp_anything_towards_universal_robotic_dexterous_grasping_with_physics_awar.md)
+- [ScribbleLight: Single Image Indoor Relighting with Scribbles](scribblelight_single_image_indoor_relighting_with_scribbles.md)
 - [Orient Anything V2: Unifying Orientation and Rotation Understanding](../../NeurIPS2025/image_generation/orient_anything_v2_unifying_orientation_and_rotation_understanding.md)
-- [DiffLocks: Generating 3D Hair from a Single Image using Diffusion Models](difflocks_generating_3d_hair_from_a_single_image_using_diffusion_models.md)
 - [Exploring Semantic-constrained Adversarial Example with Instruction Uncertainty Reduction](../../NeurIPS2025/image_generation/exploring_semantic-constrained_adversarial_example_with_instruction_uncertainty_.md)
-- [Language-Free Generative Editing from One Visual Example](../../CVPR2026/image_generation/language-free_generative_editing_from_one_visual_example.md)
+- [ICE: Intrinsic Concept Extraction from a Single Image via Diffusion Models](ice_intrinsic_concept_extraction_from_a_single_image_via_diffusion_models.md)
 
 <!-- RELATED:END -->

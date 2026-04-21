@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Seeing Clearly, Reasoning Confidently: Plug-and-Play Remedies for Vision Language Model Blindness
 description: >-

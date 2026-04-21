@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bone Soups: A Seek-and-Soup Model Merging Approach for Controllable Multi-Objective Generation
 description: >-
@@ -132,6 +132,6 @@ tags:
 - [Literature Meets Data: A Synergistic Approach to Hypothesis Generation](literature_meets_data_hypothesis.md)
 - [Controllable Financial Market Generation with Diffusion Guided Meta Agent](../../AAAI2026/others/controllable_financial_market_generation_with_diffusion_guided_meta_agent.md)
 - [CoachMe: Decoding Sport Elements with a Reference-Based Coaching Instruction Generation Model](coachme_sport_instruction.md)
-- [Multi-Hop Question Generation via Dual-Perspective Keyword Guidance](multi-hop_question_generation_via_dual-perspective_keyword_guidance.md)
+- [Personalized Generation In Large Model Era: A Survey](personalized_generation_in_large_model_era_a_survey.md)
 
 <!-- RELATED:END -->

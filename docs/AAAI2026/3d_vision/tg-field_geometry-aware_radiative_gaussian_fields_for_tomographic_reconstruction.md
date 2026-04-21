@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TG-Field: Geometry-Aware Radiative Gaussian Fields for Tomographic Reconstruction
 description: >-

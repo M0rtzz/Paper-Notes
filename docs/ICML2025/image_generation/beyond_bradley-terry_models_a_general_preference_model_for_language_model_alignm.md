@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Bradley-Terry Models: A General Preference Model for Language Model Alignment
 description: >-

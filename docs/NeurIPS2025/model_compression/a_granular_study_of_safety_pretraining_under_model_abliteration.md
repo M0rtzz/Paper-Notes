@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Granular Study of Safety Pretraining under Model Abliteration
 description: >-
@@ -139,6 +139,6 @@ tags:
 - [Q-resafe: Assessing Safety Risks and Quantization-aware Safety Patching for Quantized Large Language Models](../../ICML2025/model_compression/q-resafe_assessing_safety_risks_and_quantization-aware_safety_patching_for_quant.md)
 - [DataDecide: How to Predict Best Pretraining Data with Small Experiments](../../ICML2025/model_compression/datadecide_how_to_predict_best_pretraining_data_with_small_experiments.md)
 - [FiRA: Can We Achieve Full-Rank Training of LLMs Under Low-Rank Constraint?](fira_can_we_achieve_full-rank_training_of_llms_under_low-rank_constraint.md)
-- [Explaining Puzzle Solutions in Natural Language: An Exploratory Study on 6×6 Sudoku](../../ACL2025/model_compression/explaining_puzzle_solutions_in_natural_language_an_exploratory_study_on_6x6_sudo.md)
+- [Multi-Task Vehicle Routing Solver via Mixture of Specialized Experts under State-Decomposable MDP](multi-task_vehicle_routing_solver_via_mixture_of_specialized_experts_under_state.md)
 
 <!-- RELATED:END -->

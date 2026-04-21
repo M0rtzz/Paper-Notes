@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SparVAR: Exploring Sparsity in Visual Autoregressive Modeling for Training-Free Acceleration
 description: >-
@@ -153,6 +153,6 @@ SparVAR基于对VAR注意力模式的系统分析，提出两个互补的即插�
 - [StoryTailor: A Zero-Shot Pipeline for Action-Rich Multi-Subject Visual Narratives](storytailora_zero-shot_pipeline_for_action-rich_multi-subject_visual_narratives.md)
 - [ACE-Merging: Data-Free Model Merging with Adaptive Covariance Estimation](ace-merging_data-free_model_merging_with_adaptive_covariance_estimation.md)
 - [Stroke2Sketch: Harnessing Stroke Attributes for Training-Free Sketch Generation](../../ICCV2025/llm_efficiency/stroke2sketch_harnessing_stroke_attributes_for_training-free_sketch_generation.md)
-- [Efficient Training-Free Online Routing for High-Volume Multi-LLM Serving](../../NeurIPS2025/llm_efficiency/efficient_training-free_online_routing_for_high-volume_multi-llm_serving.md)
+- [Spatial-TTT: Streaming Visual-based Spatial Intelligence with Test-Time Training](../../CVPR2025/llm_efficiency/spatial-ttt_streaming_visual-based_spatial_intelligence_with_test-time_training.md)
 
 <!-- RELATED:END -->

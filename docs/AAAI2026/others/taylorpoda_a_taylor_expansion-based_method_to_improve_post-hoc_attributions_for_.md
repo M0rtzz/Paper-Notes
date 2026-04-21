@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TaylorPODA: A Taylor Expansion-Based Method to Improve Post-Hoc Attributions for Opaque Models
 description: >-
@@ -131,7 +131,7 @@ $$a_i^{(\text{TaylorPODA})} = f(\mathbf{x}) - f_{G\setminus\{i\}}(\mathbf{x}) - 
 - [Cost-Free Neutrality for the River Method](cost-free_neutrality_for_the_river_method.md)
 - [Regression for the Mean: Auto-Evaluation and Inference with Few Labels through Post-hoc Regression](../../ICML2025/others/regression_for_the_mean_auto-evaluation_and_inference_with_few_labels_through_po.md)
 - [EPHAD: An Evidence-Based Post-Hoc Adjustment Framework for Anomaly Detection Under Data Contamination](../../NeurIPS2025/others/an_evidence-based_post-hoc_adjustment_framework_for_anomaly_detection_under_data.md)
-- [Beyond World Models: Rethinking Understanding in AI Models](beyond_world_models_rethinking_understanding_in_ai_models.md)
 - [To Each Metric Its Decoding: Post-Hoc Optimal Decision Rules of Probabilistic Hierarchical Classifiers](../../ICML2025/others/to_each_metric_its_decoding_post-hoc_optimal_decision_rules_of_probabilistic_hie.md)
+- [Beyond World Models: Rethinking Understanding in AI Models](beyond_world_models_rethinking_understanding_in_ai_models.md)
 
 <!-- RELATED:END -->

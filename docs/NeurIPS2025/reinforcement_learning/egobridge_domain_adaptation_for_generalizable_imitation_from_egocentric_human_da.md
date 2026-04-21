@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EgoBridge: Domain Adaptation for Generalizable Imitation from Egocentric Human Data
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GS-Occ3D: Scaling Vision-only Occupancy Reconstruction with Gaussian Splatting
 description: >-

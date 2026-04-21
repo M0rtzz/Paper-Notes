@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AutoMixAlign: Adaptive Data Mixing for Multi-Task Preference Optimization in LLMs
 description: >-

@@ -157,6 +157,6 @@ BeautyGRPO 由三大组件构成：(1) 细粒度偏好数据集 FRPref-10K；(2)
 - [FG-CLIP: Fine-Grained Visual and Textual Alignment](../../ICML2025/object_detection/fg-clip_fine-grained_visual_and_textual_alignment.md)
 - [Dynamic-DINO: Fine-Grained Mixture of Experts Tuning for Real-time Open-Vocabulary Object Detection](../../ICCV2025/object_detection/dynamicdino_finegrained_mixture_of_experts_tuning_for_realti.md)
 - [FALCON: False-Negative Aware Learning of Contrastive Negatives in Vision-Language Alignment](falcon_false-negative_aware_learning_of_contrastive_negatives_in_vision-language.md)
-- [Procedural Mistake Detection via Action Effect Modeling](../../ICLR2026/object_detection/procedural_mistake_detection_via_action_effect_modeling.md)
+- [CTPD: Cross Tokenizer Preference Distillation](../../AAAI2026/object_detection/ctpd_cross_tokenizer_preference_distillation.md)
 
 <!-- RELATED:END -->

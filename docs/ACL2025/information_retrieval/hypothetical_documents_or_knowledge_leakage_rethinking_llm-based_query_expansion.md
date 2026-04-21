@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hypothetical Documents or Knowledge Leakage? Rethinking LLM-based Query Expansion
 description: >-

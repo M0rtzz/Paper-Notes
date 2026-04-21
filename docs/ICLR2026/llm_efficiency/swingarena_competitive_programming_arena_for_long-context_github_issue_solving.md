@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SwingArena: Adversarial Programming Arena for Long-context GitHub Issue Solving
 description: >-

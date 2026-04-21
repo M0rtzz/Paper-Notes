@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Split Adaptation for Pre-trained Vision Transformers
 description: >-
@@ -88,6 +88,6 @@ OOD QAT 用 Beta(0.75, 0.75) 混合增强 + Hessian 引导重建损失。最终�
 - [Privacy Auditing of Multi-Domain Graph Pre-Trained Model under Membership Inference Attack](../../AAAI2026/ai_safety/privacy_auditing_of_multi-domain_graph_pre-trained_model_under_membership_infere.md)
 - [LAMP: Learning Universal Adversarial Perturbations for Multi-Image Tasks via Pre-trained Models](../../AAAI2026/ai_safety/lamp_learning_universal_adversarial_perturbations_for_multi-image_tasks_via_pre-.md)
 - [Unmasking Backdoors: An Explainable Defense via Gradient-Attention Anomaly Scoring for Pre-trained Language Models](../../ICLR2026/ai_safety/unmasking_backdoors_an_explainable_defense_via_gradient-attention_anomaly_scorin.md)
-- [A Framework for Double-Blind Federated Adaptation of Foundation Models](../../ICCV2025/ai_safety/a_framework_for_double-blind_federated_adaptation_of_foundation_models.md)
+- [A Framework for Double-Blind Federated Adaptation of Foundation Models](../../ICCV2025/ai_safety/a_framework_for_doubleblind_federated_adaptation_of_foundati.md)
 
 <!-- RELATED:END -->

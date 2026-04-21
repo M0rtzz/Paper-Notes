@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Object-WIPER: Training-Free Object and Associated Effect Removal in Videos
 description: >-

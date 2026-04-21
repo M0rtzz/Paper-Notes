@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning-Augmented Facility Location Mechanisms for Envy Ratio
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Interactive Medical Image Analysis with Concept-based Similarity Reasoning
 description: >-

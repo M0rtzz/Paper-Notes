@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UniTok: A Unified Tokenizer for Visual Generation and Understanding
 description: >-

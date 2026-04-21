@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Cortically Inspired Architecture for Modular Perceptual AI
 description: >-
@@ -122,9 +122,9 @@ PoC 实验：在 Mistral-7B 第 15 层激活 (4096 维) 上训练稀疏自编码
 ## 相关论文
 
 - [Modal Logical Neural Networks for Financial AI](modal_logical_neural_networks_for_financial_ai.md)
+- [Position: The Reasoning Trap — Logical Reasoning as a Mechanistic Pathway to Advanced AI Self-Awareness](the_reasoning_trap_--_logical_reasoning_as_a_mechanistic_pathway_to_advanced_jai.md)
 - [Geometric Priors for Generalizable World Models via Vector Symbolic Architecture](../../NeurIPS2025/interpretability/geometric_priors_for_generalizable_world_models_via_vector_symbolic_architecture.md)
-- [Position: We Need An Algorithmic Understanding of Generative AI](../../ICML2025/interpretability/position_we_need_an_algorithmic_understanding_of_generative_ai.md)
 - [AgentiQL: An Agent-Inspired Multi-Expert Framework for Text-to-SQL Generation](../../NeurIPS2025/interpretability/agentiql_an_agent-inspired_multi-expert_framework_for_text-to-sql_generation.md)
-- [SafetyAnalyst: Interpretable, Transparent, and Steerable Safety Moderation for AI Behavior](../../ICML2025/interpretability/safetyanalyst_interpretable_transparent_and_steerable_safety_moderation_for_ai_b.md)
+- [Position: We Need An Algorithmic Understanding of Generative AI](../../ICML2025/interpretability/position_we_need_an_algorithmic_understanding_of_generative_ai.md)
 
 <!-- RELATED:END -->

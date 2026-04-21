@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From RAG to Memory: Non-Parametric Continual Learning for Large Language Models
 description: >-
@@ -193,7 +193,7 @@ HippoRAG 2 不涉及端到端训练。其核心算法为 **Personalized PageRank
 - [Table as a Modality for Large Language Models](../../NeurIPS2025/graph_learning/table_as_a_modality_for_large_language_models.md)
 - [Elastic Weight Consolidation for Knowledge Graph Continual Learning: An Empirical Evaluation](../../NeurIPS2025/graph_learning/elastic_weight_consolidation_for_knowledge_graph_continual_learning_an_empirical.md)
 - [Graph-constrained Reasoning: Faithful Reasoning on Knowledge Graphs with Large Language Models](graph-constrained_reasoning_faithful_reasoning_on_knowledge_graphs_with_large_la.md)
+- [Deliberation on Priors: Trustworthy Reasoning of Large Language Models on Knowledge Graphs](../../NeurIPS2025/graph_learning/deliberation_on_priors_trustworthy_reasoning_of_large_language_models_on_knowled.md)
 - [Mario: Multimodal Graph Reasoning with Large Language Models](../../CVPR2026/graph_learning/mario_multimodal_graph_reasoning_with_large_language_models.md)
-- [Can Knowledge Graphs Make Large Language Models More Trustworthy? An Empirical Study Over Open-ended Question Answering](../../ACL2025/graph_learning/kg_llm_trustworthy_qa.md)
 
 <!-- RELATED:END -->

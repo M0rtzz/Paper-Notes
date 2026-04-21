@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sample-Efficient Tabular Self-Play for Offline Robust Reinforcement Learning
 description: >-

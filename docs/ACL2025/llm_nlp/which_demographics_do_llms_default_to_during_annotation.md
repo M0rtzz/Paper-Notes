@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Which Demographics Do LLMs Default to During Annotation?
 description: >-

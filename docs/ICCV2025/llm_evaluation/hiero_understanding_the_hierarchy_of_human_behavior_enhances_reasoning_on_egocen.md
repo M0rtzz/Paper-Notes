@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HiERO: Understanding the Hierarchy of Human Behavior Enhances Reasoning on Egocentric Videos
 description: >-
@@ -198,8 +198,8 @@ $$\mathcal{L}_{ft} = \sum_{k=1}^{K} \sum_{c_i=k} \sum_{c_j=c_i} \frac{\exp(h_v(\
 
 ## 相关论文
 
-- [Ineq-Comp: Benchmarking Human-Intuitive Compositional Reasoning in Automated Theorem Proving on Inequalities](../../NeurIPS2025/llm_evaluation/ineq-comp_benchmarking_human-intuitive_compositional_reasoning_in_automated_theo.md)
 - [Bayesian Evaluation of Large Language Model Behavior](../../NeurIPS2025/llm_evaluation/bayesian_evaluation_of_large_language_model_behavior.md)
+- [Ineq-Comp: Benchmarking Human-Intuitive Compositional Reasoning in Automated Theorem Proving on Inequalities](../../NeurIPS2025/llm_evaluation/ineq-comp_benchmarking_human-intuitive_compositional_reasoning_in_automated_theo.md)
 - [ResearchTown: Simulator of Human Research Community](../../ICML2025/llm_evaluation/researchtown_simulator_of_human_research_community.md)
 - [3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark](3dsrbench_a_comprehensive_3d_spatial_reasoning_benchmark.md)
 - [MOSIV: Multi-Object System Identification from Videos](../../ICLR2026/llm_evaluation/mosiv_multi-object_system_identification_from_videos.md)

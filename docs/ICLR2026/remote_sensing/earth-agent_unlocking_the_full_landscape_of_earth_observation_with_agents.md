@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Earth-Agent: Unlocking the Full Landscape of Earth Observation with Agents
 description: >-

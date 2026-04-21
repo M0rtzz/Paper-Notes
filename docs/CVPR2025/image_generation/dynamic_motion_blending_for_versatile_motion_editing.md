@@ -1,12 +1,10 @@
 ---
-title: "Dynamic Motion Blending for Versatile Motion Editing"
-conference: "CVPR 2025"
-arXiv: "2503.20724"
-link: "https://arxiv.org/abs/2503.20724"
-code: "https://awfuact.github.io/motionrefit/"
-domain: "图像/视频生成"
-keywords: ["运动编辑", "文本引导", "扩散模型", "数据增强", "运动合成", "SMPL-X"]
-rating: ⭐⭐⭐⭐
+title: >-
+  [论文解读] Dynamic Motion Blending for Versatile Motion Editing (MotionReFit)
+description: >-
+  [图像生成] MotionReFit 提出了首个通用文本引导运动编辑框架，通过 MotionCutMix 数据增强技术动态生成训练三元组，配合自回归扩散模型和运动协调器，实现涵盖身体部位替换、风格迁移和细粒度调整的空间与时序编辑。
+tags:
+  - 图像生成
 ---
 
 # Dynamic Motion Blending for Versatile Motion Editing (MotionReFit)
@@ -121,10 +119,10 @@ MotionCutMix 增强策略新颖实用，问题定义完整（三种编辑场景�
 
 ## 相关论文
 
-- [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
-- [DynaVid: Learning to Generate Highly Dynamic Videos using Synthetic Motion Data](../../CVPR2026/image_generation/dynavid_learning_to_generate_highly_dynamic_videos_using_synthetic_motion_data.md)
-- [BiMotion: B-spline Motion for Text-guided Dynamic 3D Character Generation](../../CVPR2026/image_generation/bimotion_b-spline_motion_for_text-guided_dynamic_3d_character_generation.md)
-- [Video Motion Graphs](../../ICCV2025/image_generation/video_motion_graphs.md)
-- [Lifting Motion to the 3D World via 2D Diffusion](lifting_motion_to_the_3d_world_via_2d_diffusion.md)
+- [Less is More: Improving Motion Diffusion Models with Sparse Keyframes](../../ICCV2025/image_generation/less_is_more_improving_motion_diffusion_models_with_sparse_keyframes.md)
+- [MotionStreamer: Streaming Motion Generation via Diffusion-based Autoregressive Model in Causal Latent Space](../../ICCV2025/image_generation/motionstreamer_streaming_motion_generation_via_diffusion-based_autoregressive_mo.md)
+- [EEdit: Rethinking the Spatial and Temporal Redundancy for Efficient Image Editing](../../ICCV2025/image_generation/eedit_rethinking_the_spatial_and_temporal_redundancy_for_efficient_image_editing.md)
+- [FlipSketch: Flipping Static Drawings to Text-Guided Sketch Animations](flipsketch_flipping_static_drawings_to_text-guided_sketch_animations.md)
+- [FineLIP: Extending CLIP's Reach via Fine-Grained Alignment with Longer Text Inputs](finelip_extending_clips_reach_via_fine-grained_alignment_with_longer_text_inputs.md)
 
 <!-- RELATED:END -->

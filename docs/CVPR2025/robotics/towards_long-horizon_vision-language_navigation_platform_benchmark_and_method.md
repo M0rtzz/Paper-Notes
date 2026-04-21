@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Long-Horizon Vision-Language Navigation: Platform, Benchmark and Method
 description: >-
@@ -97,9 +97,9 @@ tags:
 ## 相关论文
 
 - [RoboCerebra: A Large-scale Benchmark for Long-horizon Robotic Manipulation Evaluation](../../NeurIPS2025/robotics/robocerebra_a_large-scale_benchmark_for_long-horizon_robotic_manipulation_evalua.md)
-- [COSMO: Combination of Selective Memorization for Low-cost Vision-and-Language Navigation](../../ICCV2025/robotics/cosmo_combination_of_selective_memorization_for_low-cost_vision-and-language_nav.md)
-- [RDD: Retrieval-Based Demonstration Decomposer for Planner Alignment in Long-Horizon Tasks](../../NeurIPS2025/robotics/rdd_retrieval-based_demonstration_decomposer_for_planner_alignment_in_long-horiz.md)
 - [Closed-loop Long-horizon Robotic Planning via Equilibrium Sequence Modeling](../../ICML2025/robotics/closed-loop_long-horizon_robotic_planning_via_equilibrium_sequence_modeling.md)
+- [RDD: Retrieval-Based Demonstration Decomposer for Planner Alignment in Long-Horizon Tasks](../../NeurIPS2025/robotics/rdd_retrieval-based_demonstration_decomposer_for_planner_alignment_in_long-horiz.md)
+- [COSMO: Combination of Selective Memorization for Low-cost Vision-and-Language Navigation](../../ICCV2025/robotics/cosmo_combination_of_selective_memorization_for_low-cost_vision-and-language_nav.md)
 - [NavMorph: A Self-Evolving World Model for Vision-and-Language Navigation in Continuous Environments](../../ICCV2025/robotics/navmorph_a_self-evolving_world_model_for_vision-and-language_navigation_in_conti.md)
 
 <!-- RELATED:END -->

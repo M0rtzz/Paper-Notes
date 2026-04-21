@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning to Insert for Constructive Neural Vehicle Routing Solver
 description: >-

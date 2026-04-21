@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] D2Dewarp: Dual Dimensions Geometric Representation Learning Based Document Image Dewarping
 description: >-

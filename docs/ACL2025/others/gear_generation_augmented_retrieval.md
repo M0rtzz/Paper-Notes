@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GeAR: Generation Augmented Retrieval
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HeadHunt-VAD: Hunting Robust Anomaly-Sensitive Heads in MLLM for Tuning-Free Video Anomaly Detection
 description: >-

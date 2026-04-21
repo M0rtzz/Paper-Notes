@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Text-to-3D by Stitching a Multi-view Reconstruction Network to a Video Generator
 description: >-
@@ -163,7 +163,7 @@ VIST3A在物体级(T3Bench)和场景级(SceneBench)合成上全面超越所有ba
 - [MUSt3R: Multi-view Network for Stereo 3D Reconstruction](../../CVPR2025/3d_vision/must3r_multi-view_network_for_stereo_3d_reconstruction.md)
 - [Peering into the Unknown: Active View Selection with Neural Uncertainty Maps for 3D Reconstruction](peering_into_the_unknown_active_view_selection_with_neural_uncertainty_maps_for_.md)
 - [GaussFusion: Improving 3D Reconstruction in the Wild with A Geometry-Informed Video Generator](../../CVPR2026/3d_vision/gaussfusion_improving_3d_reconstruction_in_the_wild_with_a_geometry-informed_vid.md)
-- [Coherent Human-Scene Reconstruction from Multi-Person Multi-View Video in a Single Pass](../../CVPR2026/3d_vision/coherent_humanscene_reconstruction_from_multiperso.md)
+- [Coherent Human-Scene Reconstruction from Multi-Person Multi-View Video in a Single Pass](../../CVPR2026/3d_vision/coherent_human-scene_reconstruction_from_multi-person_multi-view_video_in_a_sing.md)
 - [StreamSplat: Towards Online Dynamic 3D Reconstruction from Uncalibrated Video Streams](streamsplat_towards_online_dynamic_3d_reconstruction_from_uncalibrated_video_str.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MobileViCLIP: An Efficient Video-Text Model for Mobile Devices
 description: >-

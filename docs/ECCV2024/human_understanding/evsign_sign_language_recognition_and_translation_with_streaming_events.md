@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EvSign: Sign Language Recognition and Translation with Streaming Events
 description: >-

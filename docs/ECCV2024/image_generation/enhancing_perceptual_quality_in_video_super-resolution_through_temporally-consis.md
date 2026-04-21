@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Perceptual Quality in Video Super-Resolution through Temporally-Consistent Detail Synthesis using Diffusion Models
 description: >-

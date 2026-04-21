@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Monocular Open Vocabulary Occupancy Prediction for Indoor Scenes (LegoOcc)
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Conformal Prediction as Bayesian Quadrature
 description: >-
@@ -148,8 +148,8 @@ tags:
 
 - [When Machine Learning Gets Personal: Evaluating Prediction and Explanation](../../ICLR2026/interpretability/when_machine_learning_gets_personal_evaluating_prediction_and_explanation.md)
 - [GenePheno: Interpretable Gene Knockout-Induced Phenotype Abnormality Prediction Framework](../../AAAI2026/interpretability/genepheno_interpretable_gene_knockout-induced_phenotype_abnormality_prediction_f.md)
-- [Avoiding Leakage Poisoning: Concept Interventions Under Distribution Shifts](avoiding_leakage_poisoning_concept_interventions_under_distribution_shifts.md)
-- [Explaining, Fast and Slow: Abstraction and Refinement of Provable Explanations](explaining_fast_and_slow_abstraction_and_refinement_of_provable_explanations.md)
-- [Evolving Prompts In-Context: An Open-ended, Self-replicating Perspective](evolving_prompts_in-context_an_open-ended_self-replicating_perspective.md)
+- [Why Is Spatial Reasoning Hard for VLMs? An Attention Mechanism Perspective on Focus Areas](why_is_spatial_reasoning_hard_for_vlms_an_attention_mechanism_perspective_on_foc.md)
+- [What Makes an Ensemble (Un)interpretable?](what_makes_an_ensemble_un_interpretable.md)
+- [Concept-Based Unsupervised Domain Adaptation](concept-based_unsupervised_domain_adaptation.md)
 
 <!-- RELATED:END -->

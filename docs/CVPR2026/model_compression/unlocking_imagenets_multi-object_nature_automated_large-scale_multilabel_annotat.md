@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unlocking ImageNet's Multi-Object Nature: Automated Large-Scale Multilabel Annotation
 description: >-
@@ -153,6 +153,6 @@ ResNet-50 不同训练方案对比：
 - [Find your Needle: Small Object Image Retrieval via Multi-Object Attention Optimization](../../NeurIPS2025/model_compression/find_your_needle_small_object_image_retrieval_via_multi-object_attention_optimiz.md)
 - [S2R-HDR: A Large-Scale Rendered Dataset for HDR Fusion](../../ICLR2026/model_compression/s2r-hdr_a_large-scale_rendered_dataset_for_hdr_fusion.md)
 - [Markovian Scale Prediction: A New Era of Visual Autoregressive Generation](markovian_scale_prediction_a_new_era_of_visual_autoregressive_generation.md)
-- [BiasScope: Towards Automated Detection of Bias in LLM-as-a-Judge Evaluation](../../ICLR2026/model_compression/biasscope_towards_automated_detection_of_bias_in_llm-as-a-judge_evaluation.md)
+- [StepFun-Formalizer: Unlocking the Autoformalization Potential of LLMs Through Knowledge-Reasoning Fusion](../../AAAI2026/model_compression/stepfun-formalizer_unlocking_the_autoformalization_potential_of_llms_through_kno.md)
 
 <!-- RELATED:END -->

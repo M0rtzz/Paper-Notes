@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ChartCap: Mitigating Hallucination of Dense Chart Captioning
 description: >-

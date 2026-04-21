@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DeRS: Towards Extremely Efficient Upcycled Mixture-of-Experts Models
 description: >-
@@ -122,8 +122,8 @@ DeRS范式三步走：Decompose（将N个专家权重分解为$W_{base} + \Delta
 
 - [Unveiling Super Experts in Mixture-of-Experts Large Language Models](../../ICLR2026/model_compression/unveiling_super_experts_in_mixture-of-experts_large_language_models.md)
 - [Dense Backpropagation Improves Training for Sparse Mixture-of-Experts](../../NeurIPS2025/model_compression/dense_backpropagation_improves_training_for_sparse_mixture-of-experts.md)
-- [EAC-MoE: Expert-Selection Aware Compressor for Mixture-of-Experts Large Language Models](../../ACL2025/model_compression/eac_moe_expert_aware_compression.md)
 - [Toward Efficient Inference Attacks: Shadow Model Sharing via Mixture-of-Experts](../../NeurIPS2025/model_compression/toward_efficient_inference_attacks_shadow_model_sharing_via_mixture-of-experts.md)
+- [EAC-MoE: Expert-Selection Aware Compressor for Mixture-of-Experts Large Language Models](../../ACL2025/model_compression/eac_moe_expert_aware_compression.md)
 - [LD-MoLE: Learnable Dynamic Routing for Mixture of LoRA Experts](../../ICLR2026/model_compression/ld-mole_learnable_dynamic_routing_for_mixture_of_lora_experts.md)
 
 <!-- RELATED:END -->

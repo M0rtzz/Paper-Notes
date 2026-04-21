@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MCMoE: Completing Missing Modalities with Mixture of Experts for Incomplete Multimodal Action Quality Assessment
 description: >-

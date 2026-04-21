@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FinePseudo: Improving Pseudo-Labelling through Temporal-Alignability for Semi-Supervised Fine-Grained Action Recognition
 description: >-

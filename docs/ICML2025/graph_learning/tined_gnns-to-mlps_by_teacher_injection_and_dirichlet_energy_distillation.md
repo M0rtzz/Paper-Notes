@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TINED: GNNs-to-MLPs by Teacher Injection and Dirichlet Energy Distillation
 description: >-
@@ -121,6 +121,6 @@ GLNN 仅用软标签蒸馏，忽略 GNN 层内部的细粒度知识。
 - [PKD: Preference-driven Knowledge Distillation for Few-shot Node Classification](../../NeurIPS2025/graph_learning/preference-driven_knowledge_distillation_for_few-shot_node_classification.md)
 - [LLM Enhancers for GNNs: An Analysis from the Perspective of Causal Mechanism Identification](llm_enhancers_for_gnns_an_analysis_from_the_perspective_of_causal_mechanism_iden.md)
 - [Machines and Mathematical Mutations: Using GNNs to Characterize Quiver Mutation Classes](machines_and_mathematical_mutations_using_gnns_to_characterize_quiver_mutation_c.md)
-- [What Expressivity Theory Misses: Message Passing Complexity for GNNs](../../NeurIPS2025/graph_learning/what_expressivity_theory_misses_message_passing_complexity_for_gnns.md)
+- [Moscat: Mixture of Scope Experts at Test for Generalizing Deeper GNNs](../../NeurIPS2025/graph_learning/mixture_of_scope_experts_at_test_generalizing_deeper_graph_neural_networks_with_.md)
 
 <!-- RELATED:END -->

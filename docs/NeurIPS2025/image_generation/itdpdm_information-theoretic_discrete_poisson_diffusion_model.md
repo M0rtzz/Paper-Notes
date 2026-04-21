@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ItDPDM: Information-Theoretic Discrete Poisson Diffusion Model
 description: >-

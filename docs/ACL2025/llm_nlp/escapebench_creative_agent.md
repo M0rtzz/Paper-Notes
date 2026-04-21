@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EscapeBench: Towards Advancing Creative Intelligence of Language Model Agents
 description: >-
@@ -136,8 +136,8 @@ EscapeAgent 是一个无需训练的框架，依赖 prompting 和运行时推理
 
 - [SocialEval: Evaluating Social Intelligence of Large Language Models](socialeval_evaluating_social_intelligence_of_large_language_models.md)
 - [Writing in Symbiosis: Mapping Human Creative Agency in the AI Era](../../NeurIPS2025/llm_nlp/writing_in_symbiosis_mapping_human_creative_agency_in_the_ai_era.md)
-- [Improve Language Model and Brain Alignment via Associative Memory](improve_language_model_and_brain_alignment_via_associative_memory.md)
-- [InfiniSST: Simultaneous Translation of Unbounded Speech with Large Language Model](infinisst_simultaneous_translation_of_unbounded_speech_with_large_language_model.md)
-- [A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?](a_survey_of_llm-based_agents_in_medicine_how_far_are_we_from_baymax.md)
+- [Convert Language Model into a Value-based Strategic Planner](convert_language_model_into_a_value-based_strategic_planner.md)
+- [Training Language Model to Critique for Better Refinement](training_language_model_to_critique_for_better_refinement.md)
+- [Representation Bending for Large Language Model Safety](repbend_representation_bending_safety.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Trade-off to Synergy: A Versatile Symbiotic Watermarking Framework for Large Language Models
 description: >-
@@ -127,8 +127,8 @@ SymMark提供三种共生策略：Serial（串行，每个token同时嵌入两�
 
 - [MorphMark: Flexible Adaptive Watermarking for Large Language Models](morphmark_adaptive_watermarking.md)
 - [Ensemble Watermarks for Large Language Models](ensemble_watermarks_llm.md)
-- [Improved Unbiased Watermark for Large Language Models](improved_unbiased_watermark_for_large_language.md)
 - [Robust Data Watermarking in Language Models by Injecting Fictitious Knowledge](robust_data_watermarking_in_language_models_by_injecting_fictitious_knowledge.md)
+- [Improved Unbiased Watermark for Large Language Models](improved_unbiased_watermark_for_large_language.md)
 - [Improving Fairness of Large Language Models in Multi-document Summarization](improving_fairness_of_large_language_models_in_multi-document_summarization.md)
 
 <!-- RELATED:END -->

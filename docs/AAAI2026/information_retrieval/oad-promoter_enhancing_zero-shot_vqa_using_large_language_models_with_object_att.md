@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OAD-Promoter: Enhancing Zero-shot VQA using Large Language Models with Object Attribute Description
 description: >-

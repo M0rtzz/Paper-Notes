@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LogicPro: Improving Complex Logical Reasoning via Program-Guided Learning
 description: >-
@@ -133,6 +133,6 @@ tags:
 - [Enhancing Retrieval Systems with Inference-Time Logical Reasoning](enhancing_retrieval_systems_with_inference-time_logical_reasoning.md)
 - [Aristotle: Mastering Logical Reasoning with A Logic-Complete Decompose-Search-Resolve Framework](aristotle_logical_reasoning.md)
 - [Improving Chain-of-Thought Reasoning via Quasi-Symbolic Abstractions](improving_chain-of-thought_reasoning_via_quasi-symbolic_abstractions.md)
-- [FineReason: Evaluating and Improving LLMs' Deliberate Reasoning through Reflective Puzzle Solving](finereason_evaluating_and_improving_llms_deliberate_reasoning_through_reflective.md)
+- [Learning-enabled Polynomial Lyapunov Function Synthesis via High-Accuracy Counterexample-Guided Framework](../../CVPR2025/llm_reasoning/learning-enabled_polynomial_lyapunov_function_synthesis_via_high-accuracy_counte.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BugSweeper: Function-Level Detection of Smart Contract Vulnerabilities Using Graph Neural Networks
 description: >-
@@ -158,7 +158,7 @@ BugSweeper F1 超过最强基线 AME 约 **3.1 个百分点**，同时 Precision
 - [Adaptive Riemannian Graph Neural Networks](adaptive_riemannian_graph_neural_networks.md)
 - [Beyond Fixed Depth: Adaptive Graph Neural Networks for Node Classification Under Varying Homophily](beyond_fixed_depth_adaptive_graph_neural_networks_for_node_classification_under_.md)
 - [Are We Measuring Oversmoothing in Graph Neural Networks Correctly?](../../ICLR2026/graph_learning/are_we_measuring_oversmoothing_in_graph_neural_networks_correctly.md)
+- [Adaptive Learned Image Compression with Graph Neural Networks](../../CVPR2026/graph_learning/adaptive_learned_image_compression_with_graph_neural_networks.md)
 - [Graph Neural Networks for Interferometer Simulations](../../NeurIPS2025/graph_learning/graph_neural_networks_for_interferometer_simulations.md)
-- [Over-squashing in Spatiotemporal Graph Neural Networks](../../NeurIPS2025/graph_learning/over-squashing_in_spatiotemporal_graph_neural_networks.md)
 
 <!-- RELATED:END -->

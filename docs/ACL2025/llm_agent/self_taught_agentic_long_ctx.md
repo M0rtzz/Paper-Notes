@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-Taught Agentic Long-Context Understanding
 description: >-

@@ -1,14 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Language Guided Concept Bottleneck Models for Interpretable Continual Learning
 description: >-
-  [CVPR 2025][持续学习][可解释性] 提出语言引导的概念瓶颈模型，通过概念级解释实现持续学习过程的可解释性，同时缓解灾难性遗忘
+  [CVPR 2025][LLM效率][概念瓶颈模型] 提出语言引导的概念瓶颈模型（Language Guided Concept Bottleneck Model），将概念瓶颈网络的可解释性与持续学习结合，通过语言模型引导的概念定义实现任务间的知识迁移和可解释的增量学习。
 tags:
   - CVPR 2025
-  - 持续学习
+  - LLM效率
   - 概念瓶颈模型
-  - 可解释性
+  - 持续学习
   - 语言引导
+  - 可解释性
   - 灾难性遗忘
 ---
 
@@ -96,6 +97,6 @@ tags:
 - [Attention Retention for Continual Learning with Vision Transformers](../../AAAI2026/llm_efficiency/attention_retention_for_continual_learning_with_vision_transformers.md)
 - [Learning Like Humans: Analogical Concept Learning for Generalized Category Discovery](../../CVPR2026/llm_efficiency/learning_like_humans_analogical_concept_learning_for_generalized_category_discov.md)
 - [Expert Divergence Learning for MoE-based Language Models](../../ICLR2026/llm_efficiency/expert_divergence_learning_for_moe-based_language_models.md)
-- [Learning from the Undesirable: Robust Adaptation of Language Models without Forgetting](../../AAAI2026/llm_efficiency/learning_from_the_undesirable_robust_adaptation_of_language_models_without_forge.md)
+- [Low-Rank Adaptation in Multilinear Operator Networks for Security-Preserving Incremental Learning](low-rank_adaptation_in_multilinear_operator_networks_for_security-preserving_inc.md)
 
 <!-- RELATED:END -->

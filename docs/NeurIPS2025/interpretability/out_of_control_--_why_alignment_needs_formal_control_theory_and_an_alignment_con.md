@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Out of Control -- Why Alignment Needs Formal Control Theory (and an Alignment Control Stack)
 description: >-

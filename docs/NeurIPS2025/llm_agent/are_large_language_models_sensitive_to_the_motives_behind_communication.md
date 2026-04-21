@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Are Large Language Models Sensitive to the Motives Behind Communication?
 description: >-
@@ -119,9 +119,9 @@ tags:
 ## 相关论文
 
 - [Debate or Vote: Which Yields Better Decisions in Multi-Agent Large Language Models?](debate_or_vote_which_yields_better_decisions_in_multi-agent_large_language_model.md)
-- [ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](../../ACL2025/llm_agent/toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)
 - [Adaptive Tool Use in Large Language Models with Meta-Cognition Trigger](../../ACL2025/llm_agent/meco_metacognition_tool_use.md)
 - [Zero-Shot Large Language Model Agents for Fully Automated Radiotherapy Treatment Planning](zero-shot_large_language_model_agents_for_fully_automated_radiotherapy_treatment.md)
+- [ToolHop: A Query-Driven Benchmark for Evaluating Large Language Models in Multi-Hop Tool Use](../../ACL2025/llm_agent/toolhop_multi_hop_tool_use.md)
 - [AgentTTS: Large Language Model Agent for Test-time Compute-optimal Scaling Strategy in Complex Tasks](agenttts_large_language_model_agent_for_testtime_computeopti.md)
 
 <!-- RELATED:END -->

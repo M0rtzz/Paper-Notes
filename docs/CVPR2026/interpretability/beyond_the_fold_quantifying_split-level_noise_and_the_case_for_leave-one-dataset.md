@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond the Fold: Quantifying Split-Level Noise and the Case for Leave-One-Dataset-Out AU Evaluation
 description: >-

@@ -135,10 +135,10 @@ DINO-based RL 在表格任务上严重退化（Avg 降至 65.3），而 Visual-E
 
 ## 相关论文
 
+- [ViUniT: Visual Unit Tests for More Robust Visual Programming](viunit_visual_unit_tests_for_more_robust_visual_programming.md)
 - [Collaborative Decoding Makes Visual Auto-Regressive Modeling Efficient](collaborative_decoding_makes_visual_auto-regressive_modeling_efficient.md)
 - [InfinityStar: Unified Spacetime AutoRegressive Modeling for Visual Generation](../../NeurIPS2025/image_generation/infinitystar_unified_spacetime_autoregressive_modeling_for_v.md)
 - [Trust Your Critic: Robust Reward Modeling and Reinforcement Learning for Faithful Image Editing and Generation](trust_your_critic_robust_reward_modeling_and_reinforcement_learning_for_faithful.md)
-- [Overcoming Visual Clutter in Vision Language Action Models via Concept-Gated Visual Distillation](overcoming_visual_clutter_in_vision_language_action_models_via_concept-gated_vis.md)
-- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](../../ICLR2026/image_generation/visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
+- [Unseen Visual Anomaly Generation](unseen_visual_anomaly_generation.md)
 
 <!-- RELATED:END -->

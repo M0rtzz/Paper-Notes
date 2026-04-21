@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ModeSeq: Taming Sparse Multimodal Motion Prediction with Sequential Mode Modeling
 description: >-
@@ -120,10 +120,10 @@ ModeSeq 在模式覆盖 (MR) 和置信度评分 (mAP) 上全面优于 QCNet，�
 
 ## 相关论文
 
+- [PAR: Poly-Autoregressive Prediction for Modeling Interactions](poly-autoregressive_prediction_for_modeling_interactions.md)
 - [Generating Multimodal Driving Scenes via Next-Scene Prediction](generating_multimodal_driving_scenes_via_next-scene_prediction.md)
+- [SDGOcc: Semantic and Depth-Guided BEV Transformation for 3D Multimodal Occupancy Prediction](sdgocc_semantic_and_depth-guided_birds-eye_view_transformation_for_3d_multimodal.md)
 - [Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots](panoramic_multimodal_semantic_occupancy_prediction_for_quadruped_robots.md)
 - [EMD: Explicit Motion Modeling for High-Quality Street Gaussian Splatting](../../ICCV2025/autonomous_driving/emd_explicit_motion_modeling_for_high-quality_street_gaussian_splatting.md)
-- [Fully Sparse 3D Occupancy Prediction](../../ECCV2024/autonomous_driving/fully_sparse_3d_occupancy_prediction.md)
-- [FoSS: Modeling Long-Range Dependencies and Multimodal Uncertainty in Trajectory Prediction via Fourier–State Space Integration](../../CVPR2026/autonomous_driving/foss_modeling_long_range_dependencies_and_multimodal_uncertainty_in_trajectory_p.md)
 
 <!-- RELATED:END -->

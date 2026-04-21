@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Meta-Adaptive Prompt Distillation for Few-Shot Visual Question Answering
 description: >-
@@ -152,8 +152,8 @@ MAPD 基于 LLaVA v1.5 架构，包含三个核心组件：
 
 - [MacVQA: Adaptive Memory Allocation and Global Noise Filtering for Continual Visual Question Answering](../../AAAI2026/multimodal_vlm/macvqa_adaptive_memory_allocation_and_global_noise_filtering_for_continual_visua.md)
 - [Revisit Visual Prompt Tuning: The Expressiveness of Prompt Experts](revisit_visual_prompt_tuning_the_expressiveness_of_prompt_experts.md)
-- [Meta-Prompting for Automating Zero-Shot Visual Recognition with LLMs](../../ECCV2024/multimodal_vlm/meta-prompting_for_automating_zero-shot_visual_recognition_with_llms.md)
-- [Noise-Aware Few-Shot Learning through Bi-directional Multi-View Prompt Alignment](../../CVPR2026/multimodal_vlm/noise-aware_few-shot_learning_through_bi-directional_multi-view_prompt_alignment.md)
+- [Noise-Aware Few-Shot Learning through Bi-directional Multi-View Prompt Alignment](../../CVPR2026/multimodal_vlm/noiseaware_fewshot_learning_through_bidirectional.md)
+- [Meta-Prompting for Automating Zero-shot Visual Recognition with LLMs](../../ECCV2024/multimodal_vlm/metaprompting_for_automating_zeroshot_visual_recognitio.md)
 - [AgilePruner: An Empirical Study of Attention and Diversity for Adaptive Visual Token Pruning in LVLMs](agilepruner_an_empirical_study_of_attention_and_diversity_for_adaptive_visual_to.md)
 
 <!-- RELATED:END -->

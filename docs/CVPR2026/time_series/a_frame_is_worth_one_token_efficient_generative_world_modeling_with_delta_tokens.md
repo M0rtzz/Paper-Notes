@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Frame is Worth One Token: Efficient Generative World Modeling with Delta Tokens
 description: >-

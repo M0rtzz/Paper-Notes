@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dual Consolidation for Pre-Trained Model-Based Domain-Incremental Learning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FinMMDocR: Benchmarking Financial Multimodal Reasoning with Scenario Awareness, Document Understanding, and Multi-Step Computation
 description: >-

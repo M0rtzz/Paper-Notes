@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Comparative Evaluation of Traditional Methods and Deep Learning for Brain Glioma Imaging. Review Paper
 description: >-

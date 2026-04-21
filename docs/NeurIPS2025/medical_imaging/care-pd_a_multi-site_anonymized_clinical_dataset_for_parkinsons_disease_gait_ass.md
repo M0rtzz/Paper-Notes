@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Care-PD: A Multi-Site Anonymized Clinical Dataset for Parkinson's Disease Gait Assessment
 description: >-

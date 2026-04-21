@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CMMLoc: Advancing Text-to-PointCloud Localization with Cauchy-Mixture-Model Based Framework
 description: >-
@@ -129,8 +129,8 @@ tags:
 
 - [Advancing Text-to-3D Generation with Linearized Lookahead Variational Score Distillation](../../ICCV2025/3d_vision/advancing_text-to-3d_generation_with_linearized_lookahead_variational_score_dist.md)
 - [Gaussian Splatting Feature Fields for Privacy-Preserving Visual Localization](gaussian_splatting_feature_fields_for_privacy-preserving_visual_localization.md)
-- [Flowing from Words to Pixels: A Noise-Free Framework for Cross-Modality Evolution](flowing_from_words_to_pixels_a_noise-free_framework_for_cross-modality_evolution.md)
+- [Stable-SCore: A Stable Registration-Based Framework for 3D Shape Correspondence](stable-score_a_stable_registration-based_framework_for_3d_shape_correspondence.md)
 - [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
-- [Evolving High-Quality Rendering and Reconstruction in a Unified Framework with Contribution-Adaptive Regularization](evolving_high-quality_rendering_and_reconstruction_in_a_unified_framework_with_c.md)
+- [Flowing from Words to Pixels: A Noise-Free Framework for Cross-Modality Evolution](flowing_from_words_to_pixels_a_noise-free_framework_for_cross-modality_evolution.md)
 
 <!-- RELATED:END -->

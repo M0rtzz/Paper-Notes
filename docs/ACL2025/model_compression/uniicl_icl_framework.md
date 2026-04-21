@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UniICL: An Efficient ICL Framework Unifying Compression, Selection, and Generation
 description: >-
@@ -167,6 +167,6 @@ UniICL 的核心优势在于"统一性"和"轻量性"：用最少的额外参数
 - [UniQuanF: Unifying Uniform and Binary-coding Quantization for Accurate Compression of Large Language Models](uniquanf_unified_quantization.md)
 - [Sample Efficient Demonstration Selection for In-Context Learning](../../ICML2025/model_compression/sample_efficient_demonstration_selection_for_in-context_learning.md)
 - [HyperLoRA: Parameter-Efficient Adaptive Generation for Portrait Synthesis](../../CVPR2025/model_compression/hyperlora_parameter-efficient_adaptive_generation_for_portrait_synthesis.md)
-- [OrthoRank: Token Selection via Sink Token Orthogonality for Efficient LLM Inference](../../ICML2025/model_compression/orthorank_token_selection_via_sink_token_orthogonality_for_efficient_llm_inferen.md)
+- [Best Subset Selection: Optimal Pursuit for Feature Selection and Elimination](../../ICML2025/model_compression/best_subset_selection_optimal_pursuit_for_feature_selection_and_elimination.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ColorMAE: Exploring Data-Independent Masking Strategies in Masked AutoEncoders
 description: >-
@@ -148,9 +148,9 @@ ColorMAE-G 作为数据无关方法，在语义分割上超过多数数据自适
 ## 相关论文
 
 - [Un-EVIMO: Unsupervised Event-based Independent Motion Segmentation](un-evimo_unsupervised_event-based_independent_motion_segmentation.md)
-- [A Two-Stage Progressive Pre-training using Multi-Modal Contrastive Masked Autoencoders](../../CVPR2025/segmentation/multi-modal_contrastive_masked_autoencoders_a_two-stage_progressive_pre-training.md)
 - [SeiT++: Masked Token Modeling Improves Storage-Efficient Training](seit_masked_token_modeling_improves_storage-efficient_training.md)
 - [LASS3D: Language-Assisted Semi-Supervised 3D Semantic Segmentation with Progressive Unreliable Data Exploitation](lass3d_language-assisted_semi-supervised_3d_semantic_segmentation_with_progressi.md)
 - [SARMAE: Masked Autoencoder for SAR Representation Learning](../../CVPR2026/segmentation/sarmae_masked_autoencoder_for_sar_representation_learning.md)
+- [Dual form Complementary Masking for Domain-Adaptive Image Segmentation](../../ICML2025/segmentation/dual_form_complementary_masking_for_domain-adaptive_image_segmentation.md)
 
 <!-- RELATED:END -->

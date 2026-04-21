@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Eliminating Warping Shakes for Unsupervised Online Video Stitching
 description: >-

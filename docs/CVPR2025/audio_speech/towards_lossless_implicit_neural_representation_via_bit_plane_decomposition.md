@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Lossless Implicit Neural Representation via Bit Plane Decomposition
 description: >-

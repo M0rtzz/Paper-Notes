@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BioCLIP 2: Emergent Properties from Scaling Hierarchical Contrastive Learning
 description: >-

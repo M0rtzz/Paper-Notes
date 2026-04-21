@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AllTracker: Efficient Dense Point Tracking at High Resolution
 description: >-

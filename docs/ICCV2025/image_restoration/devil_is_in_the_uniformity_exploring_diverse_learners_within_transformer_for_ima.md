@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Devil is in the Uniformity: Exploring Diverse Learners within Transformer for Image Restoration
 description: >-
@@ -164,7 +164,7 @@ HINT比Retinexformer高0.9dB，比通用恢复方案至少高1.74dB。
 - [Enhancing Image Restoration Transformer via Adaptive Translation Equivariance](enhancing_image_restoration_transformer_via_adaptive_translation_equivariance.md)
 - [Complexity Experts are Task-Discriminative Learners for Any Image Restoration](../../CVPR2025/image_restoration/complexity_experts_are_task-discriminative_learners_for_any_image_restoration.md)
 - [Seeing the Unseen: A Frequency Prompt Guided Transformer for Image Restoration](../../ECCV2024/image_restoration/seeing_the_unseen_a_frequency_prompt_guided_transformer_for_image_restoration.md)
+- [Progressive Focused Transformer for Single Image Super-Resolution](../../CVPR2025/image_restoration/progressive_focused_transformer_for_single_image_super-resolution.md)
 - [UniRes: Universal Image Restoration for Complex Degradations](unires_universal_image_restoration_for_complex_degradations.md)
-- [Exploiting Diffusion Prior for Task-driven Image Restoration](exploiting_diffusion_prior_for_task-driven_image_restoration.md)
 
 <!-- RELATED:END -->

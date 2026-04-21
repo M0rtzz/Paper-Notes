@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] L2D: Large Language Models to Diffusion Finetuning
 description: >-
@@ -121,6 +121,6 @@ L2D在冻结的LLM主路径旁引入一条并行"扩散路径"。训练时，对
 - [From Pretrain to Pain: Adversarial Vulnerability of Video Foundation Models without Finetuning](../../AAAI2026/self_supervised/from_pretrain_to_pain_adversarial_vulnerability_of_video_foundation_models_witho.md)
 - [Scaling Language-Free Visual Representation Learning](../../ICCV2025/self_supervised/scaling_languagefree_visual_representation_learning.md)
 - [Towards Benchmarking Foundation Models for Tabular Data With Text](towards_benchmarking_foundation_models_for_tabular_data_with_text.md)
-- [Test-Time Canonicalization by Foundation Models for Robust Perception](test-time_canonicalization_by_foundation_models_for_robust_perception.md)
+- [AdaWorld: Learning Adaptable World Models with Latent Actions](adaworld_learning_adaptable_world_models_with_latent_actions.md)
 
 <!-- RELATED:END -->

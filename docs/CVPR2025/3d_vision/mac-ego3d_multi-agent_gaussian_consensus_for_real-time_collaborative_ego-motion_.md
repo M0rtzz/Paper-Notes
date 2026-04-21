@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] MAC-Ego3D: Multi-Agent Gaussian Consensus for Real-Time Collaborative Ego-Motion and Photorealistic 3D Reconstruction
 description: >-
-  [CVPR 2025][3D视觉][多智能体重建] 提出 MAC-Ego3D，通过多智能体高斯共识实现实时协作位姿估计和高质量 3D 重建，推理加速 15x
+  [CVPR 2025][3D视觉][3D 高斯泼溅] 提出 MAC-Ego3D 框架，通过统一的 3D 高斯泼溅（Gaussian Splatting）表示让多个智能体独立构建、对齐和迭代优化局部地图，利用智能体内和智能体间高斯共识机制实现实时协作位姿估计和逼真 3D 重建，达到 15 倍推理加速、位姿误差降低一个数量级、RGB PSNR 提升 4-10 dB。
 tags:
   - CVPR 2025
-  - 3D重建
-  - 高斯泼溅
+  - 3D视觉
+  - 3D 高斯泼溅
   - 多智能体协作
-  - SLAM
   - 位姿估计
+  - 实时重建
+  - 高斯共识
+  - SLAM
 ---
 
 # MAC-Ego3D: Multi-Agent Gaussian Consensus for Real-Time Collaborative Ego-Motion and Photorealistic 3D Reconstruction
@@ -110,10 +112,10 @@ MAC-Ego3D 由三大核心组件构成：(1) 各智能体独立运行的基于 3D
 
 ## 相关论文
 
-- [MNE-SLAM: Multi-Agent Neural SLAM for Mobile Robots](mne-slam_multi-agent_neural_slam_for_mobile_robots.md)
-- [MAGiC-SLAM: Multi-Agent Gaussian Globally Consistent SLAM](magic-slam_multi-agent_gaussian_globally_consistent_slam.md)
 - [Estimating Body and Hand Motion in an Ego-sensed World](estimating_body_and_hand_motion_in_an_ego-sensed_world.md)
+- [MAGiC-SLAM: Multi-Agent Gaussian Globally Consistent SLAM](magic-slam_multi-agent_gaussian_globally_consistent_slam.md)
 - [ColabSfM: Collaborative Structure-from-Motion by Point Cloud Registration](colabsfm_collaborative_structure-from-motion_by_point_cloud_registration.md)
+- [SplineGS: Robust Motion-Adaptive Spline for Real-Time Dynamic 3D Gaussians from Monocular Video](splinegs_robust_motion-adaptive_spline_for_real-time_dynamic_3d_gaussians_from_m.md)
 - [MASt3R-SLAM: Real-Time Dense SLAM with 3D Reconstruction Priors](mast3r-slam_real-time_dense_slam_with_3d_reconstruction_priors.md)
 
 <!-- RELATED:END -->

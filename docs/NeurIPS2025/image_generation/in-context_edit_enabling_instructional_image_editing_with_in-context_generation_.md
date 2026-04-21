@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ICEdit: Enabling Instructional Image Editing with In-Context Generation in Large Scale Diffusion Transformer
 description: >-

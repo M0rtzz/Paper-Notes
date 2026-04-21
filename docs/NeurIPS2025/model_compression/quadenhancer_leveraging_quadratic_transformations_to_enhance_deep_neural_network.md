@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] QuadEnhancer: Leveraging Quadratic Transformations to Enhance Deep Neural Networks
 description: >-

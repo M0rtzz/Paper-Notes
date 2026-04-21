@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unsupervised Visual Chain-of-Thought Reasoning via Preference Optimization
 description: >-

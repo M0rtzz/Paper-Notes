@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Emergence in Non-Neural Models: Grokking Modular Arithmetic via Average Gradient Outer Product
 description: >-

@@ -172,8 +172,8 @@ TokAlign 从 token-token 共现的角度出发，分三步完成词表对齐：
 
 ## 相关论文
 
-- [Pre-Training Curriculum for Multi-Token Prediction in Language Models](pre-training_curriculum_for_multi-token_prediction_in_language_models.md)
 - [Efficient Pre-Training of LLMs via Topology-Aware Communication Alignment on More Than 9600 GPUs](../../NeurIPS2025/llm_pretraining/efficient_pre-training_of_llms_via_topology-aware_communication_alignment_on_mor.md)
+- [Pre-Training Curriculum for Multi-Token Prediction in Language Models](pre-training_curriculum_for_multi-token_prediction_in_language_models.md)
 - [Large Vocabulary Size Improves Large Language Models](large_vocabulary_size_improves_large_language_models.md)
 - [Second Language (Arabic) Acquisition of LLMs via Progressive Vocabulary Expansion](second_language_arabic_acquisition_of_llms_via_progressive_vocabulary_expansion.md)
 - [Emergent Abilities of Large Language Models under Continued Pretraining for Language Adaptation](emergent_abilities_continued_pt.md)

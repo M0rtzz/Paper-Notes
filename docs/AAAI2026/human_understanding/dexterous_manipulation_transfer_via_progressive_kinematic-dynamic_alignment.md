@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dexterous Manipulation Transfer via Progressive Kinematic-Dynamic Alignment
 description: >-

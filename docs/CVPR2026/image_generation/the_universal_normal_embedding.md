@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Universal Normal Embedding
 description: >-
@@ -149,6 +149,6 @@ tags:
 - [OminiControl: Minimal and Universal Control for Diffusion Transformer](../../ICCV2025/image_generation/ominicontrol_minimal_and_universal_control_for_diffusion_transformer.md)
 - [Bridging Degradation Discrimination and Generation for Universal Image Restoration](../../ICLR2026/image_generation/bridging_degradation_discrimination_and_generation_for_universal_image_restorati.md)
 - [REGEN: Learning Compact Video Embedding with (Re-)Generative Decoder](../../ICCV2025/image_generation/regen_learning_compact_video_embedding_with_re-generative_decoder.md)
-- [OmniVTON: Training-Free Universal Virtual Try-On](../../ICCV2025/image_generation/omnivton_training-free_universal_virtual_try-on.md)
+- [ReNeg: Learning Negative Embedding with Reward Guidance](../../CVPR2025/image_generation/reneg_learning_negative_embedding_with_reward_guidance.md)
 
 <!-- RELATED:END -->

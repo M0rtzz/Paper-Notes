@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SHARE: An SLM-based Hierarchical Action CorREction Assistant for Text-to-SQL
 description: >-

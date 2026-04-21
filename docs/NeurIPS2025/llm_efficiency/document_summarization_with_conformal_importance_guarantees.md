@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Document Summarization with Conformal Importance Guarantees
 description: >-
@@ -127,8 +127,8 @@ $$1 - \alpha \leq \mathbb{P}[B(F_{\hat{q}}(x_{n+1}); y^*_{n+1}) \geq \beta] < 1 
 
 - [CNNSum: Exploring Long-Context Summarization with Large Language Models in Chinese Novels](../../ACL2025/llm_efficiency/cnnsum_exploring_long-context_summarization_with_large_language_models_in_chines.md)
 - [3-Model Speculative Decoding (PyramidSD)](3model_speculative_decoding.md)
-- [Learning in Compact Spaces with Approximately Normalized Transformer](learning_in_compact_spaces_with_approximately_normalized_transformer.md)
-- [Dynamics of Spontaneous Topic Changes in Next Token Prediction with Self-Attention](dynamics_of_spontaneous_topic_changes_in_next_token_prediction_with_self-attenti.md)
+- [Vocabulary Customization for Efficient Domain-Specific LLM Deployment](vocabulary_customization_for_efficient_domain-specific_llm_deployment.md)
 - [The PokeAgent Challenge: Competitive and Long-Context Learning at Scale](the_pokeagent_challenge_competitive_and_long-context_learning_at_scale.md)
+- [OmniDraft: A Cross-Vocabulary Online Adaptive Drafter for On-Device Speculative Decoding](omnidraft_a_cross-vocabulary_online_adaptive_drafter_for_on-device_speculative_d.md)
 
 <!-- RELATED:END -->

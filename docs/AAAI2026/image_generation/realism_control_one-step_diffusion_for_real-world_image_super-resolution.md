@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Realism Control One-step Diffusion for Real-World Image Super-Resolution
 description: >-

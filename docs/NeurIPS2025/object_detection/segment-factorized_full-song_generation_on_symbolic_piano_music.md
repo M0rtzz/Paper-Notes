@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Segment-Factorized Full-Song Generation on Symbolic Piano Music
 description: >-
@@ -114,7 +114,7 @@ SFS接受用户提供的歌曲结构$(\\hat{s}_{1:M}, \\hat{e}_{1:M}, \\hat{l}_{
 
 - [OverLayBench: A Benchmark for Layout-to-Image Generation with Dense Overlaps](overlaybench_a_benchmark_for_layout-to-image_generation_with_dense_overlaps.md)
 - [InstanceAssemble: Layout-Aware Image Generation via Instance Assembling Attention](instanceassemble_layoutaware_image_generation_via_instance_a.md)
-- [DiffVsgg: Diffusion-Driven Online Video Scene Graph Generation](../../CVPR2025/object_detection/diffvsgg_diffusion-driven_online_video_scene_graph_generation.md)
+- [ROICtrl: Boosting Instance Control for Visual Generation](../../CVPR2025/object_detection/roictrl_boosting_instance_control_for_visual_generation.md)
 - [YOLO-Count: Differentiable Object Counting for Text-to-Image Generation](../../ICCV2025/object_detection/yolo-count_differentiable_object_counting_for_text-to-image_generation.md)
 - [Large-scale Pre-training for Grounded Video Caption Generation](../../ICCV2025/object_detection/large-scale_pre-training_for_grounded_video_caption_generation.md)
 

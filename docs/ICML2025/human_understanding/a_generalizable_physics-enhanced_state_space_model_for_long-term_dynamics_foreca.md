@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Generalizable Physics-Enhanced State Space Model for Long-Term Dynamics Forecasting in Complex Environments
 description: >-

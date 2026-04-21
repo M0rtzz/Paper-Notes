@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] To Think or Not To Think: A Study of Explicit Thinking in Rule-Based Visual Reinforcement Fine-Tuning
 description: >-

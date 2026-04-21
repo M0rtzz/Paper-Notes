@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Flickerformer: A Duet of Periodicity and Directionality for Burst Flicker Removal
 description: >-
@@ -169,8 +169,8 @@ Flickerformer在全部三个指标上均取得最优，PSNR超越第二名AST +0
 
 - [Robust Adverse Weather Removal via Spectral-based Spatial Grouping (SSGformer)](../../ICCV2025/image_restoration/robust_adverse_weather_removal_via_spectral-based_spatial_grouping.md)
 - [Mechanism of Task-oriented Information Removal in In-context Learning](../../ICLR2026/image_restoration/mechanism_of_task-oriented_information_removal_in_in-context_learning.md)
+- [QMambaBSR: Burst Image Super-Resolution with Query State Space Model](../../CVPR2025/image_restoration/qmambabsr_burst_image_super-resolution_with_query_state_space_model.md)
 - [Benchmarking Burst Super-Resolution for Polarization Images: Noise Dataset and Analysis](../../ICCV2025/image_restoration/benchmarking_burst_superresolution_for_polarization_images_n.md)
 - [OAPT: Offset-Aware Partition Transformer for Double JPEG Artifacts Removal](../../ECCV2024/image_restoration/oapt_offset-aware_partition_transformer_for_double_jpeg_artifacts_removal.md)
-- [Detail-Preserving Latent Diffusion for Stable Shadow Removal](../../CVPR2025/image_restoration/detail-preserving_latent_diffusion_for_stable_shadow_removal.md)
 
 <!-- RELATED:END -->

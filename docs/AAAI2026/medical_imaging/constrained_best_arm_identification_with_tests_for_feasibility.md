@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Constrained Best Arm Identification with Tests for Feasibility
 description: >-
@@ -151,8 +151,8 @@ F-first 在类型 a 更优（0.58x），P-first 在类型 b 更优（0.84x），
 
 - [MIRNet: Integrating Constrained Graph-Based Reasoning with Pre-training for Diagnostic Medical Imaging](mirnet_integrating_constrained_graph-based_reasoning_with_pre-training_for_diagn.md)
 - [DiA-gnostic VLVAE: Disentangled Alignment-Constrained Vision Language Variational AutoEncoder for Robust Radiology Reporting with Missing Modalities](dia-gnostic_vlvae_disentangled_alignment-constrained_vision_language_variational.md)
+- [Towards All-in-One Medical Image Re-Identification](../../CVPR2025/medical_imaging/towards_all-in-one_medical_image_re-identification.md)
 - [Scaling Tumor Segmentation: Best Lessons from Real and Synthetic Data](../../ICCV2025/medical_imaging/scaling_tumor_segmentation_best_lessons_from_real_and_synthetic_data.md)
 - [RedactX: An LLM-Powered Framework for Automatic Clinical Data De-Identification](../../ACL2025/medical_imaging/redactor_an_llm-powered_framework_for_automatic_clinical_data_de-identification.md)
-- [Ordinal Label-Distribution Learning with Constrained Asymmetric Priors for Imbalanced Retinal Grading](../../NeurIPS2025/medical_imaging/ordinal_label-distribution_learning_with_constrained_asymmetric_priors_for_imbal.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] You Share Beliefs, I Adapt: Progressive Heterogeneous Collaborative Perception
 description: >-
@@ -173,6 +173,6 @@ tags:
 - [CoLA: Collaborative Low-Rank Adaptation](../../ACL2025/others/cola_collaborative_low-rank_adaptation.md)
 - [Contextual Dynamic Pricing with Heterogeneous Buyers](../../NeurIPS2025/others/contextual_dynamic_pricing_with_heterogeneous_buyers.md)
 - [ResNets Are Deeper Than You Think](../../NeurIPS2025/others/resnets_are_deeper_than_you_think.md)
-- [From Easy to Hard: Progressive Active Learning Framework for Infrared Small Target Detection with Single Point Supervision](from_easy_to_hard_progressive_active_learning_framework_for_infrared_small_targe.md)
+- [Regor: Progressive Correspondence Regenerator for Robust 3D Registration](../../CVPR2025/others/progressive_correspondence_regenerator_for_robust_3d_registration.md)
 
 <!-- RELATED:END -->

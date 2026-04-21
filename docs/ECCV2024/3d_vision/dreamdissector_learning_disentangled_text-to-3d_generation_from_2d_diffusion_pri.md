@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DreamDissector: Learning Disentangled Text-to-3D Generation from 2D Diffusion Priors
 description: >-

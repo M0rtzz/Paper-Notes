@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking the Simulation vs. Rendering Dichotomy: No Free Lunch in Spatial World Modelling
 description: >-
@@ -129,7 +129,7 @@ tags:
 - [MineAnyBuild: Benchmarking Spatial Planning for Open-world AI Agents](mineanybuild_benchmarking_spatial_planning_for_openworld_ai.md)
 - [LabUtopia: High-Fidelity Simulation and Hierarchical Benchmark for Scientific Embodied Agents](labutopia_high-fidelity_simulation_and_hierarchical_benchmark_for_scientific_emb.md)
 - [Learning Spatial-Aware Manipulation Ordering](learning_spatial-aware_manipulation_ordering.md)
-- [LLM World Models Are Mental: Output Layer Evidence of Brittle World Model Use in LLM Mechanical Reasoning](llm_world_models_are_mental_output_layer_evidence_of_brittle_world_model_use_in_.md)
 - [Building Spatial World Models from Sparse Transitional Episodic Memories](../../ICLR2026/robotics/building_spatial_world_models_from_sparse_transitional_episodic_memories.md)
+- [LLM World Models Are Mental: Output Layer Evidence of Brittle World Model Use in LLM Mechanical Reasoning](llm_world_models_are_mental_output_layer_evidence_of_brittle_world_model_use_in_.md)
 
 <!-- RELATED:END -->

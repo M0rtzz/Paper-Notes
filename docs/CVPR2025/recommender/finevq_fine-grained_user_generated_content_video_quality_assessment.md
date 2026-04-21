@@ -1,14 +1,14 @@
-﻿---
+---
 title: >-
   [论文解读] FineVQ: Fine-Grained User Generated Content Video Quality Assessment
 description: >-
-  [CVPR 2025][视频质量评估] 提出细粒度UGC视频质量评估方法，覆盖多个质量维度而非仅给出整体评分
+  [CVPR 2025][UGC视频] 提出 FineVQ 细粒度 UGC 视频质量评估方法，将质量评估从单一整体评分扩展到多个感知质量维度（清晰度、稳定性、色彩、构图等），为视频推荐和优化提供更精细的质量信号。
 tags:
   - CVPR 2025
-  - 视频质量评估
   - UGC视频
-  - 细粒度评估
+  - 细粒度VQA
   - 多维度质量
+  - 视频推荐
 ---
 
 # FineVQ: Fine-Grained User Generated Content Video Quality Assessment

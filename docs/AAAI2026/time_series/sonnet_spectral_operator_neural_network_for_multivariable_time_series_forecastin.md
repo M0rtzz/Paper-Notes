@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sonnet: Spectral Operator Neural Network for Multivariable Time Series Forecasting
 description: >-

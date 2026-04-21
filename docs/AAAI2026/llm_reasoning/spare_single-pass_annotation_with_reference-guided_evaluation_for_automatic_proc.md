@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SPARE: Single-Pass Annotation with Reference-Guided Evaluation for Automatic Process Supervision
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VOccl3D: A Video Benchmark Dataset for 3D Human Pose and Shape Estimation under Real Occlusions
 description: >-
@@ -153,10 +153,10 @@ VOccl3D-B-CLIFF 在 Hard-Occlusion MPJPE 上比 BEDLAM-CLIFF 降低约 **18.5mm*
 
 ## 相关论文
 
+- [ProbPose: A Probabilistic Approach to 2D Human Pose Estimation](../../CVPR2025/object_detection/probpose_a_probabilistic_approach_to_2d_human_pose_estimation.md)
 - [PandaPose: 3D Human Pose Lifting from a Single Image via Propagating 2D Pose Prior to 3D Anchor Space](../../NeurIPS2025/object_detection/pandapose_3d_human_pose_lifting_from_a_single_image_via_propagating_2d_pose_prio.md)
 - [Robust Long-term Test-Time Adaptation for 3D Human Pose Estimation through Motion Discretization](../../AAAI2026/object_detection/robust_long-term_test-time_adaptation_for_3d_human_pose_estimation_through_motio.md)
-- [Any6D: Model-free 6D Pose Estimation of Novel Objects](../../CVPR2025/object_detection/any6d_model-free_6d_pose_estimation_of_novel_objects.md)
 - [3D-MOOD: Lifting 2D to 3D for Monocular Open-Set Object Detection](3dmood_lifting_2d_to_3d_for_monocular_openset_object_detecti.md)
-- [YOLOE: Real-Time Seeing Anything](yoloe_realtime_seeing_anything.md)
+- [Any6D: Model-free 6D Pose Estimation of Novel Objects](../../CVPR2025/object_detection/any6d_model-free_6d_pose_estimation_of_novel_objects.md)
 
 <!-- RELATED:END -->

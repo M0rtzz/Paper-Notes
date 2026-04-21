@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VFScale: Intrinsic Reasoning through Verifier-Free Test-time Scalable Diffusion Model
 description: >-

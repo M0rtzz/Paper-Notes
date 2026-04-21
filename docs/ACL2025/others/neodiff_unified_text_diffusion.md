@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unifying Continuous and Discrete Text Diffusion with Non-simultaneous Diffusion Processes
 description: >-

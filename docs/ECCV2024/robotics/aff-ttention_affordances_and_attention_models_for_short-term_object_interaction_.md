@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AFF-ttention! Affordances and Attention models for Short-Term Object Interaction Anticipation
 description: >-
@@ -131,7 +131,7 @@ tags:
 
 ## 相关论文
 
-- [DISCO: Embodied Navigation and Interaction via Differentiable Scene Semantics and Dual-Level Control](disco_embodied_navigation_and_interaction_via_differentiable_scene_semantics_and.md)
+- [DISCO: Embodied Navigation and Interaction via Differentiable Scene Semantics and Dual-Level Control](disco_embodied_navigation_and_interaction.md)
 - [Attention as Binding: A Vector-Symbolic Perspective on Transformer Reasoning](../../AAAI2026/robotics/attention_as_binding_a_vector-symbolic_perspective_on_transformer_reasoning.md)
 - [Constructive Distortion: Improving MLLMs with Attention-Guided Image Warping](../../ICLR2026/robotics/constructive_distortion_improving_mllms_with_attention-guided_image_warping.md)
 - [Influence Malleability in Linearized Attention: Dual Implications of Non-Convergent NTK Dynamics](../../CVPR2025/robotics/influence_malleability_in_linearized_attention_dual_implications_of_non-converge.md)

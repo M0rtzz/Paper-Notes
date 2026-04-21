@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CPRet: A Dataset, Benchmark, and Model for Retrieval in Competitive Programming
 description: >-
@@ -165,8 +165,8 @@ $$\mathcal{L}_{\text{triplet}} = \max(0, \mathrm{sim}(x, x^-) - \mathrm{sim}(x, 
 
 - [Differentially Private High-dimensional Variable Selection via Integer Programming](differentially_private_high-dimensional_variable_selection_via_integer_programmi.md)
 - [ORBIT -- Open Recommendation Benchmark for Reproducible Research with Hidden Tests](orbit_--_open_recommendation_benchmark_for_reproducible_research_with_hidden_tes.md)
+- [Impact of Dataset Properties on Membership Inference Vulnerability of Deep Transfer Learning](impact_of_dataset_properties_on_membership_inference.md)
 - [Differential Privacy for Euclidean Jordan Algebra with Applications to Private Symmetric Cone Programming](differential_privacy_for_euclidean_jordan_algebra_with_applications_to_private_s.md)
-- [Impact of Dataset Properties on Membership Inference Vulnerability of Deep Transfer Learning](impact_of_dataset_properties_on_membership_inference_vulnerability_of_deep_trans.md)
 - [ForensicHub: A Unified Benchmark & Codebase for All-Domain Fake Image Detection and Localization](forensichub_a_unified_benchmark_codebase_for_all-domain_fake_image_detection_and.md)
 
 <!-- RELATED:END -->

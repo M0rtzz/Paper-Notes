@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ManiLong-Shot: Interaction-Aware One-Shot Imitation Learning for Long-Horizon Manipulation
 description: >-

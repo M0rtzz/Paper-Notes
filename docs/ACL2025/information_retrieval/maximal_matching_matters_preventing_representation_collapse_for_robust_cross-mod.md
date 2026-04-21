@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Maximal Matching Matters: Preventing Representation Collapse for Robust Cross-Modal Retrieval
 description: >-

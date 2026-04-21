@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Orochi: Versatile Biomedical Image Processor
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HiVid: LLM-Guided Video Saliency For Content-Aware VOD And Live Streaming
 description: >-

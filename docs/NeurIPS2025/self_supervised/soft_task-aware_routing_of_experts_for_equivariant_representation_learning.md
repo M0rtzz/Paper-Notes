@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Soft Task-Aware Routing of Experts for Equivariant Representation Learning
 description: >-

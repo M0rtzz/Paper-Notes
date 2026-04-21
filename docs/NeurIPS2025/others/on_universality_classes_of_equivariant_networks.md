@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On Universality Classes of Equivariant Networks
 description: >-

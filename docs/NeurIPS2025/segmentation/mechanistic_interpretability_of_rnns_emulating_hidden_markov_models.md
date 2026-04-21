@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mechanistic Interpretability of RNNs Emulating Hidden Markov Models
 description: >-
@@ -139,9 +139,9 @@ tags:
 ## 相关论文
 
 - [Attention (as Discrete-Time Markov) Chains](attention_as_discrete-time_markov_chains.md)
+- [Interpreting ResNet-based CLIP via Neuron-Attention Decomposition](interpreting_resnet-based_clip_via_neuron-attention_decomposition.md)
 - [SANSA: Unleashing the Hidden Semantics in SAM2 for Few-Shot Segmentation](sansa_unleashing_the_hidden_semantics_in_sam2_for_few-shot_segmentation.md)
 - [RoMA: Scaling up Mamba-based Foundation Models for Remote Sensing](roma_scaling_up_mamba-based_foundation_models_for_remote_sensing.md)
-- [PARTONOMY: Large Multimodal Models with Part-Level Visual Understanding](partonomy_large_multimodal_models_with_part-level_visual_understanding.md)
 - [Mars-Bench: A Benchmark for Evaluating Foundation Models for Mars Science Tasks](mars-bench_a_benchmark_for_evaluating_foundation_models_for_mars_science_tasks.md)
 
 <!-- RELATED:END -->

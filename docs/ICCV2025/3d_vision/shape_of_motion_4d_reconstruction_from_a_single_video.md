@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Shape of Motion: 4D Reconstruction from a Single Video
 description: >-

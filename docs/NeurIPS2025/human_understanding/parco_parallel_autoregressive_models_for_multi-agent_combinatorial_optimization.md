@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PARCO: Parallel AutoRegressive Models for Multi-Agent Combinatorial Optimization
 description: >-
@@ -129,8 +129,8 @@ $$\nabla_\theta \mathcal{L} \approx \frac{1}{B \cdot S} \sum_{i=1}^{B} \sum_{j=1
 
 - [Learning to Watermark: A Selective Watermarking Framework for Large Language Models via Multi-Objective Optimization](learning_to_watermark_a_selective_watermarking_framework_for_large_language_mode.md)
 - [Evolutionary Learning in Spatial Agent-Based Models for Physical Climate Risk Assessment](evolutionary_learning_in_spatial_agent-based_models_for_physical_climate_risk_as.md)
-- [What Limits Virtual Agent Application? OmniBench: A Scalable Multi-Dimensional Benchmark for Essential Virtual Agent Capabilities](../../ICML2025/human_understanding/what_limits_virtual_agent_application_omnibench_a_scalable_multi-dimensional_ben.md)
 - [Collaborative Tree Search for Enhancing Embodied Multi-Agent Collaboration](../../CVPR2025/human_understanding/collaborative_tree_search_for_enhancing_embodied_multi-agent_collaboration.md)
+- [What Limits Virtual Agent Application? OmniBench: A Scalable Multi-Dimensional Benchmark for Essential Virtual Agent Capabilities](../../ICML2025/human_understanding/what_limits_virtual_agent_application_omnibench_a_scalable_multi-dimensional_ben.md)
 - [ToProVAR: Efficient Visual Autoregressive Modeling via Tri-Dimensional Entropy-Aware Semantic Analysis and Sparsity Optimization](../../ICLR2026/human_understanding/toprovar_efficient_visual_autoregressive_modeling_via_tri-dimensional_entropy-aw.md)
 
 <!-- RELATED:END -->

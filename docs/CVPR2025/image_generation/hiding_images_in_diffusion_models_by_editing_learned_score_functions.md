@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hiding Images in Diffusion Models by Editing Learned Score Functions
 description: >-
@@ -148,10 +148,10 @@ tags:
 
 ## 相关论文
 
+- [TinyFusion: Diffusion Transformers Learned Shallow](tinyfusion_diffusion_transformers_learned_shallow.md)
 - [RestoreGrad: Signal Restoration Using Conditional Denoising Diffusion Models with Jointly Learned Prior](../../ICML2025/image_generation/restoregrad_signal_restoration_using_conditional_denoising_diffusion_models_with.md)
 - [Energy Loss Functions for Physical Systems](../../NeurIPS2025/image_generation/energy_loss_functions_for_physical_systems.md)
-- [Taming Score-Based Denoisers in ADMM: A Convergent Plug-and-Play Framework](taming_score-based_denoisers_in_admm_a_convergent_plug-and-play_framework.md)
-- [Group Editing: Edit Multiple Images in One Go](../../CVPR2026/image_generation/group_editing_edit_multiple_images_in_one_go.md)
-- [GlyphMastero: A Glyph Encoder for High-Fidelity Scene Text Editing](glyphmastero_a_glyph_encoder_for_high-fidelity_scene_text_editing.md)
+- [Traversing Distortion-Perception Tradeoff Using a Single Score-Based Generative Model](traversing_distortion-perception_tradeoff_using_a_single_score-based_generative_.md)
+- [OpenSDI: Spotting Diffusion-Generated Images in the Open World](opensdi_spotting_diffusion-generated_images_in_the_open_world.md)
 
 <!-- RELATED:END -->

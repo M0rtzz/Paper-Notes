@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PetFace: A Large-Scale Dataset and Benchmark for Animal Identification
 description: >-

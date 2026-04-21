@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LAOF: Robust Latent Action Learning with Optical Flow Constraints
 description: >-

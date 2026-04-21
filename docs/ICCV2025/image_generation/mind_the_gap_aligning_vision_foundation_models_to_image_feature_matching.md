@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mind the Gap: Aligning Vision Foundation Models to Image Feature Matching
 description: >-

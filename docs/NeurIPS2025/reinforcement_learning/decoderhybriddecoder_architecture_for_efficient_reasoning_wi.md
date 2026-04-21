@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Decoder-Hybrid-Decoder Architecture for Efficient Reasoning with Long Generation
 description: >-

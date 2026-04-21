@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] "Are We Done Yet?": A Vision-Based Judge for Autonomous Task Completion of Computer Use Agents
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond the Mean: Modelling Annotation Distributions in Continuous Affect Prediction
 description: >-

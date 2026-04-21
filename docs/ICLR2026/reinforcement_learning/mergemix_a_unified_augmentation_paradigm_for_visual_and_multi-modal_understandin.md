@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MergeMix: A Unified Augmentation Paradigm for Visual and Multi-Modal Understanding
 description: >-

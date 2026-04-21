@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Inference of Vision Instruction-Following Models with Elastic Cache
 description: >-

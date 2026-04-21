@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MMLU-CF: A Contamination-free Multi-task Language Understanding Benchmark
 description: >-

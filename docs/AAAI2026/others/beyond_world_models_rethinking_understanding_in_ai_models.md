@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond World Models: Rethinking Understanding in AI Models
 description: >-

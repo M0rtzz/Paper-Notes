@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] G2fR: Frequency Regularization in Grid-Based Feature Encoding Neural Radiance Fields
 description: >-

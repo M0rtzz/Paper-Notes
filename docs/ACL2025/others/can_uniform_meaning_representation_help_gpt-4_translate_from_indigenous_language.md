@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Can Uniform Meaning Representation Help GPT-4 Translate from Indigenous Languages?
 description: >-

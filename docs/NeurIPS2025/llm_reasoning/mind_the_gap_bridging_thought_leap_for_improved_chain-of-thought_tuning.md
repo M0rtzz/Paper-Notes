@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mind the Gap: Bridging Thought Leap for Improved Chain-of-Thought Tuning
 description: >-

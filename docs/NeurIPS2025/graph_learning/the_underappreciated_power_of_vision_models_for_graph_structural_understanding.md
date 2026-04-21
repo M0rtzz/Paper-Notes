@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Underappreciated Power of Vision Models for Graph Structural Understanding
 description: >-

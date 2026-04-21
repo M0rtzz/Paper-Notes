@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ONEBench to Test Them All: Sample-Level Benchmarking Over Open-Ended Capabilities
 description: >-

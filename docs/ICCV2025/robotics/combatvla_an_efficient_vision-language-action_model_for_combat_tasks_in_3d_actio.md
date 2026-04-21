@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CombatVLA: An Efficient Vision-Language-Action Model for Combat Tasks in 3D Action Role-Playing Games
 description: >-

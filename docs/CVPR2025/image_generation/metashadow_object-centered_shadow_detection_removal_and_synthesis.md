@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MetaShadow: Object-Centered Shadow Detection, Removal, and Synthesis
 description: >-

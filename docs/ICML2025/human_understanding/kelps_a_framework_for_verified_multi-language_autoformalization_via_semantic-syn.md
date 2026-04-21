@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] KELPS: A Framework for Verified Multi-Language Autoformalization via Semantic-Syntactic Alignment
 description: >-

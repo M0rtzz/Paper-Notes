@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] KBQA-o1: Agentic Knowledge Base Question Answering with Monte Carlo Tree Search
 description: >-

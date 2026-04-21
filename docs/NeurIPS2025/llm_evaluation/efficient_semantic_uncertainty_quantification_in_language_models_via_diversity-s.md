@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Semantic Uncertainty Quantification in Language Models via Diversity-Steered Sampling
 description: >-
@@ -137,7 +137,7 @@ NLI 微调使用标准交叉熵损失，仅更新 [TRUNC]/[MASK] 嵌入和分类
 - [Asymmetric Duos: Sidekicks Improve Uncertainty](asymmetric_duos_sidekicks_improve_uncertainty.md)
 - [AdaSTaR: Adaptive Data Sampling for Training Self-Taught Reasoners](adastar_adaptive_data_sampling_for_training_self-taught_reasoners.md)
 - [Can Large Language Models Master Complex Card Games?](can_large_language_models_master_complex_card_games.md)
-- [Conformal Prediction in The Loop: A Feedback-Based Uncertainty Model for Trajectory Optimization](conformal_prediction_in_the_loop_a_feedback-based_uncertainty_model_for_trajecto.md)
+- [ConfTuner: Training Large Language Models to Express Their Confidence Verbally](conftuner_training_large_language_models_to_express_their_confidence_verbally.md)
 - [LTD-Bench: Evaluating Large Language Models by Letting Them Draw](ltd-bench_evaluating_large_language_models_by_letting_them_draw.md)
 
 <!-- RELATED:END -->

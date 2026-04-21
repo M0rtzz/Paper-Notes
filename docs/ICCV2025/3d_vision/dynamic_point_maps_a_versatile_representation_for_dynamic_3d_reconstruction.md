@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamic Point Maps: A Versatile Representation for Dynamic 3D Reconstruction
 description: >-

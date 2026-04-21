@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology
 description: >-

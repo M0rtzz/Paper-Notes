@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Predictive Regularization Against Visual Representation Degradation in Multimodal Large Language Models
 description: >-

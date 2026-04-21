@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gumiho: A Hybrid Architecture to Prioritize Early Tokens in Speculative Decoding
 description: >-

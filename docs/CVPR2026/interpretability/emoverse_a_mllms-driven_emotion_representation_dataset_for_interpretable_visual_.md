@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EmoVerse: A MLLMs-Driven Emotion Representation Dataset for Interpretable Visual Emotion Analysis
 description: >-

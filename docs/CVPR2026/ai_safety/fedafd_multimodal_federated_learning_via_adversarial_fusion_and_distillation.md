@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FedAFD: Multimodal Federated Learning via Adversarial Fusion and Distillation
 description: >-

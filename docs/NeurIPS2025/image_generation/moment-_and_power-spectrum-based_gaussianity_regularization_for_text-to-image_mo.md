@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Moment- and Power-Spectrum-Based Gaussianity Regularization for Text-to-Image Models
 description: >-
@@ -162,10 +162,10 @@ $$\mathcal{L}_{\mathcal{N}(0,I)} = \sum_{n \in \mathcal{K}} \mathcal{L}_n + \lam
 
 ## 相关论文
 
+- [Why Diffusion Models Don't Memorize: The Role of Implicit Regularization](why_diffusion_models_dont_memorize_the_role_of_implicit_regularization.md)
 - [TextDiffuser-2: Unleashing the Power of Language Models for Text Rendering](../../ECCV2024/image_generation/textdiffuser-2_unleashing_the_power_of_language_models_for_text_rendering.md)
 - [Continual Unlearning for Text-to-Image Diffusion Models: A Regularization Perspective](../../ICLR2026/image_generation/continual_unlearning_for_text-to-image_diffusion_models_a_regularization_perspec.md)
 - [Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
 - [Fast Data Attribution for Text-to-Image Models](fast_data_attribution_for_text-to-image_models.md)
-- [Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models](training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)
 
 <!-- RELATED:END -->

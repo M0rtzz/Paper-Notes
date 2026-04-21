@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Skywork-Reward-V2: Scaling Preference Data Curation via Human-AI Synergy
 description: >-

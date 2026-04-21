@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] State-Covering Trajectory Stitching for Diffusion Planners
 description: >-
@@ -148,8 +148,8 @@ SCoTS 采用三阶段流程：(1) 学习时间距离保持的潜表示；(2) 基
 
 - [Hierarchical Koopman Diffusion: Fast Generation with Interpretable Diffusion Trajectory](hierarchical_koopman_diffusion_fast_generation_with_interpretable_diffusion_traj.md)
 - [Diffuse Everything: Multimodal Diffusion Models on Arbitrary State Spaces](../../ICML2025/image_generation/diffuse_everything_multimodal_diffusion_models_on_arbitrary_state_spaces.md)
-- [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/image_generation/parameter-efficient_fine-tuning_of_state_space_models.md)
 - [Long-Context State-Space Video World Models](../../ICCV2025/image_generation/long-context_state-space_video_world_models.md)
+- [Multidimensional Adaptive Coefficient for Inference Trajectory Optimization in Flow and Diffusion](../../ICML2025/image_generation/multidimensional_adaptive_coefficient_for_inference_trajectory_optimization_in_f.md)
 - [Learning Few-Step Diffusion Models by Trajectory Distribution Matching](../../ICCV2025/image_generation/learning_few-step_diffusion_models_by_trajectory_distribution_matching.md)
 
 <!-- RELATED:END -->

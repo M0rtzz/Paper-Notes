@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PARM: Multi-Objective Test-Time Alignment via Preference-Aware Autoregressive Reward Model
 description: >-

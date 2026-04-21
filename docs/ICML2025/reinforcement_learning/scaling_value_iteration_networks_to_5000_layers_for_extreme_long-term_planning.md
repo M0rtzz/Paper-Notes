@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling Value Iteration Networks to 5000 Layers for Extreme Long-Term Planning
 description: >-

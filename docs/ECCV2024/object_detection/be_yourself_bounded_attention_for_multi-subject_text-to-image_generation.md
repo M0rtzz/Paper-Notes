@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation
 description: >-
@@ -148,10 +148,10 @@ $$\mathcal{L}_i = 1 - \frac{\sum_{\mathbf{x} \in b_i, \mathbf{c} \in C_i} \hat{\
 
 ## 相关论文
 
-- [InstanceAssemble: Layout-Aware Image Generation via Instance Assembling Attention](../../NeurIPS2025/object_detection/instanceassemble_layoutaware_image_generation_via_instance_a.md)
-- [SAGA: Learning Signal-Aligned Distributions for Improved Text-to-Image Generation](../../AAAI2026/object_detection/saga_learning_signal-aligned_distributions_for_improved_text-to-image_generation.md)
 - [Spherical Linear Interpolation and Text-Anchoring for Zero-shot Composed Image Retrieval](spherical_linear_interpolation_and_text-anchoring_for_zero-shot_composed_image_r.md)
-- [Diverse Text-to-Image Generation via Contrastive Noise Optimization](../../ICLR2026/object_detection/diverse_text-to-image_generation_via_contrastive_noise_optimization.md)
-- [MCCD: Multi-Agent Collaboration-based Compositional Diffusion for Complex Text-to-Image Generation](../../CVPR2025/object_detection/mccd_multi-agent_collaboration-based_compositional_diffusion_for_complex_text-to.md)
+- [GRA: Detecting Oriented Objects Through Group-Wise Rotating and Attention](gra_detecting_oriented_objects_through_group-wise_rotating_and_attention.md)
+- [AugDETR: Improving Multi-scale Learning for Detection Transformer](augdetr_improving_multi-scale_learning_for_detection_transformer.md)
+- [WeCromCL: Weakly Supervised Cross-Modality Contrastive Learning for Transcription-only Supervised Text Spotting](wecromcl_weakly_supervised_cross-modality_contrastive_learning_for_transcription.md)
+- [Adaptive Multi-task Learning for Few-Shot Object Detection](adaptive_multi-task_learning_for_few-shot_object_detection.md)
 
 <!-- RELATED:END -->

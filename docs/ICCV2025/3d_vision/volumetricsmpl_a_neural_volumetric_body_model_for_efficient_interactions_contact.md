@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VolumetricSMPL: A Neural Volumetric Body Model for Efficient Interactions, Contacts, and Collisions
 description: >-

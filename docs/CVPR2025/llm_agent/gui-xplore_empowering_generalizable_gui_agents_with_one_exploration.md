@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GUI-Xplore: Empowering Generalizable GUI Agents with One Exploration
 description: >-

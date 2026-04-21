@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] R²ec: Towards Large Recommender Models with Reasoning
 description: >-

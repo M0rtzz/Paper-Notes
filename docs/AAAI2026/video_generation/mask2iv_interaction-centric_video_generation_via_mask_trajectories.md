@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] Mask2IV: Interaction-Centric Video Generation via Mask Trajectories
 description: >-
-  [AAAI 2026][视频理解][交互视频生成] 提出 Mask2IV，一个两阶段解耦框架——先预测交互者和物体的 mask 运动轨迹，再基于轨迹生成视频——实现了无需密集 mask 标注的、以交互为中心的可控视频生成，支持人-物交互和机器人操作两个场景。
+  [AAAI 2026][交互视频生成] 提出 Mask2IV，一个两阶段解耦框架——先预测交互者和物体的 mask 运动轨迹，再基于轨迹生成视频——实现了无需密集 mask 标注的、以交互为中心的可控视频生成，支持人-物交互和机器人操作两个场景。
 tags:
   - AAAI 2026
-  - 视频理解
   - 交互视频生成
   - mask轨迹
   - 人物交互
@@ -203,10 +202,10 @@ $$\mathcal{L} = \mathbb{E}_{z,S,\epsilon,t}[\|w \odot (\epsilon - \epsilon_\thet
 
 ## 相关论文
 
-- [U-Mind: A Unified Framework for Real-Time Multimodal Interaction with Audiovisual Generation](../../CVPR2026/video_generation/u-mind_a_unified_framework_for_real-time_multimodal_interaction_with_audiovisual.md)
-- [Motion Prompting: Controlling Video Generation with Motion Trajectories](../../CVPR2025/video_generation/motion_prompting_controlling_video_generation_with_motion_trajectories.md)
-- [DreamRelation: Relation-Centric Video Customization](../../ICCV2025/video_generation/dreamrelation_relation-centric_video_customization.md)
+- [Through-The-Mask: Mask-based Motion Trajectories for Image-to-Video Generation](../../CVPR2025/video_generation/through-the-mask_mask-based_motion_trajectories_for_image-to-video_generation.md)
 - [Chain of Event-Centric Causal Thought for Physically Plausible Video Generation](../../CVPR2026/video_generation/chain_of_event-centric_causal_thought_for_physically_plausible_video_generation.md)
+- [U-Mind: A Unified Framework for Real-Time Multimodal Interaction with Audiovisual Generation](../../CVPR2026/video_generation/u-mind_a_unified_framework_for_real-time_multimodal_interaction_with_audiovisual.md)
 - [HOIGen-1M: A Large-Scale Dataset for Human-Object Interaction Video Generation](../../CVPR2025/video_generation/hoigen-1m_a_large-scale_dataset_for_human-object_interaction_video_generation.md)
+- [OmniVDiff: Omni Controllable Video Diffusion for Generation and Understanding](omnivdiff_omni_controllable_video_diffusion_for_generation_and_understanding.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3D-ANC: Adaptive Neural Collapse for Robust 3D Point Cloud Recognition
 description: >-
@@ -106,7 +106,7 @@ tags:
 - [DAPointMamba: Domain Adaptive Point Mamba for Point Cloud Completion](dapointmamba_domain_adaptive_point_mamba_for_point_cloud_completion.md)
 - [Point Cloud Quantization through Multimodal Prompting for 3D Understanding](point_cloud_quantization_through_multimodal_prompting_for_3d_understanding.md)
 - [Multi-Modal Assistance for Unsupervised Domain Adaptation on Point Cloud 3D Object Detection](multi-modal_assistance_for_unsupervised_domain_adaptation_on_point_cloud_3d_obje.md)
+- [Toward Robust Neural Reconstruction from Sparse Point Sets](../../CVPR2025/3d_vision/toward_robust_neural_reconstruction_from_sparse_point_sets.md)
 - [RPBG: Towards Robust Neural Point-based Graphics in the Wild](../../ECCV2024/3d_vision/rpbg_towards_robust_neural_point-based_graphics_in_the_wild.md)
-- [MICAS: Multi-grained In-Context Adaptive Sampling for 3D Point Cloud Processing](../../CVPR2025/3d_vision/micas_multi-grained_in-context_adaptive_sampling_for_3d_point_cloud_processing.md)
 
 <!-- RELATED:END -->

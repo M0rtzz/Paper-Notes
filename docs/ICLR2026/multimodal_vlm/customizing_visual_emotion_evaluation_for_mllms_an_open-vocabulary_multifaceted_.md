@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Customizing Visual Emotion Evaluation for MLLMs: An Open-vocabulary, Multifaceted, and Scalable Approach
 description: >-

@@ -2,14 +2,16 @@
 title: >-
   [论文解读] MoST: Efficient Monarch Sparse Tuning for 3D Representation Learning
 description: >-
-  [CVPR 2025][3D PEFT] 提出首个基于重参数化的3D参数高效微调方法MoST，设计Point Monarch结构化矩阵捕获点云局部几何特征，无推理开销且泛化多种backbone。
+  [CVPR 2025][3D视觉][PEFT] 提出首个基于重参数化的3D PEFT方法MoST，设计Point Monarch结构化矩阵（在Monarch基础上加入KNN局部特征平滑），仅调3.6%参数在多个3D benchmark上超越全量微调。
 tags:
   - CVPR 2025
-  - 3D point cloud
+  - 3D视觉
   - PEFT
-  - structured matrix
-  - Point Monarch
-  - 参数高效微调
+  - 点云
+  - Monarch matrix
+  - reparameterization
+  - 3D representation learning
+  - K-Rectify
 ---
 
 # MoST: Efficient Monarch Sparse Tuning for 3D Representation Learning
@@ -135,10 +137,10 @@ K-Rectify通过三步实现无参数的局部信息交换：
 
 ## 相关论文
 
-- [On Geometry-Enhanced Parameter-Efficient Fine-Tuning for 3D Scene Segmentation](../../NeurIPS2025/3d_vision/on_geometry-enhanced_parameter-efficient_fine-tuning_for_3d_scene_segmentation.md)
-- [Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection](learning_class_prototypes_for_unified_sparse-supervised_3d_object_detection.md)
-- [SpatialSplat: Efficient Semantic 3D from Sparse Unposed Images](../../ICCV2025/3d_vision/spatialsplat_efficient_semantic_3d_from_sparse_unposed_images.md)
-- [FSFM: A Generalizable Face Security Foundation Model via Self-Supervised Facial Representation Learning](fsfm_a_generalizable_face_security_foundation_model_via_self-supervised_facial_r.md)
 - [Point-SRA: Self-Representation Alignment for 3D Representation Learning](../../AAAI2026/3d_vision/point-sra_self-representation_alignment_for_3d_representation_learning.md)
+- [Text-Guided Sparse Voxel Pruning for Efficient 3D Visual Grounding](text-guided_sparse_voxel_pruning_for_efficient_3d_visual_grounding.md)
+- [Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection](learning_class_prototypes_for_unified_sparse-supervised_3d_object_detection.md)
+- [On Geometry-Enhanced Parameter-Efficient Fine-Tuning for 3D Scene Segmentation](../../NeurIPS2025/3d_vision/on_geometry-enhanced_parameter-efficient_fine-tuning_for_3d_scene_segmentation.md)
+- [SpatialSplat: Efficient Semantic 3D from Sparse Unposed Images](../../ICCV2025/3d_vision/spatialsplat_efficient_semantic_3d_from_sparse_unposed_images.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Phase Distortion with Selective State Space Models for Video Turbulence Mitigation
 description: >-
@@ -146,6 +146,6 @@ tags:
 - [A Generalizable Physics-Enhanced State Space Model for Long-Term Dynamics Forecasting in Complex Environments](../../ICML2025/human_understanding/a_generalizable_physics-enhanced_state_space_model_for_long-term_dynamics_foreca.md)
 - [Homogeneous Dynamics Space for Heterogeneous Humans](homogeneous_dynamics_space_for_heterogeneous_humans.md)
 - [Learning to Watermark: A Selective Watermarking Framework for Large Language Models via Multi-Objective Optimization](../../NeurIPS2025/human_understanding/learning_to_watermark_a_selective_watermarking_framework_for_large_language_mode.md)
-- [FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video](fate_full-head_gaussian_avatar_with_textural_editing_from_monocular_video.md)
+- [Pose Priors from Language Models](pose_priors_from_language_models.md)
 
 <!-- RELATED:END -->

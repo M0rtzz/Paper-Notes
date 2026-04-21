@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When Eyes and Ears Disagree: Can MLLMs Discern Audio-Visual Confusion?
 description: >-
@@ -217,6 +217,6 @@ $$\mathcal{L}_{OP} = \underbrace{-\frac{1}{T}\sum_{t=1}^{T} \log \pi_\theta(o_t 
 - [When Can Model-Free Reinforcement Learning be Enough for Thinking?](../../NeurIPS2025/reinforcement_learning/when_can_model-free_reinforcement_learning_be_enough_for_thinking.md)
 - [Linking Perception, Confidence and Accuracy in MLLMs](../../CVPR2026/reinforcement_learning/linking_perception_confidence_and_accuracy_in_mllms.md)
 - [Start Small, Think Big: Curriculum-based Relative Policy Optimization for Visual Grounding](start_small_think_big_curriculum-based_relative_policy_optimization_for_visual_g.md)
-- [ReAG: Reasoning-Augmented Generation for Knowledge-based Visual Question Answering](../../CVPR2026/reinforcement_learning/reag_reasoning-augmented_generation_for_knowledge-based_visual_question_answerin.md)
+- [Seeing is Improving: Visual Feedback for Iterative Text Layout Refinement](../../CVPR2026/reinforcement_learning/seeing_is_improving_visual_feedback_for_iterative_text_layout_refinement.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unpacking Human Preference for LLMs: Demographically Aware Evaluation with the HUMAINE Framework
 description: >-
@@ -160,10 +160,10 @@ HUMAINE 基于心理测量学原理，包含四个层次：
 
 ## 相关论文
 
+- [RankLLM: Weighted Ranking of LLMs by Quantifying Question Difficulty](rankllm_weighted_ranking_of_llms_by_quantifying_question_difficulty.md)
 - [Talk, Evaluate, Diagnose: User-aware Agent Evaluation with Automated Error Analysis](talk_evaluate_diagnose_user-aware_agent_evaluation_with_automated_error_analysis.md)
 - [Subliminal Signals in Preference Labels](subliminal_signals_in_preference_labels.md)
-- [GranAlign: Granularity-Aware Alignment Framework for Zero-Shot Video Moment Retrieval](../../AAAI2026/llm_evaluation/granalign_granularity-aware_alignment_framework_for_zero-shot_video_moment_retri.md)
-- [ChatBench: From Static Benchmarks to Human-AI Evaluation](../../ACL2025/llm_evaluation/chatbench_from_static_benchmarks_to_human-ai_evaluation.md)
-- [Preference Leakage: A Contamination Problem in LLM-as-a-judge](preference_leakage_a_contamination_problem_in_llm-as-a-judge.md)
+- [SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home Agents](simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_agents.md)
+- [Benchmarking Overton Pluralism in LLMs](benchmarking_overton_pluralism_in_llms.md)
 
 <!-- RELATED:END -->

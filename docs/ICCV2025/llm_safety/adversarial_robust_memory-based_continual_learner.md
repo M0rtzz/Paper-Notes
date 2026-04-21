@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adversarial Robust Memory-Based Continual Learner
 description: >-
@@ -163,10 +163,10 @@ Split-CIFAR10 数据集，Buffer=200，ER 为基础框架的系统性分析：
 
 ## 相关论文
 
-- [Understanding Sensitivity of Differential Attention through the Lens of Adversarial Robustness](../../ICLR2026/llm_safety/understanding_sensitivity_of_differential_attention_through_the_lens_of_adversar.md)
 - [Ewe: Improving Factuality with Explicit Working Memory](../../ACL2025/llm_safety/improving_factuality_with_explicit_working_memory.md)
 - [Towards Context-Robust LLMs: A Gated Representation Fine-tuning Approach](../../ACL2025/llm_safety/towards_context-robust_llms_a_gated_representation_fine-tuning_approach.md)
 - [Finding Structure in Continual Learning](../../NeurIPS2025/llm_safety/finding_structure_in_continual_learning.md)
+- [Understanding Sensitivity of Differential Attention through the Lens of Adversarial Robustness](../../ICLR2026/llm_safety/understanding_sensitivity_of_differential_attention_through_the_lens_of_adversar.md)
 - [Order-Robust Class Incremental Learning: Graph-Driven Dynamic Similarity Grouping](../../CVPR2025/llm_safety/order-robust_class_incremental_learning_graph-driven_dynamic_similarity_grouping.md)
 
 <!-- RELATED:END -->

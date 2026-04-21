@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SortScrews: A Dataset and Baseline for Real-time Screw Classification
 description: >-

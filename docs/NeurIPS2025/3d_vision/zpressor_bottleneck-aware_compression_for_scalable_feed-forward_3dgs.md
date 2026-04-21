@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ZPressor: Bottleneck-Aware Compression for Scalable Feed-Forward 3DGS
 description: >-

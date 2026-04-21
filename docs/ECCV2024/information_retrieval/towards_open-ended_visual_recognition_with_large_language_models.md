@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Open-Ended Visual Recognition with Large Language Model
 description: >-

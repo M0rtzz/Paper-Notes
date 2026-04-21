@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpiralDiff: Spiral Diffusion with LoRA for RGB-to-RAW Conversion Across Cameras
 description: >-
@@ -139,10 +139,10 @@ SpiralDiff 基于 ResShift（一种高效残差偏移扩散框架）构建，仅
 
 ## 相关论文
 
-- [SimROD: A Simple Baseline for Raw Object Detection with Global and Local Enhancements](../../AAAI2026/object_detection/simrod_a_simple_baseline_for_raw_object_detection_with_global_and_local_enhancem.md)
-- [Tracking Meets LoRA: Faster Training, Larger Model, Stronger Performance](../../ECCV2024/object_detection/tracking_meets_lora_faster_training_larger_model_stronger_performance.md)
 - [Adaptive Auxiliary Prompt Blending for Target-Faithful Diffusion Generation](adaptive_auxiliary_prompt_blending_for_target-faithful_diffusion_generation.md)
-- [ABRA: Teleporting Fine-Tuned Knowledge Across Domains for Open-Vocabulary Object Detection](abra_teleporting_finetuned_knowledge_across_domain.md)
-- [Just-in-Time: Training-Free Spatial Acceleration for Diffusion Transformers](just-in-time_training-free_spatial_acceleration_for_diffusion_transformers.md)
+- [Towards RAW Object Detection in Diverse Conditions](../../CVPR2025/object_detection/towards_raw_object_detection_in_diverse_conditions.md)
+- [SimROD: A Simple Baseline for Raw Object Detection with Global and Local Enhancements](../../AAAI2026/object_detection/simrod_a_simple_baseline_for_raw_object_detection_with_global_and_local_enhancem.md)
+- [Tracking Meets LoRA: Faster Training, Larger Model, Stronger Performance](../../ECCV2024/object_detection/tracking_meets_lora_faster_training_larger_model_strong.md)
+- [ABRA: Teleporting Fine-Tuned Knowledge Across Domains for Open-Vocabulary Object Detection](abra_teleporting_fine-tuned_knowledge_across_domains_for_open-vocabulary_object_.md)
 
 <!-- RELATED:END -->

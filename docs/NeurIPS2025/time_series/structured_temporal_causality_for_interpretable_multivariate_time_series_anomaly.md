@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Structured Temporal Causality for Interpretable Multivariate Time Series Anomaly Detection
 description: >-
@@ -167,6 +167,6 @@ OracleAD在F1上的优势：PSM +19.95%pt，SMD +10.87%pt，SWaT +0.9%pt。VUS-P
 - [Causality-Aware Contrastive Learning for Robust Multivariate Time-Series Anomaly Detection](../../ICML2025/time_series/causality-aware_contrastive_learning_for_robust_multivariate_time-series_anomaly.md)
 - [Channel Matters: Estimating Channel Influence for Multivariate Time Series](channel_matters_estimating_channel_influence_for_multivariate_time_series.md)
 - [Contextual and Seasonal LSTMs for Time Series Anomaly Detection](../../ICLR2026/time_series/contextual_and_seasonal_lstms_for_time_series_anomaly_detection.md)
-- [KAN-AD: Time Series Anomaly Detection with Kolmogorov-Arnold Networks](../../ICML2025/time_series/kan-ad_time_series_anomaly_detection_with_kolmogorov-arnold_networks.md)
+- [Exploring Neural Granger Causality with xLSTMs: Unveiling Temporal Dependencies in Complex Data](exploring_neural_granger_causality_with_xlstms_unveiling_temporal_dependencies_i.md)
 
 <!-- RELATED:END -->

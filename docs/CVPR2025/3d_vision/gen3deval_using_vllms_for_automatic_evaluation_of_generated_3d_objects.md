@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gen3DEval: Using vLLMs for Automatic Evaluation of Generated 3D Objects
 description: >-
@@ -116,8 +116,8 @@ Gen3DEval分两个阶段：Stage 1训练一个能进行成对比较的vLLM，Sta
 
 - [Can LLMs Write Faithfully? An Agent-Based Evaluation of LLM-generated Islamic Content](../../NeurIPS2025/3d_vision/can_llms_write_faithfully_an_agent-based_evaluation_of_llm-generated_islamic_con.md)
 - [How Far are AI-generated Videos from Simulating the 3D Visual World: A Learned 3D Evaluation Approach](../../ICCV2025/3d_vision/how_far_are_ai-generated_videos_from_simulating_the_3d_visual_world_a_learned_3d.md)
+- [PICO: Reconstructing 3D People In Contact with Objects](pico_reconstructing_3d_people_in_contact_with_objects.md)
 - [MEt3R: Measuring Multi-View Consistency in Generated Images](met3r_measuring_multi-view_consistency_in_generated_images.md)
 - [Instant3dit: Multiview Inpainting for Fast Editing of 3D Objects](instant3dit_multiview_inpainting_for_fast_editing_of_3d_objects.md)
-- [IAAO: Interactive Affordance Learning for Articulated Objects in 3D Environments](iaao_interactive_affordance_learning_for_articulated_objects_in_3d_environments.md)
 
 <!-- RELATED:END -->

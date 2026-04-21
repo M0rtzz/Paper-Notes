@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A State-Transition Framework for Efficient LLM Reasoning
 description: >-
@@ -113,8 +113,8 @@ $\mathcal{L} = \mathcal{L}_{AR} + \beta \mathcal{L}_{KD}$。用 95K 高质量数
 
 - [ParoQuant: Pairwise Rotation Quantization for Efficient Reasoning LLM Inference](paroquant_pairwise_rotation_quantization_for_efficient_reasoning_llm_inference.md)
 - [Efficient Reasoning with Balanced Thinking](efficient_reasoning_with_balanced_thinking.md)
-- [Slow-Fast Policy Optimization: Reposition-Before-Update for LLM Reasoning](slow-fast_policy_optimization_reposition-before-update_for_llm_reasoning.md)
 - [Incentivizing Agentic Reasoning in LLM Judges via Tool-Integrated Reinforcement Learning](incentivizing_agentic_reasoning_in_llm_judges_via_tool-integrated_reinforcement_.md)
+- [Slow-Fast Policy Optimization: Reposition-Before-Update for LLM Reasoning](slow-fast_policy_optimization_reposition-before-update_for_llm_reasoning.md)
 - [BOTS: A Unified Framework for Bayesian Online Task Selection in LLM Reinforcement Finetuning](bots_a_unified_framework_for_bayesian_online_task_selection_in_llm_reinforcement.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VimoRAG: Video-based Retrieval-augmented 3D Motion Generation for Motion Language Models
 description: >-
@@ -153,9 +153,9 @@ VimoRAG 是一个两步流水线：(1) 给定运动描述文本，通过 Gemini-
 ## 相关论文
 
 - [Semantic Retrieval Augmented Contrastive Learning for Sequential Recommendation](semantic_retrieval_augmented_contrastive_learning_for_sequential_recommendation.md)
-- [MOSPA: Human Motion Generation Driven by Spatial Audio](mospa_human_motion_generation_driven_by_spatial_audio.md)
 - [FedRAG: A Framework for Fine-Tuning Retrieval-Augmented Generation Systems](../../ICML2025/human_understanding/fedrag_a_framework_for_fine-tuning_retrieval-augmented_generation_systems.md)
+- [MOSPA: Human Motion Generation Driven by Spatial Audio](mospa_human_motion_generation_driven_by_spatial_audio.md)
 - [MoLingo: Motion-Language Alignment for Text-to-Human Motion Generation](../../CVPR2026/human_understanding/molingo_motion-language_alignment_for_text-to-motion_generation.md)
-- [BEDLAM2.0: Synthetic Humans and Cameras in Motion](bedlam20_synthetic_humans_and_cameras_in_motion.md)
+- [Mapping Faithful Reasoning in Language Models](mapping_faithful_reasoning_in_language_models.md)
 
 <!-- RELATED:END -->

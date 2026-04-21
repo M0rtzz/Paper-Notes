@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ShortV: Efficient Multimodal Large Language Models by Freezing Visual Tokens in Ineffective Layers
 description: >-

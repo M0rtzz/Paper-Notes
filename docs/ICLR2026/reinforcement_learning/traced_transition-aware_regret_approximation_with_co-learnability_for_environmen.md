@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TRACED: Transition-aware Regret Approximation with Co-learnability for Environment Design
 description: >-

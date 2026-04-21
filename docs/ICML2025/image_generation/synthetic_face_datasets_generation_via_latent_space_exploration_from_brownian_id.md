@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Synthetic Face Datasets Generation via Latent Space Exploration from Brownian Identity Diffusion
 description: >-

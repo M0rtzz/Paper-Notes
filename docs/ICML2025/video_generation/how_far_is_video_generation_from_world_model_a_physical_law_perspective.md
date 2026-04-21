@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How Far is Video Generation from World Model: A Physical Law Perspective
 description: >-
@@ -154,9 +154,9 @@ tags:
 ## 相关论文
 
 - [Lumos-1: On Autoregressive Video Generation with Discrete Diffusion from a Unified Model Perspective](../../ICLR2026/video_generation/lumos-1_on_autoregressive_video_generation_with_discrete_diffusion_from_a_unifie.md)
-- [SAW: Toward a Surgical Action World Model via Controllable and Scalable Video Generation](../../CVPR2025/video_generation/saw_toward_a_surgical_action_world_model_via_controllable_and_scalable_video_gen.md)
 - [Photography Perspective Composition: Towards Aesthetic Perspective Recommendation](../../NeurIPS2025/video_generation/photography_perspective_composition_towards_aesthetic_perspective_recommendation.md)
-- [Physical Simulator In-the-Loop Video Generation](../../CVPR2026/video_generation/physical_simulator_in-the-loop_video_generation.md)
+- [SAW: Toward a Surgical Action World Model via Controllable and Scalable Video Generation](../../CVPR2025/video_generation/saw_toward_a_surgical_action_world_model_via_controllable_and_scalable_video_gen.md)
 - [Ca2-VDM: Efficient Autoregressive Video Diffusion Model with Causal Generation and Cache Sharing](ca2-vdm_efficient_autoregressive_video_diffusion_model_with_causal_generation_an.md)
+- [3D4D: An Interactive Editable 4D World Model via 3D Video Generation](../../AAAI2026/video_generation/3d4d_an_interactive_editable_4d_world_model_via_3d_video_generation.md)
 
 <!-- RELATED:END -->

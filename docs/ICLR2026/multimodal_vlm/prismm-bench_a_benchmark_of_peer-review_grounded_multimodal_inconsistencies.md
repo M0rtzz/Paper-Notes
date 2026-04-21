@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PRISMM-Bench: A Benchmark of Peer-Review Grounded Multimodal Inconsistencies
 description: >-

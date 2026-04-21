@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Evaluating In Silico Creativity: An Expert Review of AI Chess Compositions
 description: >-

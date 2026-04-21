@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SMoFi: Step-wise Momentum Fusion for Split Federated Learning on Heterogeneous Data
 description: >-

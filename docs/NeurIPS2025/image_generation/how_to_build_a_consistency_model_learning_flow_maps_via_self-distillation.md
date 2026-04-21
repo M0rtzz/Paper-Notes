@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How to Build a Consistency Model: Learning Flow Maps via Self-Distillation
 description: >-
@@ -231,8 +231,8 @@ Shortcut Models（Frans et al., 2024）本质上是 semigroup 条件的离散化
 
 - [Riemannian Consistency Model](riemannian_consistency_model.md)
 - [CMT: Mid-Training for Efficient Learning of Consistency, Mean Flow, and Flow Map Models](../../ICLR2026/image_generation/cmt_mid-training_for_efficient_learning_of_consistency_mean_flow_and_flow_map_mo.md)
-- [FreqPolicy: Efficient Flow-based Visuomotor Policy via Frequency Consistency](freqpolicy_efficient_flow-based_visuomotor_policy_via_frequency_consistency.md)
 - [Where and How to Perturb: On the Design of Perturbation Guidance in Diffusion and Flow Models](where_and_how_to_perturb_on_the_design_of_perturbation_guidance_in_diffusion_and.md)
+- [FreqPolicy: Efficient Flow-based Visuomotor Policy via Frequency Consistency](freqpolicy_efficient_flow-based_visuomotor_policy_via_frequency_consistency.md)
 - [Denoising Weak Lensing Mass Maps with Diffusion Model and Generative Adversarial Network](denoising_weak_lensing_mass_maps_with_diffusion_model_and_generative_adversarial.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Semi-supervised Video Desnowing Network via Temporal Decoupling Experts and Distribution-Driven Contrastive Regularization
 description: >-
@@ -154,8 +154,8 @@ $$\mathcal{L}_{un} = 2 \cdot \mathcal{L}'_{pixel} + 0.1 \cdot \mathcal{L}_{cl} +
 
 - [MdaIF: Robust One-Stop Multi-Degradation-Aware Image Fusion with Language-Driven Semantics](../../AAAI2026/earth_science/mdaif_robust_one-stop_multi-degradation-aware_image_fusion_with_language-driven_.md)
 - [Reasoning With a Star: A Heliophysics Dataset and Benchmark for Agentic Scientific Reasoning](../../NeurIPS2025/earth_science/reasoning_with_a_star_a_heliophysics_dataset_and_benchmark_for_agentic_scientifi.md)
-- [Adaptive Online Emulation for Accelerating Complex Physical Simulations](../../NeurIPS2025/earth_science/adaptive_online_emulation_for_accelerating_complex_physical_simulations.md)
-- [A Probabilistic U-Net Approach to Downscaling Climate Simulations](../../NeurIPS2025/earth_science/a_probabilistic_unet_approach_to_downscaling_climate_simulat.md)
 - [ControlFusion: A Controllable Image Fusion Framework with Language-Vision Degradation Prompts](../../NeurIPS2025/earth_science/controlfusion_a_controllable_image_fusion_framework_with_language-vision_degrada.md)
+- [A Probabilistic U-Net Approach to Downscaling Climate Simulations](../../NeurIPS2025/earth_science/a_probabilistic_unet_approach_to_downscaling_climate_simulat.md)
+- [Adaptive Online Emulation for Accelerating Complex Physical Simulations](../../NeurIPS2025/earth_science/adaptive_online_emulation_for_accelerating_complex_physical_simulations.md)
 
 <!-- RELATED:END -->

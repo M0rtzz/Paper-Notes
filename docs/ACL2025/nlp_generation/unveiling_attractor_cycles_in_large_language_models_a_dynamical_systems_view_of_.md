@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unveiling Attractor Cycles in Large Language Models: A Dynamical Systems View of Successive Paraphrasing
 description: >-
@@ -145,8 +145,8 @@ tags:
 
 ## 相关论文
 
-- [An Empirical Study of Many-to-Many Summarization with Large Language Models](an_empirical_study_of_manytomany_summarization.md)
 - [Theme-Explanation Structure for Table Summarization Using Large Language Models](theme-explanation_structure_for_table_summarization_using_large_language_models_.md)
+- [An Empirical Study of Many-to-Many Summarization with Large Language Models](an_empirical_study_of_manytomany_summarization.md)
 - [Dehumanizing Machines: Mitigating Anthropomorphic Behaviors in Text Generation Systems](dehumanizing_machines_anthropomorphic.md)
 - [Tell, Don't Show: Leveraging Language Models' Abstractive Retellings to Model Literary Themes](tell_dont_show_leveraging_language_models_abstractive_retellings_to_model_litera.md)
 - [Dense Match Summarization for Faster Two-view Estimation](../../CVPR2025/nlp_generation/dense_match_summarization_for_faster_two-view_estimation.md)

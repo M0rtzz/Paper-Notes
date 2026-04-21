@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Omni-DC: Highly Robust Depth Completion with Multiresolution Depth Integration
 description: >-
@@ -141,6 +141,6 @@ $$L_{Lap} = \log(2b) + |\mathbf{D}^{gt} - \hat{\mathbf{D}}| / b$$
 - [Focal Split: Untethered Snapshot Depth from Differential Defocus](../../CVPR2025/others/focal_split_untethered_snapshot_depth_from_differential_defocus.md)
 - [Depth-Supervised Fusion Network for Seamless-Free Image Stitching](../../NeurIPS2025/others/depth-supervised_fusion_network_for_seamless-free_image_stitching.md)
 - [Inner Thinking Transformer: Leveraging Dynamic Depth Scaling to Foster Adaptive Internal Thinking](../../ACL2025/others/inner_thinking_transformer_leveraging_dynamic_depth_scaling_to_foster_adaptive_i.md)
-- [Depth-Synergized Mamba Meets Memory Experts for All-Day Image Reflection Separation](../../AAAI2026/others/depth-synergized_mamba_meets_memory_experts_for_all-day_image_reflection_separat.md)
+- [Teaching Tailored to Talent: Adverse Weather Restoration via Prompt Pool and Depth-Anything Constraint](../../ECCV2024/others/teaching_tailored_to_talent_adverse_weather_restoration.md)
 
 <!-- RELATED:END -->

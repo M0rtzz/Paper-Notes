@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ProGait: A Multi-Purpose Video Dataset and Benchmark for Transfemoral Prosthesis Users
 description: >-

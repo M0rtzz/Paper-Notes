@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning to Focus: Prioritizing Informative Histories with Structured Attention Mechanisms in Partially Observable Reinforcement Learning
 description: >-

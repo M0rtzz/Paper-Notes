@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AccuQuant: Simulating Multiple Denoising Steps for Quantizing Diffusion Models
 description: >-
@@ -147,6 +147,6 @@ k=2-4 是最优区间——联合优化最近的 2-4 步即可捕获大部分误
 - [Fewer Denoising Steps or Cheaper Per-Step Inference: Towards Compute-Optimal Diffusion Model Deployment](../../ICCV2025/image_generation/fewer_denoising_steps_or_cheaper_per-step_inference_towards_compute-optimal_diff.md)
 - [NeuralOS: Towards Simulating Operating Systems via Neural Generative Models](../../ICLR2026/image_generation/neuralos_towards_simulating_operating_systems_via_neural_generative_models.md)
 - [Understanding Representation Dynamics of Diffusion Models via Low-Dimensional Models](understanding_representation_dynamics_of_diffusion_models_via_low-dimensional_mo.md)
-- [Token Perturbation Guidance for Diffusion Models](token_perturbation_guidance_for_diffusion_models.md)
+- [When Are Concepts Erased From Diffusion Models?](when_are_concepts_erased_from_diffusion_models.md)
 
 <!-- RELATED:END -->

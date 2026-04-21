@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Causal Evidence for the Primordiality of Colors in Trans-Neptunian Objects
 description: >-
@@ -179,8 +179,8 @@ PAG 中的不同边类型携带不同的因果信息：
 
 - [Causal Discovery of Latent Variables in Galactic Archaeology](causal_discovery_of_latent_variables_in_galactic_archaeology.md)
 - [Causal Abstraction Inference under Lossy Representations](causal_abstraction_inference_under_lossy_representations.md)
-- [Latent Variable Causal Discovery under Selection Bias](latent_variable_causal_discovery_under_selection_bias.md)
 - [Causal Effect Identification in lvLiNGAM from Higher-Order Cumulants](causal_effect_identification_in_lvlingam_from_higher-order_cumulants.md)
+- [Latent Variable Causal Discovery under Selection Bias](latent_variable_causal_discovery_under_selection_bias.md)
 - [Isolated Causal Effects of Natural Language](isolated_causal_effects_of_natural_language.md)
 
 <!-- RELATED:END -->

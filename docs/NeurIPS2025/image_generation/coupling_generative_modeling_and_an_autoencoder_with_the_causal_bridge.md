@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Coupling Generative Modeling and an Autoencoder with the Causal Bridge
 description: >-
@@ -152,6 +152,6 @@ $$\mathcal{L}_{\theta_Y} = \sum_{i: e_i=1} \rho_i - \log\left(\sum_{j: y_j > y_i
 - [Diffusion Generative Modeling on Lie Group Representations](diffusion_generative_modeling_on_lie_group_representations.md)
 - [System-Embedded Diffusion Bridge Models](system-embedded_diffusion_bridge_models.md)
 - [Non-Markovian Discrete Diffusion with Causal Language Models](non-markovian_discrete_diffusion_with_causal_language_models.md)
-- [Hephaestus: Mixture Generative Modeling with Energy Guidance for Large-scale QoS Degradation](hephaestus_mixture_generative_modeling_with_energy_guidance_for_large-scale_qos_.md)
+- [Latent Zoning Network: A Unified Principle for Generative Modeling, Representation Learning, and Classification](latent_zoning_network_a_unified_principle_for_generative_modeling_representation.md)
 
 <!-- RELATED:END -->

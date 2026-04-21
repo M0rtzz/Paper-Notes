@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Bridging the Gap between Large-Scale Pretraining and Efficient Finetuning for Humanoid Control
 description: >-

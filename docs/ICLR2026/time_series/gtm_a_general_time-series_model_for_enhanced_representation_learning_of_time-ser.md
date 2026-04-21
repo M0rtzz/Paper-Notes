@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GTM: A General Time-series Model for Enhanced Representation Learning of Time-Series Data
 description: >-
@@ -155,10 +155,10 @@ GTM 参数量 35.73M，训练速度 0.290s/iter，推理内存 1.25GB，在 A100
 
 ## 相关论文
 
+- [GTM: A General Time-series Model for Enhanced Representation Learning](gtm_a_general_time-series_model_for_enhanced_representation_learning_of_time-series.md)
 - [Rating Quality of Diverse Time Series Data by Meta-learning from LLM Judgment](rating_quality_of_diverse_time_series_data_by_meta-learning_from_llm_judgment.md)
-- [LightGTS: A Lightweight General Time Series Forecasting Model](../../ICML2025/time_series/lightgts_a_lightweight_general_time_series_forecasting_model.md)
 - [PAANO: Patch-Based Representation Learning for Time-Series Anomaly Detection](paano_patch-based_representation_learning_for_time-series_anomaly_detection.md)
-- [Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)
 - [Mask the Redundancy: Evolving Masking Representation Learning for Multivariate Time-Series Clustering](../../AAAI2026/time_series/mask_the_redundancy_evolving_masking_representation_learning_for_multivariate_ti.md)
+- [Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)
 
 <!-- RELATED:END -->

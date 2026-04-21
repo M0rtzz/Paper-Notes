@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SSTAG: Structure-Aware Self-Supervised Learning Method for Text-Attributed Graphs
 description: >-
@@ -132,7 +132,7 @@ SSTAG 包含三个核心模块：（1）统一图任务 (UGT) 模块——基于
 - [M-GRPO: Stabilizing Self-Supervised Reinforcement Learning for Large Language Models with Momentum-Anchored Policy Optimization](m-grpo_stabilizing_self-supervised_reinforcement_learning_for_large_language_mod.md)
 - [WALKER: Self-supervised Multiple Object Tracking by Walking on Temporal Appearance Graphs](../../ECCV2024/object_detection/walker_self-supervised_multiple_object_tracking_by_walking_on_temporal_appearanc.md)
 - [Discovering Global False Negatives On the Fly for Self-supervised Contrastive Learning](../../ICML2025/object_detection/discovering_global_false_negatives_on_the_fly_for_self-supervised_contrastive_le.md)
-- [WeCromCL: Weakly Supervised Cross-Modality Contrastive Learning for Transcription-only Supervised Text Spotting](../../ECCV2024/object_detection/wecromcl_weakly_supervised_cross-modality_contrastive_learning_for_transcription.md)
 - [Self-Organizing Visual Prototypes for Non-Parametric Representation Learning](../../ICML2025/object_detection/self-organizing_visual_prototypes_for_non-parametric_representation_learning.md)
+- [WeCromCL: Weakly Supervised Cross-Modality Contrastive Learning for Transcription-only Supervised Text Spotting](../../ECCV2024/object_detection/wecromcl_weakly_supervised_cross-modality_contrastive_learning_for_transcription.md)
 
 <!-- RELATED:END -->

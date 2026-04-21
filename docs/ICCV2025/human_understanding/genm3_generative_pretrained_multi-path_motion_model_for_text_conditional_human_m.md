@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation
 description: >-
@@ -188,8 +188,8 @@ GenM3 包含两个核心组件和三阶段训练流程：
 
 - [KinMo: Kinematic-Aware Human Motion Understanding and Generation](kinmo_kinematic-aware_human_motion_understanding_and_generation.md)
 - [GENMO: A GENeralist Model for Human MOtion](genmo_a_generalist_model_for_human_motion.md)
+- [Large Motion Model for Unified Multi-Modal Motion Generation](../../ECCV2024/human_understanding/large_motion_model_for_unified_multimodal_motion_generation.md)
+- [SimMotionEdit: Text-Based Human Motion Editing with Motion Similarity Prediction](../../CVPR2025/human_understanding/simmotionedit_text-based_human_motion_editing_with_motion_similarity_prediction.md)
 - [RapVerse: Coherent Vocals and Whole-Body Motion Generation from Text](rapverse_coherent_vocals_and_whole-body_motion_generation_from_text.md)
-- [SyncDiff: Synchronized Motion Diffusion for Multi-Body Human-Object Interaction Synthesis](syncdiff_synchronized_motion_diffusion_for_multi-body_human-object_interaction_s.md)
-- [MoLingo: Motion-Language Alignment for Text-to-Human Motion Generation](../../CVPR2026/human_understanding/molingo_motion-language_alignment_for_text-to-motion_generation.md)
 
 <!-- RELATED:END -->

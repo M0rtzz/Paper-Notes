@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Yes FLoReNce, I Will Do Better Next Time! Agentic Feedback Reasoning for Humorous Meme Detection
 description: >-
@@ -167,7 +167,7 @@ FLoReNce（Feedback-Loop Reasoner with Non-parametric Experience）由两个阶�
 - [Why Do Open-Source LLMs Struggle with Data Analysis? A Systematic Empirical Study](why_do_open-source_llms_struggle_with_data_analysis_a_systematic_empirical_study.md)
 - [Facial-R1: Aligning Reasoning and Recognition for Facial Emotion Analysis](facial-r1_aligning_reasoning_and_recognition_for_facial_emotion_analysis.md)
 - [Small Language Models for Efficient Agentic Tool Calling: Outperforming Large Models with Targeted Fine-tuning](small_language_models_for_efficient_agentic_tool_calling_outperforming_large_mod.md)
-- [Anomize: Better Open Vocabulary Video Anomaly Detection](../../CVPR2025/human_understanding/anomize_better_open_vocabulary_video_anomaly_detection.md)
 - [TimeOmni-1: Incentivizing Complex Reasoning with Time Series in Large Language Models](../../ICLR2026/human_understanding/timeomni-1_incentivizing_complex_reasoning_with_time_series_in_large_language_mo.md)
+- [Anomize: Better Open Vocabulary Video Anomaly Detection](../../CVPR2025/human_understanding/anomize_better_open_vocabulary_video_anomaly_detection.md)
 
 <!-- RELATED:END -->

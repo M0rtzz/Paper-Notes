@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Snapshot of Influence: A Local Data Attribution Framework for Online Reinforcement Learning
 description: >-
@@ -123,6 +123,6 @@ tags:
 - [Towards Reinforcement Learning from Neural Feedback: Mapping fNIRS Signals to Agent Performance](../../AAAI2026/robotics/towards_reinforcement_learning_from_neural_feedback_mapping_.md)
 - [Attribution-Guided Decoding](../../ICLR2026/robotics/attribution-guided_decoding.md)
 - [A Data-Centric Revisit of Pre-Trained Vision Models for Robot Learning](../../CVPR2025/robotics/a_data-centric_revisit_of_pre-trained_vision_models_for_robot_learning.md)
-- [Understanding Prompt Tuning and In-Context Learning via Meta-Learning](understanding_prompt_tuning_and_in-context_learning_via_meta-learning.md)
+- [HiMaCon: Discovering Hierarchical Manipulation Concepts from Unlabeled Multi-Modal Data](himacon_discovering_hierarchical_manipulation_concepts_from_unlabeled_multi-moda.md)
 
 <!-- RELATED:END -->

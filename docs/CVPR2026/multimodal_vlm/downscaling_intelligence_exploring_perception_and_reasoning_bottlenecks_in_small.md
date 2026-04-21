@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Downscaling Intelligence: Exploring Perception and Reasoning Bottlenecks in Small VLMs
 description: >-
@@ -134,10 +134,10 @@ Extract+Think是一个两阶段感知-推理框架。输入：图像+问题。�
 
 ## 相关论文
 
+- [Scaling Spatial Intelligence with Multimodal Foundation Models](scaling_spatial_intelligence_with_multimodal_foundation_models.md)
 - [Proof-of-Perception: Certified Tool-Using Multimodal Reasoning with Compositional Conformal Guarantees](pop_proof_of_perception_conformal_reasoning.md)
 - [SSR: Enhancing Depth Perception in VLMs via Rationale-Guided Spatial Reasoning](../../NeurIPS2025/multimodal_vlm/ssr_enhancing_depth_perception_in_vision-language_models_via_rationale-guided_sp.md)
 - [Small Drafts, Big Verdict: Information-Intensive Visual Reasoning via Speculation](../../ICLR2026/multimodal_vlm/small_drafts_big_verdict_information-intensive_visual_reasoning_via_speculation.md)
-- [ApET: Approximation-Error Guided Token Compression for Efficient VLMs](apet_approximation_error_token_compression.md)
-- [SpinBench: Perspective and Rotation as a Lens on Spatial Reasoning in VLMs](../../ICLR2026/multimodal_vlm/spinbench_perspective_and_rotation_as_a_lens_on_spatial_reasoning_in_vlms.md)
+- [ApET: Approximation-Error Guided Token Compression for Efficient VLMs](apet_approximation-error_guided_token_compression_for_efficient_vlms.md)
 
 <!-- RELATED:END -->

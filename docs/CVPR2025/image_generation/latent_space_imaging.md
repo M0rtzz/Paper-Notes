@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Latent Space Imaging
 description: >-
@@ -124,9 +124,9 @@ LSI 管线包含三个核心组件：(1) **光学编码器 O**——物理掩模
 ## 相关论文
 
 - [NPN: Non-Linear Projections of the Null-Space for Imaging Inverse Problems](../../NeurIPS2025/image_generation/npn_non-linear_projections_of_the_null-space_for_imaging_inverse_problems.md)
+- [UltraFusion: Ultra High Dynamic Imaging using Exposure Fusion](ultrafusion_ultra_high_dynamic_imaging_using_exposure_fusion.md)
 - [What's in a Latent? Leveraging Diffusion Latent Space for Domain Generalization](../../ICCV2025/image_generation/whats_in_a_latent_leveraging_diffusion_latent_space_for_domain_generalization.md)
+- [Reward Fine-Tuning Two-Step Diffusion Models via Learning Differentiable Latent-Space Surrogate Reward](reward_fine-tuning_two-step_diffusion_models_via_learning_differentiable_latent-.md)
 - [Hessian Geometry of Latent Space in Generative Models](../../ICML2025/image_generation/hessian_geometry_of_latent_space_in_generative_models.md)
-- [MotionStreamer: Streaming Motion Generation via Diffusion-based Autoregressive Model in Causal Latent Space](../../ICCV2025/image_generation/motionstreamer_streaming_motion_generation_via_diffusion-based_autoregressive_mo.md)
-- [Synthetic Face Datasets Generation via Latent Space Exploration from Brownian Identity Diffusion](../../ICML2025/image_generation/synthetic_face_datasets_generation_via_latent_space_exploration_from_brownian_id.md)
 
 <!-- RELATED:END -->

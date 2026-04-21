@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EmoEdit: Evoking Emotions through Image Manipulation
 description: >-
@@ -134,7 +134,7 @@ EmoEdit 分两大步：(1) 构建 EmoEditSet 数据集——从 EmoSet 做聚类
 - [Make Me Happier: Evoking Emotions Through Image Diffusion Models](../../ICCV2025/image_generation/make_me_happier_evoking_emotions_through_image_diffusion_models.md)
 - [Editing Away the Evidence: Diffusion-Based Image Manipulation and the Failure Modes of Robust Watermarking](editing_away_the_evidence_diffusion-based_image_manipulation_and_the_failure_mod.md)
 - [Interpretable Generative Models through Post-hoc Concept Bottlenecks](interpretable_generative_models_through_post-hoc_concept_bottlenecks.md)
-- [MINIMA: Modality Invariant Image Matching](minima_modality_invariant_image_matching.md)
-- [DreamOmni: Unified Image Generation and Editing](dreamomni_unified_image_generation_and_editing.md)
+- [Visual Lexicon: Rich Image Features in Language Space](visual_lexicon_rich_image_features_in_language_space.md)
+- [TurboFill: Adapting Few-Step Text-to-Image Model for Fast Image Inpainting](turbofill_adapting_few-step_text-to-image_model_for_fast_image_inpainting.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BCE3S: Binary Cross-Entropy Based Tripartite Synergistic Learning for Long-tailed Recognition
 description: >-

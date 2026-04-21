@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Debate, Reflect, and Distill: Multi-Agent Feedback with Tree-Structured Preference Optimization for Efficient Language Model Enhancement
 description: >-
@@ -128,6 +128,6 @@ tags:
 - [M³HF: Multi-agent Reinforcement Learning from Multi-phase Human Feedback of Mixed Quality](../../ICML2025/llm_alignment/m3hf_multi-agent_reinforcement_learning_from_multi-phase_human_feedback_of_mixed.md)
 - [QueryAttack: Jailbreaking Aligned Large Language Models Using Structured Non-natural Query Language](queryattack_jailbreaking_aligned_large_language_models_using_structured_non-natu.md)
 - [ORPO-Distill: Mixed-Policy Preference Optimization for Cross-Architecture LLM Distillation](../../NeurIPS2025/llm_alignment/orpo-distill_mixed-policy_preference_optimization_for_cross-architecture_llm_dis.md)
-- [AgentRM: Enhancing Agent Generalization with Reward Modeling](agentrm_enhancing_agent_generalization_with_reward_modeling.md)
+- [InPO: Inversion Preference Optimization with Reparametrized DDIM for Efficient Diffusion Model Alignment](../../CVPR2025/llm_alignment/inpo_inversion_preference_optimization_with_reparametrized_ddim_for_efficient_di.md)
 
 <!-- RELATED:END -->

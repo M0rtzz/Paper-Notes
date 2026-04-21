@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BridgeVLA: Input-Output Alignment for Efficient 3D Manipulation Learning with Vision-Language Models
 description: >-
@@ -150,8 +150,8 @@ $$H_i^{gt}(\mathbf{x}) = \begin{cases} \exp(-\|\mathbf{x}-\hat{\mathbf{x}_i}\|^2
 
 ## 相关论文
 
-- [Learning to Steer: Input-dependent Steering for Multimodal LLMs](learning_to_steer_input-dependent_steering_for_multimodal_llms.md)
 - [MIMO: A Medical Vision Language Model with Visual Referring Multimodal Input and Pixel Grounding Multimodal Output](../../CVPR2025/multimodal_vlm/mimo_a_medical_vision_language_model_with_visual_referring_multimodal_input_and_.md)
+- [Learning to Steer: Input-dependent Steering for Multimodal LLMs](learning_to_steer_input-dependent_steering_for_multimodal_llms.md)
 - [PointAlign: Feature-Level Alignment Regularization for 3D Vision-Language Models](../../CVPR2026/multimodal_vlm/pointalign_feature-level_alignment_regularization_for_3d_vision-language_models.md)
 - [Better Tokens for Better 3D: Advancing Vision-Language Modeling in 3D Medical Imaging](better_tokens_for_better_3d_advancing_vision-language_modeling_in_3d_medical_ima.md)
 - [ForceVLA: Enhancing VLA Models with a Force-aware MoE for Contact-rich Manipulation](forcevla_enhancing_vla_models_with_a_force-aware_moe_for_contact-rich_manipulati.md)

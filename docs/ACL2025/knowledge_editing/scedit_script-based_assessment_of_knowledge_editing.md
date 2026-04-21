@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ScEdit: Script-based Assessment of Knowledge Editing
 description: >-

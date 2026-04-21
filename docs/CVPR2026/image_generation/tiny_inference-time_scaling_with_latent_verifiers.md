@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tiny Inference-Time Scaling with Latent Verifiers
 description: >-

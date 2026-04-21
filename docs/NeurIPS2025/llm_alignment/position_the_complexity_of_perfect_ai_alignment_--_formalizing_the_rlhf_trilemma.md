@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Position: The Complexity of Perfect AI Alignment -- Formalizing the RLHF Trilemma
 description: >-

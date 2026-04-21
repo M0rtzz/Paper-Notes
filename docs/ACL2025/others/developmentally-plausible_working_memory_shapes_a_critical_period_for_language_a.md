@@ -144,7 +144,7 @@ DynamicLimit-Exp 在 Argument Structure（67.7% vs 44.8%）、Case（95.2% vs 70
 
 ## 相关论文
 
-- [If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?](if_attention_serves_as_a_cognitive.md)
+- [If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?](if_attention_serves_as_a_cognitive_model_of_human_memory_retrieval_what_is_the_p.md)
 - [Hierarchical Memory Organization for Wikipedia Generation](hierarchical_memory_wikipedia_gen.md)
 - [STRICTA: Structured Reasoning in Critical Text Assessment for Peer Review and Beyond](stricta_structured_reasoning_in_critical_text_assessment_for_peer_review_and_bey.md)
 - [Generating Plausible Distractors for Multiple-Choice Questions via Student Choice Prediction](distractor_gen_multiple_choice.md)

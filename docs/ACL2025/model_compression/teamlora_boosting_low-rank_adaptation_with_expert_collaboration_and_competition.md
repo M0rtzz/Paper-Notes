@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TeamLoRA: Boosting Low-Rank Adaptation with Expert Collaboration and Competition
 description: >-
@@ -138,6 +138,6 @@ TeamLoRA在每个线性层上添加一个非对称的LoRA旁路。输入 $x$ 首
 - [BeamLoRA: Beam-Constraint Low-Rank Adaptation](beamlora_beam_constraint_lora.md)
 - [TableLoRA: Low-rank Adaptation on Table Structure Understanding for Large Language Models](table_lora_structure_understanding.md)
 - [GoRA: Gradient-Driven Adaptive Low Rank Adaptation](../../NeurIPS2025/model_compression/gora_gradient-driven_adaptive_low_rank_adaptation.md)
-- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](../../NeurIPS2025/model_compression/reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](../../NeurIPS2025/model_compression/gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
 
 <!-- RELATED:END -->

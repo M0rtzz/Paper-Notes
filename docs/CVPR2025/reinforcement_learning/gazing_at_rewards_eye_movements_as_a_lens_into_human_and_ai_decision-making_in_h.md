@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gazing at Rewards: Eye Movements as a Lens into Human and AI Decision-Making in Hybrid Visual Foraging
 description: >-

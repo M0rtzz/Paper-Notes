@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TALON: Test-time Adaptive Learning for On-the-Fly Category Discovery
 description: >-

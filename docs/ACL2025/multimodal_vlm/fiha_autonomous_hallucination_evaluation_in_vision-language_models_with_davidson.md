@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FIHA: Autonomous Fine-grained Hallucination Evaluation in Vision-Language Models with Davidson Scene Graphs
 description: >-

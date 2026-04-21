@@ -1,7 +1,17 @@
-﻿---
-title: "Doppelgangers++: Improved Visual Disambiguation with Geometric 3D Features"
-description: "利用MASt3R的3D几何特征和多样化训练数据改进视觉消歧，显著提升SfM在重复结构场景中的重建精度"
-tags: ["视觉消歧", "SfM", "3D重建", "MASt3R", "Transformer", "重复结构"]
+---
+title: >-
+  [论文解读] Doppelgangers++: Improved Visual Disambiguation with Geometric 3D Features
+description: >-
+  [CVPR 2025][3D视觉][视觉消歧] 提出 Doppelgangers++，通过引入多样化的 VisymScenes 日常场景训练数据和利用 MASt3R 多层解码器 3D 感知特征训练 Transformer 分类器，显著提升了 doppelganger（视觉混淆图像对）检测的精度和泛化性，并无缝集成到 COLMAP 和 MASt3R-SfM 管线中改善重复结构场景的 3D 重建质量。
+tags:
+  - CVPR 2025
+  - 3D视觉
+  - 视觉消歧
+  - SfM
+  - 重复结构
+  - MASt3R
+  - Transformer
+  - 地理标签评估
 ---
 
 # Doppelgangers++: Improved Visual Disambiguation with Geometric 3D Features
@@ -126,10 +136,10 @@ Doppelgangers++ 在所有场景上 IR 均优于或等于 DG-OG，且使用统一
 
 ## 相关论文
 
-- [The NeRFect Match: Exploring NeRF Features for Visual Localization](../../ECCV2024/3d_vision/the_nerfect_match_exploring_nerf_features_for_visual_localization.md)
-- [Formula-Supervised Visual-Geometric Pre-training (FSVGP)](../../ECCV2024/3d_vision/formula-supervised_visual-geometric_pre-training.md)
 - [Pano360: Perspective to Panoramic Vision with Geometric Consistency](pano360_perspective_to_panoramic_vision_with_geometric_consistency.md)
-- [Not All Frame Features Are Equal: Video-to-4D Generation via Decoupling Dynamic-Static Features](../../ICCV2025/3d_vision/not_all_frame_features_are_equal_video-to-4d_generation_via_decoupling_dynamic-s.md)
-- [Grounding 3D Object Affordance with Language Instructions, Visual Observations and Interactions](grounding_3d_object_affordance_with_language_instructions_visual_observations_an.md)
+- [The NeRFect Match: Exploring NeRF Features for Visual Localization](../../ECCV2024/3d_vision/the_nerfect_match_exploring_nerf_features_for_visual_localization.md)
+- [TriTex: Learning Texture from a Single Mesh via Triplane Semantic Features](tritex_learning_texture_from_a_single_mesh_via_triplane_semantic_features.md)
+- [VGGT: Visual Geometry Grounded Transformer](vggt_visual_geometry_grounded_transformer.md)
+- [Formula-Supervised Visual-Geometric Pre-training (FSVGP)](../../ECCV2024/3d_vision/formula-supervised_visual-geometric_pre-training.md)
 
 <!-- RELATED:END -->

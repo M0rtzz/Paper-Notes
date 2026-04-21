@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RetimeGS: Continuous-Time Reconstruction of 4D Gaussian Splatting
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PartSTAD: 2D-to-3D Part Segmentation Task Adaptation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DEF-DTS: Deductive Reasoning for Open-domain Dialogue Topic Segmentation
 description: >-
@@ -129,8 +129,8 @@ tags:
 
 - [Aligning Spoken Dialogue Models from User Interactions](../../ICML2025/segmentation/aligning_spoken_dialogue_models_from_user_interactions.md)
 - [InstructPart: Task-Oriented Part Segmentation with Instruction Reasoning](instructpart_task-oriented_part_segmentation_with_instruction_reasoning.md)
-- [Exploiting Domain Properties in Language-Driven Domain Generalization for Semantic Segmentation](../../ICCV2025/segmentation/exploiting_domain_properties_in_language-driven_domain_generalization_for_semant.md)
 - [Pixel-Level Reasoning Segmentation via Multi-turn Conversations](pixel-level_reasoning_segmentation_via_multi-turn_conversations.md)
+- [Exploiting Domain Properties in Language-Driven Domain Generalization for Semantic Segmentation](../../ICCV2025/segmentation/exploiting_domain_properties_in_language-driven_domain_generalization_for_semant.md)
 - [COS3D: Collaborative Open-Vocabulary 3D Segmentation](../../NeurIPS2025/segmentation/cos3d_collaborative_open-vocabulary_3d_segmentation.md)
 
 <!-- RELATED:END -->

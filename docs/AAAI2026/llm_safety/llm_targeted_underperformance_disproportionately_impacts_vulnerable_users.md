@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLM Targeted Underperformance Disproportionately Impacts Vulnerable Users
 description: >-
@@ -139,6 +139,6 @@ tags:
 - [LH-Deception: Simulating and Understanding LLM Deceptive Behaviors in Long-Horizon Interactions](../../ICLR2026/llm_safety/lh-deception_simulating_and_understanding_llm_deceptive_behaviors_in_long-horizo.md)
 - [TreeCut: A Synthetic Unanswerable Math Word Problem Dataset for LLM Hallucination Evaluation](../../ACL2025/llm_safety/treecut_a_synthetic_unanswerable_math_word_problem_dataset_for_llm_hallucination.md)
 - [Which Retain Set Matters for LLM Unlearning? A Case Study on Entity Unlearning](../../ACL2025/llm_safety/which_retain_set_matters_for_llm_unlearning_a_case_study_on_entity_unlearning.md)
-- [Designing Truthful Mechanisms for Asymptotic Fair Division](designing_truthful_mechanisms_for_asymptotic_fair_division.md)
+- [PANDA: Patch and Distribution-Aware Augmentation for Long-Tailed Exemplar-Free Continual Learning](panda_--_patch_and_distribution-aware_augmentation_for_long-tailed_exemplar-free.md)
 
 <!-- RELATED:END -->

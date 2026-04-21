@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Oasis: One Image is All You Need for Multimodal Instruction Data Synthesis
 description: >-
@@ -170,9 +170,9 @@ Oasis在三种骨干上均带来显著提升：Vicuna +3.1%、Qwen2.5 +1.8%、Ll
 ## 相关论文
 
 - [Attention Smoothing Is All You Need For Unlearning](../../ICLR2026/ai_safety/attention_smoothing_is_all_you_need_for_unlearning.md)
-- [Can One Safety Loop Guard Them All? Agentic Guard Rails for Federated Computing](../../ICML2025/ai_safety/can_one_safety_loop_guard_them_all_agentic_guard_rails_for_federated_computing.md)
 - [SynFER: Towards Boosting Facial Expression Recognition with Synthetic Data](synfer_towards_boosting_facial_expression_recognition_with_synthetic_data.md)
 - [Semantic Alignment and Reinforcement for Data-Free Quantization of Vision Transformers](semantic_alignment_and_reinforcement_for_data-free_quantization_of_vision_transf.md)
 - [ForensicHub: A Unified Benchmark & Codebase for All-Domain Fake Image Detection and Localization](../../NeurIPS2025/ai_safety/forensichub_a_unified_benchmark_codebase_for_all-domain_fake_image_detection_and.md)
+- [Can One Safety Loop Guard Them All? Agentic Guard Rails for Federated Computing](../../ICML2025/ai_safety/can_one_safety_loop_guard_them_all_agentic_guard_rails_for_federated_computing.md)
 
 <!-- RELATED:END -->

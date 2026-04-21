@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HERBench: A Benchmark for Multi-Evidence Integration in Video Question Answering
 description: >-

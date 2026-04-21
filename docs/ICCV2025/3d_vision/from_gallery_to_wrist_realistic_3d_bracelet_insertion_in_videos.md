@@ -159,10 +159,10 @@ $$\mathcal{G}_t^* = \arg\min_{\mathcal{G}} \sum_{k=t-W/2}^{t+W/2} w(k-t) \cdot \
 
 ## 相关论文
 
+- [Towards Realistic Example-Based Modeling via 3D Gaussian Stitching](../../CVPR2025/3d_vision/towards_realistic_example-based_modeling_via_3d_gaussian_stitching.md)
 - [MonoMobility: Zero-Shot 3D Mobility Analysis from Monocular Videos](monomobility_zero-shot_3d_mobility_analysis_from_monocular_videos.md)
 - [TRACE: Learning 3D Gaussian Physical Dynamics from Multi-view Videos](trace_learning_3d_gaussian_physical_dynamics_from_multi-view_videos.md)
+- [Vid2Sim: Realistic and Interactive Simulation from Video for Urban Navigation](../../CVPR2025/3d_vision/vid2sim_realistic_and_interactive_simulation_from_video_for_urban_navigation.md)
 - [LongSplat: Robust Unposed 3D Gaussian Splatting for Casual Long Videos](longsplat_robust_unposed_3d_gaussian_splatting_for_casual_long_videos.md)
-- [How Far are AI-generated Videos from Simulating the 3D Visual World: A Learned 3D Evaluation Approach](how_far_are_ai-generated_videos_from_simulating_the_3d_visual_world_a_learned_3d.md)
-- [Generating 3D-Consistent Videos from Unposed Internet Photos](../../CVPR2025/3d_vision/generating_3d-consistent_videos_from_unposed_internet_photos.md)
 
 <!-- RELATED:END -->

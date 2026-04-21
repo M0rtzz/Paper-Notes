@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpatialStack: Layered Geometry-Language Fusion for 3D VLM Spatial Reasoning
 description: >-

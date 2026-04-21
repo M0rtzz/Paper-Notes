@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers
 description: >-
@@ -332,6 +332,6 @@ ImageNet-1K 上，作者将 HiAP 与多个 ViT 结构化剪枝方法比较，基
 - [PPCL: Pluggable Pruning with Contiguous Layer Distillation for Diffusion Transformers](ppcl_pluggable_pruning_dit_distillation.md)
 - [Stronger Normalization-Free Transformers](stronger_normalization-free_transformers.md)
 - [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
-- [GeoChemAD: Benchmarking Unsupervised Geochemical Anomaly Detection for Mineral Exploration](geochemad_benchmarking_unsupervised_geochemical_anomaly_detection_for_mineral_ex.md)
+- [DAGE: Dual-Stream Architecture for Efficient and Fine-Grained Geometry Estimation](dage_dual-stream_architecture_for_efficient_and_fine-grained_geometry_estimation.md)
 
 <!-- RELATED:END -->

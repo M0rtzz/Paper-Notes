@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ReMoRa: Multimodal Large Language Model based on Refined Motion Representation for Long-Video Understanding
 description: >-

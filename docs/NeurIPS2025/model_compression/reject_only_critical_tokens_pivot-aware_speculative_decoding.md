@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reject Only Critical Tokens: Pivot-Aware Speculative Decoding
 description: >-

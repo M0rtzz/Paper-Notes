@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Motion Mamba: Efficient and Long Sequence Motion Generation
 description: >-

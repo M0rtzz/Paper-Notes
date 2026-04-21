@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiTASK: Multi-Task Fine-Tuning with Diffeomorphic Transformations
 description: >-
@@ -116,8 +116,8 @@ tags:
 
 - [FAAR: Efficient Frequency-Aware Multi-Task Fine-Tuning via Automatic Rank Selection](../../CVPR2026/signal_comm/faar_efficient_frequency-aware_multi-task_fine-tuning_via_automatic_rank_selecti.md)
 - [Tuning the Frequencies: Robust Training for Sinusoidal Neural Networks](tuning_the_frequencies_robust_training_for_sinusoidal_neural_networks.md)
-- [Frequency Switching Mechanism for Parameter-Efficient Multi-Task Learning](../../CVPR2026/signal_comm/frequency_switching_mechanism_for_parameter-ecient_multi-task_learning.md)
-- [Continuous Space-Time Video Resampling with Invertible Motion Steganography](continuous_space-time_video_resampling_with_invertible_motion_steganography.md)
 - [ABC-Former: Auxiliary Bimodal Cross-domain Transformer with Interactive Channel Attention](abc-former_auxiliary_bimodal_cross-domain_transformer_with_interactive_channel_a.md)
+- [Neural Video Compression with Context Modulation](neural_video_compression_with_context_modulation.md)
+- [Continuous Space-Time Video Resampling with Invertible Motion Steganography](continuous_space-time_video_resampling_with_invertible_motion_steganography.md)
 
 <!-- RELATED:END -->

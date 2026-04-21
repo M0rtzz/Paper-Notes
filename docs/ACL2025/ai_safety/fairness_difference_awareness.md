@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fairness through Difference Awareness: Measuring Desired Group Discrimination in LLMs
 description: >-
@@ -132,8 +132,8 @@ DiffAware与模型能力的关系：Pearson r≈0, p>0.3（无相关性）
 
 - [TuCo: Measuring the Contribution of Fine-Tuning to Individual Responses of LLMs](../../ICML2025/ai_safety/tuco_measuring_the_contribution_of_fine-tuning_to_individual_responses_of_llms.md)
 - [Measuring Physical-World Privacy Awareness of Large Language Models: An Evaluation Benchmark](../../ICLR2026/ai_safety/measuring_physical-world_privacy_awareness_of_large_language_models_an_evaluatio.md)
-- [FedFACT: A Provable Framework for Controllable Group-Fairness Calibration in Federated Learning](../../NeurIPS2025/ai_safety/fedfact_a_provable_framework_for_controllable_group-fairness_calibration_in_fede.md)
 - [Some Optimizers are More Equal: Understanding the Role of Optimizers in Group Fairness](../../NeurIPS2025/ai_safety/some_optimizers_are_more_equal_understanding_the_role_of_optimizers_in_group_fai.md)
+- [FedFACT: A Provable Framework for Controllable Group-Fairness Calibration in Federated Learning](../../NeurIPS2025/ai_safety/fedfact_a_provable_framework_for_controllable_group-fairness_calibration_in_fede.md)
 - [FairContrast: Enhancing Fairness through Contrastive Learning and Customized Augmentation](../../NeurIPS2025/ai_safety/faircontrast_enhancing_fairness_through_contrastive_learning_and_customized_augm.md)
 
 <!-- RELATED:END -->

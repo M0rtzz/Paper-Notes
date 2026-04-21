@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] All-day Multi-scenes Lifelong Vision-and-Language Navigation with Tucker Adaptation
 description: >-

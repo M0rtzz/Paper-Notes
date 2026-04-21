@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exposing Hidden Biases in Text-to-Image Models via Automated Prompt Search
 description: >-

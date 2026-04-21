@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Global Convergence for Average Reward Constrained MDPs with Primal-Dual Actor-Critic
 description: >-

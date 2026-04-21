@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Data-Juicer 2.0: Cloud-Scale Adaptive Data Processing for and with Foundation Models
 description: >-

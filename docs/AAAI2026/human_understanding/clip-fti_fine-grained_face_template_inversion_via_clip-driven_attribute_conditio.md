@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CLIP-FTI: Fine-Grained Face Template Inversion via CLIP-Driven Attribute Conditioning
 description: >-

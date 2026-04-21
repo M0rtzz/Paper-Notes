@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamic Multimodal Activation Steering for Hallucination Mitigation in Large Vision-Language Models
 description: >-

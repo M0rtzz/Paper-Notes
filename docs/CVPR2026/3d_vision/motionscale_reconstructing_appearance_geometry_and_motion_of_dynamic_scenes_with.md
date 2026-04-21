@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MotionScale: Reconstructing Appearance, Geometry, and Motion of Dynamic Scenes with Scalable 4D Gaussian Splatting
 description: >-

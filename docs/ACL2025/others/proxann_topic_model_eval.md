@@ -2,9 +2,14 @@
 title: >-
   [论文解读] ProxAnn: Use-Oriented Evaluations of Topic Models and Document Clustering
 description: >-
-   提出面向实际使用场景的主题模型评估协议ProxAnn，结合可扩展的人类评估流程和LLM代理标注者，发现最佳LLM代理在统计上与人类标注者不可区分，可作为自动化评估的合理替代。
+  [ACL 2025][topic model evaluation] 提出面向实际使用场景的主题模型评估协议ProxAnn，结合可扩展的人类评估流程和LLM代理标注者，发现最佳LLM代理在统计上与人类标注者不可区分，可作为自动化评估的合理替代。
 tags:
-
+  - ACL 2025
+  - topic model evaluation
+  - proxy annotator
+  - LLM evaluation
+  - document clustering
+  - qualitative content analysis
 ---
 
 # ProxAnn: Use-Oriented Evaluations of Topic Models and Document Clustering
@@ -121,9 +126,9 @@ LLM使用凝缩的指令和相同的样本文档执行相同任务，Fit Step使
 ## 相关论文
 
 - [Using Shapley Interactions to Understand How Models Use Structure](using_shapley_interactions_to_understand_how_models_use_structure.md)
-- [Persistent Homology of Topic Networks for the Prediction of Reader Curiosity](persistent_homology_of_topic_networks_for_the_prediction_of_reader_curiosity.md)
-- [MDCure: A Scalable Pipeline for Multi-Document Instruction-Following](mdcure_a_scalable_pipeline_for_multi-document_instruction-following.md)
 - [S2WTM: Spherical Sliced-Wasserstein Autoencoder for Topic Modeling](s2wtm_spherical_sliced-wasserstein_autoencoder_for_topic_modeling.md)
+- [MDCure: A Scalable Pipeline for Multi-Document Instruction-Following](mdcure_a_scalable_pipeline_for_multi-document_instruction-following.md)
 - [Understanding Cross-Domain Adaptation in Low-Resource Topic Modeling](understanding_cross-domain_adaptation_in_low-resource_topic_modeling.md)
+- [SoRFT: Issue Resolving with Subtask-oriented Reinforced Fine-Tuning](sorft_issue_resolving_with_subtask-oriented_reinforced_fine-tuning.md)
 
 <!-- RELATED:END -->

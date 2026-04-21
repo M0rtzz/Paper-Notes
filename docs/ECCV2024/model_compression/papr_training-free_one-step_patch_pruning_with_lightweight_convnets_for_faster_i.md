@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PaPr: Training-Free One-Step Patch Pruning with Lightweight ConvNets for Faster Inference
 description: >-
@@ -168,7 +168,7 @@ PaPr 在 MAE 模型上优势尤为明显（ViT-B 上比 ToMe 高 **4.5%** 精度
 - [SpaceJAM: a Lightweight and Regularization-free Method for Fast Joint Alignment of Images](spacejam_a_lightweight_and_regularization-free_method_for_fast_joint_alignment_o.md)
 - [One-Step Diffusion-Based Image Compression with Semantic Distillation](../../NeurIPS2025/model_compression/one-step_diffusion-based_image_compression_with_semantic_distillation.md)
 - [Isomorphic Pruning for Vision Models](isomorphic_pruning_for_vision_models.md)
-- [PYRA: Parallel Yielding Re-Activation for Training-Inference Efficient Task Adaptation](pyra_parallel_yielding_re-activation_for_training-inference_efficient_task_adapt.md)
 - [Auto-DAS: Automated Proxy Discovery for Training-free Distillation-aware Architecture Search](auto-das_automated_proxy_discovery_for_training-free_distillation-aware_architec.md)
+- [Critical Patch-Aware Sparse Prompting with Decoupled Training for Continual Learning on the Edge](../../CVPR2026/model_compression/critical_patch-aware_sparse_prompting_with_decoupled_training_for_continual_lear.md)
 
 <!-- RELATED:END -->

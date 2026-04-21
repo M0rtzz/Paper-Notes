@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RL Tango: Reinforcing Generator and Verifier Together for Language Reasoning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rao-Blackwellised Reparameterisation Gradients
 description: >-
@@ -142,9 +142,9 @@ R2-G2 在不同模型深度下的方差降低比率:
 ## 相关论文
 
 - [Efficient Federated Learning against Byzantine Attacks and Data Heterogeneity via Aggregating Normalized Gradients](efficient_federated_learning_against_byzantine_attacks_and_data_heterogeneity_vi.md)
-- [Deep Taxonomic Networks for Unsupervised Hierarchical Prototype Discovery](deep_taxonomic_networks_for_unsupervised_hierarchical_prototype_discovery.md)
-- [Natural Gradient Descent for Improving Variational Inference Based Classification of Radio Galaxies](natural_gradient_descent_for_improving_variational_inference_based_classificatio.md)
+- [VIKING: Deep Variational Inference with Stochastic Projections](viking_deep_variational_inference_with_stochastic_projections.md)
 - [Learning Parameterized Skills from Demonstrations](learning_parameterized_skills_from_demonstrations.md)
 - [VERA: Variational Inference Framework for Jailbreaking Large Language Models](vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
+- [NeuSymEA: Neuro-symbolic Entity Alignment via Variational Inference](neuro-symbolic_entity_alignment_via_variational_inference.md)
 
 <!-- RELATED:END -->

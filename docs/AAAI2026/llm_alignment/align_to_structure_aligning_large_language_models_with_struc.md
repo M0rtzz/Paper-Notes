@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Align to Structure: Aligning Large Language Models with Structural Information
 description: >-

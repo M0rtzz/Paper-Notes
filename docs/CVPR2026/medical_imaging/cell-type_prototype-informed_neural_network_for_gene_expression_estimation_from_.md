@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cell-Type Prototype-Informed Neural Network for Gene Expression Estimation from Pathology Images
 description: >-
@@ -119,8 +119,8 @@ CPNN 的核心假设：slide/patch 级基因表达 = 各细胞类型原型表达
 ## 相关论文
 
 - [Learning Relative Gene Expression Trends from Pathology Images in Spatial Transcriptomics](../../NeurIPS2025/medical_imaging/learning_relative_gene_expression_trends_from_pathology_images_in_spatial_transc.md)
-- [Momentum Memory for Knowledge Distillation in Computational Pathology](momentum_memory_for_knowledge_distillation_in_computational_pathology.md)
 - [Cross-Slice Knowledge Transfer via Masked Multi-Modal Heterogeneous Graph Contrastive Learning for Spatial Gene Expression Inference](cross-slice_knowledge_transfer_via_masked_multi-modal_heterogeneous_graph_contra.md)
+- [Momentum Memory for Knowledge Distillation in Computational Pathology](momentum_memory_for_knowledge_distillation_in_computational_pathology.md)
 - [Intrinsic Lorentz Neural Network](../../ICLR2026/medical_imaging/intrinsic_lorentz_neural_network.md)
 - [Beyond Pixel Simulation: Pathology Image Generation via Diagnostic Semantic Tokens and Prototype Control](beyond_pixel_simulation_pathology_image_generation_via_diagnostic_semantic_token.md)
 

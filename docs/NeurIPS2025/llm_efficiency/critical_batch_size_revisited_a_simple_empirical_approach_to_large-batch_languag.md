@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Critical Batch Size Revisited: A Simple Empirical Approach to Large-Batch Language Model Training
 description: >-

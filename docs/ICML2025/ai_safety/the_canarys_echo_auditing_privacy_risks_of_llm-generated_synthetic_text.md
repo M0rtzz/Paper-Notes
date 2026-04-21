@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Canary's Echo: Auditing Privacy Risks of LLM-Generated Synthetic Text
 description: >-
@@ -169,8 +169,8 @@ LLM 微调
 
 ## 相关论文
 
-- [Sequentially Auditing Differential Privacy](../../NeurIPS2025/ai_safety/sequentially_auditing_differential_privacy.md)
 - [Robust Multi-bit Text Watermark with LLM-based Paraphrasers](robust_multi-bit_text_watermark_with_llm-based_paraphrasers.md)
+- [Sequentially Auditing Differential Privacy](../../NeurIPS2025/ai_safety/sequentially_auditing_differential_privacy.md)
 - [MaskSQL: Safeguarding Privacy for LLM-Based Text-to-SQL via Abstraction](../../NeurIPS2025/ai_safety/masksql_safeguarding_privacy_for_llm-based_text-to-sql_via_abstraction.md)
 - [Adversarial Paraphrasing: A Universal Attack for Humanizing AI-Generated Text](../../NeurIPS2025/ai_safety/adversarial_paraphrasing_a_universal_attack_for_humanizing_ai-generated_text.md)
 - [Unifying Re-Identification, Attribute Inference, and Data Reconstruction Risks in Differential Privacy](../../NeurIPS2025/ai_safety/unifying_re-identification_attribute_inference_and_data_reconstruction_risks_in_.md)

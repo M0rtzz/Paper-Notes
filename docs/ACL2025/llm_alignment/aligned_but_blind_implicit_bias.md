@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Aligned but Blind: Alignment Increases Implicit Bias by Reducing Awareness of Race
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Symmetry-Aware GFlowNets
 description: >-
@@ -129,6 +129,6 @@ SA-GFN 的核心修改极其简洁：在现有 GFlowNet 管线中，仅将奖励
 - [Understanding Mode Connectivity via Parameter Space Symmetry](understanding_mode_connectivity_via_parameter_space_symmetry.md)
 - [Time-Aware World Model for Adaptive Prediction and Control](time-aware_world_model_for_adaptive_prediction_and_control.md)
 - [UnHiPPO: Uncertainty-Aware Initialization for State Space Models](unhippo_uncertainty-aware_initialization_for_state_space_models.md)
-- [Sparse Training from Random Initialization: Aligning Lottery Ticket Masks using Weight Symmetry](sparse_training_from_random_initialization_aligning_lottery_ticket_masks_using_w.md)
+- [Constrained Hamiltonian Systems on Observation-Induced Fiber Bundles: Theory of Symmetry and Integrability](constrained_hamiltonian_systems_on_observation-induced_fiber_bundles_theory_of_s.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Simulation-Based Inference for Neutrino Interaction Model Parameter Tuning
 description: >-

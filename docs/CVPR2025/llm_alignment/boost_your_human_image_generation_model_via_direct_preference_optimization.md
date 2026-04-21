@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Boost Your Human Image Generation Model via Direct Preference Optimization
 description: >-
@@ -128,7 +128,7 @@ Win-rate: vs Diffusion-DPO **99.97%**, vs Pick-a-Pic v2 **86.03%**
 - [DP²O-SR: Direct Perceptual Preference Optimization for Real-World Image Super-Resolution](../../NeurIPS2025/llm_alignment/dp2o-sr_direct_perceptual_preference_optimization_for_real-world_image_super-res.md)
 - [ADHMR: Aligning Diffusion-based Human Mesh Recovery via Direct Preference Optimization](../../ICML2025/llm_alignment/adhmr_aligning_diffusion-based_human_mesh_recovery_via_direct_preference_optimiz.md)
 - [Curriculum Direct Preference Optimization for Diffusion and Consistency Models](curriculum_direct_preference_optimization_for_diffusion_and_consistency_models.md)
-- [Enhancing SAM with Efficient Prompting and Preference Optimization for Semi-Supervised Medical Image Segmentation](enhancing_sam_with_efficient_prompting_and_preference_optimization_for_semi-supe.md)
 - [Ask a Strong LLM Judge when Your Reward Model is Uncertain](../../NeurIPS2025/llm_alignment/ask_a_strong_llm_judge_when_your_reward_model_is_uncertain.md)
+- [Enhancing SAM with Efficient Prompting and Preference Optimization for Semi-Supervised Medical Image Segmentation](enhancing_sam_with_efficient_prompting_and_preference_optimization_for_semi-supe.md)
 
 <!-- RELATED:END -->

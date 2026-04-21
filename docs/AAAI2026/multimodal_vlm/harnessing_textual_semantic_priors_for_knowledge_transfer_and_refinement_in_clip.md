@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Harnessing Textual Semantic Priors for Knowledge Transfer and Refinement in CLIP-Driven Continual Learning
 description: >-

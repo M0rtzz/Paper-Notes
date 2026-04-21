@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CityWalker: Learning Embodied Urban Navigation from Web-Scale Videos
 description: >-
@@ -126,6 +126,6 @@ tags:
 - [Memo: Training Memory-Efficient Embodied Agents with Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/memo_training_memory-efficient_embodied_agents_with_reinforcement_learning.md)
 - [NavQ: Learning a Q-Model for Foresighted Vision-and-Language Navigation](../../ICCV2025/reinforcement_learning/navq_learning_a_q-model_for_foresighted_vision-and-language_navigation.md)
 - [DeepDiver: Adaptive Search Intensity Scaling via Open-Web Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/deepdiver_adaptive_search_intensity_scaling_via_open-web_reinforcement_learning.md)
-- [Provable Ordering and Continuity in Vision-Language Pretraining for Generalizable Embodied Agents](../../NeurIPS2025/reinforcement_learning/provable_ordering_and_continuity_in_vision-language_pretraining_for_generalizabl.md)
+- [Mind the GAP! The Challenges of Scale in Pixel-based Deep Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/mind_the_gap_the_challenges_of_scale_in_pixel-based_deep_reinforcement_learning.md)
 
 <!-- RELATED:END -->

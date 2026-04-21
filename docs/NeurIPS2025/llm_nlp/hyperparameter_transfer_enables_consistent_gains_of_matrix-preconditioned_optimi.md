@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hyperparameter Transfer Enables Consistent Gains of Matrix-Preconditioned Optimizers Across Scales
 description: >-

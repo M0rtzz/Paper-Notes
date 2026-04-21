@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EcoAgent: An Efficient Device-Cloud Collaborative Multi-Agent Framework for Mobile Automation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Imagine Before Concentration: Diffusion-Guided Registers Enhance Partially Relevant Video Retrieval
 description: >-
@@ -139,10 +139,10 @@ DreamPRVR 包含四个核心组件：(1) 文本语义结构学习，构建有序
 
 ## 相关论文
 
-- [SPDMark: Selective Parameter Displacement for Robust Video Watermarking](spdmark_selective_parameter_displacement_for_robust_video_watermarking.md)
+- [OpenDPR: Open-Vocabulary Change Detection via Vision-Centric Diffusion-Guided Prototype Retrieval for Remote Sensing Imagery](opendpr_open-vocabulary_change_detection_via_vision-centric_diffusion-guided_pro.md)
 - [Learnability-Guided Diffusion for Dataset Distillation](learnability-guided_diffusion_for_dataset_distillation.md)
 - [Enhancing Image Aesthetics with Dual-Conditioned Diffusion Models Guided by Multimodal Perception](enhancing_image_aesthetics_with_dual-conditioned_diffusion_models_guided_by_mult.md)
+- [SPDMark: Selective Parameter Displacement for Robust Video Watermarking](spdmark_selective_parameter_displacement_for_robust_video_watermarking.md)
 - [Understand Before You Generate: Self-Guided Training for Autoregressive Image Generation](../../NeurIPS2025/image_generation/understand_before_you_generate_self-guided_training_for_autoregressive_image_gen.md)
-- [Improved Object-Centric Diffusion Learning with Registers and Contrastive Alignment (CODA)](../../ICLR2026/image_generation/improved_object-centric_diffusion_learning_with_registers_and_contrastive_alignm.md)
 
 <!-- RELATED:END -->

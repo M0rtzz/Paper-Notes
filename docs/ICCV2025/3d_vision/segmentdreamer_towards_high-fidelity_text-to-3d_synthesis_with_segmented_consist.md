@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SegmentDreamer: Towards High-Fidelity Text-to-3D Synthesis with Segmented Consistency Trajectory Distillation
 description: >-

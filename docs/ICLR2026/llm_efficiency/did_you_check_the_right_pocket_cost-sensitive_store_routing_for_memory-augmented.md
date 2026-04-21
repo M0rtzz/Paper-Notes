@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Did You Check the Right Pocket? Cost-Sensitive Store Routing for Memory-Augmented Agents
 description: >-
@@ -141,9 +141,9 @@ tags:
 ## 相关论文
 
 - [Universe Routing: Why Self-Evolving Agents Need Epistemic Control](universe_routing_why_self-evolving_agents_need_epistemic_control.md)
+- [TokenSeek: Memory Efficient Fine Tuning via Instance-Aware Token Selection](tokenseek_memory_efficient_fine_tuning_via_instance-aware_token_selection.md)
 - [Tensor Product Attention Is All You Need](../../NeurIPS2025/llm_efficiency/tensor_product_attention_is_all_you_need.md)
 - [Obliviator Reveals the Cost of Nonlinear Guardedness in Concept Erasure](../../NeurIPS2025/llm_efficiency/obliviator_reveals_the_cost_of_nonlinear_guardedness_in_concept_erasure.md)
-- [Dense Associative Memory with Epanechnikov Energy](../../NeurIPS2025/llm_efficiency/dense_associative_memory_with_epanechnikov_energy.md)
-- [PENCIL: Long Thoughts with Short Memory](../../ICML2025/llm_efficiency/pencil_long_thoughts_with_short_memory.md)
+- [CostFilter-AD: Enhancing Anomaly Detection through Matching Cost Filtering](../../ICML2025/llm_efficiency/costfilter-ad_enhancing_anomaly_detection_through_matching_cost_filtering.md)
 
 <!-- RELATED:END -->

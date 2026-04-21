@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Monocular Occupancy Prediction for Scalable Indoor Scenes
 description: >-
@@ -194,7 +194,7 @@ DepthAnything 优于 ZoeDepth，且可学习的深度精化策略进一步提升
 - [Monocular Open Vocabulary Occupancy Prediction for Indoor Scenes (LegoOcc)](../../CVPR2026/autonomous_driving/monocular_open_vocabulary_occupancy_prediction_for_indoor_scenes.md)
 - [UniTraj: A Unified Framework for Scalable Vehicle Trajectory Prediction](unitraj_a_unified_framework_for_scalable_vehicle_trajectory_prediction.md)
 - [Fully Sparse 3D Occupancy Prediction](fully_sparse_3d_occupancy_prediction.md)
+- [OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving](occgen_generative_multimodal_3d_occupancy_prediction_for_aut.md)
 - [GaussianFormer: Scene as Gaussians for Vision-Based 3D Semantic Occupancy Prediction](gaussianformer_scene_as_gaussians_for_vision-based_3d_semantic_occupancy_predict.md)
-- [OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving](occgen_generative_multi-modal_3d_occupancy_prediction_for_autonomous_driving.md)
 
 <!-- RELATED:END -->

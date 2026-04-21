@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spiking Brain Compression: Post-Training Second-Order Compression for Spiking Neural Networks
 description: >-

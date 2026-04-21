@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Expandable and Differentiable Dual Memories with Orthogonal Regularization for Exemplar-free Continual Learning
 description: >-

@@ -1,7 +1,16 @@
-﻿---
-title: "EgoPressure: A Dataset for Hand Pressure and Pose Estimation in Egocentric Vision"
-description: "EgoPressure：首个第一人称视角的手部触觉压力与姿态数据集，含高保真多视角手部姿态标注和压力UV映射"
-tags: ["hand-pose", "pressure-estimation", "egocentric", "dataset", "hand-object-interaction"]
+---
+title: >-
+  [论文解读] EgoPressure: A Dataset for Hand Pressure and Pose Estimation in Egocentric Vision
+description: >-
+  [CVPR 2025][人体理解][手部姿态估计] EgoPressure 提出首个第一人称视角的手部触觉压力和姿态数据集，包含 21 名参与者 5 小时的 RGB-D 交互数据、基于多视角优化的高保真 MANO 手部网格标注和压力传感器的真实压力映射，并建立了从 RGB 图像估计手部压力和姿态的基准模型。
+tags:
+  - CVPR 2025
+  - 人体理解
+  - 手部姿态估计
+  - 压力感知
+  - 第一人称视角
+  - 多视角标注
+  - 手-物交互
 ---
 
 # EgoPressure: A Dataset for Hand Pressure and Pose Estimation in Egocentric Vision
@@ -119,10 +128,10 @@ PressureFormer 的损失：$\mathcal{L}_{\mathcal{PF}} = w_1 \mathcal{L}_c + w_2
 
 ## 相关论文
 
-- [3D Hand Pose Estimation in Everyday Egocentric Images](../../ECCV2024/human_understanding/3d_hand_pose_estimation_in_everyday_egocentric_images.md)
+- [UniHOPE: A Unified Approach for Hand-Only and Hand-Object Pose Estimation](unihope_a_unified_approach_for_hand-only_and_hand-object_pose_estimation.md)
 - [PoseBH: Prototypical Multi-Dataset Training Beyond Human Pose Estimation](posebh_prototypical_multi-dataset_training_beyond_human_pose_estimation.md)
 - [Analyzing the Synthetic-to-Real Domain Gap in 3D Hand Pose Estimation](analyzing_the_synthetic-to-real_domain_gap_in_3d_hand_pose_estimation.md)
 - [GigaHands: A Massive Annotated Dataset of Bimanual Hand Activities](gigahands_a_massive_annotated_dataset_of_bimanual_hand_activities.md)
-- [GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation](gce-pose_global_context_enhancement_for_category-level_object_pose_estimation.md)
+- [3D Hand Pose Estimation in Everyday Egocentric Images](../../ECCV2024/human_understanding/3d_hand_pose_estimation_in_everyday_egocentric_images.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Evaluating Proactive Risk Awareness of Multimodal Language Models
 description: >-

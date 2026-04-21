@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Random Search Neural Networks for Efficient and Expressive Graph Learning
 description: >-

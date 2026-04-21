@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MR-CoSMo: Visual-Text Memory Recall and Direct Cross-Modal Alignment Method for Query-Driven 3D Segmentation
 description: >-
@@ -215,7 +215,7 @@ Backbone替换消融：
 
 - [CrossOver: 3D Scene Cross-Modal Alignment](../../CVPR2025/3d_vision/crossover_3d_scene_cross-modal_alignment.md)
 - [Easy3D: A Simple Yet Effective Method for 3D Interactive Segmentation](../../ICCV2025/3d_vision/easy3d_a_simple_yet_effective_method_for_3d_interactive_segmentation.md)
-- [SceneGraphLoc: Cross-Modal Coarse Visual Localization on 3D Scene Graphs](../../ECCV2024/3d_vision/scenegraphloc_cross-modal_coarse_visual_localization_on_3d_scene_graphs.md)
+- [SceneGraphLoc: Cross-Modal Coarse Visual Localization on 3D Scene Graphs](../../ECCV2024/3d_vision/scenegraphloc_crossmodal_coarse_visual_localization_on_3d_sc.md)
 - [Point-SRA: Self-Representation Alignment for 3D Representation Learning](point-sra_self-representation_alignment_for_3d_representation_learning.md)
 - [GEAL: Generalizable 3D Affordance Learning with Cross-Modal Consistency](../../CVPR2025/3d_vision/geal_generalizable_3d_affordance_learning_with_cross-modal_consistency.md)
 

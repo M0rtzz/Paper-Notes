@@ -2,9 +2,15 @@
 title: >-
   [论文解读] Can Graph Neural Networks Learn Language with Extremely Weak Text Supervision?
 description: >-
-  [图学习] 本文提出Morpher，一种多模态提示学习范式，在极弱文本监督（仅几个token的标签名）下，通过同时学习图提示和文本提示将预训练GNN嵌入到LLM的语义空间中，实现跨任务、跨领域的图分类迁移以及首个CLIP风格的GNN零样本分类原型。
+  [ACL 2025][图学习][图神经网络] 本文提出Morpher，一种多模态提示学习范式，在极弱文本监督（仅几个token的标签名）下，通过同时学习图提示和文本提示将预训练GNN嵌入到LLM的语义空间中，实现跨任务、跨领域的图分类迁移以及首个CLIP风格的GNN零样本分类原型。
 tags:
+  - ACL 2025
   - 图学习
+  - 图神经网络
+  - 多模态提示学习
+  - 图文对齐
+  - 少样本学习
+  - 零样本分类
 ---
 
 # Can Graph Neural Networks Learn Language with Extremely Weak Text Supervision?
@@ -124,9 +130,9 @@ $$\mathcal{L}_{G \rightarrow T} = -\frac{1}{B}\sum_{i=1}^{B} \log \frac{\exp(\ma
 ## 相关论文
 
 - [GraphNarrator: Generating Textual Explanations for Graph Neural Networks](graphnarrator.md)
-- [Extending Complex Logical Queries on Uncertain Knowledge Graphs](extending_complex_logical_queries_uncertain_knowledge_graphs.md)
 - [Can Knowledge Graphs Make Large Language Models More Trustworthy? An Empirical Study Over Open-ended Question Answering](kg_llm_trustworthy_qa.md)
 - [Dynamic Bundling with Large Language Models for Zero-Shot Inference on Text-Attributed Graphs](../../NeurIPS2025/graph_learning/dynamic_bundling_with_large_language_models_for_zero-shot_inference_on_text-attr.md)
+- [Over-squashing in Spatiotemporal Graph Neural Networks](../../NeurIPS2025/graph_learning/over-squashing_in_spatiotemporal_graph_neural_networks.md)
 - [Graph Neural Networks for Interferometer Simulations](../../NeurIPS2025/graph_learning/graph_neural_networks_for_interferometer_simulations.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NeSTR: A Neuro-Symbolic Abductive Framework for Temporal Reasoning in Large Language Models
 description: >-
@@ -136,6 +136,6 @@ NeSTR 是纯 prompting 策略，完全不需要训练或微调。所有实验在
 - [Prompt and Parameter Co-Optimization for Large Language Models](../../ICLR2026/llm_evaluation/prompt_and_parameter_co-optimization_for_large_language_models.md)
 - [Com2: A Causal-Guided Benchmark for Exploring Complex Commonsense Reasoning in Large Language Models](../../ACL2025/llm_evaluation/com2_causal_commonsense.md)
 - [Correlated Errors in Large Language Models](../../ICML2025/llm_evaluation/correlated_errors_in_large_language_models.md)
-- [In-Context Learning of Temporal Point Processes with Foundation Inference Models](../../ICLR2026/llm_evaluation/in-context_learning_of_temporal_point_processes_with_foundation_inference_models.md)
+- [Lost in Benchmarks? Rethinking Large Language Model Benchmarking with Item Response Theory](lost_in_benchmarks_rethinking_large_language_model_benchmarking_with_item_respon.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Manipulating Feature Visualizations with Gradient Slingshots
 description: >-
@@ -132,6 +132,6 @@ tags:
 - [Synthesizing Images on Perceptual Boundaries of ANNs for Uncovering and Manipulating Human Perceptual Variability](../../ICML2025/robotics/synthesizing_images_on_perceptual_boundaries_of_anns_for_uncovering_and_manipula.md)
 - [Resolving Token-Space Gradient Conflicts: Token Space Manipulation for Transformer-Based Multi-Task Learning](../../ICCV2025/robotics/resolving_token-space_gradient_conflicts_token_space_manipulation_for_transforme.md)
 - [FORCE: Transferable Visual Jailbreaking Attacks via Feature Over-Reliance CorrEction](../../CVPR2026/robotics/force_transferable_visual_jailbreaking_attacks_via_feature_over-reliance_correct.md)
-- [MesaTask: Towards Task-Driven Tabletop Scene Generation via 3D Spatial Reasoning](mesatask_towards_task-driven_tabletop_scene_generation_via_3d_spatial_reasoning.md)
+- [Redefining Experts: Interpretable Decomposition of Language Models for Toxicity Mitigation](redefining_experts_interpretable_decomposition_of_language_models_for_toxicity_m.md)
 
 <!-- RELATED:END -->

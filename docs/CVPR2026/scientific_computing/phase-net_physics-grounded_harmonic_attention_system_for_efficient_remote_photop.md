@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PHASE-Net: Physics-Grounded Harmonic Attention System for Efficient Remote Photoplethysmography Measurement
 description: >-

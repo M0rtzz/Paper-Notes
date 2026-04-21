@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PinPoint: Evaluation of Composed Image Retrieval with Explicit Negatives, Multi-Image Queries, and Paraphrase Testing
 description: >-
@@ -153,8 +153,8 @@ PinPoint 是一个**评测基准**而非检索模型，核心贡献在数据集�
 
 - [Rethinking VLMs for Image Forgery Detection and Localization](rethinking_vlms_for_image_forgery_detection_and_lo.md)
 - [LAMP: Learning Universal Adversarial Perturbations for Multi-Image Tasks via Pre-trained Models](../../AAAI2026/ai_safety/lamp_learning_universal_adversarial_perturbations_for_multi-image_tasks_via_pre-.md)
-- [Multi-task Adversarial Attacks against Black-box Model with Few-shot Queries](../../ACL2025/ai_safety/multi-task_adversarial_attacks_against_black-box_model_with_few-shot_queries.md)
-- [Multi-Paradigm Collaborative Adversarial Attack Against Multi-Modal Large Language Models](multi-paradigm_collaborative_adversarial_attack_against_multi-modal_large_langua.md)
 - [Noise-Assisted Prompt Learning for Image Forgery Detection and Localization](../../ECCV2024/ai_safety/noise-assisted_prompt_learning_for_image_forgery_detection_and_localization.md)
+- [Multi-Paradigm Collaborative Adversarial Attack Against Multi-Modal Large Language Models](multi-paradigm_collaborative_adversarial_attack_against_multi-modal_large_langua.md)
+- [Oasis: One Image is All You Need for Multimodal Instruction Data Synthesis](../../ICCV2025/ai_safety/oasis_one_image_is_all_you_need_for_multimodal_instruction_data_synthesis.md)
 
 <!-- RELATED:END -->

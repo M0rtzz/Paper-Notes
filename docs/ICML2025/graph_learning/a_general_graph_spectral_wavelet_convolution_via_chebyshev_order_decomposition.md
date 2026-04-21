@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A General Graph Spectral Wavelet Convolution via Chebyshev Order Decomposition
 description: >-

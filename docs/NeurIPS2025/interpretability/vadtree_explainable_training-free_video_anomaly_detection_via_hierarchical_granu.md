@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VADTree: Explainable Training-Free Video Anomaly Detection via Hierarchical Granularity
 description: >-

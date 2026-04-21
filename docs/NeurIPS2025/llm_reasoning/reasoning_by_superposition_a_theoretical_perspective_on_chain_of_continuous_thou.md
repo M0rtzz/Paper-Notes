@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reasoning by Superposition: A Theoretical Perspective on Chain of Continuous Thought
 description: >-

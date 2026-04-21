@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Diffusion Models Meet Contextual Bandits
 description: >-
@@ -183,6 +183,6 @@ LinTS/dTS 累积 regret 比值随 $K$ 从 10 增到 $5 \times 10^4$ 而单调增
 - [Understanding Representation Dynamics of Diffusion Models via Low-Dimensional Models](understanding_representation_dynamics_of_diffusion_models_via_low-dimensional_mo.md)
 - [When Are Concepts Erased From Diffusion Models?](when_are_concepts_erased_from_diffusion_models.md)
 - [Token Perturbation Guidance for Diffusion Models](token_perturbation_guidance_for_diffusion_models.md)
-- [Composition and Alignment of Diffusion Models using Constrained Learning](composition_and_alignment_of_diffusion_models_using_constrai.md)
+- [Entropy Rectifying Guidance for Diffusion and Flow Models](entropy_rectifying_guidance_for_diffusion_and_flow_models.md)
 
 <!-- RELATED:END -->

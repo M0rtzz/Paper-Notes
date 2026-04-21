@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MF-LAL: Drug Compound Generation Using Multi-Fidelity Latent Space Active Learning
 description: >-
@@ -179,8 +179,8 @@ MF-LAL 在 40 个生成化合物的扩展评估中：BRD4(2) 平均 ABFE **-6.3*
 
 - [Amortized Active Generation of Pareto Sets](../../NeurIPS2025/medical_imaging/amortized_active_generation_of_pareto_sets.md)
 - [Generating Multi-Table Time Series EHR from Latent Space with Minimal Preprocessing](../../NeurIPS2025/medical_imaging/generating_multi-table_time_series_ehr_from_latent_space_with_minimal_preprocess.md)
+- [ZoomLDM: Latent Diffusion Model for Multi-Scale Image Generation](../../CVPR2025/medical_imaging/zoomldm_latent_diffusion_model_for_multi-scale_image_generation.md)
 - [Towards Unified and Lossless Latent Space for 3D Molecular Latent Diffusion Modeling](../../NeurIPS2025/medical_imaging/towards_unified_and_lossless_latent_space_for_3d_molecular_latent_diffusion_mode.md)
-- [Controllable Latent Space Augmentation for Digital Pathology](../../ICCV2025/medical_imaging/controllable_latent_space_augmentation_for_digital_pathology.md)
 - [GFlowNets for Learning Better Drug-Drug Interaction Representations](../../NeurIPS2025/medical_imaging/gflownets_for_learning_better_drug-drug_interaction_representations.md)
 
 <!-- RELATED:END -->

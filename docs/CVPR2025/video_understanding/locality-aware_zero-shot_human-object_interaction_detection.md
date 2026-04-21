@@ -1,7 +1,16 @@
-﻿---
-title: "Locality-Aware Zero-Shot Human-Object Interaction Detection"
-description: "提出LAIN框架，通过局部性适配器和交互适配器增强CLIP表征的局部感知和交互感知能力，在多种零样本HOI检测设定下达到SOTA"
-tags: ["零样本学习", "人物-物体交互", "CLIP", "目标检测", "CVPR2025"]
+---
+title: >-
+  [论文解读] Locality-Aware Zero-Shot Human-Object Interaction Detection
+description: >-
+  [CVPR 2025][视频理解][零样本HOI检测] 提出 LAIN 框架，通过局部适配器（LA）和交互适配器（IA）增强 CLIP 表示的局部细粒度感知和交互推理能力，在多种零样本 HOI 检测设定下达到 SOTA。
+tags:
+  - CVPR 2025
+  - 视频理解
+  - 零样本HOI检测
+  - CLIP适配
+  - 局部感知
+  - 交互推理
+  - 视觉语言模型
 ---
 
 # Locality-Aware Zero-Shot Human-Object Interaction Detection
@@ -127,10 +136,10 @@ LAIN 是一个两阶段 HOI 检测框架：
 
 ## 相关论文
 
-- [VDRP: Visual Diversity and Region-aware Prompt Learning for Zero-shot HOI Detection](../../NeurIPS2025/video_understanding/visual_diversity_and_region-aware_prompt_learning_for_zero-shot_hoi_detection.md)
 - [No More Sibling Rivalry: Debiasing Human-Object Interaction Detection](../../ICCV2025/video_understanding/no_more_sibling_rivalry_debiasing_human-object_interaction_detection.md)
-- [Part-Aware Bottom-Up Group Reasoning for Fine-Grained Social Interaction Detection](../../NeurIPS2025/video_understanding/part-aware_bottom-up_group_reasoning_for_fine-grained_social_interaction_detecti.md)
-- [HuMoCon: Concept Discovery for Human Motion Understanding](humocon_concept_discovery_for_human_motion_understanding.md)
-- [FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking](fc-track_overlap-aware_post-association_correction_for_online_multi-object_track.md)
+- [VDRP: Visual Diversity and Region-aware Prompt Learning for Zero-shot HOI Detection](../../NeurIPS2025/video_understanding/visual_diversity_and_region-aware_prompt_learning_for_zero-shot_hoi_detection.md)
+- [Object-Shot Enhanced Grounding Network for Egocentric Video](object-shot_enhanced_grounding_network_for_egocentric_video.md)
+- [Progress-Aware Video Frame Captioning](progress-aware_video_frame_captioning.md)
+- [TAMT: Temporal-Aware Model Tuning for Cross-Domain Few-Shot Action Recognition](tamt_temporal-aware_model_tuning_for_cross-domain_few-shot_action_recognition.md)
 
 <!-- RELATED:END -->

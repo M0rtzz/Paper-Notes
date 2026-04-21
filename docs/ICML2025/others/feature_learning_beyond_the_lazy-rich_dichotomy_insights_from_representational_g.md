@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Feature Learning beyond the Lazy-Rich Dichotomy: Insights from Representational Geometry
 description: >-
@@ -157,6 +157,6 @@ VGG-11 在 CIFAR-10 上训练，尽管训练 / 测试精度快速饱和，流形
 - [Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry](../../NeurIPS2025/others/reliable_active_learning_from_unreliable_labels_via_neural_collapse_geometry.md)
 - [On a Geometry of Interbrain Networks](../../NeurIPS2025/others/on_a_geometry_of_interbrain_networks.md)
 - [Hierarchical Refinement: Optimal Transport to Infinity and Beyond](hierarchical_refinement_optimal_transport_to_infinity_and_beyond.md)
-- [Training the Untrainable: Introducing Inductive Bias via Representational Alignment](../../NeurIPS2025/others/training_the_untrainable_introducing_inductive_bias_via_representational_alignme.md)
+- [Task-Agnostic Guided Feature Expansion for Class-Incremental Learning](../../CVPR2025/others/task-agnostic_guided_feature_expansion_for_class-incremental_learning.md)
 
 <!-- RELATED:END -->

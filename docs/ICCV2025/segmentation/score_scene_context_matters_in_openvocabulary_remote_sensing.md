@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SCORE: Scene Context Matters in Open-Vocabulary Remote Sensing Instance Segmentation
 description: >-

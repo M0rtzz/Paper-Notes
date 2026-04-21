@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Jigsaw++: Imagining Complete Shape Priors for Object Reassembly
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sharper Convergence Rates for Nonconvex Optimisation via Reduction Mappings
 description: >-

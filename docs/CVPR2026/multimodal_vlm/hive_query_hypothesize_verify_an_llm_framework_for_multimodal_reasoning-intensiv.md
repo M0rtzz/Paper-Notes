@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HIVE: Query, Hypothesize, Verify — An LLM Framework for Multimodal Reasoning-Intensive Retrieval
 description: >-

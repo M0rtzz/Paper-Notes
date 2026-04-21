@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SMMILE: An Expert-Driven Benchmark for Multimodal Medical In-Context Learning
 description: >-
@@ -153,7 +153,7 @@ SMMILE 不是一个模型方法论文，而是一个评测基准（benchmark）�
 - [CSTRL: Context-Driven Sequential Transfer Learning for Abstractive Radiology Report Summarization](../../ACL2025/medical_imaging/cstrl_context-driven_sequential_transfer_learning_for_abstractive_radiology_repo.md)
 - [MTBBench: A Multimodal Sequential Clinical Decision-Making Benchmark in Oncology](mtbbench_a_multimodal_sequential_clinical_decision-making_benchmark_in_oncology.md)
 - [Meta-Learning an In-Context Transformer Model of Human Higher Visual Cortex](meta-learning_an_in-context_transformer_model_of_human_higher_visual_cortex.md)
+- [Show and Segment: Universal Medical Image Segmentation via In-Context Learning](../../CVPR2025/medical_imaging/show_and_segment_universal_medical_image_segmentation_via_in-context_learning.md)
 - [MedMKG: Benchmarking Medical Knowledge Exploitation with Multimodal Knowledge Graph](medmkg_benchmarking_medical_knowledge_exploitation_with_multimodal_knowledge_gra.md)
-- [PatientSim: A Persona-Driven Simulator for Realistic Doctor-Patient Interactions](patientsim_a_persona-driven_simulator_for_realistic_doctor-patient_interactions.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TRivia: Self-supervised Fine-tuning of Vision-Language Models for Table Recognition
 description: >-

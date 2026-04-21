@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GSAP-ERE: Fine-Grained Scholarly Entity and Relation Extraction Focused on Machine Learning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Certified but Fooled! Breaking Certified Defences with Ghost Certificates
 description: >-
@@ -169,6 +169,6 @@ $$\max_\delta \sum_{i=1}^N L(f_\theta(x + \Delta_i + \delta \odot m), y) \quad \
 - [Certified Branch-and-Bound MaxSAT Solving (Extended Version)](certified_branch-and-bound_maxsat_solving_extended_version.md)
 - [LipNeXt: Scaling up Lipschitz-based Certified Robustness to Billion-parameter Models](../../ICLR2026/others/lipnext_scaling_up_lipschitz-based_certified_robustness_to_billion-parameter_mod.md)
 - [Enhancing Certified Robustness via Block Reflector Orthogonal Layers and Logit Annealing Loss](../../ICML2025/others/enhancing_certified_robustness_via_block_reflector_orthogonal_layers_and_logit_a.md)
-- [DW-DGAT: Dynamically Weighted Dual Graph Attention Network for Neurodegenerative Disease Diagnosis](dw-dgat_dynamically_weighted_dual_graph_attention_network_for_neurodegenerative_.md)
+- [Rethinking Flow and Diffusion Bridge Models for Speech Enhancement](rethinking_flow_and_diffusion_bridge_models_for_speech_enhancement.md)
 
 <!-- RELATED:END -->

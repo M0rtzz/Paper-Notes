@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EgoAdapt: Adaptive Multisensory Distillation and Policy Learning for Efficient Egocentric Perception
 description: >-
@@ -126,8 +126,8 @@ ASL 任务（EasyCom）：EgoAdapt 达到 89.74% mAP，仅 0.070 GMACs 和 0.39M
 
 - [Stabilizing Policy Gradients for Sample-Efficient Reinforcement Learning in LLM Reasoning](../../ICLR2026/video_understanding/stabilizing_policy_gradients_for_sample-efficient_reinforcement_learning_in_llm_.md)
 - [Adversarial Locomotion and Motion Imitation for Humanoid Policy Learning](../../NeurIPS2025/video_understanding/adversarial_locomotion_and_motion_imitation_for_humanoid_policy_learning.md)
-- [General Compression Framework for Efficient Transformer Object Tracking](general_compression_framework_for_efficient_transformer_object_tracking.md)
 - [MobileViCLIP: An Efficient Video-Text Model for Mobile Devices](mobileviclip_an_efficient_video-text_model_for_mobile_devices.md)
+- [General Compression Framework for Efficient Transformer Object Tracking](general_compression_framework_for_efficient_transformer_object_tracking.md)
 - [Fine-grained Spatiotemporal Grounding on Egocentric Videos](fine-grained_spatiotemporal_grounding_on_egocentric_videos.md)
 
 <!-- RELATED:END -->

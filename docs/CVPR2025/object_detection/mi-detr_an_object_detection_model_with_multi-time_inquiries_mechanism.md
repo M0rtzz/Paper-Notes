@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism
 description: >-
@@ -139,8 +139,8 @@ MI-DETR 保持标准 DETR 框架：backbone + 多层 transformer encoder 提取�
 
 - [Mr. DETR++: Instructive Multi-Route Training for Detection Transformers with MoE](mr_detr_instructive_multi-route_training_for_detection_transformers.md)
 - [Test-Time Adaptive Object Detection with Foundation Model](../../NeurIPS2025/object_detection/test-time_adaptive_object_detection_with_foundation_model.md)
-- [LaMI-DETR: Open-Vocabulary Detection with Language Model Instruction](../../ECCV2024/object_detection/lami-detr_open-vocabulary_detection_with_language_model_instruction.md)
 - [Efficient Test-Time Adaptive Object Detection via Sensitivity-Guided Pruning](efficient_test-time_adaptive_object_detection_via_sensitivity-guided_pruning.md)
+- [LaMI-DETR: Open-Vocabulary Detection with Language Model Instruction](../../ECCV2024/object_detection/lami-detr_open-vocabulary_detection_with_language_model_instruction.md)
 - [DEIM: DETR with Improved Matching for Fast Convergence](deim_detr_with_improved_matching_for_fast_convergence.md)
 
 <!-- RELATED:END -->

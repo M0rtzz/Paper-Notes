@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RDD: Retrieval-Based Demonstration Decomposer for Planner Alignment in Long-Horizon Tasks
 description: >-

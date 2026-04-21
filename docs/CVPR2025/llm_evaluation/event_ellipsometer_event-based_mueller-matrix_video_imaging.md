@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Event Ellipsometer: Event-based Mueller-Matrix Video Imaging
 description: >-
@@ -115,10 +115,10 @@ tags:
 
 ## 相关论文
 
+- [PolarFree: Polarization-based Reflection-Free Imaging](polarfree_polarization-based_reflection-free_imaging.md)
 - [Out of Sight, Out of Mind? Evaluating State Evolution in Video World Models](out_of_sight_out_of_mind_evaluating_state_evolution_in_video_world_models.md)
 - [Imaging Interiors: An Implicit Solution to Electromagnetic Inverse Scattering Problems](../../ECCV2024/llm_evaluation/imaging_interiors_an_implicit_solution_to_electromagnetic_inverse_scattering_pro.md)
 - [SIGMA: Sinkhorn-Guided Masked Video Modeling](../../ECCV2024/llm_evaluation/sigma_sinkhorn-guided_masked_video_modeling.md)
 - [Eliminating Warping Shakes for Unsupervised Online Video Stitching](../../ECCV2024/llm_evaluation/eliminating_warping_shakes_for_unsupervised_online_video_stitching.md)
-- [Deep Cost Ray Fusion for Sparse Depth Video Completion](../../ECCV2024/llm_evaluation/deep_cost_ray_fusion_for_sparse_depth_video_completion.md)
 
 <!-- RELATED:END -->

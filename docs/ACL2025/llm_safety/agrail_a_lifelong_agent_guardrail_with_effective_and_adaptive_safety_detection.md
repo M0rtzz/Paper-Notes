@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection
 description: >-

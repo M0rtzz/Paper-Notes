@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Align Once, Benefit Multilingually: Enforcing Multilingual Consistency for LLM Safety Alignment
 description: >-

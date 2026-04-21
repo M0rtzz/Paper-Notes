@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Detection: Exploring Evidence-based Multi-Agent Debate for Misinformation Intervention and Persuasion
 description: >-

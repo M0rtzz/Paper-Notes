@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Evaluating Multimodal Large Language Models on Core Music Perception Tasks
 description: >-
@@ -122,7 +122,7 @@ tags:
 - [Towards Evaluating Proactive Risk Awareness of Multimodal Language Models](towards_evaluating_proactive_risk_awareness_of_multimodal_language_models.md)
 - [Adapting Vision-Language Models for Evaluating World Models](adapting_visionlanguage_models_for_evaluating_world_models.md)
 - [Core Knowledge Deficits in Multi-Modal Language Models](../../ICML2025/multimodal_vlm/core_knowledge_deficits_in_multi-modal_language_models.md)
+- [Evaluating Model Perception of Color Illusions in Photorealistic Scenes](../../CVPR2025/multimodal_vlm/evaluating_model_perception_of_color_illusions_in_photorealistic_scenes.md)
 - [VisNumBench: Evaluating Number Sense of Multimodal Large Language Models](../../ICCV2025/multimodal_vlm/visnumbench_evaluating_number_sense_of_multimodal_large_language_models.md)
-- [AlignMMBench: Evaluating Chinese Multimodal Alignment in Large Vision-Language Models](../../ACL2025/multimodal_vlm/alignmmbench_evaluating_chinese_multimodal_alignment_in_large_vision-language_mo.md)
 
 <!-- RELATED:END -->

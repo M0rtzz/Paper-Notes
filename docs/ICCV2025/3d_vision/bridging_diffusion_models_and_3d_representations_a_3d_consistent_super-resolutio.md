@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bridging Diffusion Models and 3D Representations: A 3D Consistent Super-Resolution Framework
 description: >-
@@ -141,10 +141,10 @@ tags:
 
 ## 相关论文
 
-- [3DSR: Bridging Diffusion Models and 3D Representations for 3D Consistent Super-Resolution](bridging_diffusion_models_and_3d_representations_a_3d_consis.md)
+- [SuperGaussian: Repurposing Video Models for 3D Super Resolution](../../ECCV2024/3d_vision/supergaussian_repurposing_video_models_for_3d_super_resolution.md)
 - [From Image to Video: An Empirical Study of Diffusion Representations](from_image_to_video_an_empirical_study_of_diffusion_representations.md)
 - [Learning 3D Object Spatial Relationships from Pre-trained 2D Diffusion Models](learning_3d_object_spatial_relationships_from_pre-trained_2d_diffusion_models.md)
-- [Textured 3D Regenerative Morphing with 3D Diffusion Prior](textured_3d_regenerative_morphing_with_3d_diffusion_prior.md)
-- [AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction](ar1to3_single_image_to_consistent_3d_object_via_nextview_pre.md)
+- [SpinMeRound: Consistent Multi-View Identity Generation Using Diffusion Models](spinmeround_consistent_multi-view_identity_generation_using_diffusion_models.md)
+- [S2Gaussian: Sparse-View Super-Resolution 3D Gaussian Splatting](../../CVPR2025/3d_vision/s2gaussian_sparse-view_super-resolution_3d_gaussian_splatting.md)
 
 <!-- RELATED:END -->

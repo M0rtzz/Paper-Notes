@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unified Category-Level Object Detection and Pose Estimation from RGB Images using 3D Prototypes
 description: >-
@@ -136,10 +136,10 @@ tags:
 
 ## 相关论文
 
+- [Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection](../../CVPR2025/3d_vision/learning_class_prototypes_for_unified_sparse-supervised_3d_object_detection.md)
 - [Omni6D: Large-Vocabulary 3D Object Dataset for Category-Level 6D Object Pose Estimation](../../ECCV2024/3d_vision/omni6d_large-vocabulary_3d_object_dataset_for_category-level_6d_object_pose_esti.md)
 - [BoxDreamer: Dreaming Box Corners for Generalizable Object Pose Estimation](boxdreamer_dreaming_box_corners_for_generalizable_object_pos.md)
 - [SingRef6D: Monocular Novel Object Pose Estimation with a Single RGB Reference](../../NeurIPS2025/3d_vision/singref6d_monocular_novel_object_pose_estimation_with_a_single_rgb_reference.md)
-- [Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection](../../CVPR2025/3d_vision/learning_class_prototypes_for_unified_sparse-supervised_3d_object_detection.md)
 - [A Unified Interpretation of Training-Time Out-of-Distribution Detection](a_unified_interpretation_of_training-time_out-of-distribution_detection.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LEGION: Learning to Ground and Explain for Synthetic Image Detection
 description: >-
@@ -145,8 +145,8 @@ $$\mathcal{L}_{s2} = \mathcal{L}_{CE}(y_d, \hat{y}_d)$$
 
 - [Learn2Synth: Learning Optimal Data Synthesis Using Hypergradients for Brain Image Segmentation](learn2synth_learning_optimal_data_synthesis_using_hypergradients_for_brain_image.md)
 - [HiMTok: Learning Hierarchical Mask Tokens for Image Segmentation with Large Multimodal Model](himtok_learning_hierarchical_mask_tokens_for_image_segmentation_with_large_multi.md)
-- [Frequency-Spatial Entanglement Learning for Camouflaged Object Detection](../../ECCV2024/segmentation/frequency-spatial_entanglement_learning_for_camouflaged_object_detection.md)
+- [Paint by Inpaint: Learning to Add Image Objects by Removing Them First](../../CVPR2025/segmentation/paint_by_inpaint_learning_to_add_image_objects_by_removing_them_first.md)
 - [Learning Camouflaged Object Detection from Noisy Pseudo Label](../../ECCV2024/segmentation/learning_camouflaged_object_detection_from_noisy_pseudo_label.md)
-- [Self-supervised Synthetic Pretraining for Inference of Stellar Mass Embedded in Dense Gas](../../NeurIPS2025/segmentation/self-supervised_synthetic_pretraining_for_inference_of_stellar_mass_embedded_in_.md)
+- [Frequency-Spatial Entanglement Learning for Camouflaged Object Detection](../../ECCV2024/segmentation/frequency-spatial_entanglement_learning_for_camouflaged_object_detection.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Detecting Adversarial Data Using Perturbation Forgery
 description: >-
@@ -120,8 +120,8 @@ Perturbation Forgery 的整体 pipeline 如下：输入自然图像 → 首先�
 
 - [ForgeLens: Data-Efficient Forgery Focus for Generalizable Forgery Image Detection](../../ICCV2025/object_detection/forgelens_data-efficient_forgery_focus_for_generalizable_forgery_image_detection.md)
 - [Detecting Out-of-Distribution through the Lens of Neural Collapse](detecting_out-of-distribution_through_the_lens_of_neural_collapse.md)
+- [Stacking Brick by Brick: Aligned Feature Isolation for Incremental Face Forgery Detection](stacking_brick_by_brick_aligned_feature_isolation_for_incremental_face_forgery_d.md)
 - [Adversarial Attention Perturbations for Large Object Detection Transformers](../../ICCV2025/object_detection/adversarial_attention_perturbations_for_large_object_detection_transformers.md)
 - [Semantic Discrepancy-aware Detector for Image Forgery Identification](../../ICCV2025/object_detection/semantic_discrepancy-aware_detector_for_image_forgery_identification.md)
-- [FakeRadar: Probing Forgery Outliers to Detect Unknown Deepfake Videos](../../ICCV2025/object_detection/fakeradar_probing_forgery_outliers_to_detect_unknown_deepfake_videos.md)
 
 <!-- RELATED:END -->

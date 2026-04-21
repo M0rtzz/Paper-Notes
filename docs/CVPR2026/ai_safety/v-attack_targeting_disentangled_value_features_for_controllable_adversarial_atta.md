@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] V-Attack: Targeting Disentangled Value Features for Controllable Adversarial Attacks on LVLMs
 description: >-

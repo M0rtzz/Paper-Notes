@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LaGa: Tackling View-Dependent Semantics in 3D Language Gaussian Splatting
 description: >-

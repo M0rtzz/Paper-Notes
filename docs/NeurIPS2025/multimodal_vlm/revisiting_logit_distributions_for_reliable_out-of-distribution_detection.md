@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Revisiting Logit Distributions for Reliable Out-of-Distribution Detection
 description: >-

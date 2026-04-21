@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Diversity by Design: Leveraging Distribution Matching for Offline Model-Based Optimization
 description: >-

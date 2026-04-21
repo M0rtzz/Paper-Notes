@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Understanding Differential Transformer Unchains Pretrained Self-Attentions
 description: >-

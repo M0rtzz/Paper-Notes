@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AudSemThinker: Enhancing Audio-Language Models through Reasoning over Semantics of Sound
 description: >-

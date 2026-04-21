@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Silencing Empowerment, Allowing Bigotry: Auditing the Moderation of Hate Speech on Twitch
 description: >-

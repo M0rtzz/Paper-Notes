@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] To Label or Not to Label: PALM – A Predictive Model for Evaluating Sample Efficiency in Active Learning Models
 description: >-

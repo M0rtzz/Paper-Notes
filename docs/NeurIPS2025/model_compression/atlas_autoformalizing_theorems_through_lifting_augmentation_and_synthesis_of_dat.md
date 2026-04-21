@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ATLAS: Autoformalizing Theorems through Lifting, Augmentation, and Synthesis of Data
 description: >-

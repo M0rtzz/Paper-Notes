@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FruitNinja: 3D Object Interior Texture Generation with Gaussian Splatting
 description: >-
@@ -132,8 +132,8 @@ FruitNinja 在 CLIP Score（语义对齐）上最高，KID/FID 比 PhysGaussian 
 
 - [Texture-GS: Disentangling the Geometry and Texture for 3D Gaussian Splatting Editing](../../ECCV2024/3d_vision/texture-gs_disentangling_the_geometry_and_texture_for_3d_gaussian_splatting_edit.md)
 - [Mobile-GS: Real-time Gaussian Splatting for Mobile Devices](mobile-gs_real-time_gaussian_splatting_for_mobile_devices.md)
-- [High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)
-- [HybridGS: Decoupling Transients and Statics with 2D and 3D Gaussian Splatting](hybridgs_decoupling_transients_and_statics_with_2d_and_3d_gaussian_splatting.md)
-- [GaussianUDF: Inferring Unsigned Distance Functions through 3D Gaussian Splatting](gaussianudf_inferring_unsigned_distance_functions_through_3d_gaussian_splatting.md)
+- [SfM-Free 3D Gaussian Splatting via Hierarchical Training](sfm-free_3d_gaussian_splatting_via_hierarchical_training.md)
+- [PUP 3D-GS: Principled Uncertainty Pruning for 3D Gaussian Splatting](pup_3d-gs_principled_uncertainty_pruning_for_3d_gaussian_splatting.md)
+- [S2Gaussian: Sparse-View Super-Resolution 3D Gaussian Splatting](s2gaussian_sparse-view_super-resolution_3d_gaussian_splatting.md)
 
 <!-- RELATED:END -->

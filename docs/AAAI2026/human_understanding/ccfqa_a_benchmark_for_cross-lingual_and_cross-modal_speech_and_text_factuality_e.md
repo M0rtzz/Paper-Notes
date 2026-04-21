@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CCFQA: A Benchmark for Cross-Lingual and Cross-Modal Speech and Text Factuality Evaluation
 description: >-

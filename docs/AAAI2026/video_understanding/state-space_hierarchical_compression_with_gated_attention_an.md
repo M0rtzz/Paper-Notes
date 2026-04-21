@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MambaMia: State-Space Hierarchical Compression for Hour-Long Video Understanding in Large Multimodal Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] unMORE: Unsupervised Multi-Object Segmentation via Center-Boundary Reasoning
 description: >-
@@ -152,6 +152,6 @@ $$\ell = \text{CE}(\tilde{f^e}, f^e) + \ell_2(\tilde{\boldsymbol{f}^c}, \boldsym
 - [Unsupervised Moving Object Segmentation with Atmospheric Turbulence](../../ECCV2024/segmentation/unsupervised_moving_object_segmentation_with_atmospheric_turbulence.md)
 - [UniPixel: Unified Object Referring and Segmentation for Pixel-Level Visual Reasoning](../../NeurIPS2025/segmentation/unipixel_unified_object_referring_and_segmentation_for_pixel-level_visual_reason.md)
 - [Hierarchical Compact Clustering Attention (COCA) for Unsupervised Object-Centric Learning](../../CVPR2025/segmentation/hierarchical_compact_clustering_attention_coca_for_unsupervised_object-centric_l.md)
-- [Beyond Single Images: Retrieval Self-Augmented Unsupervised Camouflaged Object Detection](../../ICCV2025/segmentation/beyond_single_images_retrieval_self-augmented_unsupervised_camouflaged_object_de.md)
+- [Online Generic Event Boundary Detection](../../ICCV2025/segmentation/online_generic_event_boundary_detection.md)
 
 <!-- RELATED:END -->

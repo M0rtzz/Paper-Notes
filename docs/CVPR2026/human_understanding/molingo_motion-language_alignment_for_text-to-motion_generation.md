@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MoLingo: Motion-Language Alignment for Text-to-Human Motion Generation
 description: >-
@@ -138,6 +138,6 @@ MARDM-67 评估协议下，MoLingo (VAE) 取得最优 FID，MoLingo (SAE) 取得
 - [ParTY: Part-Guidance for Expressive Text-to-Motion Synthesis](party_part-guidance_for_expressive_text-to-motion_synthesis.md)
 - [HandX: Scaling Bimanual Motion and Interaction Generation](handx_scaling_bimanual_motion_and_interaction_generation.md)
 - [FineXtrol: Controllable Motion Generation via Fine-Grained Text](../../AAAI2026/human_understanding/finextrol_controllable_motion_generation_via_fine-grained_text.md)
-- [GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation](../../ICCV2025/human_understanding/genm3_generative_pretrained_multi-path_motion_model_for_text_conditional_human_m.md)
+- [SimMotionEdit: Text-Based Human Motion Editing with Motion Similarity Prediction](../../CVPR2025/human_understanding/simmotionedit_text-based_human_motion_editing_with_motion_similarity_prediction.md)
 
 <!-- RELATED:END -->

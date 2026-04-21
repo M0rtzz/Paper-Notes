@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Long-window Anchoring in Vision-Language Model Distillation
 description: >-

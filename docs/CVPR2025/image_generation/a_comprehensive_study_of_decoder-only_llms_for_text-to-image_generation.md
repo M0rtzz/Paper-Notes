@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Comprehensive Study of Decoder-Only LLMs for Text-to-Image Generation
 description: >-
@@ -130,10 +130,10 @@ tags:
 
 ## 相关论文
 
+- [Mono2Stereo: A Benchmark and Empirical Study for Stereo Conversion](mono2stereo_a_benchmark_and_empirical_study_for_stereo_conversion.md)
 - [Learning to Sample Effective and Diverse Prompts for Text-to-Image Generation](learning_to_sample_effective_and_diverse_prompts_for_text-to-image_generation.md)
 - [DiffSensei: Bridging Multi-Modal LLMs and Diffusion Models for Customized Manga Generation](diffsensei_bridging_multi-modal_llms_and_diffusion_models_for_customized_manga_g.md)
+- [Towards Understanding and Quantifying Uncertainty for Text-to-Image Generation](towards_understanding_and_quantifying_uncertainty_for_text-to-image_generation.md)
 - [Comprehensive Relighting: Generalizable and Consistent Monocular Human Relighting and Harmonization](comprehensive_relighting_generalizable_and_consistent_monocular_human_relighting.md)
-- [Mono2Stereo: A Benchmark and Empirical Study for Stereo Conversion](mono2stereo_a_benchmark_and_empirical_study_for_stereo_conversion.md)
-- [Minority-Focused Text-to-Image Generation via Prompt Optimization](minority-focused_text-to-image_generation_via_prompt_optimization.md)
 
 <!-- RELATED:END -->

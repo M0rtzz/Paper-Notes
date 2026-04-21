@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Error as Signal: Stiffness-Aware Diffusion Sampling via Embedded Runge-Kutta Guidance
 description: >-
@@ -148,6 +148,6 @@ $$\hat{\mathbf{x}}^{\text{Heun}}_{\sigma_{i+1}} = \mathbf{x}^{\text{Heun}}_{\sig
 - [Stochastic Self-Guidance for Training-Free Enhancement of Diffusion Models](stochastic_self-guidance_for_training-free_enhancement_of_diffusion_models.md)
 - [System-Embedded Diffusion Bridge Models](../../NeurIPS2025/image_generation/system-embedded_diffusion_bridge_models.md)
 - [Contractive Diffusion Policies: Robust Action Diffusion via Contractive Score-Based Sampling with Differential Equations](contractive_diffusion_policies_robust_action_diffusion_via_contractive_score-bas.md)
-- [Loopholing Discrete Diffusion: Deterministic Bypass of the Sampling Wall](loopholing_discrete_diffusion_deterministic_bypass_of_the_sampling_wall.md)
+- [GPS as a Control Signal for Image Generation](../../CVPR2025/image_generation/gps_as_a_control_signal_for_image_generation.md)
 
 <!-- RELATED:END -->

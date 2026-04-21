@@ -1,14 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] ManiVideo: Generating Hand-Object Manipulation Video with Dexterous and Generalizable Grasping
 description: >-
-  [CVPR 2025][hand-object interaction] 提出 ManiVideo 框架，通过多层遮挡表示（MLO）学习 3D 遮挡关系，并集成 Objaverse 大规模 3D 数据集增强物体泛化性，实现灵巧且可泛化的双手-物体操作视频生成。
+  [CVPR 2025][3D视觉][hand-object interaction] 提出多层遮挡（MLO）表示学习 3D 手-物遮挡关系，并将 Objaverse 大规模 3D 物体数据整合进训练，实现首个支持灵巧双手操作 + 可泛化物体外观的手-物操作视频生成框架。
 tags:
   - CVPR 2025
+  - 3D视觉
   - hand-object interaction
   - video generation
-  - diffusion model
-  - 遮挡建模
+  - multi-layer occlusion
+  - 扩散模型
   - Objaverse
 ---
 
@@ -140,7 +141,7 @@ ManiVideo 基于条件扩散模型，输入为双手 MANO 模型参数 $(θ,β)$
 - [Material Anything: Generating Materials for Any 3D Object via Diffusion](material_anything_generating_materials_for_any_3d_object_via_diffusion.md)
 - [HOI3DGen: Generating High-Quality Human-Object-Interactions in 3D](hoi3dgen_generating_high-quality_human-object-interactions_in_3d.md)
 - [HOT3D: Hand and Object Tracking in 3D from Egocentric Multi-View Videos](hot3d_hand_and_object_tracking_in_3d_from_egocentric_multi-view_videos.md)
+- [Estimating Body and Hand Motion in an Ego-sensed World](estimating_body_and_hand_motion_in_an_ego-sensed_world.md)
 - [D-REX: Differentiable Real-to-Sim-to-Real Engine for Learning Dexterous Grasping](../../ICLR2026/3d_vision/d-rex_differentiable_real-to-sim-to-real_engine_for_learning_dexterous_grasping.md)
-- [RoboPearls: Editable Video Simulation for Robot Manipulation](../../ICCV2025/3d_vision/robopearls_editable_video_simulation_for_robot_manipulation.md)
 
 <!-- RELATED:END -->

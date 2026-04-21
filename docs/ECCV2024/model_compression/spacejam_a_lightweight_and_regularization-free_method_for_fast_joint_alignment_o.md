@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpaceJAM: a Lightweight and Regularization-free Method for Fast Joint Alignment of Images
 description: >-

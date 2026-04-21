@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiCo: Revitalizing ConvNets for Scalable and Efficient Diffusion Modeling
 description: >-

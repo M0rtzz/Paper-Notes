@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fed-ADE: Adaptive Learning Rate for Federated Post-adaptation under Distribution Shift
 description: >-
@@ -138,7 +138,7 @@ $$\eta_c^t = \eta_{\min} + (\eta_{\max} - \eta_{\min}) \cdot \mathcal{S}_c^t$$
 - [Federated Learning with Domain Shift Eraser](../../CVPR2025/optimization/federated_learning_with_domain_shift_eraser.md)
 - [SCOPE: Semantic Coreset with Orthogonal Projection Embeddings for Federated learning](scope_semantic_coreset_with_orthogonal_projection_embeddings_for_federated_learn.md)
 - [Efficient Adaptive Federated Optimization](../../NeurIPS2025/optimization/efficient_adaptive_federated_optimization.md)
-- [Weak-to-Strong Generalization under Distribution Shifts](../../NeurIPS2025/optimization/weak-to-strong_generalization_under_distribution_shifts.md)
 - [A Convergence Analysis of Adaptive Optimizers under Floating-Point Quantization](../../ICLR2026/optimization/a_convergence_analysis_of_adaptive_optimizers_under_floating-point_quantization.md)
+- [OTPrune: Distribution-Aligned Visual Token Pruning via Optimal Transport](otprune_distribution-aligned_visual_token_pruning_via_optimal_transport.md)
 
 <!-- RELATED:END -->

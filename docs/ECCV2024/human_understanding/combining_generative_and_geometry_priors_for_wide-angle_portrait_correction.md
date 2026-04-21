@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Combining Generative and Geometry Priors for Wide-Angle Portrait Correction
 description: >-
@@ -129,10 +129,10 @@ $$\mathcal{L}_{\text{LineCNet}} = \|\Phi_{bg} - \Phi^{gt}_{bg}\|_2^2 + \lambda_3
 
 ## 相关论文
 
+- [Pose Priors from Language Models](../../CVPR2025/human_understanding/pose_priors_from_language_models.md)
 - [Diffusion Sampling Correction via Approximately 10 Parameters](../../ICML2025/human_understanding/diffusion_sampling_correction_via_approximately_10_parameters.md)
-- [Generative Social Choice: The Next Generation](../../ICML2025/human_understanding/generative_social_choice_the_next_generation.md)
 - [WIR3D: Visually-Informed and Geometry-Aware 3D Shape Abstraction](../../ICCV2025/human_understanding/wir3d_visually-informed_and_geometry-aware_3d_shape_abstraction.md)
 - [The Geometry of Reasoning: Flowing Logics in Representation Space](../../ICLR2026/human_understanding/the_geometry_of_reasoning_flowing_logics_in_representation_space.md)
-- [Self-Correction Distillation for Structured Data Question Answering](../../AAAI2026/human_understanding/self-correction_distillation_for_structured_data_question_answering.md)
+- [Generative Social Choice: The Next Generation](../../ICML2025/human_understanding/generative_social_choice_the_next_generation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GVPO: Group Variance Policy Optimization for Large Language Model Post-Training
 description: >-

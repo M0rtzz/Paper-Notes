@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Lipschitz Bandits with Stochastic Delayed Feedback
 description: >-

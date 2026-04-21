@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Military AI Needs Technically-Informed Regulation to Safeguard AI Research and its Applications
 description: >-

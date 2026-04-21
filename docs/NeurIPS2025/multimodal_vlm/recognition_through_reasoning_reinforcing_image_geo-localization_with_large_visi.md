@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Recognition through Reasoning: Reinforcing Image Geo-localization with Large Vision-Language Models
 description: >-

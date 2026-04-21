@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ConsistCompose: Unified Multimodal Layout Control for Image Composition
 description: >-

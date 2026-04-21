@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] KinMo: Kinematic-Aware Human Motion Understanding and Generation
 description: >-

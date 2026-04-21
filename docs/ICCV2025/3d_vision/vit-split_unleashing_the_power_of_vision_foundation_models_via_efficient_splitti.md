@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ViT-Split: Unleashing the Power of Vision Foundation Models via Efficient Splitting Heads
 description: >-

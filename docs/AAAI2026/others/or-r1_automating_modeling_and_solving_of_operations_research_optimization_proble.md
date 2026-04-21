@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OR-R1: Automating Modeling and Solving of Operations Research Optimization Problems
 description: >-

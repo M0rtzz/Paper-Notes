@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How Do Medical MLLMs Fail? A Study on Visual Grounding in Medical Images
 description: >-

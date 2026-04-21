@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Set-Valued Predictions for Robust Domain Generalization
 description: >-
@@ -153,6 +153,6 @@ $$L_y(\theta, C) = \sum_{i \notin G_y} \max\{0, 1+h_y^\theta(X_i)\} + \sum_{e} \
 - [Noise-Aware Generalization: Robustness to In-Domain Noise and Out-of-Domain Generalization](../../ICLR2026/llm_evaluation/noise-aware_generalization_robustness_to_in-domain_noise_and_out-of-domain_gener.md)
 - [FEDTAIL: Federated Long-Tailed Domain Generalization with Sharpness-Guided Gradient Matching](fedtail_federated_long-tailed_domain_generalization_with_sharpness-guided_gradie.md)
 - [Improving Generalization with Flat Hilbert Bayesian Inference](improving_generalization_with_flat_hilbert_bayesian_inference.md)
-- [Random Registers for Cross-Domain Few-Shot Learning](random_registers_for_cross-domain_few-shot_learning.md)
+- [On the Generalization of Handwritten Text Recognition Models](../../CVPR2025/llm_evaluation/on_the_generalization_of_handwritten_text_recognition_models.md)
 
 <!-- RELATED:END -->

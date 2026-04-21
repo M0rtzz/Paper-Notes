@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Scattered Acceptance: Fast and Coherent Inference for DLMs via Longest Stable Prefixes
 description: >-

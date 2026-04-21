@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unifying Specialized Visual Encoders for Video Language Models
 description: >-
@@ -135,9 +135,9 @@ MERV (full) 在 Perception Test 上达 48.41%，超越 SeViLA 的 46.2%（+2.2%�
 ## 相关论文
 
 - [Scaling Video-Language Models to 10K Frames via Hierarchical Differential Distillation](scaling_video-language_models_to_10k_frames_via_hierarchical_differential_distil.md)
+- [Video Summarization with Large Language Models](../../CVPR2025/video_understanding/video_summarization_with_large_language_models.md)
 - [Dynamic Updates for Language Adaptation in Visual-Language Tracking](../../CVPR2025/video_understanding/dynamic_updates_for_language_adaptation_in_visual-language_tracking.md)
 - [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
 - [Enhancing Temporal Understanding in Video-LLMs through Stacked Temporal Attention in Vision Encoders](../../NeurIPS2025/video_understanding/enhancing_temporal_understanding_in_videollms_through_stacke.md)
-- [Factorized Learning for Temporally Grounded Video-Language Models](../../ICCV2025/video_understanding/factorized_learning_for_temporally_grounded_video-language_models.md)
 
 <!-- RELATED:END -->

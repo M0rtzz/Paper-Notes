@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Encoder-Decoder Diffusion Language Models for Efficient Training and Inference
 description: >-
@@ -155,8 +155,8 @@ E2D2 比 AR 吞吐量高 ~75%，ROUGE-L 更高；比 MDLM 快 ~3×。
 ## 相关论文
 
 - [KLASS: KL-Guided Fast Inference in Masked Diffusion Models](klass_kl-guided_fast_inference_in_masked_diffusion_models.md)
-- [Training-Free Constrained Generation with Stable Diffusion Models](training-free_constrained_generation_with_stable_diffusion_models.md)
 - [Progressive Inference-Time Annealing of Diffusion Models for Sampling from Boltzmann Densities](progressive_inference-time_annealing_of_diffusion_models_for_sampling_from_boltz.md)
+- [Training-Free Constrained Generation with Stable Diffusion Models](training-free_constrained_generation_with_stable_diffusion_models.md)
 - [RLZero: Direct Policy Inference from Language Without In-Domain Supervision](rlzero_direct_policy_inference_from_language_without_in-domain_supervision.md)
 - [Continuous Diffusion Model for Language Modeling](continuous_diffusion_model_for_language_modeling.md)
 

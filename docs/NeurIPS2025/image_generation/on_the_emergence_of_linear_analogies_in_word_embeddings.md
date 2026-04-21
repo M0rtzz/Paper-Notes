@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the Emergence of Linear Analogies in Word Embeddings
 description: >-
@@ -136,6 +136,6 @@ Word2Vec和GloVe等模型基于词共现概率 $P(i,j)$ 构建词嵌入 $W_i$，
 - [Linear Differential Vision Transformer: Learning Visual Contrasts via Pairwise Differentials](linear_differential_vision_transformer_learning_visual_contrasts_via_pairwise_di.md)
 - [NPN: Non-Linear Projections of the Null-Space for Imaging Inverse Problems](npn_non-linear_projections_of_the_null-space_for_imaging_inverse_problems.md)
 - [Highlighting What Matters: Promptable Embeddings for Attribute-Focused Image Retrieval](highlighting_what_matters_promptable_embeddings_for_attribute-focused_image_retr.md)
-- [Preconditioned Langevin Dynamics with Score-Based Generative Models for Infinite-Dimensional Linear Bayesian Inverse Problems](preconditioned_langevin_dynamics_with_score-based_generative_models_for_infinite.md)
+- [Pattern Analogies: Learning to Perform Programmatic Image Edits by Analogy](../../CVPR2025/image_generation/pattern_analogies_learning_to_perform_programmatic_image_edits_by_analogy.md)
 
 <!-- RELATED:END -->

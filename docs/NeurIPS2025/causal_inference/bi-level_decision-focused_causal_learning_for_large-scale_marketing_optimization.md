@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bi-Level Decision-Focused Causal Learning for Large-Scale Marketing Optimization
 description: >-
@@ -126,10 +126,10 @@ Target Network $\mathcal{F}_\theta$ 在大量 OBS 数据上训练预测损失（
 
 ## 相关论文
 
-- [Alignment of Large Language Models with Constrained Learning](alignment_of_large_language_models_with_constrained_learning.md)
 - [Distill Gold from Massive Ores: Bi-level Data Pruning towards Efficient Dataset Distillation](../../ECCV2024/causal_inference/distill_gold_from_massive_ores_bi-level_data_pruning_towards_efficient_dataset_d.md)
 - [Cyclic Counterfactuals under Shift–Scale Interventions](cyclic_counterfactuals_under_shift-scale_interventions.md)
 - [Revealing Multimodal Causality with Large Language Models](revealing_multimodal_causality_with_large_language_models.md)
 - [Characterization and Learning of Causal Graphs from Hard Interventions](characterization_and_learning_of_causal_graphs_from_hard_interventions.md)
+- [Do-PFN: In-Context Learning for Causal Effect Estimation](do-pfn_in-context_learning_for_causal_effect_estimation.md)
 
 <!-- RELATED:END -->

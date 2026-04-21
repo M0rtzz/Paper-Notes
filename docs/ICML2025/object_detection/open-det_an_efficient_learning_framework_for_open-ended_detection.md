@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Open-Det: An Efficient Learning Framework for Open-Ended Detection
 description: >-

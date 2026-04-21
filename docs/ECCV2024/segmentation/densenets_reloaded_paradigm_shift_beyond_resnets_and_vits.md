@@ -134,10 +134,10 @@ DenseNet 的密集拼接连接是否真的不如 ResNet 式的加法连接？能
 
 ## 相关论文
 
+- [Token CropR: Faster ViTs for Quite a Few Tasks](../../CVPR2025/segmentation/token_cropr_faster_vits_for_quite_a_few_tasks.md)
 - [Hybrid-TTA: Continual Test-time Adaptation via Dynamic Domain Shift Detection](../../ICCV2025/segmentation/hybrid-tta_continual_test-time_adaptation_via_dynamic_domain_shift_detection.md)
-- [Concept-Guided Fine-Tuning: Steering ViTs away from Spurious Correlations to Improve Robustness](../../CVPR2026/segmentation/concept-guided_fine-tuning_steering_vits_away_from_spurious_correlations_to_impr.md)
 - [Seeing Beyond: Extrapolative Domain Adaptive Panoramic Segmentation](../../CVPR2026/segmentation/seeing_beyond_extrapolative_domain_adaptive_panoramic_segmentation.md)
 - [CLIP Is Shortsighted: Paying Attention Beyond the First Sentence](../../CVPR2026/segmentation/clip_is_shortsighted_paying_attention_beyond_the_first_sentence.md)
-- [PartField: Learning 3D Feature Fields for Part Segmentation and Beyond](../../ICCV2025/segmentation/partfield_learning_3d_feature_fields_for_part_segmentation_and_beyond.md)
+- [Concept-Guided Fine-Tuning: Steering ViTs away from Spurious Correlations to Improve Robustness](../../CVPR2026/segmentation/concept-guided_fine-tuning_steering_vits_away_from_spurious_correlations_to_impr.md)
 
 <!-- RELATED:END -->

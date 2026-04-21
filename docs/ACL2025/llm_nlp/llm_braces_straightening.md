@@ -144,9 +144,9 @@ LLMBraces 在不修改原始 LLM 参数的前提下，为每个 FFN 层引入一
 
 ## 相关论文
 
-- [LLM-AT: Automatic Transmission for LLM Tiers Optimizing Cost and Accuracy](automatic_transmission_for_llm_tiers_optimizing_cost_and_accuracy_in_large_langu.md)
 - [SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence](selfelicit_evidence_highlighting.md)
 - [RoCoFT: Efficient Finetuning of Large Language Models with Row-Column Updates](rocoft_efficient_finetuning_of_large_language_models_with_row-column_updates.md)
+- [LLM-AT: Automatic Transmission for LLM Tiers Optimizing Cost and Accuracy](automatic_transmission_for_llm_tiers_optimizing_cost_and_accuracy_in_large_langu.md)
 - [GUIDE: Guided Updates for In-context Decision Evolution in LLM-Driven Spacecraft Operations](../../CVPR2026/llm_nlp/guide_guided_updates_for_in-context_decision_evolution_in_llm-driven_spacecraft_.md)
 - [Towards Geo-Culturally Grounded LLM Generations](geocultural_grounded_llm.md)
 

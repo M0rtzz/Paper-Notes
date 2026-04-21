@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] GS-2DGS: Geometrically Supervised 2DGS for Reflective Object Reconstruction
 description: >-
-  [CVPR 2025][3D reconstruction] 在 2D Gaussian Splatting 基础上引入基础模型的深度/法线几何监督和延迟着色的 PBR 渲染管线，实现了高质量反射物体重建与 relighting。
+  [CVPR 2025][3D视觉][2D Gaussian Splatting] 在 2DGS 基础上引入基础模型（Marigold + Depth Pro）的深度/法线伪标签监督和延迟着色（Deferred Shading）的物理渲染管线，在反射物体重建上显著超越 GS 方法、媲美 SDF 方法且快了一个数量级。
 tags:
   - CVPR 2025
-  - 3D reconstruction
-  - Gaussian Splatting
-  - 反射物体
+  - 3D视觉
+  - 2D Gaussian Splatting
+  - reflective object
   - PBR
-  - 基础模型
+  - deferred shading
+  - foundation model
+  - normal estimation
 ---
 
 # GS-2DGS: Geometrically Supervised 2DGS for Reflective Object Reconstruction

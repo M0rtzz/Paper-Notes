@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Chameleon: A Data-Efficient Generalist for Dense Visual Prediction in the Wild
 description: >-

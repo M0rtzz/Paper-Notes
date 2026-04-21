@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Occlusion Handling in 3D Human Pose Estimation with Perturbed Positional Encoding
 description: >-

@@ -2,9 +2,15 @@
 title: >-
   [论文解读] EAC-MoE: Expert-Selection Aware Compressor for Mixture-of-Experts Large Language Models
 description: >-
-  [模型压缩] EAC-MoE 深入分析 MoE 模型的专家选择特性，提出两个互补模块——量化时通过逐层校准路由器缓解 expert-shift 问题（QESC），推理时基于专家选择频率动态剪枝不重要专家（PESF），在 4 个 MoE 模型上实现显著的内存压缩和推理加速且精度损失极小。
+  [ACL 2025][模型压缩][MoE 量化] EAC-MoE 深入分析 MoE 模型的专家选择特性，提出两个互补模块——量化时通过逐层校准路由器缓解 expert-shift 问题（QESC），推理时基于专家选择频率动态剪枝不重要专家（PESF），在 4 个 MoE 模型上实现显著的内存压缩和推理加速且精度损失极小。
 tags:
+  - ACL 2025
   - 模型压缩
+  - MoE 量化
+  - 路由器校准
+  - 动态专家剪枝
+  - expert-shift
+  - 推理加速
 ---
 
 # EAC-MoE: Expert-Selection Aware Compressor for Mixture-of-Experts Large Language Models
@@ -119,10 +125,10 @@ Expert-shift 单独造成的 PPL 增加（0.33）与量化误差本身（0.37）
 
 ## 相关论文
 
-- [SERE: Similarity-based Expert Re-routing for Efficient Batch Decoding in MoE Models](../../ICLR2026/model_compression/sere_similarity-based_expert_re-routing_for_efficient_batch_decoding_in_moe_mode.md)
-- [Explaining Puzzle Solutions in Natural Language: An Exploratory Study on 6×6 Sudoku](explaining_puzzle_solutions_in_natural_language_an_exploratory_study_on_6x6_sudo.md)
-- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](see_strategic_exploration_exploitation_prompt_optimization.md)
-- [Who Taught You That? Tracing Teachers in Model Distillation](who_taught_you_that_tracing_teachers_in_model_distillation.md)
-- [S2R-HDR: A Large-Scale Rendered Dataset for HDR Fusion](../../ICLR2026/model_compression/s2r-hdr_a_large-scale_rendered_dataset_for_hdr_fusion.md)
+- [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
+- [Wanda++: Pruning Large Language Models via Regional Gradients](wanda_pruning_large_language_models_via_regional_gradients.md)
+- [MoQAE: Mixed-Precision Quantization for Long-Context LLM Inference via Mixture of Quantization-Aware Experts](moqae_mixed_precision_kv_cache.md)
+- [Unveiling Super Experts in Mixture-of-Experts Large Language Models](../../ICLR2026/model_compression/unveiling_super_experts_in_mixture-of-experts_large_language_models.md)
+- [L4Q: Parameter Efficient Quantization-Aware Fine-Tuning on Large Language Models](l4q_parameter_efficient_quantization_aware_finetuning.md)
 
 <!-- RELATED:END -->

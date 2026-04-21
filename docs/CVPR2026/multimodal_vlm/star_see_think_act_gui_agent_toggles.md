@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] See, Think, Act: Teaching Multimodal Agents to Effectively Interact with GUI by Identifying Toggles (StaR)
 description: >-

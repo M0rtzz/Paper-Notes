@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving LLM Safety Alignment with Dual-Objective Optimization
 description: >-

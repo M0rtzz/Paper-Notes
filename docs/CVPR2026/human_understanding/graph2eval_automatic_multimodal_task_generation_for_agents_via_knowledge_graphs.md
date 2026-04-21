@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Graph2Eval: Automatic Multimodal Task Generation for Agents via Knowledge Graphs
 description: >-

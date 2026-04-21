@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Universal Safety Controllers with Learned Prophecies
 description: >-

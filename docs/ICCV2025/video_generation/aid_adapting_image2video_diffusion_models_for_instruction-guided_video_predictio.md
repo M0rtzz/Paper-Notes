@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] AID: Adapting Image2Video Diffusion Models for Instruction-guided Video Prediction
 description: >-
-  [ICCV 2025][图像生成][视频预测] 提出AID框架，将预训练的Image2Video扩散模型（SVD）迁移至文本引导视频预测任务，通过MLLM辅助的视频状态预测、双查询Transformer条件注入和时空适配器，在多个数据集上FVD指标超越前SOTA 50%以上。
+  [ICCV 2025][视频预测] 提出AID框架，将预训练的Image2Video扩散模型（SVD）迁移至文本引导视频预测任务，通过MLLM辅助的视频状态预测、双查询Transformer条件注入和时空适配器，在多个数据集上FVD指标超越前SOTA 50%以上。
 tags:
   - ICCV 2025
-  - 图像生成
   - 视频预测
   - 扩散模型
   - 文本引导
@@ -150,8 +149,8 @@ FVD改善幅度：SSv2上55.5%，Bridge上**91.2%**，Epic100上80.6%。
 
 - [FuXi-RTM: A Physics-Guided Prediction Framework with Radiative Transfer Modeling](fuxi-rtm_a_physics-guided_prediction_framework_with_radiative_transfer_modeling.md)
 - [OCK: Unsupervised Dynamic Video Prediction with Object-Centric Kinematics](ock_unsupervised_dynamic_video_prediction_with_object-centric_kinematics.md)
-- [V.I.P.: Iterative Online Preference Distillation for Efficient Video Diffusion Models](vip_iterative_online_preference_distillation_for_efficient_video_diffusion_model.md)
+- [Unified Dense Prediction of Video Diffusion](../../CVPR2025/video_generation/unified_dense_prediction_of_video_diffusion.md)
+- [ViReS: Video Instance Repainting via Sketch and Text Guided Generation](../../CVPR2025/video_generation/vires_video_instance_repainting_via_sketch_and_text_guided_generation.md)
 - [LeanVAE: An Ultra-Efficient Reconstruction VAE for Video Diffusion Models](leanvae_an_ultra-efficient_reconstruction_vae_for_video_diffusion_models.md)
-- [EfficientMT: Efficient Temporal Adaptation for Motion Transfer in Text-to-Video Diffusion Models](efficientmt_efficient_temporal_adaptation_for_motion_transfer_in_text-to-video_d.md)
 
 <!-- RELATED:END -->

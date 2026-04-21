@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Orthogonal Multi-Index Models: A Fine-Grained Information Exponent Analysis
 description: >-

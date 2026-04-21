@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LookCloser: Frequency-aware Radiance Field for Tiny-Detail Scene (FA-NeRF)
 description: >-
@@ -142,10 +142,10 @@ Music Room 场景（Multi-Frequency Dataset）：
 
 ## 相关论文
 
+- [NeRFPrior: Learning Neural Radiance Field as a Prior for Indoor Scene Reconstruction](nerfprior_learning_neural_radiance_field_as_a_prior_for_indoor_scene_reconstruct.md)
+- [Sparse Voxels Rasterization: Real-time High-fidelity Radiance Field Rendering](sparse_voxels_rasterization_real-time_high-fidelity_radiance_field_rendering.md)
+- [PBR-NeRF: Inverse Rendering with Physics-Based Neural Fields](pbr-nerf_inverse_rendering_with_physics-based_neural_fields.md)
 - [MALD-NeRF: Taming Latent Diffusion Model for Neural Radiance Field Inpainting](../../ECCV2024/3d_vision/taming_latent_diffusion_model_for_neural_radiance_field_inpainting.md)
 - [GO-N3RDet: Geometry Optimized NeRF-enhanced 3D Object Detector](go-n3rdet_geometry_optimized_nerf-enhanced_3d_object_detector.md)
-- [3D Convex Splatting: Radiance Field Rendering with 3D Smooth Convexes](3d_convex_splatting_radiance_field_rendering_with_3d_smooth_convexes.md)
-- [S³D-NeRF: Single-Shot Speech-Driven Neural Radiance Field for High Fidelity Talking Head Synthesis](../../ECCV2024/3d_vision/s3d-nerf_single-shot_speech-driven_neural_radiance_field_for_high_fidelity_talki.md)
-- [Exploiting Deblurring Networks for Radiance Fields](exploiting_deblurring_networks_for_radiance_fields.md)
 
 <!-- RELATED:END -->

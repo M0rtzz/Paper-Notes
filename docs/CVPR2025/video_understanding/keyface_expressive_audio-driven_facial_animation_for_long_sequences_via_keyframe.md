@@ -1,7 +1,17 @@
-﻿---
-title: "KeyFace: Expressive Audio-Driven Facial Animation for Long Sequences via KeyFrame Interpolation"
-description: "提出KeyFace两阶段扩散框架，通过关键帧生成+插值实现长时序音频驱动面部动画，支持连续情感建模和非语音发声"
-tags: ["面部动画", "音频驱动", "扩散模型", "关键帧插值", "CVPR2025"]
+---
+title: >-
+  [论文解读] KeyFace: Expressive Audio-Driven Facial Animation for Long Sequences via KeyFrame Interpolation
+description: >-
+  [CVPR 2025][视频理解][音频驱动面部动画] KeyFace 提出一个两阶段扩散框架——先以低帧率生成捕捉关键表情的锚帧，再通过插值模型填充中间帧——解决了现有音频驱动面部动画方法在长序列中身份漂移和质量退化的问题，同时首次支持连续情感（valence/arousal）建模和多种非语音发声 (NSV) 的动画生成。
+tags:
+  - CVPR 2025
+  - 视频理解
+  - 音频驱动面部动画
+  - 扩散模型
+  - 关键帧生成
+  - 长序列生成
+  - 情感建模
+  - 非语音发声
 ---
 
 # KeyFace: Expressive Audio-Driven Facial Animation for Long Sequences via KeyFrame Interpolation
@@ -113,10 +123,10 @@ $$L = \lambda_{tot}(L_2(z_0, z_{gt}) + L_2(x_0, x_{gt}) + L_p(x_0, x_{gt}))$$
 
 ## 相关论文
 
+- [SeriesBench: A Benchmark for Narrative-Driven Drama Series Understanding](seriesbench_a_benchmark_for_narrative-driven_drama_series_understanding.md)
 - [A Little Depth Goes a Long Way: The Expressive Power of Log-Depth Transformers](../../NeurIPS2025/video_understanding/a_little_depth_goes_a_long_way_the_expressive_power_of_logde.md)
 - [Learning Audio-Guided Video Representation with Gated Attention for Video-Text Retrieval](learning_audio-guided_video_representation_with_gated_attention_for_video-text_r.md)
-- [BiM-VFI: Bidirectional Motion Field-Guided Frame Interpolation for Video with Non-uniform Motions](bim-vfi_bidirectional_motion_field-guided_frame_interpolation_for_video_with_non.md)
+- [QA-TIGER: Question-Aware Gaussian Experts for Audio-Visual Question Answering](question-aware_gaussian_experts_for_audio-visual_question_answering.md)
 - [The Expressive Limits of Diagonal SSMs for State-Tracking](../../ICLR2026/video_understanding/the_expressive_limits_of_diagonal_ssms_for_state-tracking.md)
-- [SpikeTrack: A Spike-driven Framework for Efficient Visual Tracking](../../CVPR2026/video_understanding/spiketrack_a_spike-driven_framework_for_efficient_visual_tracking.md)
 
 <!-- RELATED:END -->

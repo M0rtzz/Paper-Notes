@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] $\textbf{Re}^{2}$: Unlocking LLM Reasoning via Reinforcement Learning with Re-solving
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking the Stability-Plasticity Trade-off in Continual Learning from an Architectural Perspective
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bidirectional Likelihood Estimation with Multi-Modal Large Language Models for Text-Video Retrieval
 description: >-

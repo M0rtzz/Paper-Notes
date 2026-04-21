@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bi-directional Contextual Attention for 3D Dense Captioning
 description: >-

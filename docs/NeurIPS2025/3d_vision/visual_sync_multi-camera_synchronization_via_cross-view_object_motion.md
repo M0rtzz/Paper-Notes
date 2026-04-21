@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VisualSync: Multi-Camera Synchronization via Cross-View Object Motion
 description: >-
@@ -163,7 +163,7 @@ VisualSync不是学习型方法，而是基于优化的框架：
 - [Learning Multi-View Spatial Reasoning from Cross-View Relations](../../CVPR2026/3d_vision/learning_multi-view_spatial_reasoning_from_cross-view_relations.md)
 - [Image as an IMU: Estimating Camera Motion from a Single Motion-Blurred Image](../../ICCV2025/3d_vision/image_as_an_imu_estimating_camera_motion_from_a_single_motion-blurred_image.md)
 - [WildCAT3D: Appearance-Aware Multi-View Diffusion in the Wild](wildcat3d_appearance-aware_multi-view_diffusion_in_the_wild.md)
+- [Dyn-HaMR: Recovering 4D Interacting Hand Motion from a Dynamic Camera](../../CVPR2025/3d_vision/dyn_hamr_recovering_4d_interacting_hand_motion_from_a_dynamic_camera.md)
 - [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
-- [Exploring Surround-View Fisheye Camera 3D Object Detection](../../AAAI2026/3d_vision/exploring_surround-view_fisheye_camera_3d_object_detection.md)
 
 <!-- RELATED:END -->

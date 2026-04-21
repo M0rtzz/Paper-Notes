@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FAPEX: Fractional Amplitude-Phase Expressor for Robust Cross-Subject Seizure Prediction
 description: >-

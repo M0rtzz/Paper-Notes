@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cross-modal Proxy Evolving for OOD Detection with Vision-Language Models
 description: >-

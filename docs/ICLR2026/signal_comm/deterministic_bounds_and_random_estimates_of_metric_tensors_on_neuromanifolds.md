@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Deterministic Bounds and Random Estimates of Metric Tensors on Neuromanifolds
 description: >-
@@ -120,9 +120,9 @@ tags:
 ## 相关论文
 
 - [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](../../NeurIPS2025/signal_comm/perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
-- [Multi-modal Data Spectrum: Multi-modal Datasets are Multi-dimensional](multi-modal_data_spectrum_multi-modal_datasets_are_multi-dimensional.md)
+- [Robust Preference Alignment via Directional Neighborhood Consensus](robust_preference_alignment_via_directional_neighborhood_consensus.md)
 - [FASA: Frequency-Aware Sparse Attention](fasa_frequency-aware_sparse_attention.md)
 - [Spectrum Tuning: Post-Training for Distributional Coverage and In-Context Steerability](spectrum_tuning_post-training_for_distributional_coverage_and_in-context_steerab.md)
-- [Robust Preference Alignment via Directional Neighborhood Consensus](robust_preference_alignment_via_directional_neighborhood_consensus.md)
+- [Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies](multi-agent_design_optimizing_agents_with_better_prompts_and_topologies.md)
 
 <!-- RELATED:END -->

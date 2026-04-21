@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Curiosity-Driven Reinforcement Learning from Human Feedback
 description: >-
@@ -175,7 +175,7 @@ UltraFeedback 训练的模型在 OOD 基准 MT-Bench 上的表现：
 - [Strategyproof Reinforcement Learning from Human Feedback](../../NeurIPS2025/llm_alignment/strategyproof_reinforcement_learning_from_human_feedback.md)
 - [Understanding Impact of Human Feedback via Influence Functions](influence_functions_rlhf.md)
 - [M³HF: Multi-agent Reinforcement Learning from Multi-phase Human Feedback of Mixed Quality](../../ICML2025/llm_alignment/m3hf_multi-agent_reinforcement_learning_from_multi-phase_human_feedback_of_mixed.md)
+- [PKU-SafeRLHF: Towards Multi-Level Safety Alignment for LLMs with Human Preference](pku-saferlhf_towards_multi-level_safety_alignment_for_llms_with_human_preference.md)
 - [Beyond Surface-Level Patterns: An Essence-Driven Defense Framework Against Jailbreak Attacks in LLMs](beyond_surface-level_patterns_an_essence-driven_defense_framework_against_jailbr.md)
-- [Debate, Reflect, and Distill: Multi-Agent Feedback with Tree-Structured Preference Optimization for Efficient Language Model Enhancement](debate_reflect_and_distill_multi-agent_feedback_with_tree-structured_preference_.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Semantic Retrieval Augmented Contrastive Learning for Sequential Recommendation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Donate or Create? Comparing Data Collection Strategies for Emotion-labeled Multimodal Social Media Posts
 description: >-

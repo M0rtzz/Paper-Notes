@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PPCL: Pluggable Pruning with Contiguous Layer Distillation for Diffusion Transformers
 description: >-

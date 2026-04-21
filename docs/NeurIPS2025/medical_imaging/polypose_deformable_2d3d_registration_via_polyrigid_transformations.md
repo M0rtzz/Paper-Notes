@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PolyPose: Deformable 2D/3D Registration via Polyrigid Transformations
 description: >-
@@ -130,7 +130,7 @@ $$(\hat{\mathbf{T}}_1, \ldots, \hat{\mathbf{T}}_K) = \arg\max_{\mathbf{T}_1, \ld
 
 ## 相关论文
 
-- [Marker-Based 3D Reconstruction of Aggregates with a Comparative Analysis of 2D and 3D Morphologies](../../CVPR2026/medical_imaging/markerbased_3d_reconstruction_of_aggregates_with_a.md)
+- [Marker-Based 3D Reconstruction of Aggregates with a Comparative Analysis of 2D and 3D Morphologies](../../CVPR2026/medical_imaging/marker-based_3d_reconstruction_of_aggregates_with_a_comparative_analysis_of_2d_a.md)
 - [Surf2CT: Cascaded 3D Flow Matching Models for Torso 3D CT Synthesis from Skin Surface](surf2ct_cascaded_3d_flow_matching_models_for_torso_3d_ct_synthesis_from_skin_sur.md)
 - [Multimodal 3D Genome Pre-training](multimodal_3d_genome_pre-training.md)
 - [Raptor: Scalable Train-Free Embeddings for 3D Medical Volumes Leveraging Pretrained 2D Foundation Models](../../ICML2025/medical_imaging/raptor_scalable_train-free_embeddings_for_3d_medical_volumes_leveraging_pretrain.md)

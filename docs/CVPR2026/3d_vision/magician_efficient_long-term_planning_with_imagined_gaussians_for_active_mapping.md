@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MAGICIAN: Efficient Long-Term Planning with Imagined Gaussians for Active Mapping
 description: >-

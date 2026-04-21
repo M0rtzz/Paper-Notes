@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mastering Negation: Boosting Grounding Models via Grouped Opposition-Based Learning
 description: >-
@@ -150,8 +150,8 @@ D-Negation 测试集（mAP）:
 
 - [Can Large Vision-Language Models Correct Semantic Grounding Errors By Themselves?](can_large_vision-language_models_correct_semantic_grounding_errors_by_themselves.md)
 - [LLaVA-Critic: Learning to Evaluate Multimodal Models](llava-critic_learning_to_evaluate_multimodal_models.md)
+- [VideoGLaMM: A Large Multimodal Model for Pixel-Level Visual Grounding in Videos](videoglamm_a_large_multimodal_model_for_pixel-level_visual_grounding_in_videos.md)
 - [ReVisionLLM: Recursive Vision-Language Model for Temporal Grounding in Hour-Long Videos](revisionllm_recursive_vision-language_model_for_temporal_grounding_in_hour-long_.md)
 - [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
-- [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](continual_learning_with_vision-language_models_via_semantic-geometry_preservatio.md)
 
 <!-- RELATED:END -->

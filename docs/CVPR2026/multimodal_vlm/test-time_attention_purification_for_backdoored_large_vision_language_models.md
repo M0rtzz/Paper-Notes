@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Test-Time Attention Purification for Backdoored Large Vision Language Models
 description: >-

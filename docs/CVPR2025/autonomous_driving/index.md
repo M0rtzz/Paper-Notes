@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 自动驾驶方向 50篇论文解读
+  CVPR2025 自动驾驶方向 86篇论文解读
 description: >-
-  50篇CVPR2025 自动驾驶方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  86篇CVPR2025 自动驾驶方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🚗 自动驾驶
 
-**📷 CVPR2025** · **50** 篇论文解读
+**📷 CVPR2025** · **86** 篇论文解读
 
 **[3D-AVS: LiDAR-based 3D Auto-Vocabulary Segmentation](3d-avs_lidar-based_3d_auto-vocabulary_segmentation.md)**
 
@@ -33,6 +33,10 @@ description: >-
 **[Certified Human Trajectory Prediction](certified_human_trajectory_prediction.md)**
 
 :   首次将随机平滑（Randomized Smoothing）认证技术引入人类轨迹预测任务，通过mean/median聚合函数和扩散去噪器为轨迹预测模型提供保证性鲁棒性——即无论输入噪声如何扰动（在半径R内），输出始终保持在认证边界内。
+
+**[ClimbingCap: Multi-Modal Dataset and Method for Rock Climbing in World Coordinate](climbingcap_multi-modal_dataset_and_method_for_rock_climbing_in_world_.md)**
+
+:   构建了首个大规模攀岩运动多模态数据集 AscendMotion（412K帧，RGB+LiDAR+IMU），并提出 ClimbingCap 方法通过分离坐标解码、后处理优化和半监督训练，在世界坐标系中精确恢复攀岩者的3D运动。
 
 **[ClimbingCap: Multi-Modal Dataset and Method for Rock Climbing in World Coordinate](climbingcap_multi-modal_dataset_and_method_for_rock_climbing_in_world_coordinate.md)**
 
@@ -162,17 +166,73 @@ description: >-
 
 :   本文提出首个用于行人轨迹预测的多模态知识蒸馏框架——用轨迹+人体姿态+文本描述训练全模态教师模型，将其知识蒸馏到仅用轨迹或轨迹+姿态的学生模型，在JRDB/SIT/ETH-UCY三个数据集上最高提升约13%预测精度。
 
+**[Neural Inverse Rendering from Propagating Light](neural_inverse_rendering_from_propagating_light.md)**
+
+:   首个从多视角时间分辨 LiDAR 测量（飞行时间光子探测）中进行物理逆渲染的方法，通过时间分辨辐射缓存替代递归路径追踪来建模直接和间接光传输，在合成场景上法线 MAE 从 FWP++ 的 22.80° 降至 8.45°，同时支持新视角合成与重光照。
+
 **[O3N: Omnidirectional Open-Vocabulary Occupancy Prediction](o3n_omnidirectional_open-vocabulary_occupancy_prediction.md)**
 
 :   O3N 首次提出纯视觉端到端的全向开放词汇占用预测框架，通过极坐标螺旋 Mamba（PsM）建模全向空间连续性、占用代价聚合（OCA）统一几何和语义监督、以及无梯度自然模态对齐（NMA）桥接像素-体素-文本模态间隙，在 QuadOcc 和 Human360Occ 上达到 SOTA。
+
+**[OccMamba: Semantic Occupancy Prediction with State Space Models](occmamba_semantic_occupancy_prediction_with_state_space_models.md)**
+
+:   OccMamba 把 SSM/Mamba 引入户外语义占据预测，用 height-prioritized 2D Hilbert 展开把 3D voxel 序列化为 1D 序列，再用层次化 Mamba + 局部上下文处理器同时建模全局和局部，在 OpenOccupancy/SemanticKITTI/SemanticPOSS 上全面 SOTA，且显存远小于 transformer 方案。
+
+**[Online Video Understanding: OVBench and VideoChat-Online](online_video_understanding_ovbench_and_videochat-online.md)**
+
+:   本文从评估基准、模型架构和训练策略三个角度推进在线视频理解：提出 OVBench（包含 6 大任务类型 16 个子任务的在线视频 QA 基准），设计金字塔记忆库（PMB）高效压缩流式视频信息，并通过离线到在线的渐进训练构建 4B 参数的 VideoChat-Online 模型，在 OVBench 上超越 7B 离线模型 4.2%。
 
 **[Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots](panoramic_multimodal_semantic_occupancy_prediction_for_quadruped_robots.md)**
 
 :   首个面向四足机器人的全景多模态语义占用预测框架 VoxelHound，提出 PanoMMOcc 数据集（全景 RGB + 热成像 + 偏振 + LiDAR），通过垂直抖动补偿（VJC）和多模态信息提示融合（MIPF）模块达到 23.34% mIoU。
 
+**[Physical Plausibility-aware Trajectory Prediction via Locomotion Embodiment](physical_plausibility-aware_trajectory_prediction_via_locomotion_embodiment.md)**
+
+:   提出 Locomotion Embodiment 框架，利用物理模拟器中的人形运动生成评估轨迹的物理合理性，通过可微的 LocoVal 函数替代不可微的物理模拟器来训练轨迹预测网络，并在推理时过滤不合理轨迹。
+
+**[PIDLoc: Cross-View Pose Optimization Network Inspired by PID Controllers](pidloc_cross-view_pose_optimization_network_inspired_by_pid_controllers.md)**
+
+:   受 PID 控制器启发，提出 PIDLoc 跨视角位姿优化网络，通过 P（局部特征差异）、I（全局多候选位姿聚合）、D（特征差异梯度）三个分支结合空间感知位姿估计器,在大初始位姿误差下实现鲁棒精确定位。
+
+**[Pixel-Aligned RGB-NIR Stereo Imaging and Dataset for Robot Vision](pixel-aligned_rgb-nir_stereo_imaging_and_dataset_for_robot_vision.md)**
+
+:   本文开发了一套基于棱镜分光的像素对齐 RGB-NIR 立体相机系统，搭建在移动机器人上采集了大规模多光照条件数据集，并提出了图像融合和特征融合两种方法，使现有 RGB 预训练视觉模型无需/少量微调即可利用 NIR 信息，在深度估计、目标检测和 SfM 等任务上取得显著提升。
+
+**[PlanarSplatting: Accurate Planar Surface Reconstruction in 3 Minutes](planarsplatting_accurate_planar_surface_reconstruction_in_3_minutes.md)**
+
+:   本文提出 PlanarSplatting，通过直接优化可学习的 3D 矩形平面基元，利用新设计的矩形 splatting 函数将平面可微地渲染为深度和法线图，仅需 3 分钟即可从多视角图像重建精确的室内平面场景，无需任何平面标注。
+
 **[Point-to-Region Loss for Semi-Supervised Point-Based Crowd Counting](point-to-region_loss_for_semi-supervised_point-based_crowd_counting.md)**
 
 :   发现半监督人群计数中点到点（P2P）匹配导致模型对未标注数据过度激活（通过 PSAM 梯度诊断可视化），提出点到区域（P2R）匹配——将每个 GT/伪标签点扩展为局部区域并传播置信度，在 ShanghaiTech-A 5% 标注下 MAE 69.9（前 SOTA 83.7），且比 P2P 快 68 倍。
+
+**[PAR: Poly-Autoregressive Prediction for Modeling Interactions](poly-autoregressive_prediction_for_modeling_interactions.md)**
+
+:   PAR（Poly-Autoregressive）提出了一种简洁统一的多智能体行为预测框架，通过将交互中其他智能体的状态序列作为条件，结合同智能体下一时间步预测和学习的智能体ID嵌入，在社交行为预测、自动驾驶轨迹预测和手-物交互三个截然不同的任务上均优于单智能体自回归基线。
+
+**[Prompting Depth Anything for 4K Resolution Accurate Metric Depth Estimation](prompting_depth_anything_for_4k_resolution_accurate_metric_depth_estimation.md)**
+
+:   Prompt Depth Anything 首次将"提示"范式引入深度基础模型，利用低成本 LiDAR（如 iPhone LiDAR）作为度量提示，通过简洁的多尺度提示融合架构指导 Depth Anything 模型输出精确的度量深度，实现了高达 4K 分辨率的高质量深度估计。
+
+**[PSA-SSL: Pose and Size-aware Self-Supervised Learning on LiDAR Point Clouds](psa-ssl_pose_and_size-aware_self-supervised_learning_on_lidar_point_clouds.md)**
+
+:   提出 PSA-SSL，通过在对比学习中增加自监督边界框回归预训练任务保留物体姿态和尺寸信息，并结合 LiDAR 光束模式增强实现跨传感器泛化，在 3D 语义分割和目标检测上显著超越 SOTA 自监督方法。
+
+**[RaCFormer: Towards High-Quality 3D Object Detection via Query-based Radar-Camera Fusion](racformer_towards_high-quality_3d_object_detection_via_query-based_radar-camera_.md)**
+
+:   提出基于查询(query-based)的雷达-相机融合框架 RaCFormer，通过同时从图像视角和 BEV 视角采样特征，结合圆形查询初始化、雷达感知深度预测和隐式动态捕获模块，在 nuScenes 上达到 64.9% mAP 和 70.2% NDS。
+
+**[RC-AutoCalib: An End-to-End Radar-Camera Automatic Calibration Network](rc-autocalib_an_end-to-end_radar-camera_automatic_calibration_network.md)**
+
+:   提出 RC-AutoCalib，首个针对 3D 雷达和相机的端到端在线自动几何标定方法，通过双视角（前视+鸟瞰）特征表示、选择性融合机制和噪声抗性匹配器，有效解决雷达数据稀疏和高度不确定性问题，在 nuScenes 数据集上大幅超越现有 LiDAR-相机标定方法。
+
+**[ReconDreamer: Crafting World Models for Driving Scene Reconstruction via Online Restoration](recondreamer_crafting_world_models_for_driving_scene_reconstruction_via_online_r.md)**
+
+:   本文提出 ReconDreamer，通过增量式整合世界模型知识来增强驾驶场景重建，核心是 DriveRestorer（在线修复渲染伪影的微调世界模型）和渐进式数据更新策略（PDUS），首次实现了大幅机动（如跨越 6 米多车道变道）下的高质量新轨迹渲染，在 NTA-IoU 上较基线提升 24.87%。
+
+**[RENO: Real-Time Neural Compression for 3D LiDAR Point Clouds](reno_real-time_neural_compression_for_3d_lidar_point_clouds.md)**
+
+:   RENO提出稀疏占用码（Sparse Occupancy Codes）和一次性推理策略，首次实现了3D LiDAR点云的实时神经压缩（10fps@14-bit），以仅1MB的模型大小超越G-PCC标准12.25%码率节省。
 
 **[GDFusion: Rethinking Temporal Fusion with a Unified Gradient Descent View for 3D Semantic Occupancy Prediction](rethinking_temporal_fusion_with_a_unified_gradient_descent_view_for_3d_semantic_.md)**
 
@@ -182,26 +242,110 @@ description: >-
 
 :   提出 Scenario Dreamer，将自动驾驶仿真环境生成分解为三部分：向量化潜扩散模型生成初始场景（车道+智能体）、回报条件的 CtRL-Sim 生成闭环行为、场景修补实现无界环境扩展，在 nuPlan 上 Frechet Distance 0.67（基线 SLEDGE 1.44），生成仅需 0.16 秒。
 
+**[SceneCrafter: Controllable Multi-View Driving Scene Editing](scenecrafter_controllable_multi-view_driving_scene_editing.md)**
+
+:   SceneCrafter 提出了一个基于多视角扩散模型的驾驶场景编辑框架，通过 teacher-student 两阶段训练范式生成高质量合成配对数据，支持天气/时间全局编辑和前景目标增删的局部编辑，同时保持跨相机的 3D 几何一致性。
+
 **[SceneDiffuser++: City-Scale Traffic Simulation via a Generative World Model](scenediffuser_city-scale_traffic_simulation_via_a_generative_world_model.md)**
 
 :   提出 SceneDiffuser++，一个端到端的城市级交通仿真扩散模型，通过软裁剪（soft clipping）处理稀疏张量中的智能体出入场问题，实现 60 秒以上的行程级（trip-level）交通仿真，在 WOMD-XLMap 上达到 0.2423 综合 JS 散度。
+
+**[SDGOcc: Semantic and Depth-Guided BEV Transformation for 3D Multimodal Occupancy Prediction](sdgocc_semantic_and_depth-guided_birds-eye_view_transformation_for_3d_multimodal.md)**
+
+:   本文提出 SDG-OCC，一个多模态 3D 语义占用预测框架，通过语义和深度引导的视图变换（利用 LiDAR 深度和图像语义分割掩码构建虚拟点）替代传统 LSS 管线，结合融合到占用驱动的主动蒸馏模块，在 Occ3D-nuScenes 上取得 SOTA 并保持实时推理速度。
+
+**[Segment Anything, Even Occluded](segment_anything_even_occluded.md)**
+
+:   提出 SAMEO，将 EfficientSAM 适配为遮挡物体的 amodal 分割解码器，结合新构建的 300K 图像 Amodal-LVIS 数据集，实现了在 COCOA-cls 和 D2SA 上超越监督方法的零样本 amodal 分割性能。
 
 **[Single Pixel Image Classification using an Ultrafast Digital Light Projector](single_pixel_image_classification_using_an_ultrafast_digital_light_projector.md)**
 
 :   利用 microLED-on-CMOS 超快数字光投影器实现基于单像素成像（SPI）的 MNIST 图像分类，在 1.2 kfps 帧率下达到 >90% 分类精度，完全绕过图像重建直接从时序光信号分类。
 
+**[SocialMOIF: Multi-Order Intention Fusion for Pedestrian Trajectory Prediction](socialmoif_multi-order_intention_fusion_for_pedestrian_trajectory_prediction.md)**
+
+:   SocialMOIF 提出了一种多阶意图融合模型，通过一阶直接交互层和高阶邻居间接交互层全面捕获社交意图，结合基于挤压定理思想的轨迹分布近似器和首次引入 KAN 网络的全局轨迹优化器，在 ETH/UCY、SDD、NBA、NuScenes 多个数据集上实现了 SOTA 性能。
+
 **[SOLVE: Synergy of Language-Vision and End-to-End Networks for Autonomous Driving](solve_synergy_of_language-vision_and_end-to-end_networks_for_autonomous_driving.md)**
 
 :   提出 SOLVE，通过共享 SQ-Former 视觉编码器实现 VLM 和端到端驾驶模型的特征级协同，用 Trajectory Chain-of-Thought（T-CoT）将 VLM 的长程轨迹作为 E2E 模型的初始化先验，在 nuScenes 上达到 0.28m 平均 L2 误差 SOTA。
+
+**[SparseAlign: A Fully Sparse Framework for Cooperative Object Detection](sparsealign_a_fully_sparse_framework_for_cooperative_object_detection.md)**
+
+:   SparseAlign提出首个全稀疏的协同目标检测框架，通过坐标可扩展稀疏卷积解决中心特征缺失和孤立卷积域问题，在减少98%通信带宽的同时超越基于稠密BEV的SOTA方法。
+
+**[Spatiotemporal Decoupling for Efficient Vision-Based Occupancy Forecasting](spatiotemporal_decoupling_for_efficient_vision-based_occupancy_forecasting.md)**
+
+:   提出 EfficientOCF，通过空间解耦（将 3D 占用分解为 2D BEV 占用 + 高度值）和时间解耦（通过光流关联实例实现逐步 OCF 而非端到端预测）解决占用预测中的空间偏置和时间偏置问题，实现 SOTA 3D 占用预测性能和 82.33ms 的快速推理。
 
 **[Spectral-Geometric Neural Fields for Pose-Free LiDAR View Synthesis](spectral-geometric_neural_fields_for_pose-free_lidar_view_synthesis.md)**
 
 :   SG-NLF 提出一种无需精确位姿的 LiDAR NeRF 框架，通过混合频谱-几何表征重建平滑几何、置信度感知位姿图实现全局对齐、对抗学习增强跨帧一致性，在低频 LiDAR 场景下重建质量和位姿精度分别超越 SOTA 35.8% 和 68.8%。
 
+**[SuperPC: A Single Diffusion Model for Point Cloud Completion, Upsampling, Denoising, and Colorization](superpc_a_single_diffusion_model_for_point_cloud_completion_upsampling_denoising.md)**
+
+:   提出 SuperPC，首个将点云补全、上采样、去噪和着色四个任务统一在单一条件扩散模型中的框架，通过三级条件（raw/local/global）和空间混合融合策略（SMF）有效融合图像与点云模态。
+
+**[T²SG: Traffic Topology Scene Graph for Topology Reasoning in Autonomous Driving](t2sg_traffic_topology_scene_graph_for_topology_reasoning_in_autonomous_driving.md)**
+
+:   定义了统一的交通拓扑场景图（T²SG），显式建模车道、交通信号控制关系及车道间拓扑连接，并提出 TopoFormer 通过车道聚合层和反事实干预层实现精确的拓扑推理，在 OpenLane-V2 上达到 46.3 OLS SOTA。
+
+**[TacoDepth: Towards Efficient Radar-Camera Depth Estimation with One-Stage Fusion](tacodepth_towards_efficient_radar-camera_depth_estimation_with_one-stage_fusion.md)**
+
+:   TacoDepth 提出首个单阶段雷达-相机融合深度估计框架，通过基于图的雷达结构提取器和金字塔式雷达融合模块，绕过了中间准稠密深度图的需求，在精度提升 12.8% 的同时速度提升 91.8%，达到实时 37+ FPS。
+
+**[Temporal Action Detection Model Compression by Progressive Block Drop](temporal_action_detection_model_compression_by_progressive_block_drop.md)**
+
+:   提出渐进式块丢弃(Progressive Block Drop)方法从深度维度压缩时序动作检测(TAD)模型，通过逐步移除冗余块并使用参数高效的跨深度对齐策略恢复性能，实现 25% 计算量减少的同时性能不降反升。
+
+**[Toward Real-World BEV Perception: Depth Uncertainty Estimation via Gaussian Splatting](toward_real-world_bev_perception_depth_uncertainty_estimation_via_gaussian_splat.md)**
+
+:   GaussianLSS 在经典的 Lift-Splat-Shoot（LSS）框架上引入深度不确定性建模，通过计算深度分布的方差并将其转换为 3D 高斯表示，再利用 Gaussian Splatting 高效光栅化生成具有不确定性感知的 BEV 特征，在 nuScenes 上达到了 unprojection 方法的 SOTA，同时比 projection 方法快 2.5 倍、省 70% 显存。
+
+**[Towards In-the-Wild 3D Plane Reconstruction from a Single Image](towards_in-the-wild_3d_plane_reconstruction_from_a_single_image.md)**
+
+:   ZeroPlane 提出了首个跨域零样本3D平面重建框架，通过构建包含14个数据集/56万标注的大规模平面基准数据集，并设计法向量-偏移解耦的分类-回归范式和像素几何增强嵌入模块，实现了在室内外多样场景中显著优于现有方法的泛化性能。
+
+**[Towards Satellite Image Road Graph Extraction: A Global-Scale Dataset and A Novel Method](towards_satellite_image_road_graph_extraction_a_global-scale_dataset_and_a_novel.md)**
+
+:   本文构建了一个覆盖全球的大规模卫星道路图提取数据集 Global-Scale（比现有最大公开数据集大约20倍），并提出 SAM-Road++ 方法，通过节点引导重采样策略解决训练与推理不匹配问题，同时引入"延长线"策略缓解遮挡导致的道路断裂，在多个数据集上取得了 SOTA 效果。
+
+**[Tra-MoE: Learning Trajectory Prediction Model from Multiple Domains for Adaptive Policy Conditioning](tra-moe_learning_trajectory_prediction_model_from_multiple_domains_for_adaptive_.md)**
+
+:   本文提出 Tra-MoE，利用稀疏门控混合专家(MoE)架构训练轨迹预测模型，有效融合大规模域外无动作视频数据与小规模域内机器人演示数据，并设计自适应策略条件化技术将 2D 轨迹与视觉观测显式对齐，在仿真和真实场景均显著提升机器人操控成功率。
+
+**[Trajectory Mamba: Efficient Attention-Mamba Forecasting Model Based on Selective SSM](trajectory_mamba_efficient_attention-mamba_forecasting_model_based_on_selective_.md)**
+
+:   提出 Trajectory Mamba（Tamba），基于选择性状态空间模型重新设计自注意力机制，实现线性时间复杂度的轨迹预测，同时通过联合 polyline 编码策略和跨状态空间解码器保持预测精度，参数减少 40%+ 且 FLOPs 降低 4 倍。
+
+**[Uncertainty-Instructed Structure Injection for Generalizable HD Map Construction](uncertainty-instructed_structure_injection_for_generalizable_hd_map_construction.md)**
+
+:   提出 UIGenMap，通过不确定性感知的透视图(PV)检测分支获取显式结构特征，并基于不确定性权重构建 PV prompt 注入 BEV 地图解码器，结合 Mimic Query 蒸馏实现实时推理，在地理不相交数据拆分上取得 +5.7 mAP 的泛化性能提升。
+
 **[UniScene: Unified Occupancy-centric Driving Scene Generation](uniscene_unified_occupancy-centric_driving_scene_generation.md)**
 
 :   提出 UniScene，以占用网格为统一中间表示的两阶段驾驶场景生成：Occupancy Diffusion Transformer 从 BEV 布局生成语义占用，再通过高斯泼溅联合渲染语义+深度图条件化双扩散模型生成视频和 LiDAR，FVD 71.94（前 SOTA Drive-WM 122.70），下游数据增强提升 3D 检测 mAP 3.62%。
 
+**[Unlocking Generalization Power in LiDAR Point Cloud Registration](unlocking_generalization_power_in_lidar_point_cloud_registration.md)**
+
+:   提出 UGP 框架，通过消除交叉注意力、引入渐进式自注意力和 BEV 特征融合，显著提升 LiDAR 点云配准在跨距离和跨数据集场景下的泛化能力。
+
+**[V2X-R: Cooperative LiDAR-4D Radar Fusion with Denoising Diffusion for 3D Object Detection](v2x-r_cooperative_lidar-4d_radar_fusion_with_denoising_diffusion_for_3d_object_d.md)**
+
+:   本文构建了首个包含 LiDAR、相机和 4D 雷达三种模态的 V2X 仿真数据集 V2X-R，提出了协同 LiDAR-4D 雷达融合流水线及 Multi-modal Denoising Diffusion (MDD) 模块，利用天气鲁棒的 4D 雷达特征指导扩散模型去噪含噪 LiDAR 特征，在雾天/雪天条件下提升检测性能高达 5.73%/6.70% 且几乎不影响正常天气性能。
+
 **[VIRD: View-Invariant Representation through Dual-Axis Transformation for Cross-View Pose Estimation](vird_view-invariant_representation_through_dual-axis_transformation_for_cross-vi.md)**
 
 :   VIRD 通过双轴变换（极坐标变换 + 上下文增强位置注意力）构建视角不变表征，实现无需方向先验的全向跨视角位姿估计，在 KITTI 上位置和方向误差分别降低 50.7% 和 76.5%。
+
+**[VisionPAD: A Vision-Centric Pre-training Paradigm for Autonomous Driving](visionpad_a_vision-centric_pre-training_paradigm_for_autonomous_driving.md)**
+
+:   本文提出 VisionPAD，一种纯视觉自监督预训练框架，用基于锚点的 3D 高斯溅射替代体积渲染重建多视角图像，并引入自监督体素速度估计和多帧光度一致性约束来学习运动线索和 3D 几何信息，完全不依赖 LiDAR 深度监督，在 3D 检测、占用预测和地图分割三个下游任务上显著超越现有预训练方法。
+
+**[VoteFlow: Enforcing Local Rigidity in Self-Supervised Scene Flow](voteflow_enforcing_local_rigidity_in_self-supervised_scene_flow.md)**
+
+:   VoteFlow 通过在网络架构中引入一个基于可微投票的轻量级模块，将局部刚性运动约束作为归纳偏置融入自监督场景流估计模型，在 Argoverse 2 和 Waymo 数据集上以极低计算开销超越了此前最优的自监督方法。
+
+**[WeatherGen: A Unified Diverse Weather Generator for LiDAR Point Clouds via Spider Mamba Diffusion](weathergen_a_unified_diverse_weather_generator_for_lidar_point_clouds_via_spider.md)**
+
+:   本文提出 WeatherGen，首个统一的多样恶劣天气 LiDAR 数据扩散生成框架，通过 Spider Mamba 生成器保持 LiDAR 物理结构、对比学习控制器实现天气可控生成，在数据保真度和下游检测性能上均显著超越基于物理模拟的方法。

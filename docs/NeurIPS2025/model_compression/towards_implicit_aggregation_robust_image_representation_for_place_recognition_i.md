@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Implicit Aggregation: Robust Image Representation for Place Recognition in the Transformer Era
 description: >-

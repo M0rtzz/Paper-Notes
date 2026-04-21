@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Panel-by-Panel Souls: A Performative Workflow for Expressive Faces in AI-Assisted Manga Creation
 description: >-

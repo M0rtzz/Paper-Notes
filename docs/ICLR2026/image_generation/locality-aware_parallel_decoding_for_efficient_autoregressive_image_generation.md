@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Locality-aware Parallel Decoding for Efficient Autoregressive Image Generation
 description: >-

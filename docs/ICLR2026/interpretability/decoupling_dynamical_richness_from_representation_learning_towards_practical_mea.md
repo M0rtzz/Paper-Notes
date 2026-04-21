@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Decoupling Dynamical Richness from Representation Learning: Towards Practical Measurement
 description: >-

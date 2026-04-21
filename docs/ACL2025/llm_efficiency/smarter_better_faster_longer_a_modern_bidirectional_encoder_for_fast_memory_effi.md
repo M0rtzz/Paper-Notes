@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference
 description: >-
@@ -173,7 +173,7 @@ tags:
 - [SkyLadder: Better and Faster Pretraining via Context Window Scheduling](../../NeurIPS2025/llm_efficiency/skyladder_better_and_faster_pretraining_via_context_window_scheduling.md)
 - [Scaling Context, Not Parameters: Training a Compact 7B Language Model for Efficient Long-Context Processing](scaling_context_not_parameters_training_a_compact_7b_language_model_for_efficien.md)
 - [EasyInv: Toward Fast and Better DDIM Inversion](../../ICML2025/llm_efficiency/easyinv_toward_fast_and_better_ddim_inversion.md)
-- [Linear Attention for Efficient Bidirectional Sequence Modeling](../../NeurIPS2025/llm_efficiency/linear_attention_for_efficient_bidirectional_sequence_modeling.md)
+- [Efficient Many-Shot In-Context Learning with Dynamic Block-Sparse Attention](efficient_many-shot_in-context_learning_with_dynamic_block-sparse_attention.md)
 - [LaMPE: Length-aware Multi-grained Positional Encoding for Adaptive Long-context Scaling Without Training](adaptive_grouped_pe_context_window.md)
 
 <!-- RELATED:END -->

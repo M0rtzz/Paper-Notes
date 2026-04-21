@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Static Artifacts: A Forensic Benchmark for Video Deepfake Reasoning in Vision Language Models
 description: >-

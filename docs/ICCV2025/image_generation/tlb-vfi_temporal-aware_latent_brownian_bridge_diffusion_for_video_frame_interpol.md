@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TLB-VFI: Temporal-Aware Latent Brownian Bridge Diffusion for Video Frame Interpolation
 description: >-
@@ -163,7 +163,7 @@ $$\hat{I}_n = M \odot \text{warp}(I_0) + (1-M) \odot \text{warp}(I_1) + \Delta$$
 - [EDEN: Enhanced Diffusion for High-quality Large-motion Video Frame Interpolation](../../CVPR2025/image_generation/eden_enhanced_diffusion_for_high-quality_large-motion_video_frame_interpolation.md)
 - [Hierarchical Flow Diffusion for Efficient Frame Interpolation](../../CVPR2025/image_generation/hierarchical_flow_diffusion_for_efficient_frame_interpolation.md)
 - [Video Motion Graphs](video_motion_graphs.md)
-- [MaskControl: Spatio-Temporal Control for Masked Motion Synthesis](maskcontrol_spatio-temporal_control_for_masked_motion_synthesis.md)
 - [What's in a Latent? Leveraging Diffusion Latent Space for Domain Generalization](whats_in_a_latent_leveraging_diffusion_latent_space_for_domain_generalization.md)
+- [MaskControl: Spatio-Temporal Control for Masked Motion Synthesis](maskcontrol_spatio-temporal_control_for_masked_motion_synthesis.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Conditional Panoramic Image Generation via Masked Autoregressive Modeling
 description: >-

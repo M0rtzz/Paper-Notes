@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Compact Latent Space for Representing Neural Signed Distance Functions with High-fidelity Geometry Details
 description: >-

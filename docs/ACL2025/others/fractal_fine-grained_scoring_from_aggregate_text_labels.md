@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FRACTAL: Fine-Grained Scoring from Aggregate Text Labels
 description: >-

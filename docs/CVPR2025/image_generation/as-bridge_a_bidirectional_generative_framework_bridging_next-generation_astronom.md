@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AS-Bridge: A Bidirectional Generative Framework Bridging Next-Generation Astronomical Surveys
 description: >-
@@ -133,10 +133,10 @@ tags:
 
 ## 相关论文
 
+- [Unseen Visual Anomaly Generation](unseen_visual_anomaly_generation.md)
 - [DreamRelation: Bridging Customization and Relation Generation](dreamrelation_bridging_customization_and_relation_generation.md)
+- [One-for-More: Continual Diffusion Model for Anomaly Detection](one-for-more_continual_diffusion_model_for_anomaly_detection.md)
 - [DiffSensei: Bridging Multi-Modal LLMs and Diffusion Models for Customized Manga Generation](diffsensei_bridging_multi-modal_llms_and_diffusion_models_for_customized_manga_g.md)
 - [coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](codrawagents_a_multi-agent_dialogue_framework_for_compositional_image_generation.md)
-- [V-Bridge: Bridging Video Generative Priors to Versatile Few-shot Image Restoration](v-bridge_bridging_video_generative_priors_to_versatile_few-shot_image_restoratio.md)
-- [From Words to Structured Visuals: A Benchmark and Framework for Text-to-Diagram Generation and Editing](from_words_to_structured_visuals_a_benchmark_and_framework_for_text-to-diagram_g.md)
 
 <!-- RELATED:END -->

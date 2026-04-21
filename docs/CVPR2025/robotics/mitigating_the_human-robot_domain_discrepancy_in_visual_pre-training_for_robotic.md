@@ -2,14 +2,15 @@
 title: >-
   [论文解读] Mitigating the Human-Robot Domain Discrepancy in Visual Pre-training for Robotic Manipulation
 description: >-
-  [CVPR 2025][机器人操作] 提出 HR-Align 方法，利用配对的人-机器人视频数据，通过参数高效适配器和人-机器人对比对齐损失弥合人类数据预训练模型与机器人下游任务之间的域差距，在仿真和真实机器人任务上取得显著提升。
+  [CVPR 2025][机器人][robotic manipulation] 提出 HR-Align 适配范式，利用配对人-机器人视频数据和对比对齐损失，以参数高效的方式弥合人类数据预训练模型与机器人域之间的语义差距，在 20 个仿真任务和 5 个真实任务上平均成功率提升 7%+。
 tags:
   - CVPR 2025
+  - 机器人
   - robotic manipulation
-  - domain adaptation
-  - contrastive learning
-  - parameter-efficient fine-tuning
   - visual pre-training
+  - human-robot domain gap
+  - contrastive alignment
+  - parameter-efficient adapter
 ---
 
 # Mitigating the Human-Robot Domain Discrepancy in Visual Pre-training for Robotic Manipulation
@@ -152,10 +153,10 @@ $$\mathcal{L} = \frac{1}{2M}\sum_{i=1}^{M} -\log\frac{\mathcal{S}(\bar{h}_i^f, \
 
 ## 相关论文
 
+- [Robotic Visual Instruction](robotic_visual_instruction.md)
 - [A Data-Centric Revisit of Pre-Trained Vision Models for Robot Learning](a_data-centric_revisit_of_pre-trained_vision_models_for_robot_learning.md)
 - [3D-MVP: 3D Multiview Pretraining for Robotic Manipulation](3d-mvp_3d_multiview_pretraining_for_manipulation.md)
 - [Generalizable Domain Adaptation for Sim-and-Real Policy Co-Training](../../NeurIPS2025/robotics/generalizable_domain_adaptation_for_sim-and-real_policy_co-training.md)
 - [RoboGround: Robotic Manipulation with Grounded Vision-Language Priors](roboground_robotic_manipulation_with_grounded_vision-language_priors.md)
-- [LaDA: Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
 
 <!-- RELATED:END -->

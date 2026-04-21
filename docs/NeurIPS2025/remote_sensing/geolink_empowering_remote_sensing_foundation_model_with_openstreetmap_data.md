@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GeoLink: Empowering Remote Sensing Foundation Model with OpenStreetMap Data
 description: >-

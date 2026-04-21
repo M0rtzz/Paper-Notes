@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Words to Structured Visuals: A Benchmark and Framework for Text-to-Diagram Generation and Editing
 description: >-
@@ -121,9 +121,9 @@ Code Agent 和 Diagram-to-Code Agent 的训练均采用标准的代码生成损�
 ## 相关论文
 
 - [AutoPresent: Designing Structured Visuals from Scratch](autopresent_designing_structured_visuals_from_scratch.md)
+- [Towards Scalable Human-Aligned Benchmark for Text-Guided Image Editing](towards_scalable_human-aligned_benchmark_for_text-guided_image_editing.md)
 - [Factuality Matters: When Image Generation and Editing Meet Structured Visuals](../../ICLR2026/image_generation/factuality_matters_when_image_generation_and_editing_meet_structured_visuals.md)
-- [LongT2IBench: A Benchmark for Evaluating Long Text-to-Image Generation with Graph-structured Annotations](../../AAAI2026/image_generation/longt2ibench_a_benchmark_for_evaluating_long_text-to-image_generation_with_graph.md)
-- [DreamOmni: Unified Image Generation and Editing](dreamomni_unified_image_generation_and_editing.md)
-- [One Image is Worth a Thousand Words: A Usability Preservable Text-Image Collaborative Erasing Framework](../../ICML2025/image_generation/one_image_is_worth_a_thousand_words_a_usability_preservable_text-image_collabora.md)
+- [PQPP: A Joint Benchmark for Text-to-Image Prompt and Query Performance Prediction](pqpp_a_joint_benchmark_for_text-to-image_prompt_and_query_performance_prediction.md)
+- [SALAD: Skeleton-aware Latent Diffusion for Text-driven Motion Generation and Editing](salad_skeleton-aware_latent_diffusion_for_text-driven_motion_generation_and_edit.md)
 
 <!-- RELATED:END -->

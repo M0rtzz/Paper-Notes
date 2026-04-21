@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PCoT: Persuasion-Augmented Chain of Thought for Detecting Fake News and Social Media Disinformation
 description: >-

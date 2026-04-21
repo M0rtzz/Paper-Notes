@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Blameless Users in a Clean Room: Defining Copyright Protection for Generative Models
 description: >-

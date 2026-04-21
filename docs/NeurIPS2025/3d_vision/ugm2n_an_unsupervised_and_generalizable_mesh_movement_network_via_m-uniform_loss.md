@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UGM2N: An Unsupervised and Generalizable Mesh Movement Network via M-Uniform Loss
 description: >-

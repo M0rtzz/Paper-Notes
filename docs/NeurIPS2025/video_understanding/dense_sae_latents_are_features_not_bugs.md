@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dense SAE Latents Are Features, Not Bugs
 description: >-
@@ -130,8 +130,8 @@ tags:
 ## 相关论文
 
 - [Fixed-Point RNNs: Interpolating from Diagonal to Dense](fixed-point_rnns_interpolating_from_diagonal_to_dense.md)
-- [ResidualViT for Efficient Temporally Dense Video Encoding](../../ICCV2025/video_understanding/residualvit_for_efficient_temporally_dense_video_encoding.md)
 - [Online Dense Point Tracking with Streaming Memory](../../ICCV2025/video_understanding/online_dense_point_tracking_with_streaming_memory.md)
+- [ResidualViT for Efficient Temporally Dense Video Encoding](../../ICCV2025/video_understanding/residualvit_for_efficient_temporally_dense_video_encoding.md)
 - [AllTracker: Efficient Dense Point Tracking at High Resolution](../../ICCV2025/video_understanding/alltracker_efficient_dense_point_tracking_at_high_resolution.md)
 - [Sparse-to-Dense: A Free Lunch for Lossless Acceleration of Video Understanding in LLMs](../../ACL2025/video_understanding/sparse-to-dense_a_free_lunch_for_lossless_acceleration_of_video_understanding_in.md)
 

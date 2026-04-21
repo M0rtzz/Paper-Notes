@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GenMol: A Drug Discovery Generalist with Discrete Diffusion
 description: >-

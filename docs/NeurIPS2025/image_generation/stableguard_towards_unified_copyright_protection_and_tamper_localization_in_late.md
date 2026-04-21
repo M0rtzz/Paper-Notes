@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] StableGuard: Towards Unified Copyright Protection and Tamper Localization in Latent Diffusion Models
 description: >-
@@ -151,6 +151,6 @@ PSNR提升2.3dB以上，Bit Acc达到99.97%，全面碾压所有基线。
 - [Anti-Tamper Protection for Unauthorized Individual Image Generation](../../ICCV2025/image_generation/anti-tamper_protection_for_unauthorized_individual_image_generation.md)
 - [Perturb a Model, Not an Image: Towards Robust Privacy Protection via Anti-Personalized Diffusion Models](perturb_a_model_not_an_image_towards_robust_privacy_protection_via_anti-personal.md)
 - [Latent Zoning Network: A Unified Principle for Generative Modeling, Representation Learning, and Classification](latent_zoning_network_a_unified_principle_for_generative_modeling_representation.md)
-- [MGE-LDM: Joint Latent Diffusion for Simultaneous Music Generation and Source Extraction](mge-ldm_joint_latent_diffusion_for_simultaneous_music_generation_and_source_extr.md)
+- [OmniCast: A Masked Latent Diffusion Model for Weather Forecasting Across Time Scales](omnicast_a_masked_latent_diffusion_model_for_weather_forecasting_across_time_sca.md)
 
 <!-- RELATED:END -->

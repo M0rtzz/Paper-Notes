@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning to Play Multi-Follower Bayesian Stackelberg Games
 description: >-

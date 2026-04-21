@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Does Self-Evaluation Enable Wireheading in Language Models?
 description: >-

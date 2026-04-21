@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Integer Programming for Generalized Causal Bootstrap Designs
 description: >-

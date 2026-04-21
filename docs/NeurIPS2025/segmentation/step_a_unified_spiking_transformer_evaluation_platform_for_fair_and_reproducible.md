@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] STEP: A Unified Spiking Transformer Evaluation Platform for Fair and Reproducible Benchmarking
 description: >-
@@ -126,6 +126,6 @@ STEP 是一个模块化的基准测试框架，而非一种新模型。其架构
 - [MultiHuman-Testbench: Benchmarking Image Generation for Multiple Humans](multihuman-testbench_benchmarking_image_generation_for_multiple_humans.md)
 - [HAODiff: Human-Aware One-Step Diffusion via Dual-Prompt Guidance](haodiff_human-aware_one-step_diffusion_via_dual-prompt_guidance.md)
 - [MambaVision: A Hybrid Mamba-Transformer Vision Backbone](../../CVPR2025/segmentation/mambavision_a_hybrid_mamba-transformer_vision_backbone.md)
-- [Locality-Attending Vision Transformer](../../ICLR2026/segmentation/locality-attending_vision_transformer.md)
+- [Rethinking Query-Based Transformer for Continual Image Segmentation](../../CVPR2025/segmentation/rethinking_query-based_transformer_for_continual_image_segmentation.md)
 
 <!-- RELATED:END -->

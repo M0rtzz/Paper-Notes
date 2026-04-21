@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GOT-Edit: Geometry-Aware Generic Object Tracking via Online Model Editing
 description: >-

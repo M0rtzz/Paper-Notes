@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CLIP Behaves like a Bag-of-Words Model Cross-modally but not Uni-modally
 description: >-
@@ -125,7 +125,7 @@ tags:
 
 ## 相关论文
 
-- [MergeVLA: Cross-Skill Model Merging Toward a Generalist Vision-Language-Action Agent](../../CVPR2026/robotics/mergevla_crossskill_model_merging_toward_a_general.md)
+- [MergeVLA: Cross-Skill Model Merging Toward a Generalist Vision-Language-Action Agent](../../CVPR2026/robotics/mergevla_cross-skill_model_merging_toward_a_generalist_vision-language-action_ag.md)
 - [From Woofs to Words: Towards Intelligent Robotic Guide Dogs with Verbal Communication](../../AAAI2026/robotics/from_woofs_to_words_towards_intelligent_robotic_guide_dogs_with_verbal_communica.md)
 - [To Align or Not to Align: Strategic Multimodal Representation Alignment for Optimal Performance](../../AAAI2026/robotics/to_align_or_not_to_align_strategic_multimodal_representation_alignment_for_optim.md)
 - [Sparse Imagination for Efficient Visual World Model Planning](sparse_imagination_for_efficient_visual_world_model_planning.md)

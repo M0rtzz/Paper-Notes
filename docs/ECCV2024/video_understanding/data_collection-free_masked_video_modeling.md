@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Data Collection-Free Masked Video Modeling
 description: >-
@@ -169,7 +169,7 @@ PMG通过**递归应用图像变换**生成视频：从变换集合中随机选�
 - [Text-Guided Video Masked Autoencoder](text-guided_video_masked_autoencoder.md)
 - [Masked Video and Body-worn IMU Autoencoder for Egocentric Action Recognition](masked_video_and_body-worn_imu_autoencoder_for_egocentric_action_recognition.md)
 - [Web-Scale Collection of Video Data for 4D Animal Reconstruction](../../NeurIPS2025/video_understanding/web-scale_collection_of_video_data_for_4d_animal_reconstruction.md)
-- [Rethinking Video-Text Understanding: Retrieval from Counterfactually Augmented Data](rethinking_video-text_understanding_retrieval_from_counterfactually_augmented_da.md)
 - [Towards Efficient General Feature Prediction in Masked Skeleton Modeling](../../ICCV2025/video_understanding/towards_efficient_general_feature_prediction_in_masked_skeleton_modeling.md)
+- [Rethinking Video-Text Understanding: Retrieval from Counterfactually Augmented Data](rethinking_video-text_understanding_retrieval_from_counterfactually_augmented_da.md)
 
 <!-- RELATED:END -->

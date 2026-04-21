@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fractals made Practical: Denoising Diffusion as Partitioned Iterated Function Systems
 description: >-
@@ -185,7 +185,7 @@ Crossover发生在 $t \in [160, 200]$，约40步窗口。Regime I全面违反(PC
 - [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
 - [Reviving ConvNeXt for Efficient Convolutional Diffusion Models](reviving_convnext_for_efficient_convolutional_diffusion_models.md)
 - [Diffusion Mental Averages](diffusion_mental_averages.md)
+- [Learnability-Guided Diffusion for Dataset Distillation](learnability-guided_diffusion_for_dataset_distillation.md)
 - [Exploring Conditions for Diffusion Models in Robotic Control](exploring_conditions_for_diffusion_models_in_robotic_control.md)
-- [APPLE: Attribute-Preserving Pseudo-Labeling for Diffusion-Based Face Swapping](apple_attribute-preserving_pseudo-labeling_for_diffusion-based_face_swapping.md)
 
 <!-- RELATED:END -->

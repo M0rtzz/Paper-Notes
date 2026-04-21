@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the Exponential Convergence for Offline RLHF with Pairwise Comparisons
 description: >-

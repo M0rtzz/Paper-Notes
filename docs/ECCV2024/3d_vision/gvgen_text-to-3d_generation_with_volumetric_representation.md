@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GVGEN: Text-to-3D Generation with Volumetric Representation
 description: >-

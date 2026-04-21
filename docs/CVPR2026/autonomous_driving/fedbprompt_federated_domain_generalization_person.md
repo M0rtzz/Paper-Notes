@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FedBPrompt: Federated Domain Generalization Person Re-Identification via Body Distribution Aware Visual Prompts
 description: >-

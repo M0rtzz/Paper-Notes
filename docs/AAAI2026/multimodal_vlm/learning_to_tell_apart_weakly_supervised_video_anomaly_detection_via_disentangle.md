@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning to Tell Apart: Weakly Supervised Video Anomaly Detection via Disentangled Semantic Alignment
 description: >-

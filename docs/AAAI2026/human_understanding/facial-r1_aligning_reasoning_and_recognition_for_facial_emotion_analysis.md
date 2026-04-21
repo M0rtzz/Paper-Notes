@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Facial-R1: Aligning Reasoning and Recognition for Facial Emotion Analysis
 description: >-

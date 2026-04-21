@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PAP: A Prediction-as-Perception Framework for 3D Object Detection
 description: >-
@@ -128,9 +128,9 @@ PAP = 感知模块 + 预测模块 + query 循环通道。输入当前帧图像 +
 ## 相关论文
 
 - [A Prediction-as-Perception Framework for 3D Object Detection](../../CVPR2026/autonomous_driving/a_predictionasperception_framework_for_3d_object_d.md)
+- [SparseAlign: A Fully Sparse Framework for Cooperative Object Detection](sparsealign_a_fully_sparse_framework_for_cooperative_object_detection.md)
+- [RaCFormer: Towards High-Quality 3D Object Detection via Query-based Radar-Camera Fusion](racformer_towards_high-quality_3d_object_detection_via_query-based_radar-camera_.md)
 - [EV-3DOD: Pushing the Temporal Boundaries of 3D Object Detection with Event Cameras](ev-3dod_pushing_the_temporal_boundaries_of_3d_object_detection_with_event_camera.md)
-- [Cubify Anything: Scaling Indoor 3D Object Detection](cubify_anything_scaling_indoor_3d_object_detection.md)
-- [GaussianFormer-2: Probabilistic Gaussian Superposition for Efficient 3D Occupancy Prediction](gaussianformer-2_probabilistic_gaussian_superposition_for_efficient_3d_occupancy.md)
-- [A Neuro-Symbolic Framework Combining Inductive and Deductive Reasoning for Autonomous Driving Planning](a_neuro-symbolic_framework_combining_inductive_and_deductive_reasoning_for_auton.md)
+- [V2X-R: Cooperative LiDAR-4D Radar Fusion with Denoising Diffusion for 3D Object Detection](v2x-r_cooperative_lidar-4d_radar_fusion_with_denoising_diffusion_for_3d_object_d.md)
 
 <!-- RELATED:END -->

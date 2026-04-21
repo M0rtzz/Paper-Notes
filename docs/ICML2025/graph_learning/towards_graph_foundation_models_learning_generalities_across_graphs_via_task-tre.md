@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Graph Foundation Models: Learning Generalities Across Graphs via Task-Trees
 description: >-

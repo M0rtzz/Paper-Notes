@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Speculative Decoding in Decentralized LLM Inference: Turning Communication Latency into Computation Throughput
 description: >-

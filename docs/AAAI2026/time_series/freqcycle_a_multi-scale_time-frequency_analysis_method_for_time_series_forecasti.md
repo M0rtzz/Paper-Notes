@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FreqCycle: A Multi-Scale Time-Frequency Analysis Method for Time Series Forecasting
 description: >-

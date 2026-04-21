@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CovMatch: Cross-Covariance Guided Multimodal Dataset Distillation with Trainable Text Encoder
 description: >-

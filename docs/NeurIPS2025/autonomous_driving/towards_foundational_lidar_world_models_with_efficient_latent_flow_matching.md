@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Foundational LiDAR World Models with Efficient Latent Flow Matching
 description: >-

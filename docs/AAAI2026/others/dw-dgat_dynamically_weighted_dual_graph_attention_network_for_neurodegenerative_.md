@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DW-DGAT: Dynamically Weighted Dual Graph Attention Network for Neurodegenerative Disease Diagnosis
 description: >-

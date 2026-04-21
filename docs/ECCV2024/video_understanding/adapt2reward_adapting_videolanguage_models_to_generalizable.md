@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adapt2Reward: Adapting Video-Language Models to Generalizable Robotic Rewards via Failure Prompts
 description: >-
@@ -102,10 +102,10 @@ tags:
 
 ## 相关论文
 
-- [MoMa: Modulating Mamba for Adapting Image Foundation Models to Video Recognition](../../ICML2025/video_understanding/moma_modulating_mamba_for_adapting_image_foundation_models_to_video_recognition.md)
+- [PAVE: Patching and Adapting Video Large Language Models](../../CVPR2025/video_understanding/pave_patching_and_adapting_video_large_language_models.md)
 - [Vamos: Versatile Action Models for Video Understanding](vamos_versatile_action_models_for_video_understanding.md)
 - [PiTe: Pixel-Temporal Alignment for Large Video-Language Model](pite_pixel-temporal_alignment_for_large_video-language_model.md)
-- [Causality Matters: How Temporal Information Emerges in Video Language Models](../../AAAI2026/video_understanding/causality_matters_how_temporal_information_emerges_in_video_language_models.md)
-- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+- [MoMa: Modulating Mamba for Adapting Image Foundation Models to Video Recognition](../../ICML2025/video_understanding/moma_modulating_mamba_for_adapting_image_foundation_models_to_video_recognition.md)
+- [Towards Model-Agnostic Dataset Condensation by Heterogeneous Models](towards_model-agnostic_dataset_condensation_by_heterogeneous_models.md)
 
 <!-- RELATED:END -->

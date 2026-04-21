@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TinyNav: End-to-End TinyML for Real-Time Autonomous Navigation on Microcontrollers
 description: >-

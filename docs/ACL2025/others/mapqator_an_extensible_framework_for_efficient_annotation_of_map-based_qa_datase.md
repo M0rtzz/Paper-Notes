@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MapQaTor: An Extensible Framework for Efficient Annotation of Map-Based QA Datasets
 description: >-

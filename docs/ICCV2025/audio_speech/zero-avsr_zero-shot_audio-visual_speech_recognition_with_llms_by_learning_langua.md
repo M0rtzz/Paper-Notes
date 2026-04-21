@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations
 description: >-

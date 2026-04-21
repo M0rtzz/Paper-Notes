@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] InfoDecom: Decomposing Information for Defending Against Privacy Leakage in Split Inference
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] C4D: 4D Made from 3D through Dual Correspondences
 description: >-

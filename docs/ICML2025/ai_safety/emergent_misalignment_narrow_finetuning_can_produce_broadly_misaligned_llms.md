@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Emergent Misalignment: Narrow Finetuning Can Produce Broadly Misaligned LLMs
 description: >-
@@ -138,7 +138,7 @@ GPT-4o 作为 judge，评对齐度和连贯性。对齐分 <30 为"失对齐"，
 - [Can Editing LLMs Inject Harm?](../../AAAI2026/ai_safety/can_editing_llms_inject_harm.md)
 - [Virus Infection Attack on LLMs: Your Poisoning Can Spread "VIA" Synthetic Data](../../NeurIPS2025/ai_safety/virus_infection_attack_on_llms_your_poisoning_can_spread_via_synthetic_data.md)
 - [Inoculation Prompting: Eliciting Traits from LLMs during Training Can Suppress Them at Test-Time](../../ICLR2026/ai_safety/inoculation_prompting_eliciting_traits_from_llms_during_training_can_suppress_th.md)
-- [Is Your Model Fairly Certain? Uncertainty-Aware Fairness Evaluation for LLMs](is_your_model_fairly_certain_uncertainty-aware_fairness_evaluation_for_llms.md)
 - [An Attack to Break Permutation-Based Private Third-Party Inference Schemes for LLMs](an_attack_to_break_permutation-based_private_third-party_inference_schemes_for_l.md)
+- [Is Your Model Fairly Certain? Uncertainty-Aware Fairness Evaluation for LLMs](is_your_model_fairly_certain_uncertainty-aware_fairness_evaluation_for_llms.md)
 
 <!-- RELATED:END -->

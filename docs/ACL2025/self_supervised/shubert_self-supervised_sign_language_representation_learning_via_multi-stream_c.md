@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SHuBERT: Self-Supervised Sign Language Representation Learning via Multi-Stream Cluster Prediction
 description: >-

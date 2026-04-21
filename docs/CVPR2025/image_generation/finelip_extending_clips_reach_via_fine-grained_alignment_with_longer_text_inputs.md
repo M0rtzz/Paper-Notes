@@ -1,10 +1,10 @@
 ---
-title: "FineLIP: Extending CLIP's Reach via Fine-Grained Alignment with Longer Text Inputs"
-conference: "CVPR 2025"
-arxiv: "2504.01916"
-code: "https://github.com/tiiuae/FineLIP"
-domain: "视觉语言模型 / 跨模态检索"
-tags: ["CLIP", "fine-grained alignment", "long caption", "token aggregation", "cross-modal retrieval"]
+title: >-
+  [论文解读] FineLIP: Extending CLIP's Reach via Fine-Grained Alignment with Longer Text Inputs
+description: >-
+  [图像生成] FineLIP 通过位置编码拉伸（77→248 tokens）、自适应 Token 精炼模块（ATRM）和跨模态 Token 级对齐（CLIM），使 CLIP 模型能够处理长文本描述并实现细粒度视觉-文本匹配，在长描述检索任务上显著超越 Long-CLIP、TULIP 等现有方法。
+tags:
+  - 图像生成
 ---
 
 # FineLIP: Extending CLIP's Reach via Fine-Grained Alignment with Longer Text Inputs
@@ -134,10 +134,10 @@ $$\mathcal{L}_{i2t} = \max(0, R(I_q, T^-) - R(I_q, T^+) + \alpha)$$
 
 ## 相关论文
 
-- [CLIP Under the Microscope: A Fine-Grained Analysis of Multi-Object Representation](clip_under_the_microscope_a_fine-grained_analysis_of_multi-object_representation.md)
-- [CharaConsist: Fine-Grained Consistent Character Generation](../../ICCV2025/image_generation/characonsist_fine-grained_consistent_character_generation.md)
-- [MARBLE: Material Recomposition and Blending in CLIP-Space](marble_material_recomposition_and_blending_in_clip-space.md)
-- [Robustness in Both Domains: CLIP Needs a Robust Text Encoder](../../NeurIPS2025/image_generation/robustness_in_both_domains_clip_needs_a_robust_text_encoder.md)
-- [FineMatch: Aspect-based Fine-grained Image and Text Mismatch Detection and Correction](../../ECCV2024/image_generation/finematch_aspect-based_fine-grained_image_and_text_mismatch_detection_and_correc.md)
+- [FlipSketch: Flipping Static Drawings to Text-Guided Sketch Animations](flipsketch_flipping_static_drawings_to_text-guided_sketch_animations.md)
+- [FlowTok: Flowing Seamlessly Across Text and Image Tokens](../../ICCV2025/image_generation/flowtok_flowing_seamlessly_across_text_and_image_tokens.md)
+- [EmotiCrafter: Text-to-Emotional-Image Generation based on Valence-Arousal Model](../../ICCV2025/image_generation/emoticrafter_text-to-emotional-image_generation_based_on_valence-arousal_model.md)
+- [EasyCraft: A Robust and Efficient Framework for Automatic Avatar Crafting](easycraft_a_robust_and_efficient_framework_for_automatic_avatar_crafting.md)
+- [Dual Prompting Image Restoration with Diffusion Transformers (DPIR)](dual_prompting_image_restoration_with_diffusion_transformers.md)
 
 <!-- RELATED:END -->

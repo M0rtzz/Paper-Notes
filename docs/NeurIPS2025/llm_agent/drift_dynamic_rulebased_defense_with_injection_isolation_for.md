@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DRIFT: Dynamic Rule-Based Defense with Injection Isolation for Securing LLM Agents
 description: >-

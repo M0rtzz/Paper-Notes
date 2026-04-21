@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RGNet: A Unified Clip Retrieval and Grounding Network for Long Videos
 description: >-
@@ -147,8 +147,8 @@ tags:
 
 - [AMEGO: Active Memory from Long EGOcentric Videos](amego_active_memory_from_long_egocentric_videos.md)
 - [Goldfish: Vision-Language Understanding of Arbitrarily Long Videos](goldfish_vision-language_understanding_of_arbitrarily_long_videos.md)
-- [SAFNet: Selective Alignment Fusion Network for Efficient HDR Imaging](safnet_selective_alignment_fusion_network_for_efficient_hdr_imaging.md)
 - [DeCafNet: Delegate and Conquer for Efficient Temporal Grounding in Long Videos](../../CVPR2025/video_understanding/decafnet_delegate_and_conquer_for_efficient_temporal_grounding_in_long_videos.md)
-- [Rethinking Video-Text Understanding: Retrieval from Counterfactually Augmented Data](rethinking_video-text_understanding_retrieval_from_counterfactually_augmented_da.md)
+- [SAFNet: Selective Alignment Fusion Network for Efficient HDR Imaging](safnet_selective_alignment_fusion_network_for_efficient_hdr_imaging.md)
+- [Object-Shot Enhanced Grounding Network for Egocentric Video](../../CVPR2025/video_understanding/object-shot_enhanced_grounding_network_for_egocentric_video.md)
 
 <!-- RELATED:END -->

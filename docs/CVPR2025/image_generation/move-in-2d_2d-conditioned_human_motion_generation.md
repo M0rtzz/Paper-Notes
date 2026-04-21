@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Move-in-2D: 2D-Conditioned Human Motion Generation
 description: >-
-  [CVPR 2025][motion generation] 提出以 2D 场景图像+文本为条件的人体运动生成新任务，构建 30 万视频规模的 HiC-Motion 数据集，训练基于 in-context conditioning 的扩散 Transformer 模型，生成可投影到场景的人体运动序列。
+  [CVPR 2025][图像生成][motion generation] 定义 2D 场景图像+文本条件下的人体运动生成新任务，构建 30 万级 HiC-Motion 数据集，通过 in-context conditioning 扩散 Transformer 生成可自然投影到场景的运动序列，赋能下游人体视频生成。
 tags:
   - CVPR 2025
+  - 图像生成
   - motion generation
-  - diffusion model
-  - scene-aware
-  - human video
-  - SMPL
+  - 2D scene conditioning
+  - Transformer
+  - in-context learning
+  - HiC-Motion
 ---
 
 # Move-in-2D: 2D-Conditioned Human Motion Generation
@@ -144,9 +145,9 @@ MSE 重建损失 $\mathcal{L}_{mse} = \mathbb{E}_{x_0, t} \| x_0 - \mathcal{M}(x
 ## 相关论文
 
 - [Lifting Motion to the 3D World via 2D Diffusion](lifting_motion_to_the_3d_world_via_2d_diffusion.md)
-- [MixerMDM: Learnable Composition of Human Motion Diffusion Models](mixermdm_learnable_composition_of_human_motion_diffusion_models.md)
 - [DreamDance: Animating Human Images by Enriching 3D Geometry Cues from 2D Poses](../../ICCV2025/image_generation/dreamdance_animating_human_images_by_enriching_3d_geometry_cues_from_2d_poses.md)
-- [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
-- [Controllable Human Image Generation with Personalized Multi-Garments](controllable_human_image_generation_with_personalized_multi-garments.md)
+- [MixerMDM: Learnable Composition of Human Motion Diffusion Models](mixermdm_learnable_composition_of_human_motion_diffusion_models.md)
+- [Nonisotropic Gaussian Diffusion for Realistic 3D Human Motion Prediction](nonisotropic_gaussian_diffusion_for_realistic_3d_human_motion_prediction.md)
+- [LaVin-DiT: Large Vision Diffusion Transformer](lavin-dit_large_vision_diffusion_transformer.md)
 
 <!-- RELATED:END -->

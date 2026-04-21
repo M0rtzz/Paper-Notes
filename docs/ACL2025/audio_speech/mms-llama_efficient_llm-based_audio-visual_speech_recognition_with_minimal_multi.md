@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MMS-LLaMA: Efficient LLM-based Audio-Visual Speech Recognition with Minimal Multimodal Speech Tokens
 description: >-

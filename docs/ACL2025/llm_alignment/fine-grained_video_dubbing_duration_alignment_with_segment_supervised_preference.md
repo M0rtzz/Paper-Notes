@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fine-grained Video Dubbing Duration Alignment with Segment Supervised Preference Optimization
 description: >-

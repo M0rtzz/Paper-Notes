@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EHETM: High-Quality and Efficient Turbulence Mitigation with Events
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FCMR: Robust Evaluation of Financial Cross-Modal Multi-Hop Reasoning
 description: >-

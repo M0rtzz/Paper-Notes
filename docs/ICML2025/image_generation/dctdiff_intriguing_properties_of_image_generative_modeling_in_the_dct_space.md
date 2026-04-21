@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DCTdiff: Intriguing Properties of Image Generative Modeling in the DCT Space
 description: >-

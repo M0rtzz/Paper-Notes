@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Deep Cost Ray Fusion for Sparse Depth Video Completion
 description: >-
@@ -144,6 +144,6 @@ tags:
 - [ColorMNet: A Memory-based Deep Spatial-Temporal Feature Propagation Network for Video Colorization](colormnet_a_memory-based_deep_spatial-temporal_feature_propagation_network_for_v.md)
 - [SIGMA: Sinkhorn-Guided Masked Video Modeling](sigma_sinkhorn-guided_masked_video_modeling.md)
 - [Eliminating Warping Shakes for Unsupervised Online Video Stitching](eliminating_warping_shakes_for_unsupervised_online_video_stitching.md)
-- [ReflexSplit: Single Image Reflection Separation via Layer Fusion-Separation](../../CVPR2026/llm_evaluation/reflexsplit_single_image_reflection_separation_via_layer_fusion-separation.md)
+- [SparseCam4D: Spatio-Temporally Consistent 4D Reconstruction from Sparse Cameras](../../CVPR2026/llm_evaluation/sparsecam4d_spatio-temporally_consistent_4d_reconstruction_from_sparse_cameras.md)
 
 <!-- RELATED:END -->

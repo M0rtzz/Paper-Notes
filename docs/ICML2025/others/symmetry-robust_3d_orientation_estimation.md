@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Symmetry-Robust 3D Orientation Estimation
 description: >-
@@ -136,10 +136,10 @@ $$\min_{p_\phi} \mathbb{E}_{Q \sim U(\mathcal{O})} \left[ \text{CE}(p_\phi(QS), 
 
 ## 相关论文
 
+- [Regor: Progressive Correspondence Regenerator for Robust 3D Registration](../../CVPR2025/others/progressive_correspondence_regenerator_for_robust_3d_registration.md)
 - [Symmetry-Aware GFlowNets](symmetry-aware_gflownets.md)
 - [Understanding Mode Connectivity via Parameter Space Symmetry](understanding_mode_connectivity_via_parameter_space_symmetry.md)
 - [HouseLayout3D: A Benchmark and Training-Free Baseline for 3D Layout Estimation in the Wild](../../NeurIPS2025/others/houselayout3d_a_benchmark_and_training-free_baseline_for_3d_layout_estimation_in.md)
 - [On Fine-Grained Distinct Element Estimation](on_fine-grained_distinct_element_estimation.md)
-- [Prediction-Powered Adaptive Shrinkage Estimation](prediction-powered_adaptive_shrinkage_estimation.md)
 
 <!-- RELATED:END -->

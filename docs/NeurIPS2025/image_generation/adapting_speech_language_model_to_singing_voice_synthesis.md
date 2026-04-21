@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adapting Speech Language Model to Singing Voice Synthesis
 description: >-
@@ -128,6 +128,6 @@ SingMOS (感知质量) 与最佳专用系统 TokSing 持平
 - [OZSpeech: One-step Zero-shot Speech Synthesis with Learned-Prior-Conditioned Flow Matching](../../ACL2025/image_generation/ozspeech_one-step_zero-shot_speech_synthesis_with_learned-prior-conditioned_flow.md)
 - [BinauralFlow: A Causal and Streamable Approach for High-Quality Binaural Speech Synthesis with Flow Matching Models](../../ICML2025/image_generation/binauralflow_a_causal_and_streamable_approach_for_high-quality_binaural_speech_s.md)
 - [Continuous Diffusion Model for Language Modeling](continuous_diffusion_model_for_language_modeling.md)
-- [ScaleDiff: Higher-Resolution Image Synthesis via Efficient and Model-Agnostic Diffusion](scalediff_higher-resolution_image_synthesis_via_efficient_and_model-agnostic_dif.md)
+- [TurboFill: Adapting Few-Step Text-to-Image Model for Fast Image Inpainting](../../CVPR2025/image_generation/turbofill_adapting_few-step_text-to-image_model_for_fast_image_inpainting.md)
 
 <!-- RELATED:END -->

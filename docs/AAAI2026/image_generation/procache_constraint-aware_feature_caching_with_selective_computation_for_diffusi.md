@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ProCache: Constraint-Aware Feature Caching with Selective Computation for Diffusion Transformer Acceleration
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RegGS: Unposed Sparse Views Gaussian Splatting with 3DGS Registration
 description: >-

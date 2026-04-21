@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Pixel-GS: Density Control with Pixel-aware Gradient for 3D Gaussian Splatting
 description: >-
@@ -139,8 +139,8 @@ Tanks & Temples数据集上的结果：
 
 - [CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization](cor-gs_sparse-view_3d_gaussian_splatting_via_co-regularization.md)
 - [Global-to-Pixel Regression for Human Mesh Recovery](global-to-pixel_regression_for_human_mesh_recovery.md)
+- [GS-LRM: Large Reconstruction Model for 3D Gaussian Splatting](gs-lrm_large_reconstruction_model_for_3d_gaussian_splatting.md)
 - [SAGS: Structure-Aware 3D Gaussian Splatting](sags_structure-aware_3d_gaussian_splatting.md)
 - [Texture-GS: Disentangling the Geometry and Texture for 3D Gaussian Splatting Editing](texture-gs_disentangling_the_geometry_and_texture_for_3d_gaussian_splatting_edit.md)
-- [G3R: Gradient Guided Generalizable Reconstruction](g3r_gradient_guided_generalizable_reconstruction.md)
 
 <!-- RELATED:END -->

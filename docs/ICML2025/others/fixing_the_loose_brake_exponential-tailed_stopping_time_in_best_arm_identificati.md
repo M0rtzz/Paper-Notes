@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fixing the Loose Brake: Exponential-Tailed Stopping Time in Best Arm Identification
 description: >-

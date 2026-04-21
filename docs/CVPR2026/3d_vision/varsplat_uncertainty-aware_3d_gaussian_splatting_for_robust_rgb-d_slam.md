@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM
 description: >-

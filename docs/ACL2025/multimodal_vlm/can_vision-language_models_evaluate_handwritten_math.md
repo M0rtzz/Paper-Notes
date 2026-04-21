@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Can Vision-Language Models Evaluate Handwritten Math?
 description: >-

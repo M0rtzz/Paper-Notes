@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Teaching Vision-Language Models to Ask: Resolving Ambiguity in Visual Questions
 description: >-
@@ -120,9 +120,9 @@ tags:
 ## 相关论文
 
 - [Can Vision Language Models Understand Mimed Actions?](can_vision_language_models_understand_mimed_actions.md)
-- [Centurio: On Drivers of Multilingual Ability of Large Vision-Language Model](centurio_multilingual_vlm.md)
 - [Can Multimodal Large Language Models Understand Spatial Relations?](spatialmqa_mllm_spatial_relations.md)
 - [ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)
 - [Physics Context Builders: A Modular Framework for Physical Reasoning in Vision-Language Models](../../ICCV2025/multimodal_vlm/physics_context_builders_a_modular_framework_for_physical_reasoning_in_vision-la.md)
+- [Redundancy Principles for MLLMs Benchmarks](redundancy_principles_for_mllms_benchmarks.md)
 
 <!-- RELATED:END -->

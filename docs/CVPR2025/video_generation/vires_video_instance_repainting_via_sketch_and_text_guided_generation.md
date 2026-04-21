@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] ViReS: Video Instance Repainting via Sketch and Text Guided Generation
 description: >-
-  [CVPR 2025][LLM/NLP][视频实例重绘] 提出ViReS框架，通过草图和文本双重引导实现视频中特定实例的重绘，利用时序注意力和实例掩码保持背景不变和时间一致性，在多种视频编辑场景下生成高质量结果。
+  [CVPR 2025][视频实例重绘] 提出ViReS框架，通过草图和文本双重引导实现视频中特定实例的重绘，利用时序注意力和实例掩码保持背景不变和时间一致性，在多种视频编辑场景下生成高质量结果。
 tags:
   - CVPR 2025
-  - LLM/NLP
   - 视频实例重绘
   - 草图引导
   - 文本引导
@@ -112,10 +111,10 @@ tags:
 
 ## 相关论文
 
+- [SketchVideo: Sketch-Based Video Generation and Editing](sketchvideo_sketch-based_video_generation_and_editing.md)
+- [PhyT2V: LLM-Guided Iterative Self-Refinement for Physics-Grounded Text-to-Video Generation](phyt2v_llm-guided_iterative_self-refinement_for_physics-grounded_text-to-video_g.md)
+- [Optical-Flow Guided Prompt Optimization for Coherent Video Generation](optical-flow_guided_prompt_optimization_for_coherent_video_generation.md)
+- [StreamingT2V: Consistent, Dynamic, and Extendable Long Video Generation from Text](streamingt2v_consistent_dynamic_and_extendable_long_video_generation_from_text.md)
 - [AID: Adapting Image2Video Diffusion Models for Instruction-guided Video Prediction](../../ICCV2025/video_generation/aid_adapting_image2video_diffusion_models_for_instruction-guided_video_predictio.md)
-- [Identity-Preserving Text-to-Video Generation by Frequency Decomposition](identity-preserving_text-to-video_generation_by_frequency_decomposition.md)
-- [Can Text-to-Video Generation Help Video-Language Alignment?](can_text-to-video_generation_help_video-language_alignment.md)
-- [MotiF: Making Text Count in Image Animation with Motion Focal Loss](motif_making_text_count_in_image_animation_with_motion_focal_loss.md)
-- [Evaluating Text-to-Visual Generation with Image-to-Text Generation](../../ECCV2024/video_generation/evaluating_text-to-visual_generation_with_image-to-text_generation.md)
 
 <!-- RELATED:END -->

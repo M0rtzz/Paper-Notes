@@ -2,9 +2,15 @@
 title: >-
   [论文解读] Math Neurosurgery: Isolating Language Models' Math Reasoning Abilities Using Only Forward Passes
 description: >-
-  [LLM/NLP] 提出 MathNeuro，一种仅需前向传播的计算高效方法，通过过滤掉对通用语言任务同样重要的参数来定位 LLM 中数学推理专属的参数，剪枝这些参数可删除数学能力，缩放这些参数可提升 4-35% 的数学性能。
+  [ACL 2025][LLM/NLP][math reasoning] 提出 MathNeuro，一种仅需前向传播的计算高效方法，通过过滤掉对通用语言任务同样重要的参数来定位 LLM 中数学推理专属的参数，剪枝这些参数可删除数学能力，缩放这些参数可提升 4-35% 的数学性能。
 tags:
+  - ACL 2025
   - LLM/NLP
+  - math reasoning
+  - parameter importance
+  - skill localization
+  - 剪枝
+  - neuron isolation
 ---
 
 # Math Neurosurgery: Isolating Language Models' Math Reasoning Abilities Using Only Forward Passes
@@ -116,10 +122,10 @@ MathNeuro 分三步：（1）分别用数学数据和非数学数据计算每个
 
 ## 相关论文
 
-- [Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning](problem-solving_logic_guided_curriculum_in-context_learning_for_llms_complex_rea.md)
-- [Boosting LLM's Molecular Structure Elucidation with Knowledge Enhanced Tree Search Reasoning](boosting_llms_molecular_structure_elucidation_with_knowledge_enhanced_tree_searc.md)
-- [Classifying Unreliable Narrators with Large Language Models](classifying_unreliable_narrators.md)
-- [SConU: Selective Conformal Uncertainty in Large Language Models](sconu_selective_conformal_uncertainty_in_large_language_models.md)
-- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
+- [STEM-PoM: Evaluating Language Models Math-Symbol Reasoning in Document Parsing](stem-pom_evaluating_language_models_math-symbol_reasoning_in_document_parsing.md)
+- [ArithmAttack: Evaluating Robustness of LLMs to Noisy Context in Math Problem Solving](arithmattack_evaluating_robustness_of_llms_to_noisy_context_in_math_problem_solv.md)
+- [To Code or not to Code? Adaptive Tool Integration for Math Language Models via Expectation-Maximization](to_code_or_not_to_code_adaptive_tool_integration_for_math_language_models_via_ex.md)
+- [Disentangling Memory and Reasoning Ability in Large Language Models](disentangle_memory_reasoning.md)
+- [The Role of Deductive and Inductive Reasoning in Large Language Models](the_role_of_deductive_and_inductive_reasoning_in_large_language_models.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling Context, Not Parameters: Training a Compact 7B Language Model for Efficient Long-Context Processing
 description: >-
@@ -203,9 +203,9 @@ MegaBeam 是**唯一在 512K 下无需 RAG 或任务微调即取得竞争性成�
 ## 相关论文
 
 - [LaMPE: Length-aware Multi-grained Positional Encoding for Adaptive Long-context Scaling Without Training](adaptive_grouped_pe_context_window.md)
-- [Ref-Long: Benchmarking the Long-Context Referencing Capability of Long-Context Language Models](ref-long_benchmarking_the_long-context_referencing_capability_of_long-context_la.md)
+- [LADM: Long-context Training Data Selection with Attention-based Dependency Measurement for LLMs](ladm_long_context_data.md)
 - [Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference](smarter_better_faster_longer_a_modern_bidirectional_encoder_for_fast_memory_effi.md)
+- [Ref-Long: Benchmarking the Long-Context Referencing Capability of Long-Context Language Models](ref-long_benchmarking_the_long-context_referencing_capability_of_long-context_la.md)
 - [Sliding Windows Are Not the End: Exploring Full Ranking with Long-Context Large Language Models](sliding_windows_full_ranking.md)
-- [How to Train Long-Context Language Models (Effectively)](train_long_context_effectively.md)
 
 <!-- RELATED:END -->

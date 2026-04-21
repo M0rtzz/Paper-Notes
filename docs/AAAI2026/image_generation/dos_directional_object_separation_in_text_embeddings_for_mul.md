@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DOS: Directional Object Separation in Text Embeddings for Multi-Object Image Generation
 description: >-

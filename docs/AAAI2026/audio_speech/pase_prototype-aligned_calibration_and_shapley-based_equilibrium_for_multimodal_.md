@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PaSE: Prototype-aligned Calibration and Shapley-based Equilibrium for Multimodal Sentiment Analysis
 description: >-

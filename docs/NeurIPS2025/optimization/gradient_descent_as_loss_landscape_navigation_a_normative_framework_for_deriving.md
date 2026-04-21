@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gradient Descent as Loss Landscape Navigation: a Normative Framework for Deriving Learning Rules
 description: >-

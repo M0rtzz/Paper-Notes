@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] InfiniDreamer: Arbitrarily Long Human Motion Generation via Segment Score Distillation
 description: >-
@@ -138,6 +138,6 @@ InfiniDreamer 通过将预训练的短序列运动扩散模型作为先验，提
 - [A Unified Framework for Motion Reasoning and Generation in Human Interaction](a_unified_framework_for_motion_reasoning_and_generation_in_human_interaction.md)
 - [HPSv3: Towards Wide-Spectrum Human Preference Score](hpsv3_towards_wide-spectrum_human_preference_score.md)
 - [ScoreHOI: Physically Plausible Reconstruction of Human-Object Interaction via Score-Guided Diffusion](scorehoi_physically_plausible_reconstruction_of_human-object_interaction_via_sco.md)
-- [Balanced Image Stylization with Style Matching Score](balanced_image_stylization_with_style_matching_score.md)
+- [Move-in-2D: 2D-Conditioned Human Motion Generation](../../CVPR2025/image_generation/move-in-2d_2d-conditioned_human_motion_generation.md)
 
 <!-- RELATED:END -->

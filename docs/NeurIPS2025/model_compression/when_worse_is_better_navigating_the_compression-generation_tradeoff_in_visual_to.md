@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When Worse is Better: Navigating the Compression-Generation Trade-off in Visual Tokenization
 description: >-

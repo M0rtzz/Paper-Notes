@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-Harmony: Learning to Harmonize Self-Supervision and Self-Play in Test-Time Reinforcement Learning
 description: >-

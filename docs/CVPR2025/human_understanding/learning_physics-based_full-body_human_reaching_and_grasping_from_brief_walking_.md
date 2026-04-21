@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Physics-Based Full-Body Human Reaching and Grasping from Brief Walking References
 description: >-
@@ -143,7 +143,7 @@ tags:
 - [Learning Cross-Hand Policies of High-DOF Reaching and Grasping](../../ECCV2024/human_understanding/learning_cross-hand_policies_of_high-dof_reaching_and_grasping.md)
 - [FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video](fate_full-head_gaussian_avatar_with_textural_editing_from_monocular_video.md)
 - [EgoExo-Fitness: Towards Egocentric and Exocentric Full-Body Action Understanding](../../ECCV2024/human_understanding/egoexo-fitness_towards_egocentric_and_exocentric_full-body_action_understanding.md)
-- [PoseBH: Prototypical Multi-Dataset Training Beyond Human Pose Estimation](posebh_prototypical_multi-dataset_training_beyond_human_pose_estimation.md)
-- [ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning](maniptrans_efficient_dexterous_bimanual_manipulation_transfer_via_residual_learn.md)
+- [GaussianIP: Identity-Preserving Realistic 3D Human Generation via Human-Centric Diffusion Prior](gaussianip_identity-preserving_realistic_3d_human_generation_via_human-centric_d.md)
+- [X-Dyna: Expressive Dynamic Human Image Animation](x-dyna_expressive_dynamic_human_image_animation.md)
 
 <!-- RELATED:END -->

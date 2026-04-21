@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Quantifying the Role of OpenFold Components in Protein Structure Prediction
 description: >-

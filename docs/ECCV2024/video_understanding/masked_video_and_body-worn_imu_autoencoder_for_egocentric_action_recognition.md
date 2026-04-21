@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Masked Video and Body-worn IMU Autoencoder for Egocentric Action Recognition
 description: >-

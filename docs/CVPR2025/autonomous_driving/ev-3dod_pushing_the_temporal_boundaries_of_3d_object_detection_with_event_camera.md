@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EV-3DOD: Pushing the Temporal Boundaries of 3D Object Detection with Event Cameras
 description: >-
@@ -109,8 +109,8 @@ $\mathcal{L} = \mathcal{L}_{RPN} + \lambda_1 \mathcal{L}_{reg} + \lambda_2 \math
 
 - [Unleashing the Temporal Potential of Stereo Event Cameras for Continuous-Time 3D Perception](../../ICCV2025/autonomous_driving/unleashing_the_temporal_potential_of_stereo_event_cameras_for_continuous-time_3d.md)
 - [PAP: A Prediction-as-Perception Framework for 3D Object Detection](a_prediction-as-perception_framework_for_3d_object_detection.md)
-- [Cubify Anything: Scaling Indoor 3D Object Detection](cubify_anything_scaling_indoor_3d_object_detection.md)
-- [SimPB: A Single Model for 2D and 3D Object Detection from Multiple Cameras](../../ECCV2024/autonomous_driving/simpb_a_single_model_for_2d_and_3d_object_detection_from_multiple_cameras.md)
-- [CVFusion: Cross-View Fusion of 4D Radar and Camera for 3D Object Detection](../../ICCV2025/autonomous_driving/cvfusion_cross-view_fusion_of_4d_radar_and_camera_for_3d_object_detection.md)
+- [RaCFormer: Towards High-Quality 3D Object Detection via Query-based Radar-Camera Fusion](racformer_towards_high-quality_3d_object_detection_via_query-based_radar-camera_.md)
+- [Temporal Action Detection Model Compression by Progressive Block Drop](temporal_action_detection_model_compression_by_progressive_block_drop.md)
+- [V2X-R: Cooperative LiDAR-4D Radar Fusion with Denoising Diffusion for 3D Object Detection](v2x-r_cooperative_lidar-4d_radar_fusion_with_denoising_diffusion_for_3d_object_d.md)
 
 <!-- RELATED:END -->

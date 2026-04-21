@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Small Language Models as Compiler Experts: Auto-Parallelization for Heterogeneous Systems
 description: >-

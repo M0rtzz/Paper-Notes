@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Anchored Answers: Unravelling Positional Bias in GPT-2's Multiple-Choice Questions
 description: >-

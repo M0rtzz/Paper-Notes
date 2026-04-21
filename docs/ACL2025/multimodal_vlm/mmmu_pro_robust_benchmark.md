@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MMMU-Pro: A More Robust Multi-discipline Multimodal Understanding Benchmark
 description: >-

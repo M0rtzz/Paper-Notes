@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RoboCerebra: A Large-scale Benchmark for Long-horizon Robotic Manipulation Evaluation
 description: >-

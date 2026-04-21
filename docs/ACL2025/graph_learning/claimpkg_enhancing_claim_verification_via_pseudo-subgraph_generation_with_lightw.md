@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ClaimPKG: Enhancing Claim Verification via Pseudo-Subgraph Generation with Lightweight Specialized LLM
 description: >-

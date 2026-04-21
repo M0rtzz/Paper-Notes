@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EffectErase: Joint Video Object Removal and Insertion for High-Quality Effect Erasing
 description: >-

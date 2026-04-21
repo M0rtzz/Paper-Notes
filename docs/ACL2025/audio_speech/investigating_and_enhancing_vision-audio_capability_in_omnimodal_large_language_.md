@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models
 description: >-

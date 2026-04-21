@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spark-TTS: An Efficient LLM-Based Text-to-Speech Model with Single-Stream Decoupled Speech Tokens
 description: >-

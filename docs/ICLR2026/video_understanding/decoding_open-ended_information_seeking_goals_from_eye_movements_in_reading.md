@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Decoding Open-Ended Information Seeking Goals from Eye Movements in Reading
 description: >-

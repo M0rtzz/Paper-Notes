@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Causal Foundation Models: Disentangling Physics from Instrument Properties
 description: >-

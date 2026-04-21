@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models
 description: >-

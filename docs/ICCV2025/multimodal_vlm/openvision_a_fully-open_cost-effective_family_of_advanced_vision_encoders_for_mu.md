@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OpenVision: A Fully-Open, Cost-Effective Family of Advanced Vision Encoders for Multimodal Learning
 description: >-

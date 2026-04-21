@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiffRefiner: Coarse to Fine Trajectory Planning via Diffusion Refinement with Semantic Interaction for End to End Autonomous Driving
 description: >-

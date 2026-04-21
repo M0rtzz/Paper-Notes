@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RDB2G-Bench: A Comprehensive Benchmark for Automatic Graph Modeling of Relational Databases
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Energy Loss Functions for Physical Systems
 description: >-

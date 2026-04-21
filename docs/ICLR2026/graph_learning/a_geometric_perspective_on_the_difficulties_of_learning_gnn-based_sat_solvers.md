@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Geometric Perspective on the Difficulties of Learning GNN-based SAT Solvers
 description: >-

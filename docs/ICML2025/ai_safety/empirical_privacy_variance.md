@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Empirical Privacy Variance
 description: >-
@@ -147,7 +147,7 @@ $ε \in \{1, 2, 4, 8, 16\}$，$δ = n^{-1.1}$，使用 LoRA 微调 + DP-Adam。
 
 - [Improving the Variance of Differentially Private Randomized Experiments through Clustering](improving_the_variance_of_differentially_private_randomized_experiments_through_.md)
 - [On the Empirical Power of Goodness-of-Fit Tests in Watermark Detection](../../NeurIPS2025/ai_safety/on_the_empirical_power_of_goodness-of-fit_tests_in_watermark_detection.md)
-- [Connecting Thompson Sampling and UCB: Towards More Efficient Trade-offs Between Privacy and Regret](connecting_thompson_sampling_and_ucb_towards_more_efficient_trade-offs_between_p.md)
+- [Connecting Thompson Sampling and UCB: Towards More Efficient Trade-offs Between Privacy and Regret](connecting_thompson_sampling_and_ucb_towards_more_efficient_best-fixed_action_.md)
 - [On Differential Privacy for Adaptively Solving Search Problems via Sketching](on_differential_privacy_for_adaptively_solving_search_problems_via_sketching.md)
 - [Cape: Context-Aware Prompt Perturbation Mechanism with Differential Privacy](cape_context-aware_prompt_perturbation_mechanism_with_differential_privacy.md)
 

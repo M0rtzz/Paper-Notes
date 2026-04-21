@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Simulations to Surveys: Domain Adaptation for Galaxy Observations
 description: >-
@@ -118,6 +118,6 @@ Domain AUC ≈ 0.5 表示源-目标特征在潜在空间中不可区分（理想
 - [Galaxy Walker: Geometry-aware VLMs For Galaxy-scale Understanding](../../CVPR2025/physics/galaxy_walker_geometry-aware_vlms_for_galaxy-scale_understanding.md)
 - [Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology](multi-modal_masked_autoencoders_for_learning_image-spectrum_associations_for_gal.md)
 - [Unsupervised Discovery of High-Redshift Galaxy Populations with Variational Autoencoders](unsupervised_discovery_of_high-redshift_galaxy_populations_with_variational_auto.md)
-- [The Platonic Universe: Do Foundation Models See the Same Sky?](the_platonic_universe_do_foundation_models_see_the_same_sky.md)
+- [The Pareto Frontier of Resilient Jet Tagging](the_pareto_frontier_of_resilient_jet_tagging.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Universal Spectral Tokenization via Self-Supervised Panchromatic Representation Learning
 description: >-

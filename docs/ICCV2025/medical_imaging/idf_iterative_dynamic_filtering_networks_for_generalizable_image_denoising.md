@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] IDF: Iterative Dynamic Filtering Networks for Generalizable Image Denoising
 description: >-
@@ -162,6 +162,6 @@ IDF 采用迭代去噪方案：输入噪声图像 $\mathbf{I}_{Noisy}$ 经过 T 
 - [UKBOB: One Billion MRI Labeled Masks for Generalizable 3D Medical Image Segmentation](ukbob_one_billion_mri_labeled_masks_for_generalizable_3d_medical_image_segmentat.md)
 - [DictAS: A Framework for Class-Generalizable Few-Shot Anomaly Segmentation via Dictionary Lookup](dictas_a_framework_for_class-generalizable_few-shot_anomaly_segmentation_via_dic.md)
 - [Iterative Foundation Model Fine-Tuning on Multiple Rewards](../../NeurIPS2025/medical_imaging/iterative_foundation_model_fine-tuning_on_multiple_rewards.md)
-- [Self Iterative Label Refinement via Robust Unlabeled Learning](../../NeurIPS2025/medical_imaging/self_iterative_label_refinement_via_robust_unlabeled_learning.md)
+- [Online Iterative Self-Alignment for Radiology Report Generation](../../ACL2025/medical_imaging/oisa_radiology_report_gen.md)
 
 <!-- RELATED:END -->

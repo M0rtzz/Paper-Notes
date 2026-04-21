@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PragWorld: A Benchmark Evaluating LLMs' Local World Model under Minimal Linguistic Alterations and Conversational Dynamics
 description: >-

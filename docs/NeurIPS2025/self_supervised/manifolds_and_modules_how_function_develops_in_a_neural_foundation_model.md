@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Manifolds and Modules: How Function Develops in a Neural Foundation Model
 description: >-

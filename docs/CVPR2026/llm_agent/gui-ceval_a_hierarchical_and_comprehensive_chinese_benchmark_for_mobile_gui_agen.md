@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GUI-CEval: A Hierarchical and Comprehensive Chinese Benchmark for Mobile GUI Agents
 description: >-

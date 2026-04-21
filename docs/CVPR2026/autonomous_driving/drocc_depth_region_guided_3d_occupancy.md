@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dr.Occ: Depth- and Region-Guided 3D Occupancy from Surround-View Cameras for Autonomous Driving
 description: >-

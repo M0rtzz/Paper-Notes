@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When Scores Learn Geometry: Rate Separations under the Manifold Hypothesis
 description: >-

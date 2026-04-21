@@ -149,7 +149,7 @@ $$\mathcal{L} = \sum_{k=1}^K l_\text{act}(n_k) - \sum_{i=1}^N \log s_{i, y_i}$$
 - [Diff-ICMH: Harmonizing Machine and Human Vision in Image Compression with Generative Prior](diff-icmh_harmonizing_machine_and_human_vision_in_image_compression_with_generat.md)
 - [Emergence and Evolution of Interpretable Concepts in Diffusion Models](emergence_and_evolution_of_interpretable_concepts_in_diffusi.md)
 - [Rethinking the Embodied Gap in Vision-and-Language Navigation: A Holistic Study of Physical and Visual Disparities](../../ICCV2025/image_generation/rethinking_the_embodied_gap_in_vision-and-language_navigation_a_holistic_study_o.md)
+- [FlipSketch: Flipping Static Drawings to Text-Guided Sketch Animations](../../CVPR2025/image_generation/flipsketch_flipping_static_drawings_to_text-guided_sketch_animations.md)
 - [Joint Diffusion Models in Continual Learning](../../ICCV2025/image_generation/joint_diffusion_models_in_continual_learning.md)
-- [LoRAverse: A Submodular Framework to Retrieve Diverse Adapters for Diffusion Models](../../ICCV2025/image_generation/loraverse_a_submodular_framework_to_retrieve_diverse_adapters_for_diffusion_mode.md)
 
 <!-- RELATED:END -->

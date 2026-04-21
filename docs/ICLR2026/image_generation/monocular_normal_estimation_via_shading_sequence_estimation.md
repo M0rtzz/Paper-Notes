@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Monocular Normal Estimation via Shading Sequence Estimation
 description: >-

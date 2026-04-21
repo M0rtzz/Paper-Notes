@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] KITAB-Bench: A Comprehensive Multi-Domain Benchmark for Arabic OCR and Document Understanding
 description: >-

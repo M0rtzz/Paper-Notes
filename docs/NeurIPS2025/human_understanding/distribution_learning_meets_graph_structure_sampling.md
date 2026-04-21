@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Distribution Learning Meets Graph Structure Sampling
 description: >-
@@ -112,9 +112,9 @@ tags:
 ## 相关论文
 
 - [Stealthy Yet Effective: Distribution-Preserving Backdoor Attacks on Graph Classification](stealthy_yet_effective_distribution-preserving_backdoor_attacks_on_graph_classif.md)
-- [SPROD: Spurious-Aware Prototype Refinement for Reliable Out-of-Distribution Detection](spurious-aware_prototype_refinement_for_reliable_out-of-distribution_detection.md)
+- [NN-Former: Rethinking Graph Structure in Neural Architecture Representation](../../CVPR2025/human_understanding/nn-former_rethinking_graph_structure_in_neural_architecture_representation.md)
+- [Probabilistic Prompt Distribution Learning for Animal Pose Estimation](../../CVPR2025/human_understanding/probabilistic_prompt_distribution_learning_for_animal_pose_estimation.md)
 - [Stable Coresets via Posterior Sampling: Aligning Induced and Full Loss Landscapes](stable_coresets_via_posterior_sampling_aligning_induced_and_full_loss_landscapes.md)
-- [TopInG: Topologically Interpretable Graph Learning via Persistent Rationale Filtration](../../ICML2025/human_understanding/toping_topologically_interpretable_graph_learning_via_persistent_rationale_filtr.md)
-- [GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
+- [Structure-Aware Correspondence Learning for Relative Pose Estimation](../../CVPR2025/human_understanding/structure-aware_correspondence_learning_for_relative_pose_estimation.md)
 
 <!-- RELATED:END -->

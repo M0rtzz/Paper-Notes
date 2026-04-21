@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Creating Blank Canvas Against AI-Enabled Image Forgery
 description: >-

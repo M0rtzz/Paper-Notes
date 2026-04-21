@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The First Impression Problem: Internal Bias Triggers Overthinking in Reasoning Models
 description: >-

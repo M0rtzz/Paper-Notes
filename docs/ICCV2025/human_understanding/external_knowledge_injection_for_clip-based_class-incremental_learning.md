@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] External Knowledge Injection for CLIP-Based Class-Incremental Learning
 description: >-

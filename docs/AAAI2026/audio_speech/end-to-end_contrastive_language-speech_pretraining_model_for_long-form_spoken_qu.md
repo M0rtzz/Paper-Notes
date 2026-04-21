@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] End-to-end Contrastive Language-Speech Pretraining Model For Long-form Spoken Question Answering
 description: >-

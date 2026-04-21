@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Statement-Tuning Enables Efficient Cross-lingual Generalization in Encoder-only Models
 description: >-

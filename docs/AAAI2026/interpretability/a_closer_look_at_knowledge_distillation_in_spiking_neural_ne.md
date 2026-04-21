@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Closer Look at Knowledge Distillation in Spiking Neural Network Training
 description: >-

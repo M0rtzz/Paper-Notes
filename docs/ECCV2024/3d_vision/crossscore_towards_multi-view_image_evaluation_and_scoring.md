@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CrossScore: Towards Multi-View Image Evaluation and Scoring
 description: >-
@@ -182,10 +182,10 @@ CrossScore 与 SSIM/PSNR 排序一致，可用于方法间比较。
 
 ## 相关论文
 
+- [SlotLifter: Slot-guided Feature Lifting for Learning Object-centric Radiance Fields](slotlifter_slot-guided_feature_lifting_for_learning_object-centric_radiance_fiel.md)
 - [MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images](mvsplat_efficient_3d_gaussian_splatting_from_sparse_multi-view_images.md)
 - [MVDiffusion++: A Dense High-Resolution Multi-View Diffusion Model for Single or Sparse-View 3D Object Reconstruction](mvdiffusion_a_dense_high-resolution_multi-view_diffusion_model_for_single_or_spa.md)
-- [MVDD: Multi-View Depth Diffusion Models](mvdd_multi-view_depth_diffusion_models.md)
-- [Differentiable Convex Polyhedra Optimization from Multi-view Images](differentiable_convex_polyhedra_optimization_from_multi-view_images.md)
 - [NGP-RT: Fusing Multi-Level Hash Features with Lightweight Attention for Real-Time Novel View Synthesis](ngp-rt_fusing_multi-level_hash_features_with_lightweight_attention_for_real-time.md)
+- [Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
 
 <!-- RELATED:END -->

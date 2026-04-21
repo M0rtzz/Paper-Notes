@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Nonlinear Laplacians: Tunable Principal Component Analysis under Directional Prior Information
 description: >-

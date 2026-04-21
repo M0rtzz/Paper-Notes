@@ -1,6 +1,16 @@
 ---
-description: 提出UPME无监督同行评审框架，通过视觉-语言评分系统和动态权重优化实现无需人工标注的MLLM评估，在MMStar上与人工评估Pearson相关性达0.944。
-tags: [CVPR2025, MLLM评估, 无监督评估, 同行评审, 视觉语言评分, 动态权重优化]
+title: >-
+  [论文解读] UPME: An Unsupervised Peer Review Framework for Multimodal Large Language Model Evaluation
+description: >-
+  [CVPR 2025][多模态][MLLM评估] 提出UPME框架，通过**无监督同行评审机制**、**视觉-语言评分系统**和**动态权重优化**，仅使用图像数据就能让多个MLLM互相出题评审，在MMStar上与人工评估的Pearson相关性达0.944，有效缓解了MLLM评估对人工标注的依赖和评审偏差问题。
+tags:
+  - CVPR 2025
+  - 多模态
+  - MLLM评估
+  - 无监督评估
+  - 同行评审
+  - 视觉语言评分
+  - 动态权重优化
 ---
 
 # UPME: An Unsupervised Peer Review Framework for Multimodal Large Language Model Evaluation
@@ -109,8 +119,8 @@ UPME包含三个核心模块：(1) **同行评审机制**——每轮迭代从ML
 
 - [PRISMM-Bench: A Benchmark of Peer-Review Grounded Multimodal Inconsistencies](../../ICLR2026/multimodal_vlm/prismm-bench_a_benchmark_of_peer-review_grounded_multimodal_inconsistencies.md)
 - [FlagEvalMM: A Flexible Framework for Comprehensive Multimodal Model Evaluation](../../ACL2025/multimodal_vlm/flagevalmm_a_flexible_framework_for_comprehensive_multimodal_model_evaluation.md)
-- [Taxonomy-Aware Evaluation of Vision-Language Models](taxonomy-aware_evaluation_of_vision-language_models.md)
 - [ODE: Open-Set Evaluation of Hallucinations in Multimodal Large Language Models](ode_open-set_evaluation_of_hallucinations_in_multimodal_large_language_models.md)
-- [MIMO: A Medical Vision Language Model with Visual Referring Multimodal Input and Pixel Grounding Multimodal Output](mimo_a_medical_vision_language_model_with_visual_referring_multimodal_input_and_.md)
+- [Distraction is All You Need for Multimodal Large Language Model Jailbreaking](distraction_is_all_you_need_for_multimodal_large_language_model_jailbreaking.md)
+- [SeqAfford: Sequential 3D Affordance Reasoning via Multimodal Large Language Model](seqafford_sequential_3d_affordance_reasoning_via_multimodal_large_language_model.md)
 
 <!-- RELATED:END -->

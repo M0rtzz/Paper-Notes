@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ECPv2: Fast, Efficient, and Scalable Global Optimization of Lipschitz Functions
 description: >-

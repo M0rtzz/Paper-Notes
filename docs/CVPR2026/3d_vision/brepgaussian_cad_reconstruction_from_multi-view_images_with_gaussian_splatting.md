@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BRepGaussian: CAD Reconstruction from Multi-View Images with Gaussian Splatting
 description: >-
@@ -148,7 +148,7 @@ CAD 重建质量对比（$D_c$: Chamfer Distance $\times 10^{-2}$, $D_h$: Hausdo
 
 - [cadrille: Multi-modal CAD Reconstruction with Reinforcement Learning](../../ICLR2026/3d_vision/cadrille_multi-modal_cad_reconstruction_with_reinforcement_learning.md)
 - [CADDreamer: CAD Object Generation from Single-view Images](../../CVPR2025/3d_vision/caddreamer_cad_object_generation_from_single-view_images.md)
-- [Coherent Human-Scene Reconstruction from Multi-Person Multi-View Video in a Single Pass](coherent_human-scene_reconstruction_from_multi-person_multi-view_video_in_a_sing.md)
+- [Coherent Human-Scene Reconstruction from Multi-Person Multi-View Video in a Single Pass](coherent_humanscene_reconstruction_from_multiperso.md)
 - [MV-RoMa: From Pairwise Matching into Multi-View Track Reconstruction](mv-roma_from_pairwise_matching_into_multi-view_track_reconstruction.md)
 - [MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images](../../ECCV2024/3d_vision/mvsplat_efficient_3d_gaussian_splatting_from_sparse_multi-view_images.md)
 

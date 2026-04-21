@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Video Finetuning Improves Reasoning Between Frames
 description: >-

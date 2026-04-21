@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Watermark-based Detection and Attribution of AI-Generated Content
 description: >-

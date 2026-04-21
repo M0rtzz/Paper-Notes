@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Aligning Generative Music AI with Human Preferences: Methods and Challenges
 description: >-

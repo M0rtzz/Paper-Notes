@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Foundation Molecular Grammar: Multi-Modal Foundation Models Induce Interpretable Molecular Grammar
 description: >-

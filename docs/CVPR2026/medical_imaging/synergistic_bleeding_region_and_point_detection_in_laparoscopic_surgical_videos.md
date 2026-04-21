@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Synergistic Bleeding Region and Point Detection in Laparoscopic Surgical Videos
 description: >-

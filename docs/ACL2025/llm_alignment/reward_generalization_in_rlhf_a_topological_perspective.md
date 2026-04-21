@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reward Generalization in RLHF: A Topological Perspective
 description: >-

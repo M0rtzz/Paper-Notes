@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Flexible Tails for Normalizing Flows
 description: >-
@@ -198,10 +198,10 @@ $$\mathcal{J}_{\text{VI}}(\theta) = \mathbb{E}_{x \sim q_x}[\log \tilde{p}(x) - 
 
 ## 相关论文
 
-- [Adjustment for Confounding using Pre-Trained Representations](adjustment_for_confounding_using_pre-trained_representations.md)
-- [Nearly Optimal Sample Complexity for Learning with Label Proportions](nearly_optimal_sample_complexity_for_learning_with_label_proportions.md)
+- [Provable Benefit of Random Permutations over Uniform Sampling in Stochastic Coordinate Descent](provable_benefit_of_random_permutations_over_uniform_sampling_in_stochastic_coor.md)
+- [Clipping Improves Adam-Norm and AdaGrad-Norm when the Noise Is Heavy-Tailed](clipping_improves_adam-norm_and_adagrad-norm_when_the_noise_is_heavy-tailed.md)
 - [GCAL: Adapting Graph Models to Evolving Domain Shifts](gcal_adapting_graph_models_to_evolving_domain_shifts.md)
-- [Autoformulation of Mathematical Optimization Models Using LLMs](autoformulation_of_mathematical_optimization_models_using_llms.md)
-- [Optimization over Sparse Support-Preserving Sets: Two-Step Projection with Global Optimality Guarantees](optimization_over_sparse_support-preserving_sets_two-step_projection_with_global.md)
+- [FSL-SAGE: Accelerating Federated Split Learning via Smashed Activation Gradient Estimation](fsl-sage_accelerating_federated_split_learning_via_smashed_activation_gradient_e.md)
+- [Adjustment for Confounding using Pre-Trained Representations](adjustment_for_confounding_using_pre-trained_representations.md)
 
 <!-- RELATED:END -->

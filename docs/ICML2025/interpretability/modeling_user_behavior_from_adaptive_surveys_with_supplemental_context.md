@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LANTERN: Modeling User Behavior from Adaptive Surveys with Supplemental Context
 description: >-

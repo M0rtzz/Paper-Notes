@@ -1,10 +1,10 @@
 ---
-title: "FlipSketch: Flipping Static Drawings to Text-Guided Sketch Animations"
-conference: "CVPR 2025"
-arxiv: "2411.10818"
-code: "https://hmrishavbandy.github.io/flipsketch-web/"
-domain: "草图动画 / 视频生成"
-tags: ["sketch animation", "text-to-video", "diffusion model", "LoRA", "attention composition"]
+title: >-
+  [论文解读] FlipSketch: Flipping Static Drawings to Text-Guided Sketch Animations
+description: >-
+  [图像生成] FlipSketch 首次实现从单张静态草图 + 文本描述自动生成无约束栅格草图动画，通过在 T2V 扩散模型上微调 LoRA、DDIM 反演参考帧机制和双注意力组合三大创新，在保持草图身份的同时生成流畅、动态的动画序列。
+tags:
+  - 图像生成
 ---
 
 # FlipSketch: Flipping Static Drawings to Text-Guided Sketch Animations
@@ -140,10 +140,10 @@ FlipSketch 首次实现从单张静态草图 + 文本描述自动生成无约束
 
 ## 相关论文
 
-- [Text to Sketch Generation with Multi-Styles](../../NeurIPS2025/image_generation/text_to_sketch_generation_with_multi-styles.md)
-- [Image Referenced Sketch Colorization Based on Animation Creation Workflow](image_referenced_sketch_colorization_based_on_animation_creation_workflow.md)
-- [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
-- [MVPortrait: Text-Guided Motion and Emotion Control for Multi-View Vivid Portrait Animation](mvportrait_text-guided_motion_and_emotion_control_for_multi-view_vivid_portrait_.md)
-- [Text Embedding Knows How to Quantize Text-Guided Diffusion Models](../../ICCV2025/image_generation/text_embedding_knows_how_to_quantize_text-guided_diffusion_models.md)
+- [FineLIP: Extending CLIP's Reach via Fine-Grained Alignment with Longer Text Inputs](finelip_extending_clips_reach_via_fine-grained_alignment_with_longer_text_inputs.md)
+- [DEXTER: Diffusion-Guided EXplanations with TExtual Reasoning for Vision Models](../../NeurIPS2025/image_generation/dexter_diffusion-guided_explanations_with_textual_reasoning_for_vision_models.md)
+- [FlowTok: Flowing Seamlessly Across Text and Image Tokens](../../ICCV2025/image_generation/flowtok_flowing_seamlessly_across_text_and_image_tokens.md)
+- [EmotiCrafter: Text-to-Emotional-Image Generation based on Valence-Arousal Model](../../ICCV2025/image_generation/emoticrafter_text-to-emotional-image_generation_based_on_valence-arousal_model.md)
+- [What Makes for Text to 360-degree Panorama Generation with Stable Diffusion?](../../ICCV2025/image_generation/what_makes_for_text_to_360-degree_panorama_generation_with_stable_diffusion.md)
 
 <!-- RELATED:END -->

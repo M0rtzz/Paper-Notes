@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking Uncertainty Estimation in LLMs: A Principled Single-Sequence Measure
 description: >-
@@ -121,10 +121,10 @@ G-NLL 不需要任何训练，是纯推理时方法。关键发现：不应对 G
 
 ## 相关论文
 
-- [Rethinking Benign Relearning: Syntax as the Hidden Driver of Unlearning Failures](rethinking_benign_relearning_syntax_as_the_hidden_driver_of_unlearning_failures.md)
+- [Rethinking Benign Relearning: Syntax as the Hidden Driver of Unlearning Failures](rethinking_benign_relearning_syntax_as_the_hidden_driver_of_the_safety_tax.md)
 - [RACE Attention: A Strictly Linear-Time Attention for Long-Sequence Training](race_attention_a_strictly_linear-time_attention_for_long-sequence_training.md)
 - [ACE-Merging: Data-Free Model Merging with Adaptive Covariance Estimation](../../CVPR2026/llm_efficiency/ace-merging_data-free_model_merging_with_adaptive_covariance_estimation.md)
-- [Linear Attention for Efficient Bidirectional Sequence Modeling](../../NeurIPS2025/llm_efficiency/linear_attention_for_efficient_bidirectional_sequence_modeling.md)
-- [Not All Splits Are Equal: Rethinking Attribute Generalization Across Unrelated Categories](../../NeurIPS2025/llm_efficiency/not_all_splits_are_equal_rethinking_attribute_generalization_across_unrelated_ca.md)
+- [Deep Compositional Phase Diffusion for Long Motion Sequence Generation](../../NeurIPS2025/llm_efficiency/deep_compositional_phase_diffusion_for_long_motion_sequence_generation.md)
+- [LOCORE: Image Re-ranking with Long-Context Sequence Modeling](../../CVPR2025/llm_efficiency/locore_image_re-ranking_with_long-context_sequence_modeling.md)
 
 <!-- RELATED:END -->

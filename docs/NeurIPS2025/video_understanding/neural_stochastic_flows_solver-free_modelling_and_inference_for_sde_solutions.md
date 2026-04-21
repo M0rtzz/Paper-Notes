@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neural Stochastic Flows: Solver-Free Modelling and Inference for SDE Solutions
 description: >-
@@ -162,10 +162,10 @@ NSF 单步采样仅需 **53 kFLOPs**，比 SDE matching 少 **~14,000 倍**。�
 
 ## 相关论文
 
-- [Free-MoRef: Instantly Multiplexing Context Perception Capabilities of Video-MLLMs within Single Inference](../../ICCV2025/video_understanding/free-moref_instantly_multiplexing_context_perception_capabilities_of_video-mllms.md)
 - [GeoDynamics: A Geometric State-Space Neural Network for Understanding Brain Dynamics on Riemannian Manifolds](geodynamics_a_geometric_state-space_neural_network_for_understanding_brain_dynam.md)
+- [Free-MoRef: Instantly Multiplexing Context Perception Capabilities of Video-MLLMs within Single Inference](../../ICCV2025/video_understanding/free-moref_instantly_multiplexing_context_perception_capabilities_of_video-mllms.md)
 - [Revisiting Bi-Linear State Transitions in Recurrent Neural Networks](revisiting_bi-linear_state_transitions_in_recurrent_neural_networks.md)
+- [VideoGEM: Training-Free Action Grounding in Videos](../../CVPR2025/video_understanding/videogem_training-free_action_grounding_in_videos.md)
 - [AIM: Adaptive Inference of Multi-Modal LLMs via Token Merging and Pruning](../../ICCV2025/video_understanding/aim_adaptive_inference_of_multi-modal_llms_via_token_merging_and_pruning.md)
-- [FastCAV: Efficient Computation of Concept Activation Vectors for Explaining Deep Neural Networks](../../ICML2025/video_understanding/fastcav_efficient_computation_of_concept_activation_vectors_for_explaining_deep_.md)
 
 <!-- RELATED:END -->

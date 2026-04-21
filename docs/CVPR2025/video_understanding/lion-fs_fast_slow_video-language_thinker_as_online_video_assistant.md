@@ -1,7 +1,16 @@
-﻿---
-title: "LION-FS: Fast & Slow Video-Language Thinker as Online Video Assistant"
-conference: "CVPR 2025"
-arxiv: "2503.03663"
+---
+title: >-
+  [论文解读] LION-FS: Fast & Slow Video-Language Thinker as Online Video Assistant
+description: >-
+  [CVPR 2025][视频理解][在线视频助手] 提出 LION-FS 在线视频助手框架，借鉴"快思考-慢思考"认知理论，用 Fast Path（基于路由的 Token 聚合与丢弃）实现高效实时响应判断，用 Slow Path（多粒度关键帧增强）在响应生成时注入细粒度空间和交互特征，在 Ego4D/Ego-Exo4D 基准上全面超越现有方法。
+tags:
+  - CVPR 2025
+  - 视频理解
+  - 在线视频助手
+  - 快慢思维
+  - Token路由
+  - 关键帧增强
+  - 第一人称视频
 ---
 
 # LION-FS: Fast & Slow Video-Language Thinker as Online Video Assistant
@@ -123,7 +132,7 @@ LION-FS 的整体流程分为两条路径。Fast Path：用双编码器（SigLIP
 - [LiveStar: Live Streaming Assistant for Real-World Online Video Understanding](../../NeurIPS2025/video_understanding/livestar_live_streaming_assistant_for_real-world_online_video_understanding.md)
 - [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
 - [EgoLife: Towards Egocentric Life Assistant](egolife_towards_egocentric_life_assistant.md)
-- [Efficient Transfer Learning for Video-language Foundation Models](efficient_transfer_learning_for_video-language_foundation_models.md)
-- [OVG-HQ: Online Video Grounding with Hybrid-modal Queries](../../ICCV2025/video_understanding/ovg-hq_online_video_grounding_with_hybrid-modal_queries.md)
+- [OVO-Bench: How Far is Your Video-LLMs from Real-World Online Video Understanding?](ovo-bench_how_far_is_your_video-llms_from_real-world_online_video_understanding.md)
+- [Video Summarization with Large Language Models](video_summarization_with_large_language_models.md)
 
 <!-- RELATED:END -->

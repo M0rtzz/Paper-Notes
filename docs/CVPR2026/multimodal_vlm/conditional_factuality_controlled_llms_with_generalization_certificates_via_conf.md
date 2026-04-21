@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Conditional Factuality Controlled LLMs with Generalization Certificates via Conformal Sampling
 description: >-
@@ -303,6 +303,6 @@ CFC是一个纯后验层（post-hoc），不需要微调基础生成模型。工
 - [Towards Multimodal Domain Generalization with Few Labels](towards_multimodal_domain_generalization_with_few_labels.md)
 - [Exploring Compositional Generalization of Multimodal LLMs for Medical Imaging](../../ACL2025/multimodal_vlm/exploring_compositional_generalization_of_multimodal_llms_for_medical_imaging.md)
 - [GroundVTS: Visual Token Sampling in Multimodal Large Language Models for Video Temporal Grounding](groundvts_visual_token_sampling_in_multimodal_large_language_models_for_video_te.md)
-- [Customized Visual Storytelling with Unified Multimodal LLMs](customized_visual_storytelling_with_unified_multimodal_llms.md)
+- [Spatial Reasoning is Not a Free Lunch: A Controlled Study on LLaVA](../../ICLR2026/multimodal_vlm/spatial_reasoning_is_not_a_free_lunch_a_controlled_study_on_llava.md)
 
 <!-- RELATED:END -->

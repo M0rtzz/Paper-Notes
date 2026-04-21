@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Theoretical Study on Bridging Internal Probability and Self-Consistency for LLM Reasoning
 description: >-

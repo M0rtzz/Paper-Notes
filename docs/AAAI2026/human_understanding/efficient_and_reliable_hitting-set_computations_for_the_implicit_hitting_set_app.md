@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient and Reliable Hitting-Set Computations for the Implicit Hitting Set Approach
 description: >-
@@ -124,7 +124,7 @@ PBO-IHS算法在核集合 $\mathcal{K}$ 和目标函数 $O$ 之间迭代：每�
 - [SPROD: Spurious-Aware Prototype Refinement for Reliable Out-of-Distribution Detection](../../NeurIPS2025/human_understanding/spurious-aware_prototype_refinement_for_reliable_out-of-distribution_detection.md)
 - [Validating Mechanistic Interpretations: An Axiomatic Approach](../../ICML2025/human_understanding/validating_mechanistic_interpretations_an_axiomatic_approach.md)
 - [A Differential and Pointwise Control Approach to Reinforcement Learning](../../NeurIPS2025/human_understanding/a_differential_and_pointwise_control_approach_to_reinforceme.md)
-- [Team RAS in 10th ABAW Competition: Multimodal Valence and Arousal Estimation Approach](../../CVPR2026/human_understanding/team_ras_in_10th_abaw_competition_multimodal_valence_and_arousal_estimation_appr.md)
 - [Refine Now, Query Fast: A Decoupled Refinement Paradigm for Implicit Neural Fields](../../ICLR2026/human_understanding/refine_now_query_fast_a_decoupled_refinement_paradigm_for_implicit_neural_fields.md)
+- [A Probability-guided Sampler for Neural Implicit Surface Rendering](../../ECCV2024/human_understanding/a_probabilityguided_sampler_for_neural_implicit_surface_rend.md)
 
 <!-- RELATED:END -->

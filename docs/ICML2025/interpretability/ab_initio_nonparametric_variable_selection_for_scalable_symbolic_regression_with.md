@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Ab Initio Nonparametric Variable Selection for Scalable Symbolic Regression with Large p
 description: >-

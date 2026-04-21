@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdaHuman: Animatable Detailed 3D Human Generation with Compositional Multiview Diffusion
 description: >-

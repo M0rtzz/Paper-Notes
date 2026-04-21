@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Highly Efficient and Effective LLMs with Multi-Boolean Architectures
 description: >-

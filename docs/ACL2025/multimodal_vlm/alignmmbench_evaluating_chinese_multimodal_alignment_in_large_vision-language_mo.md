@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AlignMMBench: Evaluating Chinese Multimodal Alignment in Large Vision-Language Models
 description: >-

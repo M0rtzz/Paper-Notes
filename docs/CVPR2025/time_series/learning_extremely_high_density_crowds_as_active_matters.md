@@ -1,14 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Extremely High Density Crowds as Active Matters
 description: >-
-  [CVPR 2025][人群分析][主动物质建模] 将极高密度人群建模为主动物质，从野外视频中学习复杂人群动力学
+  [CVPR 2025][时间序列][极高密度人群] 将极高密度人群类比为物理学中的"主动物质"（active matter），从质量参差的野外视频中学习人群的集体动力学行为模式，用于人群分析和预测。
 tags:
   - CVPR 2025
-  - 人群分析
+  - 时间序列
+  - 极高密度人群
   - 主动物质
   - 人群动力学
-  - 视频预测
+  - 野外视频学习
 ---
 
 # Learning Extremely High Density Crowds as Active Matters

@@ -1,12 +1,10 @@
-﻿---
-title: "Dual Diffusion for Unified Image Generation and Understanding"
-conference: "CVPR 2025"
-arxiv: "2501.00289"
-code: ""
-project: ""
-领域: "图像生成"
-关键词: ["多模态扩散", "统一生成与理解", "离散扩散", "MM-DiT", "视觉问答"]
-评分: "⭐⭐⭐⭐"
+---
+title: >-
+  [论文解读] Dual Diffusion for Unified Image Generation and Understanding
+description: >-
+  [图像生成] 提出 Dual Diffusion Transformer (D-DiT)，在单一 MM-DiT 架构中同时使用连续扩散建模图像分布和离散掩码扩散建模文本分布，是首个端到端的全扩散多模态模型，支持图像生成、图像描述和视觉问答等全套任务。
+tags:
+  - 图像生成
 ---
 
 # Dual Diffusion for Unified Image Generation and Understanding
@@ -120,10 +118,10 @@ $$L_{\text{dual}} = L_{\text{image}} + \lambda_{\text{text}} L_{\text{text}}$$
 
 ## 相关论文
 
-- [EvoTok: A Unified Image Tokenizer via Residual Latent Evolution for Visual Understanding and Generation](evotok_a_unified_image_tokenizer_via_residual_latent_evolution_for_visual_unders.md)
-- [JanusFlow: Harmonizing Autoregression and Rectified Flow for Unified Multimodal Understanding and Generation](janusflow_harmonizing_autoregression_and_rectified_flow_for_unified_multimodal_u.md)
-- [Co-Reinforcement Learning for Unified Multimodal Understanding and Generation](../../NeurIPS2025/image_generation/coreinforcement_learning_for_unified_multimodal_understandin.md)
-- [Toward a Unified Geometry Understanding: Riemannian Diffusion Framework for Graph Generation and Prediction](../../NeurIPS2025/image_generation/toward_a_unified_geometry_understanding_riemannian_diffusion_framework_for_graph.md)
-- [DreamOmni: Unified Image Generation and Editing](dreamomni_unified_image_generation_and_editing.md)
+- [DualAnoDiff: Dual-Interrelated Diffusion Model for Few-Shot Anomaly Image Generation](dual-interrelated_diffusion_model_for_few-shot_anomaly_image_generation.md)
+- [Dual Prompting Image Restoration with Diffusion Transformers (DPIR)](dual_prompting_image_restoration_with_diffusion_transformers.md)
+- [InfinityStar: Unified Spacetime AutoRegressive Modeling for Visual Generation](../../NeurIPS2025/image_generation/infinitystar_unified_spacetime_autoregressive_modeling_for_v.md)
+- [LiT: Delving into a Simple Linear Diffusion Transformer for Image Generation](../../ICCV2025/image_generation/lit_delving_into_a_simple_linear_diffusion_transformer_for_image_generation.md)
+- [Multi-party Collaborative Attention Control for Image Customization](multi-party_collaborative_attention_control_for_image_customization.md)
 
 <!-- RELATED:END -->

@@ -1,13 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking Spiking Self-Attention Mechanism: Implementing a-XNOR Similarity Calculation in Spiking Transformers
 description: >-
-  [CVPR 2025][脉冲神经网络] 分析点积在脉冲Transformer中失效的原因，提出a-XNOR相似度度量来替代点积，显著提升脉冲Transformer性能
+  [CVPR 2025][LLM/NLP][脉冲神经网络] 本文深入分析了点积在脉冲查询-键对中因大量"非脉冲事件"导致相似度度量失效的根本原因，提出专为脉冲序列设计的a-XNOR相似度度量，将非脉冲对的相关性重定义为特定值a，在多种脉冲Transformer架构和数据集上显著提升性能。
 tags:
   - CVPR 2025
+  - LLM/NLP
   - 脉冲神经网络
   - Transformer
-  - 注意力机制
+  - 自注意力机制
+  - XNOR相似度
   - 能效计算
 ---
 
@@ -130,8 +132,8 @@ tags:
 
 - [Spiking Transformer with Spatial-Temporal Attention](spiking_transformer_with_spatial-temporal_attention.md)
 - [STAA-SNN: Spatial-Temporal Attention Aggregator for Spiking Neural Networks](staa-snn_spatial-temporal_attention_aggregator_for_spiking_neural_networks.md)
+- [Breaking the Low-Rank Dilemma of Linear Attention](breaking_the_low-rank_dilemma_of_linear_attention.md)
+- [SATA: Spatial Autocorrelation Token Analysis for Enhancing the Robustness of Vision Transformers](sata_spatial_autocorrelation_token_analysis_for_enhancing_the_robustness_of_visi.md)
 - [Strassen Attention, Split VC Dimension and Compositionality in Transformers](../../NeurIPS2025/llm_nlp/strassen_attention_split_vc_dimension_and_compositionality_in_transformers.md)
-- [Robust Message Embedding via Attention Flow-Based Steganography](robust_message_embedding_via_attention_flow-based_steganography.md)
-- [Exposure-slot: Exposure-centric Representations Learning with Slot-in-Slot Attention](exposure-slot_exposure-centric_representations_learning_with_slot-in-slot_attent.md)
 
 <!-- RELATED:END -->

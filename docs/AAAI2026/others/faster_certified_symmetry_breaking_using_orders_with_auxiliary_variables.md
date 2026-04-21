@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Faster Certified Symmetry Breaking Using Orders With Auxiliary Variables
 description: >-

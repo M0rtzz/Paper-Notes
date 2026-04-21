@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PTQ4ARVG: Post-Training Quantization for AutoRegressive Visual Generation Models
 description: >-

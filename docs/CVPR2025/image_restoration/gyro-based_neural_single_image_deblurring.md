@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Gyro-based Neural Single Image Deblurring
 description: >-
-  [CVPR 2025][image deblurring] 提出 GyroDeblurNet，利用陀螺仪传感器数据辅助单图去模糊，通过陀螺仪细化模块、陀螺仪去模糊模块和课程学习策略有效处理真实世界中的陀螺仪误差。
+  [CVPR 2025][图像恢复][gyro sensor] 提出 GyroDeblurNet，通过新颖的相机运动场嵌入表示复杂手抖、陀螺仪细化模块利用图像模糊信息校正陀螺仪误差、陀螺仪去模糊模块用校正后的运动信息去除模糊，配合课程学习策略，在合成和真实数据集上大幅超越现有方法。
 tags:
   - CVPR 2025
+  - 图像恢复
+  - gyro sensor
   - image deblurring
-  - 陀螺仪
-  - 课程学习
-  - 可变形卷积
-  - 运动场
+  - camera motion field
+  - curriculum learning
+  - deformable convolution
 ---
 
 # Gyro-based Neural Single Image Deblurring
@@ -152,10 +153,10 @@ PSNR 超越最佳单图方法 1.27 dB，超越最佳陀螺仪方法 1.79 dB。
 
 ## 相关论文
 
+- [Progressive Focused Transformer for Single Image Super-Resolution](progressive_focused_transformer_for_single_image_super-resolution.md)
 - [Efficient Visual State Space Model for Image Deblurring](efficient_visual_state_space_model_for_image_deblurring.md)
-- [DiffFNO: Diffusion Fourier Neural Operator](difffno_diffusion_fourier_neural_operator.md)
+- [Proximal Algorithm Unrolling: Flexible and Efficient Reconstruction Networks for Single-Pixel Imaging](proximal_algorithm_unrolling_flexible_and_efficient_reconstruction_networks_for_.md)
 - [Efficient Concertormer for Image Deblurring and Beyond](../../ICCV2025/image_restoration/efficient_concertormer_for_image_deblurring_and_beyond.md)
-- [MoE-Gyro: Self-Supervised Over-Range Reconstruction and Denoising for MEMS Gyroscopes](../../NeurIPS2025/image_restoration/moe-gyro_self-supervised_over-range_reconstruction_and_denoising_for_mems_gyrosc.md)
-- [Blind Noisy Image Deblurring Using Residual Guidance Strategy](../../ICCV2025/image_restoration/blind_noisy_image_deblurring_using_residual_guidance_strateg.md)
+- [DiffFNO: Diffusion Fourier Neural Operator](difffno_diffusion_fourier_neural_operator.md)
 
 <!-- RELATED:END -->

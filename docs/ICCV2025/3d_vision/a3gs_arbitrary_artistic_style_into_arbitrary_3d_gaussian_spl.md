@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A3GS: Arbitrary Artistic Style into Arbitrary 3D Gaussian Splatting
 description: >-

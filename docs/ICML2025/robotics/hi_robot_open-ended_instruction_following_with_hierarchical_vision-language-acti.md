@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hi Robot: Open-Ended Instruction Following with Hierarchical Vision-Language-Action Models
 description: >-
@@ -205,8 +205,8 @@ $$p_{\text{gen}}(\ell_t, u_t | \mathbf{I}_t^1, \dots, \mathbf{I}_t^n, \hat{\ell}
 
 - [FOUNDER: Grounding Foundation Models in World Models for Open-Ended Embodied Decision Making](founder_grounding_foundation_models_in_world_models_for_open-ended_embodied_deci.md)
 - [CogVLA: Cognition-Aligned Vision-Language-Action Model via Instruction-Driven Routing & Sparsification](../../NeurIPS2025/robotics/cogvla_cognition-aligned_vision-language-action_model_via_instruction-driven_rou.md)
-- [SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](../../CVPR2025/robotics/sapave_towards_active_perception_and_manipulation_in_vision-language-action_mode.md)
 - [MoManipVLA: Transferring Vision-Language-Action Models for General Mobile Manipulation](../../CVPR2025/robotics/momanipvla_transferring_vision-language-action_models_for_general_mobile_manipul.md)
+- [SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](../../CVPR2025/robotics/sapave_towards_active_perception_and_manipulation_in_vision-language-action_mode.md)
 - [VQ-VLA: Improving Vision-Language-Action Models via Scaling Vector-Quantized Action Tokenizers](../../ICCV2025/robotics/vq-vla_improving_vision-language-action_models_via_scaling_vector-quantized_acti.md)
 
 <!-- RELATED:END -->

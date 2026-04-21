@@ -207,8 +207,8 @@ TaxaDiffusion 在不同分类层级生成的图像中，可观察到生物学性
 
 - [CharaConsist: Fine-Grained Consistent Character Generation](characonsist_fine-grained_consistent_character_generation.md)
 - [ShortFT: Diffusion Model Alignment via Shortcut-based Fine-Tuning](shortft_diffusion_model_alignment_via_shortcut-based_fine-tuning.md)
+- [FineLIP: Extending CLIP's Reach via Fine-Grained Alignment with Longer Text Inputs](../../CVPR2025/image_generation/finelip_extending_clips_reach_via_fine-grained_alignment_with_longer_text_inputs.md)
 - [CLIP Under the Microscope: A Fine-Grained Analysis of Multi-Object Representation](../../CVPR2025/image_generation/clip_under_the_microscope_a_fine-grained_analysis_of_multi-object_representation.md)
 - [FlowEdit: Inversion-Free Text-Based Editing Using Pre-Trained Flow Models](flowedit_inversion-free_text-based_editing_using_pre-trained_flow_models.md)
-- [Multimodal Latent Diffusion Model for Complex Sewing Pattern Generation](multimodal_latent_diffusion_model_for_complex_sewing_pattern_generation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FeDaL: Federated Dataset Learning for General Time Series Foundation Models
 description: >-

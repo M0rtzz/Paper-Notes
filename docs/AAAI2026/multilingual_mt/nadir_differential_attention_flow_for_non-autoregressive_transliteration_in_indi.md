@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NADIR: Differential Attention Flow for Non-Autoregressive Transliteration in Indic Languages
 description: >-

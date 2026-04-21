@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WAVE: Weighted Autoregressive Varying Gate for Time Series Forecasting
 description: >-

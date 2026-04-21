@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TUMLU: A Unified and Native Language Understanding Benchmark for Turkic Languages
 description: >-

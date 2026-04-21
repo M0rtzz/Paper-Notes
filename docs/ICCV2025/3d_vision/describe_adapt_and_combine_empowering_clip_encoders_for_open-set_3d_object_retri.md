@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Describe, Adapt and Combine: Empowering CLIP Encoders for Open-set 3D Object Retrieval
 description: >-

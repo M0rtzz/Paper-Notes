@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Intermediate N-Gramming: Deterministic and Fast N-Grams For Large N and Large Datasets
 description: >-

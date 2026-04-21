@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UniC-Lift: Unified 3D Instance Segmentation via Contrastive Learning
 description: >-

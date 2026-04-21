@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Track, Inpaint, Resplat: Subject-driven 3D and 4D Generation with Progressive Texture Infilling
 description: >-

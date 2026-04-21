@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Visual Agentic AI for Spatial Reasoning with a Dynamic API
 description: >-

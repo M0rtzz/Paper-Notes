@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RATE-Nav: Region-Aware Termination Enhancement for Zero-shot Object Navigation with Vision-Language Models
 description: >-

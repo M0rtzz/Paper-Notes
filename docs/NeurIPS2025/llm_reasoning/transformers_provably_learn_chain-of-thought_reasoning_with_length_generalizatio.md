@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Transformers Provably Learn Chain-of-Thought Reasoning with Length Generalization
 description: >-

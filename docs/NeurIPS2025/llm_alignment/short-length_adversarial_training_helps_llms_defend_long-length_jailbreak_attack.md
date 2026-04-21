@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Short-length Adversarial Training Helps LLMs Defend Long-length Jailbreak Attacks
 description: >-

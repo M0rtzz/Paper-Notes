@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Walking Further: Semantic-aware Multimodal Gait Recognition Under Long-Range Conditions
 description: >-

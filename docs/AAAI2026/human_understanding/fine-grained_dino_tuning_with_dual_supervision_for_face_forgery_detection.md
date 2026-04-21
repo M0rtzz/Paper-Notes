@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fine-Grained DINO Tuning with Dual Supervision for Face Forgery Detection
 description: >-

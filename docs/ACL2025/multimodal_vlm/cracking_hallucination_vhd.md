@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cracking the Code of Hallucination in LVLMs with Vision-aware Head Divergence
 description: >-

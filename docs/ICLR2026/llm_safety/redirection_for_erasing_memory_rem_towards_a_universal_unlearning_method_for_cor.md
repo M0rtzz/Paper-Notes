@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Redirection for Erasing Memory (REM): Towards a Universal Unlearning Method for Corrupted Data
 description: >-

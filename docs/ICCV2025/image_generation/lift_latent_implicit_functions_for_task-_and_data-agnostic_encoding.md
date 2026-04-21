@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LIFT: Latent Implicit Functions for Task- and Data-Agnostic Encoding
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the Hardness of Conditional Independence Testing In Practice
 description: >-
@@ -135,6 +135,6 @@ $$\mathbb{E}[\widehat{\text{KCI}}_n] = \mathbb{E}\left[k_C(C,C')\langle\Delta_{A
 - [Disparate Conditional Prediction in Multiclass Classifiers](../../ICML2025/ai_safety/disparate_conditional_prediction_in_multiclass_classifiers.md)
 - [Generalization in Federated Learning: A Conditional Mutual Information Framework](../../ICML2025/ai_safety/generalization_in_federated_learning_a_conditional_mutual_information_framework.md)
 - [PinPoint: Evaluation of Composed Image Retrieval with Explicit Negatives, Multi-Image Queries, and Paraphrase Testing](../../CVPR2026/ai_safety/pinpoint_evaluation_of_composed_image_retrieval_with_explicit_negatives_multi-im.md)
-- [Keep It Real: Challenges in Attacking Compression-Based Adversarial Purification](keep_it_real_challenges_in_attacking_compression-based_adversarial_purification.md)
+- [Bias in the Picture: Benchmarking VLMs with Social-Cue News Images and LLM-as-Judge Assessment](bias_in_the_picture_benchmarking_vlms_with_social-cue_news_images_and_llm-as-jud.md)
 
 <!-- RELATED:END -->

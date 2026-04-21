@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cross-Slice Knowledge Transfer via Masked Multi-Modal Heterogeneous Graph Contrastive Learning for Spatial Gene Expression Inference
 description: >-

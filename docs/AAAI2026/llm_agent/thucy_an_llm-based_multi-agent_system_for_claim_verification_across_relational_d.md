@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Thucy: An LLM-based Multi-Agent System for Claim Verification across Relational Databases
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unveiling the Power of Multiple Gossip Steps: A Stability-Based Generalization Analysis in Decentralized Training
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FixTalk: Taming Identity Leakage for High-Quality Talking Head Generation in Extreme Cases
 description: >-

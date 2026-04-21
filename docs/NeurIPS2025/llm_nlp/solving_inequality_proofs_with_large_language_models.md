@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Solving Inequality Proofs with Large Language Models
 description: >-

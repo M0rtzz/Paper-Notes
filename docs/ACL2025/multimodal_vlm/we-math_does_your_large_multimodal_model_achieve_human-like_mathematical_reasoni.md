@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] We-Math: Does Your Large Multimodal Model Achieve Human-like Mathematical Reasoning?
 description: >-
@@ -155,7 +155,7 @@ We-Math的构建与评估流程：
 - [MathVerse: Does Your Multi-modal LLM Truly See the Diagrams in Visual Math Problems?](../../ECCV2024/multimodal_vlm/mathverse_does_your_multi-modal_llm_truly_see_the_diagrams_in_visual_math_proble.md)
 - [The Role of Visual Modality in Multimodal Mathematical Reasoning: Challenges and Insights](the_role_of_visual_modality_in_multimodal_mathematical_reasoning_challenges_and_.md)
 - [MathCoder-VL: Bridging Vision and Code for Enhanced Multimodal Mathematical Reasoning](mathcoder-vl_bridging_vision_and_code_for_enhanced_multimodal_mathematical_reaso.md)
-- [MV-MATH: Evaluating Multimodal Math Reasoning in Multi-Visual Contexts](../../CVPR2025/multimodal_vlm/mv-math_evaluating_multimodal_math_reasoning_in_multi-visual_contexts.md)
-- [Can Vision-Language Models Evaluate Handwritten Math?](can_vision-language_models_evaluate_handwritten_math.md)
+- [MathVerse: Does Your Multi-modal LLM Truly See the Diagrams in Visual Math?](../../ECCV2024/multimodal_vlm/mathverse_does_your_multimodal_llm_truly_see_the_diagrams_in.md)
+- [OmniAlign-V: Towards Enhanced Alignment of MLLMs with Human Preference](omnialign-v_towards_enhanced_alignment_of_mllms_with_human_preference.md)
 
 <!-- RELATED:END -->

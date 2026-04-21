@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Saying the Unsaid: Revealing the Hidden Language of Multimodal Systems Through Telephone Games
 description: >-

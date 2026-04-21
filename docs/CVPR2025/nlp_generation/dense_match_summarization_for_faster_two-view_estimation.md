@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Dense Match Summarization for Faster Two-view Estimation
 description: >-
-  [CVPR 2025][几何估计][匹配摘要] 提出高效的稠密匹配摘要方法，通过生成代表性子集加速鲁棒两视图位姿估计
+  [CVPR 2025][文本生成][稠密匹配] 提出高效的稠密匹配摘要方案，从大量稠密对应中生成一小组代表性匹配子集，在保持位姿估计精度的同时大幅加速 RANSAC 鲁棒估计。
 tags:
   - CVPR 2025
-  - 两视图几何
+  - 文本生成
+  - 稠密匹配
   - 位姿估计
-  - 匹配压缩
-  - RANSAC加速
+  - 匹配摘要
+  - RANSAC
+  - 两视图几何
 ---
 
 # Dense Match Summarization for Faster Two-view Estimation
@@ -65,9 +67,9 @@ tags:
 ## 相关论文
 
 - [Unveiling Attractor Cycles in Large Language Models: A Dynamical Systems View of Successive Paraphrasing](../../ACL2025/nlp_generation/unveiling_attractor_cycles_in_large_language_models_a_dynamical_systems_view_of_.md)
+- [PerSphere: A Comprehensive Framework for Multi-Faceted Perspective Retrieval and Summarization](../../ACL2025/nlp_generation/persphere_a_comprehensive_framework_for_multi-faceted_perspective_retrieval_and_.md)
 - [DTCRS: Dynamic Tree Construction for Recursive Summarization](../../ACL2025/nlp_generation/dtcrs_dynamic_tree_construction_for_recursive_summarization.md)
 - [Context-Aware Hierarchical Merging for Long Document Summarization](../../ACL2025/nlp_generation/context-aware_hierarchical_merging_for_long_document_summarization.md)
-- [PerSphere: A Comprehensive Framework for Multi-Faceted Perspective Retrieval and Summarization](../../ACL2025/nlp_generation/persphere_a_comprehensive_framework_for_multi-faceted_perspective_retrieval_and_.md)
-- [Theme-Explanation Structure for Table Summarization Using Large Language Models](../../ACL2025/nlp_generation/theme-explanation_structure_for_table_summarization_using_large_language_models_.md)
+- [An Empirical Study of Many-to-Many Summarization with Large Language Models](../../ACL2025/nlp_generation/an_empirical_study_of_manytomany_summarization.md)
 
 <!-- RELATED:END -->

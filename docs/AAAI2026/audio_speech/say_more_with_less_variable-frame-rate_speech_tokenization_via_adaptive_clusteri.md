@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Say More with Less: Variable-Frame-Rate Speech Tokenization via Adaptive Clustering and Implicit Duration Coding
 description: >-

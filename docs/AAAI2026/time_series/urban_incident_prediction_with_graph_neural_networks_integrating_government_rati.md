@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Urban Incident Prediction with Graph Neural Networks: Integrating Government Ratings and Crowdsourced Reports
 description: >-

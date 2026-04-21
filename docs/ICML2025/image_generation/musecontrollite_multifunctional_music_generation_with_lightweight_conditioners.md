@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MuseControlLite: Multifunctional Music Generation with Lightweight Conditioners
 description: >-
@@ -142,6 +142,6 @@ MuseControlLite 基于 Stable Audio Open（一个 24 层扩散 Transformer）进
 - [Enhancing Dance-to-Music Generation via Negative Conditioning Latent Diffusion Model](../../CVPR2025/image_generation/enhancing_dance-to-music_generation_via_negative_conditioning_latent_diffusion_m.md)
 - [Music-Aligned Holistic 3D Dance Generation via Hierarchical Motion Modeling](../../ICCV2025/image_generation/music-aligned_holistic_3d_dance_generation_via_hierarchical_motion_modeling.md)
 - [MGE-LDM: Joint Latent Diffusion for Simultaneous Music Generation and Source Extraction](../../NeurIPS2025/image_generation/mge-ldm_joint_latent_diffusion_for_simultaneous_music_generation_and_source_extr.md)
-- [AnoStyler: Text-Driven Localized Anomaly Generation via Lightweight Style Transfer](../../AAAI2026/image_generation/anostyler_text-driven_localized_anomaly_generation_via_light.md)
+- [FilmComposer: LLM-Driven Music Production for Silent Film Clips](../../CVPR2025/image_generation/filmcomposer_llm-driven_music_production_for_silent_film_clips.md)
 
 <!-- RELATED:END -->

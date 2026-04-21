@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How to Take a Memorable Picture? Empowering Users with Actionable Feedback
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling Reasoning Hop Exposes Weaknesses: Demystifying and Improving Hop Generalization in Large Language Models
 description: >-

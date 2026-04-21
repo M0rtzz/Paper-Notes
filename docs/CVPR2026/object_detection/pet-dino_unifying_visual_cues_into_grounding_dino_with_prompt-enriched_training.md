@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PET-DINO: Unifying Visual Cues into Grounding DINO with Prompt-Enriched Training
 description: >-

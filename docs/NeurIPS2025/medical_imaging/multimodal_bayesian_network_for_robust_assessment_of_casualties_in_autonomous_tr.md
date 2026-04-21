@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multimodal Bayesian Network for Robust Assessment of Casualties in Autonomous Triage
 description: >-

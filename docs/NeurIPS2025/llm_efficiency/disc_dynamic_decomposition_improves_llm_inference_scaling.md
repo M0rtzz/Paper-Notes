@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DISC: Dynamic Decomposition Improves LLM Inference Scaling
 description: >-

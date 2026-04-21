@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning From Design Procedure To Generate CAD Programs for Data Augmentation
 description: >-

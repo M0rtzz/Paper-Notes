@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cut Less, Fold More: Model Compression through the Lens of Projection Geometry
 description: >-
@@ -129,8 +129,8 @@ tags:
 ## 相关论文
 
 - [Less is More but Where: Dynamic Token Compression via LLM-Guided Keyframe Prior](../../NeurIPS2025/model_compression/less_is_more_but_where_dynamic_token_compression_via_llm-guided_keyframe_prior.md)
-- [Topology and Geometry of the Learning Space of ReLU Networks: Connectivity and Size](topology_and_geometry_of_the_learning_space_of_relu_networks_connectivity_and_si.md)
 - [The Geometry of LLM Quantization: GPTQ as Babai's Nearest Plane Algorithm](the_geometry_of_llm_quantization_gptq_as_babais_nearest_plane_algorithm.md)
+- [Topology and Geometry of the Learning Space of ReLU Networks: Connectivity and Size](topology_and_geometry_of_the_learning_space_of_relu_networks_connectivity_and_si.md)
 - [Achieving More with Less: Additive Prompt Tuning for Rehearsal-Free Class-Incremental Learning](../../ICCV2025/model_compression/achieving_more_with_less_additive_prompt_tuning_for_rehearsal-free_class-increme.md)
 - [Revisiting LoRA through the Lens of Parameter Redundancy: Spectral Encoding Helps](../../ACL2025/model_compression/revisiting_lora_through_the_lens_of_parameter_redundancy_spectral_encoding_helps.md)
 

@@ -1,7 +1,16 @@
-﻿---
-title: "INFP: Audio-Driven Interactive Head Generation in Dyadic Conversations"
-description: "INFP提出统一的音频驱动交互式头部生成框架，通过双轨音频驱动agent在说话和倾听状态间自然切换，无需手动角色分配"
-tags: ["头部生成", "对话交互", "音频驱动", "扩散模型", "人脸动画"]
+---
+title: >-
+  [论文解读] INFP: Audio-Driven Interactive Head Generation in Dyadic Conversations
+description: >-
+  [CVPR 2025][图像恢复][交互式头部生成] INFP 提出了一个统一的音频驱动交互式头部生成框架，通过双轨音频（agent + 对话伙伴）驱动 agent 在说话和倾听状态间自然切换，无需手动角色分配或显式角色切换，同时引入大规模 DyConv 数据集支持研究。
+tags:
+  - CVPR 2025
+  - 图像恢复
+  - 交互式头部生成
+  - 双人对话
+  - 音频驱动
+  - 运动潜空间
+  - Transformer
 ---
 
 # INFP: Audio-Driven Interactive Head Generation in Dyadic Conversations
@@ -120,9 +129,9 @@ INFP 在所有指标上大幅领先 DIM，SyncScore (7.188 vs 4.778) 接近于 G
 ## 相关论文
 
 - [PNG: Diffusion-Based sRGB Real Noise Generation via Prompt-Driven Noise Representation Learning](../../CVPR2026/image_restoration/diffusion-based_srgb_real_noise_generation_via_prompt-driven_noise_representatio.md)
+- [One-Step Event-Driven High-Speed Autofocus](one-step_event-driven_high-speed_autofocus.md)
+- [Vision-Language Gradient Descent-driven All-in-One Deep Unfolding Networks](vision-language_gradient_descent-driven_all-in-one_deep_unfolding_networks.md)
 - [Audio Super-Resolution with Latent Bridge Models](../../NeurIPS2025/image_restoration/audio_super-resolution_with_latent_bridge_models.md)
 - [Exploiting Diffusion Prior for Task-driven Image Restoration](../../ICCV2025/image_restoration/exploiting_diffusion_prior_for_task-driven_image_restoration.md)
-- [EchoMimicV2: Towards Striking, Simplified, and Semi-Body Human Animation](echomimicv2_towards_striking_simplified_and_semi-body_human_animation.md)
-- [InterActHuman: Multi-Concept Human Animation with Layout-Aligned Audio Conditions](../../ICLR2026/image_restoration/interacthuman_multi-concept_human_animation_with_layout-aligned_audio_conditions.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Minimal Semantic Sufficiency Meets Unsupervised Domain Generalization
 description: >-
@@ -119,6 +119,6 @@ MS-UDG 在无类别标签和域标签的条件下，通过信息解纠缠模块�
 - [SEAL: Semantic-Aware Hierarchical Learning for Generalized Category Discovery](seal_semantic-aware_hierarchical_learning_for_generalized_category_discovery.md)
 - [Generalization Analysis for Supervised Contrastive Representation Learning under Non-IID Settings](../../ICML2025/self_supervised/generalization_analysis_for_supervised_contrastive_representation_learning_under.md)
 - [Contrastive Learning on LLM Back Generation Treebank for Cross-domain Constituency Parsing](../../ACL2025/self_supervised/llm_back_gen_treebank.md)
-- [Temporal Slowness in Central Vision Drives Semantic Object Learning](../../ICLR2026/self_supervised/temporal_slowness_in_central_vision_drives_semantic_object_learning.md)
+- [Rethinking Unsupervised Outlier Detection via Multiple Thresholding](../../ECCV2024/self_supervised/rethinking_unsupervised_outlier_detection_via_multiple_thresholding.md)
 
 <!-- RELATED:END -->

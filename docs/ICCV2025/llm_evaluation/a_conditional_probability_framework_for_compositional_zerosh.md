@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Conditional Probability Framework for Compositional Zero-shot Learning
 description: >-
@@ -200,9 +200,9 @@ $$\hat{c} = \arg\max_{c_{i,j} \in \mathcal{C}_{test}} p(c_{i,j}|x) + p(a_i|x, v_
 ## 相关论文
 
 - [InterSyn: Interleaved Learning for Dynamic Motion Synthesis in the Wild](intersyn_interleaved_learning_for_dynamic_motion_synthesis_in_the_wild.md)
-- [Imbalance in Balance: Online Concept Balancing in Generation Models](imbalance_in_balance_online_concept_balancing_in_generation_models.md)
-- [Supercharging Floorplan Localization with Semantic Rays](supercharging_floorplan_localization_with_semantic_rays.md)
-- [ForCenNet: Foreground-Centric Network for Document Image Rectification](forcennet_foreground-centric_network_for_document_image_rectification.md)
-- [OmniDiff: A Comprehensive Benchmark for Fine-grained Image Difference Captioning](omnidiff_a_comprehensive_benchmark_for_fine-grained_image_difference_captioning.md)
+- [On the Robustness Tradeoff in Fine-Tuning](on_the_robustness_tradeoff_in_fine-tuning.md)
+- [Generative Zoo](generative_zoo.md)
+- [ODP-Bench: Benchmarking Out-of-Distribution Performance Prediction](odp-bench_benchmarking_out-of-distribution_performance_prediction.md)
+- [3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark](3dsrbench_a_comprehensive_3d_spatial_reasoning_benchmark.md)
 
 <!-- RELATED:END -->

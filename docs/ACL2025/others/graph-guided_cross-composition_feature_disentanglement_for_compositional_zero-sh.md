@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Graph-guided Cross-composition Feature Disentanglement for Compositional Zero-shot Learning
 description: >-
@@ -150,7 +150,7 @@ DCDA[PRG+N] 在 MIT-States 上 AUC 较 CAILA 提升 3.6%，在 UT-Zappos 上提�
 - [Zero-Shot Conversational Stance Detection: Dataset and Approaches](zero-shot_conversational_stance_detection_dataset_and_approaches.md)
 - [OwlEye: Zero-Shot Learner for Cross-Domain Graph Data Anomaly Detection](../../ICLR2026/others/owleye_zero-shot_learner_for_cross-domain_graph_data_anomaly_detection.md)
 - [Synthia: Novel Concept Design with Affordance Composition](synthia_novel_concept_design_with_affordance_composition.md)
+- [Task-Agnostic Guided Feature Expansion for Class-Incremental Learning](../../CVPR2025/others/task-agnostic_guided_feature_expansion_for_class-incremental_learning.md)
 - [Towards Style Alignment in Cross-Cultural Translation](towards_style_alignment_in_cross-cultural_translation.md)
-- [Multi-Agent Collaboration via Cross-Team Orchestration](multi-agent_collaboration_via_cross-team_orchestration.md)
 
 <!-- RELATED:END -->

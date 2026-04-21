@@ -2,14 +2,15 @@
 title: >-
   [论文解读] MixerMDM: Learnable Composition of Human Motion Diffusion Models
 description: >-
-  [CVPR 2025][人体运动生成] 提出首个可学习的运动扩散模型组合方法 MixerMDM，通过对抗训练学习动态混合权重，将交互模型和个体模型的生成过程融合，实现对人-人交互运动更精细的个体可控性。
+  [CVPR 2025][图像生成][扩散模型] 提出 MixerMDM，首个可学习的运动扩散模型组合技术，通过 Transformer-based Mixer 模块预测动态混合权重，以对抗训练方式学习如何融合个体运动和交互运动扩散模型，实现细粒度可控的人-人交互运动生成。
 tags:
   - CVPR 2025
-  - human motion generation
-  - diffusion model
+  - 图像生成
+  - 扩散模型
   - model composition
   - adversarial training
-  - human interaction
+  - dynamic mixing
+  - human-human interaction
 ---
 
 # MixerMDM: Learnable Composition of Human Motion Diffusion Models
@@ -155,10 +156,10 @@ $L1$ 正则项惩罚两个判别器损失的差距过大。训练 300 epochs，b
 
 ## 相关论文
 
-- [Move-in-2D: 2D-Conditioned Human Motion Generation](move-in-2d_2d-conditioned_human_motion_generation.md)
-- [Learnable Sampler Distillation for Discrete Diffusion Models](../../NeurIPS2025/image_generation/learnable_sampler_distillation_for_discrete_diffusion_models.md)
+- [Nonisotropic Gaussian Diffusion for Realistic 3D Human Motion Prediction](nonisotropic_gaussian_diffusion_for_realistic_3d_human_motion_prediction.md)
 - [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
-- [Consistent and Controllable Image Animation with Motion Diffusion Models](consistent_and_controllable_image_animation_with_motion_diffusion_models.md)
-- [Realistic Human Motion Generation with Cross-Diffusion Models](../../ECCV2024/image_generation/realistic_human_motion_generation_with_cross-diffusion_models.md)
+- [Move-in-2D: 2D-Conditioned Human Motion Generation](move-in-2d_2d-conditioned_human_motion_generation.md)
+- [Composition and Alignment of Diffusion Models using Constrained Learning](../../NeurIPS2025/image_generation/composition_and_alignment_of_diffusion_models_using_constrai.md)
+- [Learnable Sampler Distillation for Discrete Diffusion Models](../../NeurIPS2025/image_generation/learnable_sampler_distillation_for_discrete_diffusion_models.md)
 
 <!-- RELATED:END -->

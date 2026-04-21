@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SynTSBench: Rethinking Temporal Pattern Learning in Deep Learning Models for Time Series
 description: >-

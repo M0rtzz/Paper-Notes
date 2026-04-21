@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Crucible: Quantifying the Potential of Control Algorithms through LLM Agents
 description: >-

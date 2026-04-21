@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mind the Gap: Aligning Knowledge Bases with User Needs to Enhance Mental Health Retrieval
 description: >-
@@ -131,8 +131,8 @@ $$\text{Gap}(t) = \frac{\log(1 + f_p(t))}{\max_w \log(1 + f_p(w))} \cdot \left[\
 
 - [HybGRAG: Hybrid Retrieval-Augmented Generation on Textual and Relational Knowledge Bases](../../ACL2025/information_retrieval/hybgrag_hybrid_rag_skb.md)
 - [MITRA: An AI Assistant for Knowledge Retrieval in Physics Collaborations](mitra_an_ai_assistant_for_knowledge_retrieval_in_physics_collaborations.md)
+- [HyperGraphRAG: Retrieval-Augmented Generation via Hypergraph-Structured Knowledge Representation](hypergraphrag_retrieval-augmented_generation_via_hypergraph-structured_knowledge.md)
 - [Health-LLM: Personalized Retrieval-Augmented Disease Prediction System](../../ACL2025/information_retrieval/health-llm_personalized_retrieval-augmented_disease_prediction_system.md)
 - [Retrieval-Augmented Generation for Reliable Interpretation of Radio Regulations](retrieval-augmented_generation_for_reliable_interpretation_of_radio_regulations.md)
-- [Reliable Decision Making via Calibration Oriented Retrieval Augmented Generation](reliable_decision_making_via_calibration_oriented_retrieval_augmented_generation.md)
 
 <!-- RELATED:END -->

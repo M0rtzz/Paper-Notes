@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Revitalizing Canonical Pre-Alignment for Irregular Multivariate Time Series Forecasting
 description: >-

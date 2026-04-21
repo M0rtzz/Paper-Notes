@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mod-Adapter: Tuning-Free and Versatile Multi-concept Personalization via Modulation Adapter
 description: >-
@@ -131,10 +131,10 @@ tags:
 
 ## 相关论文
 
-- [Preventing Shortcuts in Adapter Training via Providing the Shortcuts](../../NeurIPS2025/image_generation/preventing_shortcuts_in_adapter_training_via_providing_the_shortcuts.md)
+- [UNIC-Adapter: Unified Image-Instruction Adapter with Multi-modal Transformer for Image Generation](../../CVPR2025/image_generation/unic-adapter_unified_image-instruction_adapter_with_multi-modal_transformer_for_.md)
 - [Trans-Adapter: A Plug-and-Play Framework for Transparent Image Inpainting](../../ICCV2025/image_generation/trans-adapter_a_plug-and-play_framework_for_transparent_image_inpainting.md)
+- [Preventing Shortcuts in Adapter Training via Providing the Shortcuts](../../NeurIPS2025/image_generation/preventing_shortcuts_in_adapter_training_via_providing_the_shortcuts.md)
 - [TAVAE: A VAE with Adaptable Priors Explains Contextual Modulation in the Visual Cortex](tavae_a_vae_with_adaptable_priors_explains_contextual_modulation_in_the_visual_c.md)
 - [SongEcho: Towards Cover Song Generation via Instance-Adaptive Element-wise Linear Modulation](songecho_towards_cover_song_generation_via_instance-adaptive_element-wise_linear.md)
-- [SPEED: Scalable, Precise, and Efficient Concept Erasure for Diffusion Models](speed_scalable_precise_and_efficient_concept_erasure_for_diffusion_models.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] KAN-AD: Time Series Anomaly Detection with Kolmogorov-Arnold Networks
 description: >-

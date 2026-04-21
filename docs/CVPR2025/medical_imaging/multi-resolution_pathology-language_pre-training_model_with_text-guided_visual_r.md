@@ -1,11 +1,10 @@
 ---
-title: "Multi-Resolution Pathology-Language Pre-training Model with Text-Guided Visual Representation"
-conference: "CVPR 2025"
-arxiv: "2504.18856"
-arxiv_url: "https://arxiv.org/abs/2504.18856"
-code: "https://github.com/BasitAlawode/MR-PLIP"
-domain: "medical_imaging"
-keywords: ["computational pathology", "vision-language model", "multi-resolution", "whole slide image", "contrastive learning", "foundation model"]
+title: >-
+  [论文解读] Multi-Resolution Pathology-Language Pre-training Model with Text-Guided Visual Representation
+description: >-
+  [医学图像] 提出 MR-PLIP，首个在多分辨率（5×/10×/20×/40×）下进行病理-语言预训练的视觉语言模型，通过跨分辨率视觉-文本对齐（CVTA）和多分辨率文本引导视觉表示对齐（MRTVA），在 34M 图文对上训练后，在 26 个基准数据集上全面超越 SOTA 基础模型。
+tags:
+  - 医学图像
 ---
 
 # Multi-Resolution Pathology-Language Pre-training Model with Text-Guided Visual Representation
@@ -137,10 +136,10 @@ MR-PLIP 在所有 12+ 个 tile-level 数据集上均取得最佳成绩，领先�
 
 ## 相关论文
 
-- [Multi-modal Vision Pre-training for Medical Image Analysis (BrainMVP)](multi-modal_vision_pre-training_for_medical_image_analysis.md)
-- [Multimodal 3D Genome Pre-training](../../NeurIPS2025/medical_imaging/multimodal_3d_genome_pre-training.md)
-- [Boosting Vision Semantic Density with Anatomy Normality Modeling for Medical Vision-language Pre-training](../../ICCV2025/medical_imaging/boosting_vision_semantic_density_with_anatomy_normality_mode.md)
-- [SynBrain: Enhancing Visual-to-fMRI Synthesis via Probabilistic Representation Learning](../../NeurIPS2025/medical_imaging/synbrain_enhancing_visual-to-fmri_synthesis_via_probabilistic_representation_lea.md)
-- [UNIStainNet: Foundation-Model-Guided Virtual Staining of H&E to IHC](unistainnet_foundation-model-guided_virtual_staining_of_he_to_ihc.md)
+- [GuideGen: A Text-Guided Framework for Paired Full-Torso Anatomy and CT Volume Generation](../../AAAI2026/medical_imaging/guidegen_a_text-guided_framework_for_paired_full-torso_anatomy_and_ct_volume_gen.md)
+- [ViCTr: Vital Consistency Transfer for Pathology Aware Image Synthesis](../../ICCV2025/medical_imaging/victr_vital_consistency_transfer_for_pathology_aware_image_synthesis.md)
+- [Position: Thematic Analysis of Unstructured Clinical Transcripts with Large Language Models](../../NeurIPS2025/medical_imaging/position_thematic_analysis_of_unstructured_clinical_transcripts_with_large_langu.md)
+- [MedBioRAG: Semantic Search and Retrieval-Augmented Generation with Large Language Models for Medical and Biological QA](../../ACL2025/medical_imaging/medbiorag_semantic_search_and_retrieval-augmented_generation_for_biomedical_lite.md)
+- [FaNe: Towards Fine-Grained Cross-Modal Contrast with False-Negative Reduction and Text-Conditioned Sparse Attention](../../AAAI2026/medical_imaging/fane_towards_fine-grained_cross-modal_contrast_with_false-negative_reduction_and.md)
 
 <!-- RELATED:END -->

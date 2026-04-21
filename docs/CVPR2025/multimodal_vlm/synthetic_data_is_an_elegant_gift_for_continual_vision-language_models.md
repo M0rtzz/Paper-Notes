@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Synthetic Data is an Elegant GIFT for Continual Vision-Language Models
 description: >-
@@ -115,8 +115,8 @@ $\mathcal{L} = \mathcal{L}_{task} + \lambda_{CD} \cdot \mathcal{L}_{CD} + \lambd
 
 - [SpaRE: Enhancing Spatial Reasoning in Vision-Language Models with Synthetic Data](../../ACL2025/multimodal_vlm/spare_enhancing_spatial_reasoning_in_vision-language_models_with_synthetic_data.md)
 - [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](continual_learning_with_vision-language_models_via_semantic-geometry_preservatio.md)
+- [Synthetic Visual Genome](synthetic_visual_genome.md)
 - [Select and Distill: Selective Dual-Teacher Knowledge Transfer for Continual Learning on Vision-Language Models](../../ECCV2024/multimodal_vlm/select_and_distill_selective_dual-teacher_knowledge_transfer_for_continual_learn.md)
-- [Active Data Curation Effectively Distills Large-Scale Multimodal Models](active_data_curation_effectively_distills_large-scale_multimodal_models.md)
-- [Enhanced Continual Learning of Vision-Language Models with Model Fusion](../../ICLR2026/multimodal_vlm/enhanced_continual_learning_of_vision-language_models_with_model_fusion.md)
+- [SVLTA: Benchmarking Vision-Language Temporal Alignment via Synthetic Video Situation](svlta_benchmarking_vision-language_temporal_alignment_via_synthetic_video_situat.md)
 
 <!-- RELATED:END -->

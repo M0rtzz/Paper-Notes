@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Look-Ahead Reasoning on Learning Platforms
 description: >-

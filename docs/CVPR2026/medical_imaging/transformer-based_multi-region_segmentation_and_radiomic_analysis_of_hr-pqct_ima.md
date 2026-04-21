@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Transformer-Based Multi-Region Segmentation and Radiomic Analysis of HR-pQCT Imaging for Osteoporosis Classification
 description: >-

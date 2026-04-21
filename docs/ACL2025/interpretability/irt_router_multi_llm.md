@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] IRT-Router: Effective and Interpretable Multi-LLM Routing via Item Response Theory
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UniLS: End-to-End Audio-Driven Avatars for Unified Listening and Speaking
 description: >-
@@ -125,9 +125,9 @@ UniLS基于chunk-based自回归模型生成面部动作。输入是说话者A和
 ## 相关论文
 
 - [MatchED: Crisp Edge Detection Using End-to-End, Matching-based Supervision](matched_crisp_edge_detection_using_end-to-end_matching-based_supervision.md)
+- [CryptoFace: End-to-End Encrypted Face Recognition](../../CVPR2025/human_understanding/cryptoface_end-to-end_encrypted_face_recognition.md)
 - [Generalizable End-to-End Tool-Use RL with Synthetic CodeGym](../../ICLR2026/human_understanding/generalizable_end-to-end_tool-use_rl_with_synthetic_codegym.md)
 - [VASA-3D: Lifelike Audio-Driven Gaussian Head Avatars from a Single Image](../../NeurIPS2025/human_understanding/vasa-3d_lifelike_audio-driven_gaussian_head_avatars_from_a_single_image.md)
 - [Sum-of-Parts: Self-Attributing Neural Networks with End-to-End Learning of Feature Groups](../../ICML2025/human_understanding/sum-of-parts_self-attributing_neural_networks_with_end-to-end_learning_of_featur.md)
-- [CryptoFace: End-to-End Encrypted Face Recognition](../../CVPR2025/human_understanding/cryptoface_end-to-end_encrypted_face_recognition.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UMBRAE: Unified Multimodal Brain Decoding
 description: >-

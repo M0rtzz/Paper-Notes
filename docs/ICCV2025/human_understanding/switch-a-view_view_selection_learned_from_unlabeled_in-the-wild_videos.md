@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Switch-a-View: View Selection Learned from Unlabeled In-the-wild Videos
 description: >-
@@ -144,7 +144,7 @@ Switch-a-view 分为两个阶段：
 - [Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery](intra-view_and_inter-view_correlation_guided_multi-view_novel_class_discovery.md)
 - [Multi-view Gaze Target Estimation](multi-view_gaze_target_estimation.md)
 - [Neural Multi-View Self-Calibrated Photometric Stereo without Photometric Stereo Cues](neural_multi-view_self-calibrated_photometric_stereo_without_photometric_stereo_.md)
-- [Monocular Facial Appearance Capture in the Wild](monocular_facial_appearance_capture_in_the_wild.md)
 - [Understanding Co-speech Gestures in-the-wild](understanding_co-speech_gestures_in-the-wild.md)
+- [Monocular Facial Appearance Capture in the Wild](monocular_facial_appearance_capture_in_the_wild.md)
 
 <!-- RELATED:END -->

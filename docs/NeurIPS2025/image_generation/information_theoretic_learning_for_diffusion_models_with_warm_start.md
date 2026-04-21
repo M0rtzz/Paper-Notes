@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Information Theoretic Learning for Diffusion Models with Warm Start
 description: >-

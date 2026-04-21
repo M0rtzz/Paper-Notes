@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PMark: Towards Robust and Distortion-free Semantic-level Watermarking with Channel Constraints
 description: >-

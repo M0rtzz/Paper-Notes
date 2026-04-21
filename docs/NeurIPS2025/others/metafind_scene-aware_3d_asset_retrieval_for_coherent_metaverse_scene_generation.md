@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MetaFind: Scene-Aware 3D Asset Retrieval for Coherent Metaverse Scene Generation
 description: >-

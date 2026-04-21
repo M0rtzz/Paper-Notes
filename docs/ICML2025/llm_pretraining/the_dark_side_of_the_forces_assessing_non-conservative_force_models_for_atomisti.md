@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Dark Side of the Forces: Assessing Non-Conservative Force Models for Atomistic Machine Learning
 description: >-

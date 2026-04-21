@@ -139,10 +139,10 @@ $$q(\mathbf{x}_\tau|\mathbf{y}_0) \approx \mathcal{N}(\mathbf{x}_\tau; \sqrt{\ba
 
 ## 相关论文
 
+- [Uncertainty-guided Perturbation for Image Super-Resolution Diffusion Model](../../CVPR2025/image_generation/uncertainty-guided_perturbation_for_image_super-resolution_diffusion_model.md)
 - [DOVE: Efficient One-Step Diffusion Model for Real-World Video Super-Resolution](../../NeurIPS2025/image_generation/dove_efficient_one-step_diffusion_model_for_real-world_video_super-resolution.md)
+- [FaithDiff: Unleashing Diffusion Priors for Faithful Image Super-Resolution](../../CVPR2025/image_generation/faithdiff_unleashing_diffusion_priors_for_faithful_image_super-resolution.md)
 - [Image Super-Resolution with Guarantees via Conformalized Generative Models](../../NeurIPS2025/image_generation/image_super-resolution_with_guarantees_via_conformalized_generative_models.md)
 - [ScaleDiff: Higher-Resolution Image Synthesis via Efficient and Model-Agnostic Diffusion](../../NeurIPS2025/image_generation/scalediff_higher-resolution_image_synthesis_via_efficient_and_model-agnostic_dif.md)
-- [Arbitrary-Steps Image Super-Resolution via Diffusion Inversion](../../CVPR2025/image_generation/arbitrary-steps_image_super-resolution_via_diffusion_inversion.md)
-- [OmniSSR: Zero-shot Omnidirectional Image Super-Resolution using Stable Diffusion Model](../../ECCV2024/image_generation/omnissr_zero-shot_omnidirectional_image_super-resolution_using_stable_diffusion_.md)
 
 <!-- RELATED:END -->

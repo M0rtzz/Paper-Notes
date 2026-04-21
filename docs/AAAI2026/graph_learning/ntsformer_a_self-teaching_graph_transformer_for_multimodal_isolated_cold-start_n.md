@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NTSFormer: A Self-Teaching Graph Transformer for Multimodal Isolated Cold-Start Node Classification
 description: >-

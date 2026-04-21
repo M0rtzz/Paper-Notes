@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MSTAR: Box-Free Multi-Query Scene Text Retrieval with Attention Recycling
 description: >-

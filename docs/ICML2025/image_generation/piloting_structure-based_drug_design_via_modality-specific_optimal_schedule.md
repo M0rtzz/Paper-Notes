@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Piloting Structure-Based Drug Design via Modality-Specific Optimal Schedule
 description: >-

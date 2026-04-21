@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond the Golden Data: Resolving the Motion-Vision Quality Dilemma via Timestep Selective Training
 description: >-
@@ -123,7 +123,7 @@ tags:
 - [DynaVid: Learning to Generate Highly Dynamic Videos using Synthetic Motion Data](dynavid_learning_to_generate_highly_dynamic_videos_using_synthetic_motion_data.md)
 - [DMin: Scalable Training Data Influence Estimation for Diffusion Models](dmin_scalable_training_data_influence_estimation_for_diffusion_models.md)
 - [Verifier-Constrained Flow Expansion for Discovery Beyond the Data](../../ICLR2026/image_generation/verifier-constrained_flow_expansion_for_discovery_beyond_the_data.md)
-- [SPDMark: Selective Parameter Displacement for Robust Video Watermarking](spdmark_selective_parameter_displacement_for_robust_video_watermarking.md)
 - [Resolving the Identity Crisis in Text-to-Image Generation](resolving_the_identity_crisis_in_text-to-image_generation.md)
+- [SPDMark: Selective Parameter Displacement for Robust Video Watermarking](spdmark_selective_parameter_displacement_for_robust_video_watermarking.md)
 
 <!-- RELATED:END -->

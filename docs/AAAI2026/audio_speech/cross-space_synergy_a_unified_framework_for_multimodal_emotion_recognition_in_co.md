@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cross-Space Synergy: A Unified Framework for Multimodal Emotion Recognition in Conversation
 description: >-

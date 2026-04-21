@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beautiful Images, Toxic Words: Understanding and Addressing Offensive Text in Generated Images
 description: >-
@@ -131,8 +131,8 @@ $$\mathcal{L} = \|w(t) \cdot (f_\theta(I_{\text{NSFW}}(t), t, \phi(x_{\text{NSFW
 
 - [CausalCLIP: Causally-Informed Feature Disentanglement and Filtering for Generalizable Detection of Generated Images](causalclip_causally-informed_feature_disentanglement_and_filtering_for_generaliz.md)
 - [Detecting Generated Images by Fitting Natural Image Distributions](../../NeurIPS2025/image_generation/detecting_generated_images_by_fitting_natural_image_distributions.md)
+- [OpenSDI: Spotting Diffusion-Generated Images in the Open World](../../CVPR2025/image_generation/opensdi_spotting_diffusion-generated_images_in_the_open_world.md)
 - [SimLBR: Learning to Detect Fake Images by Learning to Detect Real Images](../../CVPR2026/image_generation/simlbr_learning_to_detect_fake_images_by_learning_to_detect_real_images.md)
-- [Synthetic Perception: Can Generated Images Unlock Latent Visual Prior for Text-Centric Reasoning?](../../ICML2025/image_generation/synthetic_perception_can_generated_images_unlock_latent_visual_prior_for_text-ce.md)
-- [Does Semantic Noise Initialization Transfer from Images to Videos? A Paired Diagnostic Study](../../ICLR2026/image_generation/does_semantic_noise_initialization_transfer_from_images_to_videos_a_paired_diagn.md)
+- [RewardFlow: Generate Images by Optimizing What You Reward](../../CVPR2026/image_generation/rewardflow_generate_images_by_optimizing_what_you_reward.md)
 
 <!-- RELATED:END -->

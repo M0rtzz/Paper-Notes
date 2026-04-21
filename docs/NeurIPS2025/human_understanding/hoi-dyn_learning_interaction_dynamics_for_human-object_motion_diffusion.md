@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HOI-Dyn: Learning Interaction Dynamics for Human-Object Motion Diffusion
 description: >-

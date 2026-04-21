@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DETree: DEtecting Human-AI Collaborative Texts via Tree-Structured Hierarchical Representation Learning
 description: >-
@@ -158,8 +158,8 @@ $$\mathcal{L}_{\text{TSCL}}(x;\theta) = \frac{1}{d_c} \sum_{i=0}^{d_c-1} \mathca
 
 - [CLCR: Cross-Level Semantic Collaborative Representation for Multimodal Learning](../../CVPR2026/object_detection/clcr_cross-level_semantic_collaborative_representation_for_multimodal_learning.md)
 - [Think Straight, Stop Smart: Structured Reasoning for Efficient Multi-Hop RAG](think_straight_stop_smart_structured_reasoning_for_efficient_multi-hop_rag.md)
-- [Global Context-aware Representation Learning for Spatially Resolved Transcriptomics](../../ICML2025/object_detection/global_context-aware_representation_learning_for_spatially_resolved_transcriptom.md)
-- [Self-Organizing Visual Prototypes for Non-Parametric Representation Learning](../../ICML2025/object_detection/self-organizing_visual_prototypes_for_non-parametric_representation_learning.md)
+- [Generative Modeling of Class Probability for Multi-Modal Representation Learning](../../CVPR2025/object_detection/generative_modeling_of_class_probability_for_multi-modal_representation_learning.md)
 - [Show, Don't Tell: Detecting Novel Objects by Watching Human Videos](../../CVPR2026/object_detection/show_dont_tell_detecting_novel_objects_by_watching.md)
+- [Self-Organizing Visual Prototypes for Non-Parametric Representation Learning](../../ICML2025/object_detection/self-organizing_visual_prototypes_for_non-parametric_representation_learning.md)
 
 <!-- RELATED:END -->

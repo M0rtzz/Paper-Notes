@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Token Taxes: Mitigating AGI's Economic Risks
 description: >-

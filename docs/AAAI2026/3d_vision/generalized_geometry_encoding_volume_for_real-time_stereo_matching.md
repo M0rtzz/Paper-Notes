@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generalized Geometry Encoding Volume for Real-time Stereo Matching
 description: >-

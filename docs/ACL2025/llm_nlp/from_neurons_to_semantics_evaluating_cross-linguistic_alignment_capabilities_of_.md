@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Neurons to Semantics: Evaluating Cross-Linguistic Alignment Capabilities of Large Language Models via Neurons Alignment
 description: >-

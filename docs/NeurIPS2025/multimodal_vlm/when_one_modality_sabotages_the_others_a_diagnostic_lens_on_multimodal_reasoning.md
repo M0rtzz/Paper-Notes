@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When One Modality Sabotages the Others: A Diagnostic Lens on Multimodal Reasoning
 description: >-

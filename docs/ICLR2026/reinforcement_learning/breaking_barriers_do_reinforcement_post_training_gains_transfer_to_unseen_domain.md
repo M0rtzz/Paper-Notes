@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Breaking Barriers: Do Reinforcement Post Training Gains Transfer To Unseen Domains?
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Turning Trash into Treasure: Accelerating Inference of Large Language Models with Token Recycling
 description: >-
@@ -139,6 +139,6 @@ Token Recycling 在推理过程中维护一个轻量级邻接矩阵，记录 tok
 - [The Impact of Token Granularity on the Predictive Power of Language Model Surprisal](token_granularity_impact.md)
 - [Classifying Unreliable Narrators with Large Language Models](classifying_unreliable_narrators.md)
 - [Conformity in Large Language Models](conformity_in_large_language_models.md)
-- [SConU: Selective Conformal Uncertainty in Large Language Models](sconu_selective_conformal_uncertainty_in_large_language_models.md)
+- [Nudging: Inference-time Alignment of LLMs via Guided Decoding](nudging_inference_time_alignment.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpecMER: Fast Protein Generation with K-mer Guided Speculative Decoding
 description: >-

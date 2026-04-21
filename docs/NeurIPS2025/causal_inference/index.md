@@ -1,22 +1,18 @@
 ---
 title: >-
-  NeurIPS2025 因果推理方向 24篇论文解读
+  NeurIPS2025 因果推理方向 23篇论文解读
 description: >-
-  24篇NeurIPS2025 因果推理方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  23篇NeurIPS2025 因果推理方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔗 因果推理
 
-**🧠 NeurIPS2025** · **24** 篇论文解读
+**🧠 NeurIPS2025** · **23** 篇论文解读
 
 **[A Principle of Targeted Intervention for Multi-Agent Reinforcement Learning](a_principle_of_targeted_intervention_for_multi-agent_reinforcement_learning.md)**
 
 :   提出基于多智能体影响图（MAIDs）的**目标干预范式（Targeted Intervention）**，通过仅对单个目标智能体施加**预策略干预（Pre-Strategy Intervention, PSI）**，引导整个多智能体系统收敛到满足额外期望结果的优选Nash均衡，无需对所有智能体进行全局干预。
-
-**[Alignment of Large Language Models with Constrained Learning](alignment_of_large_language_models_with_constrained_learning.md)**
-
-:   将LLM对齐建模为约束优化问题——最大化主要奖励（如有用性）同时满足次要效用约束（如安全性），提出基于拉格朗日对偶的迭代方法交替更新LLM策略和对偶变量，理论上刻画了分布空间与参数空间之间的原对偶间隙和最优性间隙，证明可以找到近最优约束LLM策略（误差仅来自参数化间隙）。
 
 **[An Analysis of Causal Effect Estimation Using Outcome Invariant Data Augmentation](an_analysis_of_causal_effect_estimation_using_outcome_invariant_data_augmentatio.md)**
 
@@ -96,7 +92,7 @@ description: >-
 
 **[Revealing Multimodal Causality with Large Language Models](revealing_multimodal_causality_with_large_language_models.md)**
 
-:   提出 MLLM-CD，首个面向多模态非结构化数据的因果发现框架，通过对比因子发现识别跨模态因果变量，结合统计因果结构推断，并利用 MLLM 的世界知识生成多模态反事实样本来迭代消除结构歧义，在合成和真实数据集上均显著优于现有方法。
+:   提出 MLLM-CD 框架，首次实现从多模态非结构化数据（文本+图像）中进行因果发现，通过对比因子发现识别因果变量、统计方法推断因果结构、迭代多模态反事实推理消除结构歧义。
 
 **[Root Cause Analysis of Outliers with Missing Structural Knowledge](root_cause_analysis_of_outliers_with_missing_structural_knowledge.md)**
 

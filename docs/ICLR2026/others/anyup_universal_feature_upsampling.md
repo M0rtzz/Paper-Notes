@@ -148,8 +148,8 @@ $$L_{\text{cos-mse}}(q', \hat{q}) = 1 - \cos(q', \hat{q}) + L^2(q', \hat{q})$$
 
 - [Computable Universal Online Learning](../../NeurIPS2025/others/computable_universal_online_learning.md)
 - [Agnostics: Learning to Synthesize Code in Any Programming Language with a Universal RL Environment](agnostics_learning_to_code_in_any_programming_language_via_reinforcement_with_a_.md)
+- [UniSpector: Towards Universal Open-set Defect Recognition via Spectral-Contrastive Visual Prompting](../../CVPR2026/others/unispector_towards_universal_open-set_defect_recognition_via_spectral-contrastiv.md)
 - [Distributionally Robust Feature Selection](../../NeurIPS2025/others/distributionally_robust_feature_selection.md)
 - [FlashMD: Long-Stride, Universal Prediction of Molecular Dynamics](../../NeurIPS2025/others/flashmd_long-stride_universal_prediction_of_molecular_dynamics.md)
-- [Feature Selection for Latent Factor Models](../../CVPR2025/others/feature_selection_for_latent_factor_models.md)
 
 <!-- RELATED:END -->

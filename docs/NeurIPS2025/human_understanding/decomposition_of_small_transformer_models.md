@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Decomposition of Small Transformer Models
 description: >-

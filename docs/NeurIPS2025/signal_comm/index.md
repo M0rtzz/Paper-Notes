@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 信号/通信方向 11篇论文解读
+  NeurIPS2025 信号/通信方向 12篇论文解读
 description: >-
-  11篇NeurIPS2025 信号/通信方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  12篇NeurIPS2025 信号/通信方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📡 信号/通信
 
-**🧠 NeurIPS2025** · **11** 篇论文解读
+**🧠 NeurIPS2025** · **12** 篇论文解读
 
 **[Angular Steering: Behavior Control via Rotation in Activation Space](angular_steering_behavior_control_via_rotation_in_activation_space.md)**
 
@@ -33,6 +33,10 @@ description: >-
 **[Estimation of Stochastic Optimal Transport Maps](estimation_of_stochastic_optimal_transport_maps.md)**
 
 :   提出适用于随机OT映射的传输误差指标 $\mathcal{E}_p$（由优化间隙与可行性间隙组成），在无需Brenier映射存在或唯一性的最小假设下，构造了计算高效的rounding估计器达到近最优收敛率 $\tilde{O}(n^{-1/(d+2p)})$，并推广至Hölder连续核与对抗污染场景，建立了首个通用OT映射估计理论。
+
+**[Feature-aware Modulation for Learning from Temporal Tabular Data](feature-aware_modulation_for_learning_from_temporal_tabular_data.md)**
+
+:   论文认为时间表格学习真正难的不是“再加一个时间 embedding”这么简单，而是很多特征的语义会随时间漂移，因此提出 feature-aware modulation，通过时间上下文动态生成每个特征的偏移、缩放与非线性形状参数，把跨时间的语义重新对齐，最终在 TabReD 上让深度模型第一次在平均排名上稳定压过 GBDT。
 
 **[Masked Symbol Modeling for Demodulation of Oversampled Baseband Communication Signals](masked_symbol_modeling_for_demodulation_of_oversampled_baseband_communication_si.md)**
 

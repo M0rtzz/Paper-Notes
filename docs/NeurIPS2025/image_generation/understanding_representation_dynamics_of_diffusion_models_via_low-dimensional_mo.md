@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Understanding Representation Dynamics of Diffusion Models via Low-Dimensional Models
 description: >-

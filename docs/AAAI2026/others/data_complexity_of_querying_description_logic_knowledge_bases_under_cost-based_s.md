@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Data Complexity of Querying Description Logic Knowledge Bases under Cost-Based Semantics
 description: >-

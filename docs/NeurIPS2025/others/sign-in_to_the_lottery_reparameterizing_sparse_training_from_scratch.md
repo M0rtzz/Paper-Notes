@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sign-In to the Lottery: Reparameterized Sparse Training from Scratch
 description: >-

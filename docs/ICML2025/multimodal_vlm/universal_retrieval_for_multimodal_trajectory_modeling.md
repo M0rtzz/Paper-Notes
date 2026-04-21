@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Universal Retrieval for Multimodal Trajectory Modeling
 description: >-

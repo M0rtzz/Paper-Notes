@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hermes: A Unified Self-Driving World Model for Simultaneous 3D Scene Understanding and Generation
 description: >-

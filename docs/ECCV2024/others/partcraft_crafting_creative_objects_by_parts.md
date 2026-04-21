@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PartCraft: Crafting Creative Objects by Parts
 description: >-
@@ -145,8 +145,8 @@ PartCraft 在 EMR（精确匹配率）上比最强基线 Break-a-Scene 高 7%，
 
 - [Articulation in Motion: Prior-Free Part Mobility Analysis for Articulated Objects](../../ICLR2026/others/articulation_in_motion_prior-free_part_mobility_analysis_for_articulated_objects.md)
 - [A Closer Look at GAN Priors: Exploiting Intermediate Features for Enhanced Model Inversion Attacks](a_closer_look_at_gan_priors_exploiting_intermediate_features.md)
-- [Wavelength-Embedding-guided Filter-Array Transformer for Spectral Demosaicing](wavelength-embedding-guided_filter-array_transformer_for_spectral_demosaicing.md)
-- [A High-Quality Robust Diffusion Framework for Corrupted Dataset](a_highquality_robust_diffusion_framework_for_corrupted_datas.md)
-- [COIN-Matting: Confounder Intervention for Image Matting](coin-matting_confounder_intervention_for_image_matting.md)
+- [Active Generation for Image Classification](active_generation_for_image_classification.md)
+- [Event-based Mosaicing Bundle Adjustment](event-based_mosaicing_bundle_adjustment.md)
+- [Dropout Mixture Low-Rank Adaptation for Visual Parameters-Efficient Fine-Tuning](dropout_mixture_low-rank_adaptation_for_visual_parameters-efficient_fine-tuning.md)
 
 <!-- RELATED:END -->

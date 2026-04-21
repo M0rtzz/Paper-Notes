@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Confidence Self-Calibration for Multi-Label Class-Incremental Learning
 description: >-

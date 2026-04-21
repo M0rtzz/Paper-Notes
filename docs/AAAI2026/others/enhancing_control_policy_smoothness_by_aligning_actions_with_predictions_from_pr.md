@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Control Policy Smoothness by Aligning Actions with Predictions from Preceding States
 description: >-

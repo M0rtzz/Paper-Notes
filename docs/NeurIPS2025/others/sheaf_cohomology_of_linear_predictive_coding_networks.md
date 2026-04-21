@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sheaf Cohomology of Linear Predictive Coding Networks
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection
 description: >-

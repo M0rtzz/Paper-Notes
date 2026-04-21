@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FSFM: A Generalizable Face Security Foundation Model via Self-Supervised Facial Representation Learning
 description: >-
@@ -129,10 +129,10 @@ FSFM 平均 AUC 比 ImageNet 监督预训练高 6.9 个点，比 MAE/DINO 等视
 
 ## 相关论文
 
+- [Sonata: Self-Supervised Learning of Reliable Point Representations](sonata_self-supervised_learning_of_reliable_point_representations.md)
 - [StruMamba3D: Exploring Structural Mamba for Self-supervised Point Cloud Representation Learning](../../ICCV2025/3d_vision/strumamba3d_exploring_structural_mamba_for_self-supervised_point_cloud_represent.md)
 - [RayZer: A Self-supervised Large View Synthesis Model](../../ICCV2025/3d_vision/rayzer_a_self-supervised_large_view_synthesis_model.md)
 - [FaceLift: Learning Generalizable Single Image 3D Face Reconstruction from Synthetic Heads](../../ICCV2025/3d_vision/facelift_learning_generalizable_single_image_3d_face_reconstruction_from_synthet.md)
 - [DEFOM-Stereo: Depth Foundation Model Based Stereo Matching](defom-stereo_depth_foundation_model_based_stereo_matching.md)
-- [GEAL: Generalizable 3D Affordance Learning with Cross-Modal Consistency](geal_generalizable_3d_affordance_learning_with_cross-modal_consistency.md)
 
 <!-- RELATED:END -->

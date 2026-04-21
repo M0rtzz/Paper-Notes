@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] People who frequently use ChatGPT for writing tasks are accurate and robust detectors of AI-generated text
 description: >-

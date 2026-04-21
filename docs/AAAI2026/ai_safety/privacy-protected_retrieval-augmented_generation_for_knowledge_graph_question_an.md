@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Privacy-protected Retrieval-Augmented Generation for Knowledge Graph Question Answering
 description: >-

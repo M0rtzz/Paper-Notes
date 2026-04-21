@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RACE Attention: A Strictly Linear-Time Attention for Long-Sequence Training
 description: >-
@@ -103,10 +103,10 @@ tags:
 
 ## 相关论文
 
-- [Linear Attention for Efficient Bidirectional Sequence Modeling](../../NeurIPS2025/llm_efficiency/linear_attention_for_efficient_bidirectional_sequence_modeling.md)
 - [xLSTM Scaling Laws: Competitive Performance with Linear Time-Complexity](xlstm_scaling_laws_competitive_performance_with_linear_time-complexity.md)
-- [Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models](understanding_and_improving_length_generalization_in_hierarchical_sparse_attenti.md)
 - [ZeroS: Zero-Sum Linear Attention for Efficient Transformers](../../NeurIPS2025/llm_efficiency/zeros_zero-sum_linear_attention_for_efficient_transformers.md)
 - [Rectifying Magnitude Neglect in Linear Attention](../../ICCV2025/llm_efficiency/rectifying_magnitude_neglect_in_linear_attention.md)
+- [Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models](understanding_and_improving_length_generalization_in_hierarchical_sparse_attenti.md)
+- [Tiled Flash Linear Attention: More Efficient Linear RNN and xLSTM Kernels](../../NeurIPS2025/llm_efficiency/tiled_flash_linear_attention_more_efficient_linear_rnn_and_xlstm_kernels.md)
 
 <!-- RELATED:END -->

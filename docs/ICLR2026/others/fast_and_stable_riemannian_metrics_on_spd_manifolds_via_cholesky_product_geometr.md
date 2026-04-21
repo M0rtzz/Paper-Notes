@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fast and Stable Riemannian Metrics on SPD Manifolds via Cholesky Product Geometry
 description: >-

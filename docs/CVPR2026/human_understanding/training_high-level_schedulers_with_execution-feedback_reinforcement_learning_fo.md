@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Training High-Level Schedulers with Execution-Feedback Reinforcement Learning for Long-Horizon GUI Automation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cross-Scale Pansharpening via ScaleFormer and the PanScale Benchmark
 description: >-

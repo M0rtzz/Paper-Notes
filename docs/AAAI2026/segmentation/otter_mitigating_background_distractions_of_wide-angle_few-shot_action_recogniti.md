@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Otter: Mitigating Background Distractions of Wide-Angle Few-Shot Action Recognition with Enhanced RWKV
 description: >-

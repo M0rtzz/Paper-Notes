@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Video-R1: Reinforcing Video Reasoning in MLLMs
 description: >-

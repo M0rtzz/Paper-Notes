@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SwiReasoning: Switch-Thinking in Latent and Explicit for Pareto-Superior Reasoning
 description: >-
@@ -161,7 +161,7 @@ Token 效率提升：
 - [Efficient Reasoning with Balanced Thinking](efficient_reasoning_with_balanced_thinking.md)
 - [A State-Transition Framework for Efficient LLM Reasoning](a_state-transition_framework_for_efficient_llm_reasoning.md)
 - [BeyondBench: Contamination-Resistant Evaluation of Reasoning in Language Models](beyondbench_contamination-resistant_evaluation_of_reasoning_in_language_models.md)
-- [ACPBench Hard: Unrestrained Reasoning about Action, Change, and Planning](acpbench_hard_unrestrained_reasoning_about_action_change_and_planning.md)
 - [ParoQuant: Pairwise Rotation Quantization for Efficient Reasoning LLM Inference](paroquant_pairwise_rotation_quantization_for_efficient_reasoning_llm_inference.md)
+- [Landscape of Thoughts: Visualizing the Reasoning Process of Large Language Models](landscape_of_thoughts_visualizing_the_reasoning_process_of_large_language_models.md)
 
 <!-- RELATED:END -->

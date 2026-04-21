@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] One Token Embedding Is Enough to Deadlock Your Large Reasoning Model
 description: >-
@@ -115,7 +115,7 @@ Deadlock Attack 分两阶段：**Phase 1** — 在连续 embedding 空间中优�
 - [Unlocking Multimodal Mathematical Reasoning via Process Reward Model](unlocking_multimodal_mathematical_reasoning_via_process_reward_model.md)
 - [Why is Your Language Model a Poor Implicit Reward Model?](../../ICLR2026/llm_reasoning/why_is_your_language_model_a_poor_implicit_reward_model.md)
 - [ARM: Adaptive Reasoning Model](arm_adaptive_reasoning_model.md)
-- [Many LLMs Are More Utilitarian Than One](many_llms_are_more_utilitarian_than_one.md)
 - [The Impact of Quantization on Large Reasoning Model Reinforcement Learning](the_impact_of_quantization_on_large_reasoning_model_reinforcement_learning.md)
+- [Many LLMs Are More Utilitarian Than One](many_llms_are_more_utilitarian_than_one.md)
 
 <!-- RELATED:END -->

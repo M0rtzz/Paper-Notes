@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Banana100: Breaking NR-IQA Metrics by 100 Iterative Image Replications with Nano Banana Pro
 description: >-
@@ -141,10 +141,10 @@ Banana100 通过让 Nano Banana Pro 迭代复制图像 100 次来系统性研究
 
 ## 相关论文
 
+- [EMMA: Concept Erasure Benchmark with Comprehensive Semantic Metrics and Diverse Categories](emma_concept_erasure_benchmark_with_comprehensive_semantic_metrics_and_diverse_c.md)
 - [ReNoise: Real Image Inversion Through Iterative Noising](../../ECCV2024/image_generation/renoise_real_image_inversion_through_iterative_noising.md)
 - [Evaluating the Evaluators: Metrics for Compositional Text-to-Image Generation](../../NeurIPS2025/image_generation/evaluating_the_evaluators_metrics_for_compositional_text-to-image_generation.md)
-- [Test-Time Iterative Error Correction for Efficient Diffusion Models](../../ICLR2026/image_generation/test-time_iterative_error_correction_for_efficient_diffusion_models.md)
 - [Breaking the Modality Barrier: Generative Modeling for Accurate Molecule Retrieval from Mass Spectra](../../AAAI2026/image_generation/breaking_the_modality_barrier_generative_modeling_for_accurate_molecule_retrieva.md)
-- [Equivariant Flow Matching for Symmetry-Breaking Bifurcation Problems](../../NeurIPS2025/image_generation/equivariant_flow_matching_for_symmetry-breaking_bifurcation_problems.md)
+- [Test-Time Iterative Error Correction for Efficient Diffusion Models](../../ICLR2026/image_generation/test-time_iterative_error_correction_for_efficient_diffusion_models.md)
 
 <!-- RELATED:END -->

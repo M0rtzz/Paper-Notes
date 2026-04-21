@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ViSpec: Accelerating Vision-Language Models with Vision-Aware Speculative Decoding
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BAH Dataset for Ambivalence/Hesitancy Recognition in Videos for Digital Behaviour Analysis
 description: >-

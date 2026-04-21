@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SR-LLM: Rethinking the Structured Representation in Large Language Model
 description: >-

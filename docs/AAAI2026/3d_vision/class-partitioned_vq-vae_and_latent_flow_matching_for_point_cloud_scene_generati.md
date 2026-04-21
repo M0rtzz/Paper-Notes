@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Class-Partitioned VQ-VAE and Latent Flow Matching for Point Cloud Scene Generation
 description: >-

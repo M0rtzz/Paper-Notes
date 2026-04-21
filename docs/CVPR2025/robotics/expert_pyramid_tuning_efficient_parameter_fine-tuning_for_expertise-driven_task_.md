@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Expert Pyramid Tuning: Efficient Parameter Fine-Tuning for Expertise-Driven Task Allocation
 description: >-
@@ -161,9 +161,9 @@ EPT 的整体架构类似参数金字塔，由三个核心组件构成：
 ## 相关论文
 
 - [Phoenix: A Motion-based Self-Reflection Framework for Fine-grained Robotic Action Correction](phoenix_a_motion-based_self-reflection_framework_for_fine-grained_robotic_action.md)
-- [A Data-Centric Revisit of Pre-Trained Vision Models for Robot Learning](a_data-centric_revisit_of_pre-trained_vision_models_for_robot_learning.md)
-- [Let Humanoids Hike! Integrative Skill Development on Complex Trails](let_humanoids_hike_integrative_skill_development_on_complex_trails.md)
+- [Robotic Visual Instruction](robotic_visual_instruction.md)
 - [Towards Long-Horizon Vision-Language Navigation: Platform, Benchmark and Method](towards_long-horizon_vision-language_navigation_platform_benchmark_and_method.md)
-- [3D-MVP: 3D Multiview Pretraining for Robotic Manipulation](3d-mvp_3d_multiview_pretraining_for_manipulation.md)
+- [A Data-Centric Revisit of Pre-Trained Vision Models for Robot Learning](a_data-centric_revisit_of_pre-trained_vision_models_for_robot_learning.md)
+- [Instruction-based Image Manipulation by Watching How Things Move](instruction-based_image_manipulation_by_watching_how_things_move.md)
 
 <!-- RELATED:END -->

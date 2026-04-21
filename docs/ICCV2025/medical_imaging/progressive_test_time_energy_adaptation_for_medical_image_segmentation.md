@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Progressive Test Time Energy Adaptation for Medical Image Segmentation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Safety Alignment Can Be Not Superficial With Explicit Safety Signals
 description: >-

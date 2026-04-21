@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spectra 1.1: Scaling Laws and Efficient Inference for Ternary Language Models
 description: >-

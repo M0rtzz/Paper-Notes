@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields
 description: >-
-  [CVPR 2025][face editing] 提出 FFaceNeRF，通过几何适配器和三平面特征注入实现 few-shot（10 张样本）的 NeRF 面部编辑，支持自定义分割 mask 布局，突破了现有方法依赖固定 mask 的限制。
+  [CVPR 2025][医学图像][face editing] 提出 FFaceNeRF，一种基于 NeRF 的面部编辑方法，通过几何适配器（geometry adapter）+ 三平面特征注入 + 潜码混合增强（LMTA），仅需 10 张标注样本即可适配到任意自定义分割 mask 布局，实现灵活的 3D 感知面部编辑。
 tags:
   - CVPR 2025
+  - 医学图像
   - face editing
   - NeRF
-  - few-shot learning
-  - segmentation mask
-  - tri-plane
+  - few-shot
+  - geometry adapter
+  - tri-plane augmentation
+  - mask layout adaptation
 ---
 
 # FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields
@@ -139,9 +141,9 @@ tags:
 ## 相关论文
 
 - [Few-Shot Personalized Scanpath Prediction](few-shot_personalized_scanpath_prediction.md)
+- [UniVAD: A Training-free Unified Model for Few-shot Visual Anomaly Detection](univad_a_training-free_unified_model_for_few-shot_visual_anomaly_detection.md)
 - [Unified All-Atom Molecule Generation with Neural Fields](../../NeurIPS2025/medical_imaging/unified_all-atom_molecule_generation_with_neural_fields.md)
 - [MoEdit: On Learning Quantity Perception for Multi-Object Image Editing](moedit_on_learning_quantity_perception_for_multi-object_image_editing.md)
 - [NePhi: Neural Deformation Fields for Approximately Diffeomorphic Medical Image Registration](../../ECCV2024/medical_imaging/textttnephi_neural_deformation_fields_for_approximately_diff.md)
-- [Dual Distillation for Few-Shot Anomaly Detection](../../ICLR2026/medical_imaging/dual_distillation_for_few-shot_anomaly_detection.md)
 
 <!-- RELATED:END -->

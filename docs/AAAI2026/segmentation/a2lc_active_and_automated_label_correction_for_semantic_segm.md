@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A²LC: Active and Automated Label Correction for Semantic Segmentation
 description: >-

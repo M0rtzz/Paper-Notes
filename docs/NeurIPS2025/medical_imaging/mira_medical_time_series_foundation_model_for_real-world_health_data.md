@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MIRA: Medical Time Series Foundation Model for Real-World Health Data
 description: >-

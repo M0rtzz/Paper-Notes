@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MaterialRefGS: Reflective Gaussian Splatting with Multi-view Consistent Material Inference
 description: >-

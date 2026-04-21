@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Encoding and Understanding Astrophysical Information in Large Language Model-Generated Summaries
 description: >-

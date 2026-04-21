@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CruxEval-X: A Benchmark for Multilingual Code Reasoning, Understanding and Execution
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DanmakuTPPBench: A Multi-modal Benchmark for Temporal Point Process Modeling and Understanding
 description: >-
@@ -127,7 +127,7 @@ DanmakuTPPBench包含两个互补组件：(1) DanmakuTPP-Events——面向经�
 - [FinMME: Benchmark Dataset for Financial Multi-Modal Reasoning Evaluation](../../ACL2025/multimodal_vlm/finmme_benchmark_dataset_for_financial_multi-modal_reasoning_evaluation.md)
 - [VideoFusion: A Spatio-Temporal Collaborative Network for Multi-modal Video Fusion](../../CVPR2026/multimodal_vlm/videofusion_a_spatiotemporal_collaborative_network.md)
 - [MMMU-Pro: A More Robust Multi-discipline Multimodal Understanding Benchmark](../../ACL2025/multimodal_vlm/mmmu_pro_robust_benchmark.md)
-- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
 - [REAL-MM-RAG: A Real-World Multi-Modal Retrieval Benchmark](../../ACL2025/multimodal_vlm/real-mm-rag_a_real-world_multi-modal_retrieval_benchmark.md)
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
 
 <!-- RELATED:END -->

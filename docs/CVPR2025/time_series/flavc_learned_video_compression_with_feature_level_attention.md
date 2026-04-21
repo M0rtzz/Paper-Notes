@@ -1,14 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] FLAVC: Learned Video Compression with Feature Level Attention
 description: >-
-  [CVPR 2025][视频压缩][特征注意力] 提出特征级注意力机制用于学习型视频压缩，在特征域中高效利用时空冗余
+  [CVPR 2025][时间序列][学习型视频压缩] 提出 FLAVC，在学习型视频压缩框架中引入特征级注意力机制，在特征域（而非像素域）中更高效地利用运动估计和时空上下文信息。
 tags:
   - CVPR 2025
-  - 视频压缩
+  - 时间序列
+  - 学习型视频压缩
   - 特征级注意力
-  - 神经视频编码
-  - 运动补偿
+  - 运动估计
+  - 上下文编码
 ---
 
 # FLAVC: Learned Video Compression with Feature Level Attention

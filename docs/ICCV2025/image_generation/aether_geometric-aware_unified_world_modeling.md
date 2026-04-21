@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Aether: Geometric-Aware Unified World Modeling
 description: >-
@@ -161,6 +161,6 @@ Aether 基于 CogVideoX-5b-I2V 进行后训练（post-training）。模型的目
 - [Long-Context State-Space Video World Models](long-context_state-space_video_world_models.md)
 - [A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation](a0_an_affordance-aware_hierarchical_model_for_general_robotic_manipulation.md)
 - [Generative Modeling of Shape-Dependent Self-Contact Human Poses](generative_modeling_of_shape-dependent_self-contact_human_poses.md)
-- [Domain Generalizable Portrait Style Transfer](domain_generalizable_portrait_style_transfer.md)
+- [Unified Uncertainty-Aware Diffusion for Multi-Agent Trajectory Modeling](../../CVPR2025/image_generation/unified_uncertainty-aware_diffusion_for_multi-agent_trajectory_modeling.md)
 
 <!-- RELATED:END -->

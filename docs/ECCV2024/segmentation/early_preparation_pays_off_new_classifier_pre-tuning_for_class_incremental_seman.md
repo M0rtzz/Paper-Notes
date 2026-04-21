@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Early Preparation Pays Off: New Classifier Pre-tuning for Class Incremental Semantic Segmentation
 description: >-

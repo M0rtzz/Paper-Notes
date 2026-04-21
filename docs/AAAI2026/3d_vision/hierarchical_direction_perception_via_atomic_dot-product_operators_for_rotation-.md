@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hierarchical Direction Perception via Atomic Dot-Product Operators for Rotation-Invariant Point Clouds Learning
 description: >-

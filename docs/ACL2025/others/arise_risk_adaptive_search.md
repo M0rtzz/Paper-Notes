@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ARise: Towards Knowledge-Augmented Reasoning via Risk-Adaptive Search
 description: >-

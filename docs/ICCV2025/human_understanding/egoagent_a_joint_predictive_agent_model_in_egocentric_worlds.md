@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EgoAgent: A Joint Predictive Agent Model in Egocentric Worlds
 description: >-

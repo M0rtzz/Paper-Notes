@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MExD: An Expert-Infused Diffusion Model for Whole-Slide Image Classification
 description: >-

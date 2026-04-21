@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RS-vHeat: Heat Conduction Guided Efficient Remote Sensing Foundation Model
 description: >-

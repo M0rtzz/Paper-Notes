@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GENIUS: A Generative Framework for Universal Multimodal Search
 description: >-
@@ -122,7 +122,7 @@ tags:
 - [Generalized Contrastive Learning for Universal Multimodal Retrieval](../../NeurIPS2025/information_retrieval/generalized_contrastive_learning_for_universal_multimodal_re.md)
 - [OneRestore: A Universal Restoration Framework for Composite Degradation](../../ECCV2024/information_retrieval/onerestore_a_universal_restoration_framework_for_composite_degradation.md)
 - [CART: A Generative Cross-Modal Retrieval Framework with Coarse-To-Fine Semantic Modeling](../../ACL2025/information_retrieval/cart_a_generative_cross-modal_retrieval_framework_with_coarse-to-fine_semantic_m.md)
+- [LotusFilter: Fast Diverse Nearest Neighbor Search via a Learned Cutoff Table](lotusfilter_fast_diverse_nearest_neighbor_search_via_a_learned_cutoff_table.md)
 - [LamRA: Large Multimodal Model as Your Advanced Retrieval Assistant](lamra_large_multimodal_model_as_your_advanced_retrieval_assistant.md)
-- [On Synthetic Data Strategies for Domain-Specific Generative Retrieval](../../ACL2025/information_retrieval/on_synthetic_data_strategies_for_domain-specific_generative_retrieval.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Designing Cyclic Peptides via Harmonic SDE with Atom-Bond Modeling
 description: >-

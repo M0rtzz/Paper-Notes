@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Quantum Algorithms for Finite-horizon Markov Decision Processes
 description: >-

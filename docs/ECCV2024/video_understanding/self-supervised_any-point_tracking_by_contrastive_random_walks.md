@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-Supervised Any-Point Tracking by Contrastive Random Walks
 description: >-

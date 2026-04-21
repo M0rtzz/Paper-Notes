@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AnyI2V: Animating Any Conditional Image with Motion Control
 description: >-

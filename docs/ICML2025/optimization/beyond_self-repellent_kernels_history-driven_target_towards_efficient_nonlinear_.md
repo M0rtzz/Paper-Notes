@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Self-Repellent Kernels: History-Driven Target Towards Efficient Nonlinear MCMC on General Graphs
 description: >-
@@ -180,6 +180,6 @@ $$\hat{x}_j = \tilde{\mu}_j \cdot |\bar{\mathcal{N}}(i) \cap \mathcal{C}|^{-1} \
 - [GHOST: Solving the Traveling Salesman Problem on Graphs of Convex Sets](../../AAAI2026/optimization/ghost_solving_the_traveling_salesman_problem_on_graphs_of_convex_sets.md)
 - [Test-Time Meta-Adaptation with Self-Synthesis](../../ICLR2026/optimization/test-time_meta-adaptation_with_self-synthesis.md)
 - [A Theoretical Study on Bridging Internal Probability and Self-Consistency for LLM Reasoning](../../NeurIPS2025/optimization/a_theoretical_study_on_bridging_internal_probability_and_sel.md)
-- [Efficient Adaptive Federated Optimization](../../NeurIPS2025/optimization/efficient_adaptive_federated_optimization.md)
+- [Beyond Õ(√T) Constraint Violation for Online Convex Optimization with Adversarial Constraints](../../NeurIPS2025/optimization/beyond_tildeosqrtt_constraint_violation_for_online_convex_optimization_with_adve.md)
 
 <!-- RELATED:END -->

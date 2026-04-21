@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Non-Asymptotic Analysis of Efficiency in Conformalized Regression
 description: >-
@@ -139,8 +139,8 @@ tags:
 ## 相关论文
 
 - [A Convergence Analysis of Adaptive Optimizers under Floating-Point Quantization](a_convergence_analysis_of_adaptive_optimizers_under_floating-point_quantization.md)
-- [Scaling Laws of SignSGD in Linear Regression: When Does It Outperform SGD?](scaling_laws_of_signsgd_in_linear_regression_when_does_it_outperform_sgd.md)
 - [RS-ORT: A Reduced-Space Branch-and-Bound Algorithm for Optimal Regression Trees](rs-ort_a_reduced-space_branch-and-bound_algorithm_for_optimal_regression_trees.md)
+- [Scaling Laws of SignSGD in Linear Regression: When Does It Outperform SGD?](scaling_laws_of_signsgd_in_linear_regression_when_does_it_outperform_sgd.md)
 - [Kernel Learning with Adversarial Features: Numerical Efficiency and Adaptive Regularization](../../NeurIPS2025/optimization/kernel_learning_with_adversarial_features_numerical_efficiency_and_adaptive_regu.md)
 - [Non-Stationary Bandit Convex Optimization: A Comprehensive Study](../../NeurIPS2025/optimization/non-stationary_bandit_convex_optimization_a_comprehensive_study.md)
 

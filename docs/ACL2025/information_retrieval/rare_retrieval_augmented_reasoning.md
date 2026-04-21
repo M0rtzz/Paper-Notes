@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RARE: Retrieval-Augmented Reasoning Enhancement for Large Language Models
 description: >-

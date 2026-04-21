@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GKD: Generalizable Knowledge Distillation from Vision Foundation Models for Semantic Segmentation
 description: >-

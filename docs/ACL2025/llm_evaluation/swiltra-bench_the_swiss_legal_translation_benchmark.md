@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SwiLTra-Bench: The Swiss Legal Translation Benchmark
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Position: The Future of Bayesian Prediction Is Prior-Fitted
 description: >-
@@ -168,6 +168,6 @@ PFN 的核心流程分为两个阶段：
 - [Density Ratio Estimation-based Bayesian Optimization with Semi-Supervised Learning](density_ratio_estimation-based_bayesian_optimization_with_semi-supervised_learni.md)
 - [Pre-Training Curriculum for Multi-Token Prediction in Language Models](../../ACL2025/llm_pretraining/pre-training_curriculum_for_multi-token_prediction_in_language_models.md)
 - [PRESCRIBE: Predicting Single-Cell Responses with Bayesian Estimation](../../NeurIPS2025/llm_pretraining/prescribe_predicting_single-cell_responses_with_bayesian_estimation.md)
-- [Algebra Unveils Deep Learning -- An Invitation to Neuroalgebraic Geometry](algebra_unveils_deep_learning_--_an_invitation_to_neuroalgebraic_geometry.md)
+- [Language Models over Canonical Byte-Pair Encodings](language_models_over_canonical_byte-pair_encodings.md)
 
 <!-- RELATED:END -->

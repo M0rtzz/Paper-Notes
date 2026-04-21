@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HiFICL: High-Fidelity In-Context Learning for Multimodal Tasks
 description: >-
@@ -137,6 +137,6 @@ tags:
 - [Context-Aware Multimodal Pretraining](context-aware_multimodal_pretraining.md)
 - [Cropper: Vision-Language Model for Image Cropping through In-Context Learning](cropper_vision-language_model_for_image_cropping_through_in-context_learning.md)
 - [DynRefer: Delving into Region-level Multimodal Tasks via Dynamic Resolution](dynrefer_delving_into_region-level_multimodal_tasks_via_dynamic_resolution.md)
-- [Identifying and Mitigating Position Bias of Multi-image Vision-Language Models](identifying_and_mitigating_position_bias_of_multi-image_vision-language_models.md)
+- [CleanSight: Test-Time Attention Purification for Backdoored Large Vision Language Models](test-time_attention_purification_for_backdoored_large_vision_language_models.md)
 
 <!-- RELATED:END -->

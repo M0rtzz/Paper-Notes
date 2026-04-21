@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Ada3Drift: Adaptive Training-Time Drifting for One-Step 3D Visuomotor Robotic Manipulation
 description: >-
@@ -142,6 +142,6 @@ $$\mathcal{L} = (1 - w_{\text{drift}}) \cdot \mathcal{L}_{\text{MLE}} + w_{\text
 - [Easy3E: Feed-Forward 3D Asset Editing via Rectified Voxel Flow](easy3e_feed-forward_3d_asset_editing_via_rectified_voxel_flow.md)
 - [tttLRM: Test-Time Training for Long Context and Autoregressive 3D Reconstruction](tttlrm_test-time_training_for_long_context_and_autoregressive_3d_reconstruction.md)
 - [GeodesicNVS: Probability Density Geodesic Flow Matching for Novel View Synthesis](geodesicnvs_probability_density_geodesic_flow_matching_for_novel_view_synthesis.md)
-- [SonoWorld: From One Image to a 3D Audio-Visual Scene](sonoworld_from_one_image_to_a_3d_audio-visual_scene.md)
+- [Real2Edit2Real: Generating Robotic Demonstrations via a 3D Control Interface](real2edit2real_generating_robotic_demonstrations_via_a_3d_control_interface.md)
 
 <!-- RELATED:END -->

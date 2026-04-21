@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] O3N: Omnidirectional Open-Vocabulary Occupancy Prediction
 description: >-

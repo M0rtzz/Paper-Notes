@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Constructive Distortion: Improving MLLMs with Attention-Guided Image Warping
 description: >-

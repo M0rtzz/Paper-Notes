@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Federated CLIP for Resource-Efficient Heterogeneous Medical Image Classification
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VeCoR — Velocity Contrastive Regularization for Flow Matching
 description: >-

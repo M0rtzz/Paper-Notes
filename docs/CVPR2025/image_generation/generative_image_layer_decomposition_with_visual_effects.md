@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generative Image Layer Decomposition with Visual Effects
 description: >-
@@ -123,6 +123,6 @@ LayerDecomp 基于 Diffusion Transformer (DiT，50亿参数) 构建。输入为�
 - [Improving Editability in Image Generation with Layer-wise Memory](improving_editability_in_image_generation_with_layer-wise_memory.md)
 - [Referring Layer Decomposition](../../ICLR2026/image_generation/referring_layer_decomposition.md)
 - [Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
-- [Generative Photomontage](generative_photomontage.md)
+- [Visual Lexicon: Rich Image Features in Language Space](visual_lexicon_rich_image_features_in_language_space.md)
 
 <!-- RELATED:END -->

@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] DACoN: DINO for Anime Paint Bucket Colorization with Any Number of Reference Images
 description: >-
-  [ICCV 2025][视频理解][动画上色] 提出DACoN，利用DINOv2基础模型的语义特征与U-Net的高分辨率空间特征融合，实现支持任意数量参考图像的动画线稿自动上色，在关键帧和连续帧上色任务中均超越现有方法。
+  [ICCV 2025][动画上色] 提出DACoN，利用DINOv2基础模型的语义特征与U-Net的高分辨率空间特征融合，实现支持任意数量参考图像的动画线稿自动上色，在关键帧和连续帧上色任务中均超越现有方法。
 tags:
   - ICCV 2025
-  - 视频理解
   - 动画上色
   - DINOv2
   - 线稿着色
@@ -152,8 +151,8 @@ $$\mathcal{L}_{dc} = \frac{1}{MN} \sum_{m,n} |\hat{S}_{m,n} - \hat{S}'_{m,n}|$$
 
 - [DIVE: Taming DINO for Subject-Driven Video Editing](dive_taming_dino_for_subject-driven_video_editing.md)
 - [Rethinking Position Embedding as a Context Controller for Multi-Reference and Multi-Shot Video Generation](../../CVPR2026/video_generation/rethinking_position_embedding_as_a_context_controller_for_multi-reference_and_mu.md)
-- [DreamRelation: Relation-Centric Video Customization](dreamrelation_relation-centric_video_customization.md)
-- [DualReal: Adaptive Joint Training for Lossless Identity-Motion Fusion in Video Customization](dualreal_adaptive_joint_training_for_lossless_identity-motion_fusion_in_video_cu.md)
-- [SweetTok: Semantic-Aware Spatial-Temporal Tokenizer for Compact Video Discretization](sweettok_semantic-aware_spatial-temporal_tokenizer_for_compact_video_discretizat.md)
+- [AID: Adapting Image2Video Diffusion Models for Instruction-guided Video Prediction](aid_adapting_image2video_diffusion_models_for_instruction-guided_video_predictio.md)
+- [Dual-Expert Consistency Model for Efficient and High-Quality Video Generation](dual-expert_consistency_model_for_efficient_and_high-quality_video_generation.md)
+- [WorldScore: A Unified Evaluation Benchmark for World Generation](worldscore_a_unified_evaluation_benchmark_for_world_generation.md)
 
 <!-- RELATED:END -->

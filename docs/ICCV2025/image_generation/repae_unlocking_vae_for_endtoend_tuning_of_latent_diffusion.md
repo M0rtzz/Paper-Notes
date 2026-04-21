@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] REPA-E: Unlocking VAE for End-to-End Tuning of Latent Diffusion Transformers
 description: >-

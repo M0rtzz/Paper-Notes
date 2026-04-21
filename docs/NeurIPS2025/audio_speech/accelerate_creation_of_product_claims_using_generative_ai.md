@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Accelerate Creation of Product Claims Using Generative AI
 description: >-

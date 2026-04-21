@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gödel Agent: A Self-Referential Agent Framework for Recursive Self-Improvement
 description: >-

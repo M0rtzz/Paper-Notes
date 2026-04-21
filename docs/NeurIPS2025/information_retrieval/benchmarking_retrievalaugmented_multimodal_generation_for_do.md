@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Benchmarking Retrieval-Augmented Multimodal Generation for Document Question Answering
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Far from the Shallow: Brain-Predictive Reasoning Embedding through Residual Disentanglement
 description: >-

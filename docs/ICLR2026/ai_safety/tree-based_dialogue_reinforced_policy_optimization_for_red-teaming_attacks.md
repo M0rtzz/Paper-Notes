@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tree-based Dialogue Reinforced Policy Optimization for Red-Teaming Attacks (DialTree)
 description: >-

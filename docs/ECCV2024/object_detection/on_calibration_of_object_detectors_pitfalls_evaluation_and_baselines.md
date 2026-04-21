@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] On Calibration of Object Detectors: Pitfalls, Evaluation and Baselines
 description: >-
-  [ECCV 2024][目标检测] 揭示目标检测器校准评估中的缺陷，提出基于Platt Scaling和Isotonic Regression的后处理校准方法，大幅超越训练时校准方法
+  [ECCV 2024 (Oral)][目标检测][目标检测校准] 本文系统性地揭示了当前目标检测器校准研究中评估框架、评估指标和温度缩放（Temperature Scaling）使用方面的重大缺陷，提出了原则性的联合评估框架以及专为目标检测定制的后处理校准方法（Platt Scaling和Isotonic Regression），证明了正确设计和评估的后处理校准器远优于近期训练时校准方法。
 tags:
-  - ECCV 2024
+  - ECCV 2024 (Oral)
   - 目标检测
-  - 模型校准
+  - 目标检测校准
   - 后处理校准
-  - 评估框架
+  - D-ECE
+  - Platt Scaling
+  - Isotonic Regression
 ---
 
 # On Calibration of Object Detectors: Pitfalls, Evaluation and Baselines
@@ -137,6 +139,6 @@ tags:
 - [Revisiting Adversarial Patch Defenses on Object Detectors: Unified Evaluation, Large-Scale Dataset, and New Insights](../../ICCV2025/object_detection/revisiting_adversarial_patch_defenses_on_object_detectors_unified_evaluation_lar.md)
 - [Automated Model Evaluation for Object Detection via Prediction Consistency and Reliability](../../ICCV2025/object_detection/automated_model_evaluation_for_object_detection_via_prediction_consistency_and_r.md)
 - [Visual Modality Prompt for Adapting Vision-Language Object Detectors](../../ICCV2025/object_detection/visual_modality_prompt_for_adapting_vision-language_object_detectors.md)
-- [Rectify the Regression Bias in Long-Tailed Object Detection](rectify_the_regression_bias_in_long-tailed_object_detection.md)
+- [Traceable Evidence Enhanced Visual Grounded Reasoning: Evaluation and Method](../../ICLR2026/object_detection/traceable_evidence_enhanced_visual_grounded_reasoning_evaluation_and_methodology.md)
 
 <!-- RELATED:END -->

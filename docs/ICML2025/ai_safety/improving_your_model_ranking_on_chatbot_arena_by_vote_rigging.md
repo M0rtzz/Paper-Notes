@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving Your Model Ranking on Chatbot Arena by Vote Rigging
 description: >-

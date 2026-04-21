@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] MagicQuill: An Intelligent Interactive Image Editing System
 description: >-
-  [CVPR 2025][image editing] 提出基于笔触的智能交互式图像编辑系统，通过双分支扩散插件实现边缘+颜色精细控制，多模态大模型实时猜测用户编辑意图免手动输入prompt。
+  [CVPR 2025][图像生成][image editing] 提出 MagicQuill 智能交互式图像编辑系统，用三种笔触（添加/减去/颜色）表达编辑意图，双分支扩散插件（inpainting + control）实现边缘和颜色的精细控制，MLLM 实时猜测意图自动生成 prompt，形成无需手动输入文字的连续编辑工作流。
 tags:
   - CVPR 2025
+  - 图像生成
   - image editing
   - interactive system
-  - diffusion model
+  - brushstroke control
+  - 扩散模型
   - MLLM
-  - brushstroke
+  - "Draw&Guess"
 ---
 
 # MagicQuill: An Intelligent Interactive Image Editing System
@@ -143,8 +145,8 @@ tags:
 
 - [InsightEdit: Towards Better Instruction Following for Image Editing](insightedit_towards_better_instruction_following_for_image_editing.md)
 - [Lazy Diffusion Transformer for Interactive Image Editing](../../ECCV2024/image_generation/lazy_diffusion_transformer_for_interactive_image_editing.md)
+- [SemanticDraw: Towards Real-Time Interactive Content Creation from Image Diffusion](semanticdraw_towards_real-time_interactive_content_creation_from_image_diffusion.md)
+- [WeGen: A Unified Model for Interactive Multimodal Generation as We Chat](wegen_a_unified_model_for_interactive_multimodal_generation_as_we_chat.md)
 - [DreamOmni: Unified Image Generation and Editing](dreamomni_unified_image_generation_and_editing.md)
-- [Trust Your Critic: Robust Reward Modeling and Reinforcement Learning for Faithful Image Editing and Generation](trust_your_critic_robust_reward_modeling_and_reinforcement_learning_for_faithful.md)
-- [Concept Lancet: Image Editing with Compositional Representation Transplant](concept_lancet_image_editing_with_compositional_representation_transplant.md)
 
 <!-- RELATED:END -->

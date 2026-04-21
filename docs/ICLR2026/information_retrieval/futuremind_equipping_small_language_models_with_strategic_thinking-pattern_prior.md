@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FutureMind: Equipping Small Language Models with Strategic Thinking-Pattern Priors via Adaptive Knowledge Distillation
 description: >-

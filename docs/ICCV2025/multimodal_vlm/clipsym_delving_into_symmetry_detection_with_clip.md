@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CLIPSym: Delving into Symmetry Detection with CLIP
 description: >-

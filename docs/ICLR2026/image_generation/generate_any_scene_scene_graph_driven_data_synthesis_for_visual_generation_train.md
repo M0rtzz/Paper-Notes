@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generate Any Scene: Scene Graph Driven Data Synthesis for Visual Generation Training
 description: >-
@@ -121,7 +121,7 @@ RLHF 奖励模型对比（SimpleAR-0.5B）：
 - 自我改进依赖 VQAScore 作为选择信号，但 VQAScore 本身可能对某些组合有盲区
 - 定向蒸馏依赖闭源教师模型（DALL-E 3），在教师模型也弱的领域无法补足
 - 场景图的组合虽然系统但仍受限于分类法的覆盖范围——28K 物体无法涵盖所有视觉概念
-- 内容审核实验规模较小（5K 图像），更大规模的验证有待补充
+- 内容审核实验规模较小（5K 图像），更大规模的验证仍需进一步展开
 - 未探索将场景图引擎应用于视频生成的训练数据增强
 
 ## 相关工作与启发
@@ -135,3 +135,15 @@ RLHF 奖励模型对比（SimpleAR-0.5B）：
 - 实验充分度: ⭐⭐⭐⭐ 四种应用场景均有量化验证，含组合泛化测试
 - 写作质量: ⭐⭐⭐⭐ 系统结构清晰，pipeline描述详尽
 - 价值: ⭐⭐⭐⭐⭐ data-centric范式对T2I训练有重要启示，定向蒸馏策略实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Consistent Text-to-Image Generation via Scene De-Contextualization](consistent_text-to-image_generation_via_scene_de-contextualization.md)
+- [EchoScene: Indoor Scene Generation via Information Echo over Scene Graph Diffusion](../../ECCV2024/image_generation/echoscene_indoor_scene_generation_via_information_echo_over_scene_graph_diffusio.md)
+- [Mutual Learning for Acoustic Matching and Dereverberation via Visual Scene-driven Diffusion](../../ECCV2024/image_generation/mutual_learning_for_acoustic_matching_and_dereverberation_via_visual_scene-drive.md)
+- [SceneDecorator: Towards Scene-Oriented Story Generation with Scene Planning and Scene Consistency](../../NeurIPS2025/image_generation/scenedecorator_towards_scene-oriented_story_generation_with_scene_planning_and_s.md)
+- [Lay-Your-Scene: Natural Scene Layout Generation with Diffusion Transformers](../../ICCV2025/image_generation/lay-your-scene_natural_scene_layout_generation_with_diffusion_transformers.md)
+
+<!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bootstrapping MLLM for Weakly-Supervised Class-Agnostic Object Counting (WS-COC)
 description: >-

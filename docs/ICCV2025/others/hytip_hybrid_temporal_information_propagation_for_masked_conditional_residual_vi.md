@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HyTIP: Hybrid Temporal Information Propagation for Masked Conditional Residual Video Coding
 description: >-

@@ -138,6 +138,6 @@ $$\mathbf{X} = \text{softmax}\left(\mathbf{M} + \frac{\mathbf{Q}\mathbf{K}^T}{\s
 - [StreamDiffusion: A Pipeline-level Solution for Real-time Interactive Generation](streamdiffusion_a_pipeline-level_solution_for_real-time_interactive_generation.md)
 - [MotionDiff: Training-Free Zero-Shot Interactive Motion Editing via Flow-Assisted Multi-View Diffusion](motiondiff_training-free_zero-shot_interactive_motion_editing_via_flow-assisted_.md)
 - [Lazy Diffusion Transformer for Interactive Image Editing](../../ECCV2024/image_generation/lazy_diffusion_transformer_for_interactive_image_editing.md)
-- [MagicQuill: An Intelligent Interactive Image Editing System](../../CVPR2025/image_generation/magicquill_an_intelligent_interactive_image_editing_system.md)
+- [SemanticDraw: Towards Real-Time Interactive Content Creation from Image Diffusion](../../CVPR2025/image_generation/semanticdraw_towards_real-time_interactive_content_creation_from_image_diffusion.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MeCeFO: Enhancing LLM Training Robustness via Fault-Tolerant Optimization
 description: >-

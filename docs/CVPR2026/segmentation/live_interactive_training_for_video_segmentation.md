@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Live Interactive Training for Video Segmentation
 description: >-

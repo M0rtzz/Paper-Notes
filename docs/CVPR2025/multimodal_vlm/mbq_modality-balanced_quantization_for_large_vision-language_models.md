@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] MBQ: Modality-Balanced Quantization for Large Vision-Language Models
 description: >-
-  [CVPR 2025][多模态VLM] 发现VLM中视觉与语言token的量化敏感度差异巨大，提出模态平衡量化方法MBQ，W3A16下精度提升达4.4%
+  [CVPR 2025][多模态][训练后量化] 发现大型VLM中视觉token和语言token对量化误差的敏感度差异超过10倍，提出MBQ方法在量化校准过程中引入基于梯度的模态平衡因子，在W3A16和W4A8设置下分别提升精度最高4.4%和11.6%，并实现1.4倍端到端加速。
 tags:
   - CVPR 2025
-  - 模型量化
-  - 视觉语言模型
+  - 多模态
   - 训练后量化
-  - 部署优化
-  - 模态差异
+  - 模态敏感度差异
+  - VLM加速
+  - 权重量化
+  - 权重-激活量化
 ---
 
 # MBQ: Modality-Balanced Quantization for Large Vision-Language Models
@@ -174,7 +175,7 @@ $$\min_{\mathbf{E}} \left[\overline{|\mathbf{g}_v|} \cdot \|WX_v - Q(W*E)Q(E^{-1
 - [MASQuant: Modality-Aware Smoothing Quantization for Multimodal Large Language Models](../../CVPR2026/multimodal_vlm/masquant_modality-aware_smoothing_quantization_for_multimodal_large_language_mod.md)
 - [Quantization without Tears](quantization_without_tears.md)
 - [Post-pre-training for Modality Alignment in Vision-Language Foundation Models](post-pre-training_for_modality_alignment_in_vision-language_foundation_models.md)
-- [LayoutVLM: Differentiable Optimization of 3D Layout via Vision-Language Models](layoutvlm_differentiable_optimization_of_3d_layout_via_vision-language_models.md)
-- [HalLoc: Token-Level Localization of Hallucinations for Vision Language Models](halloc_token-level_localization_of_hallucinations_for_vision_language_models.md)
+- [Fine-Grained Post-Training Quantization for Large Vision Language Models with Quantization-Aware Integrated Gradients](../../CVPR2026/multimodal_vlm/fine-grained_post-training_quantization_for_large_vision_language_models_with_qu.md)
+- [Balanced Token Pruning: Accelerating Vision Language Models Beyond Local Optimization](../../NeurIPS2025/multimodal_vlm/balanced_token_pruning_accelerating_vision_language_models_b.md)
 
 <!-- RELATED:END -->

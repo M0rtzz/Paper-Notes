@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Overthinking Causes Hallucination: Tracing Confounder Propagation in Vision Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Multi-modal Large Language Models via Progressive Consistency Distillation
 description: >-

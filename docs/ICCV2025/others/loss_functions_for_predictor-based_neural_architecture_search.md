@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Loss Functions for Predictor-based Neural Architecture Search
 description: >-
@@ -154,10 +154,10 @@ tags:
 
 ## 相关论文
 
+- [VKDNW: Training-free Neural Architecture Search through Variance of Knowledge of Deep Network Weights](../../CVPR2025/others/training-free_neural_architecture_search_through_variance_of_knowledge_of_deep_n.md)
 - [Joint Asymmetric Loss for Learning with Noisy Labels](joint_asymmetric_loss_for_learning_with_noisy_labels.md)
 - [On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks for Sets](../../ICLR2026/others/on_the_lipschitz_continuity_of_set_aggregation_functions_and_neural_networks_for.md)
 - [Auto-GAS: Automated Proxy Discovery for Training-Free Generative Architecture Search](../../ECCV2024/others/auto-gas_automated_proxy_discovery_for_training-free_generative_architecture_sea.md)
 - [Neural Parameter Search for Slimmer Fine-Tuned Models and Better Transfer](../../ACL2025/others/neural_parameter_search_for_slimmer_fine-tuned_models_and_better_transfer.md)
-- [Learning Compact Latent Space for Representing Neural Signed Distance Functions with High-fidelity Geometry Details](../../AAAI2026/others/learning_compact_latent_space_for_representing_neural_signed_distance_functions_.md)
 
 <!-- RELATED:END -->

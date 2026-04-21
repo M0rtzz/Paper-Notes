@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ComRAG: Retrieval-Augmented Generation with Dynamic Vector Stores for Real-time Community Question Answering in Industry
 description: >-

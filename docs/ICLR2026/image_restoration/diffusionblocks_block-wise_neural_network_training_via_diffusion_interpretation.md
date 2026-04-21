@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiffusionBlocks: Block-wise Neural Network Training via Diffusion Interpretation
 description: >-
@@ -142,6 +142,6 @@ $$\int_{\sigma_{b-1}}^{\sigma_b} p_{\text{noise}}(\sigma)\,d\sigma = 1/B$$
 - [Efficient Diffusion Transformer with Step-wise Dynamic Attention Mediators](../../ECCV2024/image_restoration/efficient_diffusion_transformer_with_step-wise_dynamic_attention_mediators.md)
 - [DiffFNO: Diffusion Fourier Neural Operator](../../CVPR2025/image_restoration/difffno_diffusion_fourier_neural_operator.md)
 - [Activation Steering for Masked Diffusion Language Models](activation_steering_for_masked_diffusion_language_models.md)
-- [Toward Safer Diffusion Language Models: Discovery and Mitigation of Priming Vulnerabilities](toward_safer_diffusion_language_models_discovery_and_mitigation_of_priming_vulne.md)
+- [The Surprising Effectiveness of Noise Pretraining for Implicit Neural Representations](../../CVPR2026/image_restoration/the_surprising_effectiveness_of_noise_pretraining_for_implicit_neural_representa.md)
 
 <!-- RELATED:END -->

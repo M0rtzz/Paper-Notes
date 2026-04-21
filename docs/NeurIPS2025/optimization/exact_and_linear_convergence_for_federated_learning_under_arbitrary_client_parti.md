@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exact and Linear Convergence for Federated Learning under Arbitrary Client Participation is Attainable
 description: >-

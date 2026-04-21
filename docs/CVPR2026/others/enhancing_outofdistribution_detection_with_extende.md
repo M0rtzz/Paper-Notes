@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ELogitNorm: Enhancing OOD Detection with Extended Logit Normalization
 description: >-

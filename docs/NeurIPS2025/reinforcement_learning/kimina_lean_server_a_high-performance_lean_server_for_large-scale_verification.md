@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Kimina Lean Server: A High-Performance Lean Server for Large-Scale Verification
 description: >-

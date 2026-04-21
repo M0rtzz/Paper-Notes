@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoMM: A Coherent Interleaved Image-Text Dataset for Multimodal Understanding and Generation
 description: >-

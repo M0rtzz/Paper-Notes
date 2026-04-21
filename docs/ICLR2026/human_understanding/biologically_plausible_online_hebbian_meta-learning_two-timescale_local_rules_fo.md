@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Biologically Plausible Online Hebbian Meta-Learning: Two-Timescale Local Rules for Spiking Neural Brain Interfaces
 description: >-
@@ -166,6 +166,6 @@ tags:
 - [Time Is All It Takes: Spike-Retiming Attacks on Event-Driven Spiking Neural Networks](time_is_all_it_takes_spike-retiming_attacks_on_event-driven_spiking_neural_netwo.md)
 - [Stable Spike: Dual Consistency Optimization via Bitwise AND Operations for Spiking Neural Networks](../../CVPR2026/human_understanding/stable_spike_dual_consistency_optimization_via_bitwise_and_operations_for_spikin.md)
 - [REA-RL: Reflection-Aware Online Reinforcement Learning for Efficient Reasoning](rea-rl_reflection-aware_online_reinforcement_learning_for_efficient_reasoning.md)
-- [Efficient Logit-based Knowledge Distillation of Deep Spiking Neural Networks for Full-Range Timestep Deployment](../../ICML2025/human_understanding/efficient_logit-based_knowledge_distillation_of_deep_spiking_neural_networks_for.md)
+- [Two by Two: Learning Multi-Task Pairwise Objects Assembly for Generalizable Robot Manipulation](../../CVPR2025/human_understanding/two_by_two_learning_multi-task_pairwise_objects_assembly_for_generalizable_robot.md)
 
 <!-- RELATED:END -->

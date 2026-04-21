@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TabRAG: Improving Tabular Document Question Answering for Retrieval Augmented Generation via Structured Representations
 description: >-
@@ -167,6 +167,6 @@ TabRAG 的优势在不同 LLM 骨干下保持一致。
 - [Follow the Saliency: Supervised Saliency for Retrieval-augmented Dense Video Captioning](../../CVPR2026/segmentation/follow_the_saliency_supervised_saliency_for_retrieval-augmented_dense_video_capt.md)
 - [Vista: Scene-Aware Optimization for Streaming Video Question Answering Under Post-Hoc Queries](../../AAAI2026/segmentation/vista_scene-aware_optimization_for_streaming_video_question_answering_under_post.md)
 - [Exploring Structural Degradation in Dense Representations for Self-supervised Learning](exploring_structural_degradation_in_dense_representations_for_self-supervised_le.md)
-- [ARGenSeg: Image Segmentation with Autoregressive Image Generation Model](argenseg_image_segmentation_with_autoregressive_image_generation_model.md)
+- [MultiHuman-Testbench: Benchmarking Image Generation for Multiple Humans](multihuman-testbench_benchmarking_image_generation_for_multiple_humans.md)
 
 <!-- RELATED:END -->

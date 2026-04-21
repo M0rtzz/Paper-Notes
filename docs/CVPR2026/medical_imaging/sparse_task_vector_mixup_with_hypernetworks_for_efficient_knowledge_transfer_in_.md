@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sparse Task Vector Mixup with Hypernetworks for Efficient Knowledge Transfer in Whole-Slide Image Prognosis
 description: >-

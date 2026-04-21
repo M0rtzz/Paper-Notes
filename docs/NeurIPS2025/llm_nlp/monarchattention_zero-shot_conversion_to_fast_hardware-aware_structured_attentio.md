@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MonarchAttention: Zero-Shot Conversion to Fast, Hardware-Aware Structured Attention
 description: >-
@@ -152,7 +152,7 @@ MonarchAttention 是一种**推理时**的优化方法，不涉及训练损失�
 - [Zero-Shot Belief: A Hard Problem for LLMs](../../ACL2025/llm_nlp/zero-shot_belief_a_hard_problem_for_llms.md)
 - [Spectral Conditioning of Attention Improves Transformer Performance](spectral_conditioning_of_attention_improves_transformer_performance.md)
 - [Strassen Attention, Split VC Dimension and Compositionality in Transformers](strassen_attention_split_vc_dimension_and_compositionality_in_transformers.md)
+- [Zero-Shot Object Counting with Good Exemplars (VA-Count)](../../ECCV2024/llm_nlp/zeroshot_object_counting_with_good_exemplars.md)
 - [Unifying Attention Heads and Task Vectors via Hidden State Geometry in In-Context Learning](unifying_attention_heads_and_task_vectors_via_hidden_state_geometry_in_in-contex.md)
-- [BIPro: Zero-shot Chinese Poem Generation via Block Inverse Prompting Constrained Generation Framework](../../ACL2025/llm_nlp/bipro_zero-shot_chinese_poem_generation_via_block_inverse_prompting_constrained_.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TrafficLoc: Localizing Traffic Surveillance Cameras in 3D Scenes
 description: >-

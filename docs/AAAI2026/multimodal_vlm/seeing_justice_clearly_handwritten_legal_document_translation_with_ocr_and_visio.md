@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Seeing Justice Clearly: Handwritten Legal Document Translation with OCR and Vision-Language Models
 description: >-
@@ -141,6 +141,6 @@ tags:
 - [Seeing Clearly, Reasoning Confidently: Plug-and-Play Remedies for Vision Language Model Blindness](../../CVPR2026/multimodal_vlm/seeing_clearly_reasoning_confidently_plug-and-play_remedies_for_vision_language_.md)
 - [Multimodal OCR: Parse Anything from Documents](../../CVPR2026/multimodal_vlm/multimodal_ocr_parse_anything_from_documents.md)
 - [Unveiling the Ignorance of MLLMs: Seeing Clearly, Answering Incorrectly](../../CVPR2025/multimodal_vlm/unveiling_the_ignorance_of_mllms_seeing_clearly_answering_incorrectly.md)
-- [Can Vision-Language Models Evaluate Handwritten Math?](../../ACL2025/multimodal_vlm/can_vision-language_models_evaluate_handwritten_math.md)
+- [PatientVLM Meets DocVLM: Pre-Consultation Dialogue Between Vision-Language Models for Efficient Diagnosis](patientvlm_meets_docvlm_pre-consultation_dialogue_between_vision_language_models.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Thompson Sampling in Function Spaces via Neural Operators
 description: >-

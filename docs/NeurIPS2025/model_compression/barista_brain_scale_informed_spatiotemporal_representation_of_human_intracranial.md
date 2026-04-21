@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BaRISTA: Brain-Scale Informed Spatiotemporal Representation of Human Intracranial EEG
 description: >-

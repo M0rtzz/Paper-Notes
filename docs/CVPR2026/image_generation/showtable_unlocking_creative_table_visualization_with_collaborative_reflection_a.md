@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ShowTable: Unlocking Creative Table Visualization with Collaborative Reflection and Refinement
 description: >-
@@ -136,8 +136,8 @@ ShowTable 是一个四阶段 pipeline：(1) **Rewriting**——MLLM 将数据密
 
 - [ViStoryBench: Comprehensive Benchmark Suite for Story Visualization](vistorybench_comprehensive_benchmark_suite_for_story_visualization.md)
 - [PSDesigner: Automated Graphic Design with a Human-Like Creative Workflow](psdesigner_automated_graphic_design_with_a_human-like_creative_workflow.md)
+- [Redefining <Creative> in Dictionary: Towards an Enhanced Semantic Understanding of Creative Generation](../../CVPR2025/image_generation/redefining_creative_in_dictionary_towards_an_enhanced_semantic_understanding_of_.md)
 - [RAISE: Requirement-Adaptive Evolutionary Refinement for Training-Free Text-to-Image Alignment](raise_requirement-adaptive_evolutionary_refinement_for_training-free_text-to-ima.md)
 - [Condition Errors Refinement in Autoregressive Image Generation with Diffusion Loss](../../ICLR2026/image_generation/condition_errors_refinement_in_autoregressive_image_generation_with_diffusion_lo.md)
-- [L-DiffER: Single Image Reflection Removal with Language-Based Diffusion Model](../../ECCV2024/image_generation/l-differ_single_image_reflection_removal_with_language-based_diffusion_model.md)
 
 <!-- RELATED:END -->

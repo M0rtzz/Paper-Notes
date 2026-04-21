@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] It's Time to Get It Right: Improving Analog Clock Reading and Clock-Hand Spatial Reasoning in Vision-Language Models
 description: >-

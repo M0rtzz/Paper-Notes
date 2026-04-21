@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GAPO: Learning Preferential Prompt through Generative Adversarial Policy Optimization
 description: >-

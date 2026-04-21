@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OmniDraft: A Cross-Vocabulary Online Adaptive Drafter for On-Device Speculative Decoding
 description: >-

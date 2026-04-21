@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ES-dLLM: Efficient Inference for Diffusion Large Language Models by Early-Skipping
 description: >-
@@ -150,6 +150,6 @@ DualCache（Fast-dLLM）缓存当前 block 之外的 KV，但仍需计算整个 
 - [Knowledge Fusion of Large Language Models Via Modular Skillpacks](knowledge_fusion_of_large_language_models_via_modular_skillpacks.md)
 - [Distillation of Large Language Models via Concrete Score Matching](distillation_of_large_language_models_via_concrete_score_matching.md)
 - [Spectra 1.1: Scaling Laws and Efficient Inference for Ternary Language Models](../../ACL2025/model_compression/scaling_laws_and_efficient_inference_for_ternary_language_models.md)
-- [Unveiling Super Experts in Mixture-of-Experts Large Language Models](unveiling_super_experts_in_mixture-of-experts_large_language_models.md)
+- [Is Finer Better? The Limits of Microscaling Formats in Large Language Models](is_finer_better_the_limits_of_microscaling_formats_in_large_language_models.md)
 
 <!-- RELATED:END -->

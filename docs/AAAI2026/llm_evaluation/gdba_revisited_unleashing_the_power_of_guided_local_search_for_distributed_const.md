@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GDBA Revisited: Unleashing the Power of Guided Local Search for Distributed Constraint Optimization
 description: >-

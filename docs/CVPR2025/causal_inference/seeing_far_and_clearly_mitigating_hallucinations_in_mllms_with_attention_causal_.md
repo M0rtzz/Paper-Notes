@@ -1,15 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Seeing Far and Clearly: Mitigating Hallucinations in MLLMs with Attention Causal Decoding
 description: >-
-  [CVPR 2025][MLLM幻觉][因果解码] 提出注意力因果解码方法，区分并缓解初始幻觉和雪球幻觉两种类型
+  [CVPR 2025][注意力因果解码] 将 MLLM 幻觉分为初始幻觉（首次出现的错误描述）和雪球幻觉（基于已有错误的累积放大），提出注意力因果解码方法分别针对两种类型进行缓解。
 tags:
   - CVPR 2025
-  - MLLM幻觉
-  - 因果解码
-  - 注意力机制
+  - 注意力因果解码
   - 初始幻觉
   - 雪球幻觉
+  - MLLM
+  - 视觉忠实性
 ---
 
 # Seeing Far and Clearly: Mitigating Hallucinations in MLLMs with Attention Causal Decoding

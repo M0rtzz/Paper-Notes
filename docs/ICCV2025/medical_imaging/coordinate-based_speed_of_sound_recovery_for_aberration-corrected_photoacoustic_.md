@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Coordinate-based Speed of Sound Recovery for Aberration-Corrected Photoacoustic Computed Tomography
 description: >-

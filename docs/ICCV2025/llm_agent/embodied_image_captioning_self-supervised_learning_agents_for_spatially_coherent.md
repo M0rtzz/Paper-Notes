@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Embodied Image Captioning: Self-supervised Learning Agents for Spatially Coherent Image Descriptions
 description: >-

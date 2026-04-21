@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Large Language Models Can Learn and Generalize Steganographic Chain-of-Thought under Process Supervision
 description: >-

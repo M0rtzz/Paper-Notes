@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpinBench: Perspective and Rotation as a Lens on Spatial Reasoning in VLMs
 description: >-

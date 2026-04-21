@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HybridBooth: Hybrid Prompt Inversion for Efficient Subject-Driven Generation
 description: >-
@@ -191,10 +191,10 @@ $$\mathcal{L}_{\boldsymbol{M}} = \frac{1}{n}\sum_{i=1}^{n}\text{mean}(\boldsymbo
 
 ## 相关论文
 
+- [Prompting Future Driven Diffusion Model for Hand Motion Prediction](prompting_future_driven_diffusion_model_for_hand_motion_prediction.md)
 - [Source Prompt Disentangled Inversion for Boosting Image Editability with Diffusion Models](source_prompt_disentangled_inversion_for_boosting_image_editability_with_diffusi.md)
 - [Soft Prompt Generation for Domain Generalization](soft_prompt_generation_for_domain_generalization.md)
-- [Prompting Future Driven Diffusion Model for Hand Motion Prediction](prompting_future_driven_diffusion_model_for_hand_motion_prediction.md)
-- [The Fabrication of Reality and Fantasy: Scene Generation with LLM-Assisted Prompt Interpretation](the_fabrication_of_reality_and_fantasy_scene_generation_with_llm-assisted_prompt.md)
-- [Mind-the-Glitch: Visual Correspondence for Detecting Inconsistencies in Subject-Driven Generation](../../NeurIPS2025/image_generation/mind-the-glitch_visual_correspondence_for_detecting_inconsistencies_in_subject-d.md)
+- [Diff-Tracker: Text-to-Image Diffusion Models are Unsupervised Trackers](difftracker_texttoimage_diffusion_models_are_unsupervised_tr.md)
+- [ScaleDreamer: Scalable Text-to-3D Synthesis with Asynchronous Score Distillation](scaledreamer_scalable_textto3d_synthesis_with_asynchronous_s.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Can Natural Image Autoencoders Compactly Tokenize fMRI Volumes for Long-Range Dynamics Modeling?
 description: >-

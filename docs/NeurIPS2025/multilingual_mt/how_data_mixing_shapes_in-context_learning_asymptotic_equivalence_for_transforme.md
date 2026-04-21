@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How Data Mixing Shapes In-Context Learning: Asymptotic Equivalence for Transformers with MLPs
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Permutation Equivariant Neural Networks for Symmetric Tensors
 description: >-

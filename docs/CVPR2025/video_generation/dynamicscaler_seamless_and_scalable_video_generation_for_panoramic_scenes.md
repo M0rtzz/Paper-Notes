@@ -1,12 +1,10 @@
 ---
-title: "DynamicScaler: Seamless and Scalable Video Generation for Panoramic Scenes"
-conference: "CVPR 2025"
-arXiv: "2412.11100"
-link: "https://arxiv.org/abs/2412.11100"
-code: "https://dynamic-scaler.pages.dev/new"
-domain: "图像/视频生成"
-keywords: ["全景视频生成", "扩散模型", "无训练", "空间可扩展", "360度全景", "AR/VR"]
-rating: ⭐⭐⭐⭐
+title: >-
+  [论文解读] DynamicScaler: Seamless and Scalable Video Generation for Panoramic Scenes
+description: >-
+   DynamicScaler 提出了一个无需微调的统一框架，通过偏移移位去噪器（OSD）和全局运动引导（GMG）实现任意分辨率/宽高比的全景动态场景合成，支持常规全景和 360° 视野视频生成，同时保持恒定 VRAM 消耗。
+tags:
+
 ---
 
 # DynamicScaler: Seamless and Scalable Video Generation for Panoramic Scenes
@@ -130,9 +128,9 @@ $$Z_{HR^0} = \Phi_\theta^{OSD}(noise(inter(\Phi_\theta^{OSD}(Z_{LR^T}))))$$
 ## 相关论文
 
 - [SAW: Toward a Surgical Action World Model via Controllable and Scalable Video Generation](saw_toward_a_surgical_action_world_model_via_controllable_and_scalable_video_gen.md)
+- [VideoScene: Distilling Video Diffusion Model to Generate 3D Scenes in One Step](videoscene_distilling_video_diffusion_model_to_generate_3d_scenes_in_one_step.md)
 - [STiV: Scalable Text and Image Conditioned Video Generation](../../ICCV2025/video_generation/stiv_scalable_text_and_image_conditioned_video_generation.md)
 - [Generating, Fast and Slow: Scalable Parallel Video Generation with Video Interface Networks](../../ICCV2025/video_generation/generating_fast_and_slow_scalable_parallel_video_generation_with_video_interface.md)
 - [SIGMark: Scalable In-Generation Watermark with Blind Extraction for Video Diffusion](../../ICLR2026/video_generation/sigmark_scalable_in-generation_watermark_with_blind_extraction_for_video_diffusi.md)
-- [VFusion3D: Learning Scalable 3D Generative Models from Video Diffusion Models](../../ECCV2024/video_generation/vfusion3d_learning_scalable_3d_generative_models_from_video_diffusion_models.md)
 
 <!-- RELATED:END -->

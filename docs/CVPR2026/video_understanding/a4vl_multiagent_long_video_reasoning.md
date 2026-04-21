@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A4VL: A Multi-Agent Perception-Action Alliance for Efficient Long Video Reasoning
 description: >-

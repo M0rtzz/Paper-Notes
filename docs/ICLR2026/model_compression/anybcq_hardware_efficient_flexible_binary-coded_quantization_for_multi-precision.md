@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AnyBCQ: Hardware Efficient Flexible Binary-Coded Quantization for Multi-Precision LLMs
 description: >-

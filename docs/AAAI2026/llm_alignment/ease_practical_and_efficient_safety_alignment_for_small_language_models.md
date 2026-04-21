@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EASE: Practical and Efficient Safety Alignment for Small Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gaia2: Benchmarking LLM Agents on Dynamic and Asynchronous Environments
 description: >-

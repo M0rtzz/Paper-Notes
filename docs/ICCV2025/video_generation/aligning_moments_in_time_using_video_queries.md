@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Aligning Moments in Time using Video Queries
 description: >-
@@ -119,9 +119,9 @@ tags:
 ## 相关论文
 
 - [VPO: Aligning Text-to-Video Generation Models with Prompt Optimization](vpo_aligning_text-to-video_generation_models_with_prompt_optimization.md)
+- [One-Minute Video Generation with Test-Time Training](../../CVPR2025/video_generation/one-minute_video_generation_with_test-time_training.md)
 - [Mind the Time: Temporally-Controlled Multi-Event Video Generation](../../CVPR2025/video_generation/mind_the_time_temporally-controlled_multi-event_video_generation.md)
 - [StreamDiT: Real-Time Streaming Text-to-Video Generation](../../CVPR2026/video_generation/streamdit_real-time_streaming_text-to-video_generation.md)
-- [Autoregressive Adversarial Post-Training for Real-Time Interactive Video Generation](../../NeurIPS2025/video_generation/autoregressive_adversarial_posttraining_for_realtime_interac.md)
-- [MotionStream: Real-Time Video Generation with Interactive Motion Controls](../../ICLR2026/video_generation/motionstream_real-time_video_generation_with_interactive_motion_controls.md)
+- [Timestep Embedding Tells: It's Time to Cache for Video Diffusion Model](../../CVPR2025/video_generation/timestep_embedding_tells_its_time_to_cache_for_video_diffusion_model.md)
 
 <!-- RELATED:END -->

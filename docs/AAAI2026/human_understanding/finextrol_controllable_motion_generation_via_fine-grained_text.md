@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FineXtrol: Controllable Motion Generation via Fine-Grained Text
 description: >-

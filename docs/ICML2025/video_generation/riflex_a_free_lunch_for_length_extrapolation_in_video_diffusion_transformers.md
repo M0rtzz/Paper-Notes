@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] RIFLEx: A Free Lunch for Length Extrapolation in Video Diffusion Transformers
 description: >-
-  [ICML 2025][视频理解][Transformer] 通过系统分析RoPE位置编码中各频率分量的角色，发现存在一个"固有频率"主导外推时的时间重复行为，提出仅降低该频率使其在外推后保持单周期的最小化方案RIFLEx，在CogVideoX-5B和HunyuanVideo上实现无训练2×高质量视频外推。
+  [ICML 2025][Transformer] 通过系统分析RoPE位置编码中各频率分量的角色，发现存在一个"固有频率"主导外推时的时间重复行为，提出仅降低该频率使其在外推后保持单周期的最小化方案RIFLEx，在CogVideoX-5B和HunyuanVideo上实现无训练2×高质量视频外推。
 tags:
   - ICML 2025
-  - 视频理解
   - Transformer
   - RoPE
   - 频率分析
@@ -120,7 +119,7 @@ RIFLEx分三步：(1) 分析RoPE各频率分量 $\theta_j$ 的周期 $N_j = 2\pi
 - [AsymRnR: Video Diffusion Transformers Acceleration with Asymmetric Reduction and Restoration](asymrnr_video_diffusion_transformers_acceleration_with_asymmetric_reduction_and_.md)
 - [Free-Lunch Long Video Generation via Layer-Adaptive O.O.D Correction](../../CVPR2026/video_generation/free-lunch_long_video_generation_via_layer-adaptive_ood_correction.md)
 - [Decouple and Track: Benchmarking and Improving Video Diffusion Transformers for Motion Transfer](../../ICCV2025/video_generation/decouple_and_track_benchmarking_and_improving_video_diffusion_transformers_for_m.md)
+- [Towards Precise Scaling Laws for Video Diffusion Transformers](../../CVPR2025/video_generation/towards_precise_scaling_laws_for_video_diffusion_transformers.md)
 - [When to Lock Attention: Training-Free KV Control in Video Diffusion](../../CVPR2025/video_generation/when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
-- [D3: Training-Free AI-Generated Video Detection Using Second-Order Features](../../ICCV2025/video_generation/d3_training-free_ai-generated_video_detection_using_second-order_features.md)
 
 <!-- RELATED:END -->

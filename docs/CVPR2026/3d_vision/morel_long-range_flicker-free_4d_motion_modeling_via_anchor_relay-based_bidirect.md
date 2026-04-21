@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MoRel: Long-Range Flicker-Free 4D Motion Modeling via Anchor Relay-based Bidirectional Blending with Hierarchical Densification
 description: >-

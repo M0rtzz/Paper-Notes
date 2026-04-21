@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Auto-DAS: Automated Proxy Discovery for Training-free Distillation-aware Architecture Search
 description: >-
@@ -134,7 +134,7 @@ Auto-DAS 的流程分为三个阶段：(1) **代理搜索空间构建**——定
 - [Category Adaptation Meets Projected Distillation in Generalized Continual Category Discovery](category_adaptation_meets_projected_distillation_in_generalized_continual_catego.md)
 - [PaPr: Training-Free One-Step Patch Pruning with Lightweight ConvNets for Faster Inference](papr_training-free_one-step_patch_pruning_with_lightweight_convnets_for_faster_i.md)
 - [Cross-Architecture Distillation Made Simple with Redundancy Suppression](../../ICCV2025/model_compression/cross-architecture_distillation_made_simple_with_redundancy_suppression.md)
-- [Jet-Nemotron: Efficient Language Model with Post Neural Architecture Search](../../NeurIPS2025/model_compression/jet-nemotron_efficient_language_model_with_post_neural_architecture_search.md)
 - [DuoGPT: Training-free Dual Sparsity through Activation-aware Pruning in LLMs](../../NeurIPS2025/model_compression/duogpt_training-free_dual_sparsity_through_activation-aware_pruning_in_llms.md)
+- [Jet-Nemotron: Efficient Language Model with Post Neural Architecture Search](../../NeurIPS2025/model_compression/jet-nemotron_efficient_language_model_with_post_neural_architecture_search.md)
 
 <!-- RELATED:END -->

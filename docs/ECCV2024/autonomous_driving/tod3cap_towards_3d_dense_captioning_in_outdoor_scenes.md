@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TOD³Cap: Towards 3D Dense Captioning in Outdoor Scenes
 description: >-

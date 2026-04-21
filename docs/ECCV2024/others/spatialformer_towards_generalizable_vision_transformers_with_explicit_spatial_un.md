@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpatialFormer: Towards Generalizable Vision Transformers with Explicit Spatial Understanding
 description: >-

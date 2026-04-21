@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Understanding Syllogistic Reasoning in LLMs from Formal and Natural Language Perspectives
 description: >-

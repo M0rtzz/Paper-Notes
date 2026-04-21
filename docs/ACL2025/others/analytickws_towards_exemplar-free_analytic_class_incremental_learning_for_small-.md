@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AnalyticKWS: Towards Exemplar-Free Analytic Class Incremental Learning for Small-footprint Keyword Spotting
 description: >-
@@ -126,10 +126,10 @@ tags:
 
 ## 相关论文
 
+- [Task-Agnostic Guided Feature Expansion for Class-Incremental Learning](../../CVPR2025/others/task-agnostic_guided_feature_expansion_for_class-incremental_learning.md)
 - [ABC Easy as 123: A Blind Counter for Exemplar-Free Multi-Class Class-Agnostic Counting](../../ECCV2024/others/abc_easy_as_123_a_blind_counter_for_exemplar-free_multi-class_class-agnostic_cou.md)
 - [Expandable and Differentiable Dual Memories with Orthogonal Regularization for Exemplar-free Continual Learning](../../AAAI2026/others/expandable_and_differentiable_dual_memories_with_orthogonal_regularization_for_e.md)
 - [An Incremental Unified Framework for Small Defect Inspection](../../ECCV2024/others/an_incremental_unified_framework_for_small_defect_inspection.md)
 - [Multi-Hop Question Generation via Dual-Perspective Keyword Guidance](multi-hop_question_generation_via_dual-perspective_keyword_guidance.md)
-- [STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning](../../ECCV2024/others/stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning.md)
 
 <!-- RELATED:END -->

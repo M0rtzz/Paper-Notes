@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SDEval: Safety Dynamic Evaluation for Multimodal Large Language Models
 description: >-

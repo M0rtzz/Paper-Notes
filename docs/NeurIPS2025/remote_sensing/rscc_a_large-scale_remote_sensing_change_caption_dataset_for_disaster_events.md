@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RSCC: A Large-Scale Remote Sensing Change Caption Dataset for Disaster Events
 description: >-

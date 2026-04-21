@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SCOPE: Saliency-Coverage Oriented Token Pruning for Efficient Multimodal LLMs
 description: >-

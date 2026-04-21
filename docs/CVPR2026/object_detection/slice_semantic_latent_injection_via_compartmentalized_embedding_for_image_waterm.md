@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking
 description: >-

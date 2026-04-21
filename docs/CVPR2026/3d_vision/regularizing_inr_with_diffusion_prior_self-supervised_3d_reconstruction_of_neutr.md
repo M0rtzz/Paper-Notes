@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Regularizing INR with Diffusion Prior for Self-Supervised 3D Reconstruction of Neutron Computed Tomography Data
 description: >-

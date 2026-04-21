@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ATRI: Mitigating Multilingual Audio Text Retrieval Inconsistencies by Reducing Data Distribution Errors
 description: >-

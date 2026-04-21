@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FACE: A General Framework for Mapping Collaborative Filtering Embeddings into LLM Tokens
 description: >-

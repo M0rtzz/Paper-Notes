@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RAVENEA: A Benchmark for Multimodal Retrieval-Augmented Visual Culture Understanding
 description: >-

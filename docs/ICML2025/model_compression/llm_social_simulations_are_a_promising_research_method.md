@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLM Social Simulations Are a Promising Research Method
 description: >-

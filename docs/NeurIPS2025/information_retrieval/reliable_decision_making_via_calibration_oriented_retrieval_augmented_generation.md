@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reliable Decision Making via Calibration Oriented Retrieval Augmented Generation
 description: >-
@@ -159,8 +159,8 @@ CalibRAG 使用通用域数据训练，但在医学领域（unseen 检索器 + O
 
 - [Retrieval-Augmented Generation for Reliable Interpretation of Radio Regulations](retrieval-augmented_generation_for_reliable_interpretation_of_radio_regulations.md)
 - [Chain-of-Retrieval Augmented Generation (CoRAG)](chain-of-retrieval_augmented_generation.md)
+- [HyperGraphRAG: Retrieval-Augmented Generation via Hypergraph-Structured Knowledge Representation](hypergraphrag_retrieval-augmented_generation_via_hypergraph-structured_knowledge.md)
 - [Controllable and Reliable Knowledge-Intensive Task-Oriented Conversational Agents with Declarative Genie Worksheets](../../ACL2025/information_retrieval/genie_worksheets_tod_agent.md)
 - [Cooperative Retrieval-Augmented Generation for Question Answering: Mutual Information Exchange and Ranking by Contrasting Layers](cooperative_retrieval-augmented_generation_for_question_answering_mutual_informa.md)
-- [Windsock is Dancing: Adaptive Multimodal Retrieval-Augmented Generation](windsock_is_dancing_adaptive_multimodal_retrieval-augmented_generation.md)
 
 <!-- RELATED:END -->

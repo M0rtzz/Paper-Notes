@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spatial-DISE: A Unified Benchmark for Evaluating Spatial Reasoning in Vision-Language Models
 description: >-

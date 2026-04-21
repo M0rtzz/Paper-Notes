@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PubSub-VFL: Towards Efficient Two-Party Split Learning in Heterogeneous Environments via Publisher/Subscriber Architecture
 description: >-

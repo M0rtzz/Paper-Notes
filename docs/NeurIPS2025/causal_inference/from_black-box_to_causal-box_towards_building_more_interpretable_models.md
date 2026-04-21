@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Black-box to Causal-box: Towards Building More Interpretable Models
 description: >-
@@ -135,7 +135,7 @@ tags:
 - [E-LDA: Toward Interpretable LDA Topic Models with Strong Guarantees in Logarithmic Parallel Time](../../ICML2025/causal_inference/e-lda_toward_interpretable_lda_topic_models_with_strong_guarantees_in_logarithmi.md)
 - [Hallucinate Less by Thinking More: Aspect-Based Causal Abstention for Large Language Models](../../AAAI2026/causal_inference/hallucinate_less_by_thinking_more_aspect-based_causal_absten.md)
 - [Revealing Multimodal Causality with Large Language Models](revealing_multimodal_causality_with_large_language_models.md)
-- [Alignment of Large Language Models with Constrained Learning](alignment_of_large_language_models_with_constrained_learning.md)
 - [On the Reliability of Large Language Models for Causal Discovery](../../ACL2025/causal_inference/llm_causal_discovery_reliability.md)
+- [RATE: Causal Explainability of Reward Models with Imperfect Counterfactuals](../../ICML2025/causal_inference/rate_causal_explainability_of_reward_models_with_imperfect_counterfactuals.md)
 
 <!-- RELATED:END -->

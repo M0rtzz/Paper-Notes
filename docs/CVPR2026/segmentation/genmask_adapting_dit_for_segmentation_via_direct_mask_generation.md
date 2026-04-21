@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GenMask: Adapting DiT for Segmentation via Direct Mask Generation
 description: >-
@@ -158,7 +158,7 @@ GenMask 在 Test 集上显著超越 LISA*（+5.0 gIoU, +11.7 cIoU），说明生
 - [Direct Segmentation without Logits Optimization for Training-Free Open-Vocabulary Semantic Segmentation](direct_segmentation_without_logits_optimization_for_training-free_open-vocabular.md)
 - [Learning Cross-View Object Correspondence via Cycle-Consistent Mask Prediction](learning_cross-view_object_correspondence_via_cycle-consistent_mask_prediction.md)
 - [CA-LoRA: Concept-Aware LoRA for Domain-Aligned Segmentation Dataset Generation](ca-lora_concept-aware_lora_for_domain-aligned_segmentation_dataset_generation.md)
-- [DSFlash: Comprehensive Panoptic Scene Graph Generation in Realtime](dsflash_comprehensive_panoptic_scene_graph_generation_in_realtime.md)
 - [A Simple Latent Diffusion Approach for Panoptic Segmentation and Mask Inpainting](../../ECCV2024/segmentation/a_simple_latent_diffusion_approach_for_panoptic_segmentation_and_mask_inpainting.md)
+- [DSFlash: Comprehensive Panoptic Scene Graph Generation in Realtime](dsflash_panoptic_scene_graph_realtime.md)
 
 <!-- RELATED:END -->

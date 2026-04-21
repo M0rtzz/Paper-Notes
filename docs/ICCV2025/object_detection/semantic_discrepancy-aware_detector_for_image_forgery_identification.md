@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Semantic Discrepancy-aware Detector for Image Forgery Identification
 description: >-
@@ -161,6 +161,6 @@ SynRIS 上的显著优势：在高保真文本到图像模型生成的图像上�
 - [FakeRadar: Probing Forgery Outliers to Detect Unknown Deepfake Videos](fakeradar_probing_forgery_outliers_to_detect_unknown_deepfake_videos.md)
 - [Image Reconstruction from Readout-Multiplexed Single-Photon Detector Arrays](../../CVPR2025/object_detection/image_reconstruction_from_readout-multiplexed_single-photon_detector_arrays.md)
 - [Is Less More? Exploring Token Condensation as Training-free Test-time Adaptation](is_less_more_exploring_token_condensation_as_training-free_test-time_adaptation.md)
-- [Detecting Adversarial Data Using Perturbation Forgery](../../CVPR2025/object_detection/detecting_adversarial_data_using_perturbation_forgery.md)
+- [Uncertainty-Aware Gradient Stabilization for Small Object Detection](uncertainty-aware_gradient_stabilization_for_small_object_detection.md)
 
 <!-- RELATED:END -->

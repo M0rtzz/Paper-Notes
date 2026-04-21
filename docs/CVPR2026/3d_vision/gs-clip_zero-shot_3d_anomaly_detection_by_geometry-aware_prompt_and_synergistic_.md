@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GS-CLIP: Zero-shot 3D Anomaly Detection by Geometry-Aware Prompt and Synergistic View Representation Learning
 description: >-
@@ -152,6 +152,6 @@ tags:
 - [FALIP: Visual Prompt as Foveal Attention Boosts CLIP Zero-Shot Performance](../../ECCV2024/3d_vision/falip_visual_prompt_as_foveal_attention_boosts_clip_zero-shot_performance.md)
 - [VirPro: Visual-referred Probabilistic Prompt Learning for Weakly-Supervised Monocular 3D Detection](virpro_visual-referred_probabilistic_prompt_learning_for_weakly-supervised_monoc.md)
 - [CASL: Curvature-Augmented Self-supervised Learning for 3D Anomaly Detection](../../AAAI2026/3d_vision/casl_curvature-augmented_self-supervised_learning_for_3d_anomaly_detection.md)
-- [A Semantically Disentangled Unified Model for Multi-category 3D Anomaly Detection](a_semantically_disentangled_unified_model_for_multi-category_3d_anomaly_detectio.md)
+- [GaussianGrow: Geometry-aware Gaussian Growing from 3D Point Clouds with Text Guidance](gaussiangrow_geometry-aware_gaussian_growing_from_3d_point_clouds_with_text_guid.md)
 
 <!-- RELATED:END -->

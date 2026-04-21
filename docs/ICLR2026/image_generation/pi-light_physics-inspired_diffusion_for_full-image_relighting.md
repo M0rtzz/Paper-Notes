@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PI-Light: Physics-Inspired Diffusion for Full-Image Relighting
 description: >-
@@ -159,8 +159,8 @@ PI-Light 采用两阶段设计，将全图像重光照分解为**逆渲染**（I
 
 - [UniLumos: Fast and Unified Image and Video Relighting with Physics-Plausible Feedback](../../NeurIPS2025/image_generation/unilumos_fast_and_unified_image_and_video_relighting_with_physics-plausible_feed.md)
 - [GenCP: Towards Generative Modeling Paradigm of Coupled Physics](gencp_towards_generative_modeling_paradigm_of_coupled_physics.md)
-- [Condition Errors Refinement in Autoregressive Image Generation with Diffusion Loss](condition_errors_refinement_in_autoregressive_image_generation_with_diffusion_lo.md)
+- [ScribbleLight: Single Image Indoor Relighting with Scribbles](../../CVPR2025/image_generation/scribblelight_single_image_indoor_relighting_with_scribbles.md)
 - [Continual Unlearning for Text-to-Image Diffusion Models: A Regularization Perspective](continual_unlearning_for_text-to-image_diffusion_models_a_regularization_perspec.md)
-- [Learning Latent Proxies for Controllable Single-Image Relighting](../../CVPR2026/image_generation/learning_latent_proxies_for_controllable_single-image_relighting.md)
+- [Condition Errors Refinement in Autoregressive Image Generation with Diffusion Loss](condition_errors_refinement_in_autoregressive_image_generation_with_diffusion_lo.md)
 
 <!-- RELATED:END -->

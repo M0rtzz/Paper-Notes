@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] QuadSync: Quadrifocal Tensor Synchronization via Tucker Decomposition
 description: >-

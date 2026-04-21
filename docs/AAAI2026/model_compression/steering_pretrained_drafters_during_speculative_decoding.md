@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Steering Pretrained Drafters during Speculative Decoding
 description: >-

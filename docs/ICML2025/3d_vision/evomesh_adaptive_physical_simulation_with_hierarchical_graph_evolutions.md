@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EvoMesh: Adaptive Physical Simulation with Hierarchical Graph Evolutions
 description: >-

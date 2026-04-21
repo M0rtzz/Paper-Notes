@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Single-Index Models via Harmonic Decomposition
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TabArena: A Living Benchmark for Machine Learning on Tabular Data
 description: >-

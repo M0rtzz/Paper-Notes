@@ -1,15 +1,18 @@
-﻿---
+---
 title: >-
   [论文解读] MaIR: A Locality- and Continuity-Preserving Mamba for Image Restoration
 description: >-
-  [CVPR 2025][image restoration] 提出MaIR，通过嵌套S形扫描策略(NSS)同时保持局部性和连续性，序列洗牌注意力(SSA)聚合不同方向序列，在超分/去噪/去模糊/去雾14个数据集上超越40+基线。
+  [CVPR 2025][图像恢复][Mamba] 提出 MaIR，核心创新是嵌套 S 形扫描策略（NSS）通过条带划分保持局部性 + S 形路径保持连续性，以及序列洗牌注意力（SSA）通过通道级注意力智能聚合不同扫描方向的序列，在超分、去噪、去模糊、去雾 4 大任务 14 个数据集上达到 SOTA。
 tags:
   - CVPR 2025
-  - image restoration
+  - 图像恢复
   - Mamba
   - state space model
   - scanning strategy
-  - super-resolution
+  - NSS
+  - SSA
+  - 超分辨率
+  - 去噪
 ---
 
 # MaIR: A Locality- and Continuity-Preserving Mamba for Image Restoration
@@ -143,7 +146,7 @@ tags:
 - [MambaIRv2: Attentive State Space Restoration](mambairv2_attentive_state_space_restoration.md)
 - [Detail-Preserving Latent Diffusion for Stable Shadow Removal](detail-preserving_latent_diffusion_for_stable_shadow_removal.md)
 - [PRE-Mamba: A 4D State Space Model for Ultra-High-Frequent Event Camera Deraining](../../ICCV2025/image_restoration/pre-mamba_a_4d_state_space_model_for_ultra-high-frequent_event_camera_deraining.md)
+- [DarkIR: Robust Low-Light Image Restoration](darkir_robust_low-light_image_restoration.md)
 - [Complexity Experts are Task-Discriminative Learners for Any Image Restoration](complexity_experts_are_task-discriminative_learners_for_any_image_restoration.md)
-- [MoDEM: A Morton-Order Degradation Estimation Mechanism for Adverse Weather Image Restoration](../../NeurIPS2025/image_restoration/modem_a_morton-order_degradation_estimation_mechanism_for_adverse_weather_image_.md)
 
 <!-- RELATED:END -->

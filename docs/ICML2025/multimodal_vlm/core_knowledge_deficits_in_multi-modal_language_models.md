@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Core Knowledge Deficits in Multi-Modal Language Models
 description: >-
@@ -187,6 +187,6 @@ tags:
 - [Evaluating Multimodal Large Language Models on Core Music Perception Tasks](../../NeurIPS2025/multimodal_vlm/evaluating_multimodal_large_language_models_on_core_music_perception_tasks.md)
 - [MMRL: Multi-Modal Representation Learning for Vision-Language Models](../../CVPR2025/multimodal_vlm/mmrl_multi-modal_representation_learning_for_vision-language_models.md)
 - [Vision-Language Models Create Cross-Modal Task Representations](vision-language_models_create_cross-modal_task_representations.md)
-- [Efficient Multi-modal Large Language Models via Progressive Consistency Distillation](../../NeurIPS2025/multimodal_vlm/efficient_multi-modal_large_language_models_via_progressive_consistency_distilla.md)
+- [Jailbreak Large Vision-Language Models Through Multi-Modal Linkage](../../ACL2025/multimodal_vlm/jailbreak_large_vision-language_models_through_multi-modal_linkage.md)
 
 <!-- RELATED:END -->

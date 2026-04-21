@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Detecting Out-of-Distribution through the Lens of Neural Collapse
 description: >-

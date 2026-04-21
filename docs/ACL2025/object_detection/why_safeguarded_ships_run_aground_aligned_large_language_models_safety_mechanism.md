@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Why Safeguarded Ships Run Aground? Aligned Large Language Models' Safety Mechanisms Tend to Be Anchored in The Template Region
 description: >-

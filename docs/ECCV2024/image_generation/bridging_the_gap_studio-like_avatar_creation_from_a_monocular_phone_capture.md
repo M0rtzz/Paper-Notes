@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bridging the Gap: Studio-Like Avatar Creation from a Monocular Phone Capture
 description: >-
@@ -132,8 +132,8 @@ GMug 的输出虽然具有均匀光照和完整覆盖，但分辨率受限于 St
 
 - [Bridging Generalization Gap of Heterogeneous Federated Clients Using Generative Models](../../ICLR2026/image_generation/bridging_generalization_gap_of_heterogeneous_federated_clients_using_generative_.md)
 - [RodinHD: High-Fidelity 3D Avatar Generation with Diffusion Models](rodinhd_high-fidelity_3d_avatar_generation_with_diffusion_models.md)
-- [Bridging the Skeleton-Text Modality Gap: Diffusion-Powered Modality Alignment for Zero-shot Skeleton-based Action Recognition](../../ICCV2025/image_generation/bridging_the_skeleton-text_modality_gap_diffusion-powered_modality_alignment_for.md)
+- [Bridging the Skeleton-Text Modality Gap: Diffusion-Powered Modality Alignment for Zero-shot Skeleton-based Action Recognition](../../ICCV2025/image_generation/bridging_the_skeleton_text_modality_gap_diffusion_powered_modality_alignment_for.md)
+- [VLOGGER: Multimodal Diffusion for Embodied Avatar Synthesis](../../CVPR2025/image_generation/vlogger_multimodal_diffusion_for_embodied_avatar_synthesis.md)
 - [HOI-IDiff: An Image-like Diffusion Method for Human-Object Interaction Detection](../../CVPR2025/image_generation/an_image-like_diffusion_method_for_human-object_interaction_detection.md)
-- [Image Referenced Sketch Colorization Based on Animation Creation Workflow](../../CVPR2025/image_generation/image_referenced_sketch_colorization_based_on_animation_creation_workflow.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3D-RAD: A Comprehensive 3D Radiology Med-VQA Dataset with Multi-Temporal Analysis and Diverse Diagnostic Tasks
 description: >-

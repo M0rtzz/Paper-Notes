@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Minor First, Major Last: A Depth-Induced Implicit Bias of Sharpness-Aware Minimization
 description: >-
@@ -145,6 +145,6 @@ Sharpness-Aware Minimization (SAM) 通过最小化邻域内最坏情况损失来
 - [Saddle-to-Saddle Dynamics Explains A Simplicity Bias Across Neural Network Architectures](saddle-to-saddle_dynamics_explains_a_simplicity_bias_across_neural_network_archi.md)
 - [The Rich and the Simple: On the Implicit Bias of Adam and SGD](../../NeurIPS2025/optimization/the_rich_and_the_simple_on_the_implicit_bias_of_adam_and_sgd.md)
 - [Implicit Bias of Spectral Descent and Muon on Multiclass Separable Data](../../NeurIPS2025/optimization/implicit_bias_of_spectral_descent_and_muon_on_multiclass_separable_data.md)
-- [Understanding Sharpness Dynamics in NN Training with a Minimalist Example: The Effects of Dataset Difficulty, Depth, Stochasticity, and More](../../ICML2025/optimization/understanding_sharpness_dynamics_in_nn_training_with_a_minimalist_example_the_ef.md)
+- [Generalization Below the Edge of Stability: The Role of Data Geometry](generalization_below_the_edge_of_stability_the_role_of_data_geometry.md)
 
 <!-- RELATED:END -->

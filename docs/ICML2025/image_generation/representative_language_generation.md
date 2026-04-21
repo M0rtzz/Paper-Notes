@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Representative Language Generation
 description: >-
@@ -125,8 +125,8 @@ $$\|\mathcal{G}(x_{1:t})|_{\mathcal{A}} - \overline{x_{1:t}}|_{\mathcal{A}}\|_{\
 
 - [Long-Form Speech Generation with Spoken Language Models](long-form_speech_generation_with_spoken_language_models.md)
 - [Language-Guided Image Tokenization for Generation](../../CVPR2025/image_generation/language-guided_image_tokenization_for_generation.md)
+- [Yo'Chameleon: Personalized Vision and Language Generation](../../CVPR2025/image_generation/yochameleon_personalized_vision_and_language_generation.md)
 - [Visual Language Models as Zero-Shot Deepfake Detectors](visual_language_models_as_zero-shot_deepfake_detectors.md)
-- [Understanding and Mitigating Miscalibration in Prompt Tuning for Vision-Language Models](understanding_and_mitigating_miscalibration_in_prompt_tuning_for_vision-language.md)
 - [NTPP: Generative Speech Language Modeling for Dual-Channel Spoken Dialogue via Next-Token-Pair Prediction](ntpp_generative_speech_language_modeling_for_dual-channel_spoken_dialogue_via_ne.md)
 
 <!-- RELATED:END -->

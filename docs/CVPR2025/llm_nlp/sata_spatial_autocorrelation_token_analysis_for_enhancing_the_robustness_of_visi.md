@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] SATA: Spatial Autocorrelation Token Analysis for Enhancing the Robustness of Vision Transformers
 description: >-
-  [CVPR 2025][ViT鲁棒性] 提出SATA方法，利用空间自相关分析对ViT的token进行分组和重加权，无需重新训练即可增强模型鲁棒性
+  [CVPR 2025][LLM/NLP][Transformer] 本文提出SATA（Spatial Autocorrelation Token Analysis），一种免训练的ViT鲁棒性增强方法，通过空间自相关分析将token按空间关联模式分组，利用分组信息重新加权token表示，提升ViT在分布偏移和对抗攻击下的鲁棒性，且不影响干净样本性能。
 tags:
   - CVPR 2025
-  - Vision Transformer
-  - 鲁棒性
+  - LLM/NLP
+  - Transformer
   - 空间自相关
-  - 对抗鲁棒性
+  - token分析
+  - 鲁棒性
+  - 免训练
 ---
 
 # SATA: Spatial Autocorrelation Token Analysis for Enhancing the Robustness of Vision Transformers
@@ -89,10 +91,10 @@ SATA作为即插即用模块应用于预训练ViT的推理阶段：(1) 从ViT的
 
 ## 相关论文
 
-- [L-SWAG: Layer-Sample Wise Activation with Gradients Information for Zero-Shot NAS on Vision Transformers](l-swag_layer-sample_wise_activation_with_gradients_information_for_zero-shot_nas.md)
 - [Learning Spatial Decay for Vision Transformers](../../AAAI2026/llm_nlp/learning_spatial_decay_for_vision_transformers.md)
 - [Spiking Transformer with Spatial-Temporal Attention](spiking_transformer_with_spatial-temporal_attention.md)
-- [Building Vision Models upon Heat Conduction](building_vision_models_upon_heat_conduction.md)
-- [Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior](bridging_the_vision-brain_gap_with_an_uncertainty-aware_blur_prior.md)
+- [L-SWAG: Layer-Sample Wise Activation with Gradients Information for Zero-Shot NAS on Vision Transformers](l-swag_layer-sample_wise_activation_with_gradients_information_for_zero-shot_nas.md)
+- [Rethinking Spiking Self-Attention Mechanism: Implementing a-XNOR Similarity Calculation in Spiking Transformers](rethinking_spiking_self-attention_mechanism_implementing_a-xnor_similarity_calcu.md)
+- [Vision Transformers are Circulant Attention Learners](../../AAAI2026/llm_nlp/vision_transformers_are_circulant_attention_learners.md)
 
 <!-- RELATED:END -->

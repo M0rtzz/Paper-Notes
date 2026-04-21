@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Incremental Sequence Classification with Temporal Consistency
 description: >-

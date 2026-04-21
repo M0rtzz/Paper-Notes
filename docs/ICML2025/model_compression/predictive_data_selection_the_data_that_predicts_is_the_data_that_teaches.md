@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Predictive Data Selection: The Data That Predicts Is the Data That Teaches
 description: >-
@@ -133,7 +133,7 @@ $$\mathbf{S} = \sum_{1 \le i < N} \sum_{i < j \le N} \mathbb{I}\{C_i > C_j\} / Z
 - [DataDecide: How to Predict Best Pretraining Data with Small Experiments](datadecide_how_to_predict_best_pretraining_data_with_small_experiments.md)
 - [Lego Sketch: A Scalable Memory-augmented Neural Network for Sketching Data Streams](lego_sketch_a_scalable_memory-augmented_neural_network_for_sketching_data_stream.md)
 - [Geometric Data Valuation via Leverage Scores](../../NeurIPS2025/model_compression/geometric_data_valuation_via_leverage_scores.md)
+- [Style Quantization for Data-Efficient GAN Training](../../CVPR2025/model_compression/style_quantization_for_data-efficient_gan_training.md)
 - [WildChat-50m: A Deep Dive Into the Role of Synthetic Data in Post-Training](wildchat-50m_a_deep_dive_into_the_role_of_synthetic_data_in_post-training.md)
-- [OuroMamba: A Data-Free Quantization Framework for Vision Mamba](../../ICCV2025/model_compression/ouromamba_a_data-free_quantization_framework_for_vision_mamba.md)
 
 <!-- RELATED:END -->

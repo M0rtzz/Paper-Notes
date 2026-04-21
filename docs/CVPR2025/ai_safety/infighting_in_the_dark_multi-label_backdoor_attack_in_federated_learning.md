@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Infighting in the Dark: Multi-Label Backdoor Attack in Federated Learning
 description: >-

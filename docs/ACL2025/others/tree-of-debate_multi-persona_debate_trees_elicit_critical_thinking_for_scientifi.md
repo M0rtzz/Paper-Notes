@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tree-of-Debate: Multi-Persona Debate Trees Elicit Critical Thinking for Scientific Comparative Analysis
 description: >-

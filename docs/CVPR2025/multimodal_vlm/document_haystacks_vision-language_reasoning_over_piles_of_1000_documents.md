@@ -1,7 +1,10 @@
-﻿---
-title: "Document Haystacks: Vision-Language Reasoning Over Piles of 1000+ Documents"
-description: "大规模文档检索与理解基准(1000+文档)及视觉中心RAG框架V-RAG"
-tags: ["document understanding", "visual question answering", "RAG", "multi-image reasoning", "benchmark"]
+---
+title: >-
+  [论文解读] Document Haystacks: Vision-Language Reasoning Over Piles of 1000+ Documents
+description: >-
+  [多模态] 提出 DocHaystack 和 InfoHaystack 两个大规模文档检索基准（每个问题对应 1000+ 文档），以及 V-RAG——一个视觉中心的检索增强生成框架，在 Recall@1 上比最佳基线提升 9%-11%。
+tags:
+  - 多模态
 ---
 
 # Document Haystacks: Vision-Language Reasoning Over Piles of 1000+ Documents
@@ -137,10 +140,10 @@ GPT-4o 直接处理 200 张文档准确率仅 23.85%，加 V-RAG 后飙升至 72
 
 ## 相关论文
 
-- [Multimodal OCR: Parse Anything from Documents](multimodal_ocr_parse_anything_from_documents.md)
-- [LongDocURL: a Comprehensive Multimodal Long Document Benchmark Integrating Understanding, Reasoning, and Locating](../../ACL2025/multimodal_vlm/longdocurl_multimodal_long_doc.md)
-- [DocThinker: Explainable Multimodal Large Language Models with Rule-based Reinforcement Learning for Document Understanding](../../ICCV2025/multimodal_vlm/docthinker_explainable_multimodal_large_language_models_with.md)
-- [FinMMDocR: Benchmarking Financial Multimodal Reasoning with Scenario Awareness, Document Understanding, and Multi-Step Computation](../../AAAI2026/multimodal_vlm/finmmdocr_benchmarking_financial_multimodal_reasoning_with_scenario_awareness_do.md)
-- [Relation-Rich Visual Document Generator for Visual Information Extraction](relation-rich_visual_document_generator_for_visual_information_extraction.md)
+- [Physics Context Builders: A Modular Framework for Physical Reasoning in Vision-Language Models](../../ICCV2025/multimodal_vlm/physics_context_builders_a_modular_framework_for_physical_reasoning_in_vision-la.md)
+- [Training-Free Personalization via Retrieval and Reasoning on Fingerprints](../../ICCV2025/multimodal_vlm/training-free_personalization_via_retrieval_and_reasoning_on_fingerprints.md)
+- [MAmmoTH-VL: Eliciting Multimodal Reasoning with Instruction Tuning at Scale](../../ACL2025/multimodal_vlm/mammoth_vl_multimodal_reasoning.md)
+- [Can Vision Language Models Understand Mimed Actions?](../../ACL2025/multimodal_vlm/can_vision_language_models_understand_mimed_actions.md)
+- [MaTVLM: Hybrid Mamba-Transformer for Efficient Vision-Language Modeling](../../ICCV2025/multimodal_vlm/matvlm_hybrid_mamba-transformer_for_efficient_vision-language_modeling.md)
 
 <!-- RELATED:END -->

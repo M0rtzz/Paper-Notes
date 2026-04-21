@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning (Approximately) Equivariant Networks via Constrained Optimization
 description: >-

@@ -1,15 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Phantom: Physics-Infused Video Generation via Joint Modeling of Visual and Latent Physical Dynamics
 description: >-
-  [CVPR 2026][视频生成][物理一致性] 提出Phantom，一个物理注入视频生成框架，通过双分支flow-matching架构联合建模视觉内容和潜在物理动力学，利用V-JEPA2的物理感知嵌入作为潜在物理表示，在VideoPhy上PC提升50.4%，Physics-IQ提升33.9%。
+  [CVPR 2026][物理一致视频生成] 提出Phantom框架，在预训练视频扩散模型（Wan2.2-TI2V）之上增加一个物理动力学分支，利用V-JEPA2提取的物理感知嵌入作为潜在物理状态，通过双向交叉注意力联合建模视觉内容和物理动力学演化，在物理一致性基准上大幅超越基线（VideoPhy PC提升50.4%），同时保持视觉质量。
 tags:
   - CVPR 2026
-  - 视频生成
-  - 物理一致性
+  - 物理一致视频生成
   - 流匹配
-  - V-JEPA2
   - 双分支架构
+  - V-JEPA2
+  - 潜在物理动力学
 ---
 
 # Phantom: Physics-Infused Video Generation via Joint Modeling of Visual and Latent Physical Dynamics
@@ -143,8 +143,8 @@ Phantom基于Wan2.2-TI2V-5B构建，采用双分支并行的latent flow-matching
 
 - [SymphoMotion: Joint Control of Camera Motion and Object Dynamics for Coherent Video Generation](symphomotion_joint_control_of_camera_motion_and_object_dynamics_for_coherent_vid.md)
 - [Physical Simulator In-the-Loop Video Generation](physical_simulator_in-the-loop_video_generation.md)
-- [SeeU: Seeing the Unseen World via 4D Dynamics-aware Generation](seeu_seeing_the_unseen_world_via_4d_dynamics-aware_generation.md)
 - [JavisDiT++: Unified Modeling and Optimization for Joint Audio-Video Generation](../../ICLR2026/video_generation/javisdit_unified_modeling_and_optimization_for_joint_audio-video_generation.md)
+- [SeeU: Seeing the Unseen World via 4D Dynamics-aware Generation](seeu_seeing_the_unseen_world_via_4d_dynamics-aware_generation.md)
 - [FuXi-RTM: A Physics-Guided Prediction Framework with Radiative Transfer Modeling](../../ICCV2025/video_generation/fuxi-rtm_a_physics-guided_prediction_framework_with_radiative_transfer_modeling.md)
 
 <!-- RELATED:END -->

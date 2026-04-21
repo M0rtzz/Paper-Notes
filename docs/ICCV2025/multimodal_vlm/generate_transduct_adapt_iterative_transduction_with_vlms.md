@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GTA-CLIP: Generate, Transduct, Adapt — Iterative Transduction with VLMs
 description: >-

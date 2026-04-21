@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unlocking General Long Chain-of-Thought Reasoning Capabilities of Large Language Models via Representation Engineering
 description: >-

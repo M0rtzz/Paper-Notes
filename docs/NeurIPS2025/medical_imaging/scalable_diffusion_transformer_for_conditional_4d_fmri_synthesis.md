@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scalable Diffusion Transformer for Conditional 4D fMRI Synthesis
 description: >-

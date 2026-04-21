@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CharaConsist: Fine-Grained Consistent Character Generation
 description: >-
@@ -179,9 +179,9 @@ CharaConsist 在几乎所有指标上取得最优，尤其在背景一致性（C
 ## 相关论文
 
 - [TaxaDiffusion: Progressively Trained Diffusion Model for Fine-Grained Species Generation](taxadiffusion_progressively_trained_diffusion_model_for_fine-grained_species_gen.md)
+- [FineLIP: Extending CLIP's Reach via Fine-Grained Alignment with Longer Text Inputs](../../CVPR2025/image_generation/finelip_extending_clips_reach_via_fine-grained_alignment_with_longer_text_inputs.md)
 - [CLIP Under the Microscope: A Fine-Grained Analysis of Multi-Object Representation](../../CVPR2025/image_generation/clip_under_the_microscope_a_fine-grained_analysis_of_multi-object_representation.md)
 - [Multi-turn Consistent Image Editing](multi-turn_consistent_image_editing.md)
 - [AnyPortal: Zero-Shot Consistent Video Background Replacement](anyportal_zero-shot_consistent_video_background_replacement.md)
-- [FineMatch: Aspect-based Fine-grained Image and Text Mismatch Detection and Correction](../../ECCV2024/image_generation/finematch_aspect-based_fine-grained_image_and_text_mismatch_detection_and_correc.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] An FPGA Implementation of Displacement Vector Search for Intra Pattern Copy in JPEG XS
 description: >-
@@ -143,10 +143,10 @@ DV搜索架构包含两个主引擎：**残差计算引擎**（从DRAM获取IPC 
 
 ## 相关论文
 
+- [AutoSSVH: Exploring Automated Frame Sampling for Efficient Self-Supervised Video Hashing](autossvh_exploring_automated_frame_sampling_for_efficient_self-supervised_video_h.md)
+- [DeRS: Towards Extremely Efficient Upcycled Mixture-of-Experts Models](ders_towards_extremely_efficient_upcycled_mixture-of-experts_models.md)
 - [CoA: Towards Real Image Dehazing via Compression-and-Adaptation](coa_towards_real_image_dehazing_via_compression-and-adaptation.md)
 - [Embracing Collaboration Over Competition: Condensing Multiple Prompts for Visual In-Context Learning](embracing_collaboration_over_competition_condensing_multiple_prompts_for_visual_.md)
-- [DeRS: Towards Extremely Efficient Upcycled Mixture-of-Experts Models](ders_towards_extremely_efficient_upcycled_mixture-of-experts_models.md)
-- [Emphasizing Discriminative Features for Dataset Distillation in Complex Scenarios](emphasizing_discriminative_features_for_dataset_distillation_in_complex_scenario.md)
-- [Targeted Forgetting of Image Subgroups in CLIP Models](targeted_forgetting_of_image_subgroups_in_clip_models.md)
+- [DyCoke: Dynamic Compression of Tokens for Fast Video Large Language Models](dycoke_dynamic_compression_of_tokens_for_fast_video_large_language_models.md)
 
 <!-- RELATED:END -->

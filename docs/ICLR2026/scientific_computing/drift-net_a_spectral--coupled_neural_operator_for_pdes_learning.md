@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DRIFT-Net: A Spectral--Coupled Neural Operator for PDEs Learning
 description: >-

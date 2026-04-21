@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Don't Reinvent the Wheel: Efficient Instruction-Following Text Embedding based on Guided Space Transformation
 description: >-

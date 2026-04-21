@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Grasp Any Region: Towards Precise, Contextual Pixel Understanding for Multimodal LLMs
 description: >-

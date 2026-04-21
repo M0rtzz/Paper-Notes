@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EditInfinity: Image Editing with Binary-Quantized Generative Models
 description: >-

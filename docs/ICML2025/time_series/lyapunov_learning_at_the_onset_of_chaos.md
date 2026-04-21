@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Lyapunov Learning at the Onset of Chaos
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generate, Refine, and Encode: Leveraging Synthesized Novel Samples for On-the-Fly Fine-Grained Category Discovery
 description: >-

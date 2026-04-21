@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] IPO: Your Language Model is Secretly a Preference Classifier
 description: >-

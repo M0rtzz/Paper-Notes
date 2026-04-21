@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Quantitative Convergence of Trained Single Layer Neural Networks to Gaussian Processes
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Movie101v2: Improved Movie Narration Benchmark
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Conditional Balance: Improving Multi-Conditioning Trade-Offs in Image Generation
 description: >-
@@ -113,8 +113,8 @@ tags:
 
 - [Trade-offs in Image Generation: How Do Different Dimensions Interact?](../../ICCV2025/image_generation/trade-offs_in_image_generation_how_do_different_dimensions_interact.md)
 - [Improving Editability in Image Generation with Layer-wise Memory](improving_editability_in_image_generation_with_layer-wise_memory.md)
+- [Rectified Diffusion Guidance for Conditional Generation](rectified_diffusion_guidance_for_conditional_generation.md)
 - [Enhancing Dance-to-Music Generation via Negative Conditioning Latent Diffusion Model](enhancing_dance-to-music_generation_via_negative_conditioning_latent_diffusion_m.md)
-- [Controllable Human Image Generation with Personalized Multi-Garments](controllable_human_image_generation_with_personalized_multi-garments.md)
-- [coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](codrawagents_a_multi-agent_dialogue_framework_for_compositional_image_generation.md)
+- [Random Conditioning for Diffusion Model Compression with Distillation](random_conditioning_for_diffusion_model_compression_with_distillation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] What Can RL Bring to VLA Generalization? An Empirical Study
 description: >-

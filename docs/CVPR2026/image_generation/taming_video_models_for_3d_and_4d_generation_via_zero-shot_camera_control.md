@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Taming Video Models for 3D and 4D Generation via Zero-Shot Camera Control
 description: >-

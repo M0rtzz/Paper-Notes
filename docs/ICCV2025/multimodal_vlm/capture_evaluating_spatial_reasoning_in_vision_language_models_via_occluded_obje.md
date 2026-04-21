@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CAPTURe: Evaluating Spatial Reasoning in Vision Language Models via Occluded Object Counting
 description: >-

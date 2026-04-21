@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OpenRSD: Towards Open-prompts for Object Detection in Remote Sensing Images
 description: >-

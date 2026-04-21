@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3DFG-PIFu: 3D Feature Grids for Human Digitization from Sparse Views
 description: >-
@@ -135,6 +135,6 @@ tags:
 - [HPFF: Hierarchical Locally Supervised Learning with Patch Feature Fusion](hpff_hierarchical_locally_supervised_learning_with_patch_feature_fusion.md)
 - [Synchronous Diffusion for Unsupervised Smooth Non-Rigid 3D Shape Matching](synchronous_diffusion_for_unsupervised_smooth_non-rigid_3d_shape_matching.md)
 - [Align before Collaborate: Mitigating Feature Misalignment for Robust Multi-Agent Perception](align_before_collaborate_mitigating_feature_misalignment_for_robust_multi-agent_.md)
-- [Distributionally Robust Feature Selection](../../NeurIPS2025/others/distributionally_robust_feature_selection.md)
+- [AnyUp: Universal Feature Upsampling](../../ICLR2026/others/anyup_universal_feature_upsampling.md)
 
 <!-- RELATED:END -->

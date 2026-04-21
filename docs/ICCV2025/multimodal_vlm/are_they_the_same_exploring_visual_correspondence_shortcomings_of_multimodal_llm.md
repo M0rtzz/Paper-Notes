@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Are They the Same? Exploring Visual Correspondence Shortcomings of Multimodal LLMs
 description: >-

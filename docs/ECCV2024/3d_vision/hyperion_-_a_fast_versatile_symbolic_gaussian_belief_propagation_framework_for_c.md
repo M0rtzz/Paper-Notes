@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Hyperion: A Fast, Versatile Symbolic Gaussian Belief Propagation Framework for Continuous-Time SLAM
 description: >-
-  [ECCV 2024][3D视觉] 提出首个连续时间高斯置信传播SLAM框架，基于SymForce自动生成超高效B/Z样条实现（2.43-110x加速），支持分布式多智能体推理
+  [ECCV 2024][3D视觉][连续时间SLAM] 本文提出Hyperion，一个基于SymForce符号计算框架自动生成超高效B/Z样条实现的连续时间高斯置信传播（GBP）SLAM框架，在运动跟踪和定位场景中达到与传统NLLS求解器（Ceres）相当的精度，同时天然支持分布式多智能体推理。
 tags:
   - ECCV 2024
-  - SLAM
+  - 3D视觉
+  - 连续时间SLAM
   - 高斯置信传播
-  - 连续时间
   - B样条
+  - 分布式优化
+  - 符号计算
 ---
 
 # Hyperion: A Fast, Versatile Symbolic Gaussian Belief Propagation Framework for Continuous-Time SLAM
@@ -142,7 +144,7 @@ GBP的优化目标等价于最小化加权残差平方和 $\Theta^* = \arg\min_\
 
 - [VersatileGaussian: Real-Time Neural Rendering for Versatile Tasks Using Gaussian Splatting](versatilegaussian_real-time_neural_rendering_for_versatile_tasks_using_gaussian_.md)
 - [SGS-SLAM: Semantic Gaussian Splatting for Neural Dense SLAM](sgs-slam_semantic_gaussian_splatting_for_neural_dense_slam.md)
-- [I²-SLAM: Inverting Imaging Process for Robust Photorealistic Dense SLAM](i2-slam_inverting_imaging_process_for_robust_photorealistic_dense_slam.md)
+- [Track Everything Everywhere Fast and Robustly](track_everything_everywhere_fast_and_robustly.md)
 - [CG-SLAM: Efficient Dense RGB-D SLAM in a Consistent Uncertainty-Aware 3D Gaussian Field](cg-slam_efficient_dense_rgb-d_slam_in_a_consistent_uncertainty-aware_3d_gaussian.md)
 - [GaussReg: Fast 3D Registration with Gaussian Splatting](gaussreg_fast_3d_registration_with_gaussian_splatting.md)
 

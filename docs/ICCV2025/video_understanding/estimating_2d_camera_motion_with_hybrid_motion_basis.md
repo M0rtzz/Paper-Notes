@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Estimating 2D Camera Motion with Hybrid Motion Basis
 description: >-

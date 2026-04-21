@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Evolve to Inspire: Novelty Search for Diverse Image Generation
 description: >-
@@ -147,6 +147,6 @@ $$\text{VS}(K) = \exp\left(-\sum_{i=1}^{n} \lambda_i \log \lambda_i\right)$$
 - [Continuous Uniqueness and Novelty Metrics for Generative Modeling of Inorganic Crystals](continuous_uniqueness_and_novelty_metrics_for_generative_modeling_of_inorganic_c.md)
 - [LoRAverse: A Submodular Framework to Retrieve Diverse Adapters for Diffusion Models](../../ICCV2025/image_generation/loraverse_a_submodular_framework_to_retrieve_diverse_adapters_for_diffusion_mode.md)
 - [Watermarking Autoregressive Image Generation](watermarking_autoregressive_image_generation.md)
-- [DiverseFlow: Sample-Efficient Diverse Mode Coverage in Flows](../../CVPR2025/image_generation/diverseflow_sample-efficient_diverse_mode_coverage_in_flows.md)
+- [Exposing Hidden Biases in Text-to-Image Models via Automated Prompt Search](../../ICLR2026/image_generation/exposing_hidden_biases_in_text-to-image_models_via_automated_prompt_search.md)
 
 <!-- RELATED:END -->

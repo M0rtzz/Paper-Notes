@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BootPlace: Bootstrapped Object Placement with Detection Transformers
 description: >-
@@ -122,8 +122,8 @@ BootPlace 分两个模块。**模块一（区域检测）**：将场景图像中
 
 - [MetaShadow: Object-Centered Shadow Detection, Removal, and Synthesis](metashadow_object-centered_shadow_detection_removal_and_synthesis.md)
 - [HOI-IDiff: An Image-like Diffusion Method for Human-Object Interaction Detection](an_image-like_diffusion_method_for_human-object_interaction_detection.md)
+- [ORIDa: Object-Centric Real-World Image Composition Dataset](orida_object-centric_real-world_image_composition_dataset.md)
 - [Composing Parts for Expressive Object Generation](composing_parts_for_expressive_object_generation.md)
-- [Multitwine: Multi-Object Compositing with Text and Layout Control](multitwine_multi-object_compositing_with_text_and_layout_control.md)
-- [Any-Resolution AI-Generated Image Detection by Spectral Learning](any-resolution_ai-generated_image_detection_by_spectral_learning.md)
+- [TinyFusion: Diffusion Transformers Learned Shallow](tinyfusion_diffusion_transformers_learned_shallow.md)
 
 <!-- RELATED:END -->

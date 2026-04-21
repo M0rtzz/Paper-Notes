@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UniAVGen: Unified Audio and Video Generation with Asymmetric Cross-Modal Interactions
 description: >-

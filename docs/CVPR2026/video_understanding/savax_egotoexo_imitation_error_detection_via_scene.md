@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SAVA-X: Ego-to-Exo Imitation Error Detection via Scene-Adaptive View Alignment and Bidirectional Cross View Fusion
 description: >-

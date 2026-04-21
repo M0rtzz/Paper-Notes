@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neural Stochastic Differential Equations on Compact State Spaces: Theory, Methods and Applications
 description: >-
@@ -125,6 +125,6 @@ tags:
 - [Out-of-Distribution Detection Methods Answer the Wrong Questions](out-of-distribution_detection_methods_answer_the_wrong_questions.md)
 - [H-DDx: A Hierarchical Evaluation Framework for Differential Diagnosis](../../NeurIPS2025/medical_imaging/h-ddx_a_hierarchical_evaluation_framework_for_differential_diagnosis.md)
 - [SciVid: Cross-Domain Evaluation of Video Models in Scientific Applications](../../ICCV2025/medical_imaging/scivid_cross-domain_evaluation_of_video_models_in_scientific_applications.md)
-- [BarcodeMamba+: Advancing State-Space Models for Fungal Biodiversity Research](../../NeurIPS2025/medical_imaging/barcodemamba_advancing_state-space_models_for_fungal_biodiversity_research.md)
+- [DyG-Mamba: Continuous State Space Modeling on Dynamic Graphs](../../NeurIPS2025/medical_imaging/dyg-mamba_continuous_state_space_modeling_on_dynamic_graphs.md)
 
 <!-- RELATED:END -->

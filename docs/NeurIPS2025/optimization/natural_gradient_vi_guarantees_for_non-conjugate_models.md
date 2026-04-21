@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Natural Gradient VI: Guarantees for Non-Conjugate Models
 description: >-

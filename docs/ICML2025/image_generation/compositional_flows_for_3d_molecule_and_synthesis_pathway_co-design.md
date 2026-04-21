@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Compositional Flows for 3D Molecule and Synthesis Pathway Co-design
 description: >-
@@ -149,6 +149,6 @@ LIT-PCBA 基准（15 个药物靶标）：
 - [Normalizing Flows are Capable Generative Models](normalizing_flows_are_capable_generative_models.md)
 - [PhysGen: Physically Grounded 3D Shape Generation for Industrial Design](../../CVPR2026/image_generation/physgen_physically_grounded_3d_shape_generation_for_industrial_design.md)
 - [Piloting Structure-Based Drug Design via Modality-Specific Optimal Schedule](piloting_structure-based_drug_design_via_modality-specific_optimal_schedule.md)
-- [From Elements to Design: A Layered Approach for Automatic Graphic Design Composition](../../CVPR2025/image_generation/from_elements_to_design_a_layered_approach_for_automatic_graphic_design_composit.md)
+- [ShapeWords: Guiding Text-to-Image Synthesis with 3D Shape-Aware Prompts](../../CVPR2025/image_generation/shapewords_guiding_text-to-image_synthesis_with_3d_shape-aware_prompts.md)
 
 <!-- RELATED:END -->

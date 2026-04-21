@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FastLSQ: Solving PDEs in One Shot via Fourier Features with Exact Analytical Derivatives
 description: >-

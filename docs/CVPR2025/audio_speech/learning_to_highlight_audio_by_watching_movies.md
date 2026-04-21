@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning to Highlight Audio by Watching Movies
 description: >-
@@ -115,10 +115,10 @@ VisAH在所有5个指标上均大幅领先，MAG降低56%、W-dis降低59%。
 
 ## 相关论文
 
-- [PACE: Pretrained Audio Continual Learning](../../ICLR2026/audio_speech/pace_pretrained_audio_continual_learning.md)
 - [LiveCC: Learning Video LLM with Streaming Speech Transcription at Scale](livecc_learning_video_llm_with_streaming_speech_transcription_at_scale.md)
+- [PACE: Pretrained Audio Continual Learning](../../ICLR2026/audio_speech/pace_pretrained_audio_continual_learning.md)
 - [Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](../../ICCV2025/audio_speech/zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
-- [Towards Open-Vocabulary Audio-Visual Event Localization](towards_open-vocabulary_audio-visual_event_localization.md)
+- [CoLeaF: A Contrastive-Collaborative Learning Framework for Weakly Supervised Audio-Visual Video Parsing](../../ECCV2024/audio_speech/coleaf_a_contrastive-collaborative_learning_framework_for_weakly_supervised_audi.md)
 - [DistinctAD: Distinctive Audio Description Generation in Contexts](distinctad_distinctive_audio_description_generation_in_contexts.md)
 
 <!-- RELATED:END -->

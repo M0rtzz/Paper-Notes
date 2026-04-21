@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Data Whitening Improves Sparse Autoencoder Learning
 description: >-

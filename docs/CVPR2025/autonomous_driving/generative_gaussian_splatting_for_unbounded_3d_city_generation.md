@@ -1,7 +1,16 @@
-﻿---
-title: "Generative Gaussian Splatting for Unbounded 3D City Generation"
-description: "首个基于3D高斯的无界城市生成框架GaussianCity，通过BEV-Point紧凑表示实现恒定显存的大规模城市合成"
-tags: ["3D高斯", "城市生成", "BEV", "场景生成", "3D-GS"]
+---
+title: >-
+  [论文解读] Generative Gaussian Splatting for Unbounded 3D City Generation
+description: >-
+  [CVPR 2025][自动驾驶][3D高斯溅射] 提出 GaussianCity，首个将 3D 高斯溅射应用于无界 3D 城市生成的框架，通过引入 BEV-Point 紧凑中间表示使显存占用与场景规模解耦（保持恒定），并设计 Point Serializer 将无序 BEV 点转为有序序列以捕获结构和上下文特征，在无人机视角和街景视角的城市生成中达到 SOTA，渲染速度比 CityDreamer（基于 NeRF）快 60 倍。
+tags:
+  - CVPR 2025
+  - 自动驾驶
+  - 3D高斯溅射
+  - 无界城市生成
+  - BEV-Point表示
+  - 高效渲染
+  - 场景合成
 ---
 
 # Generative Gaussian Splatting for Unbounded 3D City Generation
@@ -122,9 +131,9 @@ GaussianCity 在 FID/KID 指标上全面优于 CityDreamer，且渲染速度快 
 ## 相关论文
 
 - [SceneDiffuser++: City-Scale Traffic Simulation via a Generative World Model](scenediffuser_city-scale_traffic_simulation_via_a_generative_world_model.md)
-- [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](../../ICCV2025/autonomous_driving/3d_gaussian_splatting_driven_multiview_robust_physical_adver.md)
-- [GaussianWorld: Gaussian World Model for Streaming 3D Occupancy Prediction](gaussianworld_gaussian_world_model_for_streaming_3d_occupancy_prediction.md)
+- [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](../../ICCV2025/autonomous_driving/3d_gaussian_splatting_driven_multi-view_robust_physical_adversarial_camouflage_g.md)
 - [EVolSplat: Efficient Volume-based Gaussian Splatting for Urban View Synthesis](evolsplat_efficient_volume-based_gaussian_splatting_for_urban_view_synthesis.md)
-- [CCL-LGS: Contrastive Codebook Learning for 3D Language Gaussian Splatting](../../ICCV2025/autonomous_driving/ccl-lgs_contrastive_codebook_learning_for_3d_language_gaussian_splatting.md)
+- [Toward Real-World BEV Perception: Depth Uncertainty Estimation via Gaussian Splatting](toward_real-world_bev_perception_depth_uncertainty_estimation_via_gaussian_splat.md)
+- [LR-SGS: Robust LiDAR-Reflectance-Guided Salient Gaussian Splatting for Self-Driving Scene Reconstruction](lr-sgs_robust_lidar-reflectance-guided_salient_gaussian_splatting_for_self-drivi.md)
 
 <!-- RELATED:END -->

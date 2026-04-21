@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EfficientFSL: Enhancing Few-Shot Classification via Query-Only Tuning in Vision Transformers
 description: >-
@@ -203,6 +203,6 @@ EfficientFSL 的输入是预训练 ViT 各层的中间表示，通过以下模�
 - [QuEPT: Quantized Elastic Precision Transformers with One-Shot Calibration for Multi-Bit Switching](quept_quantized_elastic_precision_transformers_with_one-shot_calibration_for_mul.md)
 - [Compensating Distribution Drifts in Class-incremental Learning of Pre-trained Vision Transformers](compensating_distribution_drifts_in_class-incremental_learning_of_pre-trained_vi.md)
 - [BinaryAttention: One-Bit QK-Attention for Vision and Diffusion Transformers](../../CVPR2026/model_compression/binaryattention_one-bit_qk-attention_for_vision_and_diffusion_transformers.md)
-- [Enhancing Semi-supervised Learning with Zero-shot Pseudolabels](../../NeurIPS2025/model_compression/enhancing_semi-supervised_learning_with_zero-shot_pseudolabels.md)
+- [Logits DeConfusion with CLIP for Few-Shot Learning](../../CVPR2025/model_compression/logits_deconfusion_with_clip_for_few-shot_learning.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AstaBench: Rigorous Benchmarking of AI Agents with a Scientific Research Suite
 description: >-

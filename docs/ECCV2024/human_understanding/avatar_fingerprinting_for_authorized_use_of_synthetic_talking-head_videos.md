@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Avatar Fingerprinting for Authorized Use of Synthetic Talking-Head Videos
 description: >-
-  [ECCV 2024][人体理解] 提出Avatar指纹识别任务，通过学习与外观无关的面部运动签名来验证合成说话头视频的驱动身份
+  [ECCV 2024][人体理解][Avatar指纹识别] 本文定义了"Avatar指纹识别"这一新任务——验证合成说话头视频中驱动表情的真实身份，贡献了迄今最大规模的面部重建数据集NVFAIR（161个身份），并提出基于归一化面部关键点距离和时序CNN的基线方法，通过学习与外观无关的面部运动签名实现身份验证（平均AUC 0.85），且能泛化到未见过的生成器（AUC 0.83）。
 tags:
   - ECCV 2024
   - 人体理解
-  - 面部重建
-  - 深度伪造检测
+  - Avatar指纹识别
+  - 面部运动签名
+  - 说话头生成
   - 身份验证
+  - 深度伪造
 ---
 
 # Avatar Fingerprinting for Authorized Use of Synthetic Talking-Head Videos
@@ -130,10 +132,10 @@ Avatar指纹识别的身份验证性能：
 
 ## 相关论文
 
+- [Towards High-fidelity 3D Talking Avatar with Personalized Dynamic Texture](../../CVPR2025/human_understanding/towards_high-fidelity_3d_talking_avatar_with_personalized_dynamic_texture.md)
+- [DualTalk: Dual-Speaker Interaction for 3D Talking Head Conversations](../../CVPR2025/human_understanding/dualtalk_dual-speaker_interaction_for_3d_talking_head_conversations.md)
 - [Generalizable End-to-End Tool-Use RL with Synthetic CodeGym](../../ICLR2026/human_understanding/generalizable_end-to-end_tool-use_rl_with_synthetic_codegym.md)
 - [VideoClusterNet: Self-Supervised and Adaptive Face Clustering for Videos](videoclusternet_self-supervised_and_adaptive_face_clustering_for_videos.md)
-- [FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video](../../CVPR2025/human_understanding/fate_full-head_gaussian_avatar_with_textural_editing_from_monocular_video.md)
 - [Event-based Head Pose Estimation: Benchmark and Method](event-based_head_pose_estimation_benchmark_and_method.md)
-- [3DGazeNet: Generalizing 3D Gaze Estimation with Weak-Supervision from Synthetic Views](3dgazenet_generalizing_3d_gaze_estimation_with_weak-supervision_from_synthetic_v.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] To Code or not to Code? Adaptive Tool Integration for Math Language Models via Expectation-Maximization
 description: >-
@@ -140,7 +140,7 @@ ToRA和Mammoth是早期CoT-Code混合方法的代表，但都依赖SFT从curated
 
 ## 相关论文
 
-- [ToolCoder: A Systematic Code-Empowered Tool Learning Framework for Large Language Models](toolcoder_code_empowered_tool_learning.md)
+- [ToolCoder: A Systematic Code-Empowered Tool Learning Framework for Large Language Models](toolcoder_a_systematic_code-empowered_tool_learning_framework_for_large_language.md)
 - [OpenCoder: The Open Cookbook for Top-Tier Code Large Language Models](opencoder_the_open_cookbook_for_top-tier_code_large_language_models.md)
 - [Interactive and Expressive Code-Augmented Planning with Large Language Models](interactive_and_expressive_code-augmented_planning_with_large_language_models.md)
 - [STEM-PoM: Evaluating Language Models Math-Symbol Reasoning in Document Parsing](stem-pom_evaluating_language_models_math-symbol_reasoning_in_document_parsing.md)

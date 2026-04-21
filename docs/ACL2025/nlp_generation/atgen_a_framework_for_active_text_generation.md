@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ATGen: A Framework for Active Text Generation
 description: >-

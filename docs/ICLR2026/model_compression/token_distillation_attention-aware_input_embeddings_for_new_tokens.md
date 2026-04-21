@@ -148,9 +148,9 @@ $$\min_{\mathbf{e}^{\star} \in \mathbb{R}^d} \mathbb{E}_{s \sim S} \left[ \frac{
 ## 相关论文
 
 - [TurboBoA: Faster and Exact Attention-aware Quantization without Backpropagation](turboboa_faster_and_exact_attention-aware_quantization_without_backpropagation.md)
-- [FASA: Frequency-aware Sparse Attention](fasa_frequency-aware_sparse_attention.md)
 - [A Token is Worth over 1,000 Tokens: Efficient Knowledge Distillation through Low-Rank Clone](../../NeurIPS2025/model_compression/a_token_is_worth_over_1000_tokens_efficient_knowledge_distillation_through_low-r.md)
 - [TiTok: Transfer Token-level Knowledge via Contrastive Excess to Transplant LoRA](titok_transfer_token-level_knowledge_via_contrastive_excess_to_transplant_lora.md)
 - [Parallel Token Prediction for Language Models](parallel_token_prediction_for_language_models.md)
+- [Compute-Optimal Quantization-Aware Training](compute-optimal_quantization-aware_training.md)
 
 <!-- RELATED:END -->

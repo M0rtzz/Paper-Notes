@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On Expressive Power of Looped Transformers: Theoretical Analysis and Enhancement via Timestep Encoding
 description: >-
@@ -154,8 +154,8 @@ Theorem 4.2 证明：加入时间步编码后，模型可以**精确记忆**目�
 
 ## 相关论文
 
-- [Theoretical Limitations of Ensembles in the Age of Overparameterization](theoretical_limitations_of_ensembles_in_the_age_of_overparameterization.md)
 - [SATA: Spatial Autocorrelation Token Analysis for Enhancing the Robustness of Vision Transformers](../../CVPR2025/llm_nlp/sata_spatial_autocorrelation_token_analysis_for_enhancing_the_robustness_of_visi.md)
+- [Theoretical Limitations of Ensembles in the Age of Overparameterization](theoretical_limitations_of_ensembles_in_the_age_of_overparameterization.md)
 - [Interactive and Expressive Code-Augmented Planning with Large Language Models](../../ACL2025/llm_nlp/interactive_and_expressive_code-augmented_planning_with_large_language_models.md)
 - [The Impact of Token Granularity on the Predictive Power of Language Model Surprisal](../../ACL2025/llm_nlp/token_granularity_impact.md)
 - [Theory of Mind in Large Language Models: Assessment and Enhancement](../../ACL2025/llm_nlp/theory_of_mind_llm.md)

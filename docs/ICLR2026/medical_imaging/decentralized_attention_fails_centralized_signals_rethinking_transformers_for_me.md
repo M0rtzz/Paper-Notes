@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Decentralized Attention Fails Centralized Signals: Rethinking Transformers for Medical Time Series
 description: >-

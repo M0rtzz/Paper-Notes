@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HOP: Heterogeneous Topology-based Multimodal Entanglement for Co-Speech Gesture Generation
 description: >-

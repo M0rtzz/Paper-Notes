@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the $O(1/T)$ Convergence of Alternating Gradient Descent-Ascent in Bilinear Games
 description: >-

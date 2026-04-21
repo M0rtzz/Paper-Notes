@@ -1,16 +1,18 @@
-﻿---
+---
 title: >-
   [论文解读] Kiss3DGen: Repurposing Image Diffusion Models for 3D Asset Generation
 description: >-
-  [CVPR 2025][3D generation] 提出 Kiss3DGen，将 3D 生成问题转化为 2D 图像生成——微调 Flux 模型生成包含多视图 RGB 和法线图的 "3D Bundle Image"，再经 mesh 重建得到完整 3D 模型，支持 text-to-3D、image-to-3D、3D 编辑和增强。
+  [CVPR 2025][3D视觉][3D generation] 将 3D 资产生成转化为 2D 图像生成问题——微调 Flux DiT 模型生成"3D Bundle Image"（四视图 RGB + 法线图拼贴），再用 ISOMER 重建 3D mesh，并通过 ControlNet 扩展支持 3D 增强和编辑。
 tags:
   - CVPR 2025
+  - 3D视觉
   - 3D generation
-  - diffusion model
+  - 3D Bundle Image
+  - Flux
   - LoRA
-  - multi-view
-  - 法线图
   - ControlNet
+  - text-to-3D
+  - mesh enhancement
 ---
 
 # Kiss3DGen: Repurposing Image Diffusion Models for 3D Asset Generation
@@ -145,9 +147,9 @@ tags:
 ## 相关论文
 
 - [Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation](../../ICCV2025/3d_vision/repurposing_2d_diffusion_models_with_gaussian_atlas_for_3d_generation.md)
-- [Fine-Grained Erasure in Text-to-Image Diffusion-based Foundation Models](fine-grained_erasure_in_text-to-image_diffusion-based_foundation_models.md)
+- [Ouroboros3D: Image-to-3D Generation via 3D-aware Recursive Diffusion](ouroboros3d_image-to-3d_generation_via_3d-aware_recursive_diffusion.md)
 - [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
-- [MVGenMaster: Scaling Multi-View Generation from Any Image via 3D Priors Enhanced Diffusion Model](mvgenmaster_scaling_multi-view_generation_from_any_image_via_3d_priors_enhanced_.md)
-- [More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](../../NeurIPS2025/3d_vision/more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
+- [Fine-Grained Erasure in Text-to-Image Diffusion-based Foundation Models](fine-grained_erasure_in_text-to-image_diffusion-based_foundation_models.md)
+- [PreciseCam: Precise Camera Control for Text-to-Image Generation](precisecam_precise_camera_control_for_text-to-image_generation.md)
 
 <!-- RELATED:END -->

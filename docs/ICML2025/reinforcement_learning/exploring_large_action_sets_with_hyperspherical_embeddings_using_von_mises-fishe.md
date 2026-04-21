@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploring Large Action Sets with Hyperspherical Embeddings using von Mises-Fisher Sampling
 description: >-
@@ -173,8 +173,8 @@ $$P_0(a | n, d, V, \kappa) = \frac{f_{\text{vMF}}(A | V, \kappa) \cdot \mathcal{
 
 - [UME-R1: Exploring Reasoning-Driven Generative Multimodal Embeddings](../../ICLR2026/reinforcement_learning/ume-r1_exploring_reasoning-driven_generative_multimodal_embeddings.md)
 - [Action-Constrained Imitation Learning](action-constrained_imitation_learning.md)
-- [Fast and Robust: Task Sampling with Posterior and Diversity Synergies for Adaptive Decision-Makers in Randomized Environments](fast_and_robust_task_sampling_with_posterior_and_diversity_synergies_for_adaptiv.md)
 - [Demystifying the Paradox of Importance Sampling with an Estimated History-Dependent Behavior Policy in Off-Policy Evaluation](demystifying_the_paradox_of_importance_sampling_with_an_estimated_history-depend.md)
+- [Fast and Robust: Task Sampling with Posterior and Diversity Synergies for Adaptive Decision-Makers in Randomized Environments](fast_and_robust_task_sampling_with_posterior_and_diversity_synergies_for_adaptiv.md)
 - [Action-Dependent Optimality-Preserving Reward Shaping (ADOPS)](action-dependent_optimality-preserving_reward_shaping.md)
 
 <!-- RELATED:END -->

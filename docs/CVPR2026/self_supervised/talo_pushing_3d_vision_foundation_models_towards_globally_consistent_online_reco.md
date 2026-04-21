@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TALO: Pushing 3D Vision Foundation Models Towards Globally Consistent Online Reconstruction
 description: >-
@@ -127,7 +127,7 @@ TALO 将连续多相机视频流分割为带重叠帧的子图序列，每个子
 - [Implicit Modeling for Transferability Estimation of Vision Foundation Models](../../NeurIPS2025/self_supervised/implicit_modeling_for_transferability_estimation_of_vision_foundation_models.md)
 - [LoftUp: Learning a Coordinate-Based Feature Upsampler for Vision Foundation Models](../../ICCV2025/self_supervised/loftup_learning_a_coordinatebased_feature_upsampler_for_visi.md)
 - [LaS-Comp: Zero-shot 3D Completion with Latent-Spatial Consistency](las-comp_zero-shot_3d_completion_with_latent-spatial_consistency.md)
-- [Vision Transformers Need More Than Registers](vision_transformers_need_more_than_registers.md)
+- [Vision Transformers Need More Than Registers](vit_need_more_than_registers.md)
 - [Robust Tabular Foundation Models](../../AAAI2026/self_supervised/robust_tabular_foundation_models.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EvaLearn: Quantifying the Learning Capability and Efficiency of LLMs via Sequential Problem Solving
 description: >-

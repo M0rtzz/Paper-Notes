@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Efficient General Feature Prediction in Masked Skeleton Modeling
 description: >-

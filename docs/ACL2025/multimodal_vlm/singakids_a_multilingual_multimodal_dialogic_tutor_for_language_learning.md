@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SingaKids: A Multilingual Multimodal Dialogic Tutor for Language Learning
 description: >-

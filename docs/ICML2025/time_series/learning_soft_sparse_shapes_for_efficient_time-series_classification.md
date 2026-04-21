@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Soft Sparse Shapes for Efficient Time-Series Classification
 description: >-

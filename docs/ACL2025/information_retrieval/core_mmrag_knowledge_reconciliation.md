@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoRe-MMRAG: Cross-Source Knowledge Reconciliation for Multimodal RAG
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GAICo: A Deployed and Extensible Framework for Evaluating Diverse and Multimodal Generative AI Outputs
 description: >-

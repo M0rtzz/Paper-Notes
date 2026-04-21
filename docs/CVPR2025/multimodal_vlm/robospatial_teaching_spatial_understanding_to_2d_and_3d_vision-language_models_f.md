@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RoboSpatial: Teaching Spatial Understanding to 2D and 3D Vision-Language Models for Robotics
 description: >-

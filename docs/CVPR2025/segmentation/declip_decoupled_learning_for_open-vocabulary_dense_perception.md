@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DeCLIP: Decoupled Learning for Open-Vocabulary Dense Perception
 description: >-
@@ -139,7 +139,7 @@ DeCLIP 是一种无监督的预微调方法，输入原始图像和裁剪子图�
 - [DPSeg: Dual-Prompt Cost Volume Learning for Open-Vocabulary Semantic Segmentation](dpseg_dual-prompt_cost_volume_learning_for_open-vocabulary_semantic_segmentation.md)
 - [Mask-Adapter: The Devil is in the Masks for Open-Vocabulary Segmentation](mask-adapter_the_devil_is_in_the_masks_for_open-vocabulary_segmentation.md)
 - [Effective SAM Combination for Open-Vocabulary Semantic Segmentation](effective_sam_combination_for_open-vocabulary_semantic_segmentation.md)
-- [Frequency Dynamic Convolution for Dense Image Prediction](frequency_dynamic_convolution_for_dense_image_prediction.md)
-- [SCORE: Scene Context Matters in Open-Vocabulary Remote Sensing Instance Segmentation](../../ICCV2025/segmentation/score_scene_context_matters_in_open-vocabulary_remote_sensing_instance_segmentat.md)
+- [Semantic Library Adaptation: LoRA Retrieval and Fusion for Open-Vocabulary Semantic Segmentation](semantic_library_adaptation_lora_retrieval_and_fusion_for_open-vocabulary_semant.md)
+- [Fine-Grained Image-Text Correspondence with Cost Aggregation for Open-Vocabulary Part Segmentation](fine-grained_image-text_correspondence_with_cost_aggregation_for_open-vocabulary.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NoRD: A Data-Efficient Vision-Language-Action Model that Drives without Reasoning
 description: >-

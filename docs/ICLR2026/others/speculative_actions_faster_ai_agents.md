@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Speculative Actions: A Lossless Framework for Faster AI Agents
 description: >-

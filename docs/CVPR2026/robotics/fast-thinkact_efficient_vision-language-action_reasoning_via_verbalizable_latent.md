@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fast-ThinkAct: Efficient Vision-Language-Action Reasoning via Verbalizable Latent Planning
 description: >-

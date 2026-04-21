@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Optimal Adjustment Sets for Nonparametric Estimation of Weighted Controlled Direct Effect
 description: >-
@@ -128,6 +128,6 @@ $$\text{WCDE}(a, a') = \sum_m [E[Y \mid do(A=a, M=m)] - E[Y \mid do(A=a', M=m)]]
 - [Locally Optimal Private Sampling: Beyond the Global Minimax](locally_optimal_private_sampling_beyond_the_global_minimax.md)
 - [Beyond Last-Click: An Optimal Mechanism for Ad Attribution](beyond_last-click_an_optimal_mechanism_for_ad_attribution.md)
 - [The Ripple Effect: On Unforeseen Complications of Backdoor Attacks](../../ICML2025/ai_safety/the_ripple_effect_on_unforeseen_complications_of_backdoor_attacks.md)
-- [Nearly-Linear Time Private Hypothesis Selection with the Optimal Approximation Factor](nearly-linear_time_private_hypothesis_selection_with_the_optimal_approximation_f.md)
+- [Differentially Private Bilevel Optimization: Efficient Algorithms with Near-Optimal Rates](differentially_private_bilevel_optimization_efficient_algorithms_with_near-optim.md)
 
 <!-- RELATED:END -->

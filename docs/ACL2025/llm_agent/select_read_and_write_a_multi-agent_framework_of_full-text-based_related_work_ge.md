@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Select, Read, and Write: A Multi-Agent Framework of Full-Text-based Related Work Generation
 description: >-
@@ -136,6 +136,6 @@ Selector 和 Reader 交替迭代工作，直到 Selector 输出终止信号 `<En
 - [AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML](../../ICML2025/llm_agent/automl-agent_a_multi-agent_llm_framework_for_full-pipeline_automl.md)
 - [Bel Esprit: Multi-Agent Framework for Building AI Model Pipelines](bel_esprit_multi-agent_framework_for_building_ai_model_pipelines.md)
 - [Table-Critic: A Multi-Agent Framework for Collaborative Criticism and Refinement in Table Reasoning](table_critic_multi_agent.md)
-- [A Multi-Agent Framework for Mitigating Dialect Biases in Privacy Policy Question-Answering Systems](multi_agent_dialect_bias_privacy_qa.md)
+- [A Multi-Agent Framework for Mitigating Dialect Biases in Privacy Policy Question-Answering Systems](a_multi-agent_framework_for_mitigating_dialect_biases_in_privacy_policy_question.md)
 
 <!-- RELATED:END -->

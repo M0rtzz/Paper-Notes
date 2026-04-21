@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamic Chunking and Selection for Reading Comprehension of Ultra-Long Context in Large Language Models
 description: >-
@@ -154,8 +154,8 @@ Single-hop 代表性成绩：Loogle_SD 45.10（原始 21.25），Factrecall 29.8
 
 - [LongSafety: Evaluating Long-Context Safety of Large Language Models](longsafety_evaluating_long-context_safety_of_large_language_models.md)
 - [CNNSum: Exploring Long-Context Summarization with Large Language Models in Chinese Novels](cnnsum_exploring_long-context_summarization_with_large_language_models_in_chines.md)
+- [LongReward: Improving Long-context Large Language Models with AI Feedback](longreward_improving_long-context_large_language_models_with_ai_feedback.md)
 - [Ref-Long: Benchmarking the Long-Context Referencing Capability of Long-Context Language Models](ref-long_benchmarking_the_long-context_referencing_capability_of_long-context_la.md)
 - [How to Train Long-Context Language Models (Effectively)](train_long_context_effectively.md)
-- [Literary Evidence Retrieval via Long-Context Language Models](literary_evidence_retrieval_via_long-context_language_models.md)
 
 <!-- RELATED:END -->

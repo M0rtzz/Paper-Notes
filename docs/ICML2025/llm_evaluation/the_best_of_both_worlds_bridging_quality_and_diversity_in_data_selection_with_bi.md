@@ -148,7 +148,7 @@ GraphFilter 在**所有三个模型**上全面超越全部 9 种基线方法。
 - [Soft Quality-Diversity Optimization](../../ICLR2026/llm_evaluation/soft_quality-diversity_optimization.md)
 - [Hyperband-based Bayesian Optimization for Black-box Prompt Selection](hyperband-based_bayesian_optimization_for_black-box_prompt_selection.md)
 - [IBDR: Promoting Ensemble Diversity with Interactive Bayesian Distributional Robustness](promoting_ensemble_diversity_with_interactive_bayesian_distributional_robustness.md)
-- [How Much Can We Forget about Data Contamination?](how_much_can_we_forget_about_data_contamination.md)
 - [Unlocking Post-hoc Dataset Inference with Synthetic Data](unlocking_post-hoc_dataset_inference_with_synthetic_data.md)
+- [How Much Can We Forget about Data Contamination?](how_much_can_we_forget_about_data_contamination.md)
 
 <!-- RELATED:END -->

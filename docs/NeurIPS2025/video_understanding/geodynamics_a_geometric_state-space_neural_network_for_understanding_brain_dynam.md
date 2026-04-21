@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GeoDynamics: A Geometric State-Space Neural Network for Understanding Brain Dynamics on Riemannian Manifolds
 description: >-

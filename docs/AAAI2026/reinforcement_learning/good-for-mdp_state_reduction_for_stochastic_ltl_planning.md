@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Good-for-MDP State Reduction for Stochastic LTL Planning
 description: >-

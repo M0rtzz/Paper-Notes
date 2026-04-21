@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NOVUM: Neural Object Volumes for Robust Object Classification
 description: >-

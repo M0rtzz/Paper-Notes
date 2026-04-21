@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Decouple and Track: Benchmarking and Improving Video Diffusion Transformers for Motion Transfer
 description: >-
@@ -156,6 +156,6 @@ $$\mathcal{M}(\mathcal{T}_i, \mathcal{T}_j) = \frac{1}{N} \sum_{n=1}^{N} [\alpha
 - [ConMo: Controllable Motion Disentanglement and Recomposition for Zero-Shot Motion Transfer](../../CVPR2025/video_generation/conmo_controllable_motion_disentanglement_and_recomposition_for_zero-shot_motion.md)
 - [MotionShot: Adaptive Motion Transfer across Arbitrary Objects for Text-to-Video Generation](motionshot_adaptive_motion_transfer_across_arbitrary_objects_for_text-to-video_g.md)
 - [DisMo: Disentangled Motion Representations for Open-World Motion Transfer](../../NeurIPS2025/video_generation/dismo_disentangled_motion_representations_for_openworld_moti.md)
-- [Mimir: Improving Video Diffusion Models for Precise Text Understanding](../../CVPR2025/video_generation/mimir_improving_video_diffusion_models_for_precise_text_understanding.md)
+- [AsymRnR: Video Diffusion Transformers Acceleration with Asymmetric Reduction and Restoration](../../ICML2025/video_generation/asymrnr_video_diffusion_transformers_acceleration_with_asymmetric_reduction_and_.md)
 
 <!-- RELATED:END -->

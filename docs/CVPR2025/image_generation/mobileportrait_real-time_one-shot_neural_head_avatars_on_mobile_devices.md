@@ -2,14 +2,15 @@
 title: >-
   [论文解读] MobilePortrait: Real-Time One-Shot Neural Head Avatars on Mobile Devices
 description: >-
-  [CVPR 2025][neural head avatar] 提出轻量级单张人脸动画方法 MobilePortrait，通过混合显式/隐式关键点建模运动、预计算外观知识增强合成，以不到 SOTA 十分之一的计算量在移动端实现实时（100+ FPS）头像驱动。
+  [CVPR 2025][图像生成][neural head avatar] 提出首个可在移动端实时运行的单张人脸头像动画方法 MobilePortrait，通过混合显隐式关键点 + 预计算外观知识，仅用 16 GFLOPs 即匹敌 SOTA（100–600+ GFLOPs）的效果。
 tags:
   - CVPR 2025
+  - 图像生成
   - neural head avatar
   - face reenactment
   - mobile deployment
-  - lightweight
-  - talking head
+  - mixed keypoints
+  - lightweight U-Net
 ---
 
 # MobilePortrait: Real-Time One-Shot Neural Head Avatars on Mobile Devices
@@ -137,10 +138,10 @@ $$\mathcal{L} = \mathcal{L}_{percep} + \mathcal{L}_{L1} + \mathcal{L}_{kp} + \ma
 
 ## 相关论文
 
+- [SemanticDraw: Towards Real-Time Interactive Content Creation from Image Diffusion](semanticdraw_towards_real-time_interactive_content_creation_from_image_diffusion.md)
 - [Real-Time Execution of Action Chunking Flow Policies](../../NeurIPS2025/image_generation/real-time_execution_of_action_chunking_flow_policies.md)
-- [StreamDiffusion: A Pipeline-level Solution for Real-time Interactive Generation](../../ICCV2025/image_generation/streamdiffusion_a_pipeline-level_solution_for_real-time_interactive_generation.md)
-- [ReFrame: Layer Caching for Accelerated Inference in Real-Time Rendering](../../ICML2025/image_generation/reframe_layer_caching_for_accelerated_inference_in_real-time_rendering.md)
-- [Generation of Maximal Snake Polyominoes Using a Deep Neural Network](generation_of_maximal_snake_polyominoes_using_a_deep_neural_network.md)
 - [SANA-Sprint: One-Step Diffusion with Continuous-Time Consistency Distillation](../../ICCV2025/image_generation/sana-sprint_one-step_diffusion_with_continuous-time_consistency_distillation.md)
+- [ReFrame: Layer Caching for Accelerated Inference in Real-Time Rendering](../../ICML2025/image_generation/reframe_layer_caching_for_accelerated_inference_in_real-time_rendering.md)
+- [SnapGen-V: Generating a Five-Second Video within Five Seconds on a Mobile Device](snapgen-v_generating_a_five-second_video_within_five_seconds_on_a_mobile_device.md)
 
 <!-- RELATED:END -->

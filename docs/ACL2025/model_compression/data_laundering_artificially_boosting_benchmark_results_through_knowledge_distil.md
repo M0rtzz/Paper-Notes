@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Data Laundering: Artificially Boosting Benchmark Results through Knowledge Distillation
 description: >-

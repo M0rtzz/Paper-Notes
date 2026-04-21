@@ -1,7 +1,16 @@
 ---
-title: "DPU: Dynamic Prototype Updating for Multimodal Out-of-Distribution Detection"
-description: "提出DPU框架，通过动态原型更新处理多模态OOD检测中的类内变异问题，包含Cohesive-Separate对比训练、动态原型逼近和Pro-ratio差异增强三个模块，在5个数据集和9种基础OOD算法上实现全面提升，Far-OOD检测提升高达80%。"
-tags: ["OOD检测", "多模态学习", "动态原型", "类内变异", "即插即用"]
+title: >-
+  [论文解读] DPU: Dynamic Prototype Updating for Multimodal Out-of-Distribution Detection
+description: >-
+  [CVPR 2025][视频理解][多模态OOD检测] 提出**Dynamic Prototype Updating (DPU)**框架，通过**Cohesive-Separate对比训练**建立稳健表示空间、**动态原型逼近**自适应更新类中心、**Pro-ratio差异增强**按样本到原型的距离调节多模态预测差异的放大强度，作为即插即用模块在5个数据集×9种基础OOD方法上全面提升性能，Far-OOD检测提升最高达**80%**。
+tags:
+  - CVPR 2025
+  - 视频理解
+  - 多模态OOD检测
+  - 动态原型更新
+  - 类内变异
+  - 对比学习
+  - 差异增强
 ---
 
 # DPU: Dynamic Prototype Updating for Multimodal Out-of-Distribution Detection
@@ -129,10 +138,10 @@ DPU在所有9种基础OOD方法上均实现显著提升，FPR95降低最高达**
 
 ## 相关论文
 
-- [Out of Sight, Out of Track: Adversarial Attacks on Propagation-based Multi-Object Trackers via Query State Manipulation](../../CVPR2026/video_understanding/out_of_sight_out_of_track_adversarial_attacks_on_propagation-based_multi-object_.md)
-- [DisTime: Distribution-based Time Representation for Video Large Language Models](../../ICCV2025/video_understanding/distime_distribution-based_time_representation_for_video_large_language_models.md)
-- [DivPrune: Diversity-Based Visual Token Pruning for Large Multimodal Models](divprune_diversity-based_visual_token_pruning_for_large_multimodal_models.md)
 - [Dynamic Updates for Language Adaptation in Visual-Language Tracking](dynamic_updates_for_language_adaptation_in_visual-language_tracking.md)
 - [DynFocus: Dynamic Cooperative Network Empowers LLMs with Video Understanding](dynfocus_dynamic_cooperative_network_empowers_llms_with_video_understanding.md)
+- [STOP: Integrated Spatial-Temporal Dynamic Prompting for Video Understanding](stop_integrated_spatial-temporal_dynamic_prompting_for_video_understanding.md)
+- [Localizing Events in Videos with Multimodal Queries](localizing_events_in_videos_with_multimodal_queries.md)
+- [Out of Sight, Out of Track: Adversarial Attacks on Propagation-based Multi-Object Trackers via Query State Manipulation](../../CVPR2026/video_understanding/out_of_sight_out_of_track_adversarial_attacks_on_propagation-based_multi-object_.md)
 
 <!-- RELATED:END -->

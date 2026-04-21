@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AstroVisBench: A Code Benchmark for Scientific Computing and Visualization in Astronomy
 description: >-

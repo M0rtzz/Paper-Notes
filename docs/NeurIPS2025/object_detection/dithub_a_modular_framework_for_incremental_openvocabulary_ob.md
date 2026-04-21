@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DitHub: A Modular Framework for Incremental Open-Vocabulary Object Detection
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mesh2NeRF: Direct Mesh Supervision for Neural Radiance Field Representation and Generation
 description: >-
@@ -164,7 +164,7 @@ ShapeNet Chairs 在2-view条件下提升最显著：PSNR从19.65→22.22 (+2.57d
 - [Dynamic Neural Radiance Field from Defocused Monocular Video](dynamic_neural_radiance_field_from_defocused_monocular_video.md)
 - [MALD-NeRF: Taming Latent Diffusion Model for Neural Radiance Field Inpainting](taming_latent_diffusion_model_for_neural_radiance_field_inpainting.md)
 - [Lagrangian Hashing for Compressed Neural Field Representations](lagrangian_hashing_for_compressed_neural_field_representations.md)
-- [S³D-NeRF: Single-Shot Speech-Driven Neural Radiance Field for High Fidelity Talking Head Synthesis](s3d-nerf_single-shot_speech-driven_neural_radiance_field_for_high_fidelity_talki.md)
 - [GVGEN: Text-to-3D Generation with Volumetric Representation](gvgen_text-to-3d_generation_with_volumetric_representation.md)
+- [S³D-NeRF: Single-Shot Speech-Driven Neural Radiance Field for High Fidelity Talking Head Synthesis](s3d-nerf_single-shot_speech-driven_neural_radiance_field_for_high_fidelity_talki.md)
 
 <!-- RELATED:END -->

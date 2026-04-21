@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Extending NGU to Multi-Agent RL: A Preliminary Study
 description: >-

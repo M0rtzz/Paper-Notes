@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Just Go Parallel: Improving the Multilingual Capabilities of Large Language Models
 description: >-

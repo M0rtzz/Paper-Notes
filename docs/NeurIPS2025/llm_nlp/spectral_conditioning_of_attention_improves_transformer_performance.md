@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spectral Conditioning of Attention Improves Transformer Performance
 description: >-

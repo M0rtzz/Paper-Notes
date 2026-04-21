@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Final-Model-Only Data Attribution with a Unifying View of Gradient-Based Methods
 description: >-

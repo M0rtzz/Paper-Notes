@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MedAgentBoard: Benchmarking Multi-Agent Collaboration with Conventional Methods for Diverse Medical Tasks
 description: >-

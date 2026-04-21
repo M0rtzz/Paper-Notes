@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CheXalign: Preference Fine-tuning in Chest X-ray Interpretation Models without Human Feedback
 description: >-

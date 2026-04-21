@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adaptive Coopetition: Leveraging Coarse Verifier Signals for Resilient Multi-Agent LLM Reasoning
 description: >-

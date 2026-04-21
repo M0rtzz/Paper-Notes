@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Looking Beyond the Window: Global-Local Aligned CLIP for Training-free Open-Vocabulary Semantic Segmentation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Ambig-SWE: Interactive Agents to Overcome Underspecificity in Software Engineering
 description: >-
@@ -120,7 +120,7 @@ N/A（评估论文，不训练模型）
 - [Training Software Engineering Agents and Verifiers with SWE-Gym](../../ICML2025/code_intelligence/training_software_engineering_agents_and_verifiers_with_swe-gym.md)
 - [SWE-rebench: An Automated Pipeline for Task Collection and Decontaminated Evaluation of Software Engineering Agents](../../NeurIPS2025/code_intelligence/swe-rebench_an_automated_pipeline_for_task_collection_and_decontaminated_evaluat.md)
 - [InnoGym: Benchmarking the Innovation Potential of AI Agents](innogym_benchmarking_the_innovation_potential_of_ai_agents.md)
-- [Improving Code Localization with Repository Memory](improving_code_localization_with_repository_memory.md)
+- [UTBoost: Rigorous Evaluation of Coding Agents on SWE-Bench](../../ACL2025/code_intelligence/utboost_rigorous_evaluation_of_coding_agents_on_swe-bench.md)
 - [The Limits of Long-Context Reasoning in Automated Bug Fixing](the_limits_of_long-context_reasoning_in_automated_bug_fixing.md)
 
 <!-- RELATED:END -->

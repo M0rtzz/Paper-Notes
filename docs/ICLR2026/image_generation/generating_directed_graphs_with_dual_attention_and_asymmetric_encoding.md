@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generating Directed Graphs with Dual Attention and Asymmetric Encoding
 description: >-
@@ -140,6 +140,6 @@ Directo 构建在离散流匹配（DFM）框架之上。生成过程从噪声分
 - [Video Motion Graphs](../../ICCV2025/image_generation/video_motion_graphs.md)
 - [Directed Graph Grammars for Sequence-based Learning](../../ICML2025/image_generation/directed_graph_grammars_for_sequence-based_learning.md)
 - [TRACE: Structure-Aware Character Encoding for Robust and Generalizable Document Watermarking](../../CVPR2026/image_generation/trace_structure-aware_character_encoding_for_robust_and_generalizable_document_w.md)
-- [TruthfulRAG: Resolving Factual-level Conflicts in Retrieval-Augmented Generation with Knowledge Graphs](../../AAAI2026/image_generation/truthfulrag_resolving_factual-level_conflicts_in_retrieval-augmented_generation_.md)
+- [GraphGPT-o: Synergistic Multimodal Comprehension and Generation on Graphs](../../CVPR2025/image_generation/graphgpt-o_synergistic_multimodal_comprehension_and_generation_on_graphs.md)
 
 <!-- RELATED:END -->

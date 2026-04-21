@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TARGA: Targeted Synthetic Data Generation for Practical Reasoning over Structured Data
 description: >-

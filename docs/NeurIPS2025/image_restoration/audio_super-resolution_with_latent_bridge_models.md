@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Audio Super-Resolution with Latent Bridge Models
 description: >-
@@ -132,10 +132,10 @@ tags:
 
 ## 相关论文
 
+- [Prior Does Matter: Visual Navigation via Denoising Diffusion Bridge Models](../../CVPR2025/image_restoration/prior_does_matter_visual_navigation_via_denoising_diffusion_bridge_models.md)
 - [Latent Harmony: Synergistic Unified UHD Image Restoration via Latent Space Regularization and Controllable Refinement](latent_harmony_synergistic_unified_uhd_image_restoration_via_latent_space_regula.md)
 - [Implicit Augmentation from Distributional Symmetry in Turbulence Super-Resolution](implicit_augmentation_from_distributional_symmetry_in_turbulence_super-resolutio.md)
-- [RAW-Domain Degradation Models for Realistic Smartphone Super-Resolution](../../CVPR2026/image_restoration/raw-domain_degradation_models_for_realistic_smartphone_super-resolution.md)
-- [FIPER: Factorized Features for Robust Image Super-Resolution and Compression](fiper_factorized_features_for_robust_image_super-resolution_and_compression.md)
 - [Adaptive Discretization for Consistency Models](adaptive_discretization_for_consistency_models.md)
+- [FIPER: Factorized Features for Robust Image Super-Resolution and Compression](fiper_factorized_features_for_robust_image_super-resolution_and_compression.md)
 
 <!-- RELATED:END -->

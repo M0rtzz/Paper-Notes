@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FaceCraft4D: Animated 3D Facial Avatar Generation from a Single Image
 description: >-
@@ -161,9 +161,9 @@ FaceCraft4D 分为两大阶段：**个性化多视角生成**和 **4D表示优�
 ## 相关论文
 
 - [TeRA: Rethinking Text-guided Realistic 3D Avatar Generation](tera_rethinking_text-guided_realistic_3d_avatar_generation.md)
+- [StdGEN: Semantic-Decomposed 3D Character Generation from Single Images](../../CVPR2025/image_generation/stdgen_semantic-decomposed_3d_character_generation_from_single_images.md)
 - [RodinHD: High-Fidelity 3D Avatar Generation with Diffusion Models](../../ECCV2024/image_generation/rodinhd_high-fidelity_3d_avatar_generation_with_diffusion_models.md)
 - [DiffLocks: Generating 3D Hair from a Single Image using Diffusion Models](../../CVPR2025/image_generation/difflocks_generating_3d_hair_from_a_single_image_using_diffusion_models.md)
-- [DynamicID: Zero-Shot Multi-ID Image Personalization with Flexible Facial Editability](dynamicid_zero-shot_multi-id_image_personalization_with_flexible_facial_editabil.md)
-- [Music-Aligned Holistic 3D Dance Generation via Hierarchical Motion Modeling](music-aligned_holistic_3d_dance_generation_via_hierarchical_motion_modeling.md)
+- [DeClotH: Decomposable 3D Cloth and Human Body Reconstruction from a Single Image](../../CVPR2025/image_generation/decloth_decomposable_3d_cloth_and_human_body_reconstruction_from_a_single_image.md)
 
 <!-- RELATED:END -->

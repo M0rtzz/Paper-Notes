@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MedCLIPSeg: Probabilistic Vision-Language Adaptation for Data-Efficient and Generalizable Medical Image Segmentation
 description: >-

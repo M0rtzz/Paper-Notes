@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] LGM: Large Multi-View Gaussian Model for High-Resolution 3D Content Creation
 description: >-
-  [ECCV 2024][3D视觉] 提出基于非对称U-Net的多视角高斯模型，从4张视角图像生成65536个3D高斯，5秒内实现512分辨率的高质量3D内容创建
+  [ECCV 2024][3D视觉][3D生成] 本文提出LGM，一个基于非对称U-Net架构的多视角3D高斯重建模型，从4张正交视角图像预测65536个3D高斯原语，在512分辨率下5秒内完成从文本/图像到高分辨率3D模型的生成，通过数据增强策略弥合训练-推理域差异。
 tags:
   - ECCV 2024
+  - 3D视觉
   - 3D生成
   - 高斯溅射
-  - U-Net
   - 多视角重建
+  - 高分辨率
+  - U-Net
 ---
 
 # LGM: Large Multi-View Gaussian Model for High-Resolution 3D Content Creation
@@ -143,8 +145,8 @@ RGB损失：$\mathcal{L}_{rgb} = \mathcal{L}_{MSE}(I_{rgb}, I_{rgb}^{GT}) + \lam
 ## 相关论文
 
 - [MVDiffusion++: A Dense High-Resolution Multi-View Diffusion Model for Single or Sparse-View 3D Object Reconstruction](mvdiffusion_a_dense_high-resolution_multi-view_diffusion_model_for_single_or_spa.md)
-- [GS-LRM: Large Reconstruction Model for 3D Gaussian Splatting](gs-lrm_large_reconstruction_model_for_3d_gaussian_splatting.md)
 - [GRM: Large Gaussian Reconstruction Model for Efficient 3D Reconstruction and Generation](grm_large_gaussian_reconstruction_model_for_efficient_3d_reconstruction_and_gene.md)
+- [GS-LRM: Large Reconstruction Model for 3D Gaussian Splatting](gs-lrm_large_reconstruction_model_for_3d_gaussian_splatting.md)
 - [High-Resolution and Few-shot View Synthesis from Asymmetric Dual-Lens Inputs](high-resolution_and_few-shot_view_synthesis_from_asymmetric_dual-lens_inputs.md)
 - [MARVEL-40M+: Multi-Level Visual Elaboration for High-Fidelity Text-to-3D Content Creation](../../CVPR2025/3d_vision/marvel-40m_multi-level_visual_elaboration_for_high-fidelity_text-to-3d_content_c.md)
 

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Revisiting Orbital Minimization Method for Neural Operator Decomposition
 description: >-

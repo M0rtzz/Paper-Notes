@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoherentGS: Sparse Novel View Synthesis with Coherent 3D Gaussians
 description: >-
@@ -178,8 +178,8 @@ $$\Sigma^*,\phi^*,\mathbf{c}^* = \arg\min \sum_{\mathbf{p}} \mathcal{L}(R(\mathb
 
 - [Thermal3D-GS: Physics-induced 3D Gaussians for Thermal Infrared Novel-view Synthesis](thermal3d-gs_physics-induced_3d_gaussians_for_thermal_infrared_novel-view_synthe.md)
 - [Generative Camera Dolly: Extreme Monocular Dynamic Novel View Synthesis](generative_camera_dolly_extreme_monocular_dynamic_novel_view_synthesis.md)
-- [CoMapGS: Covisibility Map-based Gaussian Splatting for Sparse Novel View Synthesis](../../CVPR2025/3d_vision/comapgs_covisibility_map-based_gaussian_splatting_for_sparse_novel_view_synthesi.md)
+- [SV3D: Novel Multi-view Synthesis and 3D Generation from a Single Image using Latent Video Diffusion](sv3d_novel_multi-view_synthesis_and_3d_generation_from_a_single_image_using_late.md)
 - [NGP-RT: Fusing Multi-Level Hash Features with Lightweight Attention for Real-Time Novel View Synthesis](ngp-rt_fusing_multi-level_hash_features_with_lightweight_attention_for_real-time.md)
-- [WaSt-3D: Wasserstein-2 Distance for Scene-to-Scene Stylization on 3D Gaussians](wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)
+- [CoMapGS: Covisibility Map-based Gaussian Splatting for Sparse Novel View Synthesis](../../CVPR2025/3d_vision/comapgs_covisibility_map-based_gaussian_splatting_for_sparse_novel_view_synthesi.md)
 
 <!-- RELATED:END -->

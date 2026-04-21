@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PlanarGS: High-Fidelity Indoor 3D Gaussian Splatting Guided by Vision-Language Planar Priors
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Revisiting Bi-Linear State Transitions in Recurrent Neural Networks
 description: >-

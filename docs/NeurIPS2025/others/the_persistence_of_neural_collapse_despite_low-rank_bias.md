@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Persistence of Neural Collapse Despite Low-Rank Bias
 description: >-

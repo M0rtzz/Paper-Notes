@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Diff-V2M: A Hierarchical Conditional Diffusion Model with Explicit Rhythmic Modeling for Video-to-Music Generation
 description: >-
@@ -177,8 +177,8 @@ Diff-V2M 在域内测试集上全面领先，在域外也取得最佳整体表�
 ## 相关论文
 
 - [Music-Aligned Holistic 3D Dance Generation via Hierarchical Motion Modeling](../../ICCV2025/image_generation/music-aligned_holistic_3d_dance_generation_via_hierarchical_motion_modeling.md)
-- [Conditional Diffusion Model for Multi-Agent Dynamic Task Decomposition](conditional_diffusion_model_for_multi-agent_dynamic_task_dec.md)
 - [Melodia: Training-Free Music Editing Guided by Attention Probing in Diffusion Models](melodia_training-free_music_editing_guided_by_attention_probing_in_diffusion_mod.md)
+- [Conditional Diffusion Model for Multi-Agent Dynamic Task Decomposition](conditional_diffusion_model_for_multi-agent_dynamic_task_dec.md)
 - [Backdoors in Conditional Diffusion: Threats to Responsible Synthetic Data Pipelines](backdoors_in_conditional_diffusion_threats_to_responsible_synthetic_data_pipelin.md)
 - [HOG-Diff: Higher-Order Guided Diffusion for Graph Generation](../../ICLR2026/image_generation/hog-diff_higher-order_guided_diffusion_for_graph_generation.md)
 

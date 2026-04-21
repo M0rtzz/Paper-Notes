@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FLAIR: VLM with Fine-grained Language-informed Image Representations
 description: >-

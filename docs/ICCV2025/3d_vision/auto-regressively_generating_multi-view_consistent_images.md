@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Auto-Regressively Generating Multi-View Consistent Images
 description: >-
@@ -145,6 +145,6 @@ Shuffle View 是贡献最大的组件（去掉后 FID 恶化 +29，PSNR 下降 4
 - [MV-Adapter: Multi-view Consistent Image Generation Made Easy](mv-adapter_multi-view_consistent_image_generation_made_easy.md)
 - [3DEnhancer: Consistent Multi-View Diffusion for 3D Enhancement](../../CVPR2025/3d_vision/3denhancer_consistent_multi-view_diffusion_for_3d_enhancement.md)
 - [SpinMeRound: Consistent Multi-View Identity Generation Using Diffusion Models](spinmeround_consistent_multi-view_identity_generation_using_diffusion_models.md)
-- [MVGBench: a Comprehensive Benchmark for Multi-view Generation Models](mvgbench_a_comprehensive_benchmark_for_multi-view_generation_models.md)
+- [DeepMesh: Auto-Regressive Artist-Mesh Creation with Reinforcement Learning](deepmesh_auto-regressive_artist-mesh_creation_with_reinforcement_learning.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Linear Attention for Efficient Bidirectional Sequence Modeling
 description: >-

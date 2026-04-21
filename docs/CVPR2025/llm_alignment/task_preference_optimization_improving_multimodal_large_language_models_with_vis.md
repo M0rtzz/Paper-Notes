@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Task Preference Optimization: Improving Multimodal Large Language Models with Vision Task Alignment
 description: >-

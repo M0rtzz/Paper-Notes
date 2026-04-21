@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HiSpatial: Taming Hierarchical 3D Spatial Understanding in Vision-Language Models
 description: >-

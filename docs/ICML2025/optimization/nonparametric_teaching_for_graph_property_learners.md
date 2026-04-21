@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Nonparametric Teaching for Graph Property Learners
 description: >-
@@ -143,6 +143,6 @@ GraNT 时间减半且 MAE 降低两个数量级。
 - [Sparse Causal Discovery with Generative Intervention for Unsupervised Graph Domain Adaptation](sparse_causal_discovery_with_generative_intervention_for_unsupervised_graph_doma.md)
 - [GCAL: Adapting Graph Models to Evolving Domain Shifts](gcal_adapting_graph_models_to_evolving_domain_shifts.md)
 - [The Panaceas for Improving Low-Rank Decomposition in Communication-Efficient Federated Learning](the_panaceas_for_improving_low-rank_decomposition_in_communication-efficient_fed.md)
-- [Understanding the Statistical Accuracy-Communication Trade-off in Personalized Federated Learning with Minimax Guarantees](understanding_the_statistical_accuracy-communication_trade-off_in_personalized_f.md)
+- [Layer-wise Quantization for Quantized Optimistic Dual Averaging](layer-wise_quantization_for_quantized_optimistic_dual_averaging.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Quantum Doubly Stochastic Transformers
 description: >-

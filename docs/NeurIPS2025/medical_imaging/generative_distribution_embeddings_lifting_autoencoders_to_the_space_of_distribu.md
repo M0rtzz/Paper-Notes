@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generative Distribution Embeddings: Lifting Autoencoders to the Space of Distributions for Multiscale Representation Learning
 description: >-

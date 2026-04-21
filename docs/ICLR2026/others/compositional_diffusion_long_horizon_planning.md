@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Compositional Diffusion with Guided Search for Long-Horizon Planning
 description: >-

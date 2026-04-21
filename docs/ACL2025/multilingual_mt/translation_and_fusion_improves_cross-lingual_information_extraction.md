@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Translation and Fusion Improves Zero-shot Cross-lingual Information Extraction
 description: >-

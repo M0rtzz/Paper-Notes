@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LASS3D: Language-Assisted Semi-Supervised 3D Semantic Segmentation with Progressive Unreliable Data Exploitation
 description: >-
@@ -127,6 +127,6 @@ LASS3D 基于 MeanTeacher 框架构建。输入包含点云和对应的 2D 图�
 - [SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](../../CVPR2026/segmentation/semitooth_a_generalizable_semisupervised_framework.md)
 - [ConformalSAM: Unlocking the Potential of Foundational Segmentation Models in Semi-Supervised Semantic Segmentation with Conformal Prediction](../../ICCV2025/segmentation/conformalsam_unlocking_the_potential_of_foundational_segmentation_models_in_semi.md)
 - [Point-Supervised Panoptic Segmentation via Estimating Pseudo Labels from Learnable Distance](point-supervised_panoptic_segmentation_via_estimating_pseudo_labels_from_learnab.md)
-- [A Semantic Space is Worth 256 Language Descriptions: Make Stronger Segmentation Models with Descriptive Properties](a_semantic_space_is_worth_256_language_descriptions_make_str.md)
+- [PartSTAD: 2D-to-3D Part Segmentation Task Adaptation](partstad_2d-to-3d_part_segmentation_task_adaptation.md)
 
 <!-- RELATED:END -->

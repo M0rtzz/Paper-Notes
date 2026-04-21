@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Human or Machine? A Preliminary Turing Test for Speech-to-Speech Interaction
 description: >-

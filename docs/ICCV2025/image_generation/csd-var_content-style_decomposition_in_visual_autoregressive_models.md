@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CSD-VAR: Content-Style Decomposition in Visual Autoregressive Models
 description: >-

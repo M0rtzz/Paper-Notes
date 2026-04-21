@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Foundations of the Theory of Performance-Based Ranking
 description: >-

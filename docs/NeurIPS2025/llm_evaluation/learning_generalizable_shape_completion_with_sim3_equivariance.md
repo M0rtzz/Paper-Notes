@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Generalizable Shape Completion with SIM(3) Equivariance
 description: >-

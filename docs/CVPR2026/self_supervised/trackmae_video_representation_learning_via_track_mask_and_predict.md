@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TrackMAE: Video Representation Learning via Track, Mask, and Predict
 description: >-
@@ -177,7 +177,7 @@ TrackMAE（图2）在标准MVM基础上增加两个组件：
 ## 相关论文
 
 - [ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders](../../ECCV2024/self_supervised/vic-mae_self-supervised_representation_learning_from_images_and_video_with_contr.md)
-- [Representation Learning for Spatiotemporal Physical Systems](representation_learning_for_spatiotemporal_physical_systems.md)
+- [Representation Learning for Spatiotemporal Physical Systems](representation_learning_for_spatiotemporal_physica.md)
 - [Self-supervised Video Copy Localization with Regional Token Representation](../../ECCV2024/self_supervised/self-supervised_video_copy_localization_with_regional_token_representation.md)
 - [DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers](diversedit_towards_diverse_representation_learning_in_diffusion_transformers.md)
 - [D2Dewarp: Dual Dimensions Geometric Representation Learning Based Document Image Dewarping](d2dewarp_dual_dimensions_geometric_representation_learning_based_document_image_.md)

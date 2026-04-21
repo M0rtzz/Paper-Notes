@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Helix: Evolutionary Reinforcement Learning for Open-Ended Scientific Problem Solving
 description: >-
@@ -140,6 +140,6 @@ HELIX 用 14B 模型在 ML 任务上超越 GPT-4o 流水线，F1 平均提升 5.
 - [$\textbf{Re}^{2}$: Unlocking LLM Reasoning via Reinforcement Learning with Re-solving](textbfre2_unlocking_llm_reasoning_via_reinforcement_learning_with_re-solving.md)
 - [Solving Parameter-Robust Avoid Problems with Unknown Feasibility using Reinforcement Learning](solving_parameter-robust_avoid_problems_with_unknown_feasibility_using_reinforce.md)
 - [Solving Football by Exploiting Equilibrium Structure of 2p0s Differential Games with One-Sided Information](solving_football_by_exploiting_equilibrium_structure_of_2p0s_differential_games_.md)
-- [Entropy-Preserving Reinforcement Learning (REPO / ADAPO)](entropy-preserving_reinforcement_learning.md)
+- [ReMoT: Reinforcement Learning with Motion Contrast Triplets](remot_reinforcement_learning_with_motion_contrast_triplets.md)
 
 <!-- RELATED:END -->

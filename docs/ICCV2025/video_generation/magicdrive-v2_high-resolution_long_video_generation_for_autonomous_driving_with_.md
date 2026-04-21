@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] MagicDrive-V2: High-Resolution Long Video Generation for Autonomous Driving with Adaptive Control
 description: >-
-  [ICCV 2025][自动驾驶][视频生成] MagicDrive-V2 提出了基于 DiT + 3D VAE 的多视角驾驶视频生成框架，通过时空条件编码模块和渐进式训练策略，实现了 848×1600×6 视角、241 帧的高分辨率长视频生成，显著超越现有方法的分辨率和帧数限制。
+  [ICCV 2025][视频生成] MagicDrive-V2 提出了基于 DiT + 3D VAE 的多视角驾驶视频生成框架，通过时空条件编码模块和渐进式训练策略，实现了 848×1600×6 视角、241 帧的高分辨率长视频生成，显著超越现有方法的分辨率和帧数限制。
 tags:
   - ICCV 2025
-  - 自动驾驶
   - 视频生成
   - DiT
   - 3D VAE
@@ -129,9 +128,9 @@ FVD 降低了 55%+，mAP 提升 50%+，同时分辨率是前者的 3.3 倍，帧
 ## 相关论文
 
 - [RLGF: Reinforcement Learning with Geometric Feedback for Autonomous Driving Video Generation](../../NeurIPS2025/video_generation/rlgf_reinforcement_learning_with_geometric_feedback_for_autonomous_driving_video.md)
-- [Long Context Tuning for Video Generation](long_context_tuning_for_video_generation.md)
 - [DH-FaceVid-1K: A Large-Scale High-Quality Dataset for Face Video Generation](dh-facevid-1k_a_large-scale_high-quality_dataset_for_face_video_generation.md)
-- [Foresight: Adaptive Layer Reuse for Accelerated and High-Quality Text-to-Video Generation](../../NeurIPS2025/video_generation/foresight_adaptive_layer_reuse_for_accelerated_and_highquali.md)
+- [Long Context Tuning for Video Generation](long_context_tuning_for_video_generation.md)
 - [Free-Form Motion Control: Controlling the 6D Poses of Camera and Objects in Video Generation](free-form_motion_control_controlling_the_6d_poses_of_camera_and_objects_in_video.md)
+- [Foresight: Adaptive Layer Reuse for Accelerated and High-Quality Text-to-Video Generation](../../NeurIPS2025/video_generation/foresight_adaptive_layer_reuse_for_accelerated_and_highquali.md)
 
 <!-- RELATED:END -->

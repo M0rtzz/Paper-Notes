@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mixture of Noise for Pre-Trained Model-Based Class-Incremental Learning
 description: >-

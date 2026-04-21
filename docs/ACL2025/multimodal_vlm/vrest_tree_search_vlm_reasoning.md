@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VReST: Enhancing Reasoning in Large Vision-Language Models through Tree Search and Self-Reward Mechanism
 description: >-

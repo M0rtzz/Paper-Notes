@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the Feasibility and Opportunity of Autoregressive 3D Object Detection
 description: >-

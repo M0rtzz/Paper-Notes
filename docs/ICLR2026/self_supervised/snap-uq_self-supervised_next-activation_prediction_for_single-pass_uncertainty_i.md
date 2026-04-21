@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SNAP-UQ: Self-supervised Next-Activation Prediction for Single-Pass Uncertainty
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RAP: Retrieval-Augmented Personalization for Multimodal Large Language Models
 description: >-
@@ -129,6 +129,6 @@ RAP 由三个阶段组成：**(a) Remember**：构建键值数据库存储每个
 - [Cross-modal Information Flow in Multimodal Large Language Models](cross-modal_information_flow_in_multimodal_large_language_models.md)
 - [EventGPT: Event Stream Understanding with Multimodal Large Language Models](eventgpt_event_stream_understanding_with_multimodal_large_language_models.md)
 - [4D LangSplat: 4D Language Gaussian Splatting via Multimodal Large Language Models](4d_langsplat_4d_language_gaussian_splatting_via_multimodal_large_language_models.md)
-- [ODE: Open-Set Evaluation of Hallucinations in Multimodal Large Language Models](ode_open-set_evaluation_of_hallucinations_in_multimodal_large_language_models.md)
+- [Towards Zero-Shot Anomaly Detection and Reasoning with Multimodal Large Language Models](towards_zero-shot_anomaly_detection_and_reasoning_with_multimodal_large_language.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bidirectional Multimodal Prompt Learning with Scale-Aware Training for Few-Shot Multi-Class Anomaly Detection
 description: >-

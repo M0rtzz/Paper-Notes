@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Language-Guided Image Tokenization for Generation
 description: >-
@@ -120,10 +120,10 @@ TexTok 在 512 分辨率下仅用 32 个 token 就超越了原始 DiT 使用 409
 
 ## 相关论文
 
-- [Efficient Autoregressive Shape Generation via Octree-Based Adaptive Tokenization](../../ICCV2025/image_generation/efficient_autoregressive_shape_generation_via_octree-based_adaptive_tokenization.md)
-- [Representative Language Generation](../../ICML2025/image_generation/representative_language_generation.md)
+- [Yo'Chameleon: Personalized Vision and Language Generation](yochameleon_personalized_vision_and_language_generation.md)
 - [Efficient Long Video Tokenization via Coordinate-based Patch Reconstruction](efficient_long_video_tokenization_via_coordinate-based_patch_reconstruction.md)
-- [DiT-IC: Aligned Diffusion Transformer for Efficient Image Compression](dit-ic_aligned_diffusion_transformer_for_efficient_image_compression.md)
-- [Enhancing Image Aesthetics with Dual-Conditioned Diffusion Models Guided by Multimodal Perception](enhancing_image_aesthetics_with_dual-conditioned_diffusion_models_guided_by_mult.md)
+- [Efficient Autoregressive Shape Generation via Octree-Based Adaptive Tokenization](../../ICCV2025/image_generation/efficient_autoregressive_shape_generation_via_octree-based_adaptive_tokenization.md)
+- [Visual Lexicon: Rich Image Features in Language Space](visual_lexicon_rich_image_features_in_language_space.md)
+- [Representative Language Generation](../../ICML2025/image_generation/representative_language_generation.md)
 
 <!-- RELATED:END -->

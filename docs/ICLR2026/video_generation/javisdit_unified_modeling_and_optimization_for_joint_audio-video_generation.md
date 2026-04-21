@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] JavisDiT++: Unified Modeling and Optimization for Joint Audio-Video Generation
 description: >-
-  [ICLR 2026][图像生成][Joint Audio-Video Generation] 提出 JavisDiT++，一个面向联合音视频生成（JAVG）的简洁统一框架，通过模态特定 MoE 提升生成质量、时间对齐 RoPE 实现帧级同步、音视频 DPO 对齐人类偏好，基于 Wan2.1-1.3B 仅用约 1M 公开数据即达到 SOTA。
+  [ICLR 2026][Joint Audio-Video Generation] 提出 JavisDiT++，一个面向联合音视频生成（JAVG）的简洁统一框架，通过模态特定 MoE 提升生成质量、时间对齐 RoPE 实现帧级同步、音视频 DPO 对齐人类偏好，基于 Wan2.1-1.3B 仅用约 1M 公开数据即达到 SOTA。
 tags:
   - ICLR 2026
-  - 图像生成
   - Joint Audio-Video Generation
   - DiT
   - Mixture-of-Experts

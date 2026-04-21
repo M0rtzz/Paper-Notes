@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ResQ: A Novel Framework to Implement Residual Neural Networks on Analog Rydberg Atom Quantum Computers
 description: >-

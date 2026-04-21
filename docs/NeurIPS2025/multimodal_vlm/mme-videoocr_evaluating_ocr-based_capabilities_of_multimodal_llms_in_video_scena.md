@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MME-VideoOCR: Evaluating OCR-Based Capabilities of Multimodal LLMs in Video Scenarios
 description: >-

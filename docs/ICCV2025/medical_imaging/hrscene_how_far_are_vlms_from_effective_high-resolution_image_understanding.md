@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HRScene: How Far Are VLMs from Effective High-Resolution Image Understanding?
 description: >-

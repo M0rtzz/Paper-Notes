@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Linguistic Generalizability of Test-Time Scaling in Mathematical Reasoning
 description: >-

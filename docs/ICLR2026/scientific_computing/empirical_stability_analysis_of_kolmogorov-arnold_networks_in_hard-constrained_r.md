@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Empirical Stability Analysis of Kolmogorov-Arnold Networks in Hard-Constrained Recurrent Physics-Informed Discovery
 description: >-

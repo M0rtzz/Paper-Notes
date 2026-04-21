@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DSS: Discover, Segment, and Select - A Progressive Mechanism for Zero-shot Camouflaged Object Segmentation
 description: >-

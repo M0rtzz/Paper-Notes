@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MEGADance: Mixture-of-Experts Architecture for Genre-Aware 3D Dance Generation
 description: >-

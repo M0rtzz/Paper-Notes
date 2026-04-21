@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VideoMind: A Chain-of-LoRA Agent for Temporal-Grounded Video Reasoning
 description: >-
@@ -177,10 +177,10 @@ Chain-of-LoRA 以 4.2G 内存达到了与 16.6G 的 All-Distributed 完全相同
 
 ## 相关论文
 
-- [WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning](../../CVPR2026/llm_agent/worldmm_dynamic_multimodal_memory_agent_for_long_video_reasoning.md)
+- [VideoMind: A Chain-of-LoRA Agent for Temporal-Grounded Video Understanding](videomind_a_chain-of-lora_agent_for_temporal-grounded_video_understanding.md)
 - [SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home LLM Agents](simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_llm_agents.md)
-- [COACH: Collaborative Agents for Contextual Highlighting -- A Multi-Agent Framework for Sports Video Analysis](../../AAAI2026/llm_agent/coach_collaborative_agents_for_contextual_highlighting_--_a_multi-agent_framewor.md)
-- [REMem: Reasoning with Episodic Memory in Language Agents](remem_reasoning_with_episodic_memory_in_language_agent.md)
 - [Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents](web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_for_web_agents.md)
+- [Reducing Belief Deviation in Reinforcement Learning for Active Reasoning of LLM Agents](reducing_belief_deviation_in_reinforcement_learning_for_active_reasoning.md)
+- [REMem: Reasoning with Episodic Memory in Language Agents](remem_reasoning_with_episodic_memory_in_language_agent.md)
 
 <!-- RELATED:END -->

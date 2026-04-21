@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cascade: Token-Sharded Private LLM Inference
 description: >-
@@ -129,8 +129,8 @@ Cascade 将推理计算分配给两类节点：
 
 - [MPCache: MPC-Friendly KV Cache Eviction for Efficient Private LLM Inference](../../NeurIPS2025/ai_safety/mpcache_mpc-friendly_kv_cache_eviction_for_efficient_private_llm_inference.md)
 - [An Attack to Break Permutation-Based Private Third-Party Inference Schemes for LLMs](an_attack_to_break_permutation-based_private_third-party_inference_schemes_for_l.md)
-- [An Efficient Private GPT Never Autoregressively Decodes](an_efficient_private_gpt_never_autoregressively_decodes.md)
 - [WaterMod: Modular Token-Rank Partitioning for Probability-Balanced LLM Watermarking](../../AAAI2026/ai_safety/watermod_modular_token-rank_partitioning_for_probability-balanced_llm_watermarki.md)
+- [An Efficient Private GPT Never Autoregressively Decodes](an_efficient_private_gpt_never_autoregressively_decodes.md)
 - [Private Model Personalization Revisited](private_model_personalization_revisited.md)
 
 <!-- RELATED:END -->

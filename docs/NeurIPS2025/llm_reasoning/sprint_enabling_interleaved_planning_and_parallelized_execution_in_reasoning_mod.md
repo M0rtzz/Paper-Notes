@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SPRINT: Enabling Interleaved Planning and Parallelized Execution in Reasoning Models
 description: >-

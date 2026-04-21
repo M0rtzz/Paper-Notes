@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Breaking the n^{1.5} Additive Error Barrier for Private and Efficient Graph Sparsification
 description: >-
@@ -127,7 +127,7 @@ Pipeline:
 - [Skirting Additive Error Barriers for Private Turnstile Streams](../../ICLR2026/ai_safety/skirting_additive_error_barriers_for_private_turnstile_streams.md)
 - [An Efficient Private GPT Never Autoregressively Decodes](an_efficient_private_gpt_never_autoregressively_decodes.md)
 - [Relative Error Fair Clustering in the Weak-Strong Oracle Model](relative_error_fair_clustering_in_the_weak-strong_oracle_model.md)
+- [Breaking the Dyadic Barrier: Rethinking Fairness in Link Prediction Beyond Demographic Parity](../../AAAI2026/ai_safety/breaking_the_dyadic_barrier_rethinking_fairness_in_link_prediction_beyond_demogr.md)
 - [Private Model Personalization Revisited](private_model_personalization_revisited.md)
-- [Faster Rates for Private Adversarial Bandits](faster_rates_for_private_adversarial_bandits.md)
 
 <!-- RELATED:END -->

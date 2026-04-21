@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NeuroGaze-Distill: Brain-informed Distillation and Depression-Inspired Geometric Priors for Robust Facial Emotion Recognition
 description: >-

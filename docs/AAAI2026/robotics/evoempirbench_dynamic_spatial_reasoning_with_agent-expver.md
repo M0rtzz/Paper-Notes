@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EvoEmpirBench: Dynamic Spatial Reasoning with Agent-ExpVer
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] STCast: Adaptive Boundary Alignment for Global and Regional Weather Forecasting
 description: >-

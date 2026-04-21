@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Foundation Models as World Models: A Foundational Study in Text-Based GridWorlds
 description: >-

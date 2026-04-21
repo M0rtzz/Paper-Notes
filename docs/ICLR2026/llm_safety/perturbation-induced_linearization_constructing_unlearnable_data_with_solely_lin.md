@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Perturbation-Induced Linearization: Constructing Unlearnable Data with Solely Linear Classifiers
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fourier Position Embedding: Enhancing Attention's Periodic Extension for Length Generalization
 description: >-

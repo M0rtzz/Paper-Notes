@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LamRA: Large Multimodal Model as Your Advanced Retrieval Assistant
 description: >-

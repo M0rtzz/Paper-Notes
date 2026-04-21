@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Part-Aware Bottom-Up Group Reasoning for Fine-Grained Social Interaction Detection
 description: >-
@@ -147,8 +147,8 @@ $$\mathcal{L} = \lambda_i \mathcal{L}_{\text{ind}} + \lambda_c \mathcal{L}_{\tex
 
 ## 相关论文
 
-- [CleverBirds: A Multiple-Choice Benchmark for Fine-grained Human Knowledge Tracing](cleverbirds_a_multiple-choice_benchmark_for_fine-grained_human_knowledge_tracing.md)
 - [Locality-Aware Zero-Shot Human-Object Interaction Detection](../../CVPR2025/video_understanding/locality-aware_zero-shot_human-object_interaction_detection.md)
+- [CleverBirds: A Multiple-Choice Benchmark for Fine-grained Human Knowledge Tracing](cleverbirds_a_multiple-choice_benchmark_for_fine-grained_human_knowledge_tracing.md)
 - [Let's Split Up: Zero-Shot Classifier Edits for Fine-Grained Video Understanding](../../ICLR2026/video_understanding/lets_split_up_zero-shot_classifier_edits_for_fine-grained_video_understanding.md)
 - [VDRP: Visual Diversity and Region-aware Prompt Learning for Zero-shot HOI Detection](visual_diversity_and_region-aware_prompt_learning_for_zero-shot_hoi_detection.md)
 - [Fine-grained Spatiotemporal Grounding on Egocentric Videos](../../ICCV2025/video_understanding/fine-grained_spatiotemporal_grounding_on_egocentric_videos.md)

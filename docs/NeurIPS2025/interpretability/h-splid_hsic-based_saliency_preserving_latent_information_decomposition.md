@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] H-SPLID: HSIC-based Saliency Preserving Latent Information Decomposition
 description: >-

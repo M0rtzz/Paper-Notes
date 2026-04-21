@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ICL-Router: In-Context Learned Model Representations for LLM Routing
 description: >-
@@ -159,6 +159,6 @@ ICL-Router 平均 76.30，超越最佳单模型 3.11 分，超越 EmbedLLM 2.14 
 - [BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute](../../ICML2025/llm_nlp/best-route_adaptive_llm_routing_with_test-time_optimal_compute.md)
 - [Near-Optimal Online Deployment and Routing for Streaming LLMs](../../ICLR2026/llm_nlp/near-optimal_online_deployment_and_routing_for_streaming_llms.md)
 - [Cross-model Transferability among Large Language Models on the Platonic Representations of Concepts](../../ACL2025/llm_nlp/cross_model_transferability_sv.md)
-- [Scalable and Accurate Graph Reasoning with LLM-Based Multi-Agents](scalable_and_accurate_graph_reasoning_with_llm-based_multi-agents.md)
+- [Do Not Merge My Model! Safeguarding Open-Source LLMs Against Unauthorized Model Merging](do_not_merge_my_model_safeguarding_open-source_llms_against_unauthorized_model_m.md)
 
 <!-- RELATED:END -->

@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] Lumos-1: On Autoregressive Video Generation with Discrete Diffusion from a Unified Model Perspective
 description: >-
-  [ICLR 2026][视频理解][自回归] 提出 Lumos-1，一个基于 LLM 架构的统一视频生成模型：通过 MM-RoPE（分布式多模态 RoPE）解决视觉时空编码问题，通过 AR-DF（自回归离散扩散强迫）解决帧间损失不均衡问题，仅用 48 GPU 训练即可在 GenEval、VBench-I2V 和 VBench-T2V 上达到竞争力水平。
+  [ICLR 2026][自回归] 提出 Lumos-1，一个基于 LLM 架构的统一视频生成模型：通过 MM-RoPE（分布式多模态 RoPE）解决视觉时空编码问题，通过 AR-DF（自回归离散扩散强迫）解决帧间损失不均衡问题，仅用 48 GPU 训练即可在 GenEval、VBench-I2V 和 VBench-T2V 上达到竞争力水平。
 tags:
   - ICLR 2026
-  - 视频理解
   - 自回归
   - 离散扩散
   - RoPE
@@ -144,9 +143,9 @@ Lumos-1 基于标准 Llama 架构，使用 Cosmos 离散 tokenizer（$8 \times 8
 ## 相关论文
 
 - [Streaming Autoregressive Video Generation via Diagonal Distillation](streaming_autoregressive_video_generation_via_diagonal_distillation.md)
-- [CubeComposer: Spatio-Temporal Autoregressive 4K 360° Video Generation from Perspective Video](../../CVPR2026/video_generation/cubecomposer_spatio-temporal_autoregressive_4k_360_video_generation_from_perspec.md)
 - [JavisDiT++: Unified Modeling and Optimization for Joint Audio-Video Generation](javisdit_unified_modeling_and_optimization_for_joint_audio-video_generation.md)
 - [How Far is Video Generation from World Model: A Physical Law Perspective](../../ICML2025/video_generation/how_far_is_video_generation_from_world_model_a_physical_law_perspective.md)
-- [QuantSparse: Comprehensively Compressing Video Diffusion Transformer with Model Quantization and Attention Sparsification](quantsparse_comprehensively_compressing_video_diffusion_transformer_with_model_q.md)
+- [CubeComposer: Spatio-Temporal Autoregressive 4K 360° Video Generation from Perspective Video](../../CVPR2026/video_generation/cubecomposer_spatio-temporal_autoregressive_4k_360_video_generation_from_perspec.md)
+- [Photography Perspective Composition: Towards Aesthetic Perspective Recommendation](../../NeurIPS2025/video_generation/photography_perspective_composition_towards_aesthetic_perspective_recommendation.md)
 
 <!-- RELATED:END -->

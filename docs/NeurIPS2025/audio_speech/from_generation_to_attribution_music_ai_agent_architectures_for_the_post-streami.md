@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Generation to Attribution: Music AI Agent Architectures for the Post-Streaming Era
 description: >-

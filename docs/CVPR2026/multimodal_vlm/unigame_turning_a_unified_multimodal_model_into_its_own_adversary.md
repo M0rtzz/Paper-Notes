@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UniGame: Turning a Unified Multimodal Model Into Its Own Adversary
 description: >-
@@ -141,6 +141,6 @@ UniGame 在标准 UMM（如 Janus-Pro-7B）上添加两个轻量模块：(1) 扰
 - [UniHM: Unified Dexterous Hand Manipulation with Vision Language Model](../../ICLR2026/multimodal_vlm/unihm_unified_dexterous_hand_manipulation_with_vision_language_model.md)
 - [Uni3DL: Unified Model for 3D and Language Understanding](../../ECCV2024/multimodal_vlm/uni3dl_a_unified_model_for_3d_vision-language_understanding.md)
 - [VecGlypher: Unified Vector Glyph Generation with Language Models](vecglypher_unified_vector_glyph_generation_with_language_models.md)
-- [Modal Aphasia: Can Unified Multimodal Models Describe Images From Memory?](../../ICLR2026/multimodal_vlm/modal_aphasia_can_unified_multimodal_models_describe_images_from_memory.md)
+- [Revisiting Model Stitching in the Foundation Model Era](revisiting_model_stitching_in_the_foundation_model.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Alternating Gradient Flows: A Theory of Feature Learning in Two-layer Neural Networks
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Augmenting Perceptual Super-Resolution via Image Quality Predictors
 description: >-
@@ -138,10 +138,10 @@ AMO+FT 在所有 NR-IQA 指标上超越 UPos（HGGT SOTA），且无需人工标
 
 ## 相关论文
 
+- [PIDSR: Complementary Polarized Image Demosaicing and Super-Resolution](pidsr_complementary_polarized_image_demosaicing_and_super-resolution.md)
+- [Progressive Focused Transformer for Single Image Super-Resolution](progressive_focused_transformer_for_single_image_super-resolution.md)
 - [Temporal Inconsistency Guidance for Super-resolution Video Quality Assessment](../../AAAI2026/image_restoration/temporal_inconsistency_guidance_for_super-resolution_video_quality_assessment.md)
+- [QMambaBSR: Burst Image Super-Resolution with Query State Space Model](qmambabsr_burst_image_super-resolution_with_query_state_space_model.md)
 - [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
-- [FIPER: Factorized Features for Robust Image Super-Resolution and Compression](../../NeurIPS2025/image_restoration/fiper_factorized_features_for_robust_image_super-resolution_and_compression.md)
-- [Rethinking Image Super-Resolution from Training Data Perspectives](../../ECCV2024/image_restoration/rethinking_image_super-resolution_from_training_data_perspectives.md)
-- [Overcoming Distribution Mismatch in Quantizing Image Super-Resolution Networks](../../ECCV2024/image_restoration/overcoming_distribution_mismatch_in_quantizing_image_super-resolution_networks.md)
 
 <!-- RELATED:END -->

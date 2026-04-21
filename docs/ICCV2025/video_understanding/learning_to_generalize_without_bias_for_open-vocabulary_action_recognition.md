@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning to Generalize Without Bias for Open-Vocabulary Action Recognition
 description: >-

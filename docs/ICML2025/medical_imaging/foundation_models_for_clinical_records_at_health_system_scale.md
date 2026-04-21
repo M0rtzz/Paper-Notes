@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Foundation Models for Clinical Records at Health System Scale
 description: >-

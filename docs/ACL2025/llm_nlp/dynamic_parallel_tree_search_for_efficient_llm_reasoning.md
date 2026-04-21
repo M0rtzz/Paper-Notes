@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamic Parallel Tree Search for Efficient LLM Reasoning
 description: >-

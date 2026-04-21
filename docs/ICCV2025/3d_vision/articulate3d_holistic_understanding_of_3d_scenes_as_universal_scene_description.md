@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Articulate3D: Holistic Understanding of 3D Scenes as Universal Scene Description
 description: >-

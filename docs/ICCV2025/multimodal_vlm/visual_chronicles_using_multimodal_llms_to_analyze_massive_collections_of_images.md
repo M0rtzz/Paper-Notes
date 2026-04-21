@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Visual Chronicles: Using Multimodal LLMs to Analyze Massive Collections of Images
 description: >-
@@ -191,6 +191,6 @@ MLLM 的额外指标：精度 81.34%，召回率 89.87%
 - [Hints of Prompt: Enhancing Visual Representation for Multimodal LLMs in Autonomous Driving](hints_of_prompt_enhancing_visual_representation_for_multimodal_llms_in_autonomou.md)
 - [MegaPairs: Massive Data Synthesis For Universal Multimodal Retrieval](../../ACL2025/multimodal_vlm/megapairs_massive_data_synthesis_for_universal_multimodal_retrieval.md)
 - [Controlling Multimodal LLMs via Reward-guided Decoding](controlling_multimodal_llms_via_rewardguided_decoding.md)
-- [Analyzing Finetuning Representation Shift for Multimodal LLMs Steering](analyzing_finetuning_representation_shift_for_multimodal_llms_steering.md)
+- [Enrich and Detect: Video Temporal Grounding with Multimodal LLMs](enrich_and_detect_video_temporal_grounding_with_multimodal_llms.md)
 
 <!-- RELATED:END -->

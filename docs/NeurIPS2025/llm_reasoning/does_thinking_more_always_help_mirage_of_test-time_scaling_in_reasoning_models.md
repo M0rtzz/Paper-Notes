@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Does Thinking More Always Help? Mirage of Test-Time Scaling in Reasoning Models
 description: >-

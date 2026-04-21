@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scalable GPU-Accelerated Euler Characteristic Curves: Optimization and Differentiable Learning for PyTorch
 description: >-

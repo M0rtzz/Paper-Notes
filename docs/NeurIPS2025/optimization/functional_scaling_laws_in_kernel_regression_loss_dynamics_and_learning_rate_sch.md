@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Functional Scaling Laws in Kernel Regression: Loss Dynamics and Learning Rate Schedules
 description: >-

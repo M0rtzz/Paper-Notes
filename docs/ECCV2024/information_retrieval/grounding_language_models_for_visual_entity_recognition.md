@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Grounding Language Models for Visual Entity Recognition
 description: >-
@@ -126,9 +126,9 @@ AutoVER = MLLM（基于 LLaVA/Vicuna）+ 多模态实体编码器 + 检索增强
 ## 相关论文
 
 - [Towards Open-Ended Visual Recognition with Large Language Model](towards_open-ended_visual_recognition_with_large_language_models.md)
-- [ArtVLM: Attribute Recognition Through Vision-Based Prefix Language Modeling](artvlm_attribute_recognition_through_vision-based_prefix_language_modeling.md)
+- [ArtVLM: Attribute Recognition Through Vision-Based Prefix Language Modeling](artvlm_attribute_recognition_through_visionbased_prefix_lang.md)
 - [Multi-Label Cluster Discrimination for Visual Representation Learning](multi-label_cluster_discrimination_for_visual_representation_learning.md)
 - [GaRAGe: A Benchmark with Grounding Annotations for RAG Evaluation](../../ACL2025/information_retrieval/garage_a_benchmark_with_grounding_annotations_for_rag_evaluation.md)
-- [EZSR: Event-based Zero-Shot Recognition](../../CVPR2025/information_retrieval/ezsr_event-based_zero-shot_recognition.md)
+- [VISA: Retrieval Augmented Generation with Visual Source Attribution](../../ACL2025/information_retrieval/visa_retrieval_augmented_generation_with_visual_source_attribution.md)
 
 <!-- RELATED:END -->

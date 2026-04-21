@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MMAT-1M: A Large Reasoning Dataset for Multimodal Agent Tuning
 description: >-
@@ -135,7 +135,7 @@ RAG benchmark (Dyn-VQA, F1-Recall):
 - [ToolVQA: A Dataset for Multi-step Reasoning VQA with External Tools](toolvqa_a_dataset_for_multistep_reasoning_vqa_with_external.md)
 - [MAmmoTH-VL: Eliciting Multimodal Reasoning with Instruction Tuning at Scale](../../ACL2025/multimodal_vlm/mammoth_vl_multimodal_reasoning.md)
 - [MetaMorph: Multimodal Understanding and Generation via Instruction Tuning](metamorph_multimodal_understanding_and_generation_via_instruction_tuning.md)
-- [Situat3DChange: Situated 3D Change Understanding Dataset for Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/situat3dchange_situated_3d_change_understanding_dataset_for_multimodal_large_lan.md)
 - [FinMME: Benchmark Dataset for Financial Multi-Modal Reasoning Evaluation](../../ACL2025/multimodal_vlm/finmme_benchmark_dataset_for_financial_multi-modal_reasoning_evaluation.md)
+- [Situat3DChange: Situated 3D Change Understanding Dataset for Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/situat3dchange_situated_3d_change_understanding_dataset_for_multimodal_large_lan.md)
 
 <!-- RELATED:END -->

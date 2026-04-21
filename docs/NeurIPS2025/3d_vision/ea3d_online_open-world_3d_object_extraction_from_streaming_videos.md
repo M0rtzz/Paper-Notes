@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EA3D: Online Open-World 3D Object Extraction from Streaming Videos
 description: >-
@@ -149,7 +149,7 @@ $$\mathcal{L} = \sum_{t=0}^{t_{\text{now}}} \lambda_1 \mathcal{L}_1 + \lambda_2 
 - [Towards 3D Objectness Learning in an Open World](towards_3d_objectness_learning_in_an_open_world.md)
 - [Learning from Videos for 3D World: Enhancing MLLMs with 3D Vision Geometry Priors](learning_from_videos_for_3d_world_enhancing_mllms_with_3d_vision_geometry_priors.md)
 - [DepthCrafter: Generating Consistent Long Depth Sequences for Open-world Videos](../../CVPR2025/3d_vision/depthcrafter_generating_consistent_long_depth_sequences_for_open-world_videos.md)
+- [Open-World Amodal Appearance Completion](../../CVPR2025/3d_vision/open-world_amodal_appearance_completion.md)
 - [Online Segment Any 3D Thing as Instance Tracking](online_segment_any_3d_thing_as_instance_tracking.md)
-- [OnlineSplatter: Pose-Free Online 3D Reconstruction for Free-Moving Objects](onlinesplatter_pose-free_online_3d_reconstruction_for_free-moving_objects.md)
 
 <!-- RELATED:END -->

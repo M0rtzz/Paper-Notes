@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VisioMath: Benchmarking Figure-based Mathematical Reasoning in LMMs
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiVE-k: Differential Visual Reasoning for Fine-grained Image Recognition
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AfroBench: How Good are Large Language Models on African Languages?
 description: >-
@@ -138,6 +138,6 @@ Few-shot效果(GPT-4o, 0-shot vs 5-shot)：
 - [Large Language Models for Predictive Analysis: How Far Are They?](large_language_models_for_predictive_analysis_how_far_are_they.md)
 - [What Makes a Good Natural Language Prompt?](good_natural_language_prompt.md)
 - [MIRAGE: Exploring How Large Language Models Perform in Complex Social Interactive Environments](mirage_exploring_how_large_language_models_perform_in_complex_social_interactive.md)
-- [Analyzing LLMs' Knowledge Boundary Cognition Across Languages Through the Lens of Internal Representations](knowledge_boundary_crosslingual.md)
+- [TigerLLM - A Family of Bangla Large Language Models](tigerllm_-_a_family_of_bangla_large_language_models.md)
 
 <!-- RELATED:END -->

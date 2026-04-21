@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Character-Level Understanding in LLMs through Token Internal Structure Learning
 description: >-

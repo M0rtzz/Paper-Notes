@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When Shallow Wins: Silent Failures and the Depth-Accuracy Paradox in Latent Reasoning
 description: >-

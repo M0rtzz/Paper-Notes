@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stroke3D: Lifting 2D Strokes into Rigged 3D Model via Latent Diffusion Models
 description: >-

@@ -145,6 +145,6 @@ $$L(D^{f;Q}, D^{f+}, D^{f-}) = \max\{d(D^{f;Q}, D^{f+}) - d(D^{f;Q}, D^{f-}) + m
 - [Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education](uni-retrieval_a_multi-style_retrieval_framework_for_stems_education.md)
 - [Unlocking Speech Instruction Data Potential with Query Rewriting](unlocking_speech_instruction_data_potential_with_query_rewriting.md)
 - [ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval](acord_an_expert-annotated_retrieval_dataset_for_legal_contract_drafting.md)
-- [GeAR: Generation Augmented Retrieval](gear_generation_augmented_retrieval.md)
+- [Towards Text-Image Interleaved Retrieval](towards_text-image_interleaved_retrieval.md)
 
 <!-- RELATED:END -->

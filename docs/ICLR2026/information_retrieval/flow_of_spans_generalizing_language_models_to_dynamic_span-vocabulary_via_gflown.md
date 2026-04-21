@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Flow of Spans: Generalizing Language Models to Dynamic Span-Vocabulary via GFlowNets
 description: >-

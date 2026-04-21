@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Asymmetric Cross-Modal Knowledge Distillation: Bridging Modalities with Weak Semantic Consistency
 description: >-
@@ -155,6 +155,6 @@ $$\mathcal{L}_{all} = \mathcal{L}_{task} + \lambda_1 \mathcal{L}_{kd} + \lambda_
 - [Cross-modal Fuzzy Alignment Network for Text-Aerial Person Retrieval and A Large-scale Benchmark](../../CVPR2026/remote_sensing/cross-modal_fuzzy_alignment_network_for_text-aerial_person_retrieval_and_a_large.md)
 - [GeoDistill: Geometry-Guided Self-Distillation for Weakly Supervised Cross-View Localization](../../ICCV2025/remote_sensing/geodistill_geometry-guided_self-distillation_for_weakly_supervised_cross-view_lo.md)
 - [Consistency-based Abductive Reasoning over Perceptual Errors of Multiple Pre-trained Models in Novel Environments](consistency-based_abductive_reasoning_over_perceptual_errors_of_multiple_pre-tra.md)
-- [C3PO: Cross-View Cross-Modality Correspondence by Pointmap Prediction](../../NeurIPS2025/remote_sensing/c3po_cross-view_cross-modality_correspondence_by_pointmap_prediction.md)
+- [SGFormer: Satellite-Ground Fusion for 3D Semantic Scene Completion](../../CVPR2025/remote_sensing/sgformer_satellite-ground_fusion_for_3d_semantic_scene_completion.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Deep Value Benchmark: Measuring Whether Models Generalize Deep Values or Shallow Preferences
 description: >-

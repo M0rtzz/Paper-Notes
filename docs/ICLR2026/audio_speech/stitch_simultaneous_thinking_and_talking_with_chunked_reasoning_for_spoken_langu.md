@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stitch: Simultaneous Thinking and Talking with Chunked Reasoning for Spoken Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bridging Symmetry and Robustness: On the Role of Equivariance in Enhancing Adversarial Robustness
 description: >-
@@ -147,6 +147,6 @@ Parallel GCNN (R&S) 在所有扰动强度下取得最优对抗准确率，10 层
 - [Enhancing CLIP Robustness via Cross-Modality Alignment](enhancing_clip_robustness_via_crossmodality_alignment.md)
 - [On the Robustness of Verbal Confidence of LLMs in Adversarial Attacks](on_the_robustness_of_verbal_confidence_of_llms_in_adversarial_attacks.md)
 - [Understanding and Improving Adversarial Robustness of Neural Probabilistic Circuits](understanding_and_improving_adversarial_robustness_of_neural_probabilistic_circu.md)
-- [Trans-EnV: A Framework for Evaluating the Linguistic Robustness of LLMs Against English Varieties](trans-env_a_framework_for_evaluating_the_linguistic_robustness_of_llms_against_e.md)
+- [Towards Adversarial Robustness via Debiased High-Confidence Logit Alignment](../../ICCV2025/ai_safety/towards_adversarial_robustness_via_debiased_high-confidence_logit_alignment.md)
 
 <!-- RELATED:END -->

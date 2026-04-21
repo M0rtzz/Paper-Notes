@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning to Generate and Extract: A Multi-Agent Collaboration Framework for Zero-shot Document-level Event Arguments Extraction
 description: >-

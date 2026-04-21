@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DIvide, then Ground: Adapting Frame Selection to Query Types for Long-Form Video Understanding
 description: >-

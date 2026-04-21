@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WavRAG: Audio-Integrated Retrieval Augmented Generation for Spoken Dialogue Models
 description: >-

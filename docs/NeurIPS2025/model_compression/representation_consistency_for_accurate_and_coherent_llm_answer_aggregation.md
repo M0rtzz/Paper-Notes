@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Representation Consistency for Accurate and Coherent LLM Answer Aggregation
 description: >-

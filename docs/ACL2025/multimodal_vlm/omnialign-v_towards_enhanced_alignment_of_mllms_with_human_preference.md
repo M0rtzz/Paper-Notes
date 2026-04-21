@@ -2,9 +2,15 @@
 title: >-
   [论文解读] OmniAlign-V: Towards Enhanced Alignment of MLLMs with Human Preference
 description: >-
-  [多模态] 构建了 OmniAlign-V（200K 高质量多模态 SFT 数据集）和 MM-AlignBench 评测基准，通过多样化图片来源、开放式问题设计和多样化回答格式，显著提升开源 MLLM 的人类偏好对齐能力，使 LLaVA-Next-32B 经 SFT+DPO 后超越 Qwen2VL-72B。
+  [ACL 2025][多模态][MLLM alignment] 构建了 OmniAlign-V（200K 高质量多模态 SFT 数据集）和 MM-AlignBench 评测基准，通过多样化图片来源、开放式问题设计和多样化回答格式，显著提升开源 MLLM 的人类偏好对齐能力，使 LLaVA-Next-32B 经 SFT+DPO 后超越 Qwen2VL-72B。
 tags:
+  - ACL 2025
   - 多模态
+  - MLLM alignment
+  - human preference
+  - instruction tuning
+  - DPO
+  - benchmark
 ---
 
 # OmniAlign-V: Towards Enhanced Alignment of MLLMs with Human Preference
@@ -204,10 +210,10 @@ tags:
 
 ## 相关论文
 
-- [Redundancy Principles for MLLMs Benchmarks](redundancy_principles_for_mllms_benchmarks.md)
-- [ReCAD: Reinforcement Learning Enhanced Parametric CAD Model Generation with Vision-Language Models](../../AAAI2026/multimodal_vlm/recad_reinforcement_learning_enhanced_parametric_cad_model_generation_with_visio.md)
-- [Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach](multimodal_coreference_resolution_for_chinese_social_media_dialogues_dataset_and.md)
-- [ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)
-- [Can Vision Language Models Understand Mimed Actions?](can_vision_language_models_understand_mimed_actions.md)
+- [Instruction-Oriented Preference Alignment for Enhancing Multi-Modal Comprehension Capability of MLLMs](../../ICCV2025/multimodal_vlm/instruction-oriented_preference_alignment_for_enhancing_multi-modal_comprehensio.md)
+- [Guiding Cross-Modal Representations with MLLM Priors via Preference Alignment](../../NeurIPS2025/multimodal_vlm/guiding_cross-modal_representations_with_mllm_priors_via_preference_alignment.md)
+- [We-Math: Does Your Large Multimodal Model Achieve Human-like Mathematical Reasoning?](we-math_does_your_large_multimodal_model_achieve_human-like_mathematical_reasoni.md)
+- [SPA-VL: A Comprehensive Safety Preference Alignment Dataset for Vision Language Models](../../CVPR2025/multimodal_vlm/spa-vl_a_comprehensive_safety_preference_alignment_dataset_for_vision_language_m.md)
+- [Causal Disentanglement and Cross-Modal Alignment for Enhanced Few-Shot Learning](../../ICCV2025/multimodal_vlm/causal_disentanglement_and_cross-modal_alignment_for_enhanced_few-shot_learning.md)
 
 <!-- RELATED:END -->

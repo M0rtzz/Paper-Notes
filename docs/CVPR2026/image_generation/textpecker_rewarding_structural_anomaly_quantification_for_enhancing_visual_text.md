@@ -156,8 +156,8 @@ $$dx_t = \left(v_t + \frac{\sigma_t^2}{2t}(x_t + (1-t)v_t)\right)dt + \sigma_t\,
 
 - [AMO Sampler: Enhancing Text Rendering with Overshooting](../../CVPR2025/image_generation/amo_sampler_enhancing_text_rendering_with_overshooting.md)
 - [Learning to Generate via Understanding: Understanding-Driven Intrinsic Rewarding for Unified Multimodal Models](learning_to_generate_via_understanding_understanding-driven_intrinsic_rewarding_.md)
+- [Unseen Visual Anomaly Generation](../../CVPR2025/image_generation/unseen_visual_anomaly_generation.md)
 - [RenderFlow: Single-Step Neural Rendering via Flow Matching](renderflow_single-step_neural_rendering_via_flow_matching.md)
 - [Enhancing Spatial Understanding in Image Generation via Reward Modeling](enhancing_spatial_understanding_in_image_generation_via_reward_modeling.md)
-- [Spatial-SSRL: Enhancing Spatial Understanding via Self-Supervised Reinforcement Learning](spatial-ssrl_enhancing_spatial_understanding_via_self-supervised_reinforcement_l.md)
 
 <!-- RELATED:END -->

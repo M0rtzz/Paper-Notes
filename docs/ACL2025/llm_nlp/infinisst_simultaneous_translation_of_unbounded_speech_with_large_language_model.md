@@ -2,9 +2,15 @@
 title: >-
   [论文解读] InfiniSST: Simultaneous Translation of Unbounded Speech with Large Language Model
 description: >-
-  [LLM/NLP] 提出 InfiniSST，将无界流式语音同声传译建模为 LLM 多轮对话任务，结合鲁棒片段训练数据构造、多延迟增强策略和 Λ-shaped KV cache 管理，在 MuST-C En-Es/De/Zh 三个方向上将计算感知延迟降低 0.5-1 秒而不损失翻译质量。
+  [ACL 2025][LLM/NLP][simultaneous translation] 提出 InfiniSST，将无界流式语音同声传译建模为 LLM 多轮对话任务，结合鲁棒片段训练数据构造、多延迟增强策略和 Λ-shaped KV cache 管理，在 MuST-C En-Es/De/Zh 三个方向上将计算感知延迟降低 0.5-1 秒而不损失翻译质量。
 tags:
+  - ACL 2025
   - LLM/NLP
+  - simultaneous translation
+  - streaming speech
+  - KV cache
+  - multi-turn dialogue
+  - unbounded input
 ---
 
 # InfiniSST: Simultaneous Translation of Unbounded Speech with Large Language Model
@@ -109,10 +115,10 @@ InfiniSST 由三个核心组件构成：
 
 ## 相关论文
 
-- [A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](a_survey_on_efficient_large_language.md)
-- [SongComposer: A Large Language Model for Lyric and Melody Generation in Song Composition](songcomposer_llm_lyric_melody_generation.md)
-- [Improve Language Model and Brain Alignment via Associative Memory](improve_language_model_and_brain_alignment_via_associative_memory.md)
-- [SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence](selfelicit_evidence_highlighting.md)
-- [Classifying Unreliable Narrators with Large Language Models](classifying_unreliable_narrators.md)
+- [Locate-and-Focus: Enhancing Terminology Translation in Speech Language Models](locateandfocus_enhancing_terminology_translation_in_speech.md)
+- [When Large Language Models Meet Speech: A Survey on Integration Approaches](when_large_language_models_meet_speech_a_survey_on_integration_approaches.md)
+- [Recent Advances in Speech Language Models: A Survey](recent_advances_in_speech_language_models_a_survey.md)
+- [Representation Bending for Large Language Model Safety](repbend_representation_bending_safety.md)
+- [Language-Codec: Bridging Discrete Codec Representations and Speech Language Models](language_codec_bridging_discrete_codec_speech_language_models.md)
 
 <!-- RELATED:END -->

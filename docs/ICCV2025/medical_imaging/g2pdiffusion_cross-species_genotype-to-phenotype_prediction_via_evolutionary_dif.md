@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] G2PDiffusion: Cross-Species Genotype-to-Phenotype Prediction via Evolutionary Diffusion
 description: >-
@@ -141,7 +141,7 @@ G2PDiffusion包含三个核心组件：(1) MSA检索引擎从外部数据库检�
 
 ## 相关论文
 
-- [Forecasting Epileptic Seizures from Contactless Camera via Cross-Species Transfer Learning](../../CVPR2026/medical_imaging/forecasting_epileptic_seizures_from_contactless_ca.md)
+- [Forecasting Epileptic Seizures from Contactless Camera via Cross-Species Transfer Learning](../../CVPR2026/medical_imaging/forecasting_epileptic_seizures_from_contactless_camera_via_cross-species_transfe.md)
 - [FAPEX: Fractional Amplitude-Phase Expressor for Robust Cross-Subject Seizure Prediction](../../NeurIPS2025/medical_imaging/fapex_fractional_amplitude-phase_expressor_for_robust_cross-subject_seizure_pred.md)
 - [SciVid: Cross-Domain Evaluation of Video Models in Scientific Applications](scivid_cross-domain_evaluation_of_video_models_in_scientific_applications.md)
 - [Cross-Sample Augmented Test-Time Adaptation for Personalized Intraoperative Hypotension Prediction](../../AAAI2026/medical_imaging/cross-sample_augmented_test-time_adaptation_for_personalized_intraoperative_hypo.md)

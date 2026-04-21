@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Preference-Aligned LoRA Merging: Preserving Subspace Coverage and Addressing Directional Anisotropy
 description: >-
@@ -129,6 +129,6 @@ TARA框架输入为N个任务的LoRA适配器 $\{\Delta W_i = B_i A_i^\top\}$ �
 - [Unraveling LoRA Interference: Orthogonal Subspaces for Robust Model Merging](../../ACL2025/model_compression/osrm_lora_merging_orthogonal.md)
 - [SparseRM: A Lightweight Preference Modeling with Sparse Autoencoder](../../AAAI2026/model_compression/sparserm_a_lightweight_preference_modeling_with_sparse_autoencoder.md)
 - [Evolution and compression in LLMs: On the emergence of human-aligned categorization](../../ICLR2026/model_compression/evolution_and_compression_in_llms_on_the_emergence_of_human-aligned_categorizati.md)
-- [Task Vector Quantization for Memory-Efficient Model Merging](../../ICCV2025/model_compression/task_vector_quantization_for_memory-efficient_model_merging.md)
+- [TokenSqueeze: Performance-Preserving Compression for Reasoning LLMs](../../NeurIPS2025/model_compression/tokensqueeze_performance-preserving_compression_for_reasoning_llms.md)
 
 <!-- RELATED:END -->

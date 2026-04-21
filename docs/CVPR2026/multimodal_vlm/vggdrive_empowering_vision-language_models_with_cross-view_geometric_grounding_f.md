@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VGGDrive: Empowering Vision-Language Models with Cross-View Geometric Grounding for Autonomous Driving
 description: >-

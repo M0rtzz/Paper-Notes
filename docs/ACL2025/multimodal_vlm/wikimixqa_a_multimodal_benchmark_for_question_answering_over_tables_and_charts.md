@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WikiMixQA: A Multimodal Benchmark for Question Answering over Tables and Charts
 description: >-

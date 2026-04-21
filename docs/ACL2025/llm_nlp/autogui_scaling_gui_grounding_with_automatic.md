@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AutoGUI: Scaling GUI Grounding with Automatic Functionality Annotations from LLMs
 description: >-

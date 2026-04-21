@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NePhi: Neural Deformation Fields for Approximately Diffeomorphic Medical Image Registration
 description: >-
@@ -143,8 +143,8 @@ NePhi 的 pipeline 分为两个阶段：**预训练阶段**和**推理阶段**�
 
 - [Adaptive Correspondence Scoring for Unsupervised Medical Image Registration](adaptive_correspondence_scoring_for_unsupervised_medical_ima.md)
 - [Unsupervised Multi-modal Medical Image Registration via Invertible Translation](unsupervised_multi-modal_medical_image_registration_via_invertible_translation.md)
+- [SACB-Net: Spatial-Awareness Convolutions for Medical Image Registration](../../CVPR2025/medical_imaging/sacb-net_spatial-awareness_convolutions_for_medical_image_registration.md)
 - [Unified All-Atom Molecule Generation with Neural Fields](../../NeurIPS2025/medical_imaging/unified_all-atom_molecule_generation_with_neural_fields.md)
-- [I-MedSAM: Implicit Medical Image Segmentation with Segment Anything](i-medsam_implicit_medical_image_segmentation_with_segment_anything.md)
-- [Alternate Diverse Teaching for Semi-supervised Medical Image Segmentation](alternate_diverse_teaching_for_semi-supervised_medical_image_segmentation.md)
+- [FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields](../../CVPR2025/medical_imaging/ffacenerf_few-shot_face_editing_in_neural_radiance_fields.md)
 
 <!-- RELATED:END -->

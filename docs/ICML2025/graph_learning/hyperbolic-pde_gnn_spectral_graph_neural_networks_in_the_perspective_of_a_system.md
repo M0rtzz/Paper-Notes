@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hyperbolic-PDE GNN: Spectral Graph Neural Networks in the Perspective of A System of Hyperbolic Partial Differential Equations
 description: >-

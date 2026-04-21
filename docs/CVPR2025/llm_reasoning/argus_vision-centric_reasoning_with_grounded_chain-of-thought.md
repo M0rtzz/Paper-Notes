@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought
 description: >-
-  [CVPR 2025][LLM推理] Argus通过目标导向的视觉注意力接地机制，将目标检测式的bounding box预测作为视觉CoT信号，引导MLLM在推理时重新关注图像关键区域，在视觉推理和grounding任务上均取得SOTA
+  [CVPR 2025][LLM推理][视觉链式思维] Argus 提出了一种grounded visual CoT机制，通过让MLLM先预测与问题相关的bounding box（RoI），然后重新采样/编码该区域的视觉token作为推理上下文，实现了显式的目标导向视觉注意力，在7B/8B级MLLM中取得视觉推理和目标grounding双料SOTA。
 tags:
   - CVPR 2025
   - LLM推理
-  - 视觉CoT
+  - 视觉链式思维
+  - 视觉注意力接地
   - 多模态推理
-  - 视觉接地
+  - RoI重新关注
+  - 混合视觉专家
 ---
 
 # Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought
@@ -143,8 +145,8 @@ CoT和Grounding的叠加效果：
 
 - [CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models](cot-vla_visual_chain-of-thought_reasoning_for_vision-language-action_models.md)
 - [Improve Vision Language Model Chain-of-thought Reasoning](../../ACL2025/llm_reasoning/improve_vlm_cot_reasoning.md)
-- [Interleaved-Modal Chain-of-Thought](interleaved-modal_chain-of-thought.md)
 - [SceneCOT: Eliciting Grounded Chain-of-Thought Reasoning in 3D Scenes](../../ICLR2026/llm_reasoning/scenecot_eliciting_grounded_chain-of-thought_reasoning_in_3d_scenes.md)
-- [Uni-CoT: Towards Unified Chain-of-Thought Reasoning Across Text and Vision](../../ICLR2026/llm_reasoning/uni-cot_towards_unified_chain-of-thought_reasoning_across_text_and_vision.md)
+- [Interleaved-Modal Chain-of-Thought](interleaved-modal_chain-of-thought.md)
+- [VideoEspresso: A Large-Scale Chain-of-Thought Dataset for Fine-Grained Video Reasoning via Core Frame Selection](videoespresso_a_large-scale_chain-of-thought_dataset_for_fine-grained_video_reas.md)
 
 <!-- RELATED:END -->

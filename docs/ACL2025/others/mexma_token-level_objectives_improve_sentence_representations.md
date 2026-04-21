@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MEXMA: Token-level Objectives Improve Sentence Representations
 description: >-

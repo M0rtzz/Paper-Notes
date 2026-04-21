@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PolyConf: Unlocking Polymer Conformation Generation through Hierarchical Generative Models
 description: >-
@@ -219,7 +219,7 @@ $$\mathcal{L}_{\text{phase-2}} = \frac{1}{N_u}\sum_{i=1}^{N_u}\|\hat{R}_i^{(0)} 
 - [Aligning Protein Conformation Ensemble Generation with Physical Feedback](aligning_protein_conformation_ensemble_generation_with_physical_feedback.md)
 - [CFP-Gen: Combinatorial Functional Protein Generation via Diffusion Language Models](cfp-gen_combinatorial_functional_protein_generation_via_diffusion_language_model.md)
 - [DeepSeq: High-Throughput Single-Cell RNA Sequencing Data Labeling via Web Search-Augmented Agentic Generative AI Foundation Models](deepseq_high-throughput_single-cell_rna_sequencing_data_labeling_via_web_search-.md)
+- [Unlocking Positive Transfer in Incrementally Learning Surgical Instruments: A Self-reflection Hierarchical Prompt Framework](../../CVPR2026/medical_imaging/unlocking_positive_transfer_in_incrementally_learning_surgical_instruments_a_sel.md)
 - [ComRecGC: Global Graph Counterfactual Explainer through Common Recourse](comrecgc_global_graph_counterfactual_explainer_through_common_recourse.md)
-- [Steering Generative Models with Experimental Data for Protein Fitness Optimization](../../NeurIPS2025/medical_imaging/steering_generative_models_with_experimental_data_for_protein_fitness_optimizati.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Weak-to-Strong Jailbreaking on Large Language Models
 description: >-

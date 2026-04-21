@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TRAN-D: 2D Gaussian Splatting-based Sparse-view Transparent Object Depth Reconstruction via Physics Simulation for Scene Update
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Area-Optimal Control Strategies for Heterogeneous Multi-Agent Pursuit
 description: >-

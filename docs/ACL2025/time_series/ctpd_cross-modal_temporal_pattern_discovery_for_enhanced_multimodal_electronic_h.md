@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CTPD: Cross-Modal Temporal Pattern Discovery for Enhanced Multimodal Electronic Health Records Analysis
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ReMoT: Reinforcement Learning with Motion Contrast Triplets
 description: >-

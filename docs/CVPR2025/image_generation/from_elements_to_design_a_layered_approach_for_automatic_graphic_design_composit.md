@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Elements to Design: A Layered Approach for Automatic Graphic Design Composition
 description: >-
@@ -122,8 +122,8 @@ LaDeCo 包含两个阶段：(1) **Layer Planning（层规划）**：使用 GPT-4
 
 - [Rethinking Layered Graphic Design Generation with a Top-Down Approach](../../ICCV2025/image_generation/rethinking_layered_graphic_design_generation_with_a_top-down_approach.md)
 - [ChatGen: Automatic Text-to-Image Generation From FreeStyle Chatting](chatgen_automatic_text-to-image_generation_from_freestyle_chatting.md)
-- [PSDesigner: Automated Graphic Design with a Human-Like Creative Workflow](../../CVPR2026/image_generation/psdesigner_automated_graphic_design_with_a_human-like_creative_workflow.md)
-- [Diffusion-Based Electromagnetic Inverse Design of Scattering Structured Media](../../NeurIPS2025/image_generation/diffusion-based_electromagnetic_inverse_design_of_scattering_structured_media.md)
-- [ETTA: Elucidating the Design Space of Text-to-Audio Models](../../ICML2025/image_generation/etta_elucidating_the_design_space_of_text-to-audio_models.md)
+- [StyleStudio: Text-Driven Style Transfer with Selective Control of Style Elements](stylestudio_text-driven_style_transfer_with_selective_control_of_style_elements.md)
+- [MixerMDM: Learnable Composition of Human Motion Diffusion Models](mixermdm_learnable_composition_of_human_motion_diffusion_models.md)
+- [ORIDa: Object-Centric Real-World Image Composition Dataset](orida_object-centric_real-world_image_composition_dataset.md)
 
 <!-- RELATED:END -->

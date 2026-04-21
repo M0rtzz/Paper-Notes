@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VitalDiagnosis: AI-Driven Ecosystem for 24/7 Vital Monitoring and Chronic Disease Management
 description: >-

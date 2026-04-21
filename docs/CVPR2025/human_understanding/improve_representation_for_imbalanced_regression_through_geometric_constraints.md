@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improve Representation for Imbalanced Regression through Geometric Constraints
 description: >-
@@ -131,9 +131,9 @@ UCI-Airfoil数据集上（MAE）：
 ## 相关论文
 
 - [Learning Affine Correspondences by Integrating Geometric Constraints](learning_affine_correspondences_by_integrating_geometric_constraints.md)
+- [NN-Former: Rethinking Graph Structure in Neural Architecture Representation](nn-former_rethinking_graph_structure_in_neural_architecture_representation.md)
+- [Omni-ID: Holistic Identity Representation Designed for Generative Tasks](omni-id_holistic_identity_representation_designed_for_generative_tasks.md)
+- [SemGeoMo: Dynamic Contextual Human Motion Generation with Semantic and Geometric Guidance](semgeomo_dynamic_contextual_human_motion_generation_with_semantic_and_geometric_.md)
 - [Design2GarmentCode: Turning Design Concepts to Tangible Garments Through Program Synthesis](design2garmentcode_turning_design_concepts_to_tangible_garments_through_program_.md)
-- [Learning Dense Hand Contact Estimation from Imbalanced Data](../../NeurIPS2025/human_understanding/learning_dense_hand_contact_estimation_from_imbalanced_data.md)
-- [Combinative Matching for Geometric Shape Assembly](../../ICCV2025/human_understanding/combinative_matching_for_geometric_shape_assembly.md)
-- [Neural Collapse in Cumulative Link Models for Ordinal Regression: An Analysis with Unconstrained Feature Model](../../NeurIPS2025/human_understanding/neural_collapse_in_cumulative_link_models_for_ordinal_regression_an_analysis_wit.md)
 
 <!-- RELATED:END -->

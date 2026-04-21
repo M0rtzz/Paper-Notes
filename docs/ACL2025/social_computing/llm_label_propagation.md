@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Synergizing LLMs with Global Label Propagation for Multimodal Fake News Detection
 description: >-

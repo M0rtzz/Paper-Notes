@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] StreamingTOM: Streaming Token Compression for Efficient Video Understanding
 description: >-

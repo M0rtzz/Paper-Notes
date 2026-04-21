@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bring Your Rear Cameras for Egocentric 3D Human Pose Estimation
 description: >-
@@ -111,8 +111,8 @@ tags:
 
 ## 相关论文
 
-- [BoxDreamer: Dreaming Box Corners for Generalizable Object Pose Estimation](boxdreamer_dreaming_box_corners_for_generalizable_object_pos.md)
 - [Fish2Mesh Transformer: 3D Human Mesh Recovery from Egocentric Vision](fish2mesh_transformer_3d_human_mesh_recovery_from_egocentric_vision.md)
+- [BoxDreamer: Dreaming Box Corners for Generalizable Object Pose Estimation](boxdreamer_dreaming_box_corners_for_generalizable_object_pos.md)
 - [PersPose: 3D Human Pose Estimation with Perspective Encoding and Perspective Rotation](perspose_3d_human_pose_estimation_with_perspective_encoding_and_perspective_rota.md)
 - [Multi-View 3D Point Tracking](multi-view_3d_point_tracking.md)
 - [SuperDec: 3D Scene Decomposition with Superquadric Primitives](superdec_3d_scene_decomposition_with_superquadrics_primitives.md)

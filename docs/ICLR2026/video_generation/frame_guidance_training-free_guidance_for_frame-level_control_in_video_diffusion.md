@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] Frame Guidance: Training-Free Guidance for Frame-Level Control in Video Diffusion Models
 description: >-
-  [ICLR 2026][图像生成][无训练引导] 提出 Frame Guidance，一种无需训练的帧级引导方法，通过 latent slicing（降低 60× 显存）和 Video Latent Optimization（VLO）两个核心组件，在不修改模型的情况下实现关键帧引导、风格化和循环视频等多种可控视频生成任务。
+  [ICLR 2026][无训练引导] 提出 Frame Guidance，一种无需训练的帧级引导方法，通过 latent slicing（降低 60× 显存）和 Video Latent Optimization（VLO）两个核心组件，在不修改模型的情况下实现关键帧引导、风格化和循环视频等多种可控视频生成任务。
 tags:
   - ICLR 2026
-  - 图像生成
   - 无训练引导
   - 视频扩散模型
   - 帧级控制
@@ -134,8 +133,8 @@ Frame Guidance 在预训练 VDM 的推理过程中，对选定帧施加基于梯
 
 - [When to Lock Attention: Training-Free KV Control in Video Diffusion](../../CVPR2026/video_generation/when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
 - [LoRA-Edit: Controllable First-Frame-Guided Video Editing via Mask-Aware LoRA Fine-Tuning](lora-edit_controllable_first-frame-guided_video_editing_via_mask-aware_lora_fine.md)
-- [FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](../../CVPR2026/video_generation/flashmotion_few-step_controllable_video_generation_with_trajectory_guidance.md)
 - [First Frame Is the Place to Go for Video Content Customization](../../CVPR2026/video_generation/first_frame_is_the_place_to_go_for_video_content_customization.md)
-- [Target-Aware Video Diffusion Models](target-aware_video_diffusion_models.md)
+- [FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](../../CVPR2026/video_generation/flashmotion_fewstep_controllable_video_generation.md)
+- [VideoGuide: Improving Video Diffusion Models without Training Through a Teacher's Guide](../../CVPR2025/video_generation/videoguide_improving_video_diffusion_models_without_training_through_a_teachers_.md)
 
 <!-- RELATED:END -->

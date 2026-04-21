@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A.I.R.: Adaptive, Iterative, and Reasoning-based Frame Selection For Video Question Answering
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Epistemic Uncertainty for Generated Image Detection
 description: >-

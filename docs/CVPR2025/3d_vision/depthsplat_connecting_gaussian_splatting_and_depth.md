@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DepthSplat: Connecting Gaussian Splatting and Depth
 description: >-

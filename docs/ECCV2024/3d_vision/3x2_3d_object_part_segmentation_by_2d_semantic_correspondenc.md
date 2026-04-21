@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3×2: 3D Object Part Segmentation by 2D Semantic Correspondences
 description: >-
@@ -122,7 +122,7 @@ tags:
 - [Open-Vocabulary 3D Semantic Segmentation with Text-to-Image Diffusion Models](open-vocabulary_3d_semantic_segmentation_with_text-to-image_diffusion_models.md)
 - [FlashSplat: 2D to 3D Gaussian Splatting Segmentation Solved Optimally](flashsplat_2d_to_3d_gaussian_splatting_segmentation_solved_optimally.md)
 - [PartSAM: A Scalable Promptable Part Segmentation Model Trained on Native 3D Data](../../ICLR2026/3d_vision/partsam_a_scalable_promptable_part_segmentation_model_trained_on_native_3d_data.md)
-- [S2AM3D: Scale-controllable Part Segmentation of 3D Point Clouds](../../CVPR2026/3d_vision/s2am3d_scale-controllable_part_segmentation_of_3d_point_cloud.md)
+- [SUM Parts: Benchmarking Part-Level Semantic Segmentation of Urban Meshes](../../CVPR2025/3d_vision/sum_parts_benchmarking_part-level_semantic_segmentation_of_urban_meshes.md)
 - [DreamDissector: Learning Disentangled Text-to-3D Generation from 2D Diffusion Priors](dreamdissector_learning_disentangled_text-to-3d_generation_from_2d_diffusion_pri.md)
 
 <!-- RELATED:END -->

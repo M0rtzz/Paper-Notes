@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bipartite Ranking From Multiple Labels: On Loss Versus Label Aggregation
 description: >-

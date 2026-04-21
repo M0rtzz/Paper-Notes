@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OTPrune: Distribution-Aligned Visual Token Pruning via Optimal Transport
 description: >-
@@ -149,10 +149,10 @@ tags:
 
 ## 相关论文
 
-- [Estimation of Stochastic Optimal Transport Maps](../../NeurIPS2025/optimization/estimation_of_stochastic_optimal_transport_maps.md)
-- [Bispectral OT: Dataset Comparison using Symmetry-Aware Optimal Transport](../../NeurIPS2025/optimization/bispectral_ot_dataset_comparison_using_symmetry-aware_optimal_transport.md)
 - [Fed-ADE: Adaptive Learning Rate for Federated Post-adaptation under Distribution Shift](fed-ade_adaptive_learning_rate_for_federated_post-adaptation_under_distribution_.md)
 - [CogFlow: Bridging Perception and Reasoning through Knowledge Internalization for Visual Mathematical Problem Solving](../../ICLR2026/optimization/cogflow_bridging_perception_and_reasoning_through_knowledge_internalization_for_.md)
+- [FedRTS: Federated Robust Pruning via Combinatorial Thompson Sampling](../../NeurIPS2025/optimization/fedrts_federated_robust_pruning_via_combinatorial_thompson_sampling.md)
 - [Automatic Joint Structured Pruning and Quantization for Efficient Neural Network Training and Compression](../../CVPR2025/optimization/automatic_joint_structured_pruning_and_quantization_for_efficient_neural_network.md)
+- [Leveraging Perturbation Robustness to Enhance Out-of-Distribution Detection](../../CVPR2025/optimization/leveraging_perturbation_robustness_to_enhance_out-of-distribution_detection.md)
 
 <!-- RELATED:END -->

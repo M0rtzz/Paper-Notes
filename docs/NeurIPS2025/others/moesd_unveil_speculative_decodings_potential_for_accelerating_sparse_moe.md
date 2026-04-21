@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MoESD: 揭示投机解码加速稀疏MoE的潜力
 description: >-
@@ -132,9 +132,9 @@ Mixtral-8×7B-Instruct + EAGLE speculation head：
 ## 相关论文
 
 - [FlowMoE: 分布式MoE训练的可扩展流水线调度框架](flowmoe_a_scalable_pipeline_scheduling_framework_for_distributed_mixture-of-expe.md)
-- [Are Pixel-Wise Metrics Reliable for Sparse-View Computed Tomography Reconstruction?](are_pixel-wise_metrics_reliable_for_sparse-view_computed_tomography_reconstructi.md)
 - [笔记5：ReSearch - 学习通过搜索推理](research_learning_to_reason_with_search_for_llms_via_reinforcement_learning.md)
-- [EPHAD: An Evidence-Based Post-Hoc Adjustment Framework for Anomaly Detection Under Data Contamination](an_evidence-based_post-hoc_adjustment_framework_for_anomaly_detection_under_data.md)
-- [Hessian-guided Perturbed Wasserstein Gradient Flows for Escaping Saddle Points](hessian-guided_perturbed_wasserstein_gradient_flows_for_escaping_saddle_points.md)
+- [Are Pixel-Wise Metrics Reliable for Sparse-View Computed Tomography Reconstruction?](are_pixel-wise_metrics_reliable_for_sparse-view_computed_tomography_reconstructi.md)
+- [Semi-infinite Nonconvex Constrained Min-Max Optimization](semi-infinite_nonconvex_constrained_min-max_optimization.md)
+- [Learning to Condition: A Neural Heuristic for Scalable MPE Inference](learning_to_condition_a_neural_heuristic_for_scalable_mpe_inference.md)
 
 <!-- RELATED:END -->

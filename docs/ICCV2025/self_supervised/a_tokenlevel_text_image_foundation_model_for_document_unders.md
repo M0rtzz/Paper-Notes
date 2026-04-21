@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Token-level Text Image Foundation Model for Document Understanding (TokenFD/TokenVL)
 description: >-

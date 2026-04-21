@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Breaking the SFT Plateau: Multimodal Structured Reinforcement Learning for Chart-to-Code Generation
 description: >-

@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] Fast3R: Towards 3D Reconstruction of 1000+ Images in One Forward Pass
 description: >-
-  [CVPR 2025][3D reconstruction] 提出 Fast3R，一种基于 Transformer 的多视图 3D 重建方法，通过 all-to-all attention 在单次前向传播中处理 1000+ 张图像，消除了 DUSt3R 的 O(N²) 配对和全局对齐瓶颈。
+  [CVPR 2025][3D视觉][3D重建] 提出 Fast3R，将 DUSt3R 的配对 pointmap 回归推广到多视图，通过 Transformer 的 all-to-all attention 在单次前向传播中处理 N 张无序无位姿图像，彻底消除了 $O(N^2)$ 配对推理和全局对齐优化。
 tags:
   - CVPR 2025
-  - 3D reconstruction
+  - 3D视觉
+  - 3D重建
   - multi-view
   - Transformer
-  - pointmap
+  - pointmap regression
   - DUSt3R
+  - scalability
 ---
 
 # Fast3R: Towards 3D Reconstruction of 1000+ Images in One Forward Pass
@@ -143,9 +145,9 @@ tags:
 ## 相关论文
 
 - [HandOS: 3D Hand Reconstruction in One Stage](handos_3d_hand_reconstruction_in_one_stage.md)
+- [SPAR3D: Stable Point-Aware Reconstruction of 3D Objects from Single Images](spar3d_stable_point-aware_reconstruction_of_3d_objects_from_single_images.md)
 - [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
-- [MEt3R: Measuring Multi-View Consistency in Generated Images](met3r_measuring_multi-view_consistency_in_generated_images.md)
-- [Matrix3D: Large Photogrammetry Model All-in-One](matrix3d_large_photogrammetry_model_all-in-one.md)
 - [Amodal3R: Amodal 3D Reconstruction from Occluded 2D Images](../../ICCV2025/3d_vision/amodal3r_amodal_3d_reconstruction_from_occluded_2d_images.md)
+- [Pow3R: Empowering Unconstrained 3D Reconstruction with Camera and Scene Priors](pow3r_empowering_unconstrained_3d_reconstruction_with_camera_and_scene_priors.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VLM-Loc: Localization in Point Cloud Maps via Vision-Language Models
 description: >-

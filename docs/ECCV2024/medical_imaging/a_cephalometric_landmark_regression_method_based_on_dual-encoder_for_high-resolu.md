@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Cephalometric Landmark Regression Method Based on Dual-Encoder for High-Resolution X-Ray Image
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PointLLM: Empowering Large Language Models to Understand Point Clouds
 description: >-

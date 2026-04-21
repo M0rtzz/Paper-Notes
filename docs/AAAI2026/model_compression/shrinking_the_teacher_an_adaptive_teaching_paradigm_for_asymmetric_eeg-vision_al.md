@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Shrinking the Teacher: An Adaptive Teaching Paradigm for Asymmetric EEG-Vision Alignment
 description: >-

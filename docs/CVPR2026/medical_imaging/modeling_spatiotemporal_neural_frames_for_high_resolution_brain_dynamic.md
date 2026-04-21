@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics
 description: >-

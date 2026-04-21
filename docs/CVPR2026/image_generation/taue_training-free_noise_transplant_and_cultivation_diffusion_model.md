@@ -2,9 +2,15 @@
 title: >-
   [论文解读] TAUE: Training-free Noise Transplant and Cultivation Diffusion Model
 description: >-
-  [图像生成] TAUE 提出一种**免训练**的分层图像生成框架，通过将去噪中间潜变量"移植"到新生成过程的初始噪声中，并结合跨层注意力共享，实现前景、背景和合成图像的三层一致生成，性能匹配甚至超越微调方法。
+  [CVPR2026][图像生成][分层图像生成] TAUE 提出一种**免训练**的分层图像生成框架，通过将去噪中间潜变量"移植"到新生成过程的初始噪声中，并结合跨层注意力共享，实现前景、背景和合成图像的三层一致生成，性能匹配甚至超越微调方法。
 tags:
+  - CVPR2026
   - 图像生成
+  - 分层图像生成
+  - 扩散模型
+  - 免训练
+  - 潜空间移植
+  - 跨层注意力
 ---
 
 # TAUE: Training-free Noise Transplant and Cultivation Diffusion Model
@@ -204,10 +210,10 @@ $$n_t = \begin{cases} m_{\text{obj}} \odot n_{t_{\text{crop}}} + (1 - m_{\text{o
 
 ## 相关论文
 
+- [Melodia: Training-Free Music Editing Guided by Attention Probing in Diffusion Models](../../AAAI2026/image_generation/melodia_training-free_music_editing_guided_by_attention_probing_in_diffusion_mod.md)
 - [TAP: A Token-Adaptive Predictor Framework for Training-Free Diffusion Acceleration](tap_a_token-adaptive_predictor_framework_for_training-free_diffusion_acceleratio.md)
-- [MatchDiffusion: Training-free Generation of Match-Cuts](../../ICCV2025/image_generation/matchdiffusion_training-free_generation_of_match-cuts.md)
-- [TINA: Text-Free Inversion Attack for Unlearned Text-to-Image Diffusion Models](tina_text-free_inversion_attack_for_unlearned_text-to-image_diffusion_models.md)
-- [FreeMorph: Tuning-Free Generalized Image Morphing with Diffusion Model](../../ICCV2025/image_generation/freemorph_tuning-free_generalized_image_morphing_with_diffusion_model.md)
-- [Uni-DAD: Unified Distillation and Adaptation of Diffusion Models for Few-step Few-shot Image Generation](uni-dad_unified_distillation_and_adaptation_of_diffusion_models_for_few-step_few.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [HAM: A Training-Free Style Transfer Approach via Heterogeneous Attention Modulation for Diffusion Models](ham_a_training-free_style_transfer_approach_via_heterogeneous_attention_modulati.md)
+- [Accelerating Diffusion Model Training under Minimal Budgets: A Condensation-Based Perspective](accelerating_diffusion_model_training_under_minimal_budgets_a_condensation-based.md)
 
 <!-- RELATED:END -->

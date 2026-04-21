@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdaptGrad: Adaptive Sampling to Reduce Noise
 description: >-

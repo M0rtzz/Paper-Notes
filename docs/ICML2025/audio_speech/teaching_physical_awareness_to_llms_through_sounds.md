@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Teaching Physical Awareness to LLMs through Sounds
 description: >-

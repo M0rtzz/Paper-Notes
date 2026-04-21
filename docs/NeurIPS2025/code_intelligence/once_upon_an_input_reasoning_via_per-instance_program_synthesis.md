@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Once Upon an Input: Reasoning via Per-Instance Program Synthesis
 description: >-

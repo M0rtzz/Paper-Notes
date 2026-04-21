@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AVION: Aerial Vision-Language Instruction from Offline Teacher to Prompt-Tuned Network
 description: >-
@@ -134,6 +134,6 @@ AVION 采用教师-学生蒸馏架构：冻结的大型教师模型（GeoRSCLIP 
 - [Olbedo: An Albedo and Shading Aerial Dataset for Large-Scale Outdoor Environments](olbedo_an_albedo_and_shading_aerial_dataset_for_large-scale_outdoor_environments.md)
 - [ACPV-Net: All-Class Polygonal Vectorization for Seamless Vector Map Generation from Aerial Imagery](acpv-net_all-class_polygonal_vectorization_for_seamless_vector_map_generation_fr.md)
 - [Asking like Socrates: Socrates helps VLMs understand remote sensing images](asking_like_socrates_socrates_helps_vlms_understand_remote_sensing_images.md)
-- [Joint and Streamwise Distributed MIMO Satellite Communications with Multi-Antenna Ground Users](joint_and_streamwise_distributed_mimo_satellite_co.md)
+- [Joint and Streamwise Distributed MIMO Satellite Communications with Multi-Antenna Ground Users](joint_and_streamwise_distributed_mimo_satellite_communications_with_multi-antenn.md)
 
 <!-- RELATED:END -->

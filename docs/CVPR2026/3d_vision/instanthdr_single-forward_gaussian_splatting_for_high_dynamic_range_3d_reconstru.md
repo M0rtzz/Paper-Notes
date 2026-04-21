@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction
 description: >-

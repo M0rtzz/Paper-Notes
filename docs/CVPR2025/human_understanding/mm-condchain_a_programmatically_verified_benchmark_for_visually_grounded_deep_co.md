@@ -127,6 +127,6 @@ VPIR-based Agentic Benchmark Construction Pipeline：(1) Planner 逐层编排推
 - [From Easy to Hard: The MIR Benchmark for Progressive Interleaved Multi-Image Reasoning](../../ICCV2025/human_understanding/from_easy_to_hard_the_mir_benchmark_for_progressive_interleaved_multi-image_reas.md)
 - [OmniEVA: Embodied Versatile Planner via Task-Adaptive 3D-Grounded and Embodiment-aware Reasoning](../../ICLR2026/human_understanding/omnieva_embodied_versatile_planner_via_task-adaptive_3d-grounded_and_embodiment-.md)
 - [WIR3D: Visually-Informed and Geometry-Aware 3D Shape Abstraction](../../ICCV2025/human_understanding/wir3d_visually-informed_and_geometry-aware_3d_shape_abstraction.md)
-- [In-Context Compositional Learning via Sparse Coding Transformer](../../NeurIPS2025/human_understanding/in-context_compositional_learning_via_sparse_coding_transformer.md)
+- [Retrieving Semantics from the Deep: an RAG Solution for Gesture Synthesis](retrieving_semantics_from_the_deep_an_rag_solution_for_gesture_synthesis.md)
 
 <!-- RELATED:END -->

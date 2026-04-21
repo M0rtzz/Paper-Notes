@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Projecting Points to Axes: Oriented Object Detection via Point-Axis Representation
 description: >-

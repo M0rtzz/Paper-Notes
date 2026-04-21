@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Global-Lens Transformers: Adaptive Token Mixing for Dynamic Link Prediction
 description: >-

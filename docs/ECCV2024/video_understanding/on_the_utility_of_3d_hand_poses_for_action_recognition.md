@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the Utility of 3D Hand Poses for Action Recognition
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Frustratingly Simple Yet Highly Effective Attack Baseline: Over 90% Success Rate Against the Strong Black-box Models of GPT-4.5/4o/o1
 description: >-

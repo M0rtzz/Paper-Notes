@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Phys-Liquid: A Physics-Informed Dataset for Estimating 3D Geometry and Volume of Transparent Deformable Liquids
 description: >-

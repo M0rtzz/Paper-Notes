@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VT-FSL: Bridging Vision and Text with LLMs for Few-Shot Learning
 description: >-

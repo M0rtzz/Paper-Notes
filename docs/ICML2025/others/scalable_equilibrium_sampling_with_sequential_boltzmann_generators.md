@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scalable Equilibrium Sampling with Sequential Boltzmann Generators
 description: >-
@@ -134,7 +134,7 @@ SBG是唯一同时具备四个关键特性的方法。
 - [Sampling from Binary Quadratic Distributions via Stochastic Localization](sampling_from_binary_quadratic_distributions_via_stochastic_localization.md)
 - [Advancing Sequential Numerical Prediction in Autoregressive Models](../../ACL2025/others/advancing_sequential_numerical_prediction_in_autoregressive_models.md)
 - [A Sustainable AI Economy Needs Data Deals That Work for Generators](../../NeurIPS2025/others/a_sustainable_ai_economy_needs_data_deals_that_work_for_gene.md)
-- [Sample-Adaptivity Tradeoff in On-Demand Sampling](../../NeurIPS2025/others/sample-adaptivity_tradeoff_in_on-demand_sampling.md)
 - [Robust Sampling for Active Statistical Inference](../../NeurIPS2025/others/robust_sampling_for_active_statistical_inference.md)
+- [Sample-Adaptivity Tradeoff in On-Demand Sampling](../../NeurIPS2025/others/sample-adaptivity_tradeoff_in_on-demand_sampling.md)
 
 <!-- RELATED:END -->

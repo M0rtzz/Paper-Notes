@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unveiling the Spatial-Temporal Effective Receptive Fields of Spiking Neural Networks
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Comprehensive Graph Framework for Question Answering with Mode-Seeking Preference Alignment
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FOLDER: Accelerating Multi-modal Large Language Models with Enhanced Performance
 description: >-

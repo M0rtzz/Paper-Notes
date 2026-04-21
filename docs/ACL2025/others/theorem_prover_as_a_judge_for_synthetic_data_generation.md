@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Theorem Prover as a Judge for Synthetic Data Generation
 description: >-

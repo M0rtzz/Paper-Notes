@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpatialTraceGen: High-Fidelity Traces for Efficient VLM Spatial Reasoning Distillation
 description: >-

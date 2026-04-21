@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CityGaussian: Real-Time High-Quality Large-Scale Scene Rendering with Gaussians
 description: >-
@@ -173,9 +173,9 @@ tags:
 ## 相关论文
 
 - [VersatileGaussian: Real-Time Neural Rendering for Versatile Tasks Using Gaussian Splatting](versatilegaussian_real-time_neural_rendering_for_versatile_tasks_using_gaussian_.md)
+- [Sparse Voxels Rasterization: Real-time High-fidelity Radiance Field Rendering](../../CVPR2025/3d_vision/sparse_voxels_rasterization_real-time_high-fidelity_radiance_field_rendering.md)
 - [LODGE: Level-of-Detail Large-Scale Gaussian Splatting with Efficient Rendering](../../NeurIPS2025/3d_vision/lodge_level-of-detail_large-scale_gaussian_splatting_with_efficient_rendering.md)
-- [MAtCha Gaussians: Atlas of Charts for High-Quality Geometry and Photorealism From Sparse Views](../../CVPR2025/3d_vision/matcha_gaussians_atlas_of_charts_for_high-quality_geometry_and_photorealism_from.md)
 - [HeadGaS: Real-Time Animatable Head Avatars via 3D Gaussian Splatting](headgas_real-time_animatable_head_avatars_via_3d_gaussian_splatting.md)
-- [Momentum-GS: Momentum Gaussian Self-Distillation for High-Quality Large Scene Reconstruction](../../ICCV2025/3d_vision/momentum-gs_momentum_gaussian_self-distillation_for_high-quality_large_scene_rec.md)
+- [MAtCha Gaussians: Atlas of Charts for High-Quality Geometry and Photorealism From Sparse Views](../../CVPR2025/3d_vision/matcha_gaussians_atlas_of_charts_for_high-quality_geometry_and_photorealism_from.md)
 
 <!-- RELATED:END -->

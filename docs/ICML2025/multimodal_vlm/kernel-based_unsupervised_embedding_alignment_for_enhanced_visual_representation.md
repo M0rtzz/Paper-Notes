@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Kernel-based Unsupervised Embedding Alignment for Enhanced Visual Representation in Vision-language Models
 description: >-

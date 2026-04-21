@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stochastic Self-Guidance for Training-Free Enhancement of Diffusion Models
 description: >-

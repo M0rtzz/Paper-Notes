@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Large Self-Supervised Models Bridge the Gap in Domain Adaptive Object Detection
 description: >-
@@ -119,10 +119,10 @@ DINO Teacher 分三个阶段：(1) **离线标注器训练**：在冻结的 DINO
 
 ## 相关论文
 
-- [M-GRPO: Stabilizing Self-Supervised Reinforcement Learning for Large Language Models with Momentum-Anchored Policy Optimization](../../NeurIPS2025/object_detection/m-grpo_stabilizing_self-supervised_reinforcement_learning_for_large_language_mod.md)
+- [SimLTD: Simple Supervised and Semi-Supervised Long-Tailed Object Detection](simltd_simple_supervised_and_semi-supervised_long-tailed_object_detection.md)
+- [M-GRPO: Stabilizing Self-Supervised Reinforcement Learning for Large Language Models with Momentum-Anchored Policy Optimization](../../NeurIPS2025/object_detection/m-grpo_stabilizing_self-supervised_reinforcement_learning_for_multimodal_underst.md)
 - [DA-Mamba: Learning Domain-Aware State Space Model for Global-Local Alignment in Domain Adaptive Object Detection](../../CVPR2026/object_detection/da-mamba_learning_domain-aware_state_space_model_for_global-local_alignment_in_d.md)
 - [Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)
-- [LMM-Det: Make Large Multimodal Models Excel in Object Detection](../../ICCV2025/object_detection/lmm-det_make_large_multimodal_models_excel_in_object_detection.md)
-- [Bridge Past and Future: Overcoming Information Asymmetry in Incremental Object Detection](../../ECCV2024/object_detection/bridge_past_and_future_overcoming_information_asymmetry_in_incremental_object_de.md)
+- [Efficient Test-Time Adaptive Object Detection via Sensitivity-Guided Pruning](efficient_test-time_adaptive_object_detection_via_sensitivity-guided_pruning.md)
 
 <!-- RELATED:END -->

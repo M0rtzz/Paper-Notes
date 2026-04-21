@@ -2,14 +2,16 @@
 title: >-
   [论文解读] Motion Prompting: Controlling Video Generation with Motion Trajectories
 description: >-
-  [CVPR 2025][video generation] 提出motion prompt概念，通过时空稀疏/稠密点轨迹作为运动条件控制视频生成，单一ControlNet实现物体控制、相机控制、运动迁移、图像编辑等多种能力。
+  [CVPR 2025][提示学习] 将时空稀疏/稠密点轨迹作为"运动提示"训练ControlNet，用单一模型实现物体控制、相机控制、运动迁移、拖拽编辑等多种运动控制能力，并展现出逼真物理行为的涌现特性。
 tags:
   - CVPR 2025
-  - video generation
-  - motion control
+  - 提示学习
+  - 扩散模型
+  - point trajectories
   - ControlNet
-  - point tracking
-  - 运动条件
+  - camera control
+  - object control
+  - motion transfer
 ---
 
 # Motion Prompting: Controlling Video Generation with Motion Trajectories
@@ -143,10 +145,10 @@ tags:
 
 ## 相关论文
 
+- [Through-The-Mask: Mask-based Motion Trajectories for Image-to-Video Generation](through-the-mask_mask-based_motion_trajectories_for_image-to-video_generation.md)
+- [MotionPro: A Precise Motion Controller for Image-to-Video Generation](motionpro_a_precise_motion_controller_for_image-to-video_generation.md)
+- [MotionStone: Decoupled Motion Intensity Modulation with Diffusion Transformer for Image-to-Video Generation](motionstone_decoupled_motion_intensity_modulation_with_diffusion_transformer_for.md)
 - [Free-Form Motion Control: Controlling the 6D Poses of Camera and Objects in Video Generation](../../ICCV2025/video_generation/free-form_motion_control_controlling_the_6d_poses_of_camera_and_objects_in_video.md)
 - [ConMo: Controllable Motion Disentanglement and Recomposition for Zero-Shot Motion Transfer](conmo_controllable_motion_disentanglement_and_recomposition_for_zero-shot_motion.md)
-- [MotionPro: A Precise Motion Controller for Image-to-Video Generation](motionpro_a_precise_motion_controller_for_image-to-video_generation.md)
-- [Motion Modes: What Could Happen Next?](motion_modes_what_could_happen_next.md)
-- [MotionStone: Decoupled Motion Intensity Modulation with Diffusion Transformer for Image-to-Video Generation](motionstone_decoupled_motion_intensity_modulation_with_diffusion_transformer_for.md)
 
 <!-- RELATED:END -->

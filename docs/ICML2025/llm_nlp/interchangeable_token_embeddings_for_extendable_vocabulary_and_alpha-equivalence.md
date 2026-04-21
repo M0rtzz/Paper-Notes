@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Interchangeable Token Embeddings for Extendable Vocabulary and Alpha-Equivalence
 description: >-
@@ -155,7 +155,7 @@ tags:
 - [Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs](../../ACL2025/llm_nlp/token_prepending_training_free.md)
 - [Towards Universal Offline Black-Box Optimization via Learning Language Model Embeddings](towards_universal_offline_black-box_optimization_via_learning_language_model_emb.md)
 - [Reparameterized LLM Training via Orthogonal Equivalence Transformation](../../NeurIPS2025/llm_nlp/reparameterized_llm_training_via_orthogonal_equivalence_transformation.md)
+- [SATA: Spatial Autocorrelation Token Analysis for Enhancing the Robustness of Vision Transformers](../../CVPR2025/llm_nlp/sata_spatial_autocorrelation_token_analysis_for_enhancing_the_robustness_of_visi.md)
 - [Contrastive Prompting Enhances Sentence Embeddings in LLMs through Inference-Time Steering](../../ACL2025/llm_nlp/contrastive_prompting_embeddings.md)
-- [The Impact of Token Granularity on the Predictive Power of Language Model Surprisal](../../ACL2025/llm_nlp/token_granularity_impact.md)
 
 <!-- RELATED:END -->

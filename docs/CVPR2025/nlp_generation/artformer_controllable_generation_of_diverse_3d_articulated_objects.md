@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ArtFormer: Controllable Generation of Diverse 3D Articulated Objects
 description: >-
@@ -98,6 +98,6 @@ $L_{trans} = \beta_o L_o + \beta_P L_P + L_a$（终止分类 + 编码簿KL + 属
 - [ATGen: A Framework for Active Text Generation](../../ACL2025/nlp_generation/atgen_a_framework_for_active_text_generation.md)
 - [Personalized Text Generation with Contrastive Activation Steering](../../ACL2025/nlp_generation/personalized_text_generation_with_contrastive_activation_steering.md)
 - [Writing Like the Best: Exemplar-Based Expository Text Generation](../../ACL2025/nlp_generation/writing_like_best_exemplar.md)
-- [Dehumanizing Machines: Mitigating Anthropomorphic Behaviors in Text Generation Systems](../../ACL2025/nlp_generation/dehumanizing_machines_anthropomorphic.md)
+- [Towards Better Open-Ended Text Generation: A Multicriteria Evaluation Framework](../../ACL2025/nlp_generation/towards_better_open-ended_text_generation_a_multicriteria_evaluation_framework.md)
 
 <!-- RELATED:END -->

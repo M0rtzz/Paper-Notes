@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TOFA: Training-Free One-Shot Federated Adaptation for Vision-Language Models
 description: >-

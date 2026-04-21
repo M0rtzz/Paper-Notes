@@ -137,6 +137,6 @@ tags:
 - [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](disentangle_language_culture.md)
 - [Cross-Lingual Optimization for Language Transfer in Large Language Models](cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
 - [Just Go Parallel: Improving the Multilingual Capabilities of Large Language Models](just_go_parallel_improving_the_multilingual_capabilities_of_large_language_model.md)
-- [Marco-Bench-MIF: On Multilingual Instruction-Following Capability of Large Language Models](marco_bench_multilingual_if.md)
+- [Trans-Zero: Self-Play Incentivizes Large Language Models for Multilingual Translation](trans-zero_self-play_incentivizes_large_language_models_for_multilingual_transla.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OAPT: Offset-Aware Partition Transformer for Double JPEG Artifacts Removal
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generating Physically Sound Designs from Text and a Set of Physical Constraints
 description: >-

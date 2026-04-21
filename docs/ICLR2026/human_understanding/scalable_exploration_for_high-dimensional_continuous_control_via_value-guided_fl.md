@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scalable Exploration for High-Dimensional Continuous Control via Value-Guided Flow
 description: >-
@@ -124,6 +124,6 @@ This work is supported by STI 2030-Major Projects 2022ZD0209400, Beijing Academy
 - [AMPED: Adaptive Multi-objective Projection for balancing Exploration and skill Diversification](amped_adaptive_multi-objective_projection_for_balancing_exploration_and_skill_di.md)
 - [UniFlow: A Unified Pixel Flow Tokenizer for Visual Understanding and Generation](uniflow_a_unified_pixel_flow_tokenizer_for_visual_understanding_and_generation.md)
 - [What Limits Virtual Agent Application? OmniBench: A Scalable Multi-Dimensional Benchmark for Essential Virtual Agent Capabilities](../../ICML2025/human_understanding/what_limits_virtual_agent_application_omnibench_a_scalable_multi-dimensional_ben.md)
-- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
+- [ToProVAR: Efficient Visual Autoregressive Modeling via Tri-Dimensional Entropy-Aware Semantic Analysis and Sparsity Optimization](toprovar_efficient_visual_autoregressive_modeling_via_tri-dimensional_entropy-aw.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DuoLoRA: Cycle-Consistent and Rank-Disentangled Content-Style Personalization
 description: >-
@@ -133,10 +133,10 @@ $$\mathcal{L} = \lambda_{layer\_prior} \mathcal{L}_{layer\_prior} + \lambda_{cyc
 
 ## 相关论文
 
+- [Style Quantization for Data-Efficient GAN Training](../../CVPR2025/model_compression/style_quantization_for_data-efficient_gan_training.md)
 - [Beyond Low-Rank Tuning: Model Prior-Guided Rank Allocation for Effective Transfer in Low-Data and Large-Gap Regimes](beyond_low-rank_tuning_model_prior-guided_rank_allocation_for_effective_transfer.md)
 - [FreestyleRet: Retrieving Images from Style-Diversified Queries](../../ECCV2024/model_compression/freestyleret_retrieving_images_from_style-diversified_queries.md)
 - [FiRA: Can We Achieve Full-Rank Training of LLMs Under Low-Rank Constraint?](../../NeurIPS2025/model_compression/fira_can_we_achieve_full-rank_training_of_llms_under_low-rank_constraint.md)
 - [From Low Rank Gradient Subspace Stabilization to Low-Rank Weights: Observations, Theories, and Applications](../../ICML2025/model_compression/from_low_rank_gradient_subspace_stabilization_to_low-rank_weights_observations_t.md)
-- [Beyond Higher Rank: Token-wise Input-Output Projections for Efficient Low-Rank Adaptation](../../NeurIPS2025/model_compression/beyond_higher_rank_token-wise_input-output_projections_for_efficient_low-rank_ad.md)
 
 <!-- RELATED:END -->

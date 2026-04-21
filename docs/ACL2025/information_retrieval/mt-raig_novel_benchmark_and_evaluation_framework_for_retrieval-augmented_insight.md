@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MT-RAIG: Novel Benchmark and Evaluation Framework for Retrieval-Augmented Insight Generation over Multiple Tables
 description: >-

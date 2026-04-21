@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WaDi: Weight Direction-aware Distillation for One-step Image Synthesis
 description: >-

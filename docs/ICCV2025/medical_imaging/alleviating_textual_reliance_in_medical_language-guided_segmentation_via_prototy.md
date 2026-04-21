@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Alleviating Textual Reliance in Medical Language-guided Segmentation via Prototype-driven Semantic Approximation
 description: >-
@@ -126,10 +126,10 @@ ProLearn = PSA模块 + Language-guided U-Net。PSA模块一次性从少量图文
 
 ## 相关论文
 
-- [Boosting Vision Semantic Density with Anatomy Normality Modeling for Medical Vision-language Pre-training](boosting_vision_semantic_density_with_anatomy_normality_mode.md)
+- [Boosting Vision Semantic Density with Anatomy Normality Modeling for Medical Vision-language Pre-training](boosting_vision_semantic_density_with_anatomy_normality_modeling_for_medical_vis.md)
 - [Evidential learning driven Breast Tumor Segmentation with Stage-divided Vision-Language Interaction](../../CVPR2025/medical_imaging/evidential_learning_driven_breast_tumor_segmentation_with_stage-divided_vision-l.md)
-- [Bidirectional Channel-selective Semantic Interaction for Semi-Supervised Medical Segmentation](../../AAAI2026/medical_imaging/bidirectional_channel-selective_semantic_interaction_for_semi-supervised_medical.md)
-- [Magical: Medical Lay Language Generation via Semantic Invariance and Layperson-tailored Adaptation](../../NeurIPS2025/medical_imaging/magical_medical_lay_language_generation_via_semantic_invariance_and_layperson-ta.md)
+- [MedBioRAG: Semantic Search and Retrieval-Augmented Generation with Large Language Models for Medical and Biological QA](../../ACL2025/medical_imaging/medbiorag_semantic_search_and_retrieval-augmented_generation_for_biomedical_lite.md)
 - [Divide, Conquer and Unite: Hierarchical Style-Recalibrated Prototype Alignment for Federated Medical Segmentation](../../AAAI2026/medical_imaging/divide_conquer_and_unite_hierarchical_style-recalibrated_prototype_alignment_for.md)
+- [Bidirectional Channel-selective Semantic Interaction for Semi-Supervised Medical Segmentation](../../AAAI2026/medical_imaging/bidirectional_channel-selective_semantic_interaction_for_semi-supervised_medical.md)
 
 <!-- RELATED:END -->

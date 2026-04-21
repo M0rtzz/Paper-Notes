@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sim-DETR: Unlock DETR for Temporal Sentence Grounding
 description: >-
@@ -180,6 +180,6 @@ Charades-STA / TACoS：
 - [EvRT-DETR: Latent Space Adaptation of Image Detectors for Event-based Vision](evrt-detr_latent_space_adaptation_of_image_detectors_for_event-based_vision.md)
 - [Sparse-Dense Side-Tuner for Efficient Video Temporal Grounding](sparse-dense_side-tuner_for_efficient_video_temporal_grounding.md)
 - [MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism](../../CVPR2025/object_detection/mi-detr_an_object_detection_model_with_multi-time_inquiries_mechanism.md)
-- [DEIM: DETR with Improved Matching for Fast Convergence](../../CVPR2025/object_detection/deim_detr_with_improved_matching_for_fast_convergence.md)
+- [Mr. DETR++: Instructive Multi-Route Training for Detection Transformers with MoE](../../CVPR2025/object_detection/mr_detr_instructive_multi-route_training_for_detection_transformers.md)
 
 <!-- RELATED:END -->

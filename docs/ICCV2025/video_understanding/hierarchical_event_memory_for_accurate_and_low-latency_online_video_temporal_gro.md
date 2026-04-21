@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hierarchical Event Memory for Accurate and Low-latency Online Video Temporal Grounding
 description: >-
@@ -145,8 +145,8 @@ TACoS数据集上各组件的消融：
 
 ## 相关论文
 
-- [Moment Quantization for Video Temporal Grounding](moment_quantization_for_video_temporal_grounding.md)
 - [Online Dense Point Tracking with Streaming Memory](online_dense_point_tracking_with_streaming_memory.md)
+- [Moment Quantization for Video Temporal Grounding](moment_quantization_for_video_temporal_grounding.md)
 - [OVG-HQ: Online Video Grounding with Hybrid-modal Queries](ovg-hq_online_video_grounding_with_hybrid-modal_queries.md)
 - [VTimeCoT: Thinking by Drawing for Video Temporal Grounding and Reasoning](vtimecot_thinking_by_drawing_for_video_temporal_grounding_and_reasoning.md)
 - [TimeExpert: An Expert-Guided Video LLM for Video Temporal Grounding](timeexpert_an_expert-guided_video_llm_for_video_temporal_grounding.md)

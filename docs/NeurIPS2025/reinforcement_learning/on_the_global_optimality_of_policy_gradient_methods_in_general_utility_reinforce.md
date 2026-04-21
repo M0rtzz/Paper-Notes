@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the Global Optimality of Policy Gradient Methods in General Utility Reinforcement Learning
 description: >-

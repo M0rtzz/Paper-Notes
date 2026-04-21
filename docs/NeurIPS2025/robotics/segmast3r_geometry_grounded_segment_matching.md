@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SegMASt3R: Geometry Grounded Segment Matching
 description: >-

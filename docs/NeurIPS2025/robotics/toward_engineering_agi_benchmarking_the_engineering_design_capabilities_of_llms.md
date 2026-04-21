@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Toward Engineering AGI: Benchmarking the Engineering Design Capabilities of LLMs
 description: >-

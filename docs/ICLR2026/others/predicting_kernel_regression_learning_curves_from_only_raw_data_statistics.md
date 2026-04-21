@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Predicting Kernel Regression Learning Curves from Only Raw Data Statistics
 description: >-

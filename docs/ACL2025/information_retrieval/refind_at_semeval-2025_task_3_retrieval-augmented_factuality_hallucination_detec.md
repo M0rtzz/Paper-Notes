@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] REFIND at SemEval-2025 Task 3: Retrieval-Augmented Factuality Hallucination Detection in Large Language Models
 description: >-

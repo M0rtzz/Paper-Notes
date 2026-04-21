@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PE3R: Perception-Efficient 3D Reconstruction
 description: >-

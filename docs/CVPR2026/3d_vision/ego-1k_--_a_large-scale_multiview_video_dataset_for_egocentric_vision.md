@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Ego-1K: A Large-Scale Multiview Video Dataset for Egocentric Vision
 description: >-

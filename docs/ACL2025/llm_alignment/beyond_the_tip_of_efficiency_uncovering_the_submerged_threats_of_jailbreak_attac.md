@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond the Tip of Efficiency: Uncovering the Submerged Threats of Jailbreak Attacks in Small Language Models
 description: >-

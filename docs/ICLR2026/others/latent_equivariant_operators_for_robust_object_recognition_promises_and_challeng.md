@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Latent Equivariant Operators for Robust Object Recognition: Promises and Challenges
 description: >-

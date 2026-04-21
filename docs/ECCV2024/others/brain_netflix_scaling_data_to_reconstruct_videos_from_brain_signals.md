@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Brain Netflix: Scaling Data to Reconstruct Videos from Brain Signals
 description: >-
@@ -137,8 +137,8 @@ tags:
 
 ## 相关论文
 
-- [Brain-Like Processing Pathways Form in Models With Heterogeneous Experts](../../NeurIPS2025/others/brain-like_processing_pathways_form_in_models_with_heterogeneous_experts.md)
 - [SEED: Towards More Accurate Semantic Evaluation for Visual Brain Decoding](../../ICLR2026/others/seed_towards_more_accurate_semantic_evaluation_for_visual_brain_decoding.md)
+- [Brain-Like Processing Pathways Form in Models With Heterogeneous Experts](../../NeurIPS2025/others/brain-like_processing_pathways_form_in_models_with_heterogeneous_experts.md)
 - [Action2Sound: Ambient-Aware Generation of Action Sounds from Egocentric Videos](action2sound_ambientaware_generation_of_action_sounds_from_e.md)
 - [EvoBrain: Dynamic Multi-Channel EEG Graph Modeling for Time-Evolving Brain Networks](../../NeurIPS2025/others/evobrain_dynamic_multi-channel_eeg_graph_modeling_for_time-evolving_brain_networ.md)
 - [FreeAugment: Data Augmentation Search Across All Degrees of Freedom](freeaugment_data_augmentation_search_across_all_degrees_of_freedom.md)

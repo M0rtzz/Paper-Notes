@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Classic Video Denoising in a Machine Learning World: Robust, Fast, and Controllable
 description: >-
@@ -120,7 +120,7 @@ tags:
 - [Unrolled Decomposed Unpaired Learning for Controllable Low-Light Video Enhancement](../../ECCV2024/image_restoration/unrolled_decomposed_unpaired_learning_for_controllable_low-light_video_enhanceme.md)
 - [Learning to Translate Noise for Robust Image Denoising](../../CVPR2026/image_restoration/learning_to_translate_noise_for_robust_image_denoising.md)
 - [SCAN: Self-Denoising Monte Carlo Annotation for Robust Process Reward Learning](../../NeurIPS2025/image_restoration/scan_self-denoising_monte_carlo_annotation_for_robust_process_reward_learning.md)
-- [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
-- [A Physics-Informed Blur Learning Framework for Imaging Systems](a_physics-informed_blur_learning_framework_for_imaging_systems.md)
+- [DiTFlow: Video Motion Transfer with Diffusion Transformers](video_motion_transfer_with_diffusion_transformers.md)
+- [Prior Does Matter: Visual Navigation via Denoising Diffusion Bridge Models](prior_does_matter_visual_navigation_via_denoising_diffusion_bridge_models.md)
 
 <!-- RELATED:END -->

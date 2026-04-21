@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PINO: Person-Interaction Noise Optimization for Long-Duration and Customizable Motion Generation of Arbitrary-Sized Groups
 description: >-

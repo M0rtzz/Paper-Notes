@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SHINE: Saliency-aware HIerarchical NEgative Ranking for Compositional Temporal Grounding
 description: >-

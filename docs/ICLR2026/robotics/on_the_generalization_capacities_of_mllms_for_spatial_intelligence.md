@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the Generalization Capacities of MLLMs for Spatial Intelligence
 description: >-

@@ -121,10 +121,10 @@ tags:
 
 ## 相关论文
 
-- [OS-Genesis: Automating GUI Agent Trajectory Construction via Reverse Task Synthesis](os_genesis_gui_agent_trajectory.md)
-- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
 - [METAL: A Multi-Agent Framework for Chart Generation with Test-Time Scaling](metal_a_multi-agent_framework_for_chart_generation_with_test-time_scaling.md)
 - [AndroidGen: Building an Android Language Agent under Data Scarcity](androidgen_agent_data_scarcity.md)
+- [REPRO-Bench: Can Agentic AI Systems Assess the Reproducibility of Social Science Research?](repro-bench_can_agentic_ai_systems_assess_the_reproducibility_of_research_claims.md)
 - [OS-Kairos: Adaptive Interaction for MLLM-Powered GUI Agents](os-kairos_adaptive_interaction_for_mllm-powered_gui_agents.md)
+- [LocAgent: Graph-Guided LLM Agents for Code Localization](locagent_graph-guided_llm_agents_for_code_localization.md)
 
 <!-- RELATED:END -->

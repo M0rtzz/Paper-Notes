@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Act to See, See to Act: Diffusion-Driven Perception-Action Interplay for Adaptive Policies
 description: >-
@@ -128,8 +128,8 @@ Push-T 图像模态：0.87 → **0.93** (+6%)；Dynamic Push-T：0.65 → **0.80
 ## 相关论文
 
 - [Structural Information-based Hierarchical Diffusion for Offline Reinforcement Learning](structural_information-based_hierarchical_diffusion_for_offline_reinforcement_le.md)
-- [Real-World Reinforcement Learning of Active Perception Behaviors](real-world_reinforcement_learning_of_active_perception_behaviors.md)
 - [CHDP: Cooperative Hybrid Diffusion Policies for RL in Parametric Environments](../../AAAI2026/reinforcement_learning/chdp_cooperative_hybrid_diffusion_policies_for_reinforcement_learning_in_paramet.md)
+- [Real-World Reinforcement Learning of Active Perception Behaviors](real-world_reinforcement_learning_of_active_perception_behaviors.md)
 - [Reinforcement Learning with Action Chunking](reinforcement_learning_with_action_chunking.md)
 - [See It, Say It, Sorted: An Iterative Training-Free Framework for Visually-Grounded Multimodal Reasoning in LVLMs](../../CVPR2026/reinforcement_learning/see_it_say_it_sorted_an_iterative_training-free_framework_for_visually-grounded_.md)
 

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploring Landscapes for Better Minima along Valleys
 description: >-
@@ -153,6 +153,6 @@ E-adaptor 是一个可插入任意梯度优化器的适配器。核心修改：�
 - [Better NTK Conditioning: A Free Lunch from ReLU Nonlinear Activation in Wide Neural Networks](better_ntk_conditioning_a_free_lunch_from_relu_nonlinear_activation_in_wide_neur.md)
 - [When to Restart? Exploring Escalating Restarts on Convergence](../../ICLR2026/optimization/when_to_restart_exploring_escalating_restarts_on_convergence.md)
 - [Exploring Diverse Generation Paths via Inference-time Stiefel Activation Steering](../../ICLR2026/optimization/exploring_diverse_generation_paths_via_inference-time_stiefel_activation_steerin.md)
-- [Learning at the Speed of Physics: Equilibrium Propagation on Oscillator Ising Machines](learning_at_the_speed_of_physics_equilibrium_propagation_on_oscillator_ising_mac.md)
+- [Deep Taxonomic Networks for Unsupervised Hierarchical Prototype Discovery](deep_taxonomic_networks_for_unsupervised_hierarchical_prototype_discovery.md)
 
 <!-- RELATED:END -->

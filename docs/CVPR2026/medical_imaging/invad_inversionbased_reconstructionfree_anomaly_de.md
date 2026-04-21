@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models
 description: >-

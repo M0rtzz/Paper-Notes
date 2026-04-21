@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EMGauss: Continuous Slice-to-3D Reconstruction via Dynamic Gaussian Modeling in Volume Electron Microscopy
 description: >-

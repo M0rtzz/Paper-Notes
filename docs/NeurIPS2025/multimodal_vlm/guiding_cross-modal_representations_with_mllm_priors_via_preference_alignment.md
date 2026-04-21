@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Guiding Cross-Modal Representations with MLLM Priors via Preference Alignment
 description: >-

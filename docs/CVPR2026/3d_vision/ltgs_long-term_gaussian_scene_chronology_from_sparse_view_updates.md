@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LTGS: Long-Term Gaussian Scene Chronology From Sparse View Updates
 description: >-

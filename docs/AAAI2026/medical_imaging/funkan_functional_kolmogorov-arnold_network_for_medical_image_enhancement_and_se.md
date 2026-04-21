@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FunKAN: Functional Kolmogorov-Arnold Network for Medical Image Enhancement and Segmentation
 description: >-

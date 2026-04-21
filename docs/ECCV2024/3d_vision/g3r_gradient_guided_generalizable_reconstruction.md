@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] G3R: Gradient Guided Generalizable Reconstruction
 description: >-

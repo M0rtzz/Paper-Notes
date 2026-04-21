@@ -1,16 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] From Multimodal LLMs to Generalist Embodied Agents: Methods and Lessons
 description: >-
-  [CVPR 2025][Multimodal VLM][Embodied Agent] 提出 GEA（通用具身智能体），通过多具身动作分词器将离散/连续动作统一到 LLM 词表，在 220 万条跨域轨迹上 SFT + 在线 PPO 强化学习微调 MLLM，单一模型在操控、导航、游戏、UI 控制和规划五大领域均展现强泛化能力。
+  [CVPR 2025][多模态][通用具身智能体] GEA 将预训练的多模态 LLM（LLaVA-OneVision）通过学习式多具身动作分词器适配到操控/导航/游戏/UI控制/规划五大领域，先用 220 万条跨域专家轨迹 SFT，再用在线 PPO 强化学习微调，单模型在多个基准上超越或接近领域专用模型。
 tags:
   - CVPR 2025
-  - Multimodal VLM
-  - Embodied Agent
-  - Generalist Agent
+  - 多模态
+  - 通用具身智能体
+  - 多模态LLM微调
   - 强化学习
+  - 跨域迁移
   - 动作分词器
-  - 多域迁移
 ---
 
 # From Multimodal LLMs to Generalist Embodied Agents: Methods and Lessons
@@ -121,8 +121,8 @@ Stage 1：标准自回归 cross-entropy loss on actions，学习率 1e-5，AdamW
 
 ## 相关论文
 
-- [HomeSafe-Bench: Evaluating Vision-Language Models on Unsafe Action Detection for Embodied Agents in Household Scenarios](homesafe-bench_evaluating_vision-language_models_on_unsafe_action_detection_for_.md)
 - [Multi-Layer Visual Feature Fusion in Multimodal LLMs: Methods, Analysis, and Best Practices](multi-layer_visual_feature_fusion_in_multimodal_llms_methods_analysis_and_best_p.md)
+- [HomeSafe-Bench: Evaluating Vision-Language Models on Unsafe Action Detection for Embodied Agents in Household Scenarios](homesafe-bench_evaluating_vision-language_models_on_unsafe_action_detection_for_.md)
 - [Playing the Fool: Jailbreaking LLMs and Multimodal LLMs with Out-of-Distribution Strategy](playing_the_fool_jailbreaking_llms_and_multimodal_llms_with_out-of-distribution_.md)
 - [Embodied Scene Understanding for Vision Language Models via MetaVQA](embodied_scene_understanding_for_vision_language_models_via_metavqa.md)
 - [ESPIRE: A Diagnostic Benchmark for Embodied Spatial Reasoning of Vision-Language Models](espire_a_diagnostic_benchmark_for_embodied_spatial_reasoning_of_vision-language_.md)

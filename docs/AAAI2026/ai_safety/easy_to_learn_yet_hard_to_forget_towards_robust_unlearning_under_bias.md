@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Easy to Learn, Yet Hard to Forget: Towards Robust Unlearning Under Bias
 description: >-
@@ -164,9 +164,9 @@ CUPID 的核心优势在于将"参数选择"从单纯的显著性分析提升为
 ## 相关论文
 
 - [Erase or Hide? Suppressing Spurious Unlearning Neurons for Robust Unlearning](../../ICLR2026/ai_safety/erase_or_hide_suppressing_spurious_unlearning_neurons_for_robust_unlearning.md)
-- [ProbLog4Fairness: A Neurosymbolic Approach to Modeling and Mitigating Bias](problog4fairness_a_neurosymbolic_approach_to_modeling_and_mitigating_bias.md)
 - [Rethinking the Bias of Foundation Model under Long-tailed Distribution](../../ICML2025/ai_safety/rethinking_the_bias_of_foundation_model_under_long-tailed_distribution.md)
+- [ProbLog4Fairness: A Neurosymbolic Approach to Modeling and Mitigating Bias](problog4fairness_a_neurosymbolic_approach_to_modeling_and_mitigating_bias.md)
 - [The Confidence Trap: Gender Bias and Predictive Certainty in LLMs](the_confidence_trap_gender_bias_and_predictive_certainty_in_llms.md)
-- [An Information Theoretic Evaluation Metric for Strong Unlearning](an_information_theoretic_evaluation_metric_for_strong_unlear.md)
+- [Robust Watermarking on Gradient Boosting Decision Trees](robust_watermarking_on_gradient_boosting_decision_trees.md)
 
 <!-- RELATED:END -->

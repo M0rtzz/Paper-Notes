@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ASCIIBench: Evaluating Language-Model-Based Understanding of Visually-Oriented Text
 description: >-

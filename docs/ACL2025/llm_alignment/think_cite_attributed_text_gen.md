@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Think&Cite: Improving Attributed Text Generation with Self-Guided Tree Search and Progress Reward Modeling
 description: >-

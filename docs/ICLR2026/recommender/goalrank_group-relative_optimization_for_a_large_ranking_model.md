@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GoalRank: Group-Relative Optimization for a Large Ranking Model
 description: >-

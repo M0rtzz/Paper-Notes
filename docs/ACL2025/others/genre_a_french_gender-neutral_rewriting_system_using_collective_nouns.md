@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GeNRe: A French Gender-Neutral Rewriting System Using Collective Nouns
 description: >-

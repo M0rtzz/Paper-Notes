@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdaDecode: Accelerating LLM Decoding with Adaptive Layer Parallelism
 description: >-

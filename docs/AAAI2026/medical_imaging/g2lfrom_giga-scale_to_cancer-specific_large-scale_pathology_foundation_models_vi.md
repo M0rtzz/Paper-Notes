@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] G2L: From Giga-Scale to Cancer-Specific Large-Scale Pathology Foundation Models via Efficient Fine-Tuning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Boosting Generative Image Modeling via Joint Image-Feature Synthesis
 description: >-
@@ -127,8 +127,8 @@ tags:
 
 - [DCTdiff: Intriguing Properties of Image Generative Modeling in the DCT Space](../../ICML2025/image_generation/dctdiff_intriguing_properties_of_image_generative_modeling_in_the_dct_space.md)
 - [IRGen: Generative Modeling for Image Retrieval](../../ECCV2024/image_generation/irgen_generative_modeling_for_image_retrieval.md)
+- [PQPP: A Joint Benchmark for Text-to-Image Prompt and Query Performance Prediction](../../CVPR2025/image_generation/pqpp_a_joint_benchmark_for_text-to-image_prompt_and_query_performance_prediction.md)
 - [Mind the Gap: Aligning Vision Foundation Models to Image Feature Matching](../../ICCV2025/image_generation/mind_the_gap_aligning_vision_foundation_models_to_image_feature_matching.md)
-- [GenIR: Generative Visual Feedback for Mental Image Retrieval](genir_generative_visual_feedback_for_mental_image_retrieval.md)
 - [Image Super-Resolution with Guarantees via Conformalized Generative Models](image_super-resolution_with_guarantees_via_conformalized_generative_models.md)
 
 <!-- RELATED:END -->

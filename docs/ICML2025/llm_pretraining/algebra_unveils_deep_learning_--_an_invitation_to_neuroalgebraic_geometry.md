@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Algebra Unveils Deep Learning -- An Invitation to Neuroalgebraic Geometry
 description: >-
@@ -208,7 +208,7 @@ $$\min_{f \in \mathcal{M}} \mathcal{L}_\mathcal{D}(f)$$
 - [The Double-Ellipsoid Geometry of CLIP](the_double-ellipsoid_geometry_of_clip.md)
 - [MoMa: A Simple Modular Deep Learning Framework for Material Property Prediction](../../ICLR2026/llm_pretraining/moma_a_modular_deep_learning_framework_for_material_property_prediction.md)
 - [Predict Training Data Quality via Its Geometry in Metric Space](../../NeurIPS2025/llm_pretraining/predict_training_data_quality_via_its_geometry_in_metric_space.md)
-- [Intrinsic Training Dynamics of Deep Neural Networks](../../ICLR2026/llm_pretraining/intrinsic_training_dynamics_of_deep_neural_networks.md)
 - [On the Role of Label Noise in the Feature Learning Process](on_the_role_of_label_noise_in_the_feature_learning_process.md)
+- [Intrinsic Training Dynamics of Deep Neural Networks](../../ICLR2026/llm_pretraining/intrinsic_training_dynamics_of_deep_neural_networks.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Utilities from Demonstrations in Markov Decision Processes
 description: >-
@@ -113,8 +113,8 @@ tags:
 
 - [A Generalized Bisimulation Metric of State Similarity between Markov Decision Processes: From Theoretical Propositions to Applications](../../NeurIPS2025/reinforcement_learning/a_generalized_bisimulation_metric_of_state_similarity_betwee.md)
 - [Solving Zero-Sum Convex Markov Games](solving_zero-sum_convex_markov_games.md)
-- [Counterfactual Effect Decomposition in Multi-Agent Sequential Decision Making](counterfactual_effect_decomposition_in_multi-agent_sequential_decision_making.md)
 - [Divide and Conquer: Grounding LLMs as Efficient Decision-Making Agents via Offline Hierarchical Reinforcement Learning](divide_and_conquer_grounding_llms_as_efficient_decision-making_agents_via_offlin.md)
-- [SkillMimic: Learning Basketball Interaction Skills from Demonstrations](../../CVPR2025/reinforcement_learning/skillmimic_learning_basketball_interaction_skills_from_demonstrations.md)
+- [Counterfactual Effect Decomposition in Multi-Agent Sequential Decision Making](counterfactual_effect_decomposition_in_multi-agent_sequential_decision_making.md)
+- [Learning from Demonstrations via Capability-Aware Goal Sampling](../../NeurIPS2025/reinforcement_learning/learning_from_demonstrations_via_capability-aware_goal_sampling.md)
 
 <!-- RELATED:END -->

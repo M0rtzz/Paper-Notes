@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking Position Embedding as a Context Controller for Multi-Reference and Multi-Shot Video Generation
 description: >-
@@ -135,6 +135,6 @@ tags:
 - [Let Your Image Move with Your Motion! – Implicit Multi-Object Multi-Motion Transfer](let_your_image_move_with_your_motion_--_implicit_multi-object_multi-motion_trans.md)
 - [SwitchCraft: Training-Free Multi-Event Video Generation with Attention Controls](switchcraft_training-free_multi-event_video_generation_with_attention_controls.md)
 - [Geometry-as-context: Modulating Explicit 3D in Scene-consistent Video Generation to Geometry Context](geometry-as-context_modulating_explicit_3d_in_scene-consistent_video_generation_.md)
-- [FilmWeaver: Weaving Consistent Multi-Shot Videos with Cache-Guided Autoregressive Diffusion](../../AAAI2026/video_generation/filmweaver_weaving_consistent_multi-shot_videos_with_cache-guided_autoregressive.md)
+- [ShotAdapter: Text-to-Multi-Shot Video Generation with Diffusion Models](../../CVPR2025/video_generation/shotadapter_text-to-multi-shot_video_generation_with_diffusion_models.md)
 
 <!-- RELATED:END -->

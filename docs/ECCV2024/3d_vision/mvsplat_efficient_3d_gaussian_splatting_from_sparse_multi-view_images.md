@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images
 description: >-

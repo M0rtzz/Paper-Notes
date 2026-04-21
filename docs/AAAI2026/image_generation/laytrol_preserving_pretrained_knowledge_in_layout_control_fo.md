@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Laytrol: Preserving Pretrained Knowledge in Layout Control for Multimodal Diffusion Transformers
 description: >-
@@ -100,6 +100,6 @@ Laytrol 在 FLUX 的 MM-DiT 之上构建并行的布局控制网络。输入包�
 - [ConsistCompose: Unified Multimodal Layout Control for Image Composition](../../CVPR2026/image_generation/consistcompose_unified_multimodal_layout_control_for_image_composition.md)
 - [Multitwine: Multi-Object Compositing with Text and Layout Control](../../CVPR2025/image_generation/multitwine_multi-object_compositing_with_text_and_layout_control.md)
 - [Lay-Your-Scene: Natural Scene Layout Generation with Diffusion Transformers](../../ICCV2025/image_generation/lay-your-scene_natural_scene_layout_generation_with_diffusion_transformers.md)
-- [Improved Masked Image Generation with Knowledge-Augmented Token Representations](improved_masked_image_generation_with_knowledge-augmented_token_representations.md)
+- [EchoGen: Cycle-Consistent Learning for Unified Layout-Image Generation and Understanding](echogen_cycle-consistent_learning_for_unified_layout-image_generation_and_unders.md)
 
 <!-- RELATED:END -->

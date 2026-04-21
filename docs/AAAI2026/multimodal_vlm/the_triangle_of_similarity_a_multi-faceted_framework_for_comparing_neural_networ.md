@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Triangle of Similarity: A Multi-Faceted Framework for Comparing Neural Network Representations
 description: >-

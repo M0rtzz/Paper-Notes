@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Pre-Training Curriculum for Multi-Token Prediction in Language Models
 description: >-

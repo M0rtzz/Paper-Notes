@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Generalizable AI-Generated Image Detection via Image-Adaptive Prompt Learning
 description: >-

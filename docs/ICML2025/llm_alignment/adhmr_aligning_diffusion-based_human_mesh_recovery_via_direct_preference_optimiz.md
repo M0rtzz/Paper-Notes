@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ADHMR: Aligning Diffusion-based Human Mesh Recovery via Direct Preference Optimization
 description: >-

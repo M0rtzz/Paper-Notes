@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LogicReward: Incentivizing LLM Reasoning via Step-Wise Logical Supervision
 description: >-
@@ -116,6 +116,6 @@ LogicReward = Rollout生成 → Autoformalization with Soft Unification → 步�
 - [Nudging the Boundaries of LLM Reasoning](nudging_the_boundaries_of_llm_reasoning.md)
 - [Enhancing Retrieval Systems with Inference-Time Logical Reasoning](../../ACL2025/llm_reasoning/enhancing_retrieval_systems_with_inference-time_logical_reasoning.md)
 - [LogicPro: Improving Complex Logical Reasoning via Program-Guided Learning](../../ACL2025/llm_reasoning/logicpro_program_guided_reasoning.md)
-- [Aristotle: Mastering Logical Reasoning with A Logic-Complete Decompose-Search-Resolve Framework](../../ACL2025/llm_reasoning/aristotle_logical_reasoning.md)
+- [On the Design of KL-Regularized Policy Gradient Algorithms for LLM Reasoning](on_the_design_of_kl-regularized_policy_gradient_algorithms_for_llm_reasoning.md)
 
 <!-- RELATED:END -->

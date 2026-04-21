@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Free-Viewpoint Video of Outdoor Sports Using a Flying Camera
 description: >-

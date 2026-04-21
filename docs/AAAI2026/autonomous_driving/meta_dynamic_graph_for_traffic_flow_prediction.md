@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Meta Dynamic Graph for Traffic Flow Prediction
 description: >-
@@ -163,7 +163,7 @@ $$\tilde{\boldsymbol{A}_t} = \text{asym}(\boldsymbol{\phi}_t \odot \boldsymbol{A
 - [RAST: A Retrieval Augmented Spatio-Temporal Framework for Traffic Prediction](rast_a_retrieval_augmented_spatio-temporal_framework_for_traffic_prediction.md)
 - [Embracing Large Language Models in Traffic Flow Forecasting](../../ACL2025/autonomous_driving/embracing_large_language_models_in_traffic_flow_forecasting.md)
 - [CaTFormer: Causal Temporal Transformer with Dynamic Contextual Fusion for Driving Intention Prediction](catformer_causal_temporal_transformer_with_dynamic_contextual_fusion_for_driving.md)
-- [MetaDAT: Generalizable Trajectory Prediction via Meta Pre-training and Data-Adaptive Test-Time Updating](../../CVPR2026/autonomous_driving/metadat_generalizable_trajectory_prediction_via_me.md)
-- [TARS: Traffic-Aware Radar Scene Flow Estimation](../../ICCV2025/autonomous_driving/tars_traffic-aware_radar_scene_flow_estimation.md)
+- [MetaDAT: Generalizable Trajectory Prediction via Meta Pre-training and Data-Adaptive Test-Time Updating](../../CVPR2026/autonomous_driving/metadat_generalizable_trajectory_prediction_via_meta_pre-training_and_data-adapt.md)
+- [Global-Lens Transformers: Adaptive Token Mixing for Dynamic Link Prediction](global-lens_transformers_adaptive_token_mixing_for_dynamic_link_prediction.md)
 
 <!-- RELATED:END -->

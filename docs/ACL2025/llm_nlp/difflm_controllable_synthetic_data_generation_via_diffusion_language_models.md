@@ -2,9 +2,15 @@
 title: >-
   [论文解读] DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models
 description: >-
-  [LLM/NLP] DiffLM 提出基于 VAE + 潜在扩散 + 冻结 LLM 解码器的可控数据合成框架，通过在潜在空间引入扩散过程来精确建模真实数据分布，并以 soft prompt 方式将分布信息注入 LLM，在表格、代码和工具三类结构化数据上合成质量超越真实数据 2%-7%。
+  [ACL 2025][LLM/NLP][合成数据] DiffLM 提出基于 VAE + 潜在扩散 + 冻结 LLM 解码器的可控数据合成框架，通过在潜在空间引入扩散过程来精确建模真实数据分布，并以 soft prompt 方式将分布信息注入 LLM，在表格、代码和工具三类结构化数据上合成质量超越真实数据 2%-7%。
 tags:
+  - ACL 2025
   - LLM/NLP
+  - 合成数据
+  - VAE
+  - 扩散模型
+  - LLM
+  - 结构化数据生成
 ---
 
 # DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models
@@ -113,10 +119,10 @@ $$\text{ELBO}_\beta = L_{rec} - \beta L_{kl}$$
 
 ## 相关论文
 
+- [Segment-Level Diffusion: A Framework for Controllable Long-Form Generation with Diffusion Language Models](segment_level_diffusion.md)
+- [Evaluating Language Models as Synthetic Data Generators](evaluating_lms_synthetic_data_gen.md)
 - [EdiText: Controllable Coarse-to-Fine Text Editing with Diffusion Language Models](editext_diffusion_text_editing.md)
-- [A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](a_survey_on_efficient_large_language.md)
-- [SongComposer: A Large Language Model for Lyric and Melody Generation in Song Composition](songcomposer_llm_lyric_melody_generation.md)
-- [ATRIE: Automating Legal Interpretation with LLMs: Retrieval, Generation, and Evaluation](atrie_legal_interpretation.md)
-- [Classifying Unreliable Narrators with Large Language Models](classifying_unreliable_narrators.md)
+- [Genetic Instruct: Scaling up Synthetic Generation of Coding Instructions for Large Language Models](genetic_instruct_scaling_up_synthetic_generation_of_coding_instructions_for_larg.md)
+- [Automated CAD Modeling Sequence Generation from Text Descriptions via Transformer-Based Large Language Models](cadllm_cad_modeling_from_text.md)
 
 <!-- RELATED:END -->

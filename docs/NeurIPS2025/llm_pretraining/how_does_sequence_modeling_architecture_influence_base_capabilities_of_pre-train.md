@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How Does Sequence Modeling Architecture Influence Base Capabilities of Pre-trained Language Models?
 description: >-

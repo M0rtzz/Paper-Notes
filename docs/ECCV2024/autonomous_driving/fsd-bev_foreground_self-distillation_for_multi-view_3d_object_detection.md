@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FSD-BEV: Foreground Self-Distillation for Multi-View 3D Object Detection
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adaptive Evidential Learning for Temporal-Semantic Robustness in Moment Retrieval
 description: >-

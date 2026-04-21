@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Can Large Language Models Understand Internet Buzzwords Through User-Generated Content
 description: >-
@@ -133,9 +133,9 @@ Ress 是一个无需训练的 prompting 方法，不涉及参数更新。核心�
 ## 相关论文
 
 - [Aligning Large Language Models with Implicit Preferences from User-Generated Content](pugc_align_implicit_pref_ugc.md)
-- [Do Language Models Understand the Cognitive Tasks Given to Them? Investigations with the N-Back Paradigm](do_language_models_understand_the_cognitive_tasks_given_to_them_investigations_w.md)
-- [Do Language Models Understand Honorific Systems in Javanese?](do_language_models_understand_honorific_systems_in_javanese.md)
 - [LLM Meets Scene Graph: Can Large Language Models Understand and Generate Scene Graphs?](llm_meets_scene_graph_can_large_language_models_understand_and_generate_scene_gr.md)
-- [Open-Set Living Need Prediction with Large Language Models](open-set_living_need_prediction_with_large_language_models.md)
+- [Do Language Models Understand the Cognitive Tasks Given to Them? Investigations with the N-Back Paradigm](do_language_models_understand_the_cognitive_tasks_given_to_them_investigations_w.md)
+- [Can LLMs Understand Unvoiced Speech? Exploring EMG-to-Text Conversion with LLMs](can_llms_understand_unvoiced_speech_exploring_emg-to-text_conversion_with_llms.md)
+- [Do Language Models Understand Honorific Systems in Javanese?](do_language_models_understand_honorific_systems_in_javanese.md)
 
 <!-- RELATED:END -->

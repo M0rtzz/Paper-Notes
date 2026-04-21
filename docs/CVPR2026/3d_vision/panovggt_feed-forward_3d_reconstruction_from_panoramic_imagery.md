@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PanoVGGT: Feed-Forward 3D Reconstruction from Panoramic Imagery
 description: >-

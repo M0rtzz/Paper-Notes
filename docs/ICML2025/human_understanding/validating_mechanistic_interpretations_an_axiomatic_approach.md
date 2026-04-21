@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Validating Mechanistic Interpretations: An Axiomatic Approach
 description: >-
@@ -135,8 +135,8 @@ $$\forall i: \Pr_{x \sim \mathcal{D}}[t(x) = d_t[i{+}1:] \circ \gamma_i \circ d_
 ## 相关论文
 
 - [nnterp: A Standardized Interface for Mechanistic Interpretability of Transformers](../../NeurIPS2025/human_understanding/nnterp_a_standardized_interface_for_mechanistic_interpretability_of_transformers.md)
-- [Mechanistic Interpretability of RNNs Emulating Hidden Markov Models](../../NeurIPS2025/human_understanding/mechanistic_interpretability_of_rnns_emulating_hidden_markov_models.md)
 - [A Differential and Pointwise Control Approach to Reinforcement Learning](../../NeurIPS2025/human_understanding/a_differential_and_pointwise_control_approach_to_reinforceme.md)
+- [UniHOPE: A Unified Approach for Hand-Only and Hand-Object Pose Estimation](../../CVPR2025/human_understanding/unihope_a_unified_approach_for_hand-only_and_hand-object_pose_estimation.md)
 - [Team RAS in 10th ABAW Competition: Multimodal Valence and Arousal Estimation Approach](../../CVPR2025/human_understanding/team_ras_in_10th_abaw_competition_multimodal_valence_and_arousal_estimation_appr.md)
 - [SAMO: A Lightweight Sharpness-Aware Approach for Multi-Task Optimization with Joint Global-Local Perturbation](../../ICCV2025/human_understanding/samo_a_lightweight_sharpness-aware_approach_for_multi-task_optimization_with_joi.md)
 

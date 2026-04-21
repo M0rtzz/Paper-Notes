@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Upper-Body Hierarchical Graph for Skeleton Based Emotion Recognition in Assistive Driving
 description: >-

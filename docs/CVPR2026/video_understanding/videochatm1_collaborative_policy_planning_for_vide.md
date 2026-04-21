@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning
 description: >-

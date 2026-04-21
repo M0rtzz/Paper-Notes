@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Little Depth Goes a Long Way: The Expressive Power of Log-Depth Transformers
 description: >-
@@ -124,7 +124,7 @@ tags:
 - [FlowSeek: Optical Flow Made Easier with Depth Foundation Models and Motion Bases](../../ICCV2025/video_understanding/flowseek_optical_flow_made_easier_with_depth_foundation_models_and_motion_bases.md)
 - [Vamba: Understanding Hour-Long Videos with Hybrid Mamba-Transformers](../../ICCV2025/video_understanding/vamba_understanding_hour-long_videos_with_hybrid_mamba-transformers.md)
 - [KeyFace: Expressive Audio-Driven Facial Animation for Long Sequences via KeyFrame Interpolation](../../CVPR2025/video_understanding/keyface_expressive_audio-driven_facial_animation_for_long_sequences_via_keyframe.md)
+- [Learning Occlusion-Robust Vision Transformers for Real-Time UAV Tracking](../../CVPR2025/video_understanding/learning_occlusion-robust_vision_transformers_for_real-time_uav_tracking.md)
 - [The Expressive Limits of Diagonal SSMs for State-Tracking](../../ICLR2026/video_understanding/the_expressive_limits_of_diagonal_ssms_for_state-tracking.md)
-- [VideoLucy: Deep Memory Backtracking for Long Video Understanding](videolucy_deep_memory_backtracking_for_long_video_understanding.md)
 
 <!-- RELATED:END -->

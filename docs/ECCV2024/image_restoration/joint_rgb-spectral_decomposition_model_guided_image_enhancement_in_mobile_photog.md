@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Joint RGB-Spectral Decomposition Model Guided Image Enhancement in Mobile Photography
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery
 description: >-

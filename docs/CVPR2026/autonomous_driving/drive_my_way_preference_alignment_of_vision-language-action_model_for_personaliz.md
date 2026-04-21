@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Drive My Way: Preference Alignment of Vision-Language-Action Model for Personalized Driving
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HUME: Measuring the Human-Model Performance Gap in Text Embedding Tasks
 description: >-
@@ -153,10 +153,10 @@ HUME 建立在 MTEB 之上，包含四个核心组件：(1) 任务特定标注�
 
 ## 相关论文
 
-- [Embedding-Based Context-Aware Reranker](embedding-based_context-aware_reranker.md)
+- [MuCo: Multi-turn Contrastive Learning for Multimodal Embedding Model](../../CVPR2026/information_retrieval/muco_multi-turn_contrastive_learning_for_multimodal_embedding_model.md)
 - [Judge's Verdict: A Comprehensive Analysis of LLM Judge Capability Through Human Agreement](judges_verdict_a_comprehensive_analysis_of_llm_judge_capability_through_human_ag.md)
+- [Embedding-Based Context-Aware Reranker](embedding-based_context-aware_reranker.md)
 - [A Text is Worth Several Tokens: Text Embedding from LLMs Secretly Aligns Well with The Key Tokens](../../ACL2025/information_retrieval/a_text_is_worth_several_tokens_text_embedding_from_llms_secretly_aligns_well_wit.md)
 - [BTZSC: A Benchmark for Zero-Shot Text Classification Across Cross-Encoders, Embedding Models, Rerankers and LLMs](btzsc_a_benchmark_for_zero-shot_text_classification_across_cross-encoders_embedd.md)
-- [MonSTeR: a Unified Model for Motion, Scene, Text Retrieval](../../ICCV2025/information_retrieval/monster_a_unified_model_for_motion_scene_text_retrieval.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] B-VLLM: A Vision Large Language Model with Balanced Spatio-Temporal Tokens
 description: >-

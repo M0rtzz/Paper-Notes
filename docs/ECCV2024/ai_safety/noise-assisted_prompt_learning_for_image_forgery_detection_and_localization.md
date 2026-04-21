@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Noise-Assisted Prompt Learning for Image Forgery Detection and Localization
 description: >-
@@ -132,6 +132,6 @@ CLIP-IFDL 基于预训练 CLIP 模型，包含两个主要组件：(1) 实例感
 - [Unveiling Privacy Risks in Stochastic Neural Networks Training: Effective Image Reconstruction from Gradients](unveiling_privacy_risks_in_stochastic_neural_networks_training_effective_image_r.md)
 - [ForensicHub: A Unified Benchmark & Codebase for All-Domain Fake Image Detection and Localization](../../NeurIPS2025/ai_safety/forensichub_a_unified_benchmark_codebase_for_all-domain_fake_image_detection_and.md)
 - [CLIP-Guided Generative Networks for Transferable Targeted Adversarial Attacks](clip-guided_generative_networks_for_transferable_targeted_adversarial_attacks.md)
-- [Fisher Calibration for Backdoor-Robust Heterogeneous Federated Learning](fisher_calibration_for_backdoor-robust_heterogeneous_federated_learning.md)
+- [Towards Multi-modal Transformers in Federated Learning](towards_multimodal_transformers_in_federated_learning.md)
 
 <!-- RELATED:END -->

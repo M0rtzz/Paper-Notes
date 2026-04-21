@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CURE: Curriculum-guided Multi-task Training for Reliable Anatomy Grounded Report Generation
 description: >-

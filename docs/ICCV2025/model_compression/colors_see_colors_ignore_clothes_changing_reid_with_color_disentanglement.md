@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Colors See Colors Ignore: Clothes Changing ReID with Color Disentanglement
 description: >-
@@ -146,9 +146,9 @@ $$\mathcal{L}_{DE} = \left| \frac{f_{CO}}{\|f_{CO}\|_2} \cdot \frac{f_{ReID}}{\|
 ## 相关论文
 
 - [Color Matching Using Hypernetwork-Based Kolmogorov-Arnold Networks (cmKAN)](color_matching_using_hypernetwork-based_kolmogorov-arnold_networks.md)
-- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
 - [LSNet: See Large, Focus Small](../../CVPR2025/model_compression/lsnet_see_large_focus_small.md)
 - [Distilling Cross-Modal Knowledge via Feature Disentanglement](../../AAAI2026/model_compression/distilling_cross-modal_knowledge_via_feature_disentanglement.md)
+- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
 - [Dataset Color Quantization: A Training-Oriented Framework for Dataset-Level Compression](../../ICLR2026/model_compression/dataset_color_quantization_a_training-oriented_framework_for_dataset-level_compr.md)
 
 <!-- RELATED:END -->

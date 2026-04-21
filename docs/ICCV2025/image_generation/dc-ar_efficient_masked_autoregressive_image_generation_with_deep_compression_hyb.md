@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DC-AR: Efficient Masked Autoregressive Image Generation with Deep Compression Hybrid Tokenizer
 description: >-
@@ -171,8 +171,8 @@ GenEval 基准：
 
 - [Holistic Tokenizer for Autoregressive Image Generation](holistic_tokenizer_for_autoregressive_image_generation.md)
 - [Grouped Speculative Decoding for Autoregressive Image Generation](grouped_speculative_decoding_for_autoregressive_image_generation.md)
-- [Spectral Image Tokenizer](spectral_image_tokenizer.md)
-- [Efficient Autoregressive Shape Generation via Octree-Based Adaptive Tokenization](efficient_autoregressive_shape_generation_via_octree-based_adaptive_tokenization.md)
 - [LazyMAR: Accelerating Masked Autoregressive Models via Feature Caching](lazymar_accelerating_masked_autoregressive_models_via_feature_caching.md)
+- [Efficient Autoregressive Shape Generation via Octree-Based Adaptive Tokenization](efficient_autoregressive_shape_generation_via_octree-based_adaptive_tokenization.md)
+- [Spectral Image Tokenizer](spectral_image_tokenizer.md)
 
 <!-- RELATED:END -->

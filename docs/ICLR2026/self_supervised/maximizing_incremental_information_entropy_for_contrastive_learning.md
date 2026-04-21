@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Maximizing Incremental Information Entropy for Contrastive Learning
 description: >-

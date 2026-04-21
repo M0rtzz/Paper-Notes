@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] VACE: All-in-One Video Creation and Editing
 description: >-
-  [ICCV 2025][视频理解][视频生成] 本文提出VACE，一个基于Diffusion Transformer的视频生成与编辑一体化框架，通过统一的Video Condition Unit (VCU)接口和可插拔的Context Adapter结构，用单一模型覆盖参考生成、视频编辑、mask编辑等12+种视频任务，性能与任务专用模型持平。
+  [ICCV 2025][视频生成] 本文提出VACE，一个基于Diffusion Transformer的视频生成与编辑一体化框架，通过统一的Video Condition Unit (VCU)接口和可插拔的Context Adapter结构，用单一模型覆盖参考生成、视频编辑、mask编辑等12+种视频任务，性能与任务专用模型持平。
 tags:
   - ICCV 2025
-  - 视频理解
   - 视频生成
   - 视频编辑
   - Transformer
@@ -159,7 +158,7 @@ VACE-Benchmark（480评测样本，12种任务）上的自动评分+用户研究
 - [Generating, Fast and Slow: Scalable Parallel Video Generation with Video Interface Networks](generating_fast_and_slow_scalable_parallel_video_generation_with_video_interface.md)
 - [STiV: Scalable Text and Image Conditioned Video Generation](stiv_scalable_text_and_image_conditioned_video_generation.md)
 - [OmniHuman-1: Rethinking the Scaling-Up of One-Stage Conditioned Human Animation Models](omnihuman-1_rethinking_the_scaling-up_of_one-stage_conditioned_human_animation_m.md)
-- [ReCamMaster: Camera-Controlled Generative Rendering from A Single Video](recammaster_camera-controlled_generative_rendering_from_a_single_video.md)
-- [SweetTok: Semantic-Aware Spatial-Temporal Tokenizer for Compact Video Discretization](sweettok_semantic-aware_spatial-temporal_tokenizer_for_compact_video_discretizat.md)
+- [One-Minute Video Generation with Test-Time Training](../../CVPR2025/video_generation/one-minute_video_generation_with_test-time_training.md)
+- [SketchVideo: Sketch-Based Video Generation and Editing](../../CVPR2025/video_generation/sketchvideo_sketch-based_video_generation_and_editing.md)
 
 <!-- RELATED:END -->

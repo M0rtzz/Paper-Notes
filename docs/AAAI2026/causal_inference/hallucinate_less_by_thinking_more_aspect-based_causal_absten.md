@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hallucinate Less by Thinking More: Aspect-Based Causal Abstention for Large Language Models
 description: >-
@@ -117,9 +117,9 @@ tags:
 ## 相关论文
 
 - [On the Reliability of Large Language Models for Causal Discovery](../../ACL2025/causal_inference/llm_causal_discovery_reliability.md)
-- [Alignment of Large Language Models with Constrained Learning](../../NeurIPS2025/causal_inference/alignment_of_large_language_models_with_constrained_learning.md)
 - [Revealing Multimodal Causality with Large Language Models](../../NeurIPS2025/causal_inference/revealing_multimodal_causality_with_large_language_models.md)
-- [From Black-box to Causal-box: Towards Building More Interpretable Models](../../NeurIPS2025/causal_inference/from_black-box_to_causal-box_towards_building_more_interpretable_models.md)
 - [Counterfactual Reasoning for Steerable Pluralistic Value Alignment of Large Language Models](../../NeurIPS2025/causal_inference/counterfactual_reasoning_for_steerable_pluralistic_value_alignment_of_large_lang.md)
+- [From Black-box to Causal-box: Towards Building More Interpretable Models](../../NeurIPS2025/causal_inference/from_black-box_to_causal-box_towards_building_more_interpretable_models.md)
+- [Copy-Paste to Mitigate Large Language Model Hallucinations](../../ICLR2026/causal_inference/copy-paste_to_mitigate_large_language_model_hallucinations.md)
 
 <!-- RELATED:END -->

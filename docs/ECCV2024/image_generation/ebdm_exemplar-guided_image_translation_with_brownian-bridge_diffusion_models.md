@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EBDM: Exemplar-guided Image Translation with Brownian-bridge Diffusion Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] In-Context Learning for Pure Exploration
 description: >-
@@ -168,9 +168,9 @@ ICPE 采用双网络架构：
 ## 相关论文
 
 - [Modality-free Graph In-context Alignment](modality-free_graph_in-context_alignment.md)
-- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
 - [Sample Efficient Demonstration Selection for In-Context Learning](../../ICML2025/model_compression/sample_efficient_demonstration_selection_for_in-context_learning.md)
 - [CHEEM: Continual Learning by Reuse, New, Adapt and Skip -- A Hierarchical Exploration-Exploitation Approach](../../CVPR2026/model_compression/cheem_continual_learning_by_reuse_new_adapt_and_skip_--_a_hierarchical_explorati.md)
 - [Disentangling Latent Shifts of In-Context Learning with Weak Supervision](../../NeurIPS2025/model_compression/disentangling_latent_shifts_of_in-context_learning_with_weak_supervision.md)
+- [MINE-JEPA: In-Domain Self-Supervised Learning for Mineral Exploration](../../CVPR2026/model_compression/mine-jepa_in-domain_self-supervised_learning_for_mine-like_object_classification.md)
 
 <!-- RELATED:END -->

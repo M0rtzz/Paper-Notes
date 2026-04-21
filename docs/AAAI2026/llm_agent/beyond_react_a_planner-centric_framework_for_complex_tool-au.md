@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond ReAct: A Planner-Centric Framework for Complex Tool-Augmented LLM Reasoning
 description: >-
@@ -171,7 +171,7 @@ $$\mathcal{L}_{\text{SFT}}(\theta) = -\mathbb{E}_{(Q,G_{gt})\sim D_{\text{train}
 - [MedLA: A Logic-Driven Multi-Agent Framework for Complex Medical Reasoning with Large Language Models](medla_a_logic-driven_multi-agent_framework_for_complex_medic.md)
 - [PhyScensis: Physics-Augmented LLM Agents for Complex Physical Scene Arrangement](../../ICLR2026/llm_agent/physcensis_physics-augmented_llm_agents_for_complex_physical_scene_arrangement.md)
 - [Automating Complex Document Workflows via Stepwise and Rollback-Enabled Operations](automating_complex_document_workflows_via_stepwise_and_rollback-enabled_operatio.md)
-- [MoralReason: Generalizable Moral Decision Alignment For LLM Agents Using Reasoning-Level Reinforcement Learning](moralreason_generalizable_moral_decision_alignment_for_llm_agents_using_reasonin.md)
 - [AutoTool: Efficient Tool Selection for Large Language Model Agents](autotool_efficient_tool_selection_for_large_language_model_a.md)
+- [MoralReason: Generalizable Moral Decision Alignment For LLM Agents Using Reasoning-Level Reinforcement Learning](moralreason_generalizable_moral_decision_alignment_for_llm_agents_using_reasonin.md)
 
 <!-- RELATED:END -->

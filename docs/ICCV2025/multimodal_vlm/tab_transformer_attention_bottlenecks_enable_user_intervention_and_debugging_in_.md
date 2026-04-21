@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TAB: Transformer Attention Bottlenecks enable User Intervention and Debugging in Vision-Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On Learning Verifiers and Implications to Chain-of-Thought Reasoning
 description: >-
@@ -140,8 +140,8 @@ tags:
 
 ## 相关论文
 
-- [Latent Chain-of-Thought for Visual Reasoning](latent_chain-of-thought_for_visual_reasoning.md)
 - [Curriculum Abductive Learning](curriculum_abductive_learning.md)
+- [Latent Chain-of-Thought for Visual Reasoning](latent_chain-of-thought_for_visual_reasoning.md)
 - [GPO: Learning from Critical Steps to Improve LLM Reasoning](gpo_learning_from_critical_steps_to_improve_llm_reasoning.md)
 - [Reasoning by Superposition: A Theoretical Perspective on Chain of Continuous Thought](reasoning_by_superposition_a_theoretical_perspective_on_chain_of_continuous_thou.md)
 - [CoT-ICL Lab: A Synthetic Framework for Studying Chain-of-Thought Learning from In-Context Demonstrations](../../ACL2025/llm_reasoning/cot-icl_lab_a_synthetic_framework_for_studying_chain-of-thought_learning_from_in.md)

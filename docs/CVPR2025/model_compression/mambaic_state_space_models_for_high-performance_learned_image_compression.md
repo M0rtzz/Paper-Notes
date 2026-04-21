@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] MambaIC: State Space Models for High-Performance Learned Image Compression
 description: >-
-  [CVPR 2025][image compression] 首次将SSM整合到图像压缩的非线性变换和上下文模型中，结合窗口局部注意力增强熵建模，实现高效率高性能的学习型图像压缩，尤其在高分辨率场景优势明显。
+  [CVPR 2025][模型压缩][learned image compression] 首次将 SSM 同时整合到学习型图像压缩的非线性变换和上下文模型中，通过 VSS block 增强通道-空间上下文建模 + 窗口局部注意力消除空间冗余，在 Kodak 上比 VVC 节省 12.52% BD-rate，且高分辨率图像压缩优势更加显著。
 tags:
   - CVPR 2025
-  - image compression
+  - 模型压缩
+  - learned image compression
   - state space model
   - Mamba
   - entropy model
-  - rate-distortion
+  - context modeling
+  - 注意力机制
 ---
 
 # MambaIC: State Space Models for High-Performance Learned Image Compression
@@ -150,8 +152,8 @@ tags:
 ## 相关论文
 
 - [Learned Image Compression with Dictionary-based Entropy Model](learned_image_compression_with_dictionary-based_entropy_model.md)
-- [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](../../ACL2025/model_compression/state_offset_tuning_ssm_peft.md)
 - [LALIC: Linear Attention Modeling for Learned Image Compression](linear_attention_modeling_for_learned_image_compression.md)
+- [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](../../ACL2025/model_compression/state_offset_tuning_ssm_peft.md)
 - [EfficientViM: Efficient Vision Mamba with Hidden State Mixer based State Space Duality](efficientvim_efficient_vision_mamba_with_hidden_state_mixer_based_state_space_du.md)
 - [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/model_compression/parameter-efficient_fine-tuning_of_state_space_models.md)
 

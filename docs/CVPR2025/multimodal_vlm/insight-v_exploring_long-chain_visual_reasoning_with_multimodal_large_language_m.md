@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Insight-V: Exploring Long-Chain Visual Reasoning with Multimodal Large Language Models
 description: >-

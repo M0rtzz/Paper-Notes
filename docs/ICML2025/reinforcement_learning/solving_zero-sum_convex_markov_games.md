@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Solving Zero-Sum Convex Markov Games
 description: >-
@@ -125,7 +125,7 @@ tags:
 - [Perturbing Best Responses in Zero-Sum Games](../../AAAI2026/reinforcement_learning/perturbing_best_responses_in_zero-sum_games.md)
 - [Learning Utilities from Demonstrations in Markov Decision Processes](learning_utilities_from_demonstrations_in_markov_decision_processes.md)
 - [Certifying Concavity and Monotonicity in Games via Sum-of-Squares Hierarchies](../../NeurIPS2025/reinforcement_learning/certifying_concavity_and_monotonicity_in_games_via_sum-of-squares_hierarchies.md)
+- [Cross-environment Cooperation Enables Zero-shot Multi-agent Coordination](cross-environment_cooperation_enables_zero-shot_multi-agent_coordination.md)
 - [Pessimism Principle Can Be Effective: Towards a Framework for Zero-Shot Transfer RL](pessimism_principle_can_be_effective_towards_a_framework_for_zero-shot_transfer_.md)
-- [Solving Neural Min-Max Games: The Role of Architecture, Initialization & Dynamics](../../NeurIPS2025/reinforcement_learning/solving_neural_min-max_games_the_role_of_architecture_initialization_dynamics.md)
 
 <!-- RELATED:END -->

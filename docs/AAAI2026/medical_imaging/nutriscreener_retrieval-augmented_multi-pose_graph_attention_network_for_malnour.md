@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NutriScreener: Retrieval-Augmented Multi-Pose Graph Attention Network for Malnourishment Screening
 description: >-

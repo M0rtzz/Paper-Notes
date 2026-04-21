@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stealthy Yet Effective: Distribution-Preserving Backdoor Attacks on Graph Classification
 description: >-
@@ -151,7 +151,7 @@ DPSBA 包含两个阶段：
 - [Distribution Learning Meets Graph Structure Sampling](distribution_learning_meets_graph_structure_sampling.md)
 - [Transferable Backdoor Attacks for Code Models via Sharpness-Aware Adversarial Perturbation](../../AAAI2026/human_understanding/transferable_backdoor_attacks_for_code_models_via_sharpness-aware_adversarial_pe.md)
 - [SPROD: Spurious-Aware Prototype Refinement for Reliable Out-of-Distribution Detection](spurious-aware_prototype_refinement_for_reliable_out-of-distribution_detection.md)
-- [GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
 - [Authority Backdoor: A Certifiable Backdoor Mechanism for Authoring DNNs](../../AAAI2026/human_understanding/authority_backdoor_a_certifiable_backdoor_mechanism_for_authoring_dnns.md)
+- [Breaking the Gradient Barrier: Unveiling Large Language Models for Strategic Classification](breaking_the_gradient_barrier_unveiling_large_language_models_for_strategic_clas.md)
 
 <!-- RELATED:END -->

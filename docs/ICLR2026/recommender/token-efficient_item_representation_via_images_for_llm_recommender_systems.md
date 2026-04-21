@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Token-Efficient Item Representation via Images for LLM Recommender Systems
 description: >-

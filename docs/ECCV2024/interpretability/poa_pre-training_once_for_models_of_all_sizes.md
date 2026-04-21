@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] POA: Pre-training Once for Models of All Sizes
 description: >-
@@ -143,8 +143,8 @@ $$\mathcal{L}_S = \lambda \mathcal{L}_{IS} + (1-\lambda)(\mathcal{L}_{ES1} + \ma
 
 ## 相关论文
 
-- [Evolution of Concepts in Language Model Pre-Training](../../ICLR2026/interpretability/evolution_of_concepts_in_language_model_pre-training.md)
 - [Scaling Vision Pre-Training to 4K Resolution](../../CVPR2025/interpretability/scaling_vision_pre-training_to_4k_resolution.md)
+- [Evolution of Concepts in Language Model Pre-Training](../../ICLR2026/interpretability/evolution_of_concepts_in_language_model_pre-training.md)
 - [Dataset Distillation for Pre-Trained Self-Supervised Vision Models](../../NeurIPS2025/interpretability/dataset_distillation_for_pre-trained_self-supervised_vision_models.md)
 - [Improving Intervention Efficacy via Concept Realignment in Concept Bottleneck Models](improving_intervention_efficacy_via_concept_realignment_in_concept_bottleneck_mo.md)
 - [ZeroTuning: Unlocking the Initial Token's Power to Enhance Large Language Models Without Training](../../ICLR2026/interpretability/zerotuning_unlocking_the_initial_tokens_power_to_enhance_large_language_models_w.md)

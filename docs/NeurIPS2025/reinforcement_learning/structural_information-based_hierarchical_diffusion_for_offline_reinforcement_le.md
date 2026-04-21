@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Structural Information-based Hierarchical Diffusion for Offline Reinforcement Learning
 description: >-

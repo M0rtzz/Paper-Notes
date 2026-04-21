@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TRACE: Your Diffusion Model is Secretly an Instance Edge Detector
 description: >-

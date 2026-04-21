@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Omniview-Tuning: Boosting Viewpoint Invariance of Vision-Language Pre-training Models
 description: >-
@@ -146,10 +146,10 @@ OVT包含两大贡献：(1) 构建大规模多视角图文对数据集MVCap；(2
 
 ## 相关论文
 
-- [MM1: Methods, Analysis & Insights from Multimodal LLM Pre-training](mm1_methods_analysis_and_insights_from_multimodal_llm_pre-training.md)
-- [Post-pre-training for Modality Alignment in Vision-Language Foundation Models](../../CVPR2025/multimodal_vlm/post-pre-training_for_modality_alignment_in_vision-language_foundation_models.md)
 - [AddressCLIP: Empowering Vision-Language Models for City-wide Image Address Localization](addressclip_empowering_vision-language_models_for_city-wide_image_address_locali.md)
-- [Skip Tuning: Pre-trained Vision-Language Models are Effective and Efficient Adapters Themselves](../../CVPR2025/multimodal_vlm/skip_tuning_pre-trained_vision-language_models_are_effective_and_efficient_adapt.md)
-- [One Perturbation is Enough: On Generating Universal Adversarial Perturbations against Vision-Language Pre-training Models](../../ICCV2025/multimodal_vlm/one_perturbation_is_enough_on_generating_universal_adversarial_perturbations_aga.md)
+- [Quantized Prompt for Efficient Generalization of Vision-Language Models](quantized_prompt_for_efficient_generalization_of_vision-language_models.md)
+- [MarvelOVD: Marrying Object Recognition and Vision-Language Models for Robust Open-Vocabulary Object Detection](marvelovd_marrying_object_recognition_and_visionlanguage_mod.md)
+- [The Hard Positive Truth about Vision-Language Compositionality](the_hard_positive_truth_about_vision-language_compositionality.md)
+- [Self-Adapting Large Visual-Language Models to Edge Devices across Visual Modalities](self-adapting_large_visual-language_models_to_edge_devices_across_visual_modalit.md)
 
 <!-- RELATED:END -->

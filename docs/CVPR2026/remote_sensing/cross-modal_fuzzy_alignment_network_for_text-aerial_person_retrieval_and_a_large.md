@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cross-modal Fuzzy Alignment Network for Text-Aerial Person Retrieval and A Large-scale Benchmark
 description: >-

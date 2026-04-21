@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Linearly Constrained Diffusion Implicit Models
 description: >-
@@ -168,7 +168,7 @@ CDIM 在保持可比或更优质量的同时，推理速度比 DPS 快 ~28 倍�
 - [More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
 - [Difix3D+: Improving 3D Reconstructions with Single-Step Diffusion Models](../../CVPR2025/3d_vision/difix3d_improving_3d_reconstructions_with_single-step_diffusion_models.md)
 - [SpinMeRound: Consistent Multi-View Identity Generation Using Diffusion Models](../../ICCV2025/3d_vision/spinmeround_consistent_multi-view_identity_generation_using_diffusion_models.md)
+- [Scaling Properties of Diffusion Models for Perceptual Tasks](../../CVPR2025/3d_vision/scaling_properties_of_diffusion_models_for_perceptual_tasks.md)
 - [MVDD: Multi-View Depth Diffusion Models](../../ECCV2024/3d_vision/mvdd_multi-view_depth_diffusion_models.md)
-- [Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation](../../ICCV2025/3d_vision/repurposing_2d_diffusion_models_with_gaussian_atlas_for_3d_generation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Transformers for Generalizable First-Order Logical Entailment
 description: >-

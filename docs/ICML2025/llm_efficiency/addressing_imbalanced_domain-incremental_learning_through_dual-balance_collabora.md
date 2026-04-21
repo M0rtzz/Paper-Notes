@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Addressing Imbalanced Domain-Incremental Learning through Dual-Balance Collaborative Experts (DCE)
 description: >-
@@ -146,9 +146,9 @@ DCE 采用双阶段训练范式。每到达一个新域时：
 ## 相关论文
 
 - [Mixture of Lookup Experts](mixture_of_lookup_experts.md)
+- [Low-Rank Adaptation in Multilinear Operator Networks for Security-Preserving Incremental Learning](../../CVPR2025/llm_efficiency/low-rank_adaptation_in_multilinear_operator_networks_for_security-preserving_inc.md)
 - [GigaChat Family: Efficient Russian Language Modeling Through Mixture of Experts Architecture](../../ACL2025/llm_efficiency/gigachat_family_efficient_russian_language_modeling_through_mixture_of_experts_a.md)
 - [Autonomy-of-Experts Models (AoE)](autonomy-of-experts_models.md)
-- [Low-Rank Adaptation in Multilinear Operator Networks for Security-Preserving Incremental Learning](../../CVPR2025/llm_efficiency/low-rank_adaptation_in_multilinear_operator_networks_for_security-preserving_inc.md)
 - [CostFilter-AD: Enhancing Anomaly Detection through Matching Cost Filtering](costfilter-ad_enhancing_anomaly_detection_through_matching_cost_filtering.md)
 
 <!-- RELATED:END -->

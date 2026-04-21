@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Wide-Horizon Thinking and Simulation-Based Evaluation for Real-World LLM Planning with Multifaceted Constraints
 description: >-

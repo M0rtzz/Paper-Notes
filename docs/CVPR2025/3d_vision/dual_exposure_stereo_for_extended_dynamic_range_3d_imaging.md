@@ -1,12 +1,10 @@
-﻿---
-title: "Dual Exposure Stereo for Extended Dynamic Range 3D Imaging"
-conference: "CVPR 2025"
-arxiv: "2412.02351"
-code: ""
-project: ""
-领域: "三维视觉"
-关键词: ["立体匹配", "高动态范围", "双曝光", "自动曝光控制", "深度估计"]
-评分: "⭐⭐⭐⭐"
+---
+title: >-
+  [论文解读] Dual Exposure Stereo for Extended Dynamic Range 3D Imaging
+description: >-
+  [3D视觉] 提出双曝光立体成像(Dual-Exposure Stereo)方法，通过自动双曝光控制(ADEC)在交替帧中使用不同曝光，结合运动感知的双曝光特征融合网络进行视差估计，将立体相机的有效动态范围扩展至 160%，实现极端光照条件下的鲁棒 3D 成像。
+tags:
+  - 3D视觉
 ---
 
 # Dual Exposure Stereo for Extended Dynamic Range 3D Imaging
@@ -114,10 +112,10 @@ project: ""
 
 ## 相关论文
 
-- [High Dynamic Range Novel View Synthesis with Single Exposure](../../ICML2025/3d_vision/high_dynamic_range_novel_view_synthesis_with_single_exposure.md)
-- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
-- [IRIS: Inverse Rendering of Indoor Scenes from Low Dynamic Range Images](iris_inverse_rendering_of_indoor_scenes_from_low_dynamic_range_images.md)
-- [Mono4DGS-HDR: High Dynamic Range 4D Gaussian Splatting from Alternating-exposure Monocular Videos](../../ICLR2026/3d_vision/mono4dgs-hdr_high_dynamic_range_4d_gaussian_splatting_from_alternating-exposure_.md)
-- [Event Fields: Capturing Light Fields at High Speed, Resolution, and Dynamic Range](event_fields_capturing_light_fields_at_high_speed_resolution_and_dynamic_range.md)
+- [DualPM: Dual Posed-Canonical Point Maps for 3D Shape and Pose Reconstruction](dualpm_dual_posed-canonical_point_maps_for_3d_shape_and_pose_reconstruction.md)
+- [Dyn-HaMR: Recovering 4D Interacting Hand Motion from a Dynamic Camera](dyn_hamr_recovering_4d_interacting_hand_motion_from_a_dynamic_camera.md)
+- [Diving into the Fusion of Monocular Priors for Generalized Stereo Matching](../../ICCV2025/3d_vision/diving_into_the_fusion_of_monocular_priors_for_generalized_stereo_matching.md)
+- [DUNE: Distilling a Universal Encoder from Heterogeneous 2D and 3D Teachers](dune_distilling_a_universal_encoder_from_heterogeneous_2d_and_3d_teachers.md)
+- [Multi-view Reconstruction via SfM-guided Monocular Depth Estimation](multi-view_reconstruction_via_sfm-guided_monocular_depth_estimation.md)
 
 <!-- RELATED:END -->

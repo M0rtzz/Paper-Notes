@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LiveCC: Learning Video LLM with Streaming Speech Transcription at Scale
 description: >-

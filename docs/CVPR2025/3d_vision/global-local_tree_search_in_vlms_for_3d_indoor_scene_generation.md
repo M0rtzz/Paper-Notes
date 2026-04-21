@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Global-Local Tree Search in VLMs for 3D Indoor Scene Generation
 description: >-
@@ -112,10 +112,10 @@ tags:
 
 ## 相关论文
 
+- [TreeMeshGPT: Artistic Mesh Generation with Autoregressive Tree Sequencing](treemeshgpt_artistic_mesh_generation_with_autoregressive_tree_sequencing.md)
+- [NeRFPrior: Learning Neural Radiance Field as a Prior for Indoor Scene Reconstruction](nerfprior_learning_neural_radiance_field_as_a_prior_for_indoor_scene_reconstruct.md)
+- [SceneFactor: Factored Latent 3D Diffusion for Controllable 3D Scene Generation](scenefactor_factored_latent_3d_diffusion_for_controllable_3d_scene_generation.md)
 - [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
 - [LocalDyGS: Multi-view Global Dynamic Scene Modeling via Adaptive Local Implicit Feature Decoupling](../../ICCV2025/3d_vision/localdygs_multi-view_global_dynamic_scene_modeling_via_adaptive_local_implicit_f.md)
-- [IRIS: Inverse Rendering of Indoor Scenes from Low Dynamic Range Images](iris_inverse_rendering_of_indoor_scenes_from_low_dynamic_range_images.md)
-- [Diorama: Unleashing Zero-shot Single-view 3D Indoor Scene Modeling](../../ICCV2025/3d_vision/diorama_unleashing_zero-shot_single-view_3d_indoor_scene_modeling.md)
-- [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ToolWeaver: Weaving Collaborative Semantics for Scalable Tool Use in Large Language Models
 description: >-
@@ -139,7 +139,7 @@ ToolWeaver在检索和任务完成上全面领先，同时语言模型退化从1
 - [Adaptive Tool Use in Large Language Models with Meta-Cognition Trigger](../../ACL2025/llm_agent/meco_metacognition_tool_use.md)
 - [ToolHop: A Query-Driven Benchmark for Evaluating Large Language Models in Multi-Hop Tool Use](../../ACL2025/llm_agent/toolhop_multi_hop_tool_use_benchmark.md)
 - [AgentSynth: Scalable Task Generation for Generalist Computer-Use Agents](agentsynth_scalable_task_generation_for_generalist_computer-use_agents.md)
-- [ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](../../ACL2025/llm_agent/toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)
 - [Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models](agentic_context_engineering_evolving_contexts_for_self-improving_language_models.md)
+- [AutoTool: Efficient Tool Selection for Large Language Model Agents](../../AAAI2026/llm_agent/autotool_efficient_tool_selection_for_large_language_model_agents.md)
 
 <!-- RELATED:END -->

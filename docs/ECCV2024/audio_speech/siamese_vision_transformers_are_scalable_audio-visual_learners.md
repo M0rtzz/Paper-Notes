@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Siamese Vision Transformers are Scalable Audio-Visual Learners
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Nearly-Optimal Bandit Learning in Stackelberg Games with Side Information
 description: >-

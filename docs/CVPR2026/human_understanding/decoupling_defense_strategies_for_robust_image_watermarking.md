@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdvMark: Decoupling Defense Strategies for Robust Image Watermarking
 description: >-

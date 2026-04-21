@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Effective Training Data Synthesis for Improving MLLM Chart Understanding
 description: >-

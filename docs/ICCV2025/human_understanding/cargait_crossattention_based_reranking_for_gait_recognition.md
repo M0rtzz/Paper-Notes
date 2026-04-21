@@ -155,7 +155,7 @@ $$\mathcal{L} = \mathcal{L}_{ranking} + \alpha \mathcal{L}_{CE}$$
 - [One-Shot Knowledge Transfer for Scalable Person Re-Identification](one-shot_knowledge_transfer_for_scalable_person_re-identification.md)
 - [GUIOdyssey: A Comprehensive Dataset for Cross-App GUI Navigation on Mobile Devices](guiodyssey_a_comprehensive_dataset_for_cross-app_gui_navigation_on_mobile_device.md)
 - [Weakly Supervised Visible-Infrared Person Re-Identification via Heterogeneous Expert Collaborative Consistency Learning](weakly_supervised_visible-infrared_person_re-identification_via_heterogeneous_ex.md)
-- [A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](a_quality-guided_mixture_of_score-fusion_experts_framework_for_human_recognition.md)
 - [LVFace: Progressive Cluster Optimization for Large Vision Models in Face Recognition](lvface_progressive_cluster_optimization_for_large_vision_models_in_face_recognit.md)
+- [A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](a_qualityguided_mixture_of_scorefusion_experts_framework_for.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] R²-Bench: Benchmarking the Robustness of Referring Perception Models under Perturbations
 description: >-

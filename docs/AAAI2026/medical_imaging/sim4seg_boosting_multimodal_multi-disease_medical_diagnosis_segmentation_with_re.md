@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sim4Seg: Boosting Multimodal Multi-disease Medical Diagnosis Segmentation with Region-Aware Vision-Language Similarity Masks
 description: >-

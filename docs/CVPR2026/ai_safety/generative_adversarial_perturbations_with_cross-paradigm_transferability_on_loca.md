@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generative Adversarial Perturbations with Cross-paradigm Transferability on Localized Crowd Counting
 description: >-

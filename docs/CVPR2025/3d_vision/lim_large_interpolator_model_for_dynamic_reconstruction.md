@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] LIM: Large Interpolator Model for Dynamic Reconstruction
 description: >-
-  [CVPR 2025][4D reconstruction] 提出基于 Transformer 的前馈式 3D 隐式表示插值模型 LIM，结合因果一致性损失实现连续时间的高质量动态 4D 重建与网格跟踪。
+  [CVPR 2025][3D视觉][4D reconstruction] 提出 LIM——首个前馈式跨类别动态 4D 资产重建模型，通过在隐式 triplane 表示间进行 Transformer 插值并引入因果一致性损失，实现秒级高质量连续时间插值与一致拓扑的网格跟踪。
 tags:
   - CVPR 2025
+  - 3D视觉
   - 4D reconstruction
   - triplane interpolation
-  - mesh tracking
   - feed-forward
-  - LRM
+  - mesh tracking
+  - causal consistency
 ---
 
 # LIM: Large Interpolator Model for Dynamic Reconstruction
@@ -143,10 +144,10 @@ tags:
 
 ## 相关论文
 
+- [PartRM: Modeling Part-Level Dynamics with Large Cross-State Reconstruction Model](partrm_modeling_part-level_dynamics_with_large_cross-state_reconstruction_model.md)
 - [Matrix3D: Large Photogrammetry Model All-in-One](matrix3d_large_photogrammetry_model_all-in-one.md)
+- [SpectroMotion: Dynamic 3D Reconstruction of Specular Scenes](spectromotion_dynamic_3d_reconstruction_of_specular_scenes.md)
 - [ARM: Appearance Reconstruction Model for Relightable 3D Generation](arm_appearance_reconstruction_model_for_relightable_3d_generation.md)
 - [GRM: Large Gaussian Reconstruction Model for Efficient 3D Reconstruction and Generation](../../ECCV2024/3d_vision/grm_large_gaussian_reconstruction_model_for_efficient_3d_reconstruction_and_gene.md)
-- [GS-LRM: Large Reconstruction Model for 3D Gaussian Splatting](../../ECCV2024/3d_vision/gs-lrm_large_reconstruction_model_for_3d_gaussian_splatting.md)
-- [RayZer: A Self-supervised Large View Synthesis Model](../../ICCV2025/3d_vision/rayzer_a_self-supervised_large_view_synthesis_model.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MoRE-Brain: Routed Mixture of Experts for Interpretable and Generalizable Cross-Subject fMRI Visual Decoding
 description: >-

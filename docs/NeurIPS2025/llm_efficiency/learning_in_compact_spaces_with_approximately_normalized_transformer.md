@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning in Compact Spaces with Approximately Normalized Transformer
 description: >-

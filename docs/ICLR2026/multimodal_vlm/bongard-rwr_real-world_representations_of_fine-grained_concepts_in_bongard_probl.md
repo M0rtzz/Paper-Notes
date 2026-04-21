@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bongard-RWR+: Real-World Representations of Fine-Grained Concepts in Bongard Problems
 description: >-

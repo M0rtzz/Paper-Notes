@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Mathematical Framework for AI-Human Integration in Work
 description: >-
@@ -170,8 +170,8 @@ $$s_{j1} = \lambda_j \cdot s_j, \quad s_{j2} = 1 - (1-\lambda_j) \cdot s_j$$
 
 - [HeurekaBench: A Benchmarking Framework for AI Co-scientist](../../ICLR2026/model_compression/heurekabench_a_benchmarking_framework_for_ai_co-scientist.md)
 - [Hierarchical Pedagogical Oversight: A Multi-Agent Adversarial Framework for Reliable AI Tutoring](../../AAAI2026/model_compression/hierarchical_pedagogical_oversight_a_multi-agent_adversarial_framework_for_relia.md)
-- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](../../NeurIPS2025/model_compression/gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
 - [KTAE: A Model-Free Algorithm to Key-Tokens Advantage Estimation in Mathematical Reasoning](../../NeurIPS2025/model_compression/ktae_a_model-free_algorithm_to_key-tokens_advantage_estimation_in_mathematical_r.md)
-- [AI-Generated Video Detection via Perceptual Straightening](../../NeurIPS2025/model_compression/ai-generated_video_detection_via_perceptual_straightening.md)
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](../../NeurIPS2025/model_compression/gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+- [Sketch Down the FLOPs: Towards Efficient Networks for Human Sketch](../../CVPR2025/model_compression/sketch_down_the_flops_towards_efficient_networks_for_human_sketch.md)
 
 <!-- RELATED:END -->

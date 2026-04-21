@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AutoOcc: Automatic Open-Ended Semantic Occupancy Annotation via Vision-Language Guided Gaussian Splatting
 description: >-

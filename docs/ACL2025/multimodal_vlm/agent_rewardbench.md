@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Agent-RewardBench: Towards a Unified Benchmark for Reward Modeling across Perception, Planning, and Safety in Real-World Multimodal Agents
 description: >-

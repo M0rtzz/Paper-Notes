@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Graph Tokenization for Bridging Graphs and Transformers
 description: >-

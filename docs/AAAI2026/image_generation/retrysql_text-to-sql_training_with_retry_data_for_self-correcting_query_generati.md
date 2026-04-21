@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RetrySQL: Text-to-SQL Training with Retry Data for Self-Correcting Query Generation
 description: >-

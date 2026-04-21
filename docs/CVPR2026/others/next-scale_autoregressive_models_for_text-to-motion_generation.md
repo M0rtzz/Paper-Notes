@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Next-Scale Autoregressive Models for Text-to-Motion Generation
 description: >-
@@ -155,7 +155,7 @@ KIT-ML：
 ## 相关论文
 
 - [Advancing Sequential Numerical Prediction in Autoregressive Models](../../ACL2025/others/advancing_sequential_numerical_prediction_in_autoregressive_models.md)
-- [SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](sldprtnet_a_largescale_multimodal_dataset_for_cad.md)
+- [SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](sldprtnet_a_large-scale_multimodal_dataset_for_cad_generation_in_language-driven.md)
 - [Cautious Next Token Prediction](../../ACL2025/others/cautious_next_token_prediction.md)
 - [Order Matters: 3D Shape Generation from Sequential VR Sketches](order_matters_3d_shape_generation_from_sequential_vr_sketches.md)
 - [MeshA*: Efficient Path Planning With Motion Primitives](../../AAAI2026/others/mesha_efficient_path_planning_with_motion_primitives.md)

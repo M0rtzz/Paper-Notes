@@ -154,7 +154,7 @@ $$L_{\text{swepo}}(\theta) = -\log\left(\frac{\sum_{i \in S^+} \exp[s'_\theta(y_
 - [Self-Consistency Preference Optimization](self-consistency_preference_optimization.md)
 - [ConfPO: Exploiting Policy Model Confidence for Critical Token Selection in Preference Optimization](confpo_exploiting_policy_model_confidence_for_critical_token_selection_in_prefer.md)
 - [Preference Optimization for Combinatorial Optimization Problems](preference_optimization_for_combinatorial_optimization_problems.md)
-- [LongVPO: From Anchored Cues to Self-Reasoning for Long-Form Video Preference Optimization](../../NeurIPS2025/llm_alignment/longvpo_from_anchored_cues_to_selfreasoning_for_longform_vid.md)
 - [Self-alignment of Large Video Language Models with Refined Regularized Preference Optimization](../../NeurIPS2025/llm_alignment/self-alignment_of_large_video_language_models_with_refined_regularized_preferenc.md)
+- [LongVPO: From Anchored Cues to Self-Reasoning for Long-Form Video Preference Optimization](../../NeurIPS2025/llm_alignment/longvpo_from_anchored_cues_to_selfreasoning_for_longform_vid.md)
 
 <!-- RELATED:END -->

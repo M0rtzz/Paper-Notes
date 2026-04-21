@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Synthesizing Post-Training Data for LLMs through Multi-Agent Simulation
 description: >-

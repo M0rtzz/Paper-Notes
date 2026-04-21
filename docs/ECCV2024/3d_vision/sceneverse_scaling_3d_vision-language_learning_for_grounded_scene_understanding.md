@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SceneVerse: Scaling 3D Vision-Language Learning for Grounded Scene Understanding
 description: >-
@@ -145,10 +145,10 @@ GPS 预训练后直接在 ScanRefer 上已超过所有方法（47.1），fine-tu
 
 ## 相关论文
 
-- [Open Vocabulary 3D Scene Understanding via Geometry Guided Self-Distillation](open_vocabulary_3d_scene_understanding_via_geometry_guided_self-distillation.md)
-- [nuCraft: Crafting High Resolution 3D Semantic Occupancy for Unified 3D Scene Understanding](nucraft_crafting_high_resolution_3d_semantic_occupancy_for_unified_3d_scene_unde.md)
 - [WaSt-3D: Wasserstein-2 Distance for Scene-to-Scene Stylization on 3D Gaussians](wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)
-- [DG-PIC: Domain Generalized Point-In-Context Learning for Point Cloud Understanding](dg-pic_domain_generalized_point-in-context_learning_for_point_cloud_understandin.md)
-- [3DGraphLLM: Combining Semantic Graphs and Large Language Models for 3D Scene Understanding](../../ICCV2025/3d_vision/3dgraphllm_combining_semantic_graphs_and_large_language_models_for_3d_scene_unde.md)
+- [Zero-Shot Multi-Object Scene Completion](zero-shot_multi-object_scene_completion.md)
+- [SceneGraphLoc: Cross-Modal Coarse Visual Localization on 3D Scene Graphs](scenegraphloc_cross-modal_coarse_visual_localization_on_3d_scene_graphs.md)
+- [Learning to Generate Conditional Tri-Plane for 3D-Aware Expression Controllable Portrait Animation](learning_to_generate_conditional_tri-plane_for_3d-aware_expression_controllable_.md)
+- [Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
 
 <!-- RELATED:END -->

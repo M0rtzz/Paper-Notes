@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MathSmith: Towards Extremely Hard Mathematical Reasoning by Forging Synthetic Problems with a Reinforced Policy
 description: >-

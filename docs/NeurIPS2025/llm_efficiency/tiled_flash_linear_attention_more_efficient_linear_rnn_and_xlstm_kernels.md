@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tiled Flash Linear Attention: More Efficient Linear RNN and xLSTM Kernels
 description: >-
@@ -133,10 +133,10 @@ TFLA 包含两个核心内核：
 
 ## 相关论文
 
-- [Linear Attention for Efficient Bidirectional Sequence Modeling](linear_attention_for_efficient_bidirectional_sequence_modeling.md)
 - [ZeroS: Zero-Sum Linear Attention for Efficient Transformers](zeros_zero-sum_linear_attention_for_efficient_transformers.md)
 - [Rectifying Magnitude Neglect in Linear Attention](../../ICCV2025/llm_efficiency/rectifying_magnitude_neglect_in_linear_attention.md)
 - [xLSTM Scaling Laws: Competitive Performance with Linear Time-Complexity](../../ICLR2026/llm_efficiency/xlstm_scaling_laws_competitive_performance_with_linear_time-complexity.md)
+- [RACE Attention: A Strictly Linear-Time Attention for Long-Sequence Training](../../ICLR2026/llm_efficiency/race_attention_a_strictly_linear-time_attention_for_long-sequence_training.md)
 - [Tensor Product Attention Is All You Need](tensor_product_attention_is_all_you_need.md)
 
 <!-- RELATED:END -->

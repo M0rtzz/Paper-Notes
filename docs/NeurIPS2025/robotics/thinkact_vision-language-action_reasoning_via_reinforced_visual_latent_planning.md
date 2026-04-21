@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ThinkAct: Vision-Language-Action Reasoning via Reinforced Visual Latent Planning
 description: >-

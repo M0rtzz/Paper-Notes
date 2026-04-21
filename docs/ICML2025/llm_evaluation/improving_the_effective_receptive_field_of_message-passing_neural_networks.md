@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving the Effective Receptive Field of Message-Passing Neural Networks
 description: >-

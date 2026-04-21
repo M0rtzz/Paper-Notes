@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SignAvatars: A Large-scale 3D Sign Language Holistic Motion Dataset and Benchmark
 description: >-

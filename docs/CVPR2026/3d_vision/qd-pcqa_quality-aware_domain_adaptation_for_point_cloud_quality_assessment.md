@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] QD-PCQA: Quality-Aware Domain Adaptation for Point Cloud Quality Assessment
 description: >-

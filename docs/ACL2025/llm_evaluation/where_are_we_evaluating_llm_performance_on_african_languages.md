@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Where Are We? Evaluating LLM Performance on African Languages
 description: >-

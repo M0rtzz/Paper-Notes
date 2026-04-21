@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Large Stepsizes Accelerate Gradient Descent for Regularized Logistic Regression
 description: >-

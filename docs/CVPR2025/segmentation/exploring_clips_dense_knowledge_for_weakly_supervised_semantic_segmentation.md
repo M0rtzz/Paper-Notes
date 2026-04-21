@@ -1,7 +1,16 @@
-﻿---
-title: "Exploring CLIP's Dense Knowledge for Weakly Supervised Semantic Segmentation"
-description: "ExCEL通过patch-text对齐范式探索CLIP的密集知识，结合文本语义扩充和视觉校准模块，在弱监督语义分割中以极低训练成本大幅超越SOTA"
-tags: ["WSSS", "CLIP", "弱监督分割", "patch-text对齐", "CAM"]
+---
+title: >-
+  [论文解读] Exploring CLIP's Dense Knowledge for Weakly Supervised Semantic Segmentation
+description: >-
+  [CVPR 2025][图像分割][弱监督语义分割] ExCEL 提出利用 patch-text 对齐范式（而非传统 image-text 对齐）挖掘 CLIP 的密集知识用于弱监督语义分割，通过文本语义扩充（TSE）和视觉校准（VC）两个模块增强密集对齐能力，在仅需 3.2GB 显存和 6% 训练时间的条件下，在 PASCAL VOC 和 MS COCO 上大幅超越 SOTA。
+tags:
+  - CVPR 2025
+  - 图像分割
+  - 弱监督语义分割
+  - CLIP
+  - patch-text对齐
+  - 类激活图
+  - 视觉-语言预训练
 ---
 
 # Exploring CLIP's Dense Knowledge for Weakly Supervised Semantic Segmentation
@@ -118,9 +127,9 @@ ExCEL 的训练仅需 3.2GB 显存和前人方法 6% 的训练时间。Training-
 ## 相关论文
 
 - [SSR: Semantic and Spatial Rectification for CLIP-based Weakly Supervised Segmentation](../../AAAI2026/segmentation/ssr_semantic_and_spatial_rectification_for_clip-based_weakly_supervised_segmenta.md)
+- [Soft Self-Labeling and Potts Relaxations for Weakly-Supervised Segmentation](soft_self-labeling_and_potts_relaxations_for_weakly-supervised_segmentation.md)
 - [Exploring Structural Degradation in Dense Representations for Self-supervised Learning](../../NeurIPS2025/segmentation/exploring_structural_degradation_in_dense_representations_for_self-supervised_le.md)
 - [Know Your Attention Maps: Class-specific Token Masking for Weakly Supervised Semantic Segmentation](../../ICCV2025/segmentation/know_your_attention_maps_class-specific_token_masking_for_weakly_supervised_sema.md)
-- [CorrCLIP: Reconstructing Patch Correlations in CLIP for Open-Vocabulary Semantic Segmentation](../../ICCV2025/segmentation/corrclip_reconstructing_patch_correlations_in_clip_for_openv.md)
 - [DeCLIP: Decoupled Learning for Open-Vocabulary Dense Perception](declip_decoupled_learning_for_open-vocabulary_dense_perception.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Closer Look at Model Collapse: From a Generalization-to-Memorization Perspective
 description: >-
@@ -143,6 +143,6 @@ tags:
 - [Towards a Mechanistic Explanation of Diffusion Model Generalization](../../ICML2025/image_generation/towards_a_mechanistic_explanation_of_diffusion_model_generalization.md)
 - [Model Immunization from a Condition Number Perspective](../../ICML2025/image_generation/model_immunization_from_a_condition_number_perspective.md)
 - [Scaling Can Lead to Compositional Generalization](scaling_can_lead_to_compositional_generalization.md)
-- [Model Collapse Is Not a Bug but a Feature in Machine Unlearning for LLMs](../../ICLR2026/image_generation/model_collapse_is_not_a_bug_but_a_feature_in_machine_unlearning_for_llms.md)
+- [Understanding and Mitigating Memorization in Generative Models via Sharpness of Probability Landscapes](../../ICML2025/image_generation/understanding_and_mitigating_memorization_in_generative_models_via_sharpness_of_.md)
 
 <!-- RELATED:END -->

@@ -1,14 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] EZSR: Event-based Zero-Shot Recognition
 description: >-
-  [CVPR 2025][事件相机][零样本识别] 提出基于事件相机的零样本物体识别方法，利用CLIP跨模态对齐实现事件数据的零样本泛化
+  [CVPR 2025][事件相机] 提出 EZSR，通过将事件相机数据与 CLIP 的 RGB 嵌入空间对齐，实现基于事件数据的零样本物体识别。
 tags:
   - CVPR 2025
   - 事件相机
   - 零样本识别
   - CLIP
-  - 跨模态对齐
+  - 事件编码器
+  - 跨模态
 ---
 
 # EZSR: Event-based Zero-Shot Recognition

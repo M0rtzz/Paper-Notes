@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Optimizer Choice Matters for the Emergence of Neural Collapse
 description: >-
@@ -138,8 +138,8 @@ ResNet9 在 FashionMNIST 上的最终 NC 指标（越低越好）：
 ## 相关论文
 
 - [Neural Collapse in Test-Time Adaptation](../../CVPR2026/others/neural_collapse_in_test-time_adaptation.md)
-- [Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry](../../NeurIPS2025/others/reliable_active_learning_from_unreliable_labels_via_neural_collapse_geometry.md)
 - [The Publication Choice Problem](../../AAAI2026/others/the_publication_choice_problem.md)
+- [Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry](../../NeurIPS2025/others/reliable_active_learning_from_unreliable_labels_via_neural_collapse_geometry.md)
 - [The Persistence of Neural Collapse Despite Low-Rank Bias](../../NeurIPS2025/others/the_persistence_of_neural_collapse_despite_low-rank_bias.md)
 - [Generating Plausible Distractors for Multiple-Choice Questions via Student Choice Prediction](../../ACL2025/others/distractor_gen_multiple_choice.md)
 

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PanFoMa: A Lightweight Foundation Model and Benchmark for Pan-Cancer Pathology Image Analysis
 description: >-

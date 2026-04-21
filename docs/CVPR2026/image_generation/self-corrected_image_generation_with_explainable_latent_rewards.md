@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-Corrected Image Generation with Explainable Latent Rewards
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generalizable End-to-End Tool-Use RL with Synthetic CodeGym
 description: >-
@@ -156,10 +156,10 @@ tags:
 
 ## 相关论文
 
+- [CryptoFace: End-to-End Encrypted Face Recognition](../../CVPR2025/human_understanding/cryptoface_end-to-end_encrypted_face_recognition.md)
 - [MatchED: Crisp Edge Detection Using End-to-End, Matching-based Supervision](../../CVPR2026/human_understanding/matched_crisp_edge_detection_using_end-to-end_matching-based_supervision.md)
 - [UniLS: End-to-End Audio-Driven Avatars for Unified Listening and Speaking](../../CVPR2026/human_understanding/unils_end-to-end_audio-driven_avatars_for_unified_listening_and_speaking.md)
 - [Sum-of-Parts: Self-Attributing Neural Networks with End-to-End Learning of Feature Groups](../../ICML2025/human_understanding/sum-of-parts_self-attributing_neural_networks_with_end-to-end_learning_of_featur.md)
-- [CryptoFace: End-to-End Encrypted Face Recognition](../../CVPR2025/human_understanding/cryptoface_end-to-end_encrypted_face_recognition.md)
 - [Avatar Fingerprinting for Authorized Use of Synthetic Talking-Head Videos](../../ECCV2024/human_understanding/avatar_fingerprinting_for_authorized_use_of_synthetic_talking-head_videos.md)
 
 <!-- RELATED:END -->

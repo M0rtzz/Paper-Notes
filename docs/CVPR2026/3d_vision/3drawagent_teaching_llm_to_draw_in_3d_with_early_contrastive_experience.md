@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3DrawAgent: Teaching LLM to Draw in 3D with Early Contrastive Experience
 description: >-

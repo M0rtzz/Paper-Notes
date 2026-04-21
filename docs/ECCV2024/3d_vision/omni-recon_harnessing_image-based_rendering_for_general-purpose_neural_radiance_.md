@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Omni-Recon: Harnessing Image-Based Rendering for General-Purpose Neural Radiance Fields
 description: >-

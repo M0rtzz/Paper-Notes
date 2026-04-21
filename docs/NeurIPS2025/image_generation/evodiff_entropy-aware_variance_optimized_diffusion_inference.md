@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EVODiff: Entropy-aware Variance Optimized Diffusion Inference
 description: >-

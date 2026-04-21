@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Face-Human-Bench: A Comprehensive Benchmark of Face and Human Understanding for Multi-modal Assistants
 description: >-

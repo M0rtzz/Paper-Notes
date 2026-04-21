@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CHLU: The Causal Hamiltonian Learning Unit as a Symplectic Primitive for Deep Learning
 description: >-
@@ -133,7 +133,7 @@ CHLU 的内部状态 $\mathbf{z} = (\mathbf{q}, \mathbf{p})$ 表示广义坐标�
 - [How to Marginalize in Causal Structure Learning?](../../AAAI2026/others/how_to_marginalize_in_causal_structure_learning.md)
 - [Active Learning for Decision Trees with Provable Guarantees](active_learning_for_decision_trees_with_provable_guarantees.md)
 - [Uncertainty Estimation by Flexible Evidential Deep Learning](../../NeurIPS2025/others/uncertainty_estimation_by_flexible_evidential_deep_learning.md)
-- [Noisy-Pair Robust Representation Alignment for Positive-Unlabeled Learning](noisy-pair_robust_representation_alignment_for_positive-unlabeled_learning.md)
 - [Learning on a Razor's Edge: Identifiability and Singularity of Polynomial Neural Networks](learning_on_a_razors_edge_identifiability_and_singularity_of_polynomial_neural_n.md)
+- [Noisy-Pair Robust Representation Alignment for Positive-Unlabeled Learning](noisy-pair_robust_representation_alignment_for_positive-unlabeled_learning.md)
 
 <!-- RELATED:END -->

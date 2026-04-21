@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PSR: Scaling Multi-Subject Personalized Image Generation with Pairwise Subject-Consistency Rewards
 description: >-
@@ -118,10 +118,10 @@ PSRBench 包含 7 个子集，从三个维度评估：主体一致性（SC）、
 
 ## 相关论文
 
+- [When Identities Collapse: A Stress-Test Benchmark for Multi-Subject Personalization](when_identities_collapse_a_stress-test_benchmark_for_multi-subject_personalizati.md)
 - [Self-Corrected Image Generation with Explainable Latent Rewards](self-corrected_image_generation_with_explainable_latent_rewards.md)
 - [Disentangling to Re-couple: Resolving the Similarity-Controllability Paradox in Subject-Driven Text-to-Image Generation](disentangling_to_re-couple_resolving_the_similarity-controllability_paradox_in_s.md)
 - [Image Diffusion Preview with Consistency Solver](image_diffusion_preview_with_consistency_solver.md)
 - [Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards](improving_text-to-image_generation_with_intrinsic_self-confidence_rewards.md)
-- [SOLACE: Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards](solace_self_confidence_rewards_t2i.md)
 
 <!-- RELATED:END -->

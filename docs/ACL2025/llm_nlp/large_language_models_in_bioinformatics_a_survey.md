@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Large Language Models in Bioinformatics: A Survey
 description: >-

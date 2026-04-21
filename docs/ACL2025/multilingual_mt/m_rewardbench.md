@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] M-RewardBench: Evaluating Reward Models in Multilingual Settings
 description: >-

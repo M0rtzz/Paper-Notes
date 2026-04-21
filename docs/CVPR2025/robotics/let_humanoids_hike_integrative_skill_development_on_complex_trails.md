@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Let Humanoids Hike! Integrative Skill Development on Complex Trails
 description: >-

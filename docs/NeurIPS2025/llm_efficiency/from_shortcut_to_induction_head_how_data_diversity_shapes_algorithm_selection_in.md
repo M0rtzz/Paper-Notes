@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Shortcut to Induction Head: How Data Diversity Shapes Algorithm Selection in Transformers
 description: >-
@@ -130,10 +130,10 @@ tags:
 
 ## 相关论文
 
-- [LADM: Long-context Training Data Selection with Attention-based Dependency Measurement for LLMs](../../ACL2025/llm_efficiency/ladm_long_context_data.md)
 - [Constant Bit-Size Transformers Are Turing Complete](constant_bit-size_transformers_are_turing_complete.md)
-- [MoH: Multi-Head Attention as Mixture-of-Head Attention](../../ICML2025/llm_efficiency/moh_multi-head_attention_as_mixture-of-head_attention.md)
 - [ZeroS: Zero-Sum Linear Attention for Efficient Transformers](zeros_zero-sum_linear_attention_for_efficient_transformers.md)
+- [LADM: Long-context Training Data Selection with Attention-based Dependency Measurement for LLMs](../../ACL2025/llm_efficiency/ladm_long_context_data.md)
+- [MoH: Multi-Head Attention as Mixture-of-Head Attention](../../ICML2025/llm_efficiency/moh_multi-head_attention_as_mixture-of-head_attention.md)
 - [Token-level Data Selection for Safe LLM Fine-tuning](../../ICLR2026/llm_efficiency/token-level_data_selection_for_safe_llm_fine-tuning.md)
 
 <!-- RELATED:END -->

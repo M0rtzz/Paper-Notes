@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hierarchical Attention Generates Better Proofs
 description: >-
@@ -143,8 +143,8 @@ Single-pass sampling 改进更显著：miniF2F test 从 23.36% → 27.87%（+4.5
 
 - [Better Embeddings with Coupled Adam](better_embeddings_with_coupled_adam.md)
 - [Towards Better Evaluation for Generated Patent Claims](patclaimeval_patent_evaluation.md)
-- [Segment-Based Attention Masking for GPTs](segment-based_attention_masking_for_gpts.md)
 - [The Hidden Attention of Mamba Models](the_hidden_attention_of_mamba_models.md)
+- [Segment-Based Attention Masking for GPTs](segment-based_attention_masking_for_gpts.md)
 - [Hierarchical Memory Organization for Wikipedia Generation](hierarchical_memory_wikipedia_gen.md)
 
 <!-- RELATED:END -->

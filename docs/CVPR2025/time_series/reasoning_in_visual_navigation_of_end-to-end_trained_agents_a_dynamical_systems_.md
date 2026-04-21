@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] Reasoning in Visual Navigation of End-to-end Trained Agents: A Dynamical Systems Approach
 description: >-
-  [CVPR 2025][具身智能][视觉导航][动力学系统] 大规模真实实验分析端到端导航智能体内部学到的推理能力：动力学模型、潜在记忆、规划与价值函数
+  [CVPR 2025][时间序列][end-to-end navigation] 通过262个真实机器人导航episode的大规模实验，深入分析端到端RL训练的导航智能体内部涌现出的推理能力——包括类Kalman滤波的动力学模型、场景结构的潜在记忆、有限水平的规划能力以及与长期规划相关的价值函数。
 tags:
   - CVPR 2025
-  - 具身智能
-  - 视觉导航
-  - 强化学习
-  - 动力学系统
-  - Sim2Real
+  - 时间序列
+  - end-to-end navigation
+  - dynamical systems
+  - Kalman filter
+  - latent memory
+  - embodied AI
+  - sim-to-real
 ---
 
 # Reasoning in Visual Navigation of End-to-end Trained Agents: A Dynamical Systems Approach
@@ -82,10 +84,10 @@ tags:
 
 ## 相关论文
 
-- [A Graph Neural Network Approach for Localized and High-Resolution Temperature Forecasting](../../NeurIPS2025/time_series/a_graph_neural_network_approach_for_localized_and_high-resolution_temperature_fo.md)
 - [CausalDynamics: A Large-Scale Benchmark for Structural Discovery of Dynamical Causal Models](../../NeurIPS2025/time_series/causaldynamics_a_large-scale_benchmark_for_structural_discovery_of_dynamical_cau.md)
+- [A Graph Neural Network Approach for Localized and High-Resolution Temperature Forecasting](../../NeurIPS2025/time_series/a_graph_neural_network_approach_for_localized_and_high-resolution_temperature_fo.md)
 - [Context-Aware Sentiment Forecasting via LLM-based Multi-Perspective Role-Playing Agents](../../ACL2025/time_series/context_aware_sentiment_forecasting_agents.md)
-- [Reasoning on Time-Series for Financial Technical Analysis](../../ICLR2026/time_series/reasoning_on_time-series_for_financial_technical_analysis.md)
 - [MASFIN: A Multi-Agent System for Decomposed Financial Reasoning and Forecasting](../../NeurIPS2025/time_series/masfin_a_multi-agent_system_for_decomposed_financial_reasoning_and_forecasting.md)
+- [Martingale Score: An Unsupervised Metric for Bayesian Rationality in LLM Reasoning](../../NeurIPS2025/time_series/martingale_score_an_unsupervised_metric_for_bayesian_rationality_in_llm_reasonin.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SEOE: A Scalable and Reliable Semantic Evaluation Framework for Open Domain Event Detection
 description: >-

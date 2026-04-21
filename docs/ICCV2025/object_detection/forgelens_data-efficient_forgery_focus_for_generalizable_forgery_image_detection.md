@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ForgeLens: Data-Efficient Forgery Focus for Generalizable Forgery Image Detection
 description: >-

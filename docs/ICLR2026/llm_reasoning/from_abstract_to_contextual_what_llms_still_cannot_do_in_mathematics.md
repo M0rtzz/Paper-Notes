@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Abstract to Contextual: What LLMs Still Cannot Do in Mathematics
 description: >-
@@ -126,10 +126,10 @@ ContextMATH 基于 AIME 2024、AIME 2025 和 MATH-500（难度 ≥3）构建，�
 
 ## 相关论文
 
-- [RealMath: A Continuous Benchmark for Evaluating Language Models on Research-Level Mathematics](../../NeurIPS2025/llm_reasoning/realmath_a_continuous_benchmark_for_evaluating_language_models_on_research-level.md)
-- [GeoGramBench: Benchmarking the Geometric Program Reasoning in Modern LLMs](geogrambench_benchmarking_the_geometric_program_reasoning_in_modern_llms.md)
+- [Doxing via the Lens: Revealing Location-related Privacy Leakage on Multi-modal Large Reasoning Models](doxing_via_the_lens_revealing_location-related_privacy_leakage_on_multi-modal_la.md)
+- [AgentMath: Empowering Mathematical Reasoning for Large Language Models via Tool-Augmented Agent](agentmath_empowering_mathematical_reasoning_for_large_language_models_via_tool-a.md)
 - [Are Reasoning LLMs Robust to Interventions on Their Chain-of-Thought?](are_reasoning_llms_robust_to_interventions_on_their_chain-of-thought.md)
-- [Know What You Don't Know: Uncertainty Calibration of Process Reward Models](../../NeurIPS2025/llm_reasoning/know_what_you_dont_know_uncertainty_calibration_of_process_reward_models.md)
+- [GeoGramBench: Benchmarking the Geometric Program Reasoning in Modern LLMs](geogrambench_benchmarking_the_geometric_program_reasoning_in_modern_llms.md)
 - [DAG-Math: Graph-of-Thought Guided Mathematical Reasoning in LLMs](dag-math_graph-of-thought_guided_mathematical_reasoning_in_llms.md)
 
 <!-- RELATED:END -->

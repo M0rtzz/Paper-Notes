@@ -1,12 +1,10 @@
-﻿---
-title: "DualPM: Dual Posed-Canonical Point Maps for 3D Shape and Pose Reconstruction"
-conference: "CVPR 2025"
-arxiv: "2412.04464"
-code: ""
-project: "https://dualpm.github.io"
-领域: "三维视觉"
-关键词: ["点图", "3D重建", "姿态估计", "可变形物体", "四足动物"]
-评分: "⭐⭐⭐⭐⭐"
+---
+title: >-
+  [论文解读] DualPM: Dual Posed-Canonical Point Maps for 3D Shape and Pose Reconstruction
+description: >-
+  [3D视觉] 提出 Dual Point Maps (DualPM) 表示——从单张图像预测一对点图（相机空间 P + 规范空间 Q），将可变形物体的 3D 形状和姿态重建简化为点图预测问题，并引入分层 amodal 点图实现完整形状恢复（含自遮挡部分），仅用 1-2 个合成 3D 模型训练即可泛化到真实图像。
+tags:
+  - 3D视觉
 ---
 
 # DualPM: Dual Posed-Canonical Point Maps for 3D Shape and Pose Reconstruction
@@ -124,10 +122,10 @@ $$\mathcal{L}_P = \frac{1}{|M|}\sum_{\boldsymbol{u} \in M} c_P(\boldsymbol{u})\|
 
 ## 相关论文
 
-- [Dynamic Point Maps: A Versatile Representation for Dynamic 3D Reconstruction](../../ICCV2025/3d_vision/dynamic_point_maps_a_versatile_representation_for_dynamic_3d_reconstruction.md)
-- [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
-- [Rectified Point Flow: Generic Point Cloud Pose Estimation](../../NeurIPS2025/3d_vision/rectified_point_flow_generic_point_cloud_pose_estimation.md)
-- [Shape of Motion: 4D Reconstruction from a Single Video](../../ICCV2025/3d_vision/shape_of_motion_4d_reconstruction_from_a_single_video.md)
 - [Dual Exposure Stereo for Extended Dynamic Range 3D Imaging](dual_exposure_stereo_for_extended_dynamic_range_3d_imaging.md)
+- [Multi-View Pose-Agnostic Change Localization with Zero Labels](multi-view_pose-agnostic_change_localization_with_zero_labels.md)
+- [Unleashing Vecset Diffusion Model for Fast Shape Generation (FlashVDM)](../../ICCV2025/3d_vision/unleashing_vecset_diffusion_model_for_fast_shape_generation.md)
+- [NeuraLeaf: Neural Parametric Leaf Models with Shape and Deformation Disentanglement](../../ICCV2025/3d_vision/neuraleaf_neural_parametric_leaf_models_with_shape_and_deformation_disentangleme.md)
+- [Efficient Spiking Point Mamba for Point Cloud Analysis](../../ICCV2025/3d_vision/efficient_spiking_point_mamba_for_point_cloud_analysis.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tackling Resource-Constrained and Data-Heterogeneity in Federated Learning with Double-Weight Sparse Pack
 description: >-

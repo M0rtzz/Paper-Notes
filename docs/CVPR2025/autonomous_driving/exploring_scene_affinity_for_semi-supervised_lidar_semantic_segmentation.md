@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploring Scene Affinity for Semi-Supervised LiDAR Semantic Segmentation
 description: >-
@@ -115,8 +115,8 @@ Teacher-Student EMA 框架 → 教师生成伪标签（阈值 τ=0.9）→ 点�
 
 - [ItTakesTwo: Leveraging Peer Representations for Semi-supervised LiDAR Semantic Segmentation](../../ECCV2024/autonomous_driving/ittakestwo_leveraging_peer_representations_for_semi-supervised_lidar_semantic_se.md)
 - [Point-to-Region Loss for Semi-Supervised Point-Based Crowd Counting](point-to-region_loss_for_semi-supervised_point-based_crowd_counting.md)
+- [VoteFlow: Enforcing Local Rigidity in Self-Supervised Scene Flow](voteflow_enforcing_local_rigidity_in_self-supervised_scene_flow.md)
 - [3D-AVS: LiDAR-based 3D Auto-Vocabulary Segmentation](3d-avs_lidar-based_3d_auto-vocabulary_segmentation.md)
 - [CSOT: Cross-Scan Object Transfer for Semi-Supervised LiDAR Object Detection](../../ECCV2024/autonomous_driving/csot_cross-scan_object_transfer_for_semi-supervised_lidar_object_detection.md)
-- [TerraSeg: Self-Supervised Ground Segmentation for Any LiDAR](../../CVPR2026/autonomous_driving/terraseg_self-supervised_ground_segmentation_for_any_lidar.md)
 
 <!-- RELATED:END -->

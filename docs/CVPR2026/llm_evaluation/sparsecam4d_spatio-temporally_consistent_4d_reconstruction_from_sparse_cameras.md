@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SparseCam4D: Spatio-Temporally Consistent 4D Reconstruction from Sparse Cameras
 description: >-
@@ -142,10 +142,10 @@ STDF 消融（Train/Jumping 场景 LPIPS↓ / SSIM↑）：
 
 ## 相关论文
 
+- [Practical Solutions to the Relative Pose of Three Calibrated Cameras](../../CVPR2025/llm_evaluation/practical_solutions_to_the_relative_pose_of_three_calibrated_cameras.md)
 - [Are LLM Belief Updates Consistent with Bayes' Theorem?](../../ICML2025/llm_evaluation/are_llm_belief_updates_consistent_with_bayes_theorem.md)
+- [VinaBench: Benchmark for Faithful and Consistent Visual Narratives](../../CVPR2025/llm_evaluation/vinabench_benchmark_for_faithful_and_consistent_visual_narratives.md)
 - [Deep Cost Ray Fusion for Sparse Depth Video Completion](../../ECCV2024/llm_evaluation/deep_cost_ray_fusion_for_sparse_depth_video_completion.md)
-- [Weakly Supervised Video Anomaly Detection with Anomaly-Connected Components and Intention Reasoning](weakly_supervised_video_anomaly_detection_with_anomaly-connected_components_and_.md)
-- [HeSS: Head Sensitivity Score for Sparsity Redistribution in VGGT](hess_head_sensitivity_score_for_sparsity_redistribution_in_vggt.md)
-- [Pioneering Perceptual Video Fluency Assessment: A Novel Task with Benchmark Dataset and Baseline](pioneering_perceptual_video_fluency_assessment_a_novel_task_with_benchmark_datas.md)
+- [Out of Sight, Out of Mind? Evaluating State Evolution in Video World Models](out_of_sight_out_of_mind_evaluating_state_evolutio.md)
 
 <!-- RELATED:END -->

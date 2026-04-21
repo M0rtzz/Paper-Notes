@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SOS: Segment Object System for Open-World Instance Segmentation With Object Priors
 description: >-
@@ -203,6 +203,6 @@ SOS 的伪标注精度是 GGN 的 **2.6 倍**，验证了 DINO 聚焦物体的�
 - [ActionVOS: Actions as Prompts for Video Object Segmentation](actionvos_actions_as_prompts_for_video_object_segmentation.md)
 - [Unsupervised Moving Object Segmentation with Atmospheric Turbulence](unsupervised_moving_object_segmentation_with_atmospheric_turbulence.md)
 - [VISA: Reasoning Video Object Segmentation via Large Language Models](visa_reasoning_video_object_segmentation_via_large_language_models.md)
-- [Frequency-Spatial Entanglement Learning for Camouflaged Object Detection](frequency-spatial_entanglement_learning_for_camouflaged_object_detection.md)
+- [V-CLR: View-Consistent Learning for Open-World Instance Segmentation](../../CVPR2025/segmentation/v-clr_view-consistent_learning_for_open-world_instance_segmentation.md)
 
 <!-- RELATED:END -->

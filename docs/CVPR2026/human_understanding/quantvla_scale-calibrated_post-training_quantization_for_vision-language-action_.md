@@ -156,10 +156,10 @@ $$\beta(l) = \text{clip}(\beta_{\text{raw}}(l), \beta_{\min}, \beta_{\max})$$
 
 ## 相关论文
 
-- [Merge-Friendly Post-Training Quantization for Multi-Target Domain Adaptation](../../ICML2025/human_understanding/merge-friendly_post-training_quantization_for_multi-target_domain_adaptation.md)
 - [When Robots Obey the Patch: Universal Transferable Patch Attacks on Vision-Language-Action Models](when_robots_obey_the_patch_universal_transferable_patch_attacks_on_vision-langua.md)
+- [Merge-Friendly Post-Training Quantization for Multi-Target Domain Adaptation](../../ICML2025/human_understanding/merge-friendly_post-training_quantization_for_multi-target_domain_adaptation.md)
 - [Unleashing Vision-Language Semantics for Deepfake Video Detection](unleashing_vision-language_semantics_for_deepfake_video_detection.md)
 - [10 Open Challenges Steering the Future of Vision-Language-Action Models](../../AAAI2026/human_understanding/10_open_challenges_steering_the_future_of_vision-language-ac.md)
-- [SteelDefectX: A Coarse-to-Fine Vision-Language Dataset and Benchmark for Generalizable Steel Surface Defect Detection](steeldefectx_a_coarse-to-fine_vision-language_dataset_and_benchmark_for_generali.md)
+- [Vision-Language Attribute Disentanglement and Reinforcement for Lifelong Person Re-Identification](vision-language_attribute_disentanglement_and_reinforcement_for_lifelong_person_.md)
 
 <!-- RELATED:END -->

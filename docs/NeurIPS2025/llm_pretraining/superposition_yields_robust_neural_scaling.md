@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Superposition Yields Robust Neural Scaling
 description: >-
@@ -172,6 +172,6 @@ $$L \propto 1/m \quad (\alpha_m = 1)$$
 - [Scaling Embedding Layers in Language Models](scaling_embedding_layers_in_language_models.md)
 - [Generalization Bounds for Rank-sparse Neural Networks](generalization_bounds_for_rank-sparse_neural_networks.md)
 - [Gemstones: A Model Suite for Multi-Faceted Scaling Laws](gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)
-- [An Empirical Investigation of Neural ODEs and Symbolic Regression for Dynamical Systems](an_empirical_investigation_of_neural_odes_and_symbolic_regression_for_dynamical_.md)
+- [Learning to Flow from Generative Pretext Tasks for Neural Architecture Encoding](learning_to_flow_from_generative_pretext_tasks_for_neural_architecture_encoding.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Revisiting Self-Consistency from Dynamic Distributional Alignment Perspective on Answer Aggregation
 description: >-
@@ -139,7 +139,7 @@ tags:
 - [Ranked Voting based Self-Consistency of Large Language Models](ranked_voting_based_self-consistency_of_large_language_models.md)
 - [Dynamic and Generalizable Process Reward Modeling (DG-PRM)](dgprm_dynamic_process_reward.md)
 - [Is That Your Final Answer? Test-Time Scaling Improves Selective Question Answering](test_time_scaling_selective_qa.md)
-- [Rethinking the Role of Prompting Strategies in LLM Test-Time Scaling: A Perspective of Probability Theory](rethinking_the_role_of_prompting_strategies_in_llm_test-time_scaling_a_perspecti.md)
 - [Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models via a Multi-Paradigm Perspective](chain_of_reasoning_unified_math.md)
+- [Rethinking the Role of Prompting Strategies in LLM Test-Time Scaling: A Perspective of Probability Theory](rethinking_the_role_of_prompting_strategies_in_llm_test-time_scaling_a_perspecti.md)
 
 <!-- RELATED:END -->

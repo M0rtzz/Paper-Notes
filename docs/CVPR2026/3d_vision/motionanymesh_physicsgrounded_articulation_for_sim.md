@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MotionAnymesh: Physics-Grounded Articulation for Simulation-Ready Digital Twins
 description: >-
@@ -106,7 +106,7 @@ MotionAnymesh包含三个集成阶段：(1) 运动学感知零件分割——提
 - [Particulate: Feed-Forward 3D Object Articulation](particulate_feed-forward_3d_object_articulation.md)
 - [PhysHead: Simulation-Ready Gaussian Head Avatars](physhead_simulation-ready_gaussian_head_avatars.md)
 - [Wanderland: Geometrically Grounded Simulation for Open-World Embodied AI](wanderland_geometrically_grounded_simulation_for_open-world_embodied_ai.md)
-- [FunREC: Reconstructing Functional 3D Scenes from Egocentric Interaction Videos](funrec_reconstructing_functional_3d_scenes_from_egocentric_interaction_videos.md)
 - [Human Interaction-Aware 3D Reconstruction from a Single Image](human_interaction-aware_3d_reconstruction_from_a_single_image.md)
+- [FunREC: Reconstructing Functional 3D Scenes from Egocentric Interaction Videos](funrec_reconstructing_functional_3d_scenes_from_egocentric_interaction_videos.md)
 
 <!-- RELATED:END -->

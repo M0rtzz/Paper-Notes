@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SPAMming Labels: Efficient Annotations for the Trackers of Tomorrow
 description: >-

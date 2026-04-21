@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MeshSplat: Generalizable Sparse-View Surface Reconstruction via Gaussian Splatting
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OmniGaze: Reward-inspired Generalizable Gaze Estimation in the Wild
 description: >-

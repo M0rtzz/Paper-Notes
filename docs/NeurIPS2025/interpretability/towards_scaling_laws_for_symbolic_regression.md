@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Scaling Laws for Symbolic Regression
 description: >-

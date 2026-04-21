@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ResWorld: Temporal Residual World Model for End-to-End Autonomous Driving
 description: >-

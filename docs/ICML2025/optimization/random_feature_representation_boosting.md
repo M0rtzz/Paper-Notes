@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Random Feature Representation Boosting
 description: >-

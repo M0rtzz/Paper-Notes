@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TransBench: Breaking Barriers for Transferable Graphical User Interface Agents in Dynamic Digital Environments
 description: >-

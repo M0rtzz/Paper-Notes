@@ -1,7 +1,16 @@
-﻿---
-title: "FreeCloth: Free-Form Generation Enhances Challenging Clothed Human Modeling"
-description: "提出混合框架FreeCloth，结合LBS变形和自由形态生成来建模宽松服装（裙子、长裙等），解决传统LBS方法的撕裂伪影"
-tags: ["clothed human", "avatar", "point cloud", "free-form generation", "CVPR2025"]
+---
+title: >-
+  [论文解读] FreeCloth: Free-Form Generation Enhances Challenging Clothed Human Modeling
+description: >-
+  [CVPR 2025][人体理解][着装人体建模] 提出 FreeCloth 混合框架，将人体表面分为"裸露/变形/生成"三类区域，对贴身衣物用 LBS 变形、对宽松服装（裙子、长裙）用无 LBS 约束的自由形态生成器建模，在 ReSynth 数据集上取得 SOTA，尤其在宽松服装场景下大幅超越现有方法。
+tags:
+  - CVPR 2025
+  - 人体理解
+  - 着装人体建模
+  - 自由形态生成
+  - 线性混合蒙皮
+  - 点云
+  - 宽松服装
 ---
 
 # FreeCloth: Free-Form Generation Enhances Challenging Clothed Human Modeling
@@ -128,10 +137,10 @@ tags: ["clothed human", "avatar", "point cloud", "free-form generation", "CVPR20
 
 ## 相关论文
 
-- [Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback](reference-free_image_quality_assessment_for_virtual_try-on_via_human_feedback.md)
 - [TELA: Text to Layer-wise 3D Clothed Human Generation](../../ECCV2024/human_understanding/tela_text_to_layer-wise_3d_clothed_human_generation.md)
-- [RULEBREAKERS: Challenging LLMs at the Crossroads between Formal Logic and Human-like Reasoning](../../ICML2025/human_understanding/rulebreakers_challenging_llms_at_the_crossroads_between_formal_logic_and_human-l.md)
 - [GaussianIP: Identity-Preserving Realistic 3D Human Generation via Human-Centric Diffusion Prior](gaussianip_identity-preserving_realistic_3d_human_generation_via_human-centric_d.md)
-- [Think-While-Generating: On-the-Fly Reasoning for Personalized Long-Form Generation](../../ICLR2026/human_understanding/think-while-generating_on-the-fly_reasoning_for_personalized_long-form_generatio.md)
+- [SemGeoMo: Dynamic Contextual Human Motion Generation with Semantic and Geometric Guidance](semgeomo_dynamic_contextual_human_motion_generation_with_semantic_and_geometric_.md)
+- [UniPose: A Unified Multimodal Framework for Human Pose Comprehension, Generation and Editing](unipose_a_unified_multimodal_framework_for_human_pose_comprehension_generation_a.md)
+- [Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback](reference-free_image_quality_assessment_for_virtual_try-on_via_human_feedback.md)
 
 <!-- RELATED:END -->

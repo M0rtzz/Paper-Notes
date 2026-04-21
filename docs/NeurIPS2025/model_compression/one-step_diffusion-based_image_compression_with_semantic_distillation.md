@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] One-Step Diffusion-Based Image Compression with Semantic Distillation
 description: >-
@@ -133,6 +133,6 @@ OneDC由两部分组成：(1) **潜变量压缩模块**：分析变换 $g_a$ 将
 - [Layered Image Vectorization via Semantic Simplification](../../CVPR2025/model_compression/layered_image_vectorization_via_semantic_simplification.md)
 - [ChunkKV: Semantic-Preserving KV Cache Compression for Efficient Long-Context LLM Inference](chunkkv_semanticpreserving_kv_cache_compression_for_efficien.md)
 - [Uni-LoRA: One Vector is All You Need](uni-lora_one_vector_is_all_you_need.md)
-- [Mitigating Semantic Collapse in Partially Relevant Video Retrieval](mitigating_semantic_collapse_in_partially_relevant_video_retrieval.md)
+- [AdmTree: Compressing Lengthy Context with Adaptive Semantic Trees](admtree_compressing_lengthy_context_with_adaptive_semantic_trees.md)
 
 <!-- RELATED:END -->

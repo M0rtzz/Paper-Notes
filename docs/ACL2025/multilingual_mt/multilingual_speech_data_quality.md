@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Data Quality Issues in Multilingual Speech Datasets: The Need for Sociolinguistic Awareness and Proactive Language Planning
 description: >-
@@ -131,8 +131,8 @@ tags:
 ## 相关论文
 
 - [Alleviating Distribution Shift in Synthetic Data for Machine Translation Quality Estimation](alleviating_distribution_shift_in_synthetic_data_for_machine_translation_quality.md)
-- [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](disentangle_language_culture.md)
 - [Watching the Watchers: Exposing Gender Disparities in Machine Translation Quality Estimation](watching_the_watchers_exposing_gender_disparities_in_machine_translation_quality.md)
+- [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](disentangle_language_culture.md)
 - [X-MuTest: A Multilingual Benchmark for Explainable Hate Speech Detection](../../AAAI2026/multilingual_mt/x-mutest_a_multilingual_benchmark_for_explainable_hate_speech_detection_and_a_no.md)
 - [LangSAMP: Language-Script Aware Multilingual Pretraining](langsamp_multilingual_pretraining.md)
 

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Representer Theorem for Hawkes Processes via Penalized Least Squares Minimization
 description: >-
@@ -116,10 +116,10 @@ tags:
 
 ## 相关论文
 
+- [PLeaS: Merging Models with Permutations and Least Squares](../../CVPR2025/others/pleas_-_merging_models_with_permutations_and_least_squares.md)
 - [Revisiting Sharpness-Aware Minimization: A More Faithful and Effective Implementation](revisiting_sharpness-aware_minimization_a_more_faithful_and_effective_implementa.md)
 - [Theorem Prover as a Judge for Synthetic Data Generation](../../ACL2025/others/theorem_prover_as_a_judge_for_synthetic_data_generation.md)
-- [Discrepancy Minimization in Input-Sparsity Time](../../ICML2025/others/discrepancy_minimization_in_input-sparsity_time.md)
-- [Variational Regularized Unbalanced Optimal Transport: Single Network, Least Action](../../NeurIPS2025/others/variational_regularized_unbalanced_optimal_transport_single_network_least_action.md)
 - [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](../../CVPR2026/others/zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
+- [Discrepancy Minimization in Input-Sparsity Time](../../ICML2025/others/discrepancy_minimization_in_input-sparsity_time.md)
 
 <!-- RELATED:END -->

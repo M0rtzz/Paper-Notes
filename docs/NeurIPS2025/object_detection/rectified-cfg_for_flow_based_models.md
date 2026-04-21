@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rectified-CFG++ for Flow Based Models
 description: >-

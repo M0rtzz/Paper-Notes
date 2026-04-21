@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Multilingual LLM Pretraining with Model-Based Data Selection
 description: >-
@@ -172,10 +172,10 @@ MLP MKC+ 一骑绝尘，大幅领先基线。
 
 ## 相关论文
 
-- [LACA: Improving Cross-lingual Aspect-Based Sentiment Analysis with LLM Data Augmentation](../../ACL2025/multilingual_mt/laca_crosslingual_absa.md)
 - [LangSAMP: Language-Script Aware Multilingual Pretraining](../../ACL2025/multilingual_mt/langsamp_multilingual_pretraining.md)
+- [LACA: Improving Cross-lingual Aspect-Based Sentiment Analysis with LLM Data Augmentation](../../ACL2025/multilingual_mt/laca_crosslingual_absa.md)
 - [ParallelPrompt: Extracting Parallelism from Large Language Model Queries](parallelprompt_extracting_parallelism_from_large_language_model_queries.md)
 - [EXECUTE: A Multilingual Benchmark for LLM Token Understanding](../../ACL2025/multilingual_mt/execute_a_multilingual_benchmark_for_llm_token_understanding.md)
-- [DCAD-2000: A Multilingual Dataset across 2000+ Languages with Data Cleaning as Anomaly Detection](dcad-2000_a_multilingual_dataset_across_2000_languages_with_data_cleaning_as_ano.md)
+- [ShifCon: Enhancing Non-Dominant Language Capabilities with a Shift-based Multilingual Contrastive Framework](../../ACL2025/multilingual_mt/shifcon_nondominant_language.md)
 
 <!-- RELATED:END -->

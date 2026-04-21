@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] InftyThink: Breaking the Length Limits of Long-Context Reasoning in Large Language Models
 description: >-

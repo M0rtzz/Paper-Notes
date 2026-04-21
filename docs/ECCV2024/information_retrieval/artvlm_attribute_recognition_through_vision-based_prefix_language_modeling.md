@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ArtVLM: Attribute Recognition Through Vision-Based Prefix Language Modeling
 description: >-
@@ -163,8 +163,8 @@ tags:
 
 - [Grounding Language Models for Visual Entity Recognition](grounding_language_models_for_visual_entity_recognition.md)
 - [Towards Open-Ended Visual Recognition with Large Language Model](towards_open-ended_visual_recognition_with_large_language_models.md)
+- [Multi-Label Cluster Discrimination for Visual Representation Learning](multi-label_cluster_discrimination_for_visual_representation_learning.md)
+- [OneRestore: A Universal Restoration Framework for Composite Degradation](onerestore_a_universal_restoration_framework_for_composite_degradation.md)
 - [HiMo-CLIP: Modeling Semantic Hierarchy and Monotonicity in Vision-Language Alignment](../../AAAI2026/information_retrieval/himo-clip_modeling_semantic_hierarchy_and_monotonicity_in_vi.md)
-- [Revela: Dense Retriever Learning via Language Modeling](../../ICLR2026/information_retrieval/revela_dense_retriever_learning_via_language_modeling.md)
-- [FlashBack: Efficient Retrieval-Augmented Language Modeling for Fast Inference](../../ACL2025/information_retrieval/flashbackefficient_retrieval-augmented_language_modeling_for_long_context_infere.md)
 
 <!-- RELATED:END -->

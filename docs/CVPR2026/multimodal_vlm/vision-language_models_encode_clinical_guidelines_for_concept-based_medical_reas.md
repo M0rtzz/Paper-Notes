@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Vision-Language Models Encode Clinical Guidelines for Concept-Based Medical Reasoning
 description: >-

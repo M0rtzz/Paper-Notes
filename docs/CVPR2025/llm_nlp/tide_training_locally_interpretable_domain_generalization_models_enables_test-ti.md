@@ -1,13 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] TIDE: Training Locally Interpretable Domain Generalization Models Enables Test-time Correction
 description: >-
-  [CVPR 2025][域泛化] 提出TIDE训练方案，利用扩散模型和LLM自动生成概念标注，通过概念显著性对齐损失迫使模型关注局部可解释概念，实现测试时域偏移矫正
+  [CVPR 2025][LLM/NLP][单源域泛化] 本文提出TIDE，一种针对单源域泛化的新型训练方案，利用扩散模型和LLM自动生成类别级概念标注（如"鸟类=尖嘴+翅膀+爪子"），通过概念显著性对齐损失训练模型关注域不变的局部概念而非全局背景特征，使模型在测试时能通过概念显著图自动矫正域偏移导致的错误预测。
 tags:
   - CVPR 2025
-  - 域泛化
-  - 可解释性
-  - 测试时适应
+  - LLM/NLP
+  - 单源域泛化
+  - 局部可解释性
+  - 概念对齐
+  - 测试时矫正
   - 扩散模型
 ---
 
@@ -91,9 +93,9 @@ TIDE包含三个阶段：(1) 概念标注生成——利用LLM为每个类别生
 ## 相关论文
 
 - [Test-Time Visual In-Context Tuning](test-time_visual_in-context_tuning.md)
-- [Attribute-formed Class-specific Concept Space: Endowing Language Bottleneck Model with Better Generalization](attribute-formed_class-specific_concept_space_endowing_language_bottleneck_model.md)
 - [BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute](../../ICML2025/llm_nlp/best-route_adaptive_llm_routing_with_test-time_optimal_compute.md)
 - [A Training-free LLM-based Approach to General Chinese Character Error Correction](../../ACL2025/llm_nlp/a_training-free_llm-based_approach_to_general_chinese_character_error_correction.md)
-- [Understanding the Dark Side of LLMs' Intrinsic Self-Correction](../../ACL2025/llm_nlp/understanding_the_dark_side_of_llms_intrinsic_self-correction.md)
+- [Attribute-formed Class-specific Concept Space: Endowing Language Bottleneck Model with Better Generalization](attribute-formed_class-specific_concept_space_endowing_language_bottleneck_model.md)
+- [Systematic Generalization in Language Models Scales with Information Entropy](../../ACL2025/llm_nlp/systematic_generalization_in_language_models_scales_with_information_entropy.md)
 
 <!-- RELATED:END -->

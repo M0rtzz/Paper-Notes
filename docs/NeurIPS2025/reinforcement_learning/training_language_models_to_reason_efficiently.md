@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Training Language Models to Reason Efficiently
 description: >-

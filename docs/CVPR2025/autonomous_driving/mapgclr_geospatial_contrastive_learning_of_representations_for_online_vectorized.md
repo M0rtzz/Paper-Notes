@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MapGCLR: Geospatial Contrastive Learning of Representations for Online Vectorized HD Map Construction
 description: >-
@@ -128,9 +128,9 @@ $\mathcal{L}_\text{GCLR} = -\log\frac{\exp(\text{sim}(\mathbf{z}_i, \mathbf{z}_i
 ## 相关论文
 
 - [InteractionMap: Improving Online Vectorized HDMap Construction with Interaction](interactionmap_improving_online_vectorized_hdmap_construction_with_interaction.md)
+- [Uncertainty-Instructed Structure Injection for Generalizable HD Map Construction](uncertainty-instructed_structure_injection_for_generalizable_hd_map_construction.md)
 - [Driving by the Rules: A Benchmark for Integrating Traffic Sign Regulations into Vectorized HD Map](driving_by_the_rules_a_benchmark_for_integrating_traffic_sign_regulations_into_v.md)
-- [LiMoE: Mixture of LiDAR Representation Learners from Automotive Scenes](limoe_mixture_of_lidar_representation_learners_from_automotive_scenes.md)
-- [Exploring Scene Affinity for Semi-Supervised LiDAR Semantic Segmentation](exploring_scene_affinity_for_semi-supervised_lidar_semantic_segmentation.md)
-- [Scenario Dreamer: Vectorized Latent Diffusion for Generating Driving Simulation Environments](scenario_dreamer_vectorized_latent_diffusion_for_generating_driving_simulation_e.md)
+- [PSA-SSL: Pose and Size-aware Self-Supervised Learning on LiDAR Point Clouds](psa-ssl_pose_and_size-aware_self-supervised_learning_on_lidar_point_clouds.md)
+- [Unlocking Generalization Power in LiDAR Point Cloud Registration](unlocking_generalization_power_in_lidar_point_cloud_registration.md)
 
 <!-- RELATED:END -->

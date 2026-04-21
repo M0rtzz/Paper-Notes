@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OmniVCus: Feedforward Subject-driven Video Customization with Multimodal Control Conditions
 description: >-
@@ -142,8 +142,8 @@ OmniVCus 基于 DiT 架构，将文本、图像、视频和控制信号通过 pa
 
 - [Mind-the-Glitch: Visual Correspondence for Detecting Inconsistencies in Subject-Driven Generation](mind-the-glitch_visual_correspondence_for_detecting_inconsistencies_in_subject-d.md)
 - [Track, Inpaint, Resplat: Subject-driven 3D and 4D Generation with Progressive Texture Infilling](track_inpaint_resplat_subject-driven_3d_and_4d_generation_with_progressive_textu.md)
+- [Multi-party Collaborative Attention Control for Image Customization](../../CVPR2025/image_generation/multi-party_collaborative_attention_control_for_image_customization.md)
 - [Physics-Driven Spatiotemporal Modeling for AI-Generated Video Detection](physics-driven_spatiotemporal_modeling_for_ai-generated_video_detection.md)
 - [Exploring Conditions for Diffusion Models in Robotic Control](../../CVPR2026/image_generation/exploring_conditions_for_diffusion_models_in_robotic_control.md)
-- [Multi-party Collaborative Attention Control for Image Customization](../../CVPR2025/image_generation/multi-party_collaborative_attention_control_for_image_customization.md)
 
 <!-- RELATED:END -->

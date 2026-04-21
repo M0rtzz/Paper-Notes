@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] I2E: Real-Time Image-to-Event Conversion for High-Performance Spiking Neural Networks
 description: >-

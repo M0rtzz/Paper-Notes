@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bregman Conditional Random Fields: Sequence Labeling with Parallelizable Inference
 description: >-

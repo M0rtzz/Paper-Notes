@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GaussianImage: 1000 FPS Image Representation and Compression by 2D Gaussian Splatting
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EigenGS: Representation from Eigenspace to Gaussian Image Space
 description: >-
@@ -133,8 +133,8 @@ FFHQ 数据集（512×512），20,000 高斯点：
 
 - [MaskGaussian: Adaptive 3D Gaussian Representation from Probabilistic Masks](maskgaussian_adaptive_3d_gaussian_representation_from_probabilistic_masks.md)
 - [Weight Space Representation Learning on Diverse NeRF Architectures](../../ICLR2026/3d_vision/weight_space_representation_learning_on_diverse_nerf_architectures.md)
-- [AniGS: Animatable Gaussian Avatar from a Single Image with Inconsistent Gaussian Reconstruction](anigs_animatable_gaussian_avatar_from_a_single_image_with_inconsistent_gaussian_.md)
 - [Discretized Gaussian Representation for Tomographic Reconstruction](../../ICCV2025/3d_vision/discretized_gaussian_representation_for_tomographic_reconstruction.md)
-- [Gaussian Splatting for Efficient Satellite Image Photogrammetry (EOGS)](gaussian_splatting_for_efficient_satellite_image_photogrammetry.md)
+- [AniGS: Animatable Gaussian Avatar from a Single Image with Inconsistent Gaussian Reconstruction](anigs_animatable_gaussian_avatar_from_a_single_image_with_inconsistent_gaussian_.md)
+- [Novel View Synthesis with Pixel-Space Diffusion Models](novel_view_synthesis_with_pixel-space_diffusion_models.md)
 
 <!-- RELATED:END -->

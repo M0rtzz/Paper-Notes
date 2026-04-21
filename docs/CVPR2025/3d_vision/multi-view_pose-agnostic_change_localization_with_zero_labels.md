@@ -1,11 +1,10 @@
 ---
-title: "Multi-View Pose-Agnostic Change Localization with Zero Labels"
-conference: "CVPR 2025"
-arxiv: "2412.03911"
-arxiv_url: "https://arxiv.org/abs/2412.03911"
-code: "https://MV-3DCD.github.io"
-domain: "3d_vision"
-keywords: ["change detection", "3D Gaussian Splatting", "pose-agnostic", "unsupervised", "multi-view", "scene understanding"]
+title: >-
+  [论文解读] Multi-View Pose-Agnostic Change Localization with Zero Labels
+description: >-
+  [3D视觉] 提出首个无标签、位姿无关的多视角变化检测方法，通过在 3D Gaussian Splatting 中嵌入变化通道（change-aware 3DGS），融合多视角的特征感知和结构感知变化掩码，在复杂多物体场景中实现 1.7× mIoU 和 1.5× F1 的 SOTA 性能提升，并能为未见视角生成变化掩码。
+tags:
+  - 3D视觉
 ---
 
 # Multi-View Pose-Agnostic Change Localization with Zero Labels
@@ -163,10 +162,10 @@ keywords: ["change detection", "3D Gaussian Splatting", "pose-agnostic", "unsupe
 
 ## 相关论文
 
-- [MVSAnywhere: Zero-Shot Multi-View Stereo](mvsanywhere_zero-shot_multi-view_stereo.md)
-- [Changes in Real Time: Online Scene Change Detection with Multi-View Fusion](../../CVPR2026/3d_vision/changes_in_real_time_online_scene_change_detection_with_multi-view_fusion.md)
-- [Category-Agnostic Neural Object Rigging](category-agnostic_neural_object_rigging.md)
-- [Cross-View Completion Models are Zero-shot Correspondence Estimators](cross-view_completion_models_are_zero-shot_correspondence_estimators.md)
-- [CoMatcher: Multi-View Collaborative Feature Matching](comatcher_multi-view_collaborative_feature_matching.md)
+- [Multi-view Reconstruction via SfM-guided Monocular Depth Estimation](multi-view_reconstruction_via_sfm-guided_monocular_depth_estimation.md)
+- [DualPM: Dual Posed-Canonical Point Maps for 3D Shape and Pose Reconstruction](dualpm_dual_posed-canonical_point_maps_for_3d_shape_and_pose_reconstruction.md)
+- [Egocentric Action-aware Inertial Localization in Point Clouds with Vision-Language Guidance](../../ICCV2025/3d_vision/egocentric_action-aware_inertial_localization_in_point_clouds_with_vision-langua.md)
+- [One Look is Enough: Seamless Patchwise Refinement for Zero-Shot Monocular Depth Estimation on High-Resolution Images](../../ICCV2025/3d_vision/one_look_is_enough_seamless_patchwise_refinement_for_zero-shot_monocular_depth_e.md)
+- [Self-Ensembling Gaussian Splatting for Few-Shot Novel View Synthesis](../../ICCV2025/3d_vision/self-ensembling_gaussian_splatting_for_few-shot_novel_view_synthesis.md)
 
 <!-- RELATED:END -->

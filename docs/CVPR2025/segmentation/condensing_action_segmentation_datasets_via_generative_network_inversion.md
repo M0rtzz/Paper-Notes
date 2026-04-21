@@ -120,9 +120,9 @@ $$z^* = \arg\min_{z} \| D(z, a, c) - x \|^2$$
 ## 相关论文
 
 - [ActionPiece: Contextually Tokenizing Action Sequences for Generative Recommendation](../../ICML2025/segmentation/actionpiece_contextually_tokenizing_action_sequences_for_generative_recommendati.md)
+- [Scale Efficient Training for Large Datasets](scale_efficient_training_for_large_datasets.md)
 - [Generative Video Propagation](generative_video_propagation.md)
 - [Golden Cudgel Network for Real-Time Semantic Segmentation](golden_cudgel_network_for_real-time_semantic_segmentation.md)
 - [RSONet: Region-guided Selective Optimization Network for RGB-T Salient Object Detection](rsonet_region-guided_selective_optimization_network_for_rgb-t_salient_object_det.md)
-- [Joint Self-Supervised Video Alignment and Action Segmentation](../../ICCV2025/segmentation/joint_self-supervised_video_alignment_and_action_segmentation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FreeArtGS: Articulated Gaussian Splatting Under Free-Moving Scenario
 description: >-

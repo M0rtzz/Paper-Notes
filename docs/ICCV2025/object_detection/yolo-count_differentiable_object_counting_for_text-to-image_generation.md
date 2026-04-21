@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] YOLO-Count: Differentiable Object Counting for Text-to-Image Generation
 description: >-
@@ -156,7 +156,7 @@ YOLO-Count 在可微分模型中全面 SOTA，在 LVIS/OpenImg7/Obj365 的开放
 - [Diverse Text-to-Image Generation via Contrastive Noise Optimization](../../ICLR2026/object_detection/diverse_text-to-image_generation_via_contrastive_noise_optimization.md)
 - [MCCD: Multi-Agent Collaboration-based Compositional Diffusion for Complex Text-to-Image Generation](../../CVPR2025/object_detection/mccd_multi-agent_collaboration-based_compositional_diffusion_for_complex_text-to.md)
 - [SketchSplat: 3D Edge Reconstruction via Differentiable Multi-view Sketch Splatting](sketchsplat_3d_edge_reconstruction_via_differentiable_multi-view_sketch_splattin.md)
-- [Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](../../ECCV2024/object_detection/be_yourself_bounded_attention_for_multi-subject_text-to-image_generation.md)
+- [Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](../../ECCV2024/object_detection/be_yourself_bounded_attention_for_multisubject_texttoimage_g.md)
 - [SAGA: Learning Signal-Aligned Distributions for Improved Text-to-Image Generation](../../AAAI2026/object_detection/saga_learning_signal-aligned_distributions_for_improved_text-to-image_generation.md)
 
 <!-- RELATED:END -->

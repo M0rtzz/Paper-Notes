@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PhysVid: Physics Aware Local Conditioning for Generative Video
 description: >-

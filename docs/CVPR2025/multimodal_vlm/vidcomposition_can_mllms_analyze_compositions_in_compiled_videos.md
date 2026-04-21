@@ -1,6 +1,16 @@
 ---
-description: 提出VidComposition基准评估MLLM对编辑合成视频的构图理解，涵盖5大类15个子任务，33个模型评测揭示模型与人类在电影级理解上的巨大差距。
-tags: [CVPR2025, 视频理解, 视频构图, MLLM基准, 电影分析, 镜头语言, 多选题评测]
+title: >-
+  [论文解读] VidComposition: Can MLLMs Analyze Compositions in Compiled Videos?
+description: >-
+  [CVPR 2025][多模态][视频理解] 提出VidComposition基准，专门评估MLLM对**编辑合成视频**（影视、动画等）的构图理解能力，涵盖**5大类15个子任务**（镜头运动、叙事结构、角色理解等），对33个MLLM的评测揭示了模型与人类在电影级视频理解上的巨大差距（最佳模型63.3% vs 人类86.3%）。
+tags:
+  - CVPR 2025
+  - 多模态
+  - 视频理解
+  - 视频组成分析
+  - MLLM基准
+  - 电影分析
+  - 镜头语言
 ---
 
 # VidComposition: Can MLLMs Analyze Compositions in Compiled Videos?
@@ -105,10 +115,10 @@ VidComposition是一个人工标注的高质量基准，包含982个编辑合成
 
 ## 相关论文
 
-- [Can MLLMs Understand the Deep Implication Behind Chinese Images?](../../ACL2025/multimodal_vlm/can_mllms_understand_the_deep_implication_behind_chinese_images.md)
 - [ReVisionLLM: Recursive Vision-Language Model for Temporal Grounding in Hour-Long Videos](revisionllm_recursive_vision-language_model_for_temporal_grounding_in_hour-long_.md)
-- [Unveiling the Ignorance of MLLMs: Seeing Clearly, Answering Incorrectly](unveiling_the_ignorance_of_mllms_seeing_clearly_answering_incorrectly.md)
+- [Can MLLMs Understand the Deep Implication Behind Chinese Images?](../../ACL2025/multimodal_vlm/can_mllms_understand_the_deep_implication_behind_chinese_images.md)
+- [VideoGLaMM: A Large Multimodal Model for Pixel-Level Visual Grounding in Videos](videoglamm_a_large_multimodal_model_for_pixel-level_visual_grounding_in_videos.md)
 - [Visual Chronicles: Using Multimodal LLMs to Analyze Massive Collections of Images](../../ICCV2025/multimodal_vlm/visual_chronicles_using_multimodal_llms_to_analyze_massive_collections_of_images.md)
-- [VF-Eval: Evaluating Multimodal LLMs for Generating Feedback on AIGC Videos](../../ACL2025/multimodal_vlm/vf_eval_aigc_video_feedback.md)
+- [Can Large Vision-Language Models Correct Semantic Grounding Errors By Themselves?](can_large_vision-language_models_correct_semantic_grounding_errors_by_themselves.md)
 
 <!-- RELATED:END -->

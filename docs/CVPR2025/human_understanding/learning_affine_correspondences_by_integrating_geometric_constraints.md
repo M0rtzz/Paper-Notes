@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Affine Correspondences by Integrating Geometric Constraints
 description: >-
-  [CVPR 2025][image matching] 提出一种融合稠密匹配与几何约束的仿射对应估计框架，通过 Sampson 距离损失监督点匹配、仿射 Sampson 距离损失约束局部仿射变换，在图像匹配和相对位姿估计上超越 SOTA。
+  [CVPR 2025][人体理解][affine correspondence] 提出一种融合稠密匹配与几何约束的仿射对应估计新框架（DenseAffine），采用两阶段解耦训练：先用 Sampson 距离损失训练稠密点匹配器，再冻结匹配器、用仿射 Sampson 距离损失训练局部仿射变换提取器，在 HPatches 匹配和 MegaDepth 位姿估计上均取得 SOTA。
 tags:
   - CVPR 2025
+  - 人体理解
   - affine correspondence
-  - image matching
-  - geometric constraints
-  - pose estimation
   - dense matching
+  - epipolar geometry
+  - Sampson distance
+  - 位姿估计
 ---
 
 # Learning Affine Correspondences by Integrating Geometric Constraints
@@ -158,9 +159,9 @@ tags:
 ## 相关论文
 
 - [Improve Representation for Imbalanced Regression through Geometric Constraints](improve_representation_for_imbalanced_regression_through_geometric_constraints.md)
-- [Combinative Matching for Geometric Shape Assembly](../../ICCV2025/human_understanding/combinative_matching_for_geometric_shape_assembly.md)
-- [ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning](maniptrans_efficient_dexterous_bimanual_manipulation_transfer_via_residual_learn.md)
-- [Learning Physics-Based Full-Body Human Reaching and Grasping from Brief Walking References](learning_physics-based_full-body_human_reaching_and_grasping_from_brief_walking_.md)
-- [Learning Phase Distortion with Selective State Space Models for Video Turbulence Mitigation](learning_phase_distortion_with_selective_state_space_models_for_video_turbulence.md)
+- [SemGeoMo: Dynamic Contextual Human Motion Generation with Semantic and Geometric Guidance](semgeomo_dynamic_contextual_human_motion_generation_with_semantic_and_geometric_.md)
+- [HccePose(BF): Predicting Front & Back Surfaces to Construct Ultra-Dense 2D-3D Correspondences for Pose Estimation](../../ICCV2025/human_understanding/hcceposebf_predicting_front_back_surfaces_to_construct_ultra-dense_2d-3d_corresp.md)
+- [WildAvatar: Learning In-the-Wild 3D Avatars from the Web](wildavatar_learning_in-the-wild_3d_avatars_from_the_web.md)
+- [Structure-Aware Correspondence Learning for Relative Pose Estimation](structure-aware_correspondence_learning_for_relative_pose_estimation.md)
 
 <!-- RELATED:END -->

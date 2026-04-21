@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Model-Agnostic Dataset Condensation by Heterogeneous Models
 description: >-
@@ -153,7 +153,7 @@ $$\mathcal{L}_{\text{MD}}(\mathbf{x}) = \text{MSE}(\text{SSD}(f_{\theta_1}(\math
 - [ActionSwitch: Class-agnostic Detection of Simultaneous Actions in Streaming Videos](actionswitch_class-agnostic_detection_of_simultaneous_actions_in_streaming_video.md)
 - [SemTrack: A Large-Scale Dataset for Semantic Tracking in the Wild](semtrack_a_large-scale_dataset_for_semantic_tracking_in_the_wild.md)
 - [VideoMamba: State Space Model for Efficient Video Understanding](videomamba_state_space_model_for_efficient_video_understanding.md)
+- [Heterogeneous Skeleton-Based Action Representation Learning](../../CVPR2025/video_understanding/heterogeneous_skeleton-based_action_representation_learning.md)
 - [VideoMamba: Spatio-Temporal Selective State Space Model](videomamba_spatio-temporal_selective_state_space_model.md)
-- [PiTe: Pixel-Temporal Alignment for Large Video-Language Model](pite_pixel-temporal_alignment_for_large_video-language_model.md)
 
 <!-- RELATED:END -->

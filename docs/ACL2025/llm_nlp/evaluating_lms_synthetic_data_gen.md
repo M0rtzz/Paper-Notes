@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Evaluating Language Models as Synthetic Data Generators
 description: >-

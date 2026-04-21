@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Acknowledging Focus Ambiguity in Visual Questions
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Well Begun is Half Done: Low-resource Preference Alignment by Weak-to-Strong Decoding
 description: >-

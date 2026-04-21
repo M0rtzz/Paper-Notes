@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] M3SR: Multi-Scale Multi-Perceptual Mamba for Efficient Spectral Reconstruction
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fast Solvers for Discrete Diffusion Models: Theory and Applications of High-Order Algorithms
 description: >-

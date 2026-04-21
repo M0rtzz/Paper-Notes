@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RSVG-ZeroOV: Exploring a Training-Free Framework for Zero-Shot Open-Vocabulary Visual Grounding in Remote Sensing Images
 description: >-

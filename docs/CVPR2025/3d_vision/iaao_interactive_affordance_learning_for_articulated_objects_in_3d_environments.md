@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] IAAO: Interactive Affordance Learning for Articulated Objects in 3D Environments
 description: >-
-  [CVPR 2025][articulated objects][3DGS] 提出 IAAO 框架，利用 3DGS 构建层次化语义特征场，结合大基础模型实现铰接物体的交互式 affordance 检测与运动参数恢复，支持复杂室内场景的多部件操控。
+  [CVPR 2025][3D视觉][articulated objects] 构建基于 3DGS 的层次化语义特征场，融合 CLIP/SAM/DINOv2 的语义信息，实现铰接物体的交互式 affordance 预测和跨状态运动参数恢复，支持任意类别、多可动部件的复杂室内场景。
 tags:
   - CVPR 2025
-  - 3D Gaussian Splatting
+  - 3D视觉
   - articulated objects
   - affordance
-  - scene understanding
-  - foundation model
+  - 3D Gaussian Splatting
+  - foundation models
+  - motion recovery
+  - 场景理解
 ---
 
 # IAAO: Interactive Affordance Learning for Articulated Objects in 3D Environments
@@ -135,10 +137,10 @@ tags:
 
 ## 相关论文
 
+- [RigGS: Rigging of 3D Gaussians for Modeling Articulated Objects in Videos](riggs_rigging_of_3d_gaussians_for_modeling_articulated_objects_in_videos.md)
 - [GEAL: Generalizable 3D Affordance Learning with Cross-Modal Consistency](geal_generalizable_3d_affordance_learning_with_cross-modal_consistency.md)
+- [WildGS-SLAM: Monocular Gaussian Splatting SLAM in Dynamic Environments](wildgs-slam_monocular_gaussian_splatting_slam_in_dynamic_environments.md)
 - [URDF-Anything: Constructing Articulated Objects with 3D Multimodal Language Model](../../NeurIPS2025/3d_vision/urdf-anything_constructing_articulated_objects_with_3d_multimodal_language_model.md)
 - [PD²GS: Part-Level Decoupling and Continuous Deformation of Articulated Objects via Gaussian Splatting](../../ICLR2026/3d_vision/pd2gs_part-level_decoupling_and_continuous_deformation_of_articulated_objects_vi.md)
-- [iSegMan: Interactive Segment-and-Manipulate 3D Gaussians](isegman_interactive_segment-and-manipulate_3d_gaussians.md)
-- [Grounding 3D Object Affordance with Language Instructions, Visual Observations and Interactions](grounding_3d_object_affordance_with_language_instructions_visual_observations_an.md)
 
 <!-- RELATED:END -->

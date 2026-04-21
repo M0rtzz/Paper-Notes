@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SVD-NO: Learning PDE Solution Operators with SVD Integral Kernels
 description: >-

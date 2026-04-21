@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Causality-Induced Positional Encoding for Transformer-Based Representation Learning of Non-Sequential Features
 description: >-

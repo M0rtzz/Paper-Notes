@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Splats in Splats: Robust and Effective 3D Steganography towards Gaussian Splatting
 description: >-

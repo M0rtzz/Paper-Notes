@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MedGEN-Bench: Contextually Entangled Benchmark for Open-Ended Multimodal Medical Generation
 description: >-

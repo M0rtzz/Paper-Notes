@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Affordance-Guided Coarse-to-Fine Exploration for Base Placement in Open-Vocabulary Mobile Manipulation
 description: >-

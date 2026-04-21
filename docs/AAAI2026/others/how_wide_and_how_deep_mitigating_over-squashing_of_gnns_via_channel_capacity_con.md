@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How Wide and How Deep? Mitigating Over-Squashing of GNNs via Channel Capacity Constrained Estimation
 description: >-

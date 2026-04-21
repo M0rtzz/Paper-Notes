@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ProFocus: Proactive Perception and Focused Reasoning in Vision-and-Language Navigation
 description: >-

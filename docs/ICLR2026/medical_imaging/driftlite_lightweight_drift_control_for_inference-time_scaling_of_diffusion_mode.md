@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DriftLite: Lightweight Drift Control for Inference-Time Scaling of Diffusion Models
 description: >-

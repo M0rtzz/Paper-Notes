@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Wider or Deeper: Scaling LLM Inference-Time Compute with Adaptive Branching Tree Search
 description: >-

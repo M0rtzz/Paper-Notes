@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ESPIRE: A Diagnostic Benchmark for Embodied Spatial Reasoning of Vision-Language Models
 description: >-

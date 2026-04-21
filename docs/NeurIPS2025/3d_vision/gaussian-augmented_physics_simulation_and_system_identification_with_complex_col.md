@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gaussian-Augmented Physics Simulation and System Identification with Complex Colliders
 description: >-

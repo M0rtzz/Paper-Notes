@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Interaction-Centric Knowledge Infusion and Transfer for Open-Vocabulary Scene Graph Generation
 description: >-

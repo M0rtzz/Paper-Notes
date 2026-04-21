@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Easi3R: Estimating Disentangled Motion from DUSt3R Without Training
 description: >-
@@ -140,7 +140,7 @@ Easi3R 基于两阶段推理流程：
 - [Image as an IMU: Estimating Camera Motion from a Single Motion-Blurred Image](image_as_an_imu_estimating_camera_motion_from_a_single_motion-blurred_image.md)
 - [Estimating Body and Hand Motion in an Ego-sensed World](../../CVPR2025/3d_vision/estimating_body_and_hand_motion_in_an_ego-sensed_world.md)
 - [Shape of Motion: 4D Reconstruction from a Single Video](shape_of_motion_4d_reconstruction_from_a_single_video.md)
-- [PseudoMapTrainer: Learning Online Mapping without HD Maps](pseudomaptrainer_learning_online_mapping_without_hd_maps.md)
-- [4D Visual Pre-training for Robot Learning](4d_visual_pre-training_for_robot_learning.md)
+- [CoMoGaussian: Continuous Motion-Aware Gaussian Splatting from Motion-Blurred Images](comogaussian_continuous_motionaware_gaussian_splatting_from.md)
+- [4D Visual Pre-training for Robot Learning](4d_visual_pretraining_for_robot_learning.md)
 
 <!-- RELATED:END -->

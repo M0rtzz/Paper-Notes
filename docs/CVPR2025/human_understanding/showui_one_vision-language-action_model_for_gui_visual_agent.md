@@ -1,15 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] ShowUI: One Vision-Language-Action Model for GUI Visual Agent
 description: >-
-  [CVPR 2025][Human Understanding][GUI Agent] 提出 ShowUI，一个仅 2B 参数的 GUI 视觉代理模型，核心创新包括 UI 引导的视觉 token 选择（利用 UI 截图的颜色冗余性构建连通图裁剪 33% token）、交错式视觉-语言-动作流式处理、以及精选 256K 训练数据，零样本 ScreenSpot 精度 75.1%。
+  [CVPR 2025][人体理解][GUI视觉代理] ShowUI 基于 Qwen2-VL-2B，通过 UI 连通图引导的视觉 token 选择减少 33% 冗余 token 并加速 1.4 倍，配合交错式视觉-语言-动作流和精选 256K 训练数据，仅 2B 参数即在零样本 ScreenSpot 上达到 75.1% 的 SOTA 精度。
 tags:
   - CVPR 2025
-  - Human Understanding
-  - GUI Agent
-  - 视觉Token选择
-  - VLA模型
-  - UI自动化
+  - 人体理解
+  - GUI视觉代理
+  - 视觉token选择
+  - 交错式VLA流
+  - UI连通图
   - 轻量级模型
 ---
 
@@ -121,10 +121,10 @@ ShowUI 基于 Qwen2-VL-2B 构建。输入为用户查询 + 动作空间说明（
 
 ## 相关论文
 
-- [QUAR-VLA: Vision-Language-Action Model for Quadruped Robots](../../ECCV2024/human_understanding/quar-vla_vision-language-action_model_for_quadruped_robots.md)
+- [SOLAMI: Social Vision-Language-Action Modeling for Immersive Interaction with 3D Autonomous Characters](solami_social_vision-language-action_modeling_for_immersive_interaction_with_3d_.md)
+- [QUAR-VLA: Vision-Language-Action Model for Quadruped Robots](../../ECCV2024/human_understanding/quarvla_visionlanguageaction_model_for_quadruped_robots.md)
 - [MDP: Multidimensional Vision Model Pruning with Latency Constraint](mdp_multidimensional_vision_model_pruning_with_latency_constraint.md)
-- [When Robots Obey the Patch: Universal Transferable Patch Attacks on Vision-Language-Action Models](../../CVPR2026/human_understanding/when_robots_obey_the_patch_universal_transferable_patch_attacks_on_vision-langua.md)
-- [Collaborative Tree Search for Enhancing Embodied Multi-Agent Collaboration](collaborative_tree_search_for_enhancing_embodied_multi-agent_collaboration.md)
-- [10 Open Challenges Steering the Future of Vision-Language-Action Models](../../AAAI2026/human_understanding/10_open_challenges_steering_the_future_of_vision-language-ac.md)
+- [Stochastic Human Motion Prediction with Memory of Action Transition and Action Characteristic](stochastic_human_motion_prediction_with_memory_of_action_transition_and_action_c.md)
+- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](../../CVPR2026/human_understanding/quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
 
 <!-- RELATED:END -->

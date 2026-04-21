@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Micro-Act: Mitigate Knowledge Conflict in QA via Actionable Self-Reasoning
 description: >-

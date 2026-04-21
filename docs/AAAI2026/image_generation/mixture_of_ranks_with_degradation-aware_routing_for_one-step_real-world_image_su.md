@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mixture of Ranks with Degradation-Aware Routing for One-Step Real-World Image Super-Resolution
 description: >-

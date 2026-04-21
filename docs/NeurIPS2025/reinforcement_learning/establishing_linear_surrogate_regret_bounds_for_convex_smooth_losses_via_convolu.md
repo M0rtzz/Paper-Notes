@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Establishing Linear Surrogate Regret Bounds for Convex Smooth Losses via Convolutional Fenchel–Young Losses
 description: >-

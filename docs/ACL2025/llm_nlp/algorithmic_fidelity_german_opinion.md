@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Algorithmic Fidelity of Large Language Models in Generating Synthetic German Public Opinions: A Case Study
 description: >-
@@ -143,6 +143,6 @@ tags:
 - [Language Model Fine-Tuning on Scaled Survey Data for Predicting Distributions of Public Opinions](language_model_fine-tuning_on_scaled_survey_data_for_predicting_distributions_of.md)
 - [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
 - [Is It JUST Semantics? A Case Study of Discourse Particle Understanding in LLMs](is_it_just_semantics_a_case_study_of_discourse_particle_understanding_in_llms.md)
-- [How LLMs Comprehend Temporal Meaning in Narratives: A Case Study in Cognitive Evaluation of LLMs](how_llms_comprehend_temporal_meaning_in_narratives_a_case_study_in_cognitive_eva.md)
+- [Evaluating Language Models as Synthetic Data Generators](evaluating_lms_synthetic_data_gen.md)
 
 <!-- RELATED:END -->

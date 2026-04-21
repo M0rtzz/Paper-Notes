@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Time-Aware World Model for Adaptive Prediction and Control
 description: >-

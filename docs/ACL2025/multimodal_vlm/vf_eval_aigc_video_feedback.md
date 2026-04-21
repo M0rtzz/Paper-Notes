@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VF-Eval: Evaluating Multimodal LLMs for Generating Feedback on AIGC Videos
 description: >-

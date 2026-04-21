@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Exhaustive Correlation for Spectral Super-Resolution: Where Spatial-Spectral Attention Meets Linear Dependence
 description: >-

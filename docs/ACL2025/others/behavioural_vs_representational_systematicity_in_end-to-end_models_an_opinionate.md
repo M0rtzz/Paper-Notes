@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Behavioural vs. Representational Systematicity in End-to-End Models: An Opinionated Survey
 description: >-

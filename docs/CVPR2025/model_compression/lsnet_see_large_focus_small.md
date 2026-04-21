@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] LSNet: See Large, Focus Small
 description: >-
-  [CVPR 2025][lightweight][convolution] 受人类视觉系统的外周-中央视觉机制启发，提出 LS 卷积（大核感知+小核动态聚合），在极低 FLOPs 下实现超越现有轻量模型的性能-效率平衡。
+  [CVPR 2025][模型压缩][lightweight network] 受人类视觉外周（广域感知）-中央（精细聚合）的双尺度机制启发，提出 LS 卷积（大核深度卷积感知 + 小核动态卷积聚合），构建 LSNet 轻量网络家族，在 0.3~1.3G FLOPs 下全面超越现有 SOTA 轻量模型。
 tags:
   - CVPR 2025
+  - 模型压缩
   - lightweight network
-  - efficient model
-  - convolution
-  - dynamic convolution
+  - LS convolution
   - large kernel
+  - dynamic convolution
+  - heteroscale vision
+  - token mixing
 ---
 
 # LSNet: See Large, Focus Small
@@ -140,8 +142,8 @@ LSNet-T 在 0.3G FLOPs 即达 74.9%，超越同 FLOPs 所有模型；LSNet-B 80.
 
 ## 相关论文
 
-- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
 - [DataDecide: How to Predict Best Pretraining Data with Small Experiments](../../ICML2025/model_compression/datadecide_how_to_predict_best_pretraining_data_with_small_experiments.md)
+- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
 - [Colors See Colors Ignore: Clothes Changing ReID with Color Disentanglement](../../ICCV2025/model_compression/colors_see_colors_ignore_clothes_changing_reid_with_color_disentanglement.md)
 - [Flipping Knowledge Distillation: Leveraging Small Models' Expertise to Enhance LLMs in Text Matching](../../ACL2025/model_compression/flipping_kd_small_to_large.md)
 - [Find your Needle: Small Object Image Retrieval via Multi-Object Attention Optimization](../../NeurIPS2025/model_compression/find_your_needle_small_object_image_retrieval_via_multi-object_attention_optimiz.md)

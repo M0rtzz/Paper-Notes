@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Condensed Data Expansion Using Model Inversion for Knowledge Distillation
 description: >-

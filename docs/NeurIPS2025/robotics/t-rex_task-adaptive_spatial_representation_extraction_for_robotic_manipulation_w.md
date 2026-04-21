@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] T-Rex: Task-Adaptive Spatial Representation Extraction for Robotic Manipulation with VLMs
 description: >-

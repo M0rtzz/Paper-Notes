@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generative Psycho-Lexical Approach for Constructing Value Systems in Large Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VA-GS: Enhancing the Geometric Representation of Gaussian Splatting via View Alignment
 description: >-

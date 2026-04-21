@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BIPro: Zero-shot Chinese Poem Generation via Block Inverse Prompting Constrained Generation Framework
 description: >-

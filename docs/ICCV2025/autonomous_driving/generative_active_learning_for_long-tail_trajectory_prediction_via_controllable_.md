@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generative Active Learning for Long-tail Trajectory Prediction via Controllable Diffusion Model
 description: >-

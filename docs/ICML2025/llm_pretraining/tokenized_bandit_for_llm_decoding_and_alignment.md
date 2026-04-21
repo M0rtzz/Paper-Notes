@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tokenized Bandit for LLM Decoding and Alignment
 description: >-

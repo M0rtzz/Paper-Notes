@@ -1,16 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] HMAR: Efficient Hierarchical Masked Auto-Regressive Image Generation
 description: >-
-  [CVPR 2025][图像生成][自回归] HMAR 结合 next-scale 预测和 masked prediction，将 VAR 的 next-scale 预测重构为 Markov 过程（仅依赖前一尺度而非所有前序尺度），并在每个尺度内引入多步掩码生成来消除 VAR 的条件独立假设。配合 IO-aware 块稀疏注意力核和损失重加权策略，在 ImageNet 256×256 和 512×512 上匹配或超越 VAR/DiT，同时训练快 2.5× 推理快 1.75× 内存降 3×。
+  [CVPR 2025][图像生成][自回归图像生成] HMAR 将 VAR 的 next-scale 预测重构为 Markov 过程（仅依赖前一尺度的累积重建而非所有前序尺度），并在每个尺度内引入多步掩码生成来消除条件独立假设，配合自定义 IO-aware 块稀疏注意力核，在 ImageNet 上匹配或超越 VAR/DiT 质量的同时实现训练 2.5× 加速和推理 3× 内存缩减。
 tags:
   - CVPR 2025
   - 图像生成
-  - 自回归
+  - 自回归图像生成
+  - Next-Scale Prediction
   - Masked Prediction
-  - VAR
-  - 高效推理
-  - 图像编辑
+  - Markov 过程
+  - 高效注意力
+  - 损失重加权
 ---
 
 # HMAR: Efficient Hierarchical Masked Auto-Regressive Image Generation
@@ -158,7 +159,7 @@ ImageNet 512×512：
 - [Collaborative Decoding Makes Visual Auto-Regressive Modeling Efficient](collaborative_decoding_makes_visual_auto-regressive_modeling_efficient.md)
 - [MMAR: Towards Lossless Multi-Modal Auto-Regressive Probabilistic Modeling](mmar_towards_lossless_multi-modal_auto-regressive_probabilistic_modeling.md)
 - [Hierarchical Flow Diffusion for Efficient Frame Interpolation](hierarchical_flow_diffusion_for_efficient_frame_interpolation.md)
+- [DC-AR: Efficient Masked Autoregressive Image Generation with Deep Compression Hybrid Tokenizer](../../ICCV2025/image_generation/dc-ar_efficient_masked_autoregressive_image_generation_with_deep_compression_hyb.md)
 - [Distilled Decoding 2: One-step Sampling of Image Auto-regressive Models with Conditional Score Distillation](../../NeurIPS2025/image_generation/distilled_decoding_2_onestep_sampling_of_image_autoregressiv.md)
-- [Improving Editability in Image Generation with Layer-wise Memory](improving_editability_in_image_generation_with_layer-wise_memory.md)
 
 <!-- RELATED:END -->

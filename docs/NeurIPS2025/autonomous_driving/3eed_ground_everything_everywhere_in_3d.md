@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3EED: Ground Everything Everywhere in 3D
 description: >-

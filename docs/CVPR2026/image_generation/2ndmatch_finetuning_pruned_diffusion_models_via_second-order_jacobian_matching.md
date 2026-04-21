@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 2ndMatch: Finetuning Pruned Diffusion Models via Second-Order Jacobian Matching
 description: >-
@@ -135,6 +135,6 @@ Stable Diffusion (COCO 512×512)：Base+2ndM FID从15.76降至13.84，Small+2ndM
 - [HOG-Diff: Higher-Order Guided Diffusion for Graph Generation](../../ICLR2026/image_generation/hog-diff_higher-order_guided_diffusion_for_graph_generation.md)
 - [Reviving ConvNeXt for Efficient Convolutional Diffusion Models](reviving_convnext_for_efficient_convolutional_diffusion_models.md)
 - [Quantization with Unified Adaptive Distillation to enable multi-LoRA based one-for-all Generative Vision Models on edge](quantization_with_unified_adaptive_distillation_to_enable_multi-lora_based_one-f.md)
-- [Exploring Conditions for Diffusion Models in Robotic Control](exploring_conditions_for_diffusion_models_in_robotic_control.md)
+- [High-order Equivariant Flow Matching for Density Functional Theory Hamiltonian Prediction](../../NeurIPS2025/image_generation/high-order_equivariant_flow_matching_for_density_functional_theory_hamiltonian_p.md)
 
 <!-- RELATED:END -->

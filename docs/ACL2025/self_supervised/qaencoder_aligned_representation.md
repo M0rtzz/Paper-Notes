@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] QAEncoder: Towards Aligned Representation Learning in Question Answering Systems
 description: >-

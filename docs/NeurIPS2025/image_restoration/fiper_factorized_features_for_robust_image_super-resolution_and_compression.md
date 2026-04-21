@@ -170,8 +170,8 @@ $$b_i(h,w) = F_{\text{merge}}(\{b_i^n(h,w) \mid n \in 1, \ldots, M\})$$
 
 - [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](../../CVPR2025/image_restoration/adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
 - [Audio Super-Resolution with Latent Bridge Models](audio_super-resolution_with_latent_bridge_models.md)
+- [PIDSR: Complementary Polarized Image Demosaicing and Super-Resolution](../../CVPR2025/image_restoration/pidsr_complementary_polarized_image_demosaicing_and_super-resolution.md)
+- [Progressive Focused Transformer for Single Image Super-Resolution](../../CVPR2025/image_restoration/progressive_focused_transformer_for_single_image_super-resolution.md)
 - [Augmenting Perceptual Super-Resolution via Image Quality Predictors](../../CVPR2025/image_restoration/augmenting_perceptual_super-resolution_via_image_quality_predictors.md)
-- [Implicit Augmentation from Distributional Symmetry in Turbulence Super-Resolution](implicit_augmentation_from_distributional_symmetry_in_turbulence_super-resolutio.md)
-- [Spiking Meets Attention: Efficient Remote Sensing Image Super-Resolution with Attention Spiking Neural Networks](spiking_meets_attention_efficient_remote_sensing_image_super-resolution_with_att.md)
 
 <!-- RELATED:END -->

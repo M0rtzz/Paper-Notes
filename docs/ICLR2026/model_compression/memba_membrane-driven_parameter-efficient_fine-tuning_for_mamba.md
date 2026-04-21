@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Memba: Membrane-driven Parameter-Efficient Fine-Tuning for Mamba
 description: >-
@@ -120,8 +120,8 @@ Theorem 1 表明LIM具有双重效果：均值膜成分通过泄漏动态提供�
 
 - [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/model_compression/parameter-efficient_fine-tuning_of_state_space_models.md)
 - [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](../../ACL2025/model_compression/state_offset_tuning_ssm_peft.md)
+- [Parameter Efficient Mamba Tuning via Projector-targeted Diagonal-centric Linear Transformation](../../CVPR2025/model_compression/parameter_efficient_mamba_tuning_via_projector-targeted_diagonal-centric_linear_.md)
 - [ABBA-Adapters: Efficient and Expressive Fine-Tuning of Foundation Models](abba-adapters_efficient_and_expressive_fine-tuning_of_foundation_models.md)
 - [Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations](../../ICCV2025/model_compression/generalized_tensor-based_parameter-efficient_fine-tuning_via_lie_group_transform.md)
-- [Trans-PEFT: Transferable Parameter-Efficient Fine-Tuning on Evolving Base Models](../../ACL2025/model_compression/trans_peft_transferable.md)
 
 <!-- RELATED:END -->

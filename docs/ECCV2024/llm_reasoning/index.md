@@ -1,14 +1,18 @@
 ---
 title: >-
-  ECCV2024 LLM推理方向 2篇论文解读
+  ECCV2024 LLM推理方向 3篇论文解读
 description: >-
-  2篇ECCV2024 LLM推理方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  3篇ECCV2024 LLM推理方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💡 LLM推理
 
-**🎞️ ECCV2024** · **2** 篇论文解读
+**🎞️ ECCV2024** · **3** 篇论文解读
+
+**[Controllable Navigation Instruction Generation with Chain of Thought Prompting](controllable_navigation_instruction_generation.md)**
+
+:   提出 C-Instructor，利用 Chain-of-Thought with Landmarks (CoTL) 机制引导 LLM 先识别关键地标再生成指令，结合空间拓扑建模任务 (STMT) 和风格混合训练 (SMT)，实现风格可控和内容可控的导航指令生成，在四个室内外 benchmark 上全面超越 SOTA。
 
 **[Controllable Navigation Instruction Generation with Chain of Thought Prompting](controllable_navigation_instruction_generation_with_chain_of_thought_prompting.md)**
 

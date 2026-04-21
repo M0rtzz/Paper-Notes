@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PosFormer: Recognizing Complex Handwritten Mathematical Expression with Position Forest Transformer
 description: >-
@@ -241,6 +241,6 @@ $\lambda_1 = \lambda_2 = 1$，两个任务等权重。
 - [MetaWriter: Personalized Handwritten Text Recognition Using Meta-Learned Prompt Tuning](../../CVPR2025/self_supervised/metawriter_personalized_handwritten_text_recognition_using_meta-learned_prompt_t.md)
 - [Update Your Transformer to the Latest Release: Re-Basin of Task Vectors](../../ICML2025/self_supervised/update_your_transformer_to_the_latest_release_re-basin_of_task_vectors.md)
 - [MAP: Unleashing Hybrid Mamba-Transformer Vision Backbone's Potential with Masked Autoregressive Pretraining](../../CVPR2025/self_supervised/map_unleashing_hybrid_mamba-transformer_vision_backbones_potential_with_masked_a.md)
-- [ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders](vic-mae_self-supervised_representation_learning_from_images_and_video_with_contr.md)
+- [Self-supervised Video Copy Localization with Regional Token Representation](self-supervised_video_copy_localization_with_regional_token_representation.md)
 
 <!-- RELATED:END -->

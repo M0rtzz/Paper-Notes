@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SQ-LLaVA: Self-Questioning for Large Vision-Language Assistant
 description: >-
@@ -133,10 +133,10 @@ SQ-LLaVA-7B 在 10 个基准中的 9 个超过 LLaVA-v1.5-7B，13B 规模同样�
 
 ## 相关论文
 
+- [NavGPT-2: Unleashing Navigational Reasoning Capability for Large Vision-Language Models](navgpt2_unleashing_navigational_reasoning_capability.md)
+- [Omniview-Tuning: Boosting Viewpoint Invariance of Vision-Language Pre-training Models](omniviewtuning_boosting_viewpoint_invariance_of_visionlangua.md)
 - [Self-Adapting Large Visual-Language Models to Edge Devices across Visual Modalities](self-adapting_large_visual-language_models_to_edge_devices_across_visual_modalit.md)
-- [LLaVA-KD: A Framework of Distilling Multimodal Large Language Models](../../ICCV2025/multimodal_vlm/llava-kd_a_framework_of_distilling_multimodal_large_language_models.md)
-- [Robust Calibration of Large Vision-Language Adapters](robust_calibration_of_large_vision-language_adapters.md)
-- [Vary: Scaling up the Vision Vocabulary for Large Vision-Language Models](vary_scaling_up_the_vision_vocabulary_for_large_vision-language_model.md)
-- [Attention Prompting on Image for Large Vision-Language Models](attention_prompting_on_image_for_large_vision-language_models.md)
+- [DeCUR: Decoupling Common and Unique Representations for Multimodal Self-supervised Learning](decoupling_common_and_unique_representations_for_multimodal_.md)
+- [Robust Calibration of Large Vision-Language Adapters](robust_calibration_of_large_visionlanguage_adapters.md)
 
 <!-- RELATED:END -->

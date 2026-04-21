@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Conditional Distribution Compression via the Kernel Conditional Mean Embedding
 description: >-
@@ -156,6 +156,6 @@ $$\mathcal{J}^{\mathcal{D}}(\tilde{\mathbf{X}}, \tilde{\mathbf{Y}}) = \frac{1}{n
 - [SLiM: One-shot Quantization and Sparsity with Low-rank Approximation for LLM Weight Compression](../../ICML2025/interpretability/slim_one-shot_quantization_and_sparsity_with_low-rank_approximation_for_llm_weig.md)
 - [Distribution-Based Feature Attribution for Explaining the Predictions of Any Classifier](../../AAAI2026/interpretability/distribution-based_feature_attribution_for_explaining_the_predictions_of_any_cla.md)
 - [VITAL: More Understandable Feature Visualization through Distribution Alignment and Relevant Information Flow](../../ICCV2025/interpretability/vital_more_understandable_feature_visualization_through_distribution_alignment_a.md)
-- [Causal Head Gating: A Framework for Interpreting Roles of Attention Heads in Transformers](causal_head_gating_a_framework_for_interpreting_roles_of_attention_heads_in_tran.md)
+- [Toward Real-world Text Image Forgery Localization: Structured and Interpretable Data Synthesis](toward_real-world_text_image_forgery_localization_structured_and_interpretable_d.md)
 
 <!-- RELATED:END -->

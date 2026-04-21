@@ -2,9 +2,14 @@
 title: >-
   [论文解读] EpMAN: Episodic Memory AttentioN for Generalizing to Longer Contexts
 description: >-
-   提出 EpMAN 方法，通过情景记忆模块估计上下文块的相对相关性，用该相关性重新加权解码器的自注意力（differentiating attention），配合噪声训练和注意力范围扩展策略，在 16k-256k 上下文长度范围内实现了比长上下文 LLM 和 RAG 更强且更鲁棒的表现。
+  [ACL 2025][long context] 提出 EpMAN 方法，通过情景记忆模块估计上下文块的相对相关性，用该相关性重新加权解码器的自注意力（differentiating attention），配合噪声训练和注意力范围扩展策略，在 16k-256k 上下文长度范围内实现了比长上下文 LLM 和 RAG 更强且更鲁棒的表现。
 tags:
-
+  - ACL 2025
+  - long context
+  - episodic memory
+  - 注意力机制
+  - context length extension
+  - retrieval-augmented generation
 ---
 
 # EpMAN: Episodic Memory AttentioN for Generalizing to Longer Contexts
@@ -162,9 +167,9 @@ $$L = \mathbb{E}_\mathcal{D} [\alpha \ln p(l|q, C) + \ln(a|q, C, a_{mem})]$$
 ## 相关论文
 
 - [Efficient OpAmp Adaptation for Zoom Attention to Golden Contexts](efficient_opamp_adaptation_for_zoom_attention_to_golden_contexts.md)
-- [If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?](if_attention_serves_as_a_cognitive.md)
+- [If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?](if_attention_serves_as_a_cognitive_model_of_human_memory_retrieval_what_is_the_p.md)
+- [Unique Hard Attention: A Tale of Two Sides](unique_hard_attention_a_tale_of_two_sides.md)
 - [Hierarchical Memory Organization for Wikipedia Generation](hierarchical_memory_wikipedia_gen.md)
-- [The Hidden Attention of Mamba Models](the_hidden_attention_of_mamba_models.md)
-- [Segment-Based Attention Masking for GPTs](segment-based_attention_masking_for_gpts.md)
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
 
 <!-- RELATED:END -->

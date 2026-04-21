@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GS-Pose: Category-Level Object Pose Estimation via Geometric and Semantic Correspondence
 description: >-
@@ -180,6 +180,6 @@ $$L = -\frac{1}{|A_{pos}|}\sum_{\hat{A}_{i,j} \in A_{pos}}(1-\hat{A}_{i,j})^\gam
 - [LaPose: Laplacian Mixture Shape Modeling for RGB-Based Category-Level Object Pose Estimation](lapose_laplacian_mixture_shape_modeling_for_rgb-based_category-level_object_pose.md)
 - [FoundPose: Unseen Object Pose Estimation with Foundation Features](foundpose_unseen_object_pose_estimation_with_foundation_features.md)
 - [SCAPE: A Simple and Strong Category-Agnostic Pose Estimator](scape_a_simple_and_strong_category-agnostic_pose_estimator.md)
-- [CleanPose: Category-Level Object Pose Estimation via Causal Learning and Knowledge Distillation](../../ICCV2025/human_understanding/cleanpose_category-level_object_pose_estimation_via_causal_learning_and_knowledg.md)
+- [GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation](../../CVPR2025/human_understanding/gce-pose_global_context_enhancement_for_category-level_object_pose_estimation.md)
 
 <!-- RELATED:END -->

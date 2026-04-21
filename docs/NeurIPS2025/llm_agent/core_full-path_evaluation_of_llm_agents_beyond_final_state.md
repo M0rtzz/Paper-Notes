@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CORE: Full-Path Evaluation of LLM Agents Beyond Final State
 description: >-

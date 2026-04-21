@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Directional Non-Commutative Monoidal Structures for Compositional Embeddings in Machine Learning
 description: >-

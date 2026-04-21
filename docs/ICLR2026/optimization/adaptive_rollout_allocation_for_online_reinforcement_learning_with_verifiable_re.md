@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adaptive Rollout Allocation for Online RL with Verifiable Rewards (VIP)
 description: >-

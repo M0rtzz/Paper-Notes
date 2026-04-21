@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Words or Vision: Do Vision-Language Models Have Blind Faith in Text?
 description: >-

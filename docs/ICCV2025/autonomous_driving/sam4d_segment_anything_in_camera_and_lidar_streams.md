@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SAM4D: Segment Anything in Camera and LiDAR Streams
 description: >-
@@ -232,10 +232,10 @@ SAM4D 在 SAM2 的基础上扩展到多模态领域，主要包含：
 
 ## 相关论文
 
+- [Segment Anything, Even Occluded](../../CVPR2025/autonomous_driving/segment_anything_even_occluded.md)
 - [Detect Anything 3D in the Wild](detect_anything_3d_in_the_wild.md)
-- [SEAL: Segment Any Events with Language](../../ICLR2026/autonomous_driving/segment_any_events_with_language.md)
-- [Cubify Anything: Scaling Indoor 3D Object Detection](../../CVPR2025/autonomous_driving/cubify_anything_scaling_indoor_3d_object_detection.md)
-- [MapDistill: Boosting Efficient Camera-based HD Map Construction via Camera-LiDAR Fusion Model Distillation](../../ECCV2024/autonomous_driving/mapdistill_boosting_efficient_camera-based_hd_map_construction_via_camera-lidar_.md)
 - [MGSfM: Multi-Camera Geometry Driven Global Structure-from-Motion](mgsfm_multi-camera_geometry_driven_global_structure-from-motion.md)
+- [CVFusion: Cross-View Fusion of 4D Radar and Camera for 3D Object Detection](cvfusion_cross-view_fusion_of_4d_radar_and_camera_for_3d_object_detection.md)
+- [Splat-LOAM: Gaussian Splatting LiDAR Odometry and Mapping](splat-loam_gaussian_splatting_lidar_odometry_and_mapping.md)
 
 <!-- RELATED:END -->

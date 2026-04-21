@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Distilled Decoding 2: One-step Sampling of Image Auto-regressive Models with Conditional Score Distillation
 description: >-

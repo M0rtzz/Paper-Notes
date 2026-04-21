@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How to Mitigate Overfitting in Weak-to-Strong Generalization?
 description: >-

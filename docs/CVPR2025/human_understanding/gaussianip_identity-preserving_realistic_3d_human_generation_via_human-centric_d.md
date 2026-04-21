@@ -1,7 +1,16 @@
-﻿---
-title: "GaussianIP: Identity-Preserving Realistic 3D Human Generation via Human-Centric Diffusion Prior"
-conference: "CVPR 2025"
-arxiv: "2503.11143"
+---
+title: >-
+  [论文解读] GaussianIP: Identity-Preserving Realistic 3D Human Generation via Human-Centric Diffusion Prior
+description: >-
+  [CVPR 2025][人体理解][3D人体生成] 提出 GaussianIP 两阶段框架，通过自适应人体蒸馏采样（AHDS）从人体中心扩散模型高效生成身份一致的 3D 高斯人体，再通过视角一致性精炼（VCR）机制利用 mutual attention 增强面部和服饰纹理细节，在 40 分钟内完成训练并显著优于现有方法。
+tags:
+  - CVPR 2025
+  - 人体理解
+  - 3D人体生成
+  - 身份保持
+  - 3D高斯溅射
+  - 分数蒸馏
+  - 多视角一致性
 ---
 
 # GaussianIP: Identity-Preserving Realistic 3D Human Generation via Human-Centric Diffusion Prior
@@ -123,10 +132,10 @@ Face++ 验证：所有生成人体面部与输入肖像匹配，平均置信度�
 
 ## 相关论文
 
-- [TELA: Text to Layer-wise 3D Clothed Human Generation](../../ECCV2024/human_understanding/tela_text_to_layer-wise_3d_clothed_human_generation.md)
-- [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
+- [RePerformer: Immersive Human-centric Volumetric Videos from Playback to Photoreal Reperformance](reperformer_immersive_human-centric_volumetric_videos_from_playback_to_photoreal.md)
+- [StickMotion: Generating 3D Human Motions by Drawing a Stickman](stickmotion_generating_3d_human_motions_by_drawing_a_stickman.md)
+- [UniPose: A Unified Multimodal Framework for Human Pose Comprehension, Generation and Editing](unipose_a_unified_multimodal_framework_for_human_pose_comprehension_generation_a.md)
+- [SemGeoMo: Dynamic Contextual Human Motion Generation with Semantic and Geometric Guidance](semgeomo_dynamic_contextual_human_motion_generation_with_semantic_and_geometric_.md)
 - [FreeCloth: Free-Form Generation Enhances Challenging Clothed Human Modeling](freecloth_free-form_generation_enhances_challenging_clothed_human_modeling.md)
-- [HOI-Dyn: Learning Interaction Dynamics for Human-Object Motion Diffusion](../../NeurIPS2025/human_understanding/hoi-dyn_learning_interaction_dynamics_for_human-object_motion_diffusion.md)
-- [MOSPA: Human Motion Generation Driven by Spatial Audio](../../NeurIPS2025/human_understanding/mospa_human_motion_generation_driven_by_spatial_audio.md)
 
 <!-- RELATED:END -->

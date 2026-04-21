@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] An Information Theoretic Evaluation Metric for Strong Unlearning
 description: >-
@@ -114,10 +114,10 @@ tags:
 
 ## 相关论文
 
-- [Bits Leaked per Query: Information-Theoretic Bounds on Adversarial Attacks Against LLMs](../../NeurIPS2025/ai_safety/bits_leaked_per_query_information-theoretic_bounds_on_adversarial_attacks_agains.md)
-- [InfoDecom: Decomposing Information for Defending Against Privacy Leakage in Split Inference](infodecom_decomposing_information_for_defending_against_privacy_leakage_in_split.md)
 - [Beyond Superficial Forgetting: Thorough Unlearning through Knowledge Density Estimation and Block Re-insertion](beyond_superficial_forgetting_thorough_unlearning_through_knowledge_density_esti.md)
-- [PULSE: Practical Evaluation Scenarios for Large Multimodal Model Unlearning](../../NeurIPS2025/ai_safety/pulse_practical_evaluation_scenarios_for_large_multimodal_model_unlearning.md)
+- [InfoDecom: Decomposing Information for Defending Against Privacy Leakage in Split Inference](infodecom_decomposing_information_for_defending_against_privacy_leakage_in_split.md)
+- [Easy to Learn, Yet Hard to Forget: Towards Robust Unlearning Under Bias](easy_to_learn_yet_hard_to_forget_towards_robust_unlearning_under_bias.md)
+- [AUVIC: Adversarial Unlearning of Visual Concepts for Multi-modal Large Language Models](auvic_adversarial_unlearning_of_visual_concepts_for_multi-mo.md)
 - [Erase or Hide? Suppressing Spurious Unlearning Neurons for Robust Unlearning](../../ICLR2026/ai_safety/erase_or_hide_suppressing_spurious_unlearning_neurons_for_robust_unlearning.md)
 
 <!-- RELATED:END -->

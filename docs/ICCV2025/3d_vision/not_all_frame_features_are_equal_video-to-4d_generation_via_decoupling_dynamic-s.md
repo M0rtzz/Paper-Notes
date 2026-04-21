@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Not All Frame Features Are Equal: Video-to-4D Generation via Decoupling Dynamic-Static Features
 description: >-
@@ -140,7 +140,7 @@ DS4D的pipeline如下：(1) 输入单视角视频，用Zero123++生成伪多视�
 - [Gaussian Variation Field Diffusion for High-fidelity Video-to-4D Synthesis](gaussian_variation_field_diffusion_for_high-fidelity_video-to-4d_synthesis.md)
 - [Instruct-4DGS: Efficient Dynamic Scene Editing via 4D Gaussian-based Static-Dynamic Separation](../../CVPR2025/3d_vision/efficient_dynamic_scene_editing_via_4d_gaussian-based_static-dynamic_separation.md)
 - [DeGauss: Dynamic-Static Decomposition with Gaussian Splatting for Distractor-free 3D Reconstruction](degauss_dynamic-static_decomposition_with_gaussian_splatting_for_distractor-free.md)
+- [Doppelgangers++: Improved Visual Disambiguation with Geometric 3D Features](../../CVPR2025/3d_vision/doppelgangers_improved_visual_disambiguation_with_geometric_3d_features.md)
 - [Vivid4D: Improving 4D Reconstruction from Monocular Video by Video Inpainting](vivid4d_improving_4d_reconstruction_from_monocular_video_by_video_inpainting.md)
-- [Shape of Motion: 4D Reconstruction from a Single Video](shape_of_motion_4d_reconstruction_from_a_single_video.md)
 
 <!-- RELATED:END -->

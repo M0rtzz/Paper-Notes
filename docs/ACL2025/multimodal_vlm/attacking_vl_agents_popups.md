@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Attacking Vision-Language Computer Agents via Pop-ups
 description: >-

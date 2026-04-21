@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neighbor-Aware Localized Concept Erasure in Text-to-Image Diffusion Models
 description: >-
@@ -142,6 +142,6 @@ Stage 逐步添加的效果（从论文 Figure 9 提取）：
 - [Prototype-Guided Concept Erasure in Diffusion Models](prototype-guided_concept_erasure_in_diffusion_models.md)
 - [Localized Concept Erasure in Text-to-Image Diffusion Models via High-Level Representation Misdirection](../../ICLR2026/image_generation/localized_concept_erasure_in_text-to-image_diffusion_models_via_high-level_repre.md)
 - [Mass Concept Erasure in Diffusion Models with Concept Hierarchy](../../AAAI2026/image_generation/mass_concept_erasure_in_diffusion_models_with_concept_hierarchy.md)
-- [SPEED: Scalable, Precise, and Efficient Concept Erasure for Diffusion Models](../../ICLR2026/image_generation/speed_scalable_precise_and_efficient_concept_erasure_for_diffusion_models.md)
+- [EMMA: Concept Erasure Benchmark with Comprehensive Semantic Metrics and Diverse Categories](emma_concept_erasure_benchmark_with_comprehensive_semantic_metrics_and_diverse_c.md)
 
 <!-- RELATED:END -->

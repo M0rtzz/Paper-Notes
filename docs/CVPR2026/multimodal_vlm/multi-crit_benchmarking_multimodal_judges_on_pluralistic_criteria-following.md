@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multi-Crit: Benchmarking Multimodal Judges on Pluralistic Criteria-Following
 description: >-

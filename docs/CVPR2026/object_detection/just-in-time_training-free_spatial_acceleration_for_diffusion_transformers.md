@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Just-in-Time: Training-Free Spatial Acceleration for Diffusion Transformers
 description: >-
@@ -153,6 +153,6 @@ $$\mathbf{I}(t) = \mathbb{E}_\mathcal{W}[\boldsymbol{u}_\theta \odot \boldsymbol
 - [Connecting the Dots: Training-Free Visual Grounding via Agentic Reasoning](../../AAAI2026/object_detection/connecting_the_dots_training-free_visual_grounding_via_agent.md)
 - [StreamAvatar: Streaming Diffusion Models for Real-Time Interactive Human Avatars](streamavatar_streaming_diffusion_models_for_real-time_interactive_human_avatars.md)
 - [Is Less More? Exploring Token Condensation as Training-free Test-time Adaptation](../../ICCV2025/object_detection/is_less_more_exploring_token_condensation_as_training-free_test-time_adaptation.md)
-- [SpiralDiff: Spiral Diffusion with LoRA for RGB-to-RAW Conversion Across Cameras](spiraldiff_spiral_diffusion_with_lora_for_rgb-to-raw_conversion_across_cameras.md)
+- [Mr. DETR++: Instructive Multi-Route Training for Detection Transformers with MoE](../../CVPR2025/object_detection/mr_detr_instructive_multi-route_training_for_detection_transformers.md)
 
 <!-- RELATED:END -->

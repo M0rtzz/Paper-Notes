@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploring the Feature Extraction and Relation Modeling For Light-Weight Transformer Tracking
 description: >-
@@ -130,7 +130,7 @@ FERMT是一个端到端的one-stream轻量级跟踪器。输入为模板图像�
 ## 相关论文
 
 - [Towards Efficient General Feature Prediction in Masked Skeleton Modeling](../../ICCV2025/video_understanding/towards_efficient_general_feature_prediction_in_masked_skeleton_modeling.md)
-- [Elysium: Exploring Object-level Perception in Videos via MLLM](elysium_exploring_object-level_perception_in_videos_via_mllm.md)
+- [Elysium: Exploring Object-Level Perception in Videos via MLLM](elysium_exploring_objectlevel_perception_in_videos_via_mllm.md)
 - [General Compression Framework for Efficient Transformer Object Tracking](../../ICCV2025/video_understanding/general_compression_framework_for_efficient_transformer_object_tracking.md)
 - [Data Collection-Free Masked Video Modeling](data_collection-free_masked_video_modeling.md)
 - [Local All-Pair Correspondence for Point Tracking](local_all-pair_correspondence_for_point_tracking.md)

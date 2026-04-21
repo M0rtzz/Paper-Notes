@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Capability-Based Scaling Trends for LLM-Based Red-Teaming
 description: >-

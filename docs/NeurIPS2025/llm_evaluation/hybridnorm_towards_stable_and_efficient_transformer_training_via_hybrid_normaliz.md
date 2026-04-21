@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HybridNorm: Towards Stable and Efficient Transformer Training via Hybrid Normalization
 description: >-

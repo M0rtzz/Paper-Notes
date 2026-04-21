@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] M-LLM Based Video Frame Selection for Efficient Video Understanding
 description: >-
@@ -121,9 +121,9 @@ tags:
 ## 相关论文
 
 - [Q-Frame: Query-aware Frame Selection and Multi-Resolution Adaptation for Video-LLMs](../../ICCV2025/video_understanding/q-frame_query-aware_frame_selection_and_multi-resolution_adaptation_for_video-ll.md)
-- [Generative Frame Sampler for Long Video Understanding](../../ACL2025/video_understanding/generative_frame_sampler_for_long_video_understanding.md)
-- [Wavelet-based Frame Selection by Detecting Semantic Boundary for Long Video Understanding](../../CVPR2026/video_understanding/wavelet-based_frame_selection_by_detecting_semantic_boundary_for_long_video_unde.md)
-- [MLVU: Benchmarking Multi-task Long Video Understanding](mlvu_benchmarking_multi-task_long_video_understanding.md)
-- [A.I.R.: Adaptive, Iterative, and Reasoning-based Frame Selection For Video Question Answering](../../ICLR2026/video_understanding/air_enabling_adaptive_iterative_and_reasoning-based_frame_selection_for_video_qu.md)
+- [Enhancing Video-LLM Reasoning via Agent-of-Thoughts Distillation](enhancing_video-llm_reasoning_via_agent-of-thoughts_distillation.md)
+- [VideoRefer Suite: Advancing Spatial-Temporal Object Understanding with Video LLM](videorefer_suite_advancing_spatial-temporal_object_understanding_with_video_llm.md)
+- [Video-Panda: Parameter-efficient Alignment for Encoder-free Video-Language Models](video-panda_parameter-efficient_alignment_for_encoder-free_video-language_models.md)
+- [Progress-Aware Video Frame Captioning](progress-aware_video_frame_captioning.md)
 
 <!-- RELATED:END -->

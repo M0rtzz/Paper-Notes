@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Speech Language Modeling via Energy Distance in Continuous Latent Space
 description: >-

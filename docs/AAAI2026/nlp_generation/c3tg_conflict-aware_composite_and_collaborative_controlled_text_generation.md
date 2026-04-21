@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] C3TG: Conflict-aware, Composite, and Collaborative Controlled Text Generation
 description: >-

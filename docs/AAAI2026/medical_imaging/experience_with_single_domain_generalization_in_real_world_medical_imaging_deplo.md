@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Experience with Single Domain Generalization in Real World Medical Imaging Deployments
 description: >-
@@ -134,7 +134,7 @@ K1在盲测上PPV和NPV分别比纯ViT高29%和27%，5折交叉验证ROC AUC达9
 
 ## 相关论文
 
-- [Human Knowledge Integrated Multi-modal Learning for Single Source Domain Generalization](../../CVPR2026/medical_imaging/human_knowledge_integrated_multimodal_learning_for.md)
+- [Human Knowledge Integrated Multi-modal Learning for Single Source Domain Generalization](../../CVPR2026/medical_imaging/human_knowledge_integrated_multi-modal_learning_for_single_source_domain_general.md)
 - [PulseMind: A Multi-Modal Medical Model for Real-World Clinical Diagnosis](pulsemind_a_multi-modal_medical_model_for_real-world_clinical_diagnosis.md)
 - [LangDAug: Langevin Data Augmentation for Multi-Source Domain Generalization in Medical Imaging](../../ICML2025/medical_imaging/langdaug_langevin_data_augmentation_for_multi-source_domain_generalization_in_me.md)
 - [Moving Beyond Medical Exams: A Clinician-Annotated Fairness Dataset of Real-World Tasks and Ambiguity in Mental Healthcare](../../ICLR2026/medical_imaging/moving_beyond_medical_exams_a_clinician-annotated_fairness_dataset_of_real-world.md)

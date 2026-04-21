@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiffiT: Diffusion Vision Transformers for Image Generation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EmbodiedSplat: Online Feed-Forward Semantic 3DGS for Open-Vocabulary 3D Scene Understanding
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Principled Understanding of Generalization for Generative Transformer Models in Arithmetic Reasoning Tasks
 description: >-

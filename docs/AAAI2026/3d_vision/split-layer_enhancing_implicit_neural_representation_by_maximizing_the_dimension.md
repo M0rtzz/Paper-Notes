@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Split-Layer: Enhancing Implicit Neural Representation by Maximizing the Dimensionality of Feature Space
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Griffin: Towards a Graph-Centric Relational Database Foundation Model
 description: >-

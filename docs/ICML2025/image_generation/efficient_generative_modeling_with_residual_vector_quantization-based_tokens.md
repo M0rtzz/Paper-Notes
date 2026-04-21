@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Generative Modeling with Residual Vector Quantization-Based Tokens
 description: >-

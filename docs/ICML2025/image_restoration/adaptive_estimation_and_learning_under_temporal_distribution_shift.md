@@ -158,6 +158,6 @@ $$R_{\text{sq}} = \tilde{O}(n^{1/3} C^{2/3} \sigma^{4/3}), \quad R_{\text{abs}} 
 - [MAP Estimation with Denoisers: Convergence Rates and Guarantees](../../NeurIPS2025/image_restoration/map_estimation_with_denoisers_convergence_rates_and_guarantees.md)
 - [Improving Diffusion-based Inverse Algorithms under Few-Step Constraint via Learnable Linear Extrapolation](../../NeurIPS2025/image_restoration/improving_diffusion-based_inverse_algorithms_under_few-step_constraint_via_learn.md)
 - [Temporal Inconsistency Guidance for Super-resolution Video Quality Assessment](../../AAAI2026/image_restoration/temporal_inconsistency_guidance_for_super-resolution_video_quality_assessment.md)
-- [Low-Light Image Enhancement using Event-Based Illumination Estimation (RetinEV)](../../ICCV2025/image_restoration/low-light_image_enhancement_using_event-based_illumination_estimation.md)
+- [Metric Convolutions: A Unifying Theory to Adaptive Image Convolutions](../../ICCV2025/image_restoration/metric_convolutions_a_unifying_theory_to_adaptive_image_convolutions.md)
 
 <!-- RELATED:END -->

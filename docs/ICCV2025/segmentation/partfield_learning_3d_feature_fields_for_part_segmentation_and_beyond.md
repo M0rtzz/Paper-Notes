@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PartField: Learning 3D Feature Fields for Part Segmentation and Beyond
 description: >-

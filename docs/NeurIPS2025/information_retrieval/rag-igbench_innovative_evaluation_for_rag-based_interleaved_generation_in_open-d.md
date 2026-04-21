@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RAG-IGBench: Innovative Evaluation for RAG-based Interleaved Generation in Open-domain Question Answering
 description: >-

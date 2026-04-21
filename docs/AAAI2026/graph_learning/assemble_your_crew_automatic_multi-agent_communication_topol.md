@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Assemble Your Crew: Automatic Multi-agent Communication Topology Design via Autoregressive Graph Generation
 description: >-

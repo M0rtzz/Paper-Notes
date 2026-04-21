@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TableDreamer: Progressive and Weakness-Guided Data Synthesis from Scratch for Table Instruction Tuning
 description: >-

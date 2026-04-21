@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ActionVOS: Actions as Prompts for Video Object Segmentation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LoGU: Long-form Generation with Uncertainty Expressions
 description: >-
@@ -134,6 +134,6 @@ tags:
 - [Do not Abstain! Identify and Solve the Uncertainty](do_not_abstain_identify_and_solve_the_uncertainty.md)
 - [A Little Human Data Goes A Long Way](a_little_human_data_goes_a_long_way.md)
 - [Adaptive Retrieval without Self-Knowledge? Bringing Uncertainty Back Home](adaptive_retrieval_without_self-knowledge_bringing_uncertainty_back_home.md)
-- [X-Turing: Towards an Enhanced and Efficient Turing Test for Long-Term Dialogue Agents](xturing_enhanced_turing_test.md)
+- [GeAR: Generation Augmented Retrieval](gear_generation_augmented_retrieval.md)
 
 <!-- RELATED:END -->

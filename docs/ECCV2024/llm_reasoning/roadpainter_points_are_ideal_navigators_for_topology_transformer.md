@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RoadPainter: Points Are Ideal Navigators for Topology Transformer
 description: >-
@@ -164,9 +164,9 @@ $$\mathcal{L} = \mathcal{L}_{top}(\mathbf{A}_{ll}) + \mathcal{L}_{cls}(\mathbf{S
 ## 相关论文
 
 - [Topology of Reasoning: Understanding Large Reasoning Models through Reasoning Graph Properties](../../NeurIPS2025/llm_reasoning/topology_of_reasoning_understanding_large_reasoning_models_through_reasoning_gra.md)
-- [Controllable Navigation Instruction Generation with Chain of Thought Prompting](controllable_navigation_instruction_generation_with_chain_of_thought_prompting.md)
+- [Controllable Navigation Instruction Generation with Chain of Thought Prompting](controllable_navigation_instruction_generation.md)
 - [MM-Verify: Enhancing Multimodal Reasoning with Chain-of-Thought Verification](../../ACL2025/llm_reasoning/mm-verify_enhancing_multimodal_reasoning_with_chain-of-thought_verification.md)
-- [Marco-o1 v2: Towards Widening The Distillation Bottleneck for Reasoning Models](../../ACL2025/llm_reasoning/marco-o1_v2_towards_widening_the_distillation_bottleneck_for_reasoning_models.md)
-- [Reason-before-Retrieve: One-Stage Reflective Chain-of-Thoughts for Training-Free Zero-Shot Composed Image Retrieval](../../CVPR2025/llm_reasoning/reason-before-retrieve_one-stage_reflective_chain-of-thoughts_for_training-free_.md)
+- [One Missing Piece for Open-Source Reasoning Models: A Dataset to Mitigate Cold-Starting Short CoT LLMs in RL](../../ICML2025/llm_reasoning/one_missing_piece_for_open-source_reasoning_models_a_dataset_to_mitigate_cold-st.md)
+- [On the Design of KL-Regularized Policy Gradient Algorithms for LLM Reasoning](../../ICLR2026/llm_reasoning/on_the_design_of_kl-regularized_policy_gradient_algorithms_for_llm_reasoning.md)
 
 <!-- RELATED:END -->

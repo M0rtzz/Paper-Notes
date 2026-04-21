@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CleverBirds: A Multiple-Choice Benchmark for Fine-grained Human Knowledge Tracing
 description: >-

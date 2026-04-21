@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLM Strategic Reasoning: Agentic Study through Behavioral Game Theory
 description: >-

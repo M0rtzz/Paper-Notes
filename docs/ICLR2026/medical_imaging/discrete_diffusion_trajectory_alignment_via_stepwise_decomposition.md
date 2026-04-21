@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Discrete Diffusion Trajectory Alignment via Stepwise Decomposition
 description: >-

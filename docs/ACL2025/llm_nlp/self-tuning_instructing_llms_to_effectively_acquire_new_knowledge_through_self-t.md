@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-Tuning: Instructing LLMs to Effectively Acquire New Knowledge through Self-Teaching
 description: >-

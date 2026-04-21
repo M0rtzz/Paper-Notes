@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GTR: Guided Thought Reinforcement Prevents Thought Collapse in RL-based VLM Agent Training
 description: >-

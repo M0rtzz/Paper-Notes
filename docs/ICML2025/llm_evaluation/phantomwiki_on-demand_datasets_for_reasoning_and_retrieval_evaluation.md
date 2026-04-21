@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PhantomWiki: On-Demand Datasets for Reasoning and Retrieval Evaluation
 description: >-

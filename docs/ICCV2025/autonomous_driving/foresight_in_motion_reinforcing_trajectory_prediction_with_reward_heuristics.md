@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Foresight in Motion: Reinforcing Trajectory Prediction with Reward Heuristics
 description: >-
@@ -180,10 +180,10 @@ $$\mathcal{L} = \mathcal{L}_{IRL} + \alpha \mathcal{L}_{OGM} + \beta \mathcal{L}
 
 ## 相关论文
 
-- [DONUT: A Decoder-Only Model for Trajectory Prediction](donut_a_decoder-only_model_for_trajectory_prediction.md)
 - [Future-Aware Interaction Network For Motion Forecasting](future-aware_interaction_network_for_motion_forecasting.md)
+- [DONUT: A Decoder-Only Model for Trajectory Prediction](donut_a_decoder-only_model_for_trajectory_prediction.md)
 - [Certified Human Trajectory Prediction](../../CVPR2025/autonomous_driving/certified_human_trajectory_prediction.md)
-- [Generative Active Learning for Long-tail Trajectory Prediction via Controllable Diffusion Model](generative_active_learning_for_long-tail_trajectory_prediction_via_controllable_.md)
 - [DINO-Foresight: Looking into the Future with DINO](../../NeurIPS2025/autonomous_driving/dino-foresight_looking_into_the_future_with_dino.md)
+- [Generative Active Learning for Long-tail Trajectory Prediction via Controllable Diffusion Model](generative_active_learning_for_long-tail_trajectory_prediction_via_controllable_.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Boosting Masked ECG-Text Auto-Encoders as Discriminative Learners (D-BETA)
 description: >-
@@ -223,8 +223,8 @@ D-BETA 仅用 1 个导联 (76.5%) 即超过之前 SOTA 使用全部 12 导联的
 
 - [From Token to Rhythm: A Multi-Scale Approach for ECG-Language Pretraining](from_token_to_rhythm_a_multi-scale_approach_for_ecg-language_pretraining.md)
 - [A Novel Approach to Classification of ECG Arrhythmia Types with Latent ODEs](../../NeurIPS2025/medical_imaging/a_novel_approach_to_classification_of_ecg_arrhythmia_types_with_latent_odes.md)
-- [RadGPT: Constructing 3D Image-Text Tumor Datasets](../../ICCV2025/medical_imaging/radgpt_constructing_3d_image-text_tumor_datasets.md)
 - [Benchmarking ECG FMs: A Reality Check Across Clinical Tasks](../../ICLR2026/medical_imaging/benchmarking_ecg_fms_a_reality_check_across_clinical_tasks.md)
 - [How to Make the Most of Your Masked Language Model for Protein Engineering](../../ICLR2026/medical_imaging/how_to_make_the_most_of_your_masked_language_model_for_protein_engineering.md)
+- [RadGPT: Constructing 3D Image-Text Tumor Datasets](../../ICCV2025/medical_imaging/radgpt_constructing_3d_image-text_tumor_datasets.md)
 
 <!-- RELATED:END -->

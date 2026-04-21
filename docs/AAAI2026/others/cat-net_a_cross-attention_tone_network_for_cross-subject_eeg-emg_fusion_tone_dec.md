@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CAT-Net: A Cross-Attention Tone Network for Cross-Subject EEG-EMG Fusion Tone Decoding
 description: >-

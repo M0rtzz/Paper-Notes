@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UrbanIng-V2X: A Large-Scale Multi-Vehicle Multi-Infrastructure Dataset Across Multiple Intersections for Cooperative Perception
 description: >-

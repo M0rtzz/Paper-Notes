@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AIR-Bench: Automated Heterogeneous Information Retrieval Benchmark
 description: >-

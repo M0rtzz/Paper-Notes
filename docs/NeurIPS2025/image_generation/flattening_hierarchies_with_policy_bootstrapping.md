@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Flattening Hierarchies with Policy Bootstrapping
 description: >-
@@ -133,10 +133,10 @@ SAW 分三个训练阶段（但共享同一个价值函数）：(1) 训练一个
 
 ## 相关论文
 
-- [Two-Steps Diffusion Policy for Robotic Manipulation via Genetic Denoising](two-steps_diffusion_policy_for_robotic_manipulation_via_genetic_denoising.md)
 - [RLZero: Direct Policy Inference from Language Without In-Domain Supervision](rlzero_direct_policy_inference_from_language_without_in-domain_supervision.md)
+- [Two-Steps Diffusion Policy for Robotic Manipulation via Genetic Denoising](two-steps_diffusion_policy_for_robotic_manipulation_via_genetic_denoising.md)
 - [Video Prediction Policy: A Generalist Robot Policy with Predictive Visual Representations](../../ICML2025/image_generation/video_prediction_policy_a_generalist_robot_policy_with_predictive_visual_represe.md)
 - [FreqPolicy: Efficient Flow-based Visuomotor Policy via Frequency Consistency](freqpolicy_efficient_flow-based_visuomotor_policy_via_frequency_consistency.md)
-- [Unsupervised Conformal Inference: Bootstrapping and Alignment to Control LLM Uncertainty](../../ICLR2026/image_generation/unsupervised_conformal_inference_bootstrapping_and_alignment_to_control_llm_unce.md)
+- [Theoretical Guarantees on the Best-of-n Alignment Policy](../../ICML2025/image_generation/theoretical_guarantees_on_the_best-of-n_alignment_policy.md)
 
 <!-- RELATED:END -->

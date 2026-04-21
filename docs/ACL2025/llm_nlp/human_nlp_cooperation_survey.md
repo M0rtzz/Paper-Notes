@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How to Enable Effective Cooperation Between Humans and NLP Models: A Survey of Principles, Formalizations, and Beyond
 description: >-

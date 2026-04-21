@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval
 description: >-

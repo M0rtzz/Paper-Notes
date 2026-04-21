@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CARE: Towards Clinical Accountability in Multi-Modal Medical Reasoning with an Evidence-Grounded Agentic Framework
 description: >-

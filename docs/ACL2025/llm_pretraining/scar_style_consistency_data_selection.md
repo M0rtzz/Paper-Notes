@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SCAR: Data Selection via Style Consistency-Aware Response Ranking for Efficient Instruction-Tuning
 description: >-

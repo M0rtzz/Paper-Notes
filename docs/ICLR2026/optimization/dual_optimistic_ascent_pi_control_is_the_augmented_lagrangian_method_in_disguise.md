@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dual Optimistic Ascent (PI Control) is the Augmented Lagrangian Method in Disguise
 description: >-

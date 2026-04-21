@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GeodesicNVS: Probability Density Geodesic Flow Matching for Novel View Synthesis
 description: >-
@@ -126,10 +126,10 @@ Geodesic FM vs Linear FM:
 
 ## 相关论文
 
-- [Physically Inspired Gaussian Splatting for HDR Novel View Synthesis](physically_inspired_gaussian_splatting_for_hdr_novel_view_synthesis.md)
 - [PR-IQA: Partial-Reference Image Quality Assessment for Diffusion-Based Novel View Synthesis](pr-iqa_partial-reference_image_quality_assessment_for_diffusion-based_novel_view.md)
 - [Hierarchical Visual Relocalization with Nearest View Synthesis from Feature Gaussian Splatting](hierarchical_visual_relocalization_with_nearest_view_synthesis_from_feature_gaus.md)
 - [Scaling View Synthesis Transformers (SVSM)](scaling_view_synthesis_transformers.md)
 - [Easy3E: Feed-Forward 3D Asset Editing via Rectified Voxel Flow](easy3e_feed-forward_3d_asset_editing_via_rectified_voxel_flow.md)
+- [Physically Inspired Gaussian Splatting for HDR Novel View Synthesis](physically_inspired_gaussian_splatting_for_hdr_novel_view_synthesis.md)
 
 <!-- RELATED:END -->

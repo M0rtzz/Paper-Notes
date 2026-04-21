@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] What Matters in Evaluating Book-Length Stories? A Systematic Study of Long Story Evaluation
 description: >-
@@ -158,6 +158,6 @@ $$-\log P(r_{i \leq m}, R, S' | X_{\text{Instruct, Metadata, Sum, Excerpts}}, a_
 - [Meaning Beyond Truth Conditions: Evaluating Discourse Level Understanding via Anaphora Accessibility](meaning_beyond_truth_conditions_evaluating_discourse_level_understanding_via_ana.md)
 - [Completing A Systematic Review in Hours instead of Months with Interactive AI Agents](completing_a_systematic_review_in_hours.md)
 - [Anything Goes? A Crosslinguistic Study of (Im)possible Language Learning in LMs](anything_goes_a_crosslinguistic_study_of_impossible_language_learning_in_lms.md)
-- [Length-Induced Embedding Collapse in PLM-based Models](length-induced_embedding_collapse_in_plm-based_models.md)
+- [Explaining Matters: Leveraging Definitions and Semantic Expansion for Sexism Detection](explaining_matters_leveraging_definitions_and_semantic_expansion_for_sexism_dete.md)
 
 <!-- RELATED:END -->

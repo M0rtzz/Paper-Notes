@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Aha: Predicting What Matters Next — Online Highlight Detection Without Looking Ahead
 description: >-
@@ -123,8 +123,8 @@ Aha包含四个组件：(1) 冻结的SigLIP视觉编码器提取帧特征；(2) 
 
 - [Towards Predicting Any Human Trajectory in Context](towards_predicting_any_human_trajectory_in_context.md)
 - [DINO-Foresight: Looking into the Future with DINO](dino-foresight_looking_into_the_future_with_dino.md)
+- [Online Video Understanding: OVBench and VideoChat-Online](../../CVPR2025/autonomous_driving/online_video_understanding_ovbench_and_videochat-online.md)
 - [Generating Multimodal Driving Scenes via Next-Scene Prediction](../../CVPR2025/autonomous_driving/generating_multimodal_driving_scenes_via_next-scene_prediction.md)
 - [Where, What, Why: Towards Explainable Driver Attention Prediction](../../ICCV2025/autonomous_driving/where_what_why_towards_explainable_driver_attention_prediction.md)
-- [StreamForest: Efficient Online Video Understanding with Persistent Event Memory](streamforest_efficient_online_video_understanding_with_persistent_event_memory.md)
 
 <!-- RELATED:END -->

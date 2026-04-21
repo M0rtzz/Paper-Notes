@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EdgeDiT: Hardware-Aware Diffusion Transformers for Efficient On-Device Image Generation
 description: >-

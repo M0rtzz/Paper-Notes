@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CORDS: Continuous Representations of Discrete Structures
 description: >-
@@ -120,7 +120,7 @@ tags:
 - [Learning Procedural-aware Video Representations through State-Grounded Hierarchy Unfolding](../../AAAI2026/object_detection/learning_procedural-aware_video_representations_through_state-grounded_hierarchy.md)
 - [Continuous Vision-Language-Action Co-Learning with Semantic-Physical Alignment for Behavioral Cloning](../../AAAI2026/object_detection/continuous_vision-language-action_co-learning_with_semantic-.md)
 - [Actor-Critic for Continuous Action Chunks: A Reinforcement Learning Framework for Long-Horizon Robotic Manipulation with Sparse Reward](../../AAAI2026/object_detection/actor-critic_for_continuous_action_chunks_a_reinforcement_le.md)
-- [Zero-shot HOI Detection with MLLM-based Detector-agnostic Interaction Recognition](zero-shot_hoi_detection_with_mllm-based_detector-agnostic_interaction_recognitio.md)
-- [VLBiMan: Vision-Language Anchored One-Shot Demonstration Enables Generalizable Bimanual Robotic Manipulation](vlbiman_vision-language_anchored_one-shot_demonstration_enables_generalizable_bi.md)
+- [Thinking in Latents: Adaptive Anchor Refinement for Implicit Reasoning in LLMs](thinking_in_latents_adaptive_anchor_refinement_for_implicit_reasoning_in_llms.md)
+- [InfoDet: A Dataset for Infographic Element Detection](infodet_a_dataset_for_infographic_element_detection.md)
 
 <!-- RELATED:END -->

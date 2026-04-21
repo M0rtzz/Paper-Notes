@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GRAM: A Generative Foundation Reward Model for Reward Generalization
 description: >-
@@ -135,6 +135,6 @@ GRAM 提出用生成式（而非判别式）方法训练奖励模型——先通
 - [Visual-ERM: Reward Modeling for Visual Equivalence](../../CVPR2025/image_generation/visual-erm_reward_modeling_for_visual_equivalence.md)
 - [Discriminative Policy Optimization for Token-Level Reward Models](discriminative_policy_optimization_for_token-level_reward_models.md)
 - [EditReward: A Human-Aligned Reward Model for Instruction-Guided Image Editing](../../ICLR2026/image_generation/editreward_a_human-aligned_reward_model_for_instruction-guided_image_editing.md)
-- [Diffusion-VLA: Generalizable and Interpretable Robot Foundation Model via Self-Generated Reasoning](diffusion-vla_generalizable_and_interpretable_robot_foundation_model_via_self-ge.md)
+- [Reward Fine-Tuning Two-Step Diffusion Models via Learning Differentiable Latent-Space Surrogate Reward](../../CVPR2025/image_generation/reward_fine-tuning_two-step_diffusion_models_via_learning_differentiable_latent-.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SeaCache: Spectral-Evolution-Aware Cache for Accelerating Diffusion Models
 description: >-

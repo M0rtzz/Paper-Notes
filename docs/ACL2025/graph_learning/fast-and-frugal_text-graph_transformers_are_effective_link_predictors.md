@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fast-and-Frugal Text-Graph Transformers are Effective Link Predictors
 description: >-
@@ -171,8 +171,8 @@ Wikidata5M$_{\text{IND}}$ 测试集（迁移设置）：
 
 - [Multimodal Transformers are Hierarchical Modal-wise Heterogeneous Graphs](multimodal_transformers_are_hierarchical_modal-wise_heterogeneous_graphs.md)
 - [Relieving the Over-Aggregating Effect in Graph Transformers](../../NeurIPS2025/graph_learning/relieving_the_over-aggregating_effect_in_graph_transformers.md)
+- [Can Graph Neural Networks Learn Language with Extremely Weak Text Supervision?](can_graph_neural_networks_learn_language.md)
 - [FastJAM: a Fast Joint Alignment Model for Images](../../NeurIPS2025/graph_learning/fastjam_a_fast_joint_alignment_model_for_images.md)
 - [Unifying Text Semantics and Graph Structures for Temporal Text-attributed Graphs with LLMs](../../NeurIPS2025/graph_learning/unifying_text_semantics_and_graph_structures_for_temporal_text-attributed_graphs.md)
-- [Can Graph Neural Networks Learn Language with Extremely Weak Text Supervision?](can_graph_neural_networks_learn_language.md)
 
 <!-- RELATED:END -->

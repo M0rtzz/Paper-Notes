@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Utterance to Vividity: Training Expressive Subtitle Translation LLM via Adaptive Local Preference Optimization
 description: >-

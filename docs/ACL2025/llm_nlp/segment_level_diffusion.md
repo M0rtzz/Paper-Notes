@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Segment-Level Diffusion: A Framework for Controllable Long-Form Generation with Diffusion Language Models
 description: >-

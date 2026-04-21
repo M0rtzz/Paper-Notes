@@ -1,15 +1,14 @@
-﻿---
+---
 title: >-
   [论文解读] Galaxy Walker: Geometry-aware VLMs For Galaxy-scale Understanding
 description: >-
-  [CVPR 2025][天文VLM][几何感知] 提出几何感知的视觉语言模型，在球面和双曲空间中建模天体物理现象
+  [CVPR 2025][几何感知VLM] 提出 Galaxy Walker，一种几何感知的视觉语言模型，将球面空间（行星轨道）和双曲空间（黑洞）等非欧几何引入 VLM 框架，实现对天文现象的多尺度多几何理解。
 tags:
   - CVPR 2025
-  - 天文学
-  - VLM
-  - 非欧几何
-  - 球面空间
+  - 几何感知VLM
+  - 球面嵌入
   - 双曲空间
+  - 天文现象理解
 ---
 
 # Galaxy Walker: Geometry-aware VLMs For Galaxy-scale Understanding

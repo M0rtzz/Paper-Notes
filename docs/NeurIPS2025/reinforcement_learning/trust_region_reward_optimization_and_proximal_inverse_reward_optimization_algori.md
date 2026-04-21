@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Trust Region Reward Optimization and Proximal Inverse Reward Optimization Algorithm
 description: >-

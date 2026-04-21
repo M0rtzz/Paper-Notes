@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Machine Learning for Sustainable Rice Production: Region-Scale Monitoring of Water-Saving Practices in Punjab, India
 description: >-

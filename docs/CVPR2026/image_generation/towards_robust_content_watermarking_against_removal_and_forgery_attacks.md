@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Robust Content Watermarking Against Removal and Forgery Attacks
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Ψ-Sampler: Initial Particle Sampling for SMC-Based Inference-Time Reward Alignment in Score Models
 description: >-

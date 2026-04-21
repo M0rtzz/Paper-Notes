@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Adaptation of Pre-Trained Vision Transformer Underpinned by Approximation Theory
 description: >-

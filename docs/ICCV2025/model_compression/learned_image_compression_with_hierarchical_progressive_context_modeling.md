@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learned Image Compression with Hierarchical Progressive Context Modeling
 description: >-
@@ -142,10 +142,10 @@ tags:
 
 ## 相关论文
 
-- [Context Guided Transformer Entropy Modeling for Video Compression](context_guided_transformer_entropy_modeling_for_video_compression.md)
 - [LALIC: Linear Attention Modeling for Learned Image Compression](../../CVPR2025/model_compression/linear_attention_modeling_for_learned_image_compression.md)
+- [Context Guided Transformer Entropy Modeling for Video Compression](context_guided_transformer_entropy_modeling_for_video_compression.md)
 - [4DGCPro: Efficient Hierarchical 4D Gaussian Compression for Progressive Volumetric Video Streaming](../../NeurIPS2025/model_compression/4dgcpro_efficient_hierarchical_4d_gaussian_compression_for_p.md)
-- [DLF: Extreme Image Compression with Dual-generative Latent Fusion](dlf_extreme_image_compression_with_dual-generative_latent_fusion.md)
+- [Learned Image Compression with Dictionary-based Entropy Model](../../CVPR2025/model_compression/learned_image_compression_with_dictionary-based_entropy_model.md)
 - [DynaQuant: Dynamic Mixed-Precision Quantization for Learned Image Compression](../../AAAI2026/model_compression/dynaquant_dynamic_mixed-precision_quantization_for_learned_i.md)
 
 <!-- RELATED:END -->

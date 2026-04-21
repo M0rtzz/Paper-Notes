@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Universal Properties of Activation Sparsity in Modern Large Language Models
 description: >-

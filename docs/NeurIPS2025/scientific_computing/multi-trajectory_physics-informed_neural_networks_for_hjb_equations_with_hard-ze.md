@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multi-Trajectory Physics-Informed Neural Networks for HJB Equations with Hard-Zero Terminal Inventory: Optimal Execution on Synthetic & SPY Data
 description: >-

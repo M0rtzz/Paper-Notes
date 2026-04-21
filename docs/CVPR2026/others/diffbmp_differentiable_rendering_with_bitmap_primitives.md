@@ -138,6 +138,6 @@ DiffBMP 的流程：**输入**一组位图图元和目标图像 → 通过可微
 - [WildCap: Facial Albedo Capture in the Wild via Hybrid Inverse Rendering](wildcap_facial_albedo_capture_in_the_wild_via_hybrid_inverse_rendering.md)
 - [MeshA*: Efficient Path Planning With Motion Primitives](../../AAAI2026/others/mesha_efficient_path_planning_with_motion_primitives.md)
 - [Expandable and Differentiable Dual Memories with Orthogonal Regularization for Exemplar-free Continual Learning](../../AAAI2026/others/expandable_and_differentiable_dual_memories_with_orthogonal_regularization_for_e.md)
-- [Exact Learning of Arithmetic with Differentiable Agents](../../NeurIPS2025/others/exact_learning_of_arithmetic_with_differentiable_agents.md)
+- [A Differentiable Model of Supply-Chain Shocks](../../NeurIPS2025/others/a_differentiable_model_of_supply-chain_shocks.md)
 
 <!-- RELATED:END -->

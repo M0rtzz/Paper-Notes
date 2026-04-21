@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Static Benchmarks to Dynamic Protocol: Agent-Centric Text Anomaly Detection for Evaluating LLM Reasoning
 description: >-

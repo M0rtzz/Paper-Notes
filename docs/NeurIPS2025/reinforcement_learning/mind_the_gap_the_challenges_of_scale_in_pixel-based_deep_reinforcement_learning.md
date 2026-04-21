@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mind the GAP! The Challenges of Scale in Pixel-based Deep Reinforcement Learning
 description: >-

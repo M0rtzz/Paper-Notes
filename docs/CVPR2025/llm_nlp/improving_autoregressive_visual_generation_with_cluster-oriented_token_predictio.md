@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Improving Autoregressive Visual Generation with Cluster-Oriented Token Prediction
 description: >-
-  [CVPR 2025][视觉自回归生成] 提出IAR方法，通过码本重排和簇导向token预测弥合语言与视觉特征空间差异，提升LLM框架下的视觉生成质量
+  [CVPR 2025][LLM/NLP][自回归视觉生成] 本文深入分析LLM框架下视觉embedding空间的特性，发现视觉token间的相关性有助于实现更稳定的生成，据此提出IAR方法，通过码本重排（Codebook Rearrangement）和簇导向token预测（Cluster-Oriented Token Prediction）提升自回归视觉生成的效率和质量。
 tags:
   - CVPR 2025
-  - 视觉生成
-  - 自回归模型
+  - LLM/NLP
+  - 自回归视觉生成
+  - 码本重排
+  - 簇导向预测
   - LLM
-  - 图像生成
+  - token空间
 ---
 
 # Improving Autoregressive Visual Generation with Cluster-Oriented Token Prediction
@@ -91,6 +93,6 @@ IAR包含三个核心组件：(1) 码本重排——对VQGAN码本中的token按
 - [Classifier-to-Bias: Toward Unsupervised Automatic Bias Detection for Visual Classifiers](classifier-to-bias_toward_unsupervised_automatic_bias_detection_for_visual_class.md)
 - [Test-Time Visual In-Context Tuning](test-time_visual_in-context_tuning.md)
 - [AssetFormer: Modular 3D Assets Generation with Autoregressive Transformer](../../ICLR2026/llm_nlp/assetformer_modular_3d_assets_generation_with_autoregressive_transformer.md)
-- [SATA: Spatial Autocorrelation Token Analysis for Enhancing the Robustness of Vision Transformers](sata_spatial_autocorrelation_token_analysis_for_enhancing_the_robustness_of_visi.md)
+- [Imagine and Seek: Improving Composed Image Retrieval with an Imagined Proxy](imagine_and_seek_improving_composed_image_retrieval_with_an_imagined_proxy.md)
 
 <!-- RELATED:END -->

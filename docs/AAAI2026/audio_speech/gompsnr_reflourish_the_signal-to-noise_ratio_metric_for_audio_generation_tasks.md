@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GOMPSNR: Reflourish the Signal-to-Noise Ratio Metric for Audio Generation Tasks
 description: >-

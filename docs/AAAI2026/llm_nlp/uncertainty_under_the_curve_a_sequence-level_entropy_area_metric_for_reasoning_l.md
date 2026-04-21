@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Uncertainty Under the Curve: A Sequence-Level Entropy Area Metric for Reasoning LLMs
 description: >-

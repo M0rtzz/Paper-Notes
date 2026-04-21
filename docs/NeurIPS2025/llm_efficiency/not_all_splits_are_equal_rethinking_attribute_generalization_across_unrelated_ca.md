@@ -141,8 +141,8 @@ tags:
 
 - [Tensor Product Attention Is All You Need](tensor_product_attention_is_all_you_need.md)
 - [One Prompt Fits All: Universal Graph Adaptation for Pretrained Models](one_prompt_fits_all_universal_graph_adaptation_for_pretrained_models.md)
-- [Fourier Position Embedding: Enhancing Attention's Periodic Extension for Length Generalization](../../ICML2025/llm_efficiency/fourier_position_embedding_enhancing_attentions_periodic_extension_for_length_ge.md)
 - [Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models](../../ICLR2026/llm_efficiency/understanding_and_improving_length_generalization_in_hierarchical_sparse_attenti.md)
-- [Rethinking Uncertainty Estimation in LLMs: A Principled Single-Sequence Measure](../../ICLR2026/llm_efficiency/rethinking_uncertainty_estimation_in_llms_a_principled_single-sequence_measure.md)
+- [Sliding Windows Are Not the End: Exploring Full Ranking with Long-Context Large Language Models](../../ACL2025/llm_efficiency/sliding_windows_full_ranking.md)
+- [Scaling Context, Not Parameters: Training a Compact 7B Language Model for Efficient Long-Context Processing](../../ACL2025/llm_efficiency/scaling_context_not_parameters_training_a_compact_7b_language_model_for_efficien.md)
 
 <!-- RELATED:END -->

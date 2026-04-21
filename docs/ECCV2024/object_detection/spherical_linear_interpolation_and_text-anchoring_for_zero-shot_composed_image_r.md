@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spherical Linear Interpolation and Text-Anchoring for Zero-shot Composed Image Retrieval
 description: >-
@@ -150,9 +150,9 @@ tags:
 ## 相关论文
 
 - [Beyond Semantic Search: Towards Referential Anchoring in Composed Image Retrieval](../../CVPR2026/object_detection/beyond_semantic_search_towards_referential_anchoring_in_composed_image_retrieval.md)
-- [OpenKD: Opening Prompt Diversity for Zero- and Few-shot Keypoint Detection](openkd_opening_prompt_diversity_for_zero-_and_few-shot_keypoint_detection.md)
 - [Zero-Shot Detection of AI-Generated Images](zero-shot_detection_of_ai-generated_images.md)
-- [Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](be_yourself_bounded_attention_for_multi-subject_text-to-image_generation.md)
+- [OpenKD: Opening Prompt Diversity for Zero- and Few-shot Keypoint Detection](openkd_opening_prompt_diversity_for_zero-_and_few-shot_keypoint_detection.md)
+- [Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](be_yourself_bounded_attention_for_multisubject_texttoimage_g.md)
 - [Adaptive Multi-task Learning for Few-Shot Object Detection](adaptive_multi-task_learning_for_few-shot_object_detection.md)
 
 <!-- RELATED:END -->

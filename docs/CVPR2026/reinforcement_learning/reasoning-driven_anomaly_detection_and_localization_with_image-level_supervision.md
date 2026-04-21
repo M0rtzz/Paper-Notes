@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reasoning-Driven Anomaly Detection and Localization with Image-Level Supervision
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GenDoP: Auto-regressive Camera Trajectory Generation as a Director of Photography
 description: >-

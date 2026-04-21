@@ -1,14 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Image Quality Assessment: Investigating Causal Perceptual Effects with Abductive Counterfactual
 description: >-
-  [CVPR 2025][图像质量评估][因果推理] 提出基于溯因反事实推理的全参考图像质量评估方法，建模人类感知的因果机制
+  [CVPR 2025][FR-IQA] 提出基于溯因反事实推理的全参考图像质量评估方法（FR-IQA），通过建模"如果没有某种失真，感知质量会如何变化"的因果关系来更准确地评估图像质量。
 tags:
   - CVPR 2025
-  - 图像质量评估
-  - 因果推理
-  - 反事实分析
   - FR-IQA
+  - 因果感知
+  - 溯因推理
+  - 反事实
+  - 失真建模
 ---
 
 # Image Quality Assessment: Investigating Causal Perceptual Effects with Abductive Counterfactual
@@ -61,6 +62,6 @@ tags:
 - [Transferring Causal Effects using Proxies](../../NeurIPS2025/causal_inference/transferring_causal_effects_using_proxies.md)
 - [Isolated Causal Effects of Natural Language](../../ICML2025/causal_inference/isolated_causal_effects_of_natural_language.md)
 - [Conformal Prediction for Causal Effects of Continuous Treatments](../../NeurIPS2025/causal_inference/conformal_prediction_for_causal_effects_of_continuous_treatments.md)
-- [Towards Fine-Grained Interpretability: Counterfactual Explanations for Misclassification](towards_fine-grained_interpretability_counterfactual_explanations_for_misclassif.md)
+- [Estimating Causal Effects in Gaussian Linear SCMs with Finite Data](../../ICML2025/causal_inference/estimating_causal_effects_in_gaussian_linear_scms_with_finite_data.md)
 
 <!-- RELATED:END -->

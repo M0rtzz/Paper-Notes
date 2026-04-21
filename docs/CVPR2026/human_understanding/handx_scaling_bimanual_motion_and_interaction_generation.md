@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HandX: Scaling Bimanual Motion and Interaction Generation
 description: >-

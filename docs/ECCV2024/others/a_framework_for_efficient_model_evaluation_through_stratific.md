@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Framework for Efficient Model Evaluation through Stratification, Sampling, and Estimation
 description: >-
@@ -110,6 +110,6 @@ tags:
 - [Multiple-Policy Evaluation via Density Estimation](../../ICML2025/others/multiple-policy_evaluation_via_density_estimation.md)
 - [De-confounded Gaze Estimation](de-confounded_gaze_estimation.md)
 - [Active Measurement: Efficient Estimation at Scale](../../NeurIPS2025/others/active_measurement_efficient_estimation_at_scale.md)
-- [An Incremental Unified Framework for Small Defect Inspection](an_incremental_unified_framework_for_small_defect_inspection.md)
+- [AttnZero: Efficient Attention Discovery for Vision Transformers](attnzero_efficient_attention_discovery_for_vision_transformers.md)
 
 <!-- RELATED:END -->

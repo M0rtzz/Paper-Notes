@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Flow Fields in Attention for Controllable Person Image Generation
 description: >-
-  [CVPR 2025][person image generation] 提出 Leffa，在扩散模型注意力层中学习流场正则化，显式引导 target query 关注正确的 reference key 区域，在虚拟试衣和姿态迁移任务上有效减少细节失真，VITON-HD/DressCode/DeepFashion 上均 SOTA。
+  [CVPR 2025][图像生成][virtual try-on] 提出 Leffa（Learning Flow Fields in Attention），在扩散模型的注意力层中将 attention map 转换为流场并进行像素级正则化监督，显式引导 target query 关注正确的 reference key 区域，**零额外推理开销**地减少细粒度细节（纹理、文字、logo）失真，在虚拟试衣（VITON-HD、DressCode）和姿态迁移（DeepFashion）上均 SOTA。
 tags:
   - CVPR 2025
+  - 图像生成
   - virtual try-on
   - pose transfer
-  - diffusion model
-  - attention flow field
-  - person image generation
+  - 扩散模型
+  - flow field
+  - 注意力机制
 ---
 
 # Learning Flow Fields in Attention for Controllable Person Image Generation
@@ -147,10 +148,10 @@ Paired FID 从 3.99 降至 **2.06** (−48.4%)，提升极为显著。
 
 ## 相关论文
 
+- [DNF: Unconditional 4D Generation with Dictionary-Based Neural Fields](dnf_unconditional_4d_generation_with_dictionary-based_neural_fields.md)
+- [CTRL-O: Language-Controllable Object-Centric Visual Representation Learning](ctrl-o_language-controllable_object-centric_visual_representation_learning.md)
 - [Controllable Human Image Generation with Personalized Multi-Garments](controllable_human_image_generation_with_personalized_multi-garments.md)
 - [Multi-focal Conditioned Latent Diffusion for Person Image Synthesis](multi-focal_conditioned_latent_diffusion_for_person_image_synthesis.md)
 - [Consistent and Controllable Image Animation with Motion Diffusion Models](consistent_and_controllable_image_animation_with_motion_diffusion_models.md)
-- [Learning to Sample Effective and Diverse Prompts for Text-to-Image Generation](learning_to_sample_effective_and_diverse_prompts_for_text-to-image_generation.md)
-- [Learning Latent Proxies for Controllable Single-Image Relighting](../../CVPR2026/image_generation/learning_latent_proxies_for_controllable_single-image_relighting.md)
 
 <!-- RELATED:END -->

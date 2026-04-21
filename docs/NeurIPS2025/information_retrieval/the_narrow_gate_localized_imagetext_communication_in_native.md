@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Narrow Gate: Localized Image-Text Communication in Native Multimodal Models
 description: >-

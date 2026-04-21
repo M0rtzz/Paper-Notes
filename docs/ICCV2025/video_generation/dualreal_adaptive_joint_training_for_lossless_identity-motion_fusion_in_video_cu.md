@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] DualReal: Adaptive Joint Training for Lossless Identity-Motion Fusion in Video Customization
 description: >-
-  [ICCV 2025][视频理解][视频定制生成] DualReal 首次提出身份与运动的自适应联合训练框架，通过 Dual-aware Adaptation 和 StageBlender Controller 实现两个维度的无损融合，在 CLIP-I 和 DINO-I 指标上平均提升 21.7% 和 31.8%。
+  [ICCV 2025][视频定制生成] DualReal 首次提出身份与运动的自适应联合训练框架，通过 Dual-aware Adaptation 和 StageBlender Controller 实现两个维度的无损融合，在 CLIP-I 和 DINO-I 指标上平均提升 21.7% 和 31.8%。
 tags:
   - ICCV 2025
-  - 视频理解
   - 视频定制生成
   - 身份-运动融合
   - 联合训练
@@ -155,6 +154,6 @@ DualReal 在 CLIP-I 和 DINO-I 上分别比次优方法提升 11.1% 和 20.0%，
 - [DreamRelation: Relation-Centric Video Customization](dreamrelation_relation-centric_video_customization.md)
 - [Multi-identity Human Image Animation with Structural Video Diffusion](multi-identity_human_image_animation_with_structural_video_diffusion.md)
 - [MagicDrive-V2: High-Resolution Long Video Generation for Autonomous Driving with Adaptive Control](magicdrive-v2_high-resolution_long_video_generation_for_autonomous_driving_with_.md)
-- [D3: Training-Free AI-Generated Video Detection Using Second-Order Features](d3_training-free_ai-generated_video_detection_using_second-order_features.md)
+- [SymphoMotion: Joint Control of Camera Motion and Object Dynamics for Coherent Video Generation](../../CVPR2026/video_generation/symphomotion_joint_control_of_camera_motion_and_object_dynamics_for_coherent_vid.md)
 
 <!-- RELATED:END -->

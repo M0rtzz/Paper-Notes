@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Physical Basis of Prediction: World Model Formation in Neural Organoids via an LLM-Generated Curriculum
 description: >-

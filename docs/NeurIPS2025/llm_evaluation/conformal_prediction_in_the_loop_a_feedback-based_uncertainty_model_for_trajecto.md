@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Conformal Prediction in The Loop: A Feedback-Based Uncertainty Model for Trajectory Optimization
 description: >-
@@ -138,6 +138,6 @@ $$\sum_{\tau=t+1}^{T} \alpha_\tau \leq \alpha - \sum_{\tau=0}^{t} \beta_\tau$$
 - [Conformal Prediction Adaptive to Unknown Subpopulation Shifts](../../ICLR2026/llm_evaluation/conformal_prediction_adaptive_to_unknown_subpopulation_shifts.md)
 - [Semi-Supervised Conformal Prediction With Unlabeled Nonconformity Score](../../CVPR2026/llm_evaluation/semi-supervised_conformal_prediction_with_unlabeled_nonconformity_score.md)
 - [Asymmetric Duos: Sidekicks Improve Uncertainty](asymmetric_duos_sidekicks_improve_uncertainty.md)
-- [A Conformal Risk Control Framework for Granular Word Assessment and Uncertainty Calibration of CLIPScore Quality Estimates](../../ACL2025/llm_evaluation/a_conformal_risk_control_framework_for_granular_word_assessment_and_uncertainty_.md)
+- [Uncertainty Weighted Gradients for Model Calibration](../../CVPR2025/llm_evaluation/uncertainty_weighted_gradients_for_model_calibration.md)
 
 <!-- RELATED:END -->

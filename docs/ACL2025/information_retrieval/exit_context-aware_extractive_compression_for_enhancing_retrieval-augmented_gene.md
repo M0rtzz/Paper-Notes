@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EXIT: Context-Aware Extractive Compression for Enhancing Retrieval-Augmented Generation
 description: >-

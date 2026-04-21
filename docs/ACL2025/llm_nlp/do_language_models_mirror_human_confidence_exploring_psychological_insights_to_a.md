@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Do Language Models Mirror Human Confidence? Exploring Psychological Insights to Address Overconfidence in LLMs
 description: >-

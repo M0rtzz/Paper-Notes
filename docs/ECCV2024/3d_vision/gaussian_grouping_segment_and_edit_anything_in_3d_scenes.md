@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gaussian Grouping: Segment and Edit Anything in 3D Scenes
 description: >-

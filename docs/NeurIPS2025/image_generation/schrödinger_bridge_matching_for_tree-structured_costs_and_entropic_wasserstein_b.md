@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Schrödinger Bridge Matching for Tree-Structured Costs and Entropic Wasserstein Barycentres
 description: >-

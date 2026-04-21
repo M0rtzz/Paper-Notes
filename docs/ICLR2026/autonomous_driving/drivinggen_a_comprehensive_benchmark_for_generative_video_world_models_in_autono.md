@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DrivingGen: A Comprehensive Benchmark for Generative Video World Models in Autonomous Driving
 description: >-
@@ -126,8 +126,8 @@ DrivingGen 本身是评测基准，不涉及模型训练。轨迹从生成视频
 
 ## 相关论文
 
-- [Neural Volumetric World Models for Autonomous Driving](../../ECCV2024/autonomous_driving/neural_volumetric_world_models_for_autonomous_driving.md)
 - [ResWorld: Temporal Residual World Model for End-to-End Autonomous Driving](resworld_temporal_residual_world_model_for_end-to-end_autonomous_driving.md)
+- [Neural Volumetric World Models for Autonomous Driving](../../ECCV2024/autonomous_driving/neural_volumetric_world_models_for_autonomous_driving.md)
 - [An Instance-Centric Panoptic Occupancy Prediction Benchmark for Autonomous Driving](../../CVPR2026/autonomous_driving/an_instance-centric_panoptic_occupancy_prediction_benchmark_for_autonomous_drivi.md)
 - [DLWM: Dual Latent World Models enable Holistic Gaussian-centric Pre-training in Autonomous Driving](../../CVPR2026/autonomous_driving/dlwm_dual_latent_world_models_enable_holistic_gaussian-centric_pre-training_in_a.md)
 - [EgoDex: Learning Dexterous Manipulation from Large-Scale Egocentric Video](egodex_learning_dexterous_manipulation_from_large-scale_egocentric_video.md)

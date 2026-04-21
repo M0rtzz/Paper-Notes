@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MLR-Bench: Evaluating AI Agents on Open-Ended Machine Learning Research
 description: >-

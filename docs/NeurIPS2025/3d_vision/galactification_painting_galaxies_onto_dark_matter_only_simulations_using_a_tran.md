@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Galactification: Painting Galaxies onto Dark Matter Only Simulations Using a Transformer-Based Model
 description: >-

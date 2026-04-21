@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Discount Model Search for Quality Diversity Optimization in High-Dimensional Measure Spaces
 description: >-

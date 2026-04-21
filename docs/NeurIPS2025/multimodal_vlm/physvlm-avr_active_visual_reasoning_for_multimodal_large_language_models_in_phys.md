@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PhysVLM-AVR: Active Visual Reasoning for Multimodal Large Language Models in Physical Environments
 description: >-

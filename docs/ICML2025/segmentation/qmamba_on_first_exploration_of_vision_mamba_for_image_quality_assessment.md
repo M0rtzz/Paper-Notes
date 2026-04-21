@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] QMamba: On First Exploration of Vision Mamba for Image Quality Assessment
 description: >-

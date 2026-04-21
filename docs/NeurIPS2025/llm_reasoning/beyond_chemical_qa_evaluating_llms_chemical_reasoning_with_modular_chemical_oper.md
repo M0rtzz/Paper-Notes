@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Chemical QA: Evaluating LLM's Chemical Reasoning with Modular Chemical Operations
 description: >-

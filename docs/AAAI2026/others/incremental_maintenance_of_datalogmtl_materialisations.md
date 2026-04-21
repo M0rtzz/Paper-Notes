@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Incremental Maintenance of DatalogMTL Materialisations
 description: >-
@@ -112,9 +112,9 @@ tags:
 ## 相关论文
 
 - [An Incremental Unified Framework for Small Defect Inspection](../../ECCV2024/others/an_incremental_unified_framework_for_small_defect_inspection.md)
+- [Task-Agnostic Guided Feature Expansion for Class-Incremental Learning](../../CVPR2025/others/task-agnostic_guided_feature_expansion_for_class-incremental_learning.md)
 - [STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning](../../ECCV2024/others/stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning.md)
 - [AnalyticKWS: Towards Exemplar-Free Analytic Class Incremental Learning for Small-footprint Keyword Spotting](../../ACL2025/others/analytickws_towards_exemplar-free_analytic_class_incremental_learning_for_small-.md)
-- [DW-DGAT: Dynamically Weighted Dual Graph Attention Network for Neurodegenerative Disease Diagnosis](dw-dgat_dynamically_weighted_dual_graph_attention_network_for_neurodegenerative_.md)
-- [ParaMETA: Towards Learning Disentangled Paralinguistic Speaking Styles Representations](parameta_towards_learning_disentangled_paralinguistic_speaking_styles_representa.md)
+- [Model Counting for Dependency Quantified Boolean Formulas](model_counting_for_dependency_quantified_boolean_formulas.md)
 
 <!-- RELATED:END -->

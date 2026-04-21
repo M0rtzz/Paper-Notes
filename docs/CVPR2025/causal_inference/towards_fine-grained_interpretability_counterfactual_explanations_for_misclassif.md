@@ -1,14 +1,14 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Fine-Grained Interpretability: Counterfactual Explanations for Misclassification
 description: >-
-  [CVPR 2025][可解释性][反事实解释] 针对模型错误分类场景，提出细粒度的反事实解释方法
+  [CVPR 2025][反事实解释] 针对模型错误分类的场景，提出细粒度的反事实解释方法 — 不仅展示"模型看了什么"，还能回答"如果哪些区域不同，模型就能正确分类"。
 tags:
   - CVPR 2025
-  - 可解释性
   - 反事实解释
   - 错误分类
-  - 归因分析
+  - 细粒度归因
+  - 模型调试
 ---
 
 # Towards Fine-Grained Interpretability: Counterfactual Explanations for Misclassification

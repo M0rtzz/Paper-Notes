@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DIVA-GRPO: Enhancing Multimodal Reasoning through Difficulty-Adaptive Variant Advantage
 description: >-

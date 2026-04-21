@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Geometric Contact Flows: Contactomorphisms for Dynamics and Control
 description: >-
@@ -162,7 +162,7 @@ GCF 在二阶动力学场景（DigiLeTs）显著优于所有一阶方法，且�
 - [ForceVLA2: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation](../../CVPR2026/robotics/forcevla2_unleashing_hybrid_force-position_control_with_force_awareness_for_cont.md)
 - [BiAssemble: Learning Collaborative Affordance for Bimanual Geometric Assembly](biassemble_learning_collaborative_affordance_for_bimanual_geometric_assembly.md)
 - [Influence Malleability in Linearized Attention: Dual Implications of Non-Convergent NTK Dynamics](../../CVPR2025/robotics/influence_malleability_in_linearized_attention_dual_implications_of_non-converge.md)
-- [On Entropy Control in LLM-RL Algorithms](../../ICLR2026/robotics/on_entropy_control_in_llm-rl_algorithms.md)
 - [Action–Geometry Prediction with 3D Geometric Prior for Bimanual Manipulation](../../CVPR2026/robotics/actiongeometry_prediction_with_3d_geometric_prior.md)
+- [On Entropy Control in LLM-RL Algorithms](../../ICLR2026/robotics/on_entropy_control_in_llm-rl_algorithms.md)
 
 <!-- RELATED:END -->

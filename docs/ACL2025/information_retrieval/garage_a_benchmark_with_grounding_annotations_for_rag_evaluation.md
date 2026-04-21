@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GaRAGe: A Benchmark with Grounding Annotations for RAG Evaluation
 description: >-

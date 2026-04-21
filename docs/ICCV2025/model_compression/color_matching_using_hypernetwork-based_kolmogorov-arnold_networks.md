@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Color Matching Using Hypernetwork-Based Kolmogorov-Arnold Networks (cmKAN)
 description: >-

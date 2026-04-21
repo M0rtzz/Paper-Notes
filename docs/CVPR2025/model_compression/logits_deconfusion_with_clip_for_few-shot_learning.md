@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] Logits DeConfusion with CLIP for Few-Shot Learning
 description: >-
-  [CVPR 2025][few-shot learning] 提出 Logits DeConfusion（LDC）方法，通过多层级 Adapter 融合和类间去混淆模块，以残差结构学习并消除 CLIP logits 中的类间混淆，显著提升少样本分类性能。
+  [CVPR 2025][模型压缩][few-shot learning] 发现 CLIP 在下游任务中 logits 存在严重的类间混淆问题，提出 Logits DeConfusion（LDC）方法，通过多层级 Adapter 融合（MAF）增强特征表示，结合类间去混淆模块（ICD）以残差结构学习并消除混淆模式，在 11 个基准上取得 SOTA。
 tags:
   - CVPR 2025
+  - 模型压缩
   - few-shot learning
   - CLIP
   - logits deconfusion
-  - adapter
-  - 类间混淆
+  - inter-class confusion
+  - adapter fusion
+  - residual learning
 ---
 
 # Logits DeConfusion with CLIP for Few-Shot Learning
@@ -131,10 +133,10 @@ tags:
 
 ## 相关论文
 
-- [InsTaG: Learning Personalized 3D Talking Head from Few-Second Video](instag_learning_personalized_3d_talking_head_from_few-second_video.md)
+- [Tripartite Weight-Space Ensemble for Few-Shot Class-Incremental Learning](tripartite_weight-space_ensemble_for_few-shot_class-incremental_learning.md)
 - [Improving Zero-Shot Generalization for CLIP with Variational Adapter](../../ECCV2024/model_compression/improving_zero-shot_generalization_for_clip_with_variational_adapter.md)
+- [InsTaG: Learning Personalized 3D Talking Head from Few-Second Video](instag_learning_personalized_3d_talking_head_from_few-second_video.md)
 - [Targeted Forgetting of Image Subgroups in CLIP Models](targeted_forgetting_of_image_subgroups_in_clip_models.md)
-- [Enhancing Semi-supervised Learning with Zero-shot Pseudolabels](../../NeurIPS2025/model_compression/enhancing_semi-supervised_learning_with_zero-shot_pseudolabels.md)
 - [Knowledge Distillation with Refined Logits](../../ICCV2025/model_compression/knowledge_distillation_with_refined_logits.md)
 
 <!-- RELATED:END -->

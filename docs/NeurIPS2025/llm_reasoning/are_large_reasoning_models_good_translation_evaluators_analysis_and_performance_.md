@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Are Large Reasoning Models Good Translation Evaluators? Analysis and Performance Boost
 description: >-
@@ -118,9 +118,9 @@ tags:
 ## 相关论文
 
 - [Evaluating Judges as Evaluators: The JETTS Benchmark of LLM-as-Judges as Test-Time Scaling Evaluators](../../ICML2025/llm_reasoning/evaluating_judges_as_evaluators_the_jetts_benchmark_of_llm-as-judges_as_test-tim.md)
+- [DRT: Deep Reasoning Translation via Long Chain-of-Thought](../../ACL2025/llm_reasoning/drt_deep_reasoning_translation_via_long_chain-of-thought.md)
 - [ProofSketch: Efficient Verified Reasoning for Large Language Models](proofsketch_efficient_verified_reasoning_for_large_language_models.md)
 - [Reasoning Models Hallucinate More: Factuality-Aware Reinforcement Learning for Large Reasoning Models](reasoning_models_hallucinate_more_factuality-aware_reinforcement_learning_for_la.md)
-- [DRT: Deep Reasoning Translation via Long Chain-of-Thought](../../ACL2025/llm_reasoning/drt_deep_reasoning_translation_via_long_chain-of-thought.md)
-- [Topology of Reasoning: Understanding Large Reasoning Models through Reasoning Graph Properties](topology_of_reasoning_understanding_large_reasoning_models_through_reasoning_gra.md)
+- [Trade-offs in Large Reasoning Models: An Empirical Analysis of Deliberative and Adaptive Reasoning over Foundational Capabilities](../../AAAI2026/llm_reasoning/trade-offs_in_large_reasoning_models_an_empirical_analysis_of_deliberative_and_a.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Information Density Principle for MLLM Benchmarks
 description: >-

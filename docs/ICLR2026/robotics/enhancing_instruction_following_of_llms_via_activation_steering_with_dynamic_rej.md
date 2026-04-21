@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Instruction Following of LLMs via Activation Steering with Dynamic Rejection
 description: >-

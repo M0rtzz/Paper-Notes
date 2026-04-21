@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MovieRecapsQA: A Multimodal Open-Ended Video Question-Answering Benchmark
 description: >-

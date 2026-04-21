@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] nnterp: A Standardized Interface for Mechanistic Interpretability of Transformers
 description: >-
@@ -136,10 +136,10 @@ nnterp 是推理/分析工具，不涉及训练。内置的可解释性方法包
 
 ## 相关论文
 
-- [Mechanistic Interpretability of RNNs Emulating Hidden Markov Models](mechanistic_interpretability_of_rnns_emulating_hidden_markov_models.md)
 - [BubbleFormer: Forecasting Boiling with Transformers](bubbleformer_forecasting_boiling_with_transformers.md)
-- [Vision Transformers for Cosmological Fields: Application to Weak Lensing Mass Maps](vision_transformers_for_cosmological_fields_application_to_weak_lensing_mass_map.md)
 - [Emergent World Beliefs: Exploring Transformers in Stochastic Games](emergent_world_beliefs_exploring_transformers_in_stochastic_games.md)
+- [Validating Mechanistic Interpretations: An Axiomatic Approach](../../ICML2025/human_understanding/validating_mechanistic_interpretations_an_axiomatic_approach.md)
+- [Vision Transformers for Cosmological Fields: Application to Weak Lensing Mass Maps](vision_transformers_for_cosmological_fields_application_to_weak_lensing_mass_map.md)
 - [Policy Compatible Skill Incremental Learning via Lazy Learning Interface](policy_compatible_skill_incremental_learning_via_lazy_learning_interface.md)
 
 <!-- RELATED:END -->

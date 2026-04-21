@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpeechIQ: Speech-Agentic Intelligence Quotient Across Cognitive Levels in Voice Understanding by Large Language Models
 description: >-

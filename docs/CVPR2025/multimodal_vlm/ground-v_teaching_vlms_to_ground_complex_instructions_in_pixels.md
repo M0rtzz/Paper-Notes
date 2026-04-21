@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Ground-V: Teaching VLMs to Ground Complex Instructions in Pixels
 description: >-
-  [CVPR 2025][多模态VLM] 构建50万指令-分割对数据集Ground-V，覆盖五大真实世界挑战，大幅提升VLM像素级grounding能力
+  [CVPR 2025][多模态][视觉定位] 构建了Ground-V，一个包含50万指令-分割对的数据集，系统性解决真实世界指代分割中的五大挑战（幻觉引用、多对象、推理、多粒度、部件引用），训练后的VLM在gRefCOCO上N-Acc超越前SOTA 20%以上。
 tags:
   - CVPR 2025
-  - 视觉语言模型
-  - 指代分割
-  - 数据集
+  - 多模态
   - 视觉定位
-  - 幻觉缓解
+  - 指代分割
+  - 数据集构建
+  - 复杂指令
+  - 像素级grounding
 ---
 
 # Ground-V: Teaching VLMs to Ground Complex Instructions in Pixels
@@ -151,7 +152,7 @@ Ground-V的五个维度对不同测试子集贡献明确，删除任一维度会
 - [Aria-UI: Visual Grounding for GUI Instructions](../../ACL2025/multimodal_vlm/aria-ui_visual_grounding_for_gui_instructions.md)
 - [RoboSpatial: Teaching Spatial Understanding to 2D and 3D Vision-Language Models for Robotics](robospatial_teaching_spatial_understanding_to_2d_and_3d_vision-language_models_f.md)
 - [Teaching Large Language Models to Regress Accurate Image Quality Scores Using Score Distribution](teaching_large_language_models_to_regress_accurate_image_quality_scores_using_sc.md)
-- [DASH: Detection and Assessment of Systematic Hallucinations of VLMs](../../ICCV2025/multimodal_vlm/dash_detection_and_assessment_of_systematic_hallucinations_of_vlms.md)
+- [MoVE-KD: Knowledge Distillation for VLMs with Mixture of Visual Encoders](move-kd_knowledge_distillation_for_vlms_with_mixture_of_visual_encoders.md)
 - [Teaching Vision-Language Models to Ask: Resolving Ambiguity in Visual Questions](../../ACL2025/multimodal_vlm/teaching_vlm_ask_ambiguity.md)
 
 <!-- RELATED:END -->

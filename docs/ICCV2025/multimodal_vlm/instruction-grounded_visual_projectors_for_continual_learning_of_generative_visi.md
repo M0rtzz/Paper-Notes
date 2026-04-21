@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Instruction-Grounded Visual Projectors for Continual Learning of Generative Vision-Language Models
 description: >-

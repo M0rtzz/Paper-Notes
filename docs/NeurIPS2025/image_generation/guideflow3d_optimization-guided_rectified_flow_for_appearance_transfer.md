@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GuideFlow3D: Optimization-Guided Rectified Flow For Appearance Transfer
 description: >-

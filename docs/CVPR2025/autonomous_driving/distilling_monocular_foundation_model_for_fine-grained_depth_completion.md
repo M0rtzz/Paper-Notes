@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Distilling Monocular Foundation Model for Fine-grained Depth Completion
 description: >-
@@ -147,9 +147,9 @@ DMD3C采用两阶段蒸馏框架：第一阶段通过数据生成策略从无标
 ## 相关论文
 
 - [Distilling Multi-modal Large Language Models for Autonomous Driving](distilling_multi-modal_large_language_models_for_autonomous_driving.md)
+- [Prompting Depth Anything for 4K Resolution Accurate Metric Depth Estimation](prompting_depth_anything_for_4k_resolution_accurate_metric_depth_estimation.md)
+- [SuperPC: A Single Diffusion Model for Point Cloud Completion, Upsampling, Denoising, and Colorization](superpc_a_single_diffusion_model_for_point_cloud_completion_upsampling_denoising.md)
 - [PTC-Depth: Pose-Refined Monocular Depth Estimation with Temporal Consistency](../../CVPR2026/autonomous_driving/ptc-depth_pose-refined_monocular_depth_estimation_with_temporal_consistency.md)
 - [Fine-Grained Representation for Lane Topology Reasoning](../../AAAI2026/autonomous_driving/fine-grained_representation_for_lane_topology_reasoning.md)
-- [HoloLLM: Multisensory Foundation Model for Language-Grounded Human Sensing and Reasoning](../../NeurIPS2025/autonomous_driving/holollm_multisensory_foundation_model_for_language-grounded_human_sensing_and_re.md)
-- [Helvipad: A Real-World Dataset for Omnidirectional Stereo Depth Estimation](helvipad_a_real-world_dataset_for_omnidirectional_stereo_depth_estimation.md)
 
 <!-- RELATED:END -->

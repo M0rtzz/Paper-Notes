@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CMT: Mid-Training for Efficient Learning of Consistency, Mean Flow, and Flow Map Models
 description: >-

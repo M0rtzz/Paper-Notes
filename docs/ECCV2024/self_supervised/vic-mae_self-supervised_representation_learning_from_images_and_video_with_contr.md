@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders
 description: >-

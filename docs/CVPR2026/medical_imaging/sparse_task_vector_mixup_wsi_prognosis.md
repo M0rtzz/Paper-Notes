@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] STEPH: Sparse Task Vector Mixup with Hypernetworks for Efficient Knowledge Transfer in WSI Prognosis
 description: >-

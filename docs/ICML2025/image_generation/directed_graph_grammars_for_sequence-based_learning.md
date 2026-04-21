@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Directed Graph Grammars for Sequence-based Learning
 description: >-
@@ -161,7 +161,7 @@ DIGGED 在 FoM 优化上超越 CktGNN 9 倍以上（310.26 vs 33.44），甚至�
 - [GSPN-2: Efficient Parallel Sequence Modeling](../../NeurIPS2025/image_generation/gspn-2_efficient_parallel_sequence_modeling.md)
 - [Graph Distance as Surprise: Free Energy Minimization in Knowledge Graph Reasoning](../../NeurIPS2025/image_generation/graph_distance_as_surprise_free_energy_minimization_in_knowledge_graph_reasoning.md)
 - [Graph Generative Pre-trained Transformer (G2PT)](graph_generative_pre-trained_transformer.md)
-- [MamTiff-CAD: Multi-Scale Latent Diffusion with Mamba+ for Complex Parametric Sequence](../../ICCV2025/image_generation/mamtiff-cad_multi-scale_latent_diffusion_with_mamba_for_complex_parametric_seque.md)
+- [Parallel Sequence Modeling via Generalized Spatial Propagation Network](../../CVPR2025/image_generation/parallel_sequence_modeling_via_generalized_spatial_propagation_network.md)
 - [Generating Directed Graphs with Dual Attention and Asymmetric Encoding](../../ICLR2026/image_generation/generating_directed_graphs_with_dual_attention_and_asymmetric_encoding.md)
 
 <!-- RELATED:END -->

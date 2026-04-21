@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Convex Dominance in Deep Learning I: A Scaling Law of Loss and Learning Rate
 description: >-

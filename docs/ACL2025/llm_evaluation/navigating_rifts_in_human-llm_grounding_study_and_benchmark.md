@@ -145,6 +145,6 @@ Grounding forecaster 使用标准的因果语言建模目标（causal language m
 - [Towards Dynamic Theory of Mind: Evaluating LLM Adaptation to Temporal Evolution of Human States](towards_dynamic_theory_of_mind_evaluating_llm_adaptation_to_temporal_evolution_o.md)
 - [HalluLens: LLM Hallucination Benchmark](hallulens_llm_hallucination_benchmark.md)
 - [RGB-to-Polarization Estimation: A New Task and Benchmark Study](../../NeurIPS2025/llm_evaluation/rgb-to-polarization_estimation_a_new_task_and_benchmark_study.md)
-- [GRACE: A Granular Benchmark for Evaluating Model Calibration Against Human Calibration](grace_a_granular_benchmark_for_evaluating_model_calibration_against_human_calibr.md)
+- [RealHiTBench: A Comprehensive Realistic Hierarchical Table Benchmark for Evaluating LLM-Based Table Analysis](realhitbench_a_comprehensive_realistic_hierarchical_table_benchmark_for_evaluati.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ComLQ: Benchmarking Complex Logical Queries in Information Retrieval
 description: >-

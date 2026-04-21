@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] MOVIS: Enhancing Multi-Object Novel View Synthesis for Indoor Scenes
 description: >-
-  [CVPR 2025][novel view synthesis] 针对多物体室内场景 NVS，提出结构感知特征注入（深度+掩码）、辅助掩码预测任务、结构引导的时间步采样调度器三个关键设计，显著增强跨视角结构一致性。
+  [CVPR 2025][3D视觉][novel view synthesis] 针对多物体室内场景的新视角合成（NVS），通过注入结构感知特征（深度+物体掩码）、引入辅助掩码预测任务、设计结构引导的时间步采样调度器三项设计，显著提升跨视角的物体放置和几何一致性。
 tags:
   - CVPR 2025
+  - 3D视觉
   - novel view synthesis
   - multi-object
-  - diffusion model
-  - indoor scene
-  - structural consistency
+  - 扩散模型
+  - timestep scheduling
+  - cross-view consistency
 ---
 
 # MOVIS: Enhancing Multi-Object Novel View Synthesis for Indoor Scenes
@@ -137,10 +138,10 @@ MOVIS 在 IoU（物体放置准确性）上提升 **72%**（vs Zero-1-to-3），
 
 ## 相关论文
 
+- [MVGD: Zero-Shot Novel View and Depth Synthesis with Multi-View Geometric Diffusion](zero-shot_novel_view_and_depth_synthesis_with_multi-view_geometric_diffusion.md)
+- [Novel View Synthesis with Pixel-Space Diffusion Models](novel_view_synthesis_with_pixel-space_diffusion_models.md)
+- [Sharp-It: A Multi-view to Multi-view Diffusion Model for 3D Synthesis and Manipulation](sharp-it_a_multi-view_to_multi-view_diffusion_model_for_3d_synthesis_and_manipul.md)
 - [CoMapGS: Covisibility Map-based Gaussian Splatting for Sparse Novel View Synthesis](comapgs_covisibility_map-based_gaussian_splatting_for_sparse_novel_view_synthesi.md)
-- [IRIS: Inverse Rendering of Indoor Scenes from Low Dynamic Range Images](iris_inverse_rendering_of_indoor_scenes_from_low_dynamic_range_images.md)
-- [NerfBaselines: Consistent and Reproducible Evaluation of Novel View Synthesis Methods](../../NeurIPS2025/3d_vision/nerfbaselines_consistent_and_reproducible_evaluation_of_novel_view_synthesis_met.md)
-- [Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction](../../ICCV2025/3d_vision/boosting_multiview_indoor_3d_object_detection_via_adaptive_3.md)
-- [HOT3D: Hand and Object Tracking in 3D from Egocentric Multi-View Videos](hot3d_hand_and_object_tracking_in_3d_from_egocentric_multi-view_videos.md)
+- [SoundVista: Novel-View Ambient Sound Synthesis via Visual-Acoustic Binding](soundvista_novel-view_ambient_sound_synthesis_via_visual-acoustic_binding.md)
 
 <!-- RELATED:END -->

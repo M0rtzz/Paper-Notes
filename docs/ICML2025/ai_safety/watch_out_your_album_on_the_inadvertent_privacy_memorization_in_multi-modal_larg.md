@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Watch Out Your Album! On the Inadvertent Privacy Memorization in Multi-Modal Large Language Models
 description: >-

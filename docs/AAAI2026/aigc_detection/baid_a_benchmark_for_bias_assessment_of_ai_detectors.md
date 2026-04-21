@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BAID: A Benchmark for Bias Assessment of AI Detectors
 description: >-

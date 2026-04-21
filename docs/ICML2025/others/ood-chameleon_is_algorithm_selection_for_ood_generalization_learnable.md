@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OOD-Chameleon: Is Algorithm Selection for OOD Generalization Learnable?
 description: >-
@@ -135,6 +135,6 @@ OOD-Chameleon 接近 Oracle 上界（86.3% vs 100%），WG 误差仅比 Oracle �
 - [Provably Efficient Algorithm for Best Scoring Rule Identification in Online Principal-Agent Information Acquisition](provably_efficient_algorithm_for_best_scoring_rule_identification_in_online_prin.md)
 - [Modified K-means Algorithm with Local Optimality Guarantees](modified_k-means_algorithm_with_local_optimality_guarantees.md)
 - [Improved Generalization Bounds for Transductive Learning by Transductive Local Complexity and Its Applications](improved_generalization_bounds_for_transductive_learning_by_transductive_local_c.md)
-- [Distributionally Robust Feature Selection](../../NeurIPS2025/others/distributionally_robust_feature_selection.md)
+- [Optimal Sensor Scheduling and Selection for Continuous-Discrete Kalman Filtering with Auxiliary Dynamics](optimal_sensor_scheduling_and_selection_for_continuous-discrete_kalman_filtering.md)
 
 <!-- RELATED:END -->

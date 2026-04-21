@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 2S-ODIS: Two-Stage Omni-Directional Image Synthesis by Geometric Distortion Correction
 description: >-
@@ -109,6 +109,6 @@ tags:
 - [FineMatch: Aspect-based Fine-grained Image and Text Mismatch Detection and Correction](finematch_aspect-based_fine-grained_image_and_text_mismatch_detection_and_correc.md)
 - [Editable Image Elements for Controllable Synthesis](editable_image_elements_for_controllable_synthesis.md)
 - [Rejection Sampling IMLE: Designing Priors for Better Few-Shot Image Synthesis](rejection_sampling_imle_designing_priors_for_better_few-shot_image_synthesis.md)
-- [∞-Brush: Controllable Large Image Synthesis with Diffusion Models in Infinite Dimensions](inftybrush_controllable_large_image_synthesis_with_diffusion.md)
+- [FouriScale: A Frequency Perspective on Training-Free High-Resolution Image Synthesis](fouriscale_a_frequency_perspective_on_training-free_high-resolution_image_synthe.md)
 
 <!-- RELATED:END -->

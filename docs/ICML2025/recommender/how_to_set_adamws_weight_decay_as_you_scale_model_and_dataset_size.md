@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How to Set AdamW's Weight Decay as You Scale Model and Dataset Size
 description: >-

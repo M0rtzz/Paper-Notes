@@ -2,14 +2,15 @@
 title: >-
   [论文解读] Mono2Stereo: A Benchmark and Empirical Study for Stereo Conversion
 description: >-
-  [CVPR 2025][stereo conversion] 构建 240 万对立体图像的 Mono2Stereo 基准，提出面向立体感知的评估指标 SIoU 和双条件扩散模型 + Edge Consistency 损失，在图像质量和立体效果上同时超越现有方法。
+  [CVPR 2025][图像生成][stereo conversion] 构建首个大规模立体转换基准 Mono2Stereo（240 万对），提出立体质量指标 SIoU（与人类判断相关性 0.84 Spearman）和双条件扩散模型 + Edge Consistency 损失，同时解决单阶段方法立体效果弱和两阶段方法图像质量差的矛盾。
 tags:
   - CVPR 2025
+  - 图像生成
   - stereo conversion
-  - 3D vision
-  - diffusion model
+  - 扩散模型
+  - SIoU metric
+  - Edge Consistency loss
   - benchmark
-  - evaluation metric
 ---
 
 # Mono2Stereo: A Benchmark and Empirical Study for Stereo Conversion
@@ -150,9 +151,9 @@ Mono2Stereo 测试集上的对比（Table 3）:
 ## 相关论文
 
 - [A Comprehensive Study of Decoder-Only LLMs for Text-to-Image Generation](a_comprehensive_study_of_decoder-only_llms_for_text-to-image_generation.md)
+- [PQPP: A Joint Benchmark for Text-to-Image Prompt and Query Performance Prediction](pqpp_a_joint_benchmark_for_text-to-image_prompt_and_query_performance_prediction.md)
+- [Towards Scalable Human-Aligned Benchmark for Text-Guided Image Editing](towards_scalable_human-aligned_benchmark_for_text-guided_image_editing.md)
 - [From Words to Structured Visuals: A Benchmark and Framework for Text-to-Diagram Generation and Editing](from_words_to_structured_visuals_a_benchmark_and_framework_for_text-to-diagram_g.md)
-- [OVERT: A Benchmark for Over-Refusal Evaluation on Text-to-Image Models](../../NeurIPS2025/image_generation/overt_a_benchmark_for_over-refusal_evaluation_on_text-to-image_models.md)
-- [R-VC: Rhythm Controllable and Efficient Zero-Shot Voice Conversion via Shortcut Flow Matching](../../ACL2025/image_generation/rvc_rhythm_voice_conversion.md)
 - [Rethinking the Embodied Gap in Vision-and-Language Navigation: A Holistic Study of Physical and Visual Disparities](../../ICCV2025/image_generation/rethinking_the_embodied_gap_in_vision-and-language_navigation_a_holistic_study_o.md)
 
 <!-- RELATED:END -->

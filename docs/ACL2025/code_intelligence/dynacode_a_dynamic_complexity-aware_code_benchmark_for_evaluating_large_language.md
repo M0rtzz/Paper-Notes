@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DynaCode: A Dynamic Complexity-Aware Code Benchmark for Evaluating Large Language Models in Code Generation
 description: >-

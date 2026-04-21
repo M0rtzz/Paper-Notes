@@ -1,7 +1,16 @@
-﻿---
-title: "MoVE-KD: Knowledge Distillation for VLMs with Mixture of Visual Encoders"
-description: "首个从知识蒸馏角度融合多视觉编码器到单一VLM的方法，使用MoLE和注意力引导蒸馏策略"
-tags: ["knowledge distillation", "VLM", "mixture of experts", "visual encoder", "LoRA", "CVPR2025"]
+---
+title: >-
+  [论文解读] MoVE-KD: Knowledge Distillation for VLMs with Mixture of Visual Encoders
+description: >-
+  [CVPR 2025][多模态][知识蒸馏] 本文提出MoVE-KD——首个从知识蒸馏角度将多个视觉编码器（CLIP/EVA/ConvNeXt/SAM）的特长融合到单个编码器的框架，通过Mixture-of-LoRA-Experts (MoLE)缓解多教师知识冲突、利用CLIP的[CLS]注意力自适应加权蒸馏token和教师，在LLaVA/LLaVA-NeXT上实现一致提升。
+tags:
+  - CVPR 2025
+  - 多模态
+  - 知识蒸馏
+  - 视觉编码器融合
+  - 混合专家
+  - LoRA
+  - 注意力引导
 ---
 
 # MoVE-KD: Knowledge Distillation for VLMs with Mixture of Visual Encoders
@@ -117,10 +126,10 @@ tags: ["knowledge distillation", "VLM", "mixture of experts", "visual encoder", 
 
 ## 相关论文
 
-- [Uncertainty-Aware Knowledge Distillation for Multimodal Large Language Models](../../CVPR2026/multimodal_vlm/uncertainty-aware_knowledge_distillation_for_multimodal_large_language_models.md)
 - [HAWAII: Hierarchical Visual Knowledge Transfer for Efficient VLM](../../NeurIPS2025/multimodal_vlm/hawaii_hierarchical_visual_knowledge_transfer_for_efficient_vision-language_mode.md)
-- [Towards Understanding How Knowledge Evolves in Large Vision-Language Models](towards_understanding_how_knowledge_evolves_in_large_vision-language_models.md)
-- [VILA-M3: Enhancing Vision-Language Models with Medical Expert Knowledge](vila-m3_enhancing_vision-language_models_with_medical_expert_knowledge.md)
+- [Uncertainty-Aware Knowledge Distillation for Multimodal Large Language Models](../../CVPR2026/multimodal_vlm/uncertainty-aware_knowledge_distillation_for_multimodal_large_language_models.md)
+- [LLaVA-KD: A Framework of Distilling Multimodal Large Language Models](../../ICCV2025/multimodal_vlm/llava-kd_a_framework_of_distilling_multimodal_large_language_models.md)
 - [BadVision: Stealthy Backdoor Attack in Self-Supervised Learning Vision Encoders for Large Vision Language Models](stealthy_backdoor_attack_in_self-supervised_learning_vision_encoders_for_large_v.md)
+- [Ground-V: Teaching VLMs to Ground Complex Instructions in Pixels](ground-v_teaching_vlms_to_ground_complex_instructions_in_pixels.md)
 
 <!-- RELATED:END -->

@@ -2,9 +2,14 @@
 title: >-
   [论文解读] Visual Cues Enhance Predictive Turn-Taking for Two-Party Human Interaction
 description: >-
-   提出 MM-VAP 多模态预测性话轮转换模型，将面部表情、头部姿态和注视方向等视觉线索引入语音预测模型，在视频会议语料上将 hold/shift 预测准确率从 79% 提升至 84%。
+  [ACL 2025][Turn-Taking] 提出 MM-VAP 多模态预测性话轮转换模型，将面部表情、头部姿态和注视方向等视觉线索引入语音预测模型，在视频会议语料上将 hold/shift 预测准确率从 79% 提升至 84%。
 tags:
-
+  - ACL 2025
+  - Turn-Taking
+  - 多模态
+  - Facial Action Units
+  - Predictive Model
+  - Video Conferencing
 ---
 
 # Visual Cues Enhance Predictive Turn-Taking for Two-Party Human Interaction
@@ -137,8 +142,8 @@ MM-VAP 在所有沉默时长上都优于 VAP，且两者性能均随沉默时长
 ## 相关论文
 
 - [Enhancing Conversational Agents with Theory of Mind: Aligning Beliefs, Desires, and Intentions for Human-Like Interaction](enhancing_conversational_agents_with_theory_of_mind_aligning_beliefs_desires_and.md)
+- [VAQUUM: Are Vague Quantifiers Grounded in Visual Data?](vaquum_are_vague_quantifiers_grounded_in_visual_data.md)
 - [Unique Hard Attention: A Tale of Two Sides](unique_hard_attention_a_tale_of_two_sides.md)
-- [Sheaf Cohomology of Linear Predictive Coding Networks](../../NeurIPS2025/others/sheaf_cohomology_of_linear_predictive_coding_networks.md)
 - [DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
 - [A Little Human Data Goes A Long Way](a_little_human_data_goes_a_long_way.md)
 

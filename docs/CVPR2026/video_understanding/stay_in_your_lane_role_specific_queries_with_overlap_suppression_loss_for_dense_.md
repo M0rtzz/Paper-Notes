@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stay in your Lane: Role Specific Queries with Overlap Suppression Loss for Dense Video Captioning
 description: >-
@@ -167,6 +167,6 @@ YouCook2 上 F1 比 E2DVC 高 3.39；ActivityNet 上 Recall 和 Precision 接近
 - [FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking](fc-track_overlap-aware_post-association_correction_for_online_multi-object_track.md)
 - [VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning](videochatm1_collaborative_policy_planning_for_vide.md)
 - [CVA: Context-aware Video-text Alignment for Video Temporal Grounding](cva_context-aware_video-text_alignment_for_video_temporal_grounding.md)
-- [Explicit Temporal-Semantic Modeling for Dense Video Captioning via Context-Aware Cross-Modal Interaction](../../AAAI2026/video_understanding/explicit_temporal-semantic_modeling_for_dense_video_captioning_via_context-aware.md)
+- [FlexHook: Rethinking Two-Stage Referring-by-Tracking in RMOT](rethinking_twostage_referringbytracking_in_referri.md)
 
 <!-- RELATED:END -->

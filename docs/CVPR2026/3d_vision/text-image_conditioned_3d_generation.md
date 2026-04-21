@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Text–Image Conditioned 3D Generation
 description: >-
@@ -132,6 +132,6 @@ TIGON采用双分支架构，基于UniLat3D的整流流框架：输入为一张�
 - [ForgeDreamer: Industrial Text-to-3D Generation with Multi-Expert LoRA and Cross-View Hypergraph](forgedreamer_industrial_text-to-3d_generation_with_multi-expert_lora_and_cross-v.md)
 - [Pano3DComposer: Feed-Forward Compositional 3D Scene Generation from Single Panoramic Image](pano3dcomposer_feed-forward_compositional_3d_scene_generation_from_single_panora.md)
 - [NI-Tex: Non-isometric Image-based Garment Texture Generation](ni-tex_non-isometric_image-based_garment_texture_generation.md)
-- [MeshPad: Interactive Sketch-Conditioned Artist-Reminiscent Mesh Generation and Editing](../../ICCV2025/3d_vision/meshpad_interactive_sketch-conditioned_artist-reminiscent_mesh_generation_and_ed.md)
+- [PreciseCam: Precise Camera Control for Text-to-Image Generation](../../CVPR2025/3d_vision/precisecam_precise_camera_control_for_text-to-image_generation.md)
 
 <!-- RELATED:END -->

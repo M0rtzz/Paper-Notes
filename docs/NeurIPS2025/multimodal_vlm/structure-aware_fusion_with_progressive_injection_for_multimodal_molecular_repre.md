@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Structure-Aware Fusion with Progressive Injection for Multimodal Molecular Representation Learning
 description: >-
@@ -329,10 +329,10 @@ MuMo 在 LD50 任务上取得了 **27% 的显著提升**（0.615 → 0.782），
 
 ## 相关论文
 
+- [STRUCTURE: With Limited Data for Multimodal Alignment, Let the Structure Guide You](with_limited_data_for_multimodal_alignment_let_the_structure_guide_you.md)
 - [On the Value of Cross-Modal Misalignment in Multimodal Representation Learning](on_the_value_of_cross-modal_misalignment_in_multimodal_representation_learning.md)
 - [Aligning by Misaligning: Boundary-aware Curriculum Learning for Multimodal Alignment](aligning_by_misaligning_boundaryaware_curriculum_learning_fo.md)
 - [MIRe: Enhancing Multimodal Queries Representation via Fusion-Free Modality Interaction](../../ACL2025/multimodal_vlm/mire_enhancing_multimodal_queries_representation_via_fusion-free_modality_intera.md)
 - [Multimodal Negative Learning](multimodal_negative_learning.md)
-- [SRPO: Enhancing Multimodal LLM Reasoning via Reflection-Aware Reinforcement Learning](srpo_enhancing_multimodal_llm_reasoning_via_reflection-aware_reinforcement_learn.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CrossCheck-Bench: Diagnosing Compositional Failures in Multimodal Conflict Resolution
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RoCo-Sim: Enhancing Roadside Collaborative Perception through Foreground Simulation
 description: >-

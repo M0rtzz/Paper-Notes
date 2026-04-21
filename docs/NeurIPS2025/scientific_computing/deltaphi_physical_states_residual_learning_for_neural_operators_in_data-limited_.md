@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving
 description: >-
@@ -143,6 +143,6 @@ $$\mathcal{L} = \frac{1}{N} \sum_{i=1}^{N} \| \mathcal{N}_\theta(a_i, a_{k_i}) -
 - [Neural Emulator Superiority: When Machine Learning for PDEs Surpasses its Training Data](neural_emulator_superiority_when_machine_learning_for_pdes_surpasses_its_trainin.md)
 - [Hamiltonian Neural PDE Solvers through Functional Approximation](hamiltonian_neural_pde_solvers_through_functional_approximation.md)
 - [Enforcing Governing Equation Constraints in Neural PDE Solvers via Training-free Projections](enforcing_governing_equation_constraints_in_neural_pde_solvers_via_training-free.md)
-- [INC: An Indirect Neural Corrector for Auto-Regressive Hybrid PDE Solvers](inc_an_indirect_neural_corrector_for_auto-regressive_hybrid_pde_solvers.md)
+- [Accurate Differential Operators for Hybrid Neural Fields](../../CVPR2025/scientific_computing/accurate_differential_operators_for_hybrid_neural_fields.md)
 
 <!-- RELATED:END -->

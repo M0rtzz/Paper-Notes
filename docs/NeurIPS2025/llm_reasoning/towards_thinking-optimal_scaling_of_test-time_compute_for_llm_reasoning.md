@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Thinking-Optimal Scaling of Test-Time Compute for LLM Reasoning
 description: >-

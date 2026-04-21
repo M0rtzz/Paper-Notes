@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RefineVAD: Semantic-Guided Feature Recalibration for Weakly Supervised Video Anomaly Detection
 description: >-

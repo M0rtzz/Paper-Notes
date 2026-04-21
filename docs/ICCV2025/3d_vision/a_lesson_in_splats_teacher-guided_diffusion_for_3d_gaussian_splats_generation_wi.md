@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Lesson in Splats: Teacher-Guided Diffusion for 3D Gaussian Splats Generation with 2D Supervision
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tell Model Where to Look: Mitigating Hallucinations in MLLMs by Vision-Guided Attention
 description: >-

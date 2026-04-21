@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-Destructive Language Model
 description: >-

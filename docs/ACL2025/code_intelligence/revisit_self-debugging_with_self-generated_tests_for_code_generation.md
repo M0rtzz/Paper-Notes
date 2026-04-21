@@ -2,9 +2,14 @@
 title: >-
   [论文解读] Revisit Self-Debugging with Self-Generated Tests for Code Generation
 description: >-
-   系统性地研究了使用 LLM 自生成测试进行自调试（self-debugging）的效果，发现基于后执行信息的自调试在基础编程问题上反而降低性能（因自生成测试偏差），但基于执行中间状态（in-execution）的自调试可有效规避该偏差，在基础和竞赛题上均有提升。
+  [ACL 2025][code generation] 系统性地研究了使用 LLM 自生成测试进行自调试（self-debugging）的效果，发现基于后执行信息的自调试在基础编程问题上反而降低性能（因自生成测试偏差），但基于执行中间状态（in-execution）的自调试可有效规避该偏差，在基础和竞赛题上均有提升。
 tags:
-
+  - ACL 2025
+  - code generation
+  - self-debugging
+  - self-generated tests
+  - execution feedback
+  - LLM
 ---
 
 # Revisit Self-Debugging with Self-Generated Tests for Code Generation
@@ -151,7 +156,7 @@ tags:
 - [CodeDPO: Aligning Code Models with Self Generated and Verified Source Code](codedpo_code_alignment.md)
 - [A Self-Improving Coding Agent](../../NeurIPS2025/code_intelligence/a_selfimproving_coding_agent.md)
 - [MLDebugging: Towards Benchmarking Code Debugging Across Multi-Library Scenarios](mldebugging_towards_benchmarking_code_debugging_across_multi-library_scenarios.md)
+- [Personality-Guided Code Generation Using Large Language Models](personality_guided_code_gen.md)
 - [MM-ReCoder: Advancing Chart-to-Code Generation with Reinforcement Learning and Self-Correction](../../CVPR2026/code_intelligence/mm-recoder_advancing_chart-to-code_generation_with_reinforcement_learning_and_se.md)
-- [MoSE: Hierarchical Self-Distillation Enhances Early Layer Embeddings](../../AAAI2026/code_intelligence/mose_hierarchical_self-distillation_enhances_early_layer_embeddings.md)
 
 <!-- RELATED:END -->

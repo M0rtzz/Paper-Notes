@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] What Happened in LLM Layers when Trained for Fast vs. Slow Thinking: A Gradient Perspective
 description: >-

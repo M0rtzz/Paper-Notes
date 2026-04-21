@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FineTec: Fine-Grained Action Recognition Under Temporal Corruption via Skeleton Decomposition and Sequence Completion
 description: >-

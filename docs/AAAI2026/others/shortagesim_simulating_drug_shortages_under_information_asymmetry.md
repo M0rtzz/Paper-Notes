@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ShortageSim: Simulating Drug Shortages under Information Asymmetry
 description: >-

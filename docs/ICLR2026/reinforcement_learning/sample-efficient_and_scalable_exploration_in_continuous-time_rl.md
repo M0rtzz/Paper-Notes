@@ -124,6 +124,6 @@ $$R_N \leq \mathcal{O}\left(\sqrt{\mathcal{I}_N^3(\bm{f}^*, S) \cdot N}\right)$$
 - [Continuous-Time Value Iteration for Multi-Agent Reinforcement Learning](continuous-time_value_iteration_for_multi-agent_reinforcement_learning.md)
 - [Safe Continuous-time Multi-Agent Reinforcement Learning via Epigraph Form](safe_continuous-time_multi-agent_reinforcement_learning_via_epigraph_form.md)
 - [Spectral Bellman Method: Unifying Representation and Exploration in RL](spectral_bellman_method_unifying_representation_and_exploration_in_rl.md)
-- [Ensemble++: Scalable Exploration via Ensemble](../../NeurIPS2025/reinforcement_learning/scalable_exploration_via_ensemble.md)
+- [Unsupervised Learning of Efficient Exploration: Pre-training Adaptive Policies via Self-Imposed Goals](unsupervised_learning_of_efficient_exploration_pre-training_adaptive_policies_vi.md)
 
 <!-- RELATED:END -->

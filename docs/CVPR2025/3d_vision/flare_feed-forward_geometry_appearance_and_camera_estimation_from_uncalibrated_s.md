@@ -1,10 +1,10 @@
 ---
-title: "FLARE: Feed-forward Geometry, Appearance and Camera Estimation from Uncalibrated Sparse Views"
-conference: "CVPR 2025"
-arxiv: "2502.12138"
-code: "https://zhanghe3z.github.io/FLARE/"
-domain: "三维重建 / 稀疏视角"
-tags: ["sparse view reconstruction", "camera pose estimation", "3D Gaussian", "feed-forward", "cascaded learning"]
+title: >-
+  [论文解读] FLARE: Feed-forward Geometry, Appearance and Camera Estimation from Uncalibrated Sparse Views
+description: >-
+  [3D视觉] FLARE 提出级联学习范式（cascade learning），以相机位姿为桥梁将 3D 重建分解为位姿估计→局部几何→全局几何→高斯外观四个渐进阶段，在 0.5 秒内从 2-8 张未标定稀疏图像实现高质量的相机位姿、几何重建和新视角合成。
+tags:
+  - 3D视觉
 ---
 
 # FLARE: Feed-forward Geometry, Appearance and Camera Estimation from Uncalibrated Sparse Views
@@ -128,10 +128,10 @@ $$\mathcal{L}_{total} = \lambda_{pose}\mathcal{L}_{pose} + \lambda_{geo}\mathcal
 
 ## 相关论文
 
-- [Speed3R: Sparse Feed-forward 3D Reconstruction Models](../../CVPR2026/3d_vision/speed3r_sparse_feed-forward_3d_reconstruction_models.md)
-- [MAtCha Gaussians: Atlas of Charts for High-Quality Geometry and Photorealism From Sparse Views](matcha_gaussians_atlas_of_charts_for_high-quality_geometry_and_photorealism_from.md)
-- [FiffDepth: Feed-forward Transformation of Diffusion-Based Generators for Detailed Depth Estimation](../../ICCV2025/3d_vision/fiffdepth_feed-forward_transformation_of_diffusion-based_generators_for_detailed.md)
-- [Light3R-SfM: Towards Feed-forward Structure-from-Motion](light3r-sfm_towards_feed-forward_structure-from-motion.md)
-- [Depth Any Camera: Zero-Shot Metric Depth Estimation from Any Camera](depth_any_camera_zero-shot_metric_depth_estimation_from_any_camera.md)
+- [Dyn-HaMR: Recovering 4D Interacting Hand Motion from a Dynamic Camera](dyn_hamr_recovering_4d_interacting_hand_motion_from_a_dynamic_camera.md)
+- [Multi-view Reconstruction via SfM-guided Monocular Depth Estimation](multi-view_reconstruction_via_sfm-guided_monocular_depth_estimation.md)
+- [SuperMat: Physically Consistent PBR Material Estimation at Interactive Rates](../../ICCV2025/3d_vision/supermat_physically_consistent_pbr_material_estimation_at_interactive_rates.md)
+- [Depth AnyEvent: A Cross-Modal Distillation Paradigm for Event-Based Monocular Depth Estimation](../../ICCV2025/3d_vision/depth_anyevent_a_cross-modal_distillation_paradigm_for_event-based_monocular_dep.md)
+- [One Look is Enough: Seamless Patchwise Refinement for Zero-Shot Monocular Depth Estimation on High-Resolution Images](../../ICCV2025/3d_vision/one_look_is_enough_seamless_patchwise_refinement_for_zero-shot_monocular_depth_e.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Logical Expressiveness of Graph Neural Networks with Hierarchical Node Individualization
 description: >-

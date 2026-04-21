@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AAAR-1.0: Assessing AI's Potential to Assist Research
 description: >-

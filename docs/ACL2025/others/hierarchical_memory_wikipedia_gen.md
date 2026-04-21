@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hierarchical Memory Organization for Wikipedia Generation
 description: >-
@@ -135,8 +135,8 @@ tags:
 
 - [MindRef: Mimicking Human Memory for Hierarchical Reference Retrieval with Fine-Grained Location Awareness](mindref_mimicking_human_memory_hierarchical_reference_retrieval.md)
 - [If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?](if_attention_serves_as_a_cognitive_model_of_human_memory_retrieval_what_is_the_p.md)
+- [EpMAN: Episodic Memory AttentioN for Generalizing to Longer Contexts](epman_episodic_memory_attention_for_generalizing_to_longer_contexts.md)
 - [SHARE: An SLM-based Hierarchical Action CorREction Assistant for Text-to-SQL](share_text_to_sql_correction.md)
 - [Hierarchical Attention Generates Better Proofs](hierarchical_attention_generates_better_proofs.md)
-- [Hierarchical Bracketing Encodings for Dependency Parsing as Tagging](hierarchical_bracketing_dep_parsing.md)
 
 <!-- RELATED:END -->

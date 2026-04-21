@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Deadline-Aware, Energy-Efficient Control of Domestic Immersion Hot Water Heaters
 description: >-

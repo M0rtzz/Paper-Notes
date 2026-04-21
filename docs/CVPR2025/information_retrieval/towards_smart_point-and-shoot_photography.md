@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Smart Point-and-Shoot Photography
 description: >-
@@ -104,10 +104,10 @@ CCQA：$L_{CCQA} = L_{MSE} + L_{rank} + 0.1 \cdot L_{consistency}$。CPAM：$L_{
 
 ## 相关论文
 
-- [EZSR: Event-based Zero-Shot Recognition](ezsr_event-based_zero-shot_recognition.md)
-- [Preserving Clusters in Prompt Learning for Unsupervised Domain Adaptation](preserving_clusters_in_prompt_learning_for_unsupervised_domain_adaptation.md)
 - [Advancing Myopia To Holism: Fully Contrastive Language-Image Pre-training](advancing_myopia_to_holism_fully_contrastive_language-image_pre-training.md)
-- [Few-Shot Recognition via Stage-Wise Retrieval-Augmented Finetuning](few-shot_recognition_via_stage-wise_retrieval-augmented_finetuning.md)
+- [Preserving Clusters in Prompt Learning for Unsupervised Domain Adaptation](preserving_clusters_in_prompt_learning_for_unsupervised_domain_adaptation.md)
+- [EZSR: Event-based Zero-Shot Recognition](ezsr_event-based_zero-shot_recognition.md)
+- [GENIUS: A Generative Framework for Universal Multimodal Search](genius_a_generative_framework_for_universal_multimodal_search.md)
 - [LamRA: Large Multimodal Model as Your Advanced Retrieval Assistant](lamra_large_multimodal_model_as_your_advanced_retrieval_assistant.md)
 
 <!-- RELATED:END -->

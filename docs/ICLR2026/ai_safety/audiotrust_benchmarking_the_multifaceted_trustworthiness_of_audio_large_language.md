@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AudioTrust: Benchmarking the Multifaceted Trustworthiness of Audio Large Language Models
 description: >-

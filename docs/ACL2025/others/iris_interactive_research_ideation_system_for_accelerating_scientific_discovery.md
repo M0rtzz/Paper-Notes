@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] IRIS: Interactive Research Ideation System for Accelerating Scientific Discovery
 description: >-

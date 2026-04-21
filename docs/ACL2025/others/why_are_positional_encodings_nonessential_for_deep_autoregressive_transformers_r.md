@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Why Are Positional Encodings Nonessential for Deep Autoregressive Transformers? Revisiting a Petroglyph
 description: >-

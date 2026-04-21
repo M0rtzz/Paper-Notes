@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cross-Lingual Optimization for Language Transfer in Large Language Models
 description: >-

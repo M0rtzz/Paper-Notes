@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLM as Copilot for Coarse-Grained Vision-and-Language Navigation
 description: >-

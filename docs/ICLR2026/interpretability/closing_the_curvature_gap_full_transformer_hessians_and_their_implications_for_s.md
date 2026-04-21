@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Closing the Curvature Gap: Full Transformer Hessians and Their Implications for Scaling Laws
 description: >-

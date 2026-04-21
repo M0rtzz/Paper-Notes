@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GenCP: Towards Generative Modeling Paradigm of Coupled Physics
 description: >-

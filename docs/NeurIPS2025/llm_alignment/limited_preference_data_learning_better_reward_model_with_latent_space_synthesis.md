@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Limited Preference Data? Learning Better Reward Model with Latent Space Synthesis
 description: >-

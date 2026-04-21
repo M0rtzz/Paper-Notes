@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Struct2D: A Perception-Guided Framework for Spatial Reasoning in MLLMs
 description: >-

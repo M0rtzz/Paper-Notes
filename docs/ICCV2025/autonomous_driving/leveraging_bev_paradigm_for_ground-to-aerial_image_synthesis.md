@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SkyDiffusion: Leveraging BEV Paradigm for Ground-to-Aerial Image Synthesis
 description: >-

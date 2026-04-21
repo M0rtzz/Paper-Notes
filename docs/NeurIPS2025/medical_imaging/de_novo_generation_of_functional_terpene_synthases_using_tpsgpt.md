@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] De novo generation of functional terpene synthases using TpsGPT
 description: >-

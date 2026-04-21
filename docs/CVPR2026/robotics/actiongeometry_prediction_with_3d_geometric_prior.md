@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Action–Geometry Prediction with 3D Geometric Prior for Bimanual Manipulation
 description: >-

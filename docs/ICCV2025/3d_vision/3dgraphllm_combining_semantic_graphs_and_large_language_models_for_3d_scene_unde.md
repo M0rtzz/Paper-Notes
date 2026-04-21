@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3DGraphLLM: Combining Semantic Graphs and Large Language Models for 3D Scene Understanding
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rare Text Semantics Were Always There in Your Diffusion Transformer
 description: >-
@@ -148,7 +148,7 @@ $$\tilde{z}_t = \alpha \cdot (z_t - \bar{z}_t) + \bar{z}_t$$
 - [SparseDiT: Token Sparsification for Efficient Diffusion Transformer](sparsedit_token_sparsification_for_efficient_diffusion_transformer.md)
 - [Dense2MoE: Restructuring Diffusion Transformer to MoE for Efficient Text-to-Image Generation](../../ICCV2025/image_generation/dense2moe_restructuring_diffusion_transformer_to_moe_for_eff.md)
 - [Linear Differential Vision Transformer: Learning Visual Contrasts via Pairwise Differentials](linear_differential_vision_transformer_learning_visual_contrasts_via_pairwise_di.md)
-- [Your Text Encoder Can Be An Object-Level Watermarking Controller](../../ICCV2025/image_generation/your_text_encoder_can_be_an_object-level_watermarking_controller.md)
+- [Towards Transformer-Based Aligned Generation with Self-Coherence Guidance](../../CVPR2025/image_generation/towards_transformer-based_aligned_generation_with_self-coherence_guidance.md)
 - [LaVin-DiT: Large Vision Diffusion Transformer](../../CVPR2025/image_generation/lavin-dit_large_vision_diffusion_transformer.md)
 
 <!-- RELATED:END -->

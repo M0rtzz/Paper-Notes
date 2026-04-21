@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MindPower: Enabling Theory-of-Mind Reasoning in VLM-based Embodied Agents
 description: >-

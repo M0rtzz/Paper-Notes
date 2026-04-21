@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HAMMER: Harnessing MLLM via Cross-Modal Integration for Intention-Driven 3D Affordance Grounding
 description: >-

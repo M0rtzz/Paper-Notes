@@ -1,6 +1,16 @@
-﻿---
-description: 提出IP-CLIP框架通过轻量级IP-Prompt和风格增强分支保护VLM知识产权，授权域性能零下降，非授权域性能显著退化。
-tags: [CVPR2025, 知识产权保护, CLIP, 提示学习, 非可迁移性, 域授权, 特征银行]
+---
+title: >-
+  [论文解读] Vision-Language Model IP Protection via Prompt-based Learning
+description: >-
+  [CVPR 2025][多模态][知识产权保护] 提出IP-CLIP框架，通过轻量级IP-Prompt学习（域token+图像token）和风格增强分支，在冻结CLIP骨干上实现VLM的知识产权保护——让模型在授权域保持高准确率的同时故意降低在非授权域的性能，授权域准确率下降为0%。
+tags:
+  - CVPR 2025
+  - 多模态
+  - 知识产权保护
+  - CLIP
+  - 提示学习
+  - 域泛化限制
+  - 非迁移性学习
 ---
 
 # Vision-Language Model IP Protection via Prompt-based Learning
@@ -112,9 +122,9 @@ Target-free场景（无非授权域数据）：通过风格增强生成OOD数据
 ## 相关论文
 
 - [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+- [Cropper: Vision-Language Model for Image Cropping through In-Context Learning](cropper_vision-language_model_for_image_cropping_through_in-context_learning.md)
 - [VaMP: Variational Multi-Modal Prompt Learning for Vision-Language Models](../../NeurIPS2025/multimodal_vlm/vamp_variational_multi-modal_prompt_learning_for_vision-language_models.md)
 - [Visual and Semantic Prompt Collaboration for Generalized Zero-Shot Learning](visual_and_semantic_prompt_collaboration_for_generalized_zero-shot_learning.md)
-- [Cropper: Vision-Language Model for Image Cropping through In-Context Learning](cropper_vision-language_model_for_image_cropping_through_in-context_learning.md)
 - [Beyond Words: Augmenting Discriminative Richness via Diffusions in Unsupervised Prompt Learning](beyond_words_augmenting_discriminative_richness_via_diffusions_in_unsupervised_p.md)
 
 <!-- RELATED:END -->

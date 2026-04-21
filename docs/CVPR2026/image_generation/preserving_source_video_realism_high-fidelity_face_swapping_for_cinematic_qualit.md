@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Preserving Source Video Realism: High-Fidelity Face Swapping for Cinematic Quality
 description: >-

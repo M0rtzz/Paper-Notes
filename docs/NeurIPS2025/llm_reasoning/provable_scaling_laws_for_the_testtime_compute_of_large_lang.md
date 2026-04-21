@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Provable Scaling Laws for the Test-Time Compute of Large Language Models
 description: >-

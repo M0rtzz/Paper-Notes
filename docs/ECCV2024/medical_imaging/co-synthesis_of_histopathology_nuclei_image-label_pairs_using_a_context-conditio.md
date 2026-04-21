@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Co-synthesis of Histopathology Nuclei Image-Label Pairs using a Context-Conditioned Joint Diffusion Model
 description: >-
@@ -151,10 +151,10 @@ $$p_\theta^u(u_{t-1}|u_t) = p_\theta^i(i_{t-1}|u_t) \cdot p_\theta^d(d_{t-1}|u_t
 
 ## 相关论文
 
+- [TopoCellGen: Generating Histopathology Cell Topology with a Diffusion Model](../../CVPR2025/medical_imaging/topocellgen_generating_histopathology_cell_topology_with_a_diffusion_model.md)
 - [CoCoLIT: ControlNet-Conditioned Latent Image Translation for MRI to Amyloid PET Synthesis](../../AAAI2026/medical_imaging/cocolit_controlnet-conditioned_latent_image_translation_for_mri_to_amyloid_pet_s.md)
 - [Semantic and Visual Crop-Guided Diffusion Models for Heterogeneous Tissue Synthesis in Histopathology](../../NeurIPS2025/medical_imaging/semantic_and_visual_crop-guided_diffusion_models_for_heterogeneous_tissue_synthe.md)
 - [Virtual Multiplex Staining for Histological Images Using a Marker-wise Conditioned Diffusion Model](../../AAAI2026/medical_imaging/virtual_multiplex_staining_for_histological_images_using_a_marker-wise_condition.md)
-- [Latent Drifting in Diffusion Models for Counterfactual Medical Image Synthesis](../../CVPR2025/medical_imaging/latent_drifting_in_diffusion_models_for_counterfactual_medical_image_synthesis.md)
-- [RadEdit: Stress-Testing Biomedical Vision Models via Diffusion Image Editing](radedit_stress-testing_biomedical_vision_models_via_diffusion_image_editing.md)
+- [Noise-Consistent Siamese-Diffusion for Medical Image Synthesis and Segmentation](../../CVPR2025/medical_imaging/noise-consistent_siamese-diffusion_for_medical_image_synthesis_and_segmentation.md)
 
 <!-- RELATED:END -->

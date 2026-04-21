@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Hot Mess of AI: How Does Misalignment Scale With Model Intelligence and Task Complexity?
 description: >-

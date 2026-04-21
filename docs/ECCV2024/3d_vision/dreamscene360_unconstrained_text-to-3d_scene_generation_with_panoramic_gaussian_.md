@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DreamScene360: Unconstrained Text-to-3D Scene Generation with Panoramic Gaussian Splatting
 description: >-
@@ -147,7 +147,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{RGB}} + \lambda_1 \cdot \mathcal{L}_{\text{se
 - [DreamView: Injecting View-specific Text Guidance into Text-to-3D Generation](dreamview_injecting_view-specific_text_guidance_into_text-to-3d_generation.md)
 - [GVGEN: Text-to-3D Generation with Volumetric Representation](gvgen_text-to-3d_generation_with_volumetric_representation.md)
 - [TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)
-- [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
 - [GaussCtrl: Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing](gaussctrl_multi-view_consistent_text-driven_3d_gaussian_splatting_editing.md)
+- [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
 
 <!-- RELATED:END -->

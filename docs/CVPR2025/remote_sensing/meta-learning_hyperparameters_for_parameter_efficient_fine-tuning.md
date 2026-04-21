@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Meta-Learning Hyperparameters for Parameter Efficient Fine-Tuning
 description: >-
@@ -147,8 +147,8 @@ LoRA + MetaPEFT在平均精度上提升1.13%达到83.97%，尾部类别平均提
 
 - [ExPLoRA: Parameter-Efficient Extended Pre-Training to Adapt Vision Transformers under Domain Shifts](../../ICML2025/remote_sensing/explora_parameter-efficient_extended_pre-training_to_adapt_vision_transformers_u.md)
 - [Task-free Adaptive Meta Black-box Optimization](../../ICLR2026/remote_sensing/task-free_adaptive_meta_black-box_optimization.md)
-- [Adapting Fine-Grained Cross-View Localization to Areas without Fine Ground Truth](../../ECCV2024/remote_sensing/adapting_fine-grained_cross-view_localization_to_areas_without_fine_ground_truth.md)
 - [DiSciPLE: Learning Interpretable Programs for Scientific Visual Discovery](disciple_learning_interpretable_programs_for_scientific_visual_discovery.md)
+- [Adapting Fine-Grained Cross-View Localization to Areas without Fine Ground Truth](../../ECCV2024/remote_sensing/adapting_fine-grained_cross-view_localization_to_areas_without_fine_ground_truth.md)
 - [RS-vHeat: Heat Conduction Guided Efficient Remote Sensing Foundation Model](../../ICCV2025/remote_sensing/rs-vheat_heat_conduction_guided_efficient_remote_sensing_foundation_model.md)
 
 <!-- RELATED:END -->

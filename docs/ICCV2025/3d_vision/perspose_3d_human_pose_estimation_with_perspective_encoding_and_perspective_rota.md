@@ -128,7 +128,7 @@ PersPose在多个基准上取得一致的SOTA或竞争性结果。
 - [Bring Your Rear Cameras for Egocentric 3D Human Pose Estimation](bring_your_rear_cameras_for_egocentric_3d_human_pose_estimation.md)
 - [Pano360: Perspective to Panoramic Vision with Geometric Consistency](../../CVPR2025/3d_vision/pano360_perspective_to_panoramic_vision_with_geometric_consistency.md)
 - [Extreme Rotation Estimation in the Wild](../../CVPR2025/3d_vision/extreme_rotation_estimation_in_the_wild.md)
+- [BoxDreamer: Dreaming Box Corners for Generalizable Object Pose Estimation](boxdreamer_dreaming_box_corners_for_generalizable_object_pose_estimation.md)
 - [RePoseD: Efficient Relative Pose Estimation with Known Depth Information](reposed_efficient_relative_pose_estimation_with_known_depth_information.md)
-- [BoxDreamer: Dreaming Box Corners for Generalizable Object Pose Estimation](boxdreamer_dreaming_box_corners_for_generalizable_object_pos.md)
 
 <!-- RELATED:END -->

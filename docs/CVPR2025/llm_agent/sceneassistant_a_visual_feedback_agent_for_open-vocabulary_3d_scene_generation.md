@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SceneAssistant: A Visual Feedback Agent for Open-Vocabulary 3D Scene Generation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MPMAvatar: Learning 3D Gaussian Avatars with Accurate and Robust Physics-Based Dynamics
 description: >-

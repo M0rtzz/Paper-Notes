@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] mRAKL: Multilingual Retrieval-Augmented Knowledge Graph Construction for Low-Resourced Languages
 description: >-

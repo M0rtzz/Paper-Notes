@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reasoning Circuits in Language Models: A Mechanistic Interpretation of Syllogistic Inference
 description: >-

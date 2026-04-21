@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Path of Least Resistance: Guiding LLM Reasoning Trajectories with Prefix Consensus
 description: >-

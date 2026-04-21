@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiffuMatch: Category-Agnostic Spectral Diffusion Priors for Robust Non-rigid Shape Matching
 description: >-
@@ -140,6 +140,6 @@ $$\mathcal{L}_{total}(C_{raw}) = \mathcal{L}_{proper}(C_{raw}) + \mathcal{L}_{SD
 - [Harnessing Text-to-Image Diffusion Models for Category-Agnostic Pose Estimation](../../ECCV2024/image_generation/harnessing_text-to-image_diffusion_models_for_category-agnostic_pose_estimation.md)
 - [Learning Few-Step Diffusion Models by Trajectory Distribution Matching](learning_few-step_diffusion_models_by_trajectory_distribution_matching.md)
 - [Dual Recursive Feedback on Generation and Appearance Latents for Pose-Robust Text-to-Image Diffusion](dual_recursive_feedback_on_generation_and_appearance_latents_for_pose-robust_tex.md)
-- [Unlocking the Potential of Diffusion Priors in Blind Face Restoration](unlocking_the_potential_of_diffusion_priors_in_blind_face_restoration.md)
+- [Balanced Image Stylization with Style Matching Score](balanced_image_stylization_with_style_matching_score.md)
 
 <!-- RELATED:END -->

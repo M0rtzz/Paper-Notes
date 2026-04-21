@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] High-order Equivariant Flow Matching for Density Functional Theory Hamiltonian Prediction
 description: >-

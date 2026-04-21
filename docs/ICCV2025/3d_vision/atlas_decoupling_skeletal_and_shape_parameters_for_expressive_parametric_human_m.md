@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ATLAS: Decoupling Skeletal and Shape Parameters for Expressive Parametric Human Modeling
 description: >-

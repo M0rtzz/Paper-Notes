@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mind the Cost of Scaffold! Benign Clients May Even Become Accomplices of Backdoor Attack
 description: >-
@@ -155,8 +155,8 @@ BadSFL 包含 4 个步骤：
 
 ## 相关论文
 
-- [Infighting in the Dark: Multi-Label Backdoor Attack in Federated Learning](../../CVPR2025/ai_safety/infighting_in_the_dark_multi-label_backdoor_attack_in_federated_learning.md)
 - [Taught Well, Learned Ill: Towards Distillation-Conditional Backdoor Attack](../../NeurIPS2025/ai_safety/taught_well_learned_ill_towards_distillation-conditional_backdoor_attack.md)
+- [Infighting in the Dark: Multi-Label Backdoor Attack in Federated Learning](../../CVPR2025/ai_safety/infighting_in_the_dark_multi-label_backdoor_attack_in_federated_learning.md)
 - [INACTIVE: Invisible Backdoor Attack against Self-supervised Learning](../../CVPR2025/ai_safety/invisible_backdoor_attack_against_self-supervised_learning.md)
 - [Find a Scapegoat: Poisoning Membership Inference Attack and Defense to Federated Learning](find_a_scapegoat_poisoning_membership_inference_attack_and_defense_to_federated_.md)
 - [Backdoor Mitigation by Distance-Driven Detoxification](backdoor_mitigation_by_distance-driven_detoxification.md)

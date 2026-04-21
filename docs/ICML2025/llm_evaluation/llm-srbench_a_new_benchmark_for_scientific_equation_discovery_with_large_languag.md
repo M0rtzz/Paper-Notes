@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLM-SRBench: A New Benchmark for Scientific Equation Discovery with LLMs
 description: >-

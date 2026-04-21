@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EvoTok: A Unified Image Tokenizer via Residual Latent Evolution for Visual Understanding and Generation
 description: >-
@@ -135,10 +135,10 @@ $$\mathcal{L}_{\text{total}} = \underbrace{(\mathcal{L}_R + \lambda_P \mathcal{L
 
 ## 相关论文
 
+- [TokenFlow: Unified Image Tokenizer for Multimodal Understanding and Generation](tokenflow_unified_image_tokenizer_for_multimodal_understanding_and_generation.md)
 - [Dual Diffusion for Unified Image Generation and Understanding](dual_diffusion_for_unified_image_generation_and_understanding.md)
-- [DreamOmni: Unified Image Generation and Editing](dreamomni_unified_image_generation_and_editing.md)
-- [Spectral Image Tokenizer](../../ICCV2025/image_generation/spectral_image_tokenizer.md)
 - [JanusFlow: Harmonizing Autoregression and Rectified Flow for Unified Multimodal Understanding and Generation](janusflow_harmonizing_autoregression_and_rectified_flow_for_unified_multimodal_u.md)
-- [Holistic Tokenizer for Autoregressive Image Generation](../../ICCV2025/image_generation/holistic_tokenizer_for_autoregressive_image_generation.md)
+- [OmniGen: Unified Image Generation](omnigen_unified_image_generation.md)
+- [Towards Understanding and Quantifying Uncertainty for Text-to-Image Generation](towards_understanding_and_quantifying_uncertainty_for_text-to-image_generation.md)
 
 <!-- RELATED:END -->

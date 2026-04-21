@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Blended Point Cloud Diffusion for Localized Text-guided Shape Editing
 description: >-
@@ -151,10 +151,10 @@ BlendedPC 采用两阶段策略：
 
 ## 相关论文
 
+- [PrEditor3D: Fast and Precise 3D Shape Editing](../../CVPR2025/3d_vision/preditor3d_fast_and_precise_3d_shape_editing.md)
 - [Image-Guided Shape-from-Template Using Mesh Inextensibility Constraints](image-guided_shape-from-template_using_mesh_inextensibility_constraints.md)
 - [Unleashing Vecset Diffusion Model for Fast Shape Generation (FlashVDM)](unleashing_vecset_diffusion_model_for_fast_shape_generation.md)
 - [Efficient Spiking Point Mamba for Point Cloud Analysis](efficient_spiking_point_mamba_for_point_cloud_analysis.md)
 - [UniVG: A Generalist Diffusion Model for Unified Image Generation and Editing](univg_a_generalist_diffusion_model_for_unified_image_generation_and_editing.md)
-- [BUFFER-X: Towards Zero-Shot Point Cloud Registration in Diverse Scenes](bufferx_towards_zeroshot_point_cloud_registration_in_diverse.md)
 
 <!-- RELATED:END -->

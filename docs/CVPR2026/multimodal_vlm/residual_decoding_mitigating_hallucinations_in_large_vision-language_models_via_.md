@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Residual Decoding: Mitigating Hallucinations in Large Vision-Language Models via History-Aware Residual Guidance
 description: >-

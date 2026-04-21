@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Publication Choice Problem
 description: >-
@@ -129,7 +129,7 @@ tags:
 - [Automated Reproducibility Has a Problem Statement Problem](automated_reproducibility_has_a_problem_statement_problem.md)
 - [Generating Plausible Distractors for Multiple-Choice Questions via Student Choice Prediction](../../ACL2025/others/distractor_gen_multiple_choice.md)
 - [Optimizer Choice Matters for the Emergence of Neural Collapse](../../ICLR2026/others/optimizer_choice_matters_for_the_emergence_of_neural_collapse.md)
-- [CellStream: Dynamical Optimal Transport Informed Embeddings for Reconstructing Cellular Trajectories from Snapshots Data](cellstream_dynamical_optimal_transport_informed_embeddings_for_reconstructing_ce.md)
-- [Cash Flow Underwriting with Bank Transaction Data: Advancing MSME Financial Inclusion in Malaysia](cash_flow_underwriting_with_bank_transaction_data_advancing_msme_financial_inclu.md)
+- [Agent-SAMA: State-Aware Mobile Assistant](agent-sama_state-aware_mobile_assistant.md)
+- [Rethinking Flow and Diffusion Bridge Models for Speech Enhancement](rethinking_flow_and_diffusion_bridge_models_for_speech_enhancement.md)
 
 <!-- RELATED:END -->

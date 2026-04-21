@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CognitionCapturerPro: Towards High-Fidelity Visual Decoding from EEG/MEG via Multi-modal Information and Asymmetric Alignment
 description: >-

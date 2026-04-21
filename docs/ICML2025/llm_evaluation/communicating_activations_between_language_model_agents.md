@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Communicating Activations Between Language Model Agents
 description: >-

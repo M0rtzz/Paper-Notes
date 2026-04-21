@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How Numerical Precision Affects Arithmetical Reasoning Capabilities of LLMs
 description: >-
@@ -134,7 +134,7 @@ tags:
 - [Characterizing the Expressivity of Fixed-Precision Transformer Language Models](../../NeurIPS2025/llm_nlp/characterizing_the_expressivity_of_fixed-precision_transformer_language_models.md)
 - [Linear Transformers Implicitly Discover Unified Numerical Algorithms](../../NeurIPS2025/llm_nlp/linear_transformers_implicitly_discover_unified_numerical_algorithms.md)
 - [PlanGenLLMs: A Modern Survey of LLM Planning Capabilities](plangenllms_planning_survey.md)
+- [Lost in Literalism: How Supervised Training Shapes Translationese in LLMs](lost_in_literalism_how_supervised_training_shapes_translationese_in_llms.md)
 - [Stepwise Reasoning Disruption Attack of LLMs](stepwise_reasoning_disruption_attack_of_llms.md)
-- [Are Your LLMs Capable of Stable Reasoning?](are_your_llms_capable_of_stable_reasoning.md)
 
 <!-- RELATED:END -->

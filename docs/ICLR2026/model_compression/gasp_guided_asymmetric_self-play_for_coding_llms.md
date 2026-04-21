@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GASP: Guided Asymmetric Self-Play For Coding LLMs
 description: >-
@@ -131,6 +131,6 @@ LiveCodeBench v5 (Qwen2.5-Coder-7B)：
 - [SeeDNorm: Self-Rescaled Dynamic Normalization](seednorm_self-rescaled_dynamic_normalization.md)
 - [Reference-Guided Machine Unlearning](reference-guided_machine_unlearning.md)
 - [Draft-based Approximate Inference for LLMs](draft-based_approximate_inference_for_llms.md)
-- [AMiD: Knowledge Distillation for LLMs with α-mixture Assistant Distribution](amid_knowledge_distillation_for_llms_with_α-mixture_assistant_distribution.md)
+- [Highly Efficient and Effective LLMs with Multi-Boolean Architectures](highly_efficient_and_effective_llms_with_multi-boolean_architectures.md)
 
 <!-- RELATED:END -->

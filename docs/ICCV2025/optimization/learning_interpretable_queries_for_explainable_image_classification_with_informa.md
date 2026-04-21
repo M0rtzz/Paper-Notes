@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Interpretable Queries for Explainable Image Classification with Information Pursuit
 description: >-
@@ -139,9 +139,9 @@ K-Learned优于或可比4种SOTA概念瓶颈模型。
 ## 相关论文
 
 - [Cooperative Pseudo Labeling for Unsupervised Federated Classification](cooperative_pseudo_labeling_for_unsupervised_federated_classification.md)
-- [Generalization in Federated Learning: A Conditional Mutual Information Framework](../../ICML2025/optimization/generalization_in_federated_learning_a_conditional_mutual_information_framework.md)
 - [Synonymous Variational Inference for Perceptual Image Compression](../../ICML2025/optimization/synonymous_variational_inference_for_perceptual_image_compression.md)
 - [From Information to Generative Exponent: Learning Rate Induces Phase Transitions in SGD](../../NeurIPS2025/optimization/from_information_to_generative_exponent_learning_rate_induces_phase_transitions_.md)
 - [Learning Orthogonal Multi-Index Models: A Fine-Grained Information Exponent Analysis](../../NeurIPS2025/optimization/learning_orthogonal_multi-index_models_a_fine-grained_information_exponent_analy.md)
+- [Improving the Straight-Through Estimator with Zeroth-Order Information](../../NeurIPS2025/optimization/improving_the_straight-through_estimator_with_zeroth-order_information.md)
 
 <!-- RELATED:END -->

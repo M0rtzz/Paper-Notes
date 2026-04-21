@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CogniBench: A Legal-inspired Framework and Dataset for Assessing Cognitive Faithfulness of Large Language Models
 description: >-

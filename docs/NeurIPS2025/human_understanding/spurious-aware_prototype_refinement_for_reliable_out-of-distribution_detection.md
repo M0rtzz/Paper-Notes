@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SPROD: Spurious-Aware Prototype Refinement for Reliable Out-of-Distribution Detection
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Provable Ordering and Continuity in Vision-Language Pretraining for Generalizable Embodied Agents
 description: >-

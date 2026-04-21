@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OneRestore: A Universal Restoration Framework for Composite Degradation
 description: >-
@@ -154,8 +154,8 @@ tags:
 
 - [GENIUS: A Generative Framework for Universal Multimodal Search](../../CVPR2025/information_retrieval/genius_a_generative_framework_for_universal_multimodal_search.md)
 - [Generalized Contrastive Learning for Universal Multimodal Retrieval](../../NeurIPS2025/information_retrieval/generalized_contrastive_learning_for_universal_multimodal_re.md)
-- [Grounding Language Models for Visual Entity Recognition](grounding_language_models_for_visual_entity_recognition.md)
+- [ArtVLM: Attribute Recognition Through Vision-Based Prefix Language Modeling](artvlm_attribute_recognition_through_visionbased_prefix_lang.md)
 - [Towards Open-Ended Visual Recognition with Large Language Model](towards_open-ended_visual_recognition_with_large_language_models.md)
-- [ArtVLM: Attribute Recognition Through Vision-Based Prefix Language Modeling](artvlm_attribute_recognition_through_vision-based_prefix_language_modeling.md)
+- [Multi-Label Cluster Discrimination for Visual Representation Learning](multi-label_cluster_discrimination_for_visual_representation_learning.md)
 
 <!-- RELATED:END -->

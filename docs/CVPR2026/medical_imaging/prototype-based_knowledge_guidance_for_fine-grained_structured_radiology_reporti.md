@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting
 description: >-

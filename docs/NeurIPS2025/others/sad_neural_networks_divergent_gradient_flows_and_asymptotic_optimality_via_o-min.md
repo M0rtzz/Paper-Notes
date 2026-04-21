@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SAD Neural Networks: Divergent Gradient Flows and Asymptotic Optimality via o-minimal Structures
 description: >-

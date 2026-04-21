@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cross-Lingual Transfer of Cultural Knowledge: An Asymmetric Phenomenon
 description: >-

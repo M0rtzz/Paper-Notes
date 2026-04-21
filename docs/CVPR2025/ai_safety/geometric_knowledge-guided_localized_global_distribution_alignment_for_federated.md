@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Geometric Knowledge-Guided Localized Global Distribution Alignment for Federated Learning
 description: >-

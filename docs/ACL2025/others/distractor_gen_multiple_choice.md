@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generating Plausible Distractors for Multiple-Choice Questions via Student Choice Prediction
 description: >-

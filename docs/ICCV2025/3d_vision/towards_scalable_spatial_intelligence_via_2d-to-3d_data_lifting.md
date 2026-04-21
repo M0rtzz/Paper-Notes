@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Scalable Spatial Intelligence via 2D-to-3D Data Lifting
 description: >-

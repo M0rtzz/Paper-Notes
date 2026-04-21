@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neural Emulator Superiority: When Machine Learning for PDEs Surpasses its Training Data
 description: >-

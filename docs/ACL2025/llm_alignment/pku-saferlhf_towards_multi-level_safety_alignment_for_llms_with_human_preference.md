@@ -2,9 +2,16 @@
 title: >-
   [论文解读] PKU-SafeRLHF: Towards Multi-Level Safety Alignment for LLMs with Human Preference
 description: >-
-  [LLM对齐] 发布 PKU-SafeRLHF 大规模安全偏好数据集，包含 44.6k 精炼 prompt、265k 带安全元标签的 QA 对和 166.8k 偏好数据，首次引入 19 种危害类别和 3 级严重程度标注，并训练了严重程度敏感的审核模型（93% 准确率）和基于该数据的 SafeRLHF 对齐 pipeline。
+  [ACL 2025][LLM对齐][safety alignment] 发布 PKU-SafeRLHF 大规模安全偏好数据集，包含 44.6k 精炼 prompt、265k 带安全元标签的 QA 对和 166.8k 偏好数据，首次引入 19 种危害类别和 3 级严重程度标注，并训练了严重程度敏感的审核模型（93% 准确率）和基于该数据的 SafeRLHF 对齐 pipeline。
 tags:
+  - ACL 2025
   - LLM对齐
+  - safety alignment
+  - RLHF
+  - preference data
+  - harm categories
+  - severity levels
+  - moderation
 ---
 
 # PKU-SafeRLHF: Towards Multi-Level Safety Alignment for LLMs with Human Preference
@@ -201,10 +208,10 @@ PKU-SafeRLHF 对齐模型 vs Alpaca 原始模型的胜率：
 
 ## 相关论文
 
-- [SynthesizeMe! Inducing Persona-Guided Prompts for Personalized Reward Models in LLMs](synthesizeme_persona_prompts.md)
-- [Dynamic Scaling of Unit Tests for Code Reward Modeling](dynamic_scaling_of_unit_tests_for_code_reward_modeling.md)
 - [MTSA: Multi-Turn Safety Alignment for LLMs through Multi-Round Red-Teaming](mtsa_multi-turn_safety_alignment_for_llms_through_multi-round_red-teaming.md)
 - [AgentAlign: Navigating Safety Alignment in the Shift from Informative to Agentic LLMs](agentalign_navigating_safety_alignment_in_the_shift_from_informative_to_agentic_.md)
-- [Probability-Consistent Preference Optimization for Enhanced LLM Reasoning](probability-consistent_preference_optimization_for_enhanced_llm_reasoning.md)
+- [LSSF: Safety Alignment via Low-Rank Safety Subspace Fusion](lssf_safety_subspace.md)
+- [AutoMixAlign: Adaptive Data Mixing for Multi-Task Preference Optimization in LLMs](automixalign_adaptive_data_mixing.md)
+- [M2S: Multi-turn to Single-turn jailbreak in Red Teaming for LLMs](m2s_multiturn_to_singleturn_jailbreak_in.md)
 
 <!-- RELATED:END -->

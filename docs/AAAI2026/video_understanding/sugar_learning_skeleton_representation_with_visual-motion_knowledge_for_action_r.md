@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SUGAR: Learning Skeleton Representation with Visual-Motion Knowledge for Action Recognition
 description: >-

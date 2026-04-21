@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AEDR: Training-Free AI-Generated Image Attribution via Autoencoder Double-Reconstruction
 description: >-

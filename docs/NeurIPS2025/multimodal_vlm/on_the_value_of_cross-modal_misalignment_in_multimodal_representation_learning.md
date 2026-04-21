@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the Value of Cross-Modal Misalignment in Multimodal Representation Learning
 description: >-

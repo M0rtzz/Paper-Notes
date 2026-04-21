@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Equi-GSPR: Equivariant SE(3) Graph Network Model for Sparse Point Cloud Registration
 description: >-

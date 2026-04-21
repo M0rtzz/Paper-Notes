@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Continuous Subspace Optimization for Continual Learning (CoSO)
 description: >-
@@ -211,10 +211,10 @@ tags:
 
 ## 相关论文
 
-- [Contrastive Consolidation of Top-Down Modulations Achieves Sparsely Supervised Continual Learning](contrastive_consolidation_of_top-down_modulations_achieves_sparsely_supervised_c.md)
 - [Revisiting Supervision for Continual Representation Learning](../../ECCV2024/self_supervised/revisiting_supervision_for_continual_representation_learning.md)
 - [Do Your Best and Get Enough Rest for Continual Learning](../../CVPR2025/self_supervised/do_your_best_and_get_enough_rest_for_continual_learning.md)
 - [PonderLM: Pretraining Language Models to Ponder in Continuous Space](../../ICLR2026/self_supervised/ponderlm_pretraining_language_models_to_ponder_in_continuous_space.md)
 - [PromptCCD: Learning Gaussian Mixture Prompt Pool for Continual Category Discovery](../../ECCV2024/self_supervised/promptccd_learning_gaussian_mixture_prompt_pool_for_continual_category_discovery.md)
+- [Fly-CL: A Fly-Inspired Framework for Enhancing Efficient Decorrelation and Reduced Training Time in Pre-trained Model-based Continual Representation Learning](../../ICLR2026/self_supervised/fly-cl_a_fly-inspired_framework_for_enhancing_efficient_decorrelation_and_reduce.md)
 
 <!-- RELATED:END -->

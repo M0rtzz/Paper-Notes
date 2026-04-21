@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SynDaCaTE: A Synthetic Dataset for Evaluating Part-Whole Hierarchical Inference
 description: >-

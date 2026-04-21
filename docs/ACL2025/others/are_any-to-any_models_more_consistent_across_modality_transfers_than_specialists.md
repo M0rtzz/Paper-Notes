@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Are Any-to-Any Models More Consistent Across Modality Transfers Than Specialists?
 description: >-

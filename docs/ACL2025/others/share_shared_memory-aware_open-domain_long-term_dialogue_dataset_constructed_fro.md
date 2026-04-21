@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SHARE: Shared Memory-Aware Open-Domain Long-Term Dialogue Dataset Constructed from Movie Script
 description: >-

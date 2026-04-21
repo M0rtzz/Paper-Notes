@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] REP: Keys to Robust Edits — From Theoretical Insights to Practical Advances
 description: >-
@@ -129,8 +129,8 @@ REP（Robust Edit Pathway）是一个即插即用适配器模块，在MLP的键�
 
 - [Double Descent Meets Out-of-Distribution Detection: Theoretical Insights and Empirical Analysis](../../NeurIPS2025/others/double_descent_meets_out-of-distribution_detection_theoretical_insights_and_empi.md)
 - [Graphically Speaking: Unmasking Abuse in Social Media with Conversation Insights](graphically_speaking_unmasking_abuse_in_social_media_with_conversation_insights.md)
-- [A Practical Approach for Building Production-Grade Conversational Agents with Workflow Graphs](a_practical_approach_for_building_production-grade_conversational_agents_with_wo.md)
 - [TARGA: Targeted Synthetic Data Generation for Practical Reasoning over Structured Data](targa_targeted_synthetic_data_generation_for_practical_reasoning_over_structured.md)
+- [A Practical Approach for Building Production-Grade Conversational Agents with Workflow Graphs](a_practical_approach_for_building_production-grade_conversational_agents_with_wo.md)
 - [Towards Robust ESG Analysis Against Greenwashing Risks: A3CG](a3cg_esg_greenwashing.md)
 
 <!-- RELATED:END -->

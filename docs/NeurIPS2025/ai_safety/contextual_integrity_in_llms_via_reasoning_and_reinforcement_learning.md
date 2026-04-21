@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Contextual Integrity in LLMs via Reasoning and Reinforcement Learning
 description: >-
@@ -148,6 +148,6 @@ tags:
 - [PrivaCI-Bench: Evaluating Privacy with Contextual Integrity and Legal Compliance](../../ACL2025/ai_safety/privacibench_evaluating_privacy_with_contextual_integrity.md)
 - [Reverse Engineering Human Preferences with Reinforcement Learning](reverse_engineering_human_preferences_with_reinforcement_learning.md)
 - [LLM Strategic Reasoning: Agentic Study through Behavioral Game Theory](llm_strategic_reasoning_agentic_study_through_behavioral_gam.md)
-- [Evaluating the Promise and Pitfalls of LLMs in Hiring Decisions](evaluating_the_promise_and_pitfalls_of_llms_in_hiring_decisions.md)
+- [On the Robustness of Verbal Confidence of LLMs in Adversarial Attacks](on_the_robustness_of_verbal_confidence_of_llms_in_adversarial_attacks.md)
 
 <!-- RELATED:END -->

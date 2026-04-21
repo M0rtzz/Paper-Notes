@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CorrCLIP: Reconstructing Patch Correlations in CLIP for Open-Vocabulary Semantic Segmentation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Are Vision Language Models Ready for Clinical Diagnosis? A 3D Medical Benchmark for Tumor-centric Visual Question Answering
 description: >-

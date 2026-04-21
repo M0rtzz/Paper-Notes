@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FACT-GS: Frequency-Aligned Complexity-Aware Texture Reparameterization for 2D Gaussian Splatting
 description: >-

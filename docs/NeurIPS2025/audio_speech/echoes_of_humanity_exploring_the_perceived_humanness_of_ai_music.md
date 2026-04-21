@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Echoes of Humanity: Exploring the Perceived Humanness of AI Music
 description: >-

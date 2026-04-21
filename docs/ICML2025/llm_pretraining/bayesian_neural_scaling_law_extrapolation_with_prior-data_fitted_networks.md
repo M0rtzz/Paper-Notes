@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bayesian Neural Scaling Law Extrapolation with Prior-Data Fitted Networks
 description: >-

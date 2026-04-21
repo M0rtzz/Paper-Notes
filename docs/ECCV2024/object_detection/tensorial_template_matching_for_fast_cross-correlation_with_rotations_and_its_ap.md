@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tensorial Template Matching for Fast Cross-Correlation with Rotations and Its Application for Tomography
 description: >-
@@ -160,8 +160,8 @@ Frobenius 范数作为检测分数的代理可能存在少量位移。精化策�
 
 - [DEIM: DETR with Improved Matching for Fast Convergence](../../CVPR2025/object_detection/deim_detr_with_improved_matching_for_fast_convergence.md)
 - [Few-Shot Pattern Detection via Template Matching and Regression](../../ICCV2025/object_detection/few-shot_pattern_detection_via_template_matching_and_regression.md)
-- [Towards Natural Language-Guided Drones: GeoText-1652 Benchmark with Spatial Relation Matching](towards_natural_language-guided_drones_geotext-1652_benchmark_with_spatial_relat.md)
+- [Towards Natural Language-Guided Drones: GeoText-1652 Benchmark with Spatial Relation Matching](towards_natural_languageguided_drones_geotext1652_bench.md)
 - [WeCromCL: Weakly Supervised Cross-Modality Contrastive Learning for Transcription-only Supervised Text Spotting](wecromcl_weakly_supervised_cross-modality_contrastive_learning_for_transcription.md)
-- [On Calibration of Object Detectors: Pitfalls, Evaluation and Baselines](on_calibration_of_object_detectors_pitfalls_evaluation_and_baselines.md)
+- [ReCon-GS: Continuum-Preserved Gaussian Streaming for Fast and Compact Reconstruction](../../NeurIPS2025/object_detection/recon-gs_continuum-preserved_gaussian_streaming_for_fast_and_compact_reconstruct.md)
 
 <!-- RELATED:END -->

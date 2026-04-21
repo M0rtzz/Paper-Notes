@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] JOPP-3D: Joint Open Vocabulary Semantic Segmentation on Point Clouds and Panoramas
 description: >-

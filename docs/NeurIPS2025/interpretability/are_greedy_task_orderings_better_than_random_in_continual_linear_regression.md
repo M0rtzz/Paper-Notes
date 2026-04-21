@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Are Greedy Task Orderings Better Than Random in Continual Linear Regression?
 description: >-

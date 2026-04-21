@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FiRA: Can We Achieve Full-Rank Training of LLMs Under Low-Rank Constraint?
 description: >-
@@ -201,6 +201,6 @@ Fira 在极低 rank 下仍接近全秩性能，而 GaLore 急剧退化。这说�
 - [Beyond Higher Rank: Token-wise Input-Output Projections for Efficient Low-Rank Adaptation](beyond_higher_rank_token-wise_input-output_projections_for_efficient_low-rank_ad.md)
 - [GoRA: Gradient-Driven Adaptive Low Rank Adaptation](gora_gradient-driven_adaptive_low_rank_adaptation.md)
 - [Accurate and Efficient Low-Rank Model Merging in Core Space](accurate_and_efficient_low-rank_model_merging_in_core_space.md)
-- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
 
 <!-- RELATED:END -->

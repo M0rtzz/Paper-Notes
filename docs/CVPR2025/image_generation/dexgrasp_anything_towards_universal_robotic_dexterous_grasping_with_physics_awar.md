@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DexGrasp Anything: Towards Universal Robotic Dexterous Grasping with Physics Awareness
 description: >-
@@ -70,8 +70,8 @@ tags:
 
 - [InterMimic: Towards Universal Whole-Body Control for Physics-Based Human-Object Interactions](intermimic_towards_universal_whole-body_control_for_physics-based_human-object_i.md)
 - [CustAny: Customizing Anything from A Single Example](custany_customizing_anything_from_a_single_example.md)
+- [UIBDiffusion: Universal Imperceptible Backdoor Attack for Diffusion Models](uibdiffusion_universal_imperceptible_backdoor_attack_for_diffusion_models.md)
+- [UniReal: Universal Image Generation and Editing via Learning Real-world Dynamics](unireal_universal_image_generation_and_editing_via_learning_real-world_dynamics.md)
 - [OminiControl: Minimal and Universal Control for Diffusion Transformer](../../ICCV2025/image_generation/ominicontrol_minimal_and_universal_control_for_diffusion_transformer.md)
-- [Orient Anything V2: Unifying Orientation and Rotation Understanding](../../NeurIPS2025/image_generation/orient_anything_v2_unifying_orientation_and_rotation_understanding.md)
-- [Grasp2Grasp: Vision-Based Dexterous Grasp Translation via Schrödinger Bridges](../../NeurIPS2025/image_generation/grasp2grasp_vision-based_dexterous_grasp_translation_via_schrödinger_bridges.md)
 
 <!-- RELATED:END -->

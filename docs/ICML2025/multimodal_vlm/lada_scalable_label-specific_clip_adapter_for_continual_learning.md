@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LADA: Scalable Label-Specific CLIP Adapter for Continual Learning
 description: >-

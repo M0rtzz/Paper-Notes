@@ -1,14 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] SWIFT: Sliding Window Reconstruction for Few-Shot Training-Free Generated Video Attribution
 description: >-
-  [CVPR 2026][视频理解][视频溯源] 首次定义"少样本免训练生成视频溯源"任务，提出SWIFT方法，利用3D VAE的时间压缩特性设计滑动窗口差分重建策略，通过正常/损坏重建损失比值作为归属信号，在5个SOTA模型上实现94%平均溯源准确率。
+  [CVPR 2026][生成视频溯源] SWIFT 首次定义了"少样本免训练生成视频溯源"任务，利用 3D VAE 中"多帧像素↔单帧潜变量"的时间映射特性，通过固定长度滑动窗口执行正常和损坏两次重建，用重叠帧的损失比值作为溯源信号，仅需 20 个样本即可达到 90%+ 平均溯源准确率，5 模型平均 94%。
 tags:
   - CVPR 2026
-  - 视频理解
-  - 视频溯源
+  - 生成视频溯源
   - 3D VAE
-  - 生成视频检测
+  - 滑动窗口重建
+  - 免训练
+  - 时间一致性
 ---
 
 # SWIFT: Sliding Window Reconstruction for Few-Shot Training-Free Generated Video Attribution
@@ -136,9 +137,9 @@ SWIFT 是完全免训练方法。核心度量使用 MSE 作为重建损失。消
 ## 相关论文
 
 - [Training-free Motion Factorization for Compositional Video Generation](training-free_motion_factorization_for_compositional_video_generation.md)
-- [D3: Training-Free AI-Generated Video Detection Using Second-Order Features](../../ICCV2025/video_generation/d3_training-free_ai-generated_video_detection_using_second-order_features.md)
-- [FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](flashmotion_few-step_controllable_video_generation_with_trajectory_guidance.md)
 - [SwitchCraft: Training-Free Multi-Event Video Generation with Attention Controls](switchcraft_training-free_multi-event_video_generation_with_attention_controls.md)
-- [Semantic Satellite Communications for Synchronized Audiovisual Reconstruction](semantic_satellite_communications_for_synchronized.md)
+- [D3: Training-Free AI-Generated Video Detection Using Second-Order Features](../../ICCV2025/video_generation/d3_training-free_ai-generated_video_detection_using_second-order_features.md)
+- [Free-Lunch Long Video Generation via Layer-Adaptive O.O.D Correction](free-lunch_long_video_generation_via_layer-adaptive_ood_correction.md)
+- [When to Lock Attention: Training-Free KV Control in Video Diffusion](when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
 
 <!-- RELATED:END -->

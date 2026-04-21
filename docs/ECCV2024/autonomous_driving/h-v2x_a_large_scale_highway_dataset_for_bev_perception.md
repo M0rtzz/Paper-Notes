@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] H-V2X: A Large Scale Highway Dataset for BEV Perception
 description: >-
@@ -128,7 +128,7 @@ BEV检测任务采用CenterPoint框架，使用heatmap focal loss + L1 regressio
 
 ## 相关论文
 
-- [Navigation Instruction Generation with BEV Perception and Large Language Models](navigation_instruction_generation_with_bev_perception_and_large_language_models.md)
+- [Navigation Instruction Generation with BEV Perception and Large Language Models](navigation_instruction_generation_with_bev.md)
 - [V2X-Radar: A Multi-Modal Dataset with 4D Radar for Cooperative Perception](../../NeurIPS2025/autonomous_driving/v2x-radar_a_multi-modal_dataset_with_4d_radar_for_cooperative_perception.md)
 - [UrbanIng-V2X: A Large-Scale Multi-Vehicle Multi-Infrastructure Dataset Across Multiple Intersections for Cooperative Perception](../../NeurIPS2025/autonomous_driving/urbaning-v2x_a_large-scale_multi-vehicle_multi-infrastructure_dataset_across_mul.md)
 - [Accelerating Online Mapping and Behavior Prediction via Direct BEV Feature Attention](accelerating_online_mapping_and_behavior_prediction_via_dire.md)

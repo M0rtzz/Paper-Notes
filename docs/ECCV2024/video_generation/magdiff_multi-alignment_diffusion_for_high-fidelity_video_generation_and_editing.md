@@ -2,10 +2,9 @@
 title: >-
   [论文解读] MagDiff: Multi-Alignment Diffusion for High-Fidelity Video Generation and Editing
 description: >-
-  [ECCV 2024][图像生成] 提出首个统一视频生成与编辑的多对齐扩散模型 MagDiff，通过主体驱动对齐、自适应提示对齐和高保真对齐三种策略，在单一无微调框架中同时实现高质量视频生成与编辑。
+  [ECCV 2024] 提出首个统一视频生成与编辑的多对齐扩散模型 MagDiff，通过主体驱动对齐、自适应提示对齐和高保真对齐三种策略，在单一无微调框架中同时实现高质量视频生成与编辑。
 tags:
   - ECCV 2024
-  - 图像生成
 ---
 
 # MagDiff: Multi-Alignment Diffusion for High-Fidelity Video Generation and Editing
@@ -141,7 +140,7 @@ MagDiff 在仅用 76K 微调数据的情况下，FVD 指标大幅领先所有方
 - [Videoshop: Localized Semantic Video Editing with Noise-Extrapolated Diffusion Inversion](videoshop_localized_semantic_video_editing_with_noise-extrapolated_diffusion_inv.md)
 - [VFusion3D: Learning Scalable 3D Generative Models from Video Diffusion Models](vfusion3d_learning_scalable_3d_generative_models_from_video_diffusion_models.md)
 - [MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model](mofa-video_controllable_image_animation_via_generative_motion_field_adaptions_in.md)
-- [DIVE: Taming DINO for Subject-Driven Video Editing](../../ICCV2025/video_generation/dive_taming_dino_for_subject-driven_video_editing.md)
-- [DreamMotion: Space-Time Self-Similar Score Distillation for Zero-Shot Video Editing](dreammotion_space-time_self-similar_score_distillation_for_zero-shot_video_editi.md)
+- [SV3D: Novel Multi-view Synthesis and 3D Generation from a Single Image using Latent Video Diffusion](sv3d_novel_multi-view_synthesis_and_3d_generation_from_a_single_image_using_late.md)
+- [PreciseCache: Precise Feature Caching for Efficient and High-fidelity Video Generation](../../ICLR2026/video_generation/precisecache_precise_feature_caching_for_efficient_and_high-fidelity_video_gener.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] First Frame Is the Place to Go for Video Content Customization
 description: >-

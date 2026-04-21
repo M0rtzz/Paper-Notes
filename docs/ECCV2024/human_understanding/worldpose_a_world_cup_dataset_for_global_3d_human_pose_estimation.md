@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WorldPose: A World Cup Dataset for Global 3D Human Pose Estimation
 description: >-

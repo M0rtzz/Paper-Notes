@@ -2,15 +2,16 @@
 title: >-
   [论文解读] ForestLPR: LiDAR Place Recognition in Forests Attentioning Multiple BEV Density Images
 description: >-
-  [CVPR 2025][自动驾驶][场景识别] 本文提出ForestLPR，通过多高度BEV密度图与patch级多BEV交互模块实现森林环境下的鲁棒LiDAR位置识别，在Wild-Places等多个数据集上Recall@1平均提升7.38%~9.11%，且无需微调即可跨数据集泛化。
+  [CVPR 2025][自动驾驶][位置识别] 本文提出ForestLPR，通过将点云在不同高度切片生成多张BEV密度图，利用ViT提取局部特征后经multi-BEV交互模块自适应关注不同高度的判别性特征，实现森林环境下鲁棒的LiDAR位置识别，在多个数据集上大幅超越SOTA。
 tags:
   - CVPR 2025
   - 自动驾驶
   - 位置识别
   - LiDAR
-  - BEV
+  - BEV密度图
   - 森林环境
-  - Transformer
+  - 多高度交互
+  - 旋转不变性
 ---
 
 # ForestLPR: LiDAR Place Recognition in Forests Attentioning Multiple BEV Density Images
@@ -142,8 +143,8 @@ R@1相比最强竞争者LoGG3D-Net平均提升**7.38%**。
 
 - [L2RSI: Cross-View LiDAR-Based Place Recognition for Large-Scale Urban Scenes via Remote Sensing Imagery](../../NeurIPS2025/autonomous_driving/l2rsi_cross-view_lidar-based_place_recognition_for_large-scale_urban_scenes_via_.md)
 - [Rethinking LiDAR Domain Generalization: Single Source as Multiple Density Domains](../../ECCV2024/autonomous_driving/rethinking_lidar_domain_generalization_single_source_as_multiple_density_domains.md)
-- [BEV-SLD: Self-Supervised Scene Landmark Detection for Global Localization with LiDAR Bird's-Eye View Images](../../CVPR2026/autonomous_driving/bev-sld_self-supervised_scene_landmark_detection_for_global_localization_with_li.md)
-- [Learning to Detect Objects from Multi-Agent LiDAR Scans without Manual Labels](learning_to_detect_objects_from_multi-agent_lidar_scans_without_manual_labels.md)
-- [LiDAR-RT: Gaussian-based Ray Tracing for Dynamic LiDAR Re-Simulation](lidar-rt_gaussian-based_ray_tracing_for_dynamic_lidar_re-simulation.md)
+- [Tra-MoE: Learning Trajectory Prediction Model from Multiple Domains for Adaptive Policy Conditioning](tra-moe_learning_trajectory_prediction_model_from_multiple_domains_for_adaptive_.md)
+- [RENO: Real-Time Neural Compression for 3D LiDAR Point Clouds](reno_real-time_neural_compression_for_3d_lidar_point_clouds.md)
+- [Toward Real-World BEV Perception: Depth Uncertainty Estimation via Gaussian Splatting](toward_real-world_bev_perception_depth_uncertainty_estimation_via_gaussian_splat.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SVC 2026: The Second Multimodal Deception Detection Challenge and the First Domain Generalized Remote Physiological Measurement Challenge
 description: >-

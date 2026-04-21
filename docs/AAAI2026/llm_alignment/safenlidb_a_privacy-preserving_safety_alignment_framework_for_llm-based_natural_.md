@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SafeNlidb: A Privacy-Preserving Safety Alignment Framework for LLM-based Natural Language Database Interfaces
 description: >-

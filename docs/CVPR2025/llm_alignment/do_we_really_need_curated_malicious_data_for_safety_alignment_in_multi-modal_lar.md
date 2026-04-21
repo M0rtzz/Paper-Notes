@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Do We Really Need Curated Malicious Data for Safety Alignment in Multi-Modal Large Language Models?
 description: >-
-  [CVPR 2025][LLM安全] 本文发现MLLM的安全对齐问题主要源于数据分布偏差而非缺乏恶意数据，用少量良性数据加简单拒绝句即可显著提升安全性，无需费力收集恶意样本
+  [CVPR 2025][LLM对齐][安全对齐] 本文通过系统分析揭示MLLM的安全对齐缺口主要源于微调数据的分布偏差（而非图像内容、回复质量或对比行为），仅需用少量良性指令跟随数据（将回复替换为简单拒绝句）即可显著提升5种架构MLLM的安全性，无需费力收集恶意数据。
 tags:
   - CVPR 2025
-  - LLM安全
+  - LLM对齐
   - 安全对齐
-  - 多模态安全
-  - 数据偏差
+  - 多模态LLM
+  - 数据分布偏差
+  - 排版攻击
+  - 拒绝回复
 ---
 
 # Do We Really Need Curated Malicious Data for Safety Alignment in Multi-Modal Large Language Models?
@@ -120,10 +122,10 @@ tags:
 
 ## 相关论文
 
-- [MTSA: Multi-Turn Safety Alignment for LLMs through Multi-Round Red-Teaming](../../ACL2025/llm_alignment/mtsa_multi-turn_safety_alignment_for_llms_through_multi-round_red-teaming.md)
 - [Task Preference Optimization: Improving Multimodal Large Language Models with Vision Task Alignment](task_preference_optimization_improving_multimodal_large_language_models_with_vis.md)
 - [SEA: Low-Resource Safety Alignment for Multimodal Large Language Models via Synthetic Embeddings](../../ACL2025/llm_alignment/sea_lowresource_safety_alignment_for_multimodal.md)
-- [Debiasing Multimodal Large Language Models via Noise-Aware Preference Optimization](debiasing_multimodal_large_language_models_via_noise-aware_preference_optimizati.md)
 - [Federated Data-Efficient Instruction Tuning for Large Language Models](../../ACL2025/llm_alignment/federated_data-efficient_instruction_tuning_for_large_language_models.md)
+- [Debiasing Multimodal Large Language Models via Noise-Aware Preference Optimization](debiasing_multimodal_large_language_models_via_noise-aware_preference_optimizati.md)
+- [Diverging Preferences: When do Annotators Disagree and do Models Know?](../../ICML2025/llm_alignment/diverging_preferences_when_do_annotators_disagree_and_do_models_know.md)
 
 <!-- RELATED:END -->

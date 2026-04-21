@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FoundIR: Unleashing Million-scale Training Data to Advance Foundation Models for Image Restoration
 description: >-
@@ -149,8 +149,8 @@ FoundIR 采用泛化器-专家联合架构：(1) 基于扩散的退化无关泛�
 
 ## 相关论文
 
-- [Rethinking Image Super-Resolution from Training Data Perspectives](../../ECCV2024/image_restoration/rethinking_image_super-resolution_from_training_data_perspectives.md)
 - [Spend Wisely: Maximizing Post-Training Gains in Iterative Synthetic Data Bootstrapping](../../NeurIPS2025/image_restoration/spend_wisely_maximizing_post-training_gains_in_iterative_synthetic_data_bootstra.md)
+- [Rethinking Image Super-Resolution from Training Data Perspectives](../../ECCV2024/image_restoration/rethinking_image_super-resolution_from_training_data_perspectives.md)
 - [UniRes: Universal Image Restoration for Complex Degradations](unires_universal_image_restoration_for_complex_degradations.md)
 - [Outlier-Aware Post-Training Quantization for Image Super-Resolution](outlier-aware_post-training_quantization_for_image_super-resolution.md)
 - [Exploiting Diffusion Prior for Task-driven Image Restoration](exploiting_diffusion_prior_for_task-driven_image_restoration.md)

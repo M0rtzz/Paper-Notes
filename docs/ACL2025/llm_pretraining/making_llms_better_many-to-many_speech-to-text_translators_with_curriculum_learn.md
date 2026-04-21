@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Making LLMs Better Many-to-Many Speech-to-Text Translators with Curriculum Learning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Optimal Online Change Detection via Random Fourier Features
 description: >-
@@ -152,6 +152,6 @@ $$\inf_{N: \mathbb{P}_\infty(N<\infty)\leq\alpha} \sup_{\eta, \mathbb{P}, \mathb
 - [Imagine How To Change: Explicit Procedure Modeling for Change Captioning](../../ICLR2026/llm_pretraining/imagine_how_to_change_explicit_procedure_modeling_for_change_captioning.md)
 - [Watch and Learn: Learning to Use Computers from Online Videos](../../CVPR2026/llm_pretraining/watch_and_learn_learning_to_use_computers_from_online_videos.md)
 - [Gemstones: A Model Suite for Multi-Faceted Scaling Laws](gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)
-- [Language Model Behavioral Phases are Consistent Across Architecture, Training Data, and Scale](language_model_behavioral_phases_are_consistent_across_archi.md)
+- [Cross-Domain Learning for Video Anomaly Detection with Limited Supervision](../../ECCV2024/llm_pretraining/cross-domain_learning_for_video_anomaly_detection_with_limited_supervision.md)
 
 <!-- RELATED:END -->

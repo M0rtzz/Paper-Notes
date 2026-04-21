@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ATTS: Asynchronous Test-Time Scaling via Conformal Prediction
 description: >-

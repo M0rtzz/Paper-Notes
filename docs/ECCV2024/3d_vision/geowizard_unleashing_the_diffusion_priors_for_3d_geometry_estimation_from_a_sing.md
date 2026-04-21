@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] GeoWizard: Unleashing the Diffusion Priors for 3D Geometry Estimation from a Single Image
 description: >-
-  [ECCV 2024][3D视觉] 基于Stable Diffusion联合预测深度和法线，通过几何切换器和场景分布解耦策略实现零样本SOTA几何估计
+  [ECCV 2024][3D视觉][深度估计] 本文提出GeoWizard，一个基于Stable Diffusion先验的几何估计基础模型，通过几何切换器（Geometry Switcher）实现单一模型联合预测深度和法线，并通过场景分布解耦策略（Scene Distribution Decoupler）消除混合场景布局的歧义，在零样本深度和法线基准上达到SOTA。
 tags:
   - ECCV 2024
+  - 3D视觉
   - 深度估计
   - 法线估计
-  - 扩散模型
-  - 3D重建
+  - 扩散先验
+  - 联合估计
+  - 场景分布解耦
 ---
 
 # GeoWizard: Unleashing the Diffusion Priors for 3D Geometry Estimation from a Single Image
@@ -132,10 +134,10 @@ GeoWizard基于Stable Diffusion V2微调。输入图像 $x$ 首先通过原始SD
 
 ## 相关论文
 
-- [6DGS: 6D Pose Estimation from a Single Image and a 3D Gaussian Splatting Model](6dgs_6d_pose_estimation_from_a_single_image_and_a_3d_gaussia.md)
-- [DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation](diffusiondepth_diffusion_denoising_approach_for_monocular_depth_estimation.md)
-- [DreamDissector: Learning Disentangled Text-to-3D Generation from 2D Diffusion Priors](dreamdissector_learning_disentangled_text-to-3d_generation_from_2d_diffusion_pri.md)
 - [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
 - [Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
+- [6DGS: 6D Pose Estimation from a Single Image and a 3D Gaussian Splatting Model](6dgs_6d_pose_estimation_from_a_single_image_and_a_3d_gaussia.md)
+- [ZeST: Zero-Shot Material Transfer from a Single Image](zest_zero-shot_material_transfer_from_a_single_image.md)
+- [SV3D: Novel Multi-view Synthesis and 3D Generation from a Single Image using Latent Video Diffusion](sv3d_novel_multi-view_synthesis_and_3d_generation_from_a_single_image_using_late.md)
 
 <!-- RELATED:END -->

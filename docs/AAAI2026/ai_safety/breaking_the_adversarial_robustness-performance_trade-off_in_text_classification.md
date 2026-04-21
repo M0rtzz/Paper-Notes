@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Breaking the Adversarial Robustness-Performance Trade-off in Text Classification via Manifold Purification
 description: >-
@@ -151,6 +151,6 @@ MC²F 包含两个核心模块：(1) SR-CNF 进行对抗样本检测；(2) Geode
 - [Enhancing Graph Classification Robustness with Singular Pooling](../../NeurIPS2025/ai_safety/enhancing_graph_classification_robustness_with_singular_pooling.md)
 - [Improving the Trade-off Between Watermark Strength and Speculative Sampling Efficiency for Language Models](../../ICLR2026/ai_safety/improving_the_trade-off_between_watermark_strength_and_speculative_sampling_effi.md)
 - [Breaking the Dyadic Barrier: Rethinking Fairness in Link Prediction Beyond Demographic Parity](breaking_the_dyadic_barrier_rethinking_fairness_in_link_prediction_beyond_demogr.md)
-- [From Trade-off to Synergy: A Versatile Symbiotic Watermarking Framework for Large Language Models](../../ACL2025/ai_safety/from_tradeoff_to_synergy_a_versatile.md)
+- [Mitigating Privacy-Utility Trade-off in Decentralized Federated Learning via f-Differential Privacy](../../NeurIPS2025/ai_safety/mitigating_privacy-utility_trade-off_in_decentralized_federated_learning_via_f-d.md)
 
 <!-- RELATED:END -->

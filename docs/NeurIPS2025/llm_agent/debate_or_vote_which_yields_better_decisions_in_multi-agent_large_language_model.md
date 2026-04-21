@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Debate or Vote: Which Yields Better Decisions in Multi-Agent Large Language Models?
 description: >-
@@ -127,8 +127,8 @@ tags:
 
 - [Are Large Language Models Sensitive to the Motives Behind Communication?](are_large_language_models_sensitive_to_the_motives_behind_communication.md)
 - [FACT-AUDIT: An Adaptive Multi-Agent Framework for Dynamic Fact-Checking Evaluation of Large Language Models](../../ACL2025/llm_agent/fact_audit_factcheck.md)
-- [ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](../../ACL2025/llm_agent/toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)
-- [ToolHop: A Query-Driven Benchmark for Evaluating Large Language Models in Multi-Hop Tool Use](../../ACL2025/llm_agent/toolhop_multi_hop_tool_use.md)
+- [ToolHop: A Query-Driven Benchmark for Evaluating Large Language Models in Multi-Hop Tool Use](../../ACL2025/llm_agent/toolhop_multi_hop_tool_use_benchmark.md)
+- [AgentTTS: Large Language Model Agent for Test-time Compute-optimal Scaling Strategy in Complex Tasks](agenttts_large_language_model_agent_for_testtime_computeopti.md)
 - [MedLA: A Logic-Driven Multi-Agent Framework for Complex Medical Reasoning with Large Language Models](../../AAAI2026/llm_agent/medla_a_logic-driven_multi-agent_framework_for_complex_medic.md)
 
 <!-- RELATED:END -->

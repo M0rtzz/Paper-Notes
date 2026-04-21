@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fourier Angle Alignment for Oriented Object Detection in Remote Sensing
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Escaping Saddle Points without Lipschitz Smoothness: The Power of Nonlinear Preconditioning
 description: >-

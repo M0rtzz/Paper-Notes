@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GazeGaussian: High-Fidelity Gaze Redirection with 3D Gaussian Splatting
 description: >-

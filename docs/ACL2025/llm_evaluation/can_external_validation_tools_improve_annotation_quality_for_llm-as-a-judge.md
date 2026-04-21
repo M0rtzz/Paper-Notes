@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Can External Validation Tools Improve Annotation Quality for LLM-as-a-Judge?
 description: >-

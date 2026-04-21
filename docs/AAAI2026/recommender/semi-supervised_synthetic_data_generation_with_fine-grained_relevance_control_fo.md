@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Semi-Supervised Synthetic Data Generation with Fine-Grained Relevance Control for Short Video Search Relevance Modeling
 description: >-

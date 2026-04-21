@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TruthfulRAG: Resolving Factual-level Conflicts in Retrieval-Augmented Generation with Knowledge Graphs
 description: >-

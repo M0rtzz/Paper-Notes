@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] Goku: Flow Based Video Generative Foundation Models
 description: >-
-  [CVPR 2025][video generation] 提出 Goku 系列模型，基于 rectified flow Transformer 实现图像-视频联合生成，通过 3D 联合 VAE、全注意力机制和多阶段训练策略达到业界领先水平。
+  [CVPR 2025][图像生成][rectified flow] Goku 是字节跳动与港大提出的 rectified flow Transformer 系列模型（2B/8B），首次将 rectified flow 用于图像-视频联合生成，配合全面的数据管线和大规模训练基础设施优化，在 VBench（84.85）和 GenEval（0.76）等基准上达到 SOTA。
 tags:
   - CVPR 2025
-  - video generation
+  - 图像生成
   - rectified flow
+  - video generation
+  - joint image-video
+  - 3D VAE
   - Transformer
-  - 联合图像视频生成
-  - 数据管线
+  - data curation
 ---
 
 # Goku: Flow Based Video Generative Foundation Models
@@ -155,9 +157,9 @@ RF 仅需 400k 步即达到 DDPM 1000k 步的 FID 水平。
 ## 相关论文
 
 - [Can Generative Video Models Help Pose Estimation?](can_generative_video_models_help_pose_estimation.md)
+- [VLog: Video-Language Models by Generative Retrieval of Narration Vocabulary](vlog_video-language_models_by_generative_retrieval_of_narration_vocabulary.md)
 - [Deeply Supervised Flow-Based Generative Models](../../ICCV2025/image_generation/deeply_supervised_flow-based_generative_models.md)
 - [GRAM: A Generative Foundation Reward Model for Reward Generalization](../../ICML2025/image_generation/gram_a_generative_foundation_reward_model_for_reward_generalization.md)
 - [Gradient Variance Reveals Failure Modes in Flow-Based Generative Models](../../NeurIPS2025/image_generation/gradient_variance_reveals_failure_modes_in_flow-based_generative_models.md)
-- [QVGen: Pushing the Limit of Quantized Video Generative Models](../../ICLR2026/image_generation/qvgen_pushing_the_limit_of_quantized_video_generative_models.md)
 
 <!-- RELATED:END -->

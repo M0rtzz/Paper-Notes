@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EmoVid: A Multimodal Emotion Video Dataset for Emotion-Centric Video Understanding and Generation
 description: >-

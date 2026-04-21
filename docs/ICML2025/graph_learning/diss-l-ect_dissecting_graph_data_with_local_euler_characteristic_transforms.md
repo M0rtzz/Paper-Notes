@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Diss-l-ECT: Dissecting Graph Data with Local Euler Characteristic Transforms
 description: >-

@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] PosterO: Structuring Layout Trees to Enable Language Models in Generalized Content-Aware Layout Generation
 description: >-
-  [CVPR 2025][布局生成] 提出PosterO，将布局结构化为SVG语言的树形表示，利用LLM的in-context learning实现通用化的内容感知海报布局生成
+  [CVPR 2025][LLM/NLP][布局生成] 本文提出PosterO，一种以布局为中心的海报生成方法，将数据集中的布局结构化为SVG语言的层次化树表示，通过通用形状表示、设计意图向量化和层次节点描述三大机制，使LLM能够通过in-context learning在推理时生成多样化的内容感知布局。
 tags:
   - CVPR 2025
+  - LLM/NLP
   - 布局生成
   - 海报设计
   - LLM
-  - SVG
+  - SVG树
+  - in-context learning
 ---
 
 # PosterO: Structuring Layout Trees to Enable Language Models in Generalized Content-Aware Layout Generation
@@ -89,8 +91,8 @@ PosterO的核心流程：(1) 数据预处理——将训练集中的海报布局
 
 - [Can Large Language Models Understand Internet Buzzwords Through User-Generated Content](../../ACL2025/llm_nlp/buzzword_understanding_ugc.md)
 - [Aligning Large Language Models with Implicit Preferences from User-Generated Content](../../ACL2025/llm_nlp/pugc_align_implicit_pref_ugc.md)
+- [Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models](../../ACL2025/llm_nlp/salience_sparse_fine_tuning.md)
+- [DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models](../../ACL2025/llm_nlp/difflm_controllable_synthetic_data_generation_via_diffusion_language_models.md)
 - [Improving Autoregressive Visual Generation with Cluster-Oriented Token Prediction](improving_autoregressive_visual_generation_with_cluster-oriented_token_predictio.md)
-- [Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior](bridging_the_vision-brain_gap_with_an_uncertainty-aware_blur_prior.md)
-- [COSMIC: Generalized Refusal Direction Identification in LLM Activations](../../ACL2025/llm_nlp/cosmic_generalized_refusal_direction_identification_in_llm_activations.md)
 
 <!-- RELATED:END -->

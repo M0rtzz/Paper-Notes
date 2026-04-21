@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PLOT: Text-based Person Search with Part Slot Attention for Corresponding Part Discovery
 description: >-

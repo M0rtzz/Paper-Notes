@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MERIT: Multilingual Semantic Retrieval with Interleaved Multi-Condition Query
 description: >-

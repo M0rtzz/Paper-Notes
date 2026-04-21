@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mind the Gap: Confidence Discrepancy Can Guide Federated Semi-Supervised Learning
 description: >-
@@ -105,7 +105,7 @@ tags:
 - [FedQS: Optimizing Gradient and Model Aggregation for Semi-Asynchronous Federated Learning](../../NeurIPS2025/optimization/fedqs_optimizing_gradient_and_model_aggregation_for_semi-asynchronous_federated_.md)
 - [SCOPE: Semantic Coreset with Orthogonal Projection Embeddings for Federated Learning](scope_semantic_coreset_with_orthogonal_projection_embeddings_for_federated_learn.md)
 - [Federated Learning with Domain Shift Eraser](federated_learning_with_domain_shift_eraser.md)
+- [Model Poisoning Attacks to Federated Learning via Multi-Round Consistency](model_poisoning_attacks_to_federated_learning_via_multi-round_consistency.md)
 - [Asymptotically Stable Quaternionic Hopfield Structured Neural Network with Supervised Projection-based Manifold Learning](../../NeurIPS2025/optimization/asymptotically_stable_quaternion-valued_hopfield-structured_neural_network_with_.md)
-- [Oracle-Efficient Combinatorial Semi-Bandits](../../NeurIPS2025/optimization/oracle-efficient_combinatorial_semi-bandits.md)
 
 <!-- RELATED:END -->

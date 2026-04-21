@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Solving Continuous Mean Field Games: Deep Reinforcement Learning for Non-Stationary Dynamics
 description: >-

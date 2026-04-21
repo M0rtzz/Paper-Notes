@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MMLongBench: Benchmarking Long-Context Vision-Language Models Effectively and Thoroughly
 description: >-

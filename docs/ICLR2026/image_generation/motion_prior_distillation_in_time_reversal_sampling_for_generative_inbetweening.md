@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Motion Prior Distillation in Time Reversal Sampling for Generative Inbetweening
 description: >-

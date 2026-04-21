@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sequential Multi-Agent Dynamic Algorithm Configuration
 description: >-

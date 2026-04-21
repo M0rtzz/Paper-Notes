@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] IVC-Prune: Revealing the Implicit Visual Coordinates in LVLMs for Vision Token Pruning
 description: >-

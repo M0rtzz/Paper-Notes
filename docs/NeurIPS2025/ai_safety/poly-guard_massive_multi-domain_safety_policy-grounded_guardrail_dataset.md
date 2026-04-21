@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Poly-Guard: Massive Multi-Domain Safety Policy-Grounded Guardrail Dataset
 description: >-

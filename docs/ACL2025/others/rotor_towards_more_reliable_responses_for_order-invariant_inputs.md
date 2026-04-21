@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RoToR: Towards More Reliable Responses for Order-Invariant Inputs
 description: >-

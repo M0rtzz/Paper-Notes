@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MOBO-OSD: Batch Multi-Objective Bayesian Optimization via Orthogonal Search Directions
 description: >-

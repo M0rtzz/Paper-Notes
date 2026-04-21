@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BVINet: Unlocking Blind Video Inpainting with Zero Annotations
 description: >-
@@ -179,6 +179,6 @@ MPNet 消融：
 - [AnyPortal: Zero-Shot Consistent Video Background Replacement](anyportal_zero-shot_consistent_video_background_replacement.md)
 - [Inpaint4Drag: Repurposing Inpainting Models for Drag-Based Image Editing via Bidirectional Warping](inpaint4drag_repurposing_inpainting_models_for_drag-based_image_editing_via_bidi.md)
 - [Less-to-More Generalization: Unlocking More Controllability by In-Context Generation](less-to-more_generalization_unlocking_more_controllability_by_in-context_generat.md)
-- [Video Motion Graphs](video_motion_graphs.md)
+- [REPA-E: Unlocking VAE for End-to-End Tuning with Latent Diffusion Transformers](repa-e_unlocking_vae_for_end-to-end_tuning_of_latent_diffusion_transformers.md)
 
 <!-- RELATED:END -->

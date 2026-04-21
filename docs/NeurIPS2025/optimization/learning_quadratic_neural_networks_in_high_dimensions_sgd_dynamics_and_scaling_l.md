@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Quadratic Neural Networks in High Dimensions: SGD Dynamics and Scaling Laws
 description: >-

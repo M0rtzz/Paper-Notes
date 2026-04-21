@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mono4DGS-HDR: High Dynamic Range 4D Gaussian Splatting from Alternating-exposure Monocular Videos
 description: >-

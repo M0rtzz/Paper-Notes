@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DeepProofLog: Efficient Proving in Deep Stochastic Logic Programs
 description: >-

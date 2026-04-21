@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] G-UBS: Towards Robust Understanding of Implicit Feedback via Group-Aware User Behavior Simulation
 description: >-

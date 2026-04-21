@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Human-AI Accessibility Mapping in India: VLM-Guided Annotations and POI-Centric Analysis in Chandigarh
 description: >-

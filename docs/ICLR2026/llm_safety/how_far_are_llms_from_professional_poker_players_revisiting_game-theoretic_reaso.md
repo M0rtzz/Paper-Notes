@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How Far Are LLMs from Professional Poker Players? Revisiting Game-Theoretic Reasoning with Agentic Tool Use
 description: >-
@@ -130,8 +130,8 @@ $R_{tool}$ 的设计特别重要：不仅奖励“调用了工具”，还奖励
 
 - [System-Aware Unlearning Algorithms: Use Lesser, Forget Faster](../../ICML2025/llm_safety/system-aware_unlearning_algorithms_use_lesser_forget_faster.md)
 - [Teaming LLMs to Detect and Mitigate Hallucinations](../../NeurIPS2025/llm_safety/teaming_llms_to_detect_and_mitigate_hallucinations.md)
-- [Empowering LLMs to Understand and Generate Complex Vector Graphics](../../CVPR2025/llm_safety/empowering_llms_to_understand_and_generate_complex_vector_graphics.md)
 - [Towards Context-Robust LLMs: A Gated Representation Fine-tuning Approach](../../ACL2025/llm_safety/towards_context-robust_llms_a_gated_representation_fine-tuning_approach.md)
-- [SEUF: Is Unlearning One Expert Enough for Mixture-of-Experts LLMs?](../../ACL2025/llm_safety/seuf_is_unlearning_one_expert_enough_for_mixture-of-experts_llms.md)
+- [HD-NDEs: Neural Differential Equations for Hallucination Detection in LLMs](../../ACL2025/llm_safety/hd-ndes_neural_differential_equations_for_hallucination_detection_in_llms.md)
+- [UAQFact: Evaluating Factual Knowledge Utilization of LLMs on Unanswerable Questions](../../ACL2025/llm_safety/uaqfact_evaluating_factual_knowledge_utilization_of_llms_on_unanswerable_questio.md)
 
 <!-- RELATED:END -->

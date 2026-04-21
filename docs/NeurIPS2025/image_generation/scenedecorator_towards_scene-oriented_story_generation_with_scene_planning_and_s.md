@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SceneDecorator: Towards Scene-Oriented Story Generation with Scene Planning and Scene Consistency
 description: >-
@@ -141,7 +141,7 @@ SceneDecorator 是一个无需训练的框架，由两个核心技术组成：
 - [Lay-Your-Scene: Natural Scene Layout Generation with Diffusion Transformers](../../ICCV2025/image_generation/lay-your-scene_natural_scene_layout_generation_with_diffusion_transformers.md)
 - [Free4D: Tuning-free 4D Scene Generation with Spatial-Temporal Consistency](../../ICCV2025/image_generation/free4d_tuning-free_4d_scene_generation_with_spatial-temporal_consistency.md)
 - [EchoScene: Indoor Scene Generation via Information Echo over Scene Graph Diffusion](../../ECCV2024/image_generation/echoscene_indoor_scene_generation_via_information_echo_over_scene_graph_diffusio.md)
-- [Compositional Scene Understanding through Inverse Generative Modeling](../../ICML2025/image_generation/compositional_scene_understanding_through_inverse_generative_modeling.md)
-- [GlyphMastero: A Glyph Encoder for High-Fidelity Scene Text Editing](../../CVPR2025/image_generation/glyphmastero_a_glyph_encoder_for_high-fidelity_scene_text_editing.md)
+- [ShowHowTo: Generating Scene-Conditioned Step-by-Step Visual Instructions](../../CVPR2025/image_generation/showhowto_generating_scene-conditioned_step-by-step_visual_instructions.md)
+- [Generate Any Scene: Scene Graph Driven Data Synthesis for Visual Generation Training](../../ICLR2026/image_generation/generate_any_scene_scene_graph_driven_data_synthesis_for_visual_generation_train.md)
 
 <!-- RELATED:END -->

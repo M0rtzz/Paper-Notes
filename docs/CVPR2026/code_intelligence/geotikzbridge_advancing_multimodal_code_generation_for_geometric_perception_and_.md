@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GeoTikzBridge: Advancing Multimodal Code Generation for Geometric Perception and Reasoning
 description: >-

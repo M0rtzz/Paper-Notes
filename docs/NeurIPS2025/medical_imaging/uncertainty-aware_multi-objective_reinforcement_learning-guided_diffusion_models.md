@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design
 description: >-
@@ -153,10 +153,10 @@ $$\mathcal{L}_{\text{PPO}} = -\mathbb{E}_{m \sim p_\theta}\left[\min\left(r(m) \
 
 ## 相关论文
 
-- [Multi-Objective Reinforcement Learning with Max-Min Criterion: A Game-Theoretic Approach](multi-objective_reinforcement_learning_with_max-min_criterion_a_game-theoretic_a.md)
 - [Towards Unified and Lossless Latent Space for 3D Molecular Latent Diffusion Modeling](towards_unified_and_lossless_latent_space_for_3d_molecular_latent_diffusion_mode.md)
 - [Consistent Sampling and Simulation: Molecular Dynamics with Energy-Based Diffusion Models](consistent_sampling_and_simulation_molecular_dynamics_with_energy-based_diffusio.md)
 - [UniMoMo: Unified Generative Modeling of 3D Molecules for De Novo Binder Design](../../ICML2025/medical_imaging/unimomo_unified_generative_modeling_of_3d_molecules_for_de_novo_binder_design.md)
 - [De novo generation of functional terpene synthases using TpsGPT](de_novo_generation_of_functional_terpene_synthases_using_tpsgpt.md)
+- [Semantic and Visual Crop-Guided Diffusion Models for Heterogeneous Tissue Synthesis in Histopathology](semantic_and_visual_crop-guided_diffusion_models_for_heterogeneous_tissue_synthe.md)
 
 <!-- RELATED:END -->

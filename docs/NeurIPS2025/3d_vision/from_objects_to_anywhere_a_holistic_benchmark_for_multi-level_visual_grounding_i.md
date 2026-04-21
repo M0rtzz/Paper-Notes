@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Objects to Anywhere: A Holistic Benchmark for Multi-level Visual Grounding in 3D Scenes
 description: >-
@@ -136,10 +136,10 @@ Anywhere3D-Bench 包含 2,886 个表达-3D 包围盒对，来自 276 个场景�
 
 ## 相关论文
 
-- [Articulate3D: Holistic Understanding of 3D Scenes as Universal Scene Description](../../ICCV2025/3d_vision/articulate3d_holistic_understanding_of_3d_scenes_as_universal_scene_description.md)
-- [ScanReason: Empowering 3D Visual Grounding with Reasoning Capabilities](../../ECCV2024/3d_vision/scanreason_empowering_3d_visual_grounding_with_reasoning_capabilities.md)
+- [Articulate3D: Holistic Understanding of 3D Scenes as Universal Scene Description](../../ICCV2025/3d_vision/articulate3d_holistic_understanding_of_3d_scenes_as_universa.md)
+- [Text-Guided Sparse Voxel Pruning for Efficient 3D Visual Grounding](../../CVPR2025/3d_vision/text-guided_sparse_voxel_pruning_for_efficient_3d_visual_grounding.md)
 - [OpenLex3D: A Tiered Evaluation Benchmark for Open-Vocabulary 3D Scene Representations](openlex3d_a_tiered_evaluation_benchmark_for_open-vocabulary_3d_scene_representat.md)
-- [MARVEL-40M+: Multi-Level Visual Elaboration for High-Fidelity Text-to-3D Content Creation](../../CVPR2025/3d_vision/marvel-40m_multi-level_visual_elaboration_for_high-fidelity_text-to-3d_content_c.md)
-- [MVGBench: a Comprehensive Benchmark for Multi-view Generation Models](../../ICCV2025/3d_vision/mvgbench_a_comprehensive_benchmark_for_multi-view_generation_models.md)
+- [SeeGround: See and Ground for Zero-Shot Open-Vocabulary 3D Visual Grounding](../../CVPR2025/3d_vision/seeground_see_and_ground_for_zero-shot_open-vocabulary_3d_visual_grounding.md)
+- [ProxyTransformation: Preshaping Point Cloud Manifold with Proxy Attention for 3D Visual Grounding](../../CVPR2025/3d_vision/proxytransformation_preshaping_point_cloud_manifold_with_proxy_attention_for_3d_.md)
 
 <!-- RELATED:END -->

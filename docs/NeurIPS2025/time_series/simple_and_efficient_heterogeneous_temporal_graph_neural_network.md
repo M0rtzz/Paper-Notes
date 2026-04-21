@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Simple and Efficient Heterogeneous Temporal Graph Neural Network
 description: >-

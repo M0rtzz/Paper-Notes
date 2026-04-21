@@ -1,14 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Joint Scheduling of Causal Prompts and Tasks for Multi-Task Learning
 description: >-
-  [CVPR 2025][因果推理][多任务学习] 提出JSCPT，联合调度因果提示和任务顺序以优化多任务提示学习
+  [CVPR 2025][因果提示] 提出 JSCPT，通过联合调度因果提示（消除虚假相关）和任务学习顺序（利用动态任务关系），优化多任务提示学习的性能。
 tags:
   - CVPR 2025
-  - 多任务学习
   - 因果提示
   - 任务调度
-  - VLM微调
+  - 多任务学习
+  - VLM
+  - 虚假相关
 ---
 
 # Joint Scheduling of Causal Prompts and Tasks for Multi-Task Learning
@@ -58,9 +59,9 @@ tags:
 ## 相关论文
 
 - [A Principle of Targeted Intervention for Multi-Agent Reinforcement Learning](../../NeurIPS2025/causal_inference/a_principle_of_targeted_intervention_for_multi-agent_reinforcement_learning.md)
+- [Learning Time-Aware Causal Representation for Model Generalization in Evolving Domains](../../ICML2025/causal_inference/learning_time-aware_causal_representation_for_model_generalization_in_evolving_d.md)
 - [Function Induction and Task Generalization: An Interpretability Study with Off-by-One Addition](../../ICLR2026/causal_inference/function_induction_and_task_generalization_an_interpretability_study_with_off-by.md)
 - [Characterization and Learning of Causal Graphs from Hard Interventions](../../NeurIPS2025/causal_inference/characterization_and_learning_of_causal_graphs_from_hard_interventions.md)
-- [MPF: Aligning and Debiasing Language Models post Deployment via Multi Perspective Fusion](../../ICML2025/causal_inference/mpf_aligning_and_debiasing_language_models_post_deployment_via_multi_perspective.md)
 - [Do-PFN: In-Context Learning for Causal Effect Estimation](../../NeurIPS2025/causal_inference/do-pfn_in-context_learning_for_causal_effect_estimation.md)
 
 <!-- RELATED:END -->

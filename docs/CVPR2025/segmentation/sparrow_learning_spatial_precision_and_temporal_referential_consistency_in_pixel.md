@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SPARROW: Learning Spatial Precision and Temporal Referential Consistency in Pixel-Grounded Video MLLMs
 description: >-
@@ -127,10 +127,10 @@ tags:
 
 ## 相关论文
 
+- [Using Diffusion Priors for Video Amodal Segmentation](using_diffusion_priors_for_video_amodal_segmentation.md)
+- [SegAgent: Exploring Pixel Understanding Capabilities in MLLMs by Imitating Human Annotator Trajectories](segagent_exploring_pixel_understanding_capabilities_in_mllms_by_imitating_human_.md)
+- [Towards Generalizable Scene Change Detection](towards_generalizable_scene_change_detection.md)
+- [The Devil is in Temporal Token: High Quality Video Reasoning Segmentation](the_devil_is_in_temporal_token_high_quality_video_reasoning_segmentation.md)
 - [Exploiting Temporal State Space Sharing for Video Semantic Segmentation](exploiting_temporal_state_space_sharing_for_video_semantic_segmentation.md)
-- [Generative Video Propagation](generative_video_propagation.md)
-- [DINOv2 Meets Text: A Unified Framework for Image- and Pixel-Level Vision-Language Alignment](dinov2_meets_text_a_unified_framework_for_image-_and_pixel-level_vision-language.md)
-- [2DMamba: Efficient State Space Model for Image Representation with Applications on Giga-Pixel Whole Slide Image Classification](2dmamba_efficient_state_space_model_for_image_representation_with_applications_o.md)
-- [MatAnyone: Stable Video Matting with Consistent Memory Propagation](matanyone_stable_video_matting_with_consistent_memory_propagation.md)
 
 <!-- RELATED:END -->

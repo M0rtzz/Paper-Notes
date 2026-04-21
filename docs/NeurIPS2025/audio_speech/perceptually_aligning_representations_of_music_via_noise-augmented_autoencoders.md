@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Perceptually Aligning Representations of Music via Noise-Augmented Autoencoders
 description: >-

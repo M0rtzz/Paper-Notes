@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Theory of Mind in Large Language Models: Assessment and Enhancement
 description: >-
@@ -129,10 +129,10 @@ tags:
 
 ## 相关论文
 
+- [PapersPlease: A Benchmark for Evaluating Motivational Values of Large Language Models Based on ERG Theory](papersplease_a_benchmark_for_evaluating_motivational_values_of_large_language_mo.md)
 - [Knockout LLM Assessment: Using Large Language Models for Evaluations through Iterative Pairwise Comparisons](knockout_llm_assessment_using_large_language_models_for_evaluations_through_iter.md)
-- [Culture is Not Trivia: Sociocultural Theory for Cultural NLP](culture_is_not_trivia_sociocultural_theory_for_cultural_nlp.md)
+- [Mind the (Belief) Gap: Group Identity in the World of LLMs](mind_the_belief_gap_group_identity_in_the_world_of_llms.md)
 - [A Theory of Response Sampling in LLMs: Part Descriptive and Part Prescriptive](theory_of_llm_sampling.md)
-- [Mind the Belief Gap: Group Identity in the World of LLMs](mind_the_belief_gap_group_identity_in_the_world_of_llms.md)
-- [Representations of Fact, Fiction and Forecast in Large Language Models: Epistemics and Attitudes](representations_of_fact_fiction_and_forecast_in_large_language_models_epistemics.md)
+- [Culture is Not Trivia: Sociocultural Theory for Cultural NLP](culture_is_not_trivia_sociocultural_theory_for_cultural_nlp.md)
 
 <!-- RELATED:END -->

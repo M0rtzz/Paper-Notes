@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking
 description: >-
@@ -102,9 +102,9 @@ SLICE的pipeline分三步：(1) 从参考图像中提取四个语义因子描述
 
 ## 相关论文
 
-- [StreamAvatar: Streaming Diffusion Models for Real-Time Interactive Human Avatars](streamavatar_streaming_diffusion_models_for_real-time_interactive_human_avatars.md)
 - [PHAC: Promptable Human Amodal Completion](phac_promptable_human_amodal_completion.md)
 - [MoKus: Leveraging Cross-Modal Knowledge Transfer for Knowledge-Aware Concept Customization](mokus_leveraging_cross-modal_knowledge_transfer_for_knowledge-aware_concept_cust.md)
+- [StreamAvatar: Streaming Diffusion Models for Real-Time Interactive Human Avatars](streamavatar_streaming_diffusion_models_for_real-time_interactive_human_avatars.md)
 - [Beyond Semantic Search: Towards Referential Anchoring in Composed Image Retrieval](beyond_semantic_search_towards_referential_anchoring_in_composed_image_retrieval.md)
 - [NoOVD: Novel Category Discovery and Embedding for Open-Vocabulary Object Detection](noovd_novel_category_discovery_and_embedding_for_open-vocabulary_object_detectio.md)
 

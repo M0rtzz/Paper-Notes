@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cleaning the Pool: Progressive Filtering of Unlabeled Pools in Deep Active Learning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Markovian Scale Prediction: A New Era of Visual Autoregressive Generation
 description: >-

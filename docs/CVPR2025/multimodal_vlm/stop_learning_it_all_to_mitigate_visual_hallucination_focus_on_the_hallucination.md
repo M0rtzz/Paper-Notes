@@ -1,7 +1,16 @@
 ---
-title: "Stop Learning It All to Mitigate Visual Hallucination, Focus on the Hallucination Target"
-description: "提出TL-DPO，通过目标学习策略将偏好学习限制在幻觉发生的目标chunk和图像区域，排除无关信号干扰，有效降低MLLM视觉幻觉同时提升综合性能"
-tags: ["视觉幻觉", "偏好学习", "DPO", "目标学习", "MLLM"]
+title: >-
+  [论文解读] Stop Learning It All to Mitigate Visual Hallucination, Focus on the Hallucination Target
+description: >-
+  [CVPR 2025][多模态][视觉幻觉] 提出**TL-DPO**（Target-Learning DPO），将传统DPO的全句级偏好学习限制到**幻觉发生的目标chunk**和**对应的图像区域**，通过目标生成损失和目标条件损失排除无关信号，在LLaVA-1.5上将CHAIR_s从66.8降至20.1，同时LLaVA-Bench从63.4提升至71.2。
+tags:
+  - CVPR 2025
+  - 多模态
+  - 视觉幻觉
+  - 目标学习
+  - DPO
+  - 偏好优化
+  - 多模态大模型
 ---
 
 # Stop Learning It All to Mitigate Visual Hallucination, Focus on the Hallucination Target
@@ -127,8 +136,8 @@ TL-DPO包含两个互补的损失函数：(1) **目标生成损失**——仅在
 
 - [Octopus: Alleviating Hallucination via Dynamic Contrastive Decoding](octopus_alleviating_hallucination_via_dynamic_contrastive_decoding.md)
 - [Mixture of Decoding: An Attention-Inspired Adaptive Decoding Strategy to Mitigate Hallucination in Multimodal LLMs](../../ACL2025/multimodal_vlm/mixture_of_decoding_an_attention-inspired_adaptive_decoding_strategy_to_mitigate.md)
-- [Locate-then-Sparsify: Attribution Guided Sparse Strategy for Visual Hallucination Mitigation](../../CVPR2026/multimodal_vlm/locate-then-sparsify_attribution_guided_sparse_strategy_for_visual_hallucination.md)
-- [Look Twice Before You Answer: Memory-Space Visual Retracing for Hallucination Mitigation in Multimodal Large Language Models](../../ICML2025/multimodal_vlm/look_twice_before_you_answer_memory-space_visual_retracing_for_hallucination_mit.md)
 - [MAVias: Mitigate Any Visual Bias](../../ICCV2025/multimodal_vlm/mavias_mitigate_any_visual_bias.md)
+- [Locate-then-Sparsify: Attribution Guided Sparse Strategy for Visual Hallucination Mitigation](../../CVPR2026/multimodal_vlm/locate-then-sparsify_attribution_guided_sparse_strategy_for_visual_hallucination.md)
+- [It's a (Blind) Match! Towards Vision-Language Correspondence without Parallel Data](its_a_blind_match_towards_vision-language_correspondence_without_parallel_data.md)
 
 <!-- RELATED:END -->

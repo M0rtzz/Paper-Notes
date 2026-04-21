@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots
 description: >-
@@ -147,6 +147,6 @@ $$\mathcal{L}_{occ} = \mathcal{L}_{ce} + \mathcal{L}_{ls} + \mathcal{L}_{scal}^{
 - [An Instance-Centric Panoptic Occupancy Prediction Benchmark for Autonomous Driving](an_instance-centric_panoptic_occupancy_prediction_benchmark_for_autonomous_drivi.md)
 - [CoIn3D: Revisiting Configuration-Invariant Multi-Camera 3D Object Detection](coin3d_revisiting_configuration-invariant_multi-camera_3d_object_detection.md)
 - [TT-Occ: Test-Time 3D Occupancy Prediction](test-time_3d_occupancy_prediction.md)
-- [Learning Geometric and Photometric Features from Panoramic LiDAR Scans for Outdoor Place Categorization](learning_geometric_and_photometric_features_from_p.md)
+- [Learning Geometric and Photometric Features from Panoramic LiDAR Scans for Outdoor Place Categorization](learning_geometric_and_photometric_features_from_panoramic_lidar_scans_for_outdo.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EnvGS: Modeling View-Dependent Appearance with Environment Gaussian
 description: >-
@@ -122,10 +122,10 @@ $\mathcal{L} = \mathcal{L}_{rgb} + 0.04 \cdot \mathcal{L}_{norm} + 0.01 \cdot \m
 
 ## 相关论文
 
+- [ReCap: Better Gaussian Relighting with Cross-Environment Captures](recap_better_gaussian_relighting_with_cross-environment_captures.md)
 - [LaGa: Tackling View-Dependent Semantics in 3D Language Gaussian Splatting](../../ICML2025/3d_vision/tackling_view-dependent_semantics_in_3d_language_gaussian_splatting.md)
+- [Towards Realistic Example-Based Modeling via 3D Gaussian Stitching](towards_realistic_example-based_modeling_via_3d_gaussian_stitching.md)
 - [WildCAT3D: Appearance-Aware Multi-View Diffusion in the Wild](../../NeurIPS2025/3d_vision/wildcat3d_appearance-aware_multi-view_diffusion_in_the_wild.md)
-- [ARM: Appearance Reconstruction Model for Relightable 3D Generation](arm_appearance_reconstruction_model_for_relightable_3d_generation.md)
-- [HybridGS: Decoupling Transients and Statics with 2D and 3D Gaussian Splatting](hybridgs_decoupling_transients_and_statics_with_2d_and_3d_gaussian_splatting.md)
-- [4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video](4dequine_disentangling_motion_and_appearance_for_4d_equine_reconstruction_from_m.md)
+- [Open-World Amodal Appearance Completion](open-world_amodal_appearance_completion.md)
 
 <!-- RELATED:END -->

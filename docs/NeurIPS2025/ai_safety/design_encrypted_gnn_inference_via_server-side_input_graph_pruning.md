@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DESIGN: Encrypted GNN Inference via Server-Side Input Graph Pruning
 description: >-
@@ -144,6 +144,6 @@ tags:
 - [Robust Graph Condensation via Classification Complexity Mitigation](robust_graph_condensation_via_classification_complexity_mitigation.md)
 - [Enhancing Graph Classification Robustness with Singular Pooling](enhancing_graph_classification_robustness_with_singular_pooling.md)
 - [Influence Functions for Edge Edits in Non-Convex Graph Neural Networks](influence_functions_for_edge_edits_in_non-convex_graph_neural_networks.md)
-- [Systematizing LLM Persona Design: A Four-Quadrant Technical Taxonomy for AI Companions](systematizing_llm_persona_design_a_four-quadrant_technical_taxonomy_for_ai_compa.md)
+- [CryptoMoE: Privacy-Preserving and Scalable Mixture of Experts Inference via Balanced Expert Routing](cryptomoe_privacy-preserving_and_scalable_mixture_of_experts_inference_via_balan.md)
 
 <!-- RELATED:END -->

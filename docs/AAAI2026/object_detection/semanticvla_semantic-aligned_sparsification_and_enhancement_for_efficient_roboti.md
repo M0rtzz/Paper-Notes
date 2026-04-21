@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SemanticVLA: Semantic-Aligned Sparsification and Enhancement for Efficient Robotic Manipulation
 description: >-

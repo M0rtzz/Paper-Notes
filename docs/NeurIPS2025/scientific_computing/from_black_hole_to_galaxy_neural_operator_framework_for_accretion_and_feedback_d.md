@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Black Hole to Galaxy: Neural Operator Framework for Accretion and Feedback Dynamics
 description: >-

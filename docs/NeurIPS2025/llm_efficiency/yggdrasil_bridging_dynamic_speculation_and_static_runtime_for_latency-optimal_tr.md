@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Yggdrasil: Bridging Dynamic Speculation and Static Runtime for Latency-Optimal Tree-Based LLM Decoding
 description: >-

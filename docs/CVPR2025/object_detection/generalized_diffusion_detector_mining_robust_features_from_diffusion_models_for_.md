@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection
 description: >-
@@ -118,10 +118,10 @@ tags:
 
 ## 相关论文
 
+- [VerbDiff: Text-Only Diffusion Models with Enhanced Interaction Awareness](verbdiff_text-only_diffusion_models_with_enhanced_interaction_awareness.md)
 - [Enhancing Privacy-Utility Trade-offs to Mitigate Memorization in Diffusion Models](enhancing_privacy-utility_trade-offs_to_mitigate_memorization_in_diffusion_model.md)
 - [Beyond Semantic Features: Pixel-Level Mapping for Generalized AI-Generated Image Detection](../../AAAI2026/object_detection/beyond_semantic_features_pixel-level_mapping_for_generalized_ai-generated_image_.md)
 - [DiffDoctor: Diagnosing Image Diffusion Models Before Treating](../../ICCV2025/object_detection/diffdoctor_diagnosing_image_diffusion_models_before_treating.md)
 - [Large Self-Supervised Models Bridge the Gap in Domain Adaptive Object Detection](large_self-supervised_models_bridge_the_gap_in_domain_adaptive_object_detection.md)
-- [Implicit Concept Removal of Diffusion Models](../../ECCV2024/object_detection/implicit_concept_removal_of_diffusion_models.md)
 
 <!-- RELATED:END -->

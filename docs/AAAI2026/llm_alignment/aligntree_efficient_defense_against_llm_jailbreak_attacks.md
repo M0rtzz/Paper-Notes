@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AlignTree: Efficient Defense Against LLM Jailbreak Attacks
 description: >-

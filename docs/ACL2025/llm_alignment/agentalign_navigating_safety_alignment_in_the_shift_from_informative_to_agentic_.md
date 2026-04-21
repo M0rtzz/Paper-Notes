@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AgentAlign: Navigating Safety Alignment in the Shift from Informative to Agentic LLMs
 description: >-

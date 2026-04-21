@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LoA-Trans: Enhancing Visual Grounding by Location-Aware Transformers
 description: >-
@@ -221,7 +221,7 @@ LoA-Trans的位置感知查询策略启发我们重新思考DETR类模型中quer
 
 ## 相关论文
 
-- [Groma: Localized Visual Tokenization for Grounding Multimodal Large Language Models](groma_localized_visual_tokenization_for_grounding_multimodal_large_language_mode.md)
+- [Groma: Localized Visual Tokenization for Grounding Multimodal Large Language Models](groma_localized_visual_tokenization_for_grounding_multimodal.md)
 - [CAT: Enhancing Multimodal Large Language Model to Answer Questions in Dynamic Audio-Visual Scenarios](cat_enhancing_multimodal_large_language_model_to_answer_questions_in_dynamic_aud.md)
 - [DOGR: Towards Versatile Visual Document Grounding and Referring](../../ICCV2025/multimodal_vlm/dogr_towards_versatile_visual_document_grounding_and_referring.md)
 - [Visual Intention Grounding for Egocentric Assistants](../../ICCV2025/multimodal_vlm/visual_intention_grounding_for_egocentric_assistants.md)

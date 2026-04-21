@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] mR3: Multilingual Rubric-Agnostic Reward Reasoning Models
 description: >-

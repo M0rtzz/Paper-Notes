@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning on Model Weights using Tree Experts
 description: >-
@@ -128,6 +128,6 @@ tags:
 - [DR.Experts: Differential Refinement of Distortion-Aware Experts for Blind Image Quality Assessment](../../AAAI2026/interpretability/drexperts_differential_refinement_of_distortion-aware_experts_for_blind_image_qu.md)
 - [Uni-NTFM: A Unified Foundation Model for EEG Signal Representation Learning](../../ICLR2026/interpretability/uni-ntfm_a_unified_foundation_model_for_eeg_signal_representation_learning.md)
 - [Learning Visual Composition through Improved Semantic Guidance](learning_visual_composition_through_improved_semantic_guidance.md)
-- [ToC: Tree-of-Claims Search with Multi-Agent Language Models](../../AAAI2026/interpretability/toc_tree-of-claims_search_with_multi-agent_language_models.md)
+- [Open Ad-Hoc Categorization with Contextualized Feature Learning](open_ad-hoc_categorization_with_contextualized_feature_learning.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] StyleBreak: Revealing Alignment Vulnerabilities in Large Audio-Language Models via Style-Aware Audio Jailbreak
 description: >-

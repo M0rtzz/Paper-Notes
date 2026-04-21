@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ReliabilityRAG: Effective and Provably Robust Defense for RAG-based Web-Search
 description: >-
@@ -143,8 +143,8 @@ ReliabilityRAG 的完整流程分三阶段：
 
 - [Robust Graph Condensation via Classification Complexity Mitigation](robust_graph_condensation_via_classification_complexity_mitigation.md)
 - [A Set of Generalized Components to Achieve Effective Poison-only Clean-label Backdoor Attacks with Collaborative Sample Selection and Triggers](a_set_of_generalized_components_to_achieve_effective_poison-only_clean-label_bac.md)
-- [Retraining with Predicted Hard Labels Provably Increases Model Accuracy](../../ICML2025/ai_safety/retraining_with_predicted_hard_labels_provably_increases_model_accuracy.md)
 - [MARS: A Malignity-Aware Backdoor Defense in Federated Learning](mars_a_malignity-aware_backdoor_defense_in_federated_learning.md)
+- [Retraining with Predicted Hard Labels Provably Increases Model Accuracy](../../ICML2025/ai_safety/retraining_with_predicted_hard_labels_provably_increases_model_accuracy.md)
 - [On Differential Privacy for Adaptively Solving Search Problems via Sketching](../../ICML2025/ai_safety/on_differential_privacy_for_adaptively_solving_search_problems_via_sketching.md)
 
 <!-- RELATED:END -->

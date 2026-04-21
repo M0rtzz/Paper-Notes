@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] COSMO-INR: Complex Sinusoidal Modulation for Implicit Neural Representations
 description: >-

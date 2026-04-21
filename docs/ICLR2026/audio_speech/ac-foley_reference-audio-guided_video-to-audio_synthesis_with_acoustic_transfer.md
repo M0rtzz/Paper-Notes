@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AC-Foley: Reference-Audio-Guided Video-to-Audio Synthesis with Acoustic Transfer
 description: >-
@@ -121,7 +121,7 @@ tags:
 - [MultiFoley: Video-Guided Foley Sound Generation with Multimodal Controls](../../CVPR2025/audio_speech/video-guided_foley_sound_generation_with_multimodal_controls.md)
 - [Query-Guided Spatial-Temporal-Frequency Interaction for Music Audio-Visual Question Answering](query-guided_spatial-temporal-frequency_interaction_for_music_audio-visual_quest.md)
 - [PACE: Pretrained Audio Continual Learning](pace_pretrained_audio_continual_learning.md)
+- [TripleSumm: Adaptive Triple-Modality Fusion for Video Summarization](triplesumm_adaptive_triple-modality_fusion_for_video_summarization.md)
 - [OmniSonic: Towards Universal and Holistic Audio Generation from Video and Text](../../CVPR2026/audio_speech/omnisonic_towards_universal_and_holistic_audio_generation_from_video_and_text.md)
-- [FlexiCodec: A Dynamic Neural Audio Codec for Low Frame Rates](flexicodec_a_dynamic_neural_audio_codec_for_low_frame_rates.md)
 
 <!-- RELATED:END -->

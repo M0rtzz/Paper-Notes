@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ScaleDiff: Higher-Resolution Image Synthesis via Efficient and Model-Agnostic Diffusion
 description: >-

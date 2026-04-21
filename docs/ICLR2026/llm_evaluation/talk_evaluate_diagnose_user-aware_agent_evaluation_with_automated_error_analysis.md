@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Talk, Evaluate, Diagnose: User-aware Agent Evaluation with Automated Error Analysis
 description: >-
@@ -123,6 +123,6 @@ Talk→用可复用persona模板模拟expert/non-expert用户与Agent交互。Ev
 - [Generalization Error Analysis for Selective State-Space Models Through the Lens of Attention](../../NeurIPS2025/llm_evaluation/generalization_error_analysis_for_selective_state-space_models_through_the_lens_.md)
 - [Which LLM Multi-Agent Protocol to Choose?](which_llm_multi-agent_protocol_to_choose.md)
 - [UIS-Digger: Towards Comprehensive Research Agent Systems for Real-world Unindexed Information Seeking](uis-digger_towards_comprehensive_research_agent_systems_for_real-world_unindexed.md)
-- [Noise-Aware Generalization: Robustness to In-Domain Noise and Out-of-Domain Generalization](noise-aware_generalization_robustness_to_in-domain_noise_and_out-of-domain_gener.md)
+- [SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home Agents](simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_agents.md)
 
 <!-- RELATED:END -->

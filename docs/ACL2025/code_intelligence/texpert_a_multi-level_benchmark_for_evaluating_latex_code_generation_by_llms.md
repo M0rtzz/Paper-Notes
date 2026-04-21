@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TeXpert: A Multi-Level Benchmark for Evaluating LaTeX Code Generation by LLMs
 description: >-

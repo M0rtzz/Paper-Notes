@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Angle Domain Guidance: Latent Diffusion Requires Rotation Rather Than Extrapolation
 description: >-

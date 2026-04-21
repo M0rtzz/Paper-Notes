@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Transformer-Based Spatial-Temporal Counterfactual Outcomes Estimation
 description: >-
@@ -151,8 +151,8 @@ $$\mathcal{L} = -\sum_{i=1}^{|S|} \ln(\text{net}(s_i)) + \int_\Omega \text{net}(
 
 - [LLM Interpretability with Identifiable Temporal-Instantaneous Representation](../../NeurIPS2025/causal_inference/llm_interpretability_with_identifiable_temporal-instantaneous_representation.md)
 - [Causality-Induced Positional Encoding for Transformer-Based Representation Learning of Non-Sequential Features](../../NeurIPS2025/causal_inference/causality-induced_positional_encoding_for_transformer-based_representation_learn.md)
-- [Exogenous Isomorphism for Counterfactual Identifiability](exogenous_isomorphism_for_counterfactual_identifiability.md)
 - [Do-PFN: In-Context Learning for Causal Effect Estimation](../../NeurIPS2025/causal_inference/do-pfn_in-context_learning_for_causal_effect_estimation.md)
-- [An Analysis of Causal Effect Estimation Using Outcome Invariant Data Augmentation](../../NeurIPS2025/causal_inference/an_analysis_of_causal_effect_estimation_using_outcome_invariant_data_augmentatio.md)
+- [Exogenous Isomorphism for Counterfactual Identifiability](exogenous_isomorphism_for_counterfactual_identifiability.md)
+- [It's Hard to Be Normal: The Impact of Noise on Structure-agnostic Estimation](../../NeurIPS2025/causal_inference/its_hard_to_be_normal_the_impact_of_noise_on_structure-agnostic_estimation.md)
 
 <!-- RELATED:END -->

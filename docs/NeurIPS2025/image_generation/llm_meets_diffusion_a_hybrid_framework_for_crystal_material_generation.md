@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLM Meets Diffusion: A Hybrid Framework for Crystal Material Generation
 description: >-
@@ -126,9 +126,9 @@ $$\mathcal{L} = \mathcal{L}_{lattice} + \mathcal{L}_{coord}$$
 ## 相关论文
 
 - [ObCLIP: Oblivious Cloud-Device Hybrid Image Generation with Privacy Preservation](obclip_oblivious_cloud-device_hybrid_image_generation_with_privacy_preservation.md)
+- [MARBLE: Material Recomposition and Blending in CLIP-Space](../../CVPR2025/image_generation/marble_material_recomposition_and_blending_in_clip-space.md)
+- [HybridBooth: Hybrid Prompt Inversion for Efficient Subject-Driven Generation](../../ECCV2024/image_generation/hybridbooth_hybrid_prompt_inversion_for_efficient_subje.md)
 - [Toward a Unified Geometry Understanding: Riemannian Diffusion Framework for Graph Generation and Prediction](toward_a_unified_geometry_understanding_riemannian_diffusion_framework_for_graph.md)
-- [HybridBooth: Hybrid Prompt Inversion for Efficient Subject-Driven Generation](../../ECCV2024/image_generation/hybridbooth_hybrid_prompt_inversion_for_efficient_subject-driven_generation.md)
-- [DDIS: When Model Knowledge Meets Diffusion Model — Diffusion-assisted Data-free Image Synthesis](../../ICML2025/image_generation/when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_sy.md)
-- [The Fabrication of Reality and Fantasy: Scene Generation with LLM-Assisted Prompt Interpretation](../../ECCV2024/image_generation/the_fabrication_of_reality_and_fantasy_scene_generation_with_llm-assisted_prompt.md)
+- [DDIS: When Model Knowledge Meets Diffusion Model](../../ICML2025/image_generation/when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_synthesis.md)
 
 <!-- RELATED:END -->

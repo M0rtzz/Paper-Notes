@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PENCIL: Long Thoughts with Short Memory
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Draw-In-Mind: Rebalancing Designer-Painter Roles in Unified Multimodal Models Benefits Image Editing
 description: >-

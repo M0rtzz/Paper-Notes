@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OmniDiff: A Comprehensive Benchmark for Fine-grained Image Difference Captioning
 description: >-

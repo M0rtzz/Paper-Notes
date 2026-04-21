@@ -1,3 +1,17 @@
+---
+title: >-
+  [论文解读] ProAPO: Progressively Automatic Prompt Optimization for Visual Classification
+description: >-
+  [CVPR 2025][自动提示优化] 提出 ProAPO 渐进式自动提示优化方法，通过 LLM 生成视觉描述并迭代优化，自动为 VLM 发现最优分类提示，无需人工设计或梯度训练。
+tags:
+  - CVPR 2025
+  - 自动提示优化
+  - VLM
+  - LLM
+  - 视觉分类
+  - 渐进式优化
+---
+
 ﻿---
 title: >-
   [论文解读] ProAPO: Progressively Automatic Prompt Optimization for Visual Classification
@@ -59,9 +73,9 @@ tags:
 ## 相关论文
 
 - [Enhancing Few-Shot Class-Incremental Learning via Training-Free Bi-Level Modality Calibration](enhancing_few-shot_class-incremental_learning_via_training-free_bi-level_modalit.md)
+- [Iron Sharpens Iron: Defending Against Attacks in Machine-Generated Text Detection with Adversarial Training](../../ACL2025/aigc_detection/greater_adversarial_mgt_detection.md)
 - [ASCIIBench: Evaluating Language-Model-Based Understanding of Visually-Oriented Text](../../NeurIPS2025/aigc_detection/asciibench_evaluating_language-model-based_understanding_of_visually-oriented_te.md)
 - ["Jutters"](../../NeurIPS2025/aigc_detection/jutters.md)
-- [People who frequently use ChatGPT for writing tasks are accurate and robust detectors of AI-generated text](../../ACL2025/aigc_detection/chatgpt_user_ai_text_detection.md)
-- [Classical Planning with LLM-Generated Heuristics: Challenging the State of the Art with Python Code](../../NeurIPS2025/aigc_detection/classical_planning_with_llm-generated_heuristics_challenging_the_state_of_the_ar.md)
+- [A Rose by Any Other Name: LLM-Generated Explanations Are Good Proxies for Human Explanations to Collect Label Distributions on NLI](../../ACL2025/aigc_detection/a_rose_by_any_other_name_llm-generated_explanations_are_good_proxies_for_human_e.md)
 
 <!-- RELATED:END -->

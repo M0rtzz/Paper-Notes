@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Shifted Autoencoders for Point Annotation Restoration in Object Counting
 description: >-
@@ -164,7 +164,7 @@ SAE包含三个步骤：
 ## 相关论文
 
 - [Object-Aware NIR-to-Visible Translation](object-aware_nir-to-visible_translation.md)
-- [Teaching Tailored to Talent: Adverse Weather Restoration via Prompt Pool and Depth-Anything Constraint](teaching_tailored_to_talent_adverse_weather_restoration_via_prompt_pool_and_dept.md)
+- [Teaching Tailored to Talent: Adverse Weather Restoration via Prompt Pool and Depth-Anything Constraint](teaching_tailored_to_talent_adverse_weather_restoration.md)
 - [Bidirectional Uncertainty-Based Active Learning for Open-Set Annotation](bidirectional_uncertainty-based_active_learning_for_open-set_annotation.md)
 - [ABC Easy as 123: A Blind Counter for Exemplar-Free Multi-Class Class-Agnostic Counting](abc_easy_as_123_a_blind_counter_for_exemplar-free_multi-class_class-agnostic_cou.md)
 - [The Counting Power of Transformers](../../ICLR2026/others/the_counting_power_of_transformers.md)

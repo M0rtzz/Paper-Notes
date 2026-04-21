@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Learnability-Guided Diffusion for Dataset Distillation
 description: >-
-  [CVPR 2026][图像生成][数据集蒸馏] 提出LGD方法，通过可学习性驱动的增量式数据集蒸馏解决现有方法的冗余问题，将扩散模型的生成过程条件化于当前模型学习状态，生成互补而非重复的训练样本，在ImageNet-1K达60.1%、ImageNette达87.2%，冗余减少39.1%。
+  [CVPR 2026][图像生成][数据集蒸馏] 提出可学习性驱动的增量式数据集蒸馏框架LGD，将蒸馏数据集分阶段构建，每阶段条件化于当前模型状态生成互补而非冗余的训练样本，通过在扩散采样中注入可学习性梯度引导，将现有方法80-90%的样本间信息冗余降低39.1%，在ImageNet-1K上达60.1%（50 IPC）、ImageNette上达87.2%（100 IPC）。
 tags:
   - CVPR 2026
   - 图像生成
   - 数据集蒸馏
-  - 扩散模型引导
-  - 课程学习
-  - 可学习性
+  - 可学习性引导
+  - 扩散模型
+  - 增量式合成
+  - 冗余分析
 ---
 
 # Learnability-Guided Diffusion for Dataset Distillation
@@ -121,8 +122,8 @@ tags:
 
 - [CaO2: Rectifying Inconsistencies in Diffusion-Based Dataset Distillation](../../ICCV2025/image_generation/cao2_rectifying_inconsistencies_in_diffusion-based_dataset_distillation.md)
 - [Taming Diffusion for Dataset Distillation with High Representativeness (D³HR)](../../ICML2025/image_generation/taming_diffusion_for_dataset_distillation_with_high_representativeness.md)
+- [Enhancing Image Aesthetics with Dual-Conditioned Diffusion Models Guided by Multimodal Perception](enhancing_image_aesthetics_with_dual-conditioned_diffusion_models_guided_by_mult.md)
+- [Imagine Before Concentration: Diffusion-Guided Registers Enhance Partially Relevant Video Retrieval](imagine_before_concentration_diffusion-guided_registers_enhance_partially_releva.md)
 - [Pluggable Pruning with Contiguous Layer Distillation for Diffusion Transformers](pluggable_pruning_with_contiguous_layer_distillation_for_diffusion_transformers.md)
-- [Prototype-Guided Concept Erasure in Diffusion Models](prototype-guided_concept_erasure_in_diffusion_models.md)
-- [BioVITA: Biological Dataset, Model, and Benchmark for Visual-Textual-Acoustic Alignment](biovita_biological_dataset_model_and_benchmark_for_visual-textual-acoustic_align.md)
 
 <!-- RELATED:END -->

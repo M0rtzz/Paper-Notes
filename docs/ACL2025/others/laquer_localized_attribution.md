@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LAQuer: Localized Attribution Queries in Content-grounded Generation
 description: >-

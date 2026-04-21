@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking the Spatio-Temporal Alignment of End-to-End 3D Perception
 description: >-

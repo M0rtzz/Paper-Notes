@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Slimmable NAM: Neural Amp Models with Adjustable Runtime Computational Cost
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Explainable Temporal Reasoning in Large Language Models: A Structure-Aware Generative Framework
 description: >-
@@ -153,6 +153,6 @@ RL 方法通过预定义奖励机制构建推理路径，但决策过程隐式�
 - [Auditing Meta-Cognitive Hallucinations in Reasoning Large Language Models](../../NeurIPS2025/interpretability/auditing_meta-cognitive_hallucinations_in_reasoning_large_language_models.md)
 - [The Trilemma of Truth in Large Language Models](../../NeurIPS2025/interpretability/the_trilemma_of_truth_in_large_language_models.md)
 - [Reasoning Circuits in Language Models: A Mechanistic Interpretation of Syllogistic Inference](reasoning_circuits_in_language_models_a_mechanistic_interpretation_of_syllogisti.md)
-- [Cracking Factual Knowledge: A Comprehensive Analysis of Degenerate Knowledge Neurons in Large Language Models](cracking_factual_knowledge_a_comprehensive_analysis_of_degenerate_knowledge_neur.md)
+- [Inference-Time Decomposition of Activations (ITDA): A Scalable Approach to Interpreting Large Language Models](../../ICML2025/interpretability/inference-time_decomposition_of_activations_itda_a_scalable_approach_to_interpre.md)
 
 <!-- RELATED:END -->

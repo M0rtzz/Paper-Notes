@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mind the Hitch: Dynamic Calibration and Articulated Perception for Autonomous Trucks
 description: >-

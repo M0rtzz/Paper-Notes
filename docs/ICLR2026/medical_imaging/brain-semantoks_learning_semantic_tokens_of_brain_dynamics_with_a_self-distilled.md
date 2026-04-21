@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Brain-Semantoks: Learning Semantic Tokens of Brain Dynamics with a Self-Distilled Foundation Model
 description: >-
@@ -153,7 +153,7 @@ Brain-Semantoks 采用学生-教师架构。输入 fMRI 时间序列 $X \in \mat
 - [Brain Harmony: A Multimodal Foundation Model Unifying Morphology and Function into 1D Tokens](../../NeurIPS2025/medical_imaging/brain_harmony_a_multimodal_foundation_model_unifying_morphology_and_function_int.md)
 - [Brain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer](brain-it_image_reconstruction_from_fmri_via_brain-interaction_transformer.md)
 - [Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](../../CVPR2026/medical_imaging/modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)
-- [The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning](../../ICML2025/medical_imaging/the_brains_bitter_lesson_scaling_speech_decoding_with_self-supervised_learning.md)
 - [Towards Interpretable Visual Decoding with Attention to Brain Representations](towards_interpretable_visual_decoding_with_attention_to_brain_representations.md)
+- [The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning](../../ICML2025/medical_imaging/the_brains_bitter_lesson_scaling_speech_decoding_with_self-supervised_learning.md)
 
 <!-- RELATED:END -->

@@ -2,9 +2,15 @@
 title: >-
   [论文解读] Centurio: On Drivers of Multilingual Ability of Large Vision-Language Model
 description: >-
-  [多模态] 系统研究多语言LVLM训练策略中训练语言数量、语言数据分布和多语言OCR三个维度，发现可同时训练100种语言且仅需25-50%非英语数据，据此训练出覆盖100语言的Centurio模型达到SOTA。
+  [ACL 2025][多模态][multilingual LVLM] 系统研究多语言LVLM训练策略中训练语言数量、语言数据分布和多语言OCR三个维度，发现可同时训练100种语言且仅需25-50%非英语数据，据此训练出覆盖100语言的Centurio模型达到SOTA。
 tags:
+  - ACL 2025
   - 多模态
+  - multilingual LVLM
+  - 视觉语言
+  - training data distribution
+  - OCR
+  - language fidelity
 ---
 
 # Centurio: On Drivers of Multilingual Ability of Large Vision-Language Model
@@ -110,10 +116,10 @@ tags:
 
 ## 相关论文
 
-- [Can Multimodal Large Language Models Understand Spatial Relations?](spatialmqa_mllm_spatial_relations.md)
-- [ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)
-- [Can Vision Language Models Understand Mimed Actions?](can_vision_language_models_understand_mimed_actions.md)
-- [Teaching Vision-Language Models to Ask: Resolving Ambiguity in Visual Questions](teaching_vlm_ask_ambiguity.md)
-- [ReCAD: Reinforcement Learning Enhanced Parametric CAD Model Generation with Vision-Language Models](../../AAAI2026/multimodal_vlm/recad_reinforcement_learning_enhanced_parametric_cad_model_generation_with_visio.md)
+- [SingaKids: A Multilingual Multimodal Dialogic Tutor for Language Learning](singakids_a_multilingual_multimodal_dialogic_tutor_for_language_learning.md)
+- [Parrot: Multilingual Visual Instruction Tuning](../../ICML2025/multimodal_vlm/parrot_multilingual_visual_instruction_tuning.md)
+- [ChartCoder: Advancing Multimodal Large Language Model for Chart-to-Code Generation](chartcoder_chart_to_code.md)
+- [Rethinking Multimodal Learning from the Perspective of Mitigating Classification Ability Disproportion](../../NeurIPS2025/multimodal_vlm/rethinking_multimodal_learning_from_the_perspective_of_mitig.md)
+- [LogicQA: Logical Anomaly Detection with Vision Language Model Generated Questions](logicqa_logical_anomaly_detection_with_vision_language_model_generated_questions.md)
 
 <!-- RELATED:END -->

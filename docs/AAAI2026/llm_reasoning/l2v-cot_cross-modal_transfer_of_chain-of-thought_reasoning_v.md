@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] L2V-CoT: Cross-Modal Transfer of Chain-of-Thought Reasoning via Latent Intervention
 description: >-

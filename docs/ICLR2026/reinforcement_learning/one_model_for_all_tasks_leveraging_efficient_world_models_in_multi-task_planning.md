@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] One Model for All Tasks: Leveraging Efficient World Models in Multi-Task Planning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Amortized Active Generation of Pareto Sets
 description: >-

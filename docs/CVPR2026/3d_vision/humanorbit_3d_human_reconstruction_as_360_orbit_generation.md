@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HumanOrbit: 3D Human Reconstruction as 360° Orbit Generation
 description: >-

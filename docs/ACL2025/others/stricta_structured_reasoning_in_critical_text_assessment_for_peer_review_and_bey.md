@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] STRICTA: Structured Reasoning in Critical Text Assessment for Peer Review and Beyond
 description: >-

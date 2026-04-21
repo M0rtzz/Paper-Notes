@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Predicting Training Re-evaluation Curves Enables Effective Data Curriculums
 description: >-

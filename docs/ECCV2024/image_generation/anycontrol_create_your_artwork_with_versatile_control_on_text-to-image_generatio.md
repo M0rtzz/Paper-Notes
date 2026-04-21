@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AnyControl: Create Your Artwork with Versatile Control on Text-to-Image Generation
 description: >-
@@ -139,9 +139,9 @@ tags:
 ## 相关论文
 
 - [LivePhoto: Real Image Animation with Text-guided Motion Control](livephoto_real_image_animation_with_text-guided_motion_control.md)
-- [Collaborative Control for Geometry-Conditioned PBR Image Generation](collaborative_control_for_geometry-conditioned_pbr_image_generation.md)
 - [Latent Guard: a Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_text-to-image_generation.md)
 - [Powerful and Flexible: Personalized Text-to-Image Generation via Reinforcement Learning](powerful_and_flexible_personalized_text-to-image_generation_via_reinforcement_le.md)
-- [Generating Human Interaction Motions in Scenes with Text Control](generating_human_interaction_motions_in_scenes_with_text_control.md)
+- [MagicEraser: Erasing Any Objects via Semantics-Aware Control](magiceraser_erasing_any_objects_via_semantics-aware_control.md)
+- [LCM-Lookahead for Encoder-based Text-to-Image Personalization](lcm-lookahead_for_encoder-based_text-to-image_personalization.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoMatcher: Multi-View Collaborative Feature Matching
 description: >-
@@ -129,9 +129,9 @@ $$\mathcal{L}_{total} = \frac{1}{M}\sum_{I_i \in \mathcal{G}}(\mathcal{L}_{corr}
 ## 相关论文
 
 - [MV-RoMa: From Pairwise Matching into Multi-View Track Reconstruction](../../CVPR2026/3d_vision/mv-roma_from_pairwise_matching_into_multi-view_track_reconstruction.md)
+- [Sharp-It: A Multi-view to Multi-view Diffusion Model for 3D Synthesis and Manipulation](sharp-it_a_multi-view_to_multi-view_diffusion_model_for_3d_synthesis_and_manipul.md)
+- [MAC-Ego3D: Multi-Agent Gaussian Consensus for Real-Time Collaborative Ego-Motion and Photorealistic 3D Reconstruction](mac-ego3d_multi-agent_gaussian_consensus_for_real-time_collaborative_ego-motion_.md)
 - [ColabSfM: Collaborative Structure-from-Motion by Point Cloud Registration](colabsfm_collaborative_structure-from-motion_by_point_cloud_registration.md)
 - [MVSAnywhere: Zero-Shot Multi-View Stereo](mvsanywhere_zero-shot_multi-view_stereo.md)
-- [MEt3R: Measuring Multi-View Consistency in Generated Images](met3r_measuring_multi-view_consistency_in_generated_images.md)
-- [MVBoost: Boost 3D Reconstruction with Multi-View Refinement](mvboost_boost_3d_reconstruction_with_multi-view_refinement.md)
 
 <!-- RELATED:END -->

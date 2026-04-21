@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SMART: Self-Aware Agent for Tool Overuse Mitigation
 description: >-
@@ -104,8 +104,8 @@ tags:
 
 - [Gödel Agent: A Self-Referential Agent Framework for Recursive Self-Improvement](gödel_agent_a_self-referential_agent_framework_for_recursive_self-improvement.md)
 - [SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home LLM Agents](../../ICLR2026/llm_agent/simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_llm_agents.md)
-- [Agentic Knowledgeable Self-Awareness](agentic_knowledgeable_self-awareness.md)
 - [Adaptive Tool Use in Large Language Models with Meta-Cognition Trigger](meco_metacognition_tool_use.md)
+- [Agentic Knowledgeable Self-Awareness](agentic_knowledgeable_self-awareness.md)
 - [Play2Prompt: Zero-shot Tool Instruction Optimization for LLM Agents via Tool Play](play2prompt_zero-shot_tool_instruction_optimization_for_llm_agents_via_tool_play.md)
 
 <!-- RELATED:END -->

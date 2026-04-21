@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Trade-offs in Large Reasoning Models: An Empirical Analysis of Deliberative and Adaptive Reasoning over Foundational Capabilities
 description: >-
@@ -141,6 +141,6 @@ s1.1-32B在IFEval上下降47.38%的同时推理成本增加250%！
 - [Text-to-Scene with Large Reasoning Models](text-to-scene_with_large_reasoning_models.md)
 - [Are Large Reasoning Models Good Translation Evaluators? Analysis and Performance Boost](../../NeurIPS2025/llm_reasoning/are_large_reasoning_models_good_translation_evaluators_analysis_and_performance_.md)
 - [The Curious Case of Analogies: Investigating Analogical Reasoning in Large Language Models](the_curious_case_of_analogies_investigating_analogical_reasoning_in_large_langua.md)
-- [Adaptive Dual Reasoner: Large Reasoning Models Can Think Efficiently by Hybrid Reasoning](../../NeurIPS2025/llm_reasoning/adaptive_dual_reasoner_large_reasoning_models_can_think_efficiently_by_hybrid_re.md)
+- [ARM: Adaptive Reasoning Model](../../NeurIPS2025/llm_reasoning/arm_adaptive_reasoning_model.md)
 
 <!-- RELATED:END -->

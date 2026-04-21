@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] "Give Me BF16 or Give Me Death"? Accuracy-Performance Trade-Offs in LLM Quantization
 description: >-

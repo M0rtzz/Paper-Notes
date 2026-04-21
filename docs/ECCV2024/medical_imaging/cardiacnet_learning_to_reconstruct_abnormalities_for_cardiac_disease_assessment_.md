@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CardiacNet: Learning to Reconstruct Abnormalities for Cardiac Disease Assessment from Echocardiogram Videos
 description: >-

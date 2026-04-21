@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EVOS: Efficient Implicit Neural Training via EVOlutionary Selector
 description: >-
@@ -117,9 +117,9 @@ EVOS不仅更快（1.85×），质量还更好（PSNR +0.71dB）。
 ## 相关论文
 
 - [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
-- [Superpixel-Informed Implicit Neural Representation for Multi-Dimensional Data](../../ECCV2024/others/superpixel-informed_implicit_neural_representation_for_multi-dimensional_data.md)
 - [Evolutionary Prediction Games](../../NeurIPS2025/others/evolutionary_prediction_games.md)
+- [Superpixel-Informed Implicit Neural Representation for Multi-Dimensional Data](../../ECCV2024/others/superpixel-informed_implicit_neural_representation_for_multi-dimensional_data.md)
+- [VKDNW: Training-free Neural Architecture Search through Variance of Knowledge of Deep Network Weights](training-free_neural_architecture_search_through_variance_of_knowledge_of_deep_n.md)
 - [SUICA: Learning Super-high Dimensional Sparse Implicit Neural Representations for Spatial Transcriptomics](../../ICML2025/others/suica_learning_super-high_dimensional_sparse_implicit_neural_representations_for.md)
-- [Sign-In to the Lottery: Reparameterized Sparse Training from Scratch](../../NeurIPS2025/others/sign-in_to_the_lottery_reparameterizing_sparse_training_from_scratch.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Provably Efficient Online RLHF with One-Pass Reward Modeling
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning
 description: >-
@@ -124,6 +124,6 @@ FINO (Flow matching with Injected Noise for Offline-to-online RL) 基于FQL框�
 - [DiffusionNFT: Online Diffusion Reinforcement with Forward Process](diffusionnft_online_diffusion_reinforcement_with_forward_process.md)
 - [Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
 - [Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
-- [DenseGRPO: From Sparse to Dense Reward for Flow Matching Model Alignment](densegrpo_from_sparse_to_dense_reward_for_flow_matching_model_alignment.md)
+- [SenseFlow: Scaling Distribution Matching for Flow-based Text-to-Image Distillation](senseflow_scaling_distribution_matching_for_flow-based_text-to-image_distillatio.md)
 
 <!-- RELATED:END -->

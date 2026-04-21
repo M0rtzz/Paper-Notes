@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sampling-Aware 3D Spatial Analysis in Multiplexed Imaging
 description: >-
@@ -129,6 +129,6 @@ tags:
 - [Adapting Point Cloud Analysis via Multimodal Bayesian Distribution Learning](adapting_point_cloud_analysis_via_multimodal_bayesian_distribution_learning.md)
 - [SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection](span_spatial_projection_alignment_mono3d.md)
 - [E-RayZer: Self-supervised 3D Reconstruction as Spatial Visual Pre-training](e-rayzer_self-supervised_3d_reconstruction_as_spatial_visual_pre-training.md)
-- [Metropolis-Hastings Sampling for 3D Gaussian Reconstruction](../../NeurIPS2025/3d_vision/metropolis-hastings_sampling_for_3d_gaussian_reconstruction.md)
+- [Dual Exposure Stereo for Extended Dynamic Range 3D Imaging](../../CVPR2025/3d_vision/dual_exposure_stereo_for_extended_dynamic_range_3d_imaging.md)
 
 <!-- RELATED:END -->

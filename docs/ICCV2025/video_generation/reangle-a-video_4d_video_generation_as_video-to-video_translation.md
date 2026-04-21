@@ -2,10 +2,9 @@
 title: >-
   [论文解读] Reangle-A-Video: 4D Video Generation as Video-to-Video Translation
 description: >-
-  [ICCV 2025][图像生成][多视角视频] Reangle-A-Video 将多视角视频生成重新定义为视频到视频翻译问题，通过自监督微调视频扩散模型学习视角不变运动，配合 DUSt3R 引导的多视角一致性 inpainting，从单目视频生成同步多视角视频。
+  [ICCV 2025][多视角视频] Reangle-A-Video 将多视角视频生成重新定义为视频到视频翻译问题，通过自监督微调视频扩散模型学习视角不变运动，配合 DUSt3R 引导的多视角一致性 inpainting，从单目视频生成同步多视角视频。
 tags:
   - ICCV 2025
-  - 图像生成
   - 多视角视频
   - 视频翻译
   - 视角迁移
@@ -141,8 +140,8 @@ $$\mathbb{E}[\|\boldsymbol{\epsilon} \odot \mathbf{m}_{\text{down}}^{1:N} - \eps
 
 - [Geometry-aware 4D Video Generation for Robot Manipulation](../../ICLR2026/video_generation/geometry-aware_4d_video_generation_for_robot_manipulation.md)
 - [4Real-Video: Learning Generalizable Photo-Realistic 4D Video Diffusion](../../CVPR2025/video_generation/4real-video_learning_generalizable_photo-realistic_4d_video_diffusion.md)
-- [X-Dancer: Expressive Music to Human Dance Video Generation](x-dancer_expressive_music_to_human_dance_video_generation.md)
-- [MotionAgent: Fine-grained Controllable Video Generation via Motion Field Agent](motionagent_fine-grained_controllable_video_generation_via_motion_field_agent.md)
 - [3D4D: An Interactive Editable 4D World Model via 3D Video Generation](../../AAAI2026/video_generation/3d4d_an_interactive_editable_4d_world_model_via_3d_video_generation.md)
+- [ReCamMaster: Camera-Controlled Generative Rendering from A Single Video](recammaster_camera-controlled_generative_rendering_from_a_single_video.md)
+- [SeeU: Seeing the Unseen World via 4D Dynamics-aware Generation](../../CVPR2026/video_generation/seeu_seeing_the_unseen_world_via_4d_dynamics-aware_generation.md)
 
 <!-- RELATED:END -->

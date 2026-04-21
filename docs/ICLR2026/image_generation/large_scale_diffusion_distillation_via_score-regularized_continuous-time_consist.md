@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Large Scale Diffusion Distillation via Score-Regularized Continuous-Time Consistency
 description: >-

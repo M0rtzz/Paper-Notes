@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AnoStyler: Text-Driven Localized Anomaly Generation via Lightweight Style Transfer
 description: >-
@@ -124,10 +124,10 @@ AnoStyler的核心优势在于用style transfer替代生成模型，在保持质
 
 ## 相关论文
 
+- [StyleStudio: Text-Driven Style Transfer with Selective Control of Style Elements](../../CVPR2025/image_generation/stylestudio_text-driven_style_transfer_with_selective_control_of_style_elements.md)
 - [HSI: A Holistic Style Injector for Arbitrary Style Transfer](../../CVPR2025/image_generation/hsi_a_holistic_style_injector_for_arbitrary_style_transfer.md)
 - [HAM: A Training-Free Style Transfer Approach via Heterogeneous Attention Modulation for Diffusion Models](../../CVPR2026/image_generation/ham_a_training-free_style_transfer_approach_via_heterogeneous_attention_modulati.md)
-- [Domain Generalizable Portrait Style Transfer](../../ICCV2025/image_generation/domain_generalizable_portrait_style_transfer.md)
-- [DogFit: Domain-guided Fine-tuning for Efficient Transfer Learning of Diffusion Models](dogfit_domain-guided_fine-tuning_for_efficient_transfer_learning_of_diffusion_mo.md)
-- [Neighbor-Aware Localized Concept Erasure in Text-to-Image Diffusion Models](../../CVPR2026/image_generation/neighbor-aware_localized_concept_erasure_in_text-to-image_diffusion_models.md)
+- [SaMam: Style-aware State Space Model for Arbitrary Image Style Transfer](../../CVPR2025/image_generation/samam_style-aware_state_space_model_for_arbitrary_image_style_transfer.md)
+- [OmniStyle: Filtering High Quality Style Transfer Data at Scale](../../CVPR2025/image_generation/omnistyle_filtering_high_quality_style_transfer_data_at_scale.md)
 
 <!-- RELATED:END -->

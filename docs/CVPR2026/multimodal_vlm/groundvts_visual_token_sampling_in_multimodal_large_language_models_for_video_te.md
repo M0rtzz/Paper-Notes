@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GroundVTS: Visual Token Sampling in Multimodal Large Language Models for Video Temporal Grounding
 description: >-

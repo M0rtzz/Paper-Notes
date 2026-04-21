@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Real-World Document Parsing via Realistic Scene Synthesis and Document-Aware Training
 description: >-

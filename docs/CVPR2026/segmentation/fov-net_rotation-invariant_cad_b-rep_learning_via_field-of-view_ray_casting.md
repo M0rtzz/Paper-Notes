@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FoV-Net: Rotation-Invariant CAD B-rep Learning via Field-of-View Ray Casting
 description: >-
@@ -145,6 +145,6 @@ FoV-Net 旋转前后性能完全一致；UV-Net 在 SolidLetters 上从 97.10% �
 - [Learning Cross-View Object Correspondence via Cycle-Consistent Mask Prediction](learning_cross-view_object_correspondence_via_cycle-consistent_mask_prediction.md)
 - [Unified Spherical Frontend: Learning Rotation-Equivariant Representations of Spherical Images from Any Camera](unified_spherical_frontend_learning_rotation-equivariant_representations_of_sphe.md)
 - [PRUE: A Practical Recipe for Field Boundary Segmentation at Scale](prue_a_practical_recipe_for_field_boundary_segmentation_at_scale.md)
-- [SPARROW: Learning Spatial Precision and Temporal Referential Consistency in Pixel-Grounded Video MLLMs](sparrow_learning_spatial_precision_and_temporal_re.md)
+- [V-CLR: View-Consistent Learning for Open-World Instance Segmentation](../../CVPR2025/segmentation/v-clr_view-consistent_learning_for_open-world_instance_segmentation.md)
 
 <!-- RELATED:END -->

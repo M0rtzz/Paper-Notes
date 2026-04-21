@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3DID: Direct 3D Inverse Design for Aerodynamics with Physics-Aware Optimization
 description: >-

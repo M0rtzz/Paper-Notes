@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Designing Truthful Mechanisms for Asymptotic Fair Division
 description: >-

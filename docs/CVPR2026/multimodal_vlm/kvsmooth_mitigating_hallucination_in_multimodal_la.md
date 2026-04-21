@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] KVSmooth: Mitigating Hallucination in Multi-modal Large Language Models through Key-Value Smoothing
 description: >-

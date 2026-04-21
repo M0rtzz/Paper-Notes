@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SkillVerse: Assessing and Enhancing LLMs with Tree Evaluation
 description: >-
@@ -145,9 +145,9 @@ SkillVerse增强ICL vs 基线方法（相对于直接生成的改进百分比）
 ## 相关论文
 
 - [ConsistencyChecker: Tree-based Evaluation of LLM Generalization Capabilities](consistencychecker_tree_evaluation.md)
+- [ATRIE: Automating Legal Interpretation with LLMs: Retrieval, Generation, and Evaluation](atrie_legal_interpretation.md)
 - [Which of These Best Describes Multiple Choice Evaluation with LLMs?](multiple_choice_eval.md)
 - [How LLMs Comprehend Temporal Meaning in Narratives: A Case Study in Cognitive Evaluation of LLMs](how_llms_comprehend_temporal_meaning_in_narratives_a_case_study_in_cognitive_eva.md)
 - [Psycholinguistic Word Features: A New Approach for the Evaluation of LLMs Alignment with Humans](psycholinguistic_word_features_a_new_approach_for_the_evaluation_of_llms_alignme.md)
-- [CodeTool: Enhancing Programmatic Tool Invocation of LLMs via Process Supervision](codetool_enhancing_programmatic_tool_invocation_of_llms_via_process_supervision.md)
 
 <!-- RELATED:END -->

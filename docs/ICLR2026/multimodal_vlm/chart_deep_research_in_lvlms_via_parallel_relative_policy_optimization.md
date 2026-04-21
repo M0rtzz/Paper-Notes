@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Chart Deep Research in LVLMs via Parallel Relative Policy Optimization
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] What Makes Good Synthetic Training Data for Zero-Shot Stereo Matching?
 description: >-

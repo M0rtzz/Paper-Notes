@@ -1,16 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] DPSeg: Dual-Prompt Cost Volume Learning for Open-Vocabulary Semantic Segmentation
 description: >-
-  [CVPR 2025][图像分割][开放词汇分割] DPSeg 提出双提示代价体积学习框架，联合利用文本提示和 Stable Diffusion 生成的视觉提示构建代价体积，配合多尺度代价体积引导解码器和语义引导提示精炼策略，在多个开放词汇语义分割基准上大幅超越现有方法。
+  [CVPR 2025][图像分割][开放词汇分割] DPSeg 提出在开放词汇语义分割中同时利用文本提示和 Stable Diffusion 生成的视觉提示来构建双提示代价体积，通过多尺度视觉代价体积引导解码器和两轮推理的语义精炼策略，在 5 个公开数据集上全面超越现有方法。
 tags:
   - CVPR 2025
   - 图像分割
   - 开放词汇分割
+  - 双提示
+  - 代价体积
   - 视觉提示
   - CLIP
-  - 代价体积
-  - 语义分割
 ---
 
 # DPSeg: Dual-Prompt Cost Volume Learning for Open-Vocabulary Semantic Segmentation
@@ -149,9 +149,9 @@ ConvNeXt-L 配置：
 ## 相关论文
 
 - [DeCLIP: Decoupled Learning for Open-Vocabulary Dense Perception](declip_decoupled_learning_for_open-vocabulary_dense_perception.md)
+- [Fine-Grained Image-Text Correspondence with Cost Aggregation for Open-Vocabulary Part Segmentation](fine-grained_image-text_correspondence_with_cost_aggregation_for_open-vocabulary.md)
 - [Mask-Adapter: The Devil is in the Masks for Open-Vocabulary Segmentation](mask-adapter_the_devil_is_in_the_masks_for_open-vocabulary_segmentation.md)
 - [Effective SAM Combination for Open-Vocabulary Semantic Segmentation](effective_sam_combination_for_open-vocabulary_semantic_segmentation.md)
-- [Fine-Grained Image-Text Correspondence with Cost Aggregation for Open-Vocabulary Part Segmentation](fine-grained_image-text_correspondence_with_cost_aggregation_for_open-vocabulary.md)
-- [Stepping Out of Similar Semantic Space for Open-Vocabulary Segmentation](../../ICCV2025/segmentation/stepping_out_of_similar_semantic_space_for_open-vocabulary_segmentation.md)
+- [Semantic Library Adaptation: LoRA Retrieval and Fusion for Open-Vocabulary Semantic Segmentation](semantic_library_adaptation_lora_retrieval_and_fusion_for_open-vocabulary_semant.md)
 
 <!-- RELATED:END -->

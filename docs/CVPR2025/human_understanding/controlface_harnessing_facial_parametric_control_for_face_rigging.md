@@ -1,7 +1,10 @@
-﻿---
-title: "ControlFace: Harnessing Facial Parametric Control for Face Rigging"
-description: "基于3DMM参数化控制的人脸操控方法，使用双分支U-Net和参考控制引导实现高保真身份保持与精确控制"
-tags: ["face rigging", "3DMM", "diffusion model", "identity preservation", "face editing"]
+---
+title: >-
+  [论文解读] ControlFace: Harnessing Facial Parametric Control for Face Rigging
+description: >-
+  [人体理解] 提出 ControlFace，利用双分支 U-Net（FaceNet + 去噪 U-Net）结合 3DMM 渲染条件，实现无需微调即可灵活编辑人脸姿态、表情和光照，同时精确保留身份和语义细节。
+tags:
+  - 人体理解
 ---
 
 # ControlFace: Harnessing Facial Parametric Control for Face Rigging
@@ -128,10 +131,10 @@ Face Controller（~1M 参数）比 ControlNet（~360M）和 ControlNeXt（~3M）
 
 ## 相关论文
 
-- [Facial-R1: Aligning Reasoning and Recognition for Facial Emotion Analysis](../../AAAI2026/human_understanding/facial-r1_aligning_reasoning_and_recognition_for_facial_emotion_analysis.md)
-- [Monocular Facial Appearance Capture in the Wild](../../ICCV2025/human_understanding/monocular_facial_appearance_capture_in_the_wild.md)
-- [3D Face Reconstruction From Radar Images](3d_face_reconstruction_from_radar_images.md)
-- [A Differential and Pointwise Control Approach to Reinforcement Learning](../../NeurIPS2025/human_understanding/a_differential_and_pointwise_control_approach_to_reinforceme.md)
-- [Generalizable Facial Expression Recognition](../../ECCV2024/human_understanding/generalizable_facial_expression_recognition.md)
+- [CryptoFace: End-to-End Encrypted Face Recognition](cryptoface_end-to-end_encrypted_face_recognition.md)
+- [CRISP: Object Pose and Shape Estimation with Test-Time Adaptation](crisp_object_pose_and_shape_estimation_with_test-time_adaptation.md)
+- [Multi-Sensor Object Anomaly Detection: Unifying Appearance, Geometry, and Internal Properties](multi-sensor_object_anomaly_detection_unifying_appearance_geometry_and_internal_.md)
+- [DualTalk: Dual-Speaker Interaction for 3D Talking Head Conversations](dualtalk_dual-speaker_interaction_for_3d_talking_head_conversations.md)
+- [What's Making That Sound Right Now? Video-centric Audio-Visual Localization](../../ICCV2025/human_understanding/whats_making_that_sound_right_now_video-centric_audio-visual_localization.md)
 
 <!-- RELATED:END -->

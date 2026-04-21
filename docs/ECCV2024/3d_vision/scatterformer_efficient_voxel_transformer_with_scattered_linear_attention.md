@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ScatterFormer: Efficient Voxel Transformer with Scattered Linear Attention
 description: >-
@@ -182,8 +182,8 @@ $$X' = \text{Concat}(X_k, X_w, X_h, X^{3c:4c})$$
 
 - [TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)
 - [Analysis-by-Synthesis Transformer for Single-View 3D Reconstruction](analysis-by-synthesis_transformer_for_single-view_3d_reconstruction.md)
-- [Bi-directional Contextual Attention for 3D Dense Captioning](bi-directional_contextual_attention_for_3d_dense_captioning.md)
 - [Locality-Sensitive Hashing-Based Efficient Point Transformer for Charged Particle Reconstruction](../../NeurIPS2025/3d_vision/locality-sensitive_hashing-based_efficient_point_transformer_for_charged_particl.md)
+- [Bi-directional Contextual Attention for 3D Dense Captioning](bi-directional_contextual_attention_for_3d_dense_captioning.md)
 - [ERUPT: Efficient Rendering with Unposed Patch Transformer](../../CVPR2025/3d_vision/erupt_efficient_rendering_with_unposed_patch_transformer.md)
 
 <!-- RELATED:END -->

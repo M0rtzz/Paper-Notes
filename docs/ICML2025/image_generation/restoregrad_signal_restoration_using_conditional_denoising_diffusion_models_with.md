@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RestoreGrad: Signal Restoration Using Conditional Denoising Diffusion Models with Jointly Learned Prior
 description: >-
@@ -162,10 +162,10 @@ Posterior Net 对稳定训练和提升性能至关重要。
 
 ## 相关论文
 
-- [Hiding Images in Diffusion Models by Editing Learned Score Functions](../../CVPR2025/image_generation/hiding_images_in_diffusion_models_by_editing_learned_score_functions.md)
 - [Navigating Image Restoration with VAR's Distribution Alignment Prior](../../CVPR2025/image_generation/navigating_image_restoration_with_vars_distribution_alignment_prior.md)
-- [OZSpeech: One-step Zero-shot Speech Synthesis with Learned-Prior-Conditioned Flow Matching](../../ACL2025/image_generation/ozspeech_one-step_zero-shot_speech_synthesis_with_learned-prior-conditioned_flow.md)
+- [Hiding Images in Diffusion Models by Editing Learned Score Functions](../../CVPR2025/image_generation/hiding_images_in_diffusion_models_by_editing_learned_score_functions.md)
 - [DIIP: Diffusion Image Prior](../../ICCV2025/image_generation/diffusion_image_prior.md)
+- [OZSpeech: One-step Zero-shot Speech Synthesis with Learned-Prior-Conditioned Flow Matching](../../ACL2025/image_generation/ozspeech_one-step_zero-shot_speech_synthesis_with_learned-prior-conditioned_flow.md)
 - [MoFRR: Mixture of Diffusion Models for Face Retouching Restoration](../../ICCV2025/image_generation/mofrr_mixture_of_diffusion_models_for_face_retouching_restoration.md)
 
 <!-- RELATED:END -->

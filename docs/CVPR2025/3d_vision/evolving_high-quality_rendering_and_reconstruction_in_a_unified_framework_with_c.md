@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Evolving High-Quality Rendering and Reconstruction in a Unified Framework with Contribution-Adaptive Regularization
 description: >-
@@ -130,9 +130,9 @@ CarGS在TnT数据集上F1达到0.65（超过PGSR的0.60），同时PSNR 26.41也
 ## 相关论文
 
 - [HRAvatar: High-Quality and Relightable Gaussian Head Avatar](hravatar_high-quality_and_relightable_gaussian_head_avatar.md)
+- [SPARS3R: Semantic Prior Alignment and Regularization for Sparse 3D Reconstruction](spars3r_semantic_prior_alignment_and_regularization_for_sparse_3d_reconstruction.md)
 - [MAtCha Gaussians: Atlas of Charts for High-Quality Geometry and Photorealism From Sparse Views](matcha_gaussians_atlas_of_charts_for_high-quality_geometry_and_photorealism_from.md)
 - [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
-- [HOI3DGen: Generating High-Quality Human-Object-Interactions in 3D](hoi3dgen_generating_high-quality_human-object-interactions_in_3d.md)
-- [Momentum-GS: Momentum Gaussian Self-Distillation for High-Quality Large Scene Reconstruction](../../ICCV2025/3d_vision/momentum-gs_momentum_gaussian_self-distillation_for_high-quality_large_scene_rec.md)
+- [Sparse Voxels Rasterization: Real-time High-fidelity Radiance Field Rendering](sparse_voxels_rasterization_real-time_high-fidelity_radiance_field_rendering.md)
 
 <!-- RELATED:END -->

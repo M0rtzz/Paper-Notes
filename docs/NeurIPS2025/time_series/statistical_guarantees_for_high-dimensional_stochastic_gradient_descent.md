@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Statistical Guarantees for High-Dimensional Stochastic Gradient Descent
 description: >-

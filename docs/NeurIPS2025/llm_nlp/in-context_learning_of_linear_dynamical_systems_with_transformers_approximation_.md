@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] In-Context Learning of Linear Dynamical Systems with Transformers: Approximation Bounds and Depth-Separation
 description: >-

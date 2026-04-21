@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Scalable Inter-edge Correlation Modeling in CopulaGNN for Link Sign Prediction
 description: >-
@@ -117,8 +117,8 @@ tags:
 
 - [Learning on a Razor's Edge: Identifiability and Singularity of Polynomial Neural Networks](learning_on_a_razors_edge_identifiability_and_singularity_of_polynomial_neural_n.md)
 - [Completing Missing Annotation: Multi-Agent Debate for Accurate and Scalable Relevance Assessment](completing_missing_annotation_multi-agent_debate_for_accurate_and_scalable_relev.md)
-- [Learning-Augmented Streaming Algorithms for Correlation Clustering](../../NeurIPS2025/others/learning-augmented_streaming_algorithms_for_correlation_clustering.md)
 - [Sign-In to the Lottery: Reparameterized Sparse Training from Scratch](../../NeurIPS2025/others/sign-in_to_the_lottery_reparameterizing_sparse_training_from_scratch.md)
+- [Learning-Augmented Streaming Algorithms for Correlation Clustering](../../NeurIPS2025/others/learning-augmented_streaming_algorithms_for_correlation_clustering.md)
 - [Sparse-Pivot: Dynamic Correlation Clustering for Node Insertions](../../ICML2025/others/sparse-pivot_dynamic_correlation_clustering_for_node_insertions.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Vision-centric Token Compression in Large Language Model
 description: >-

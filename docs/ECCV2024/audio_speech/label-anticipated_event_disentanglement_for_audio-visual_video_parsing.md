@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Label-Anticipated Event Disentanglement for Audio-Visual Video Parsing
 description: >-

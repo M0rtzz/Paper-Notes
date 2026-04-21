@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] STI-Bench: Are MLLMs Ready for Precise Spatial-Temporal World Understanding?
 description: >-

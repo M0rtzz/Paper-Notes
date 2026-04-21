@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Prompt-Driven Lightweight Foundation Model for Instance Segmentation-Based Fault Detection in Freight Trains
 description: >-

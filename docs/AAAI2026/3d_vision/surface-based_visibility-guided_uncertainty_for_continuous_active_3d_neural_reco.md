@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Surface-Based Visibility-Guided Uncertainty for Continuous Active 3D Neural Reconstruction
 description: >-

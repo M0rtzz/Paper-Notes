@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ThermalGen: Style-Disentangled Flow-Based Generative Models for RGB-to-Thermal Image Translation
 description: >-
@@ -154,7 +154,7 @@ ThermalGen 基于 SiT（Scalable Interpolant Transformer）架构，在潜空间
 - [SCFlow: Implicitly Learning Style and Content Disentanglement with Flow Models](../../ICCV2025/image_generation/scflow_implicitly_learning_style_and_content_disentanglement_with_flow_models.md)
 - [Gradient Variance Reveals Failure Modes in Flow-Based Generative Models](gradient_variance_reveals_failure_modes_in_flow-based_generative_models.md)
 - [Physics-Constrained Flow Matching: Sampling Generative Models with Hard Constraints](physics-constrained_flow_matching_sampling_generative_models_with_hard_constrain.md)
+- [Deeply Supervised Flow-Based Generative Models](../../ICCV2025/image_generation/deeply_supervised_flow-based_generative_models.md)
 - [EditInfinity: Image Editing with Binary-Quantized Generative Models](editinfinity_image_editing_with_binary-quantized_generative_models.md)
-- [BitMark: Watermarking Bitwise Autoregressive Image Generative Models](bitmark_watermarking_bitwise_autoregressive_image_generative_models.md)
 
 <!-- RELATED:END -->

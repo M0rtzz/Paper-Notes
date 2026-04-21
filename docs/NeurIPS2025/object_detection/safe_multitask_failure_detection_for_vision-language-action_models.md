@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SAFE: Multitask Failure Detection for Vision-Language-Action Models
 description: >-

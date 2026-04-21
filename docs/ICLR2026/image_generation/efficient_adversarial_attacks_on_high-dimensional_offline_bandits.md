@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Adversarial Attacks on High-dimensional Offline Bandits
 description: >-
@@ -147,7 +147,7 @@ tags:
 - [Offline Reinforcement Learning with Generative Trajectory Policies](offline_reinforcement_learning_with_generative_trajectory_policies.md)
 - [Pareto-Conditioned Diffusion Models for Offline Multi-Objective Optimization](pareto-conditioned_diffusion_models_for_offline_multi-objective_optimization.md)
 - [Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
+- [SoftVQ-VAE: Efficient 1-Dimensional Continuous Tokenizer](../../CVPR2025/image_generation/softvq-vae_efficient_1-dimensional_continuous_tokenizer.md)
 - [Scaling Offline RL via Efficient and Expressive Shortcut Models](../../NeurIPS2025/image_generation/scaling_offline_rl_via_efficient_and_expressive_shortcut_models.md)
-- [Verification of the Implicit World Model in a Generative Model via Adversarial Sequences](verification_of_the_implicit_world_model_in_a_generative_model_via_adversarial_s.md)
 
 <!-- RELATED:END -->

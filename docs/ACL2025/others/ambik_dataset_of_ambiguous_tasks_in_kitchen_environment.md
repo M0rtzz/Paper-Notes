@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AmbiK: Dataset of Ambiguous Tasks in Kitchen Environment
 description: >-

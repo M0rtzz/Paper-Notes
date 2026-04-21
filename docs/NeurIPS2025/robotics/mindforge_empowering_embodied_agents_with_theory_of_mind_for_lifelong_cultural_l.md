@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MindForge: Empowering Embodied Agents with Theory of Mind for Lifelong Cultural Learning
 description: >-

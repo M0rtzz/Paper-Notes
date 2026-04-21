@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 视频生成方向 40篇论文解读
+  CVPR2025 视频生成方向 77篇论文解读
 description: >-
-  40篇CVPR2025 视频生成方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  77篇CVPR2025 视频生成方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎬 视频生成
 
-**📷 CVPR2025** · **40** 篇论文解读
+**📷 CVPR2025** · **77** 篇论文解读
 
 **[4Real-Video: Learning Generalizable Photo-Realistic 4D Video Diffusion](4real-video_learning_generalizable_photo-realistic_4d_video_diffusion.md)**
 
@@ -21,6 +21,10 @@ description: >-
 **[Articulated Kinematics Distillation from Video Diffusion Models](articulated_kinematics_distillation_from_video_diffusion_models.md)**
 
 :   提出 AKD，将视频扩散模型（CogVideoX-5B）的运动先验通过 SDS 蒸馏到 3D 铰链角色的关节角度参数中，结合可微分前向运动学+高斯散射渲染+物理约束，实现文本驱动的真实角色动画，VideoPhy SA 得分从 TC4D 的 0.40 提升到 0.81。
+
+**[BF-STVSR: B-Splines and Fourier—Best Friends for High Fidelity Spatial-Temporal Video Super-Resolution](bf-stvsr_b-splines_and_fourier---best_friends_for_high_fidelity_spatia.md)**
+
+:   提出 BF-STVSR 框架，用 B-spline Mapper 建模时间运动插值、Fourier Mapper 捕获空间高频细节，无需外部光流网络即可实现连续时空视频超分辨率的 SOTA 性能。
 
 **[BF-STVSR: B-Splines and Fourier—Best Friends for High Fidelity Spatial-Temporal Video Super-Resolution](bf-stvsr_b-splines_and_fourier---best_friends_for_high_fidelity_spatial-temporal.md)**
 
@@ -150,22 +154,166 @@ description: >-
 
 :   提出 NeuS-V，首个用形式化验证（时序逻辑+概率模型检验）评估文本到视频（T2V）模型时序一致性的框架——将文本提示转为时序逻辑规范，用 VLM 评分原子命题，构建视频自动机后形式化验证满足概率，在 Gen-3 上与人类标注 Pearson 相关 0.71（VBench 仅 0.47）。
 
+**[One-Minute Video Generation with Test-Time Training](one-minute_video_generation_with_test-time_training.md)**
+
+:   本文将 Test-Time Training (TTT) 层引入预训练的 Diffusion Transformer，利用其以神经网络为隐藏状态的高表达能力，实现了从文本故事板生成一分钟连贯长视频的能力，在人类评估中以 34 Elo 分领先于 Mamba 2、Gated DeltaNet 等基线。
+
+**[Optical-Flow Guided Prompt Optimization for Coherent Video Generation](optical-flow_guided_prompt_optimization_for_coherent_video_generation.md)**
+
+:   本文提出 MotionPrompt，一种无需重新训练视频扩散模型的推理时引导方法，通过优化可学习的 token embedding 并结合光流判别器，提升视频生成的时序一致性和运动平滑性。
+
+**[OSV: One Step is Enough for High-Quality Image to Video Generation](osv_one_step_is_enough_for_high-quality_image_to_video_generation.md)**
+
+:   提出两阶段训练框架 OSV，结合 GAN 对抗训练和一致性蒸馏，实现单步高质量图像到视频生成，并设计了无需解码的新型视频判别器。
+
+**[Parallelized Autoregressive Visual Generation](parallelized_autoregressive_visual_generation.md)**
+
+:   提出 PAR（Parallelized Autoregressive），通过分析视觉 token 依赖性，将空间距离远的弱依赖 token 并行生成而保持局部强依赖 token 的顺序生成，实现 3.6-9.5 倍加速且质量几乎无损。
+
+**[PatchVSR: Breaking Video Diffusion Resolution Limits with Patch-Wise Video Super-Resolution](patchvsr_breaking_video_diffusion_resolution_limits_with_patch-wise_video_super-.md)**
+
+:   PatchVSR 首次将预训练视频扩散模型（T2V）用于 patch 级别的视频超分辨率，通过双分支适配器（局部 patch 分支 + 全局上下文分支）和无训练的多 patch 联合调制方案，基于 512×512 分辨率的基础模型实现了高保真的 4K 视频超分辨率，同时大幅提升计算效率。
+
+**[Pathways on the Image Manifold: Image Editing via Video Generation](pathways_on_the_image_manifold_image_editing_via_video_generation.md)**
+
+:   Frame2Frame (F2F) 将图像编辑重新定义为视频生成任务——利用 image-to-video 模型在图像流形上从源图像到目标编辑生成一条平滑的时间路径，通过 VLM 生成时间编辑描述并自动选帧，在编辑精度和图像保真度之间取得了 SOTA 平衡。
+
+**[PhyT2V: LLM-Guided Iterative Self-Refinement for Physics-Grounded Text-to-Video Generation](phyt2v_llm-guided_iterative_self-refinement_for_physics-grounded_text-to-video_g.md)**
+
+:   PhyT2V 利用 LLM 的思维链（CoT）和 step-back 推理能力，通过迭代式地分析生成视频与物理规则的不一致、并据此优化文本 prompt，使现有 T2V 模型在无需重新训练的情况下将物理规则遵循度提升最高 2.3 倍。
+
+**[PoseTraj: Pose-Aware Trajectory Control in Video Diffusion](posetraj_pose-aware_trajectory_control_in_video_diffusion.md)**
+
+:   提出 PoseTraj，一个姿态感知的轨迹引导视频生成模型，通过两阶段姿态感知预训练（利用合成数据集 PoseTraj-10K 和3D包围盒中间监督）和相机运动解耦微调，实现从2D轨迹生成3D对齐的旋转运动视频。
+
+**[Protecting Your Video Content: Disrupting Automated Video-Based LLM Annotations](protecting_your_video_content_disrupting_automated_video-based_llm_annotations.md)**
+
+:   本文提出两类对抗性视频水印方法——Ramblings（诱导视频 LLM 生成错误描述）和 Mutes（诱导视频 LLM 生成极短或空描述），通过不可感知的对抗扰动保护个人视频免受未经授权的自动化标注，并验证了这些低质量标注会降低下游文本到视频生成模型的性能。
+
 **[SAW: Toward a Surgical Action World Model via Controllable and Scalable Video Generation](saw_toward_a_surgical_action_world_model_via_controllable_and_scalable_video_gen.md)**
 
 :   提出 SAW（Surgical Action World），通过四种轻量级条件信号（语言提示、参考帧、组织功能图、工具轨迹）驱动视频扩散模型，实现可控、可扩展的手术动作视频生成，用于罕见动作增强和手术仿真。
 
 **[Semantic Satellite Communications for Synchronized Audiovisual Reconstruction](semantic_satellite_communications_for_synchronized_audiovisual_reconstruction.md)**
 
-:   提出一种LLM驱动的自适应多模态语义卫星传输系统，通过双流生成架构（V2A/A2V）灵活切换视频驱动音频生成和音频驱动视频生成，结合动态知识库更新机制，在极低带宽卫星链路上实现高保真音视频同步重建。
+:   本文提出了一个面向卫星通信场景的自适应多模态语义传输系统，通过双流生成架构（视频驱动音频 / 音频驱动视频）灵活切换传输路径，结合动态知识库更新机制和 LLM 智能决策模块，在极其有限的卫星带宽下实现高保真的音视频同步重建。
+
+**[ShotAdapter: Text-to-Multi-Shot Video Generation with Diffusion Models](shotadapter_text-to-multi-shot_video_generation_with_diffusion_models.md)**
+
+:   ShotAdapter 提出了一个轻量框架，通过引入可学习的"转场token"和局部注意力掩码策略，仅需约 5000 次迭代的微调即可将预训练的单镜头 T2V 模型转变为支持多镜头视频生成（T2MSV）的生成器，实现角色身份一致、各镜头独立可控的多镜头视频生成。
+
+**[SketchVideo: Sketch-Based Video Generation and Editing](sketchvideo_sketch-based_video_generation_and_editing.md)**
+
+:   基于 DiT 视频生成架构，提出内存高效的草图条件网络和帧间注意力机制，实现通过 1-2 张关键帧草图对视频进行精细的空间布局和几何细节控制，同时支持基于草图的视频局部编辑。
+
+**[SpatialDreamer: Self-supervised Stereo Video Synthesis from Monocular Input](spatialdreamer_self-supervised_stereo_video_synthesis_from_monocular_input.md)**
+
+:   提出 SpatialDreamer，一种基于视频扩散模型的自监督立体视频合成框架：通过深度引导的视频数据生成模块 (DVG) 解决立体视频训练数据不足问题，通过 RefinerNet 框架和一致性控制模块（立体偏差强度 + 时序交互学习 TIL）确保生成立体视频的几何与时间一致性，性能超越 Apple Vision Pro 3D 转换器。
+
+**[StreamingT2V: Consistent, Dynamic, and Extendable Long Video Generation from Text](streamingt2v_consistent_dynamic_and_extendable_long_video_generation_from_text.md)**
+
+:   提出 StreamingT2V，一种自回归文本到长视频生成方法，通过短期记忆模块（CAM）和长期记忆模块（APM）实现长达 2 分钟以上（1200+ 帧）的无缝、高运动量视频生成。
+
+**[StreetCrafter: Street View Synthesis with Controllable Video Diffusion Models](streetcrafter_street_view_synthesis_with_controllable_video_diffusion_models.md)**
+
+:   提出 StreetCrafter，利用 LiDAR 点云渲染作为像素级条件来控制视频扩散模型，实现精确相机控制的街景新视角合成，并可将生成先验蒸馏到动态 3DGS 表示中实现实时渲染。
+
+**[Taming Teacher Forcing for Masked Autoregressive Video Generation](taming_teacher_forcing_for_masked_autoregressive_video_generation.md)**
+
+:   MAGI 提出 Complete Teacher Forcing（CTF）范式，在训练时条件化于完整观察帧而非掩码帧，消除训练-推理差距，FVD 提升 23%，仅训练 16 帧即可生成超过 100 帧的连贯视频。
+
+**[Teller: Real-Time Streaming Audio-Driven Portrait Animation with Autoregressive Motion Generation](teller_real-time_streaming_audio-driven_portrait_animation_with_autoregressive_m.md)**
+
+:   提出首个基于自回归 Transformer 的实时流式音频驱动肖像动画框架 Teller，通过 RVQ 将面部运动离散化为 token，结合高效时序模块精炼身体细节，以 25 FPS 实时速度（生成 1s 视频仅需 0.92s vs Hallo 20.93s）达到与扩散模型可比的动画质量。
+
+**[The Devil is in the Prompts: Retrieval-Augmented Prompt Optimization for Text-to-Video Generation](the_devil_is_in_the_prompts_retrieval-augmented_prompt_optimization_for_text-to-.md)**
+
+:   RAPO 提出一个检索增强的 Prompt 优化框架，通过从训练数据中构建关系图检索相关修饰语、微调 LLM 重构句式、以及判别器选取最优 prompt，将用户简短 prompt 转换为与训练数据分布对齐的优化 prompt，在 VBench 上将多物体生成从 37.71% 提升至 64.86%。
+
+**[Through-The-Mask: Mask-based Motion Trajectories for Image-to-Video Generation](through-the-mask_mask-based_motion_trajectories_for_image-to-video_generation.md)**
+
+:   本文提出 Through-The-Mask（TTM），一种两阶段组合式 I2V 框架，以基于掩码的运动轨迹（mask-based motion trajectory）作为中间表示，将图像到视频的生成分解为"运动生成"和"视频生成"两个阶段，在多物体复杂运动场景中取得SOTA效果。
+
+**[Timestep Embedding Tells: It's Time to Cache for Video Diffusion Model](timestep_embedding_tells_its_time_to_cache_for_video_diffusion_model.md)**
+
+:   本文提出 TeaCache，一种免训练的视频扩散模型缓存加速方法，通过时间步嵌入调制噪声输入来估计相邻时间步模型输出的差异，配合多项式拟合进行缩放校准，从而自适应决定何时缓存/复用输出，在 Open-Sora-Plan 上实现 4.41× 加速且视觉质量几乎无损（VBench 仅降 0.07%）。
+
+**[Tora: Trajectory-Oriented Diffusion Transformer for Video Generation](tora_trajectory-oriented_diffusion_transformer_for_video_generation.md)**
+
+:   提出 Tora，首个面向轨迹控制的 Diffusion Transformer（DiT）视频生成框架，通过轨迹提取器（3D VAE 编码运动轨迹为时空 patch）和运动引导融合器（自适应归一化注入 DiT 块），实现了可扩展的、支持多分辨率/多时长/多宽高比的轨迹控制视频生成，在 128 帧测试中轨迹精度比 UNet 方法高 3-5 倍。
+
+**[Towards Precise Scaling Laws for Video Diffusion Transformers](towards_precise_scaling_laws_for_video_diffusion_transformers.md)**
+
+:   本文首次系统验证了视频扩散 Transformer（Video DiT）中缩放法则的存在，并发现视频模型比语言模型对学习率和 batch size 更敏感，提出了同时预测最优超参数、最优模型大小和验证损失的精确缩放法则公式，在相同计算预算下可减少 40.1% 的推理成本或 39.9% 的模型大小。
+
+**[Tracktention: Leveraging Point Tracking to Attend Videos Faster and Better](tracktention_leveraging_point_tracking_to_attend_videos_faster_and_better.md)**
+
+:   Tracktention 提出了一种基于点追踪的新型注意力层，通过将预提取的点轨迹信息注入 Vision Transformer，实现运动感知的时序特征聚合，能将纯图像模型升级为 SOTA 视频模型，在视频深度预测和视频着色任务上显著提升时序一致性。
+
+**[TransPixeler: Advancing Text-to-Video Generation with Transparency](transpixeler_advancing_text-to-video_generation_with_transparency.md)**
+
+:   TransPixeler 提出在预训练的 DiT 视频生成模型中引入 alpha 通道 token，通过位置编码共享、域嵌入、部分 LoRA 微调和注意力掩码设计，在极少 RGBA 训练数据下实现高质量的 RGB 与 alpha 通道联合生成。
+
+**[Unified Dense Prediction of Video Diffusion](unified_dense_prediction_of_video_diffusion.md)**
+
+:   提出 UDPDiff，首次在视频扩散模型中实现 RGB 视频生成与实体分割、深度估计的联合生成，通过 Pixelplanes 统一表示和可学习任务嵌入提升视频质量和一致性。
+
+**[VEU-Bench: Towards Comprehensive Understanding of Video Editing](veu-bench_towards_comprehensive_understanding_of_video_editing.md)**
+
+:   提出 VEU-Bench，首个全面评估视频大模型对视频编辑元素理解能力的基准，涵盖10个编辑维度、3个评估层级（识别/推理/判断）共19个细粒度任务，并训练专家模型 Oscars 超越开源SOTA 28.3%。
+
+**[Video-Bench: Human-Aligned Video Generation Benchmark](video-bench_human-aligned_video_generation_benchmark.md)**
+
+:   本文提出 Video-Bench，一个全面的视频生成评估基准，通过 Chain-of-Query 和 Few-Shot Scoring 两种技术系统性地利用多模态大语言模型（MLLM）自动评估生成视频，在所有评估维度上实现了与人类偏好最高的对齐度。
+
+**[Video-ColBERT: Contextualized Late Interaction for Text-to-Video Retrieval](video-colbert_contextualized_late_interaction_for_text-to-video_retrieval.md)**
+
+:   将文本检索中ColBERT的后交互引入文本-视频检索，提出Video-ColBERT，通过在帧级和视频级两个层面执行MeanMaxSim交互，配合双Sigmoid损失训练独立且兼容的多粒度表征，在多个T2VR benchmark上超越现有双编码器方法。
+
+**[VideoDirector: Precise Video Editing via Text-to-Video Models](videodirector_precise_video_editing_via_text-to-video_models.md)**
+
+:   VideoDirector 提出了时空解耦引导（STDG）、多帧 Null-Text 优化和自注意力控制策略，首次成功地将经典的"反演-编辑"范式应用于 T2V 模型（AnimateDiff），实现了高保真、时间一致、运动自然的精确视频编辑。
+
+**[VideoDPO: Omni-Preference Alignment for Video Diffusion Generation](videodpo_omni-preference_alignment_for_video_diffusion_generation.md)**
+
+:   VideoDPO 首次将 DPO（Direct Preference Optimization）适配到视频扩散模型，提出 OmniScore 综合评分体系同时衡量视觉质量和语义对齐，结合自动偏好数据生成 pipeline 和基于分数差异的数据重加权策略，在 VideoCrafter2、T2V-Turbo 和 CogVideoX 上均取得了显著的偏好对齐提升。
+
+**[VideoGigaGAN: Towards Detail-rich Video Super-Resolution](videogigagan_towards_detail-rich_video_super-resolution.md)**
+
+:   提出 VideoGigaGAN，首个大规模 GAN 视频超分模型，通过光流引导特征传播、抗锯齿模块和高频穿梭机制，在保持时序一致性的同时生成丰富的高频细节，支持 8× 超分。
+
+**[VideoGuide: Improving Video Diffusion Models without Training Through a Teacher's Guide](videoguide_improving_video_diffusion_models_without_training_through_a_teachers_.md)**
+
+:   VideoGuide 提出了一种无需额外训练的视频扩散模型增强框架，通过在反向扩散采样的早期阶段利用任意预训练视频扩散模型（或自身）作为教师，将教师模型的去噪样本与采样模型进行插值融合，显著提升视频的时序一致性而不损害图像质量。
+
+**[VideoScene: Distilling Video Diffusion Model to Generate 3D Scenes in One Step](videoscene_distilling_video_diffusion_model_to_generate_3d_scenes_in_one_step.md)**
+
+:   VideoScene 提出了一种 3D 感知的跳跃式流蒸馏（Leap Flow Distillation）策略，将视频扩散模型蒸馏为一步生成器，从两张稀疏视角图像生成具有 3D 一致性的视频，配合动态去噪策略网络（DDPNet）自适应选择最优起始噪声水平，在速度上从 2 分钟压缩到 3 秒的同时保持了高质量。
+
+**[VidTwin: Video VAE with Decoupled Structure and Dynamics](vidtwin_video_vae_with_decoupled_structure_and_dynamics.md)**
+
+:   提出 VidTwin，将视频解耦为 Structure Latent（全局内容和整体运动）和 Dynamics Latent（细粒度细节和快速运动）两个独立潜空间，以 0.20% 的极高压缩率实现 28.14 PSNR 的高质量重建。
 
 **[ViReS: Video Instance Repainting via Sketch and Text Guided Generation](vires_video_instance_repainting_via_sketch_and_text_guided_generation.md)**
 
 :   提出ViReS框架，通过草图和文本双重引导实现视频中特定实例的重绘，利用时序注意力和实例掩码保持背景不变和时间一致性，在多种视频编辑场景下生成高质量结果。
 
+**[Visual Prompting for One-Shot Controllable Video Editing Without Inversion](visual_prompting_for_one-shot_controllable_video_editing_without_inversion.md)**
+
+:   本文从视觉提示（Visual Prompting）的全新视角解决一次性可控视频编辑（OCVE）问题，通过图像修复扩散模型完成编辑传播，并提出内容一致性采样（CCS）和时序-内容一致性采样（TCS）两种采样策略，无需 DDIM 反演即可实现高质量可控视频编辑。
+
 **[When to Lock Attention: Training-Free KV Control in Video Diffusion](when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)**
 
 :   提出 KV-Lock，一种基于扩散幻觉检测的免训练视频编辑框架，通过动态调度 KV 缓存融合比例和 CFG 引导尺度，在保持背景一致性的同时增强前景生成质量。
 
+**[World-Consistent Video Diffusion with Explicit 3D Modeling](world-consistent_video_diffusion_with_explicit_3d_modeling.md)**
+
+:   本文提出 WVD（World-consistent Video Diffusion），通过训练扩散模型联合建模 RGB 图像和 XYZ 图像（编码全局3D坐标），实现了显式3D约束下的多视角一致性视频生成，并通过灵活的 inpainting 策略统一了单图3D重建、多视角立体、相机控制生成等多种任务。
+
 **[World2Act: Latent Action Post-Training via Skill-Compositional World Models](world2act_latent_action_post-training_via_skill-compositional_world_models.md)**
 
 :   World2Act 提出了一种基于潜在空间对齐的 VLA 后训练方法：通过对比学习将 World Model 的视频动态潜表示与 VLA 的动作表示对齐（而非在像素空间监督），并引入 LLM 驱动的技能分解流水线实现任意长度视频生成，在 RoboCasa 和 LIBERO 上以 50 条合成轨迹即达到 SOTA，真实世界提升 6.7%。
+
+**[Zero-1-to-A: Zero-Shot One Image to Animatable Head Avatars Using Video Diffusion](zero-1-to-a_zero-shot_one_image_to_animatable_head_avatars_using_video_diffusion.md)**
+
+:   提出 Zero-1-to-A，通过共生生成（SymGEN）和渐进式学习策略，从单张图片利用预训练视频扩散模型生成高保真可动画化 4D 头部虚拟形象，有效解决了视频扩散的时空不一致性问题。

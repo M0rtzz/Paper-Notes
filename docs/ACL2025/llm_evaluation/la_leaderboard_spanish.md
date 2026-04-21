@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] La Leaderboard: A Large Language Model Leaderboard for Spanish Varieties and Languages of Spain and Latin America
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] COLING-UniA at SciVQA 2025: Few-Shot Example Retrieval and Confidence-Informed Ensembling for Multimodal Large Language Models
 description: >-

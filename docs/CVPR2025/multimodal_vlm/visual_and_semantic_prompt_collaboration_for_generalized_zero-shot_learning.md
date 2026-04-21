@@ -1,6 +1,16 @@
-﻿---
-description: 提出VSPCN视觉-语义提示协作网络，通过弱/强提示融合机制在ViT中高效学习语义相关视觉特征，在三个GZSL基准上达到最佳性能。
-tags: [CVPR2025, 广义零样本学习, 提示学习, 视觉语义对齐, ViT, 属性嵌入, 参数高效微调]
+---
+title: >-
+  [论文解读] Visual and Semantic Prompt Collaboration for Generalized Zero-Shot Learning
+description: >-
+  [CVPR 2025][多模态][广义零样本学习] 提出视觉语义提示协作网络（VSPCN），通过在预训练ViT中同时学习视觉提示和语义提示，并设计浅层弱融合+深层强融合机制，高效适配ViT提取语义相关的判别性视觉特征，在CUB/SUN/AWA2三个GZSL基准上均达到SOTA。
+tags:
+  - CVPR 2025
+  - 多模态
+  - 广义零样本学习
+  - 视觉语义提示
+  - 提示学习
+  - ViT适配
+  - 知识迁移
 ---
 
 # Visual and Semantic Prompt Collaboration for Generalized Zero-Shot Learning
@@ -121,8 +131,8 @@ VSPCN以预训练ViT-Base（ImageNet-1k）为骨干，输入包含5部分：CLS 
 
 - [UNEM: UNrolled Generalized EM for Transductive Few-Shot Learning](unem_unrolled_generalized_em_for_transductive_few-shot_learning.md)
 - [DPC: Dual-Prompt Collaboration for Tuning Vision-Language Models](dpc_dual-prompt_collaboration_for_tuning_vision-language_models.md)
-- [Vision-Language Model IP Protection via Prompt-based Learning](vision-language_model_ip_protection_via_prompt-based_learning.md)
 - [Generalized Few-Shot 3D Point Cloud Segmentation with Vision-Language Model](generalized_few-shot_3d_point_cloud_segmentation_with_vision-language_model.md)
-- [Meta-Prompting for Automating Zero-Shot Visual Recognition with LLMs](../../ECCV2024/multimodal_vlm/meta-prompting_for_automating_zero-shot_visual_recognition_with_llms.md)
+- [Vision-Language Model IP Protection via Prompt-based Learning](vision-language_model_ip_protection_via_prompt-based_learning.md)
+- [SpLIP: Elevating All Zero-Shot Sketch-Based Image Retrieval Through Multimodal Prompt Learning](../../ECCV2024/multimodal_vlm/elevating_all_zeroshot_sketchbased_image_retrieval_through_m.md)
 
 <!-- RELATED:END -->

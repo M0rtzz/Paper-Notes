@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] STEM Faculty Perspectives on Generative AI in Higher Education
 description: >-

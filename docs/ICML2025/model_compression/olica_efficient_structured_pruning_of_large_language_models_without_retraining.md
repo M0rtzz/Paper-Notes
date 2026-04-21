@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Olica: Efficient Structured Pruning of Large Language Models without Retraining
 description: >-
@@ -186,6 +186,6 @@ Olica 的核心启发：**在参数空间做正交分解，可以绕开数据依
 - [Elastic ViTs from Pretrained Models without Retraining](../../NeurIPS2025/model_compression/elastic_vits_from_pretrained_models_without_retraining.md)
 - [BlockPruner: Fine-grained Pruning for Large Language Models](../../ACL2025/model_compression/blockpruner_fine-grained_pruning_for_large_language_models.md)
 - [DLP: Dynamic Layerwise Pruning in Large Language Models](dlp_dynamic_layerwise_pruning_in_large_language_models.md)
-- [Wanda++: Pruning Large Language Models via Regional Gradients](../../ACL2025/model_compression/wanda_pruning_large_language_models_via_regional_gradients.md)
+- [STUN: Structured-Then-Unstructured Pruning for Scalable MoE Pruning](../../ACL2025/model_compression/stun_moe_pruning.md)
 
 <!-- RELATED:END -->

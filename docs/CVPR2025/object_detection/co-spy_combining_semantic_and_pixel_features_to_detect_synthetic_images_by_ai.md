@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Co-Spy: Combining Semantic and Pixel Features to Detect Synthetic Images by AI
 description: >-
@@ -116,8 +116,8 @@ tags:
 
 - [Beyond Semantic Features: Pixel-Level Mapping for Generalized AI-Generated Image Detection](../../AAAI2026/object_detection/beyond_semantic_features_pixel-level_mapping_for_generalized_ai-generated_image_.md)
 - [A Bias-Free Training Paradigm for More General AI-generated Image Detection](a_bias-free_training_paradigm_for_more_general_ai-generated_image_detection.md)
-- [Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)
 - [Zero-Shot Detection of AI-Generated Images](../../ECCV2024/object_detection/zero-shot_detection_of_ai-generated_images.md)
+- [Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)
 - [Small Target Detection Based on Mask-Enhanced Attention Fusion of Visible and Infrared Remote Sensing Images](small_target_detection_based_on_mask-enhanced_attention_fusion_of_visible_and_in.md)
 
 <!-- RELATED:END -->

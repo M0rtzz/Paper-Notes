@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] iFinder: Structured Zero-Shot VLM Grounding for Dash-Cam Video Reasoning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] No Other Representation Component Is Needed: Diffusion Transformers Can Provide Representation Guidance by Themselves
 description: >-

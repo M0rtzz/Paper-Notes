@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploring In-Image Machine Translation with Real-World Background
 description: >-

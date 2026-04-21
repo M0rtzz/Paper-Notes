@@ -150,8 +150,8 @@ $$\frac{\langle t, Q_1 \rangle}{L_{1,1}} = \frac{\langle Xw, Q_1 \rangle}{L_{1,1
 
 - [The Geometry of LLM Quantization: GPTQ as Babai's Nearest Plane Algorithm](the_geometry_of_llm_quantization_gptq_as_babais_nearest_plane_algorithm.md)
 - [TurboBoA: Faster and Exact Attention-aware Quantization without Backpropagation](turboboa_faster_and_exact_attention-aware_quantization_without_backpropagation.md)
-- [Adaptive Width Neural Networks](adaptive_width_neural_networks.md)
 - [Topology and Geometry of the Learning Space of ReLU Networks: Connectivity and Size](topology_and_geometry_of_the_learning_space_of_relu_networks_connectivity_and_si.md)
+- [Adaptive Width Neural Networks](adaptive_width_neural_networks.md)
 - [Cut Less, Fold More: Model Compression through the Lens of Projection Geometry](cut_less_fold_more_model_compression_through_the_lens_of_projection_geometry.md)
 
 <!-- RELATED:END -->

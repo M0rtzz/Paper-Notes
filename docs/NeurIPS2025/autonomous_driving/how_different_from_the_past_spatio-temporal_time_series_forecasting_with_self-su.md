@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How Different from the Past? Spatio-Temporal Time Series Forecasting with Self-Supervised Deviation Learning
 description: >-
@@ -160,8 +160,8 @@ $$\mathcal{L} = \mathcal{L}_{MAE} + \lambda_{Con} \cdot \mathcal{L}_{Con} + \lam
 
 - [DBLoss: Decomposition-based Loss Function for Time Series Forecasting](dbloss_decomposition-based_loss_function_for_time_series_forecasting.md)
 - [Self-Supervised Learning of Graph Representations for Network Intrusion Detection](self-supervised_learning_of_graph_representations_for_network_intrusion_detectio.md)
+- [PSA-SSL: Pose and Size-aware Self-Supervised Learning on LiDAR Point Clouds](../../CVPR2025/autonomous_driving/psa-ssl_pose_and_size-aware_self-supervised_learning_on_lidar_point_clouds.md)
 - [FutureSightDrive: Thinking Visually with Spatio-Temporal CoT for Autonomous Driving](futuresightdrive_thinking_visually_with_spatiotemporal_cot_f.md)
 - [ChronoGraph: A Real-World Graph-Based Multivariate Time Series Dataset](chronograph_a_real-world_graph-based_multivariate_time_series_dataset.md)
-- [Equivariant Spatio-Temporal Self-Supervision for LiDAR Object Detection](../../ECCV2024/autonomous_driving/equivariant_spatio-temporal_self-supervision_for_lidar_object_detection.md)
 
 <!-- RELATED:END -->

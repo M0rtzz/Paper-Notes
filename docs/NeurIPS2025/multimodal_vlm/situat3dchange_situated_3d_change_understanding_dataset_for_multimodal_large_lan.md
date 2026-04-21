@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Situat3DChange: Situated 3D Change Understanding Dataset for Multimodal Large Language Models
 description: >-

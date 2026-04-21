@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HouseLayout3D: A Benchmark and Training-Free Baseline for 3D Layout Estimation in the Wild
 description: >-

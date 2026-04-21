@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Knockout LLM Assessment: Using Large Language Models for Evaluations through Iterative Pairwise Comparisons
 description: >-

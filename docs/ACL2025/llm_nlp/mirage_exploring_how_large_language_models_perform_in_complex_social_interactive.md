@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MIRAGE: Exploring How Large Language Models Perform in Complex Social Interactive Environments
 description: >-

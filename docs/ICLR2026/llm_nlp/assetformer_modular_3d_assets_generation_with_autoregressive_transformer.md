@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AssetFormer: Modular 3D Assets Generation with Autoregressive Transformer
 description: >-
@@ -172,8 +172,8 @@ $$
 
 - [Circuit Compositions: Exploring Modular Structures in Transformer-Based Language Models](../../ACL2025/llm_nlp/circuit_compositions_modular_structures.md)
 - [ScaMo: Exploring the Scaling Law in Autoregressive Motion Generation Model](../../CVPR2025/llm_nlp/scamo_exploring_the_scaling_law_in_autoregressive_motion_generation_model.md)
+- [Improving Autoregressive Visual Generation with Cluster-Oriented Token Prediction](../../CVPR2025/llm_nlp/improving_autoregressive_visual_generation_with_cluster-oriented_token_predictio.md)
 - [Automated CAD Modeling Sequence Generation from Text Descriptions via Transformer-Based Large Language Models](../../ACL2025/llm_nlp/cadllm_cad_modeling_from_text.md)
 - [A Modular Dataset to Demonstrate LLM Abstraction Capability](../../ACL2025/llm_nlp/a_modular_dataset_to_demonstrate_llm_abstraction_capability.md)
-- [Improving Autoregressive Visual Generation with Cluster-Oriented Token Prediction](../../CVPR2025/llm_nlp/improving_autoregressive_visual_generation_with_cluster-oriented_token_predictio.md)
 
 <!-- RELATED:END -->

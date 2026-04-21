@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Language Models over Tokens to Language Models over Characters
 description: >-
@@ -125,8 +125,8 @@ tags:
 
 ## 相关论文
 
-- [Persistent Topological Features in Large Language Models](persistent_topological_features_in_large_language_models.md)
 - [Weak-to-Strong Jailbreaking on Large Language Models](weak-to-strong_jailbreaking_on_large_language_models.md)
+- [Persistent Topological Features in Large Language Models](persistent_topological_features_in_large_language_models.md)
 - [DLP: Dynamic Layerwise Pruning in Large Language Models](dlp_dynamic_layerwise_pruning_in_large_language_models.md)
 - [DyCoke: Dynamic Compression of Tokens for Fast Video Large Language Models](../../CVPR2025/model_compression/dycoke_dynamic_compression_of_tokens_for_fast_video_large_language_models.md)
 - [Instruction-Following Pruning for Large Language Models](instruction-following_pruning_for_large_language_models.md)

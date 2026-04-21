@@ -2,9 +2,13 @@
 title: >-
   [论文解读] Hierarchical Level-Wise News Article Clustering via Multilingual Matryoshka Embeddings
 description: >-
-   提出利用多语言Matryoshka嵌入实现层级化新闻聚类的方法：嵌入的不同维度子集对应不同粒度的语义相似性（主题→话题→事件），配合改进的层级凝聚聚类算法，在SemEval 2022 Task 8上达到SOTA（Pearson ρ=0.816）。
+  [Matryoshka embeddings] 提出利用多语言Matryoshka嵌入实现层级化新闻聚类的方法：嵌入的不同维度子集对应不同粒度的语义相似性（主题→话题→事件），配合改进的层级凝聚聚类算法，在SemEval 2022 Task 8上达到SOTA（Pearson ρ=0.816）。
 tags:
-
+  - Matryoshka embeddings
+  - multilingual
+  - hierarchical clustering
+  - news similarity
+  - agglomerative clustering
 ---
 
 # Hierarchical Level-Wise News Article Clustering via Multilingual Matryoshka Embeddings

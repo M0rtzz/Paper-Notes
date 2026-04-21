@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Helvipad: A Real-World Dataset for Omnidirectional Stereo Depth Estimation
 description: >-
@@ -135,10 +135,10 @@ tags:
 
 ## 相关论文
 
+- [Toward Real-World BEV Perception: Depth Uncertainty Estimation via Gaussian Splatting](toward_real-world_bev_perception_depth_uncertainty_estimation_via_gaussian_splat.md)
+- [Prompting Depth Anything for 4K Resolution Accurate Metric Depth Estimation](prompting_depth_anything_for_4k_resolution_accurate_metric_depth_estimation.md)
+- [Pixel-Aligned RGB-NIR Stereo Imaging and Dataset for Robot Vision](pixel-aligned_rgb-nir_stereo_imaging_and_dataset_for_robot_vision.md)
+- [TacoDepth: Towards Efficient Radar-Camera Depth Estimation with One-Stage Fusion](tacodepth_towards_efficient_radar-camera_depth_estimation_with_one-stage_fusion.md)
 - [ChronoGraph: A Real-World Graph-Based Multivariate Time Series Dataset](../../NeurIPS2025/autonomous_driving/chronograph_a_real-world_graph-based_multivariate_time_series_dataset.md)
-- [Cheating Stereo Matching in Full-Scale: Physical Adversarial Attack against Binocular Depth Estimation](../../AAAI2026/autonomous_driving/cheating_stereo_matching_in_full-scale_physical_adversarial_attack_against_binoc.md)
-- [ClimbingCap: Multi-Modal Dataset and Method for Rock Climbing in World Coordinate](climbingcap_multi-modal_dataset_and_method_for_rock_climbing_in_world_coordinate.md)
-- [O3N: Omnidirectional Open-Vocabulary Occupancy Prediction](o3n_omnidirectional_open-vocabulary_occupancy_prediction.md)
-- [Towards Open-World Generation of Stereo Images and Unsupervised Matching](../../ICCV2025/autonomous_driving/towards_open-world_generation_of_stereo_images_and_unsupervised_matching.md)
 
 <!-- RELATED:END -->

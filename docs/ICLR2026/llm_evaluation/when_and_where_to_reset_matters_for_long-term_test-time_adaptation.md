@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When and Where to Reset Matters for Long-Term Test-Time Adaptation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adapting Vision-Language Models for Evaluating World Models
 description: >-

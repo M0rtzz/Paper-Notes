@@ -1,10 +1,10 @@
 ---
-title: "FilmComposer: LLM-Driven Music Production for Silent Film Clips"
-conference: "CVPR 2025"
-arxiv: "2503.08147"
-code: "https://apple-jun.github.io/FilmComposer.github.io/"
-domain: "音乐生成 / 多模态"
-tags: ["film music", "LLM agent", "video-to-music", "multi-agent", "symbolic music"]
+title: >-
+  [论文解读] FilmComposer: LLM-Driven Music Production for Silent Film Clips
+description: >-
+  [图像生成] FilmComposer 首次将大语言模型多代理系统与波形/符号音乐生成相结合，模拟专业音乐人的工作流程（选点→作曲→编曲→混音），从无声电影片段自动生成高质量（48kHz）、高音乐性、具有发展性的电影配乐。
+tags:
+  - 图像生成
 ---
 
 # FilmComposer: LLM-Driven Music Production for Silent Film Clips
@@ -121,10 +121,10 @@ FilmComposer 由三大模块组成，模拟人类音乐人的完整创作流程�
 
 ## 相关论文
 
-- [LLM2Fx-Tools: Tool Calling for Music Post-Production](../../ICLR2026/image_generation/llm2fx-tools_tool_calling_for_music_post-production.md)
-- [The Silent Assistant: NoiseQuery as Implicit Guidance for Goal-Driven Image Generation](../../ICCV2025/image_generation/the_silent_assistant_noisequery_as_implicit_guidance_for_goal-driven_image_gener.md)
-- [AutoPrompt: Automated Red-Teaming of Text-to-Image Models via LLM-Driven Adversarial Prompts](../../ICCV2025/image_generation/autoprompt_automated_red-teaming_of_text-to-image_models_via_llm-driven_adversar.md)
-- [Enhancing Dance-to-Music Generation via Negative Conditioning Latent Diffusion Model](enhancing_dance-to-music_generation_via_negative_conditioning_latent_diffusion_m.md)
-- [MuseControlLite: Multifunctional Music Generation with Lightweight Conditioners](../../ICML2025/image_generation/musecontrollite_multifunctional_music_generation_with_lightweight_conditioners.md)
+- [EasyCraft: A Robust and Efficient Framework for Automatic Avatar Crafting](easycraft_a_robust_and_efficient_framework_for_automatic_avatar_crafting.md)
+- [Dual Diffusion for Unified Image Generation and Understanding](dual_diffusion_for_unified_image_generation_and_understanding.md)
+- [FineLIP: Extending CLIP's Reach via Fine-Grained Alignment with Longer Text Inputs](finelip_extending_clips_reach_via_fine-grained_alignment_with_longer_text_inputs.md)
+- [DualAnoDiff: Dual-Interrelated Diffusion Model for Few-Shot Anomaly Image Generation](dual-interrelated_diffusion_model_for_few-shot_anomaly_image_generation.md)
+- [Dynamic Motion Blending for Versatile Motion Editing (MotionReFit)](dynamic_motion_blending_for_versatile_motion_editing.md)
 
 <!-- RELATED:END -->

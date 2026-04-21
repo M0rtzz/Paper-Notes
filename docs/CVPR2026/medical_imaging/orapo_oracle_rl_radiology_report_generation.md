@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OraPO: Oracle-educated Reinforcement Learning for Data-efficient and Factual Radiology Report Generation
 description: >-

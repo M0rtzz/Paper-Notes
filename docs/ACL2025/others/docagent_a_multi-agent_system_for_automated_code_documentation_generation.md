@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DocAgent: A Multi-Agent System for Automated Code Documentation Generation
 description: >-
@@ -166,8 +166,8 @@ DocAgent 分两阶段：Navigator 模块确定依赖感知的处理顺序，Mult
 
 - [A Measure of the System Dependence of Automated Metrics](a_measure_of_the_system_dependence_of_automated_metrics.md)
 - [Multi-Agent Collaboration via Cross-Team Orchestration](multi-agent_collaboration_via_cross-team_orchestration.md)
-- [Preventing Rogue Agents Improves Multi-Agent Collaboration](preventing_rogue_agents_improves_multi-agent_collaboration.md)
 - [CortexDebate: Debating Sparsely and Equally for Multi-Agent Debate](cortexdebate_debating_sparsely_and_equally_for_multi-agent_debate.md)
+- [Preventing Rogue Agents Improves Multi-Agent Collaboration](preventing_rogue_agents_improves_multi-agent_collaboration.md)
 - [Beyond Frameworks: Unpacking Collaboration Strategies in Multi-Agent Systems](beyond_frameworks_multi_agent_collaboration.md)
 
 <!-- RELATED:END -->

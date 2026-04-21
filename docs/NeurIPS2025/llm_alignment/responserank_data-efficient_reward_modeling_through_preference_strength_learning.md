@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ResponseRank: Data-Efficient Reward Modeling through Preference Strength Learning
 description: >-

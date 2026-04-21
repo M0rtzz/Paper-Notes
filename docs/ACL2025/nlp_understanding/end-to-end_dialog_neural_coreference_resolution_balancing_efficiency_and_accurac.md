@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] End-to-End Dialog Neural Coreference Resolution: Balancing Efficiency and Accuracy in Large-Scale Systems
 description: >-

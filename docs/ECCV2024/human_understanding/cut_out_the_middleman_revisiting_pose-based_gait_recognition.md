@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cut Out the Middleman: Revisiting Pose-Based Gait Recognition
 description: >-

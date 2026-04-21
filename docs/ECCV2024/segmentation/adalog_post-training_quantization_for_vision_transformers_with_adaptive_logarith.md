@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdaLog: Post-Training Quantization for Vision Transformers with Adaptive Logarithm Quantizer
 description: >-

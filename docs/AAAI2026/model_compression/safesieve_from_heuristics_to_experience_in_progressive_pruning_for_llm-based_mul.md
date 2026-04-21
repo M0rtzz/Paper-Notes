@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SafeSieve: From Heuristics to Experience in Progressive Pruning for LLM-based Multi-Agent Communication
 description: >-

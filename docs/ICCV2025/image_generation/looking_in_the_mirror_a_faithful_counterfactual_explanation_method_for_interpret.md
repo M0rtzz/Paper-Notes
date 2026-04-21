@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Looking in the Mirror: A Faithful Counterfactual Explanation Method for Interpreting Deep Image Classification Models
 description: >-
@@ -145,6 +145,6 @@ Mirror-CFE 在所有数据集上同时达到最优或次优的接近性（L1/LPI
 - [Revelio: Interpreting and Leveraging Semantic Information in Diffusion Models](revelio_interpreting_and_leveraging_semantic_information_in_diffusion_models.md)
 - [DC-AR: Efficient Masked Autoregressive Image Generation with Deep Compression Hybrid Tokenizer](dc-ar_efficient_masked_autoregressive_image_generation_with_deep_compression_hyb.md)
 - [V-CECE: Visual Counterfactual Explanations via Conceptual Edits](../../NeurIPS2025/image_generation/v-cece_visual_counterfactual_explanations_via_conceptual_edits.md)
-- [Towards a Mechanistic Explanation of Diffusion Model Generalization](../../ICML2025/image_generation/towards_a_mechanistic_explanation_of_diffusion_model_generalization.md)
+- [FaithDiff: Unleashing Diffusion Priors for Faithful Image Super-Resolution](../../CVPR2025/image_generation/faithdiff_unleashing_diffusion_priors_for_faithful_image_super-resolution.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PolyJuice Makes It Real: Black-Box, Universal Red Teaming for Synthetic Image Detectors
 description: >-

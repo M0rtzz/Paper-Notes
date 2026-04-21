@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SGMA: Semantic-Guided Modality-Aware Segmentation for Remote Sensing with Incomplete Multimodal Data
 description: >-
@@ -126,8 +126,8 @@ $\mathcal{L}_{\text{IMSS}} = \lambda_{\text{seg}} \mathcal{L}_{\text{seg}}(\hat{
 
 - [RDNet: Region Proportion-Aware Dynamic Adaptive Salient Object Detection Network in Optical Remote Sensing Images](rdnet_region_proportion-aware_dynamic_adaptive_salient_object_detection_network_.md)
 - [G2HFNet: GeoGran-Aware Hierarchical Feature Fusion Network for Salient Object Detection in Optical Remote Sensing Images](binwang2hfnet_geogran-aware_hierarchical_feature_fusion_network_for_salient_obje.md)
+- [ROS-SAM: High-Quality Interactive Segmentation for Remote Sensing Moving Object](ros-sam_high-quality_interactive_segmentation_for_remote_sensing_moving_object.md)
+- [DA-VPT: Semantic-Guided Visual Prompt Tuning for Vision Transformers](da-vpt_semantic-guided_visual_prompt_tuning_for_vision_transformers.md)
 - [COSMOS: Cross-Modality Self-Distillation for Vision Language Pre-training](cosmos_cross-modality_self-distillation_for_vision_language_pre-training.md)
-- [MaSS13K: A Matting-level Semantic Segmentation Benchmark](mass13k_a_matting-level_semantic_segmentation_benchmark.md)
-- [A Distractor-Aware Memory for Visual Object Tracking with SAM2](a_distractor-aware_memory_for_visual_object_tracking_with_sam2.md)
 
 <!-- RELATED:END -->

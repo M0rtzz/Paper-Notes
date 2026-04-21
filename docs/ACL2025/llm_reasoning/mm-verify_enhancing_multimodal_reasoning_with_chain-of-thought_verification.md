@@ -157,10 +157,10 @@ Stage 2在几乎所有设置中都优于Stage 1，验证了拒绝采样进一步
 
 ## 相关论文
 
-- [Marco-o1 v2: Towards Widening The Distillation Bottleneck for Reasoning Models](marco-o1_v2_towards_widening_the_distillation_bottleneck_for_reasoning_models.md)
+- [One Missing Piece for Open-Source Reasoning Models: A Dataset to Mitigate Cold-Starting Short CoT LLMs in RL](../../ICML2025/llm_reasoning/one_missing_piece_for_open-source_reasoning_models_a_dataset_to_mitigate_cold-st.md)
 - [Safe: Enhancing Mathematical Reasoning in Large Language Models via Retrospective Step-aware Formal Verification](safe_math_reasoning.md)
 - [Clip-and-Verify: 线性约束驱动的域裁剪加速神经网络验证](../../NeurIPS2025/llm_reasoning/clip-and-verify_linear_constraint-driven_domain_clipping_for_accelerating_neural.md)
-- [Corvid: Improving Multimodal Large Language Models Towards Chain-of-Thought Reasoning](../../ICCV2025/llm_reasoning/corvid_improving_multimodal_large_language_models_towards_ch.md)
+- [CoRVid: Improving Multimodal Large Language Models Towards Chain-of-Thought Reasoning](../../ICCV2025/llm_reasoning/corvid_improving_multimodal_large_language_models_towards_chain-of-thought_reaso.md)
 - [BPP-Search: Enhancing Tree of Thought Reasoning for Mathematical Modeling Problem Solving](bpp-search_enhancing_tree_of_thought_reasoning_for_mathematical_modeling_problem.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Open-World 3D Scene Graph Generation for Retrieval-Augmented Reasoning
 description: >-

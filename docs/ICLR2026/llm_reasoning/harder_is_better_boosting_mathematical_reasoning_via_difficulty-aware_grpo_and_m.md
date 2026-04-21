@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Harder Is Better: Boosting Mathematical Reasoning via Difficulty-Aware GRPO and Multi-Aspect Question Reformulation
 description: >-

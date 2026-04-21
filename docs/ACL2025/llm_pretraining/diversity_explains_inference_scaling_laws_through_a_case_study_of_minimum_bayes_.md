@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Diversity Explains Inference Scaling Laws: Through a Case Study of Minimum Bayes Risk Decoding
 description: >-

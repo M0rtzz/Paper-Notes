@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation
 description: >-

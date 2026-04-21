@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WGFormer: An SE(3)-Transformer Driven by Wasserstein Gradient Flows for Molecular Generation
 description: >-

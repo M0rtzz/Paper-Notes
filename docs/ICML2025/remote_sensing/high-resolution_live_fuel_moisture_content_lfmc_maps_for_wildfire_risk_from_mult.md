@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] High-Resolution Live Fuel Moisture Content (LFMC) Maps for Wildfire Risk from Multimodal Earth Observation Data
 description: >-

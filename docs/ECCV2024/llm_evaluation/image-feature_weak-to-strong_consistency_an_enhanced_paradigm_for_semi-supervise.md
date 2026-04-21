@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Image-Feature Weak-to-Strong Consistency: An Enhanced Paradigm for Semi-Supervised Learning
 description: >-

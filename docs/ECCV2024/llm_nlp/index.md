@@ -1,14 +1,14 @@
 ---
 title: >-
-  ECCV2024 LLM/NLP方向 6篇论文解读
+  ECCV2024 LLM/NLP方向 7篇论文解读
 description: >-
-  6篇ECCV2024 LLM/NLP方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  7篇ECCV2024 LLM/NLP方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 LLM/NLP
 
-**🎞️ ECCV2024** · **6** 篇论文解读
+**🎞️ ECCV2024** · **7** 篇论文解读
 
 **[AdaCLIP: Adapting CLIP with Hybrid Learnable Prompts for Zero-Shot Anomaly Detection](adaclip_adapting_clip_with_hybrid_learnable_prompts_for_zero.md)**
 
@@ -33,3 +33,7 @@ description: >-
 **[Stripe Observation Guided Inference Cost-Free Attention Mechanism](stripe_observation_guided_inference_cost-free_attention_mechanism.md)**
 
 :   本文通过深入分析Transformer中注意力权重矩阵的条纹（stripe）模式现象，提出一种推理阶段完全无额外计算开销的注意力增强机制——仅在训练阶段通过辅助模块学习条纹引导的注意力修正，并在推理时将其重参数化融入标准注意力权重中，实现"免费午餐"式的性能提升。
+
+**[Zero-Shot Object Counting with Good Exemplars (VA-Count)](zeroshot_object_counting_with_good_exemplars.md)**
+
+:   提出 VA-Count，一种基于视觉关联的零样本物体计数框架，通过 Grounding DINO 驱动的样例增强模块和对比学习噪声抑制模块，为任意类别建立高质量样例与图像间的鲁棒视觉关联。

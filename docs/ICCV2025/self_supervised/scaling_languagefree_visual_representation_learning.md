@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling Language-Free Visual Representation Learning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Deep Compositional Phase Diffusion for Long Motion Sequence Generation
 description: >-
@@ -125,10 +125,10 @@ tags:
 
 ## 相关论文
 
-- [Linear Attention for Efficient Bidirectional Sequence Modeling](linear_attention_for_efficient_bidirectional_sequence_modeling.md)
-- [RefreshKV: Updating Small KV Cache During Long-form Generation](../../ACL2025/llm_efficiency/refreshkv_updating_small_kv_cache_during_long-form_generation.md)
 - [LOCORE: Image Re-ranking with Long-Context Sequence Modeling](../../CVPR2025/llm_efficiency/locore_image_re-ranking_with_long-context_sequence_modeling.md)
+- [RefreshKV: Updating Small KV Cache During Long-form Generation](../../ACL2025/llm_efficiency/refreshkv_updating_small_kv_cache_during_long-form_generation.md)
 - [LayerTracer: Cognitive-Aligned Layered SVG Synthesis via Diffusion Transformer](../../ICCV2025/llm_efficiency/layertracer_cognitive-aligned_layered_svg_synthesis_via_diffusion_transformer.md)
 - [Stroke2Sketch: Harnessing Stroke Attributes for Training-Free Sketch Generation](../../ICCV2025/llm_efficiency/stroke2sketch_harnessing_stroke_attributes_for_training-free_sketch_generation.md)
+- [Improving Accuracy and Calibration via Differentiated Deep Mutual Learning](../../CVPR2025/llm_efficiency/improving_accuracy_and_calibration_via_differentiated_deep_mutual_learning.md)
 
 <!-- RELATED:END -->

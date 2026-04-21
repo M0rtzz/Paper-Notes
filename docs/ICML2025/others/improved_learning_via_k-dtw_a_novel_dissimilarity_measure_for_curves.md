@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improved Learning via k-DTW: A Novel Dissimilarity Measure for Curves
 description: >-

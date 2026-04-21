@@ -201,6 +201,6 @@ HSCR 在零样本设置下取得 SOTA，在 SLAKE 封闭题上提升 6.97%，在
 - [Retrieval Visual Contrastive Decoding to Mitigate Object Hallucinations in Large Vision-Language Models](retrieval_visual_contrastive_decoding_to_mitigate_object_hallucinations_in_large.md)
 - [BioCLIP 2: Emergent Properties from Scaling Hierarchical Contrastive Learning](../../NeurIPS2025/multimodal_vlm/bioclip_2_emergent_properties_from_scaling_hierarchical_contrastive_learning.md)
 - [Improving Medical Large Vision-Language Models with Abnormal-Aware Feedback](improving_medical_large_vision-language_models_with_abnormal-aware_feedback.md)
-- [SPHERE: Unveiling Spatial Blind Spots in Vision-Language Models Through Hierarchical Evaluation](sphere_unveiling_spatial_blind_spots_in.md)
+- [Hierarchical Safety Realignment: Lightweight Restoration of Safety in Pruned Large Vision-Language Models](hierarchical_safety_realignment_lightweight_restoration_of_safety_in_pruned_larg.md)
 
 <!-- RELATED:END -->

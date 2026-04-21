@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Pre³: Enabling Deterministic Pushdown Automata for Faster Structured LLM Generation
 description: >-

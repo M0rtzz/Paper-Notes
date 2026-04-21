@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Elastic Weight Consolidation Done Right for Continual Learning
 description: >-

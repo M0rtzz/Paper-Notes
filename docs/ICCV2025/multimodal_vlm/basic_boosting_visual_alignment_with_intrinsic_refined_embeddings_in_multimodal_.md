@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BASIC: Boosting Visual Alignment with Intrinsic Refined Embeddings in Multimodal Large Language Models
 description: >-

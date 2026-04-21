@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Task Aware Modulation Using Representation Learning for Upscaling of Terrestrial Carbon Fluxes
 description: >-
@@ -110,10 +110,10 @@ tags:
 
 ## 相关论文
 
-- [Frequency Switching Mechanism for Parameter-Efficient Multi-Task Learning](../../CVPR2026/signal_comm/frequency_switching_mechanism_for_parameter-ecient_multi-task_learning.md)
+- [Feature-aware Modulation for Learning from Temporal Tabular Data](../../NeurIPS2025/signal_comm/feature-aware_modulation_for_learning_from_temporal_tabular_data.md)
 - [FAAR: Efficient Frequency-Aware Multi-Task Fine-Tuning via Automatic Rank Selection](../../CVPR2026/signal_comm/faar_efficient_frequency-aware_multi-task_fine-tuning_via_automatic_rank_selecti.md)
-- [Neural Video Compression with Context Modulation](../../CVPR2025/signal_comm/neural_video_compression_with_context_modulation.md)
 - [FASA: Frequency-Aware Sparse Attention](../../ICLR2026/signal_comm/fasa_frequency-aware_sparse_attention.md)
-- [Boosting Multimodal Learning via Disentangled Gradient Learning](../../ICCV2025/signal_comm/boosting_multimodal_learning_via_disentangled_gradient_learning.md)
+- [Neural Video Compression with Context Modulation](../../CVPR2025/signal_comm/neural_video_compression_with_context_modulation.md)
+- [Toward Gaze Target Detection in Young Autistic Children](toward_gaze_target_detection_of_young_autistic_children.md)
 
 <!-- RELATED:END -->

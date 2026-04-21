@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Quantifying Climate Policy Action and Its Links to Development Outcomes: A Cross-National Data-Driven Analysis
 description: >-

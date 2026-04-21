@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SOM Directions are Better than One: Multi-Directional Refusal Suppression in Language Models
 description: >-
@@ -143,8 +143,8 @@ HarmBench上的攻击成功率（ASR）对比：
 
 - [ToC: Tree-of-Claims Search with Multi-Agent Language Models](toc_tree-of-claims_search_with_multi-agent_language_models.md)
 - [Are Greedy Task Orderings Better Than Random in Continual Linear Regression?](../../NeurIPS2025/interpretability/are_greedy_task_orderings_better_than_random_in_continual_linear_regression.md)
-- [Probing Preference Representations: A Multi-Dimensional Evaluation and Analysis Method for Reward Models](probing_preference_representations_a_multi-dimensional_evaluation_and_analysis_m.md)
 - [Better Estimation of the Kullback-Leibler Divergence Between Language Models](../../NeurIPS2025/interpretability/better_estimation_of_the_kullback--leibler_divergence_between_language_models.md)
+- [Probing Preference Representations: A Multi-Dimensional Evaluation and Analysis Method for Reward Models](probing_preference_representations_a_multi-dimensional_evaluation_and_analysis_m.md)
 - [HSKBenchmark: Modeling and Benchmarking Chinese Second Language Acquisition in Large Language Models through Curriculum Tuning](hskbenchmark_modeling_and_benchmarking_chinese_second_language_acquisition_in_la.md)
 
 <!-- RELATED:END -->

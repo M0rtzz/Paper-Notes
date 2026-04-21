@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Leveraging 2D Priors and SDF Guidance for Dynamic Urban Scene Rendering
 description: >-
@@ -146,6 +146,6 @@ SDF 损失包含 RGB 渲染损失 $\mathcal{L}_{rgb}$、深度损失 $\mathcal{L
 - [GaussRender: Learning 3D Occupancy with Gaussian Rendering](gaussrender_learning_3d_occupancy_with_gaussian_rendering.md)
 - [Extrapolated Urban View Synthesis Benchmark](extrapolated_urban_view_synthesis_benchmark.md)
 - [SimWorld-Robotics: Synthesizing Photorealistic and Dynamic Urban Environments for Multimodal Robot Navigation and Collaboration](../../NeurIPS2025/autonomous_driving/simworld-robotics_synthesizing_photorealistic_and_dynamic_urban_environments_for.md)
-- [FlowScene: Learning Temporal 3D Semantic Scene Completion via Optical Flow Guidance](../../NeurIPS2025/autonomous_driving/learning_temporal_3d_semantic_scene_completion_via_optical_flow_guidance.md)
+- [SkyDiffusion: Leveraging BEV Paradigm for Ground-to-Aerial Image Synthesis](leveraging_bev_paradigm_for_ground-to-aerial_image_synthesis.md)
 
 <!-- RELATED:END -->

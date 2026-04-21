@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Unified Shape-Aware Foundation Model for Time Series Classification
 description: >-

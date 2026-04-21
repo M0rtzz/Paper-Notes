@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Disentangling to Re-couple: Resolving the Similarity-Controllability Paradox in Subject-Driven Text-to-Image Generation
 description: >-
@@ -126,6 +126,6 @@ DisCo 在 subject 相似度和 text 可控性上**同时**达到 SOTA，打破�
 - [PSR: Scaling Multi-Subject Personalized Image Generation with Pairwise Subject-Consistency Rewards](psr_scaling_multi-subject_personalized_image_generation_with_pairwise_subject-co.md)
 - [Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards](improving_text-to-image_generation_with_intrinsic_self-confidence_rewards.md)
 - [When Safety Collides: Resolving Multi-Category Harmful Conflicts in Text-to-Image Diffusion via Adaptive Safety Guidance](when_safety_collides_resolving_multi-category_harmful_conflicts_in_text-to-image.md)
-- [Agentic Retoucher for Text-To-Image Generation](agentic_retoucher_for_text-to-image_generation.md)
+- [Agentic Retoucher for Text-To-Image Generation](agentic_retoucher_for_texttoimage_generation.md)
 
 <!-- RELATED:END -->

@@ -1,7 +1,16 @@
-﻿---
-title: "Fine-Grained Image-Text Correspondence with Cost Aggregation for Open-Vocabulary Part Segmentation"
-description: "PartCATSeg：通过解耦代价聚合、组合损失和DINO结构引导，实现开放词汇部件级分割的大幅提升"
-tags: ["open-vocabulary", "part-segmentation", "cost-aggregation", "CLIP", "DINO"]
+---
+title: >-
+  [论文解读] Fine-Grained Image-Text Correspondence with Cost Aggregation for Open-Vocabulary Part Segmentation
+description: >-
+  [CVPR 2025][图像分割][开放词汇分割] PartCATSeg 通过将物体级和部件级的图文代价体积解耦聚合、引入组合损失约束部件构成关系、并利用 DINO 特征提供结构引导，在多个开放词汇部件分割基准上将 h-IoU 提升超过 10%。
+tags:
+  - CVPR 2025
+  - 图像分割
+  - 开放词汇分割
+  - 部件分割
+  - 代价聚合
+  - 视觉语言模型
+  - DINO结构引导
 ---
 
 # Fine-Grained Image-Text Correspondence with Cost Aggregation for Open-Vocabulary Part Segmentation
@@ -123,8 +132,8 @@ PartCATSeg 基于 CAT-Seg 架构进行扩展。输入一张图像和类别文本
 
 - [DPSeg: Dual-Prompt Cost Volume Learning for Open-Vocabulary Semantic Segmentation](dpseg_dual-prompt_cost_volume_learning_for_open-vocabulary_semantic_segmentation.md)
 - [Seg4Diff: Unveiling Open-Vocabulary Segmentation in Text-to-Image Diffusion Transformers](../../NeurIPS2025/segmentation/seg4diff_unveiling_open-vocabulary_segmentation_in_text-to-image_diffusion_trans.md)
-- [PartNeXt: A Next-Generation Dataset for Fine-Grained and Hierarchical 3D Part Understanding](../../NeurIPS2025/segmentation/partnext_a_next-generation_dataset_for_fine-grained_and_hierarchical_3d_part_und.md)
-- [LangHOPS: Language Grounded Hierarchical Open-Vocabulary Part Segmentation](../../NeurIPS2025/segmentation/langhops_language_grounded_hierarchical_open-vocabulary_part_segmentation.md)
 - [Mask-Adapter: The Devil is in the Masks for Open-Vocabulary Segmentation](mask-adapter_the_devil_is_in_the_masks_for_open-vocabulary_segmentation.md)
+- [PartNeXt: A Next-Generation Dataset for Fine-Grained and Hierarchical 3D Part Understanding](../../NeurIPS2025/segmentation/partnext_a_next-generation_dataset_for_fine-grained_and_hierarchical_3d_part_und.md)
+- [DeCLIP: Decoupled Learning for Open-Vocabulary Dense Perception](declip_decoupled_learning_for_open-vocabulary_dense_perception.md)
 
 <!-- RELATED:END -->

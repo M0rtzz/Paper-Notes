@@ -119,10 +119,10 @@ $$\mathcal{L} = \sum_{u(s)>0} (U(\phi(s), \hat{P}_c) - U(\phi(s), \mathcal{P}))^
 
 ## 相关论文
 
-- [GraphNarrator: Generating Textual Explanations for Graph Neural Networks](graphnarrator.md)
-- [Can Graph Neural Networks Learn Language with Extremely Weak Text Supervision?](can_graph_neural_networks_learn_language.md)
 - [Can LLMs Evaluate Complex Attribution in QA? Automatic Benchmarking using Knowledge Graphs](paper_2401_14640.md)
 - [Is Complex Query Answering Really Complex?](../../ICML2025/graph_learning/is_complex_query_answering_really_complex.md)
 - [Uncertain Knowledge Graph Completion via Semi-Supervised Confidence Distribution Learning](../../NeurIPS2025/graph_learning/uncertain_knowledge_graph_completion_via_semi-supervised_confidence_distribution.md)
+- [Cross-Document Contextual Coreference Resolution in Knowledge Graphs](cross-document_contextual_coreference_resolution_in_knowledge_graphs.md)
+- [SimGRAG: Leveraging Similar Subgraphs for Knowledge Graphs Driven Retrieval-Augmented Generation](simgrag_leveraging_similar_subgraphs_for_knowledge_graphs_driven_retrieval-augme.md)
 
 <!-- RELATED:END -->

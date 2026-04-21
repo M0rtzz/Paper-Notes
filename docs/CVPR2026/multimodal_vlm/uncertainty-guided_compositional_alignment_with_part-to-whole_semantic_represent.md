@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Uncertainty-guided Compositional Alignment with Part-to-Whole Semantic Representativeness in Hyperbolic Vision-Language Models
 description: >-

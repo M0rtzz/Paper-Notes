@@ -1,7 +1,16 @@
-﻿---
-title: "FRESA: Feedforward Reconstruction of Personalized Skinned Avatars from Few Images"
-description: "提出前馈式个性化蒙皮Avatar重建方法FRESA，通过3D canonicalization和通用先验模型从少量图像瞬时生成可动画化Avatar"
-tags: ["avatar reconstruction", "skinning", "feed-forward", "animation", "CVPR2025"]
+---
+title: >-
+  [论文解读] FRESA: Feedforward Reconstruction of Personalized Skinned Avatars from Few Images
+description: >-
+  [CVPR 2025][人体理解][Avatar重建] 提出 FRESA，通过学习一个通用着装人体先验模型，从少量图像前馈式（18秒）联合推理个性化 canonical 形状、蒙皮权重和姿态依赖变形，实现零样本泛化到手机照片的高质量可动画化 3D 人体 Avatar 重建。
+tags:
+  - CVPR 2025
+  - 人体理解
+  - Avatar重建
+  - 前馈推理
+  - 个性化蒙皮
+  - 线性混合蒙皮
+  - 可动画化
 ---
 
 # FRESA: Feedforward Reconstruction of Personalized Skinned Avatars from Few Images
@@ -127,9 +136,9 @@ tags: ["avatar reconstruction", "skinning", "feed-forward", "animation", "CVPR20
 ## 相关论文
 
 - [3D Face Reconstruction From Radar Images](3d_face_reconstruction_from_radar_images.md)
-- [NBAvatar: Neural Billboards Avatars with Realistic Hand-Face Interaction](nbavatar_neural_billboards_avatars_with_realistic_hand-face_interaction.md)
 - [Avat3r: Large Animatable Gaussian Reconstruction Model for High-fidelity 3D Head Avatars](../../ICCV2025/human_understanding/avat3r_large_animatable_gaussian_reconstruction_model_for_hi.md)
+- [Towards High-fidelity 3D Talking Avatar with Personalized Dynamic Texture](towards_high-fidelity_3d_talking_avatar_with_personalized_dynamic_texture.md)
+- [WildAvatar: Learning In-the-Wild 3D Avatars from the Web](wildavatar_learning_in-the-wild_3d_avatars_from_the_web.md)
 - [ShowMak3r: Compositional TV Show Reconstruction](showmak3r_compositional_tv_show_reconstruction.md)
-- [Provably Improving Generalization of Few-Shot Models with Synthetic Data](../../ICML2025/human_understanding/provably_improving_generalization_of_few-shot_models_with_synthetic_data.md)
 
 <!-- RELATED:END -->

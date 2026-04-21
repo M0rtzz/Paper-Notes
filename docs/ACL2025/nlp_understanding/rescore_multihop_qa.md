@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ReSCORE: Label-free Iterative Retriever Training for Multi-hop Question Answering with Relevance-Consistency Supervision
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Input-Level Backdoor Defense on Text-to-Image Synthesis via Neuron Activation Variation
 description: >-

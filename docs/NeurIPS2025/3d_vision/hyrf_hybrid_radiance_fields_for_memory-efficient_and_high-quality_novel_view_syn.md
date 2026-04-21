@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HyRF: Hybrid Radiance Fields for Memory-efficient and High-quality Novel View Synthesis
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Training-free Online Video Step Grounding
 description: >-

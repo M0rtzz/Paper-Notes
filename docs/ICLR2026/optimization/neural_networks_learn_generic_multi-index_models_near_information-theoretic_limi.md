@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neural Networks Learn Generic Multi-Index Models Near Information-Theoretic Limit
 description: >-

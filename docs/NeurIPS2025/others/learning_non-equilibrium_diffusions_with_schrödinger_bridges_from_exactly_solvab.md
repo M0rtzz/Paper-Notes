@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning non-equilibrium diffusions with Schrödinger bridges: from exactly solvable to simulation-free
 description: >-

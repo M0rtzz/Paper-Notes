@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DCA: Graph-Guided Deep Embedding Clustering for Brain Atlases
 description: >-

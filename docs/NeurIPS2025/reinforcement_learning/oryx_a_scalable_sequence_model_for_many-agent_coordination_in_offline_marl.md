@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Oryx: a Scalable Sequence Model for Many-Agent Coordination in Offline MARL
 description: >-
@@ -131,7 +131,7 @@ $$J_Q(\phi) = \mathbb{E}_\mathcal{B}\left[\left(r + \gamma \frac{\exp(Q_{\phi^-}
 - [Communicating Plans, Not Percepts: Scalable Multi-Agent Coordination with Embodied World Models](communicating_plans_not_percepts_scalable_multi-agent_coordination_with_embodied.md)
 - [Partial Action Replacement: Tackling Distribution Shift in Offline MARL](../../AAAI2026/reinforcement_learning/partial_action_replacement_tackling_distribution_shift_in_offline_marl.md)
 - [Incremental Sequence Classification with Temporal Consistency](incremental_sequence_classification_with_temporal_consistency.md)
-- [Ensemble++: Scalable Exploration via Ensemble](scalable_exploration_via_ensemble.md)
+- [Scalable Policy-Based RL Algorithms for POMDPs](scalable_policy-based_rl_algorithms_for_pomdps.md)
 - [Horizon Reduction Makes RL Scalable](horizon_reduction_makes_rl_scalable.md)
 
 <!-- RELATED:END -->

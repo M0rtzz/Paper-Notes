@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Aether: Geometric-Aware Unified World Modeling
 description: >-

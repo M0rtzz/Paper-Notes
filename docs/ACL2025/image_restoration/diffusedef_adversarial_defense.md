@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiffuseDef: Improved Robustness to Adversarial Attacks via Iterative Denoising
 description: >-
@@ -179,6 +179,6 @@ DiffuseDef 在编码器与分类器之间插入一个扩散去噪层，训练时
 - [DenoiseRotator: Enhance Pruning Robustness for LLMs via Importance Concentration](../../NeurIPS2025/image_restoration/denoiserotator_enhance_pruning_robustness_for_llms_via_importance_concentration.md)
 - [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](../../CVPR2025/image_restoration/adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
 - [Spend Wisely: Maximizing Post-Training Gains in Iterative Synthetic Data Bootstrapping](../../NeurIPS2025/image_restoration/spend_wisely_maximizing_post-training_gains_in_iterative_synthetic_data_bootstra.md)
-- [ε-VAE: Denoising as Visual Decoding](../../ICML2025/image_restoration/epsilon-vae_denoising_as_visual_decoding.md)
+- [Iterative Predictor-Critic Code Decoding for Real-World Image Dehazing](../../CVPR2025/image_restoration/iterative_predictor-critic_code_decoding_for_real-world_image_dehazing.md)
 
 <!-- RELATED:END -->

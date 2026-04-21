@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Harmonizing Visual Representations for Unified Multimodal Understanding and Generation
 description: >-

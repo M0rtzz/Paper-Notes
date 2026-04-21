@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Foundation Model Insights and a Multi-Model Approach for Superior Fine-Grained One-shot Subset Selection
 description: >-

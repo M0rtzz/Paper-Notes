@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On Token's Dilemma: Dynamic MoE with Drift-Aware Token Assignment for Continual Learning of Large Vision Language Models
 description: >-

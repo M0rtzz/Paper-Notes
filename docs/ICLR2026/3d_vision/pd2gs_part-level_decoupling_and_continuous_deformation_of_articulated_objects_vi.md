@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PD²GS: Part-Level Decoupling and Continuous Deformation of Articulated Objects via Gaussian Splatting
 description: >-

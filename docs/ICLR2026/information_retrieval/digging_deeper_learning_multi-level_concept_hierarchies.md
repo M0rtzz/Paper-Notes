@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Digging Deeper: Learning Multi-Level Concept Hierarchies
 description: >-
@@ -127,9 +127,9 @@ tags:
 ## 相关论文
 
 - [Hierarchical Concept-based Interpretable Models](hierarchical_concept-based_interpretable_models.md)
+- [MuCo: Multi-turn Contrastive Learning for Multimodal Embedding Model](../../CVPR2026/information_retrieval/muco_multi-turn_contrastive_learning_for_multimodal_embedding_model.md)
 - [Multi-Label Cluster Discrimination for Visual Representation Learning](../../ECCV2024/information_retrieval/multi-label_cluster_discrimination_for_visual_representation_learning.md)
-- [Learning Task-Agnostic Representations through Multi-Teacher Distillation](../../NeurIPS2025/information_retrieval/learning_task-agnostic_representations_through_multi-teacher_distillation.md)
 - [Deep Research Brings Deeper Harm](../../NeurIPS2025/information_retrieval/deep_research_brings_deeper_harm.md)
-- [Query-Level Uncertainty in Large Language Models](query-level_uncertainty_in_large_language_models.md)
+- [Learning Task-Agnostic Representations through Multi-Teacher Distillation](../../NeurIPS2025/information_retrieval/learning_task-agnostic_representations_through_multi-teacher_distillation.md)
 
 <!-- RELATED:END -->

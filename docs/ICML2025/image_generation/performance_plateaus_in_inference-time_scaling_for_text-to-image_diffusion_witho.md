@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Performance Plateaus in Inference-Time Scaling for Text-to-Image Diffusion Without External Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bridging Continuous and Discrete Tokens for Autoregressive Visual Generation
 description: >-

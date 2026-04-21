@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DetailSemNet: Elevating Signature Verification through Detail-Semantic Integration
 description: >-

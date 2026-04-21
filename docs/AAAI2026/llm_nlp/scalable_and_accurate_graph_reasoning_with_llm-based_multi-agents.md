@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scalable and Accurate Graph Reasoning with LLM-Based Multi-Agents
 description: >-
@@ -133,6 +133,6 @@ tags:
 - [TReMu: Towards Neuro-Symbolic Temporal Reasoning for LLM-Agents with Memory in Multi-Session Dialogues](../../ACL2025/llm_nlp/tremu_towards_neuro-symbolic_temporal_reasoning_for_llm-agents_with_memory_in_mu.md)
 - [ScaleQuest: Unleashing LLM Reasoning Capability via Scalable Question Synthesis from Scratch](../../ACL2025/llm_nlp/unleashing_llm_reasoning_capability_via_scalable.md)
 - [Blue Teaming Function-Calling Agents](blue_teaming_function-calling_agents.md)
-- [ICL-Router: In-Context Learned Model Representations for LLM Routing](icl-router_in-context_learned_model_representations_for_llm_routing.md)
+- [Can Graph Descriptive Order Affect Solving Graph Problems with LLMs?](../../ACL2025/llm_nlp/graph_descriptive_order_llm.md)
 
 <!-- RELATED:END -->

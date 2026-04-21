@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multi-perspective Alignment for Increasing Naturalness in Neural Machine Translation
 description: >-

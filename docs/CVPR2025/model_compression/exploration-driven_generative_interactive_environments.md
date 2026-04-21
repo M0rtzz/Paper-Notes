@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploration-Driven Generative Interactive Environments
 description: >-

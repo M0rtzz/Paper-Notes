@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HotelMatch-LLM: Joint Multi-Task Training of Small and Large Language Models for Efficient Multimodal Hotel Retrieval
 description: >-
@@ -126,8 +126,8 @@ HotelMatch-LLM 是一个非对称双编码器检索架构。Query 侧用小模�
 
 - [OMGM: Orchestrate Multiple Granularities and Modalities for Efficient Multimodal Retrieval](omgm_orchestrate_multiple_granularities_and_modalities_for_efficient_multimodal_.md)
 - [Training-Free Personalization via Retrieval and Reasoning on Fingerprints](../../ICCV2025/multimodal_vlm/training-free_personalization_via_retrieval_and_reasoning_on_fingerprints.md)
-- [RAP: Retrieval-Augmented Personalization for Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/rap_retrieval-augmented_personalization_for_multimodal_large_language_models.md)
 - [VLsI: Verbalized Layers-to-Interactions from Large to Small Vision Language Models](../../CVPR2025/multimodal_vlm/vlsi_verbalized_layers-to-interactions_from_large_to_small_vision_language_model.md)
+- [RAP: Retrieval-Augmented Personalization for Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/rap_retrieval-augmented_personalization_for_multimodal_large_language_models.md)
 - [Bidirectional Likelihood Estimation with Multi-Modal Large Language Models for Text-Video Retrieval](../../ICCV2025/multimodal_vlm/bidirectional_likelihood_estimation_with_multi-modal_large_language_models_for_t.md)
 
 <!-- RELATED:END -->

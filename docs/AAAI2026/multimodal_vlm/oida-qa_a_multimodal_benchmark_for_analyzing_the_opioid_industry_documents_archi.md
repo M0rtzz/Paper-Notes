@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OIDA-QA: A Multimodal Benchmark for Analyzing the Opioid Industry Documents Archive
 description: >-
@@ -174,6 +174,6 @@ $$\mathcal{L}_{\text{MNRL}} = -\frac{1}{B}\sum_{b=1}^B \log \frac{\exp(s_{b,b}/\
 - [Analyzing Finetuning Representation Shift for Multimodal LLMs Steering](../../ICCV2025/multimodal_vlm/analyzing_finetuning_representation_shift_for_multimodal_llms_steering.md)
 - [VP-Bench: A Comprehensive Benchmark for Visual Prompting in Multimodal Large Language Models](vp-bench_a_comprehensive_benchmark_for_visual_prompting_in_m.md)
 - [CrossVid: A Comprehensive Benchmark for Evaluating Cross-Video Reasoning in Multimodal Large Language Models](crossvid_a_comprehensive_benchmark_for_evaluating_cross-vide.md)
-- [LongDocURL: a Comprehensive Multimodal Long Document Benchmark Integrating Understanding, Reasoning, and Locating](../../ACL2025/multimodal_vlm/longdocurl_multimodal_long_doc.md)
+- [Document Haystacks: Vision-Language Reasoning Over Piles of 1000+ Documents](../../CVPR2025/multimodal_vlm/document_haystacks_vision-language_reasoning_over_piles_of_1000_documents.md)
 
 <!-- RELATED:END -->

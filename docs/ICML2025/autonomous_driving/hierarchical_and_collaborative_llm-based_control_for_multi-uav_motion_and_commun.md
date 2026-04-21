@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hierarchical and Collaborative LLM-Based Control for Multi-UAV Motion and Communication in Integrated Terrestrial and Non-Terrestrial Networks
 description: >-
@@ -195,6 +195,6 @@ $$r_t^{j, tele} = w_4 \cdot WR_{i^*, j, t} \cdot (1 - \min(1, \xi_t^j))$$
 - [MGSfM: Multi-Camera Geometry Driven Global Structure-from-Motion](../../ICCV2025/autonomous_driving/mgsfm_multi-camera_geometry_driven_global_structure-from-motion.md)
 - [Continuous Simplicial Neural Networks](../../NeurIPS2025/autonomous_driving/continuous_simplicial_neural_networks.md)
 - [CoLMDriver: LLM-based Negotiation Benefits Cooperative Autonomous Driving](../../ICCV2025/autonomous_driving/colmdriver_llm-based_negotiation_benefits_cooperative_autonomous_driving.md)
-- [CCF: Complementary Collaborative Fusion for Domain Generalized Multi-Modal 3D Object Detection](../../CVPR2026/autonomous_driving/ccf_complementary_collaborative_fusion_for_domain_generalized_multi-modal_3d_obj.md)
+- [Saliency-Aware Quantized Imitation Learning for Efficient Robotic Control](../../ICCV2025/autonomous_driving/saliency-aware_quantized_imitation_learning_for_efficient_robotic_control.md)
 
 <!-- RELATED:END -->

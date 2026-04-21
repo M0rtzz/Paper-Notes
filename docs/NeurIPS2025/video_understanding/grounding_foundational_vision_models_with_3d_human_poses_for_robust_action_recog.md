@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Grounding Foundational Vision Models with 3D Human Poses for Robust Action Recognition
 description: >-

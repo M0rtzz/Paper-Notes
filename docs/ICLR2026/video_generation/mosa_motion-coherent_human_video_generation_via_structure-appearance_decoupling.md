@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] MoSA: Motion-Coherent Human Video Generation via Structure-Appearance Decoupling
 description: >-
-  [ICLR 2026][视频理解][人物视频生成] 提出 MoSA 框架，将人体视频生成拆分为"结构生成"（3D Transformer 先生成物理合理的运动骨骼）和"外观生成"（DiT 在骨骼引导下合成视频），并设计人体感知动态控制（HADC）模块将稀疏骨骼信号扩展到整个运动区域，配合密集跟踪损失和接触约束，在 FVD、CLIPSIM 等指标上全面超越 HunyuanVideo、Wan 2.1 等 SOTA。
+  [ICLR 2026][人物视频生成] 提出 MoSA 框架，将人体视频生成拆分为"结构生成"（3D Transformer 先生成物理合理的运动骨骼）和"外观生成"（DiT 在骨骼引导下合成视频），并设计人体感知动态控制（HADC）模块将稀疏骨骼信号扩展到整个运动区域，配合密集跟踪损失和接触约束，在 FVD、CLIPSIM 等指标上全面超越 HunyuanVideo、Wan 2.1 等 SOTA。
 tags:
   - ICLR 2026
-  - 视频理解
   - 人物视频生成
   - 结构-外观解耦
   - 3D运动生成
@@ -145,10 +144,10 @@ MoSA 框架迁移到 Wan 2.1 后也有显著提升：Wan 2.1 原始 FVD=1251 / C
 
 ## 相关论文
 
-- [MotionCharacter: Fine-Grained Motion Controllable Human Video Generation](../../AAAI2026/video_generation/motioncharacter_fine-grained_motion_controllable_human_video_generation.md)
 - [PAM: A Pose-Appearance-Motion Engine for Sim-to-Real HOI Video Generation](../../CVPR2026/video_generation/pam_a_pose-appearance-motion_engine_for_sim-to-real_hoi_video_generation.md)
 - [SymphoMotion: Joint Control of Camera Motion and Object Dynamics for Coherent Video Generation](../../CVPR2026/video_generation/symphomotion_joint_control_of_camera_motion_and_object_dynamics_for_coherent_vid.md)
+- [MotionCharacter: Fine-Grained Motion Controllable Human Video Generation](../../AAAI2026/video_generation/motioncharacter_fine-grained_motion_controllable_human_video_generation.md)
 - [MotionStream: Real-Time Video Generation with Interactive Motion Controls](motionstream_real-time_video_generation_with_interactive_motion_controls.md)
-- [BindWeave: Subject-Consistent Video Generation via Cross-Modal Integration](bindweave_subject-consistent_video_generation_via_cross-modal_integration.md)
+- [MimicMotion: High-Quality Human Motion Video Generation with Confidence-aware Pose Guidance](../../ICML2025/video_generation/mimicmotion_high-quality_human_motion_video_generation_with_confidence-aware_pos.md)
 
 <!-- RELATED:END -->

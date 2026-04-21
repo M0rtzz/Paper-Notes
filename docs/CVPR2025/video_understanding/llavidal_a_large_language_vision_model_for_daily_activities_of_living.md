@@ -1,7 +1,16 @@
-﻿---
-title: "LLAVIDAL: A Large Language Vision Model for Daily Activities of Living"
-description: "提出LLAVIDAL模型和ADL-X数据集，通过多模态渐进式训练策略整合视频、3D骨架和人物-物体交互线索，显著提升日常活动理解的LLVM性能"
-tags: ["视频理解", "大语言视觉模型", "日常活动识别", "多模态融合", "CVPR2025"]
+---
+title: >-
+  [论文解读] LLAVIDAL: A Large Language Vision Model for Daily Activities of Living
+description: >-
+  [CVPR 2025][视频理解][日常活动理解] 针对日常生活活动（ADL）理解，构建了多视角多模态指令微调数据集 ADL-X，提出 LLAVIDAL 模型融合视频、3D 骨架和 HOI 线索，采用 MMPro 渐进式训练策略实现 SOTA 性能。
+tags:
+  - CVPR 2025
+  - 视频理解
+  - 日常活动理解
+  - 大语言视觉模型
+  - 多模态融合
+  - 骨架特征
+  - 人物交互
 ---
 
 # LLAVIDAL: A Large Language Vision Model for Daily Activities of Living
@@ -128,9 +137,9 @@ LLAVIDAL 由三大部分组成：
 ## 相关论文
 
 - [MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)
-- [PiTe: Pixel-Temporal Alignment for Large Video-Language Model](../../ECCV2024/video_understanding/pite_pixel-temporal_alignment_for_large_video-language_model.md)
-- [BehaviorVLM: Unified Finetuning-Free Behavioral Understanding with Vision-Language Reasoning](behaviorvlm_unified_finetuning-free_behavioral_understanding_with_vision-languag.md)
-- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
-- [Aligning Effective Tokens with Video Anomaly in Large Language Models](../../ICCV2025/video_understanding/aligning_effective_tokens_with_video_anomaly_in_large_language_models.md)
+- [VoCo-LLaMA: Towards Vision Compression with Large Language Models](voco-llama_towards_vision_compression_with_large_language_models.md)
+- [Video Summarization with Large Language Models](video_summarization_with_large_language_models.md)
+- [PAVE: Patching and Adapting Video Large Language Models](pave_patching_and_adapting_video_large_language_models.md)
+- [On the Consistency of Video Large Language Models in Temporal Comprehension](on_the_consistency_of_video_large_language_models_in_temporal_comprehension.md)
 
 <!-- RELATED:END -->

@@ -1,16 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Hierarchical Flow Diffusion for Efficient Frame Interpolation
 description: >-
-  [CVPR 2025][图像生成][视频插帧] 本文提出层次化光流扩散模型用于高效视频帧插值。不同于在潜空间直接去噪的方法，HFD 在多尺度上对光流显式建模，从粗到细逐级去噪双向光流，结合光流引导的图像合成器端到端训练。在 SNU-FILM、Xiph、DAVIS、Vimeo-90k 上取得 SOTA 精度，推理速度比其他扩散方法快 10 倍以上。
+  [CVPR 2025][图像生成][视频插帧] 本文提出在视频插帧中用层级扩散模型从粗到细显式去噪双向光流（而非直接去噪潜空间），再用流引导图像合成器生成最终帧，实现比其他扩散方法快 10+ 倍且精度 SOTA。
 tags:
   - CVPR 2025
   - 图像生成
   - 视频插帧
   - 扩散模型
-  - 光流
-  - 层次化
-  - 帧插值
+  - 层级光流
+  - 从粗到细
+  - 端到端训练
 ---
 
 # Hierarchical Flow Diffusion for Efficient Frame Interpolation
@@ -286,7 +286,7 @@ DAVIS + Vimeo-90k：
 - [EDEN: Enhanced Diffusion for High-quality Large-motion Video Frame Interpolation](eden_enhanced_diffusion_for_high-quality_large-motion_video_frame_interpolation.md)
 - [TLB-VFI: Temporal-Aware Latent Brownian Bridge Diffusion for Video Frame Interpolation](../../ICCV2025/image_generation/tlb-vfi_temporal-aware_latent_brownian_bridge_diffusion_for_video_frame_interpol.md)
 - [HMAR: Efficient Hierarchical Masked Auto-Regressive Image Generation](hmar_efficient_hierarchical_masked_auto-regressive_image_generation.md)
+- [Nested Diffusion Models Using Hierarchical Latent Priors](nested_diffusion_models_using_hierarchical_latent_priors.md)
 - [Efficient Rectified Flow for Image Fusion](../../NeurIPS2025/image_generation/efficient_rectified_flow_for_image_fusion.md)
-- [Efficient Fine-Tuning and Concept Suppression for Pruned Diffusion Models](efficient_fine-tuning_and_concept_suppression_for_pruned_diffusion_models.md)
 
 <!-- RELATED:END -->

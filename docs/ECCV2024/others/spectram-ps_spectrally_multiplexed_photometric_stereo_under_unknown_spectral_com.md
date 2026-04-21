@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpectraM-PS: Spectrally Multiplexed Photometric Stereo Under Unknown Spectral Composition
 description: >-
@@ -133,8 +133,8 @@ tags:
 
 ## 相关论文
 
-- [Wavelength-Embedding-guided Filter-Array Transformer for Spectral Demosaicing](wavelength-embedding-guided_filter-array_transformer_for_spectral_demosaicing.md)
 - [Thermal Polarimetric Multi-view Stereo](../../ICCV2025/others/thermal_polarimetric_multi-view_stereo.md)
+- [Wavelength-Embedding-guided Filter-Array Transformer for Spectral Demosaicing](wavelength-embedding-guided_filter-array_transformer_for_spectral_demosaicing.md)
 - [Synthia: Novel Concept Design with Affordance Composition](../../ACL2025/others/synthia_novel_concept_design_with_affordance_composition.md)
 - [A Federated Generalized Expectation-Maximization Algorithm for Mixture Models with an Unknown Number of Components](../../ICLR2026/others/a_federated_generalized_expectation-maximization_algorithm_for_mixture_models_wi.md)
 - [Rebalancing Using Estimated Class Distribution for Imbalanced Semi-Supervised Learning under Class Distribution Mismatch](rebalancing_using_estimated_class_distribution_for_imbalanced_semi-supervised_le.md)

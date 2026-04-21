@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] New Interaction Paradigm for Complex EDA Software Leveraging GPT
 description: >-
@@ -186,10 +186,10 @@ DocHelper 是整个系统的知识基座，负责为任务感知的问答提供�
 
 ## 相关论文
 
-- [Position: The Right to AI](the_right_to_ai.md)
 - [Recommendations and Reporting Checklist for Rigorous & Transparent Human Baselines in Model Evaluations](recommendations_and_reporting_checklist_for_rigorous_transparent_human_baselines.md)
-- [Not All Explanations for Deep Learning Phenomena Are Equally Valuable](not_all_explanations_for_deep_learning_phenomena_are_equally_valuable.md)
 - [RLTHF: Targeted Human Feedback for LLM Alignment](rlthf_targeted_human_feedback_for_llm_alignment.md)
-- [Deprecating Benchmarks: Criteria and Framework](deprecating_benchmarks_criteria_and_framework.md)
+- [Not All Explanations for Deep Learning Phenomena Are Equally Valuable](not_all_explanations_for_deep_learning_phenomena_are_equally_valuable.md)
+- [How to Set AdamW's Weight Decay as You Scale Model and Dataset Size](how_to_set_adamws_weight_decay_as_you_scale_model_and_dataset_size.md)
+- [Position: The Right to AI](the_right_to_ai.md)
 
 <!-- RELATED:END -->

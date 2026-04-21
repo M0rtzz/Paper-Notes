@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ClimbingCap: Multi-Modal Dataset and Method for Rock Climbing in World Coordinate
 description: >-
@@ -126,10 +126,10 @@ tags:
 
 ## 相关论文
 
-- [UAVScenes: A Multi-Modal Dataset for UAVs](../../ICCV2025/autonomous_driving/uavscenes_a_multi-modal_dataset_for_uavs.md)
-- [V2X-Radar: A Multi-Modal Dataset with 4D Radar for Cooperative Perception](../../NeurIPS2025/autonomous_driving/v2x-radar_a_multi-modal_dataset_with_4d_radar_for_cooperative_perception.md)
-- [Helvipad: A Real-World Dataset for Omnidirectional Stereo Depth Estimation](helvipad_a_real-world_dataset_for_omnidirectional_stereo_depth_estimation.md)
+- [Towards Satellite Image Road Graph Extraction: A Global-Scale Dataset and A Novel Method](towards_satellite_image_road_graph_extraction_a_global-scale_dataset_and_a_novel.md)
 - [Multi-modal Knowledge Distillation-based Human Trajectory Forecasting](multi-modal_knowledge_distillation-based_human_trajectory_forecasting.md)
-- [Distilling Multi-modal Large Language Models for Autonomous Driving](distilling_multi-modal_large_language_models_for_autonomous_driving.md)
+- [RENO: Real-Time Neural Compression for 3D LiDAR Point Clouds](reno_real-time_neural_compression_for_3d_lidar_point_clouds.md)
+- [Neural Inverse Rendering from Propagating Light](neural_inverse_rendering_from_propagating_light.md)
+- [PIDLoc: Cross-View Pose Optimization Network Inspired by PID Controllers](pidloc_cross-view_pose_optimization_network_inspired_by_pid_controllers.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EMDM: Efficient Motion Diffusion Model for Fast and High-Quality Motion Generation
 description: >-

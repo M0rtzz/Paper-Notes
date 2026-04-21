@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Distributed Asynchronous Generalized Momentum Algorithm Without Delay Bounds
 description: >-
@@ -135,7 +135,7 @@ tags:
 - [SMoFi: Step-wise Momentum Fusion for Split Federated Learning on Heterogeneous Data](smofi_step-wise_momentum_fusion_for_split_federated_learning_on_heterogeneous_da.md)
 - [Integer Programming for Generalized Causal Bootstrap Designs](../../ICML2025/optimization/integer_programming_for_generalized_causal_bootstrap_designs.md)
 - [Dynamic Momentum Recalibration in Online Gradient Learning](../../CVPR2026/optimization/dynamic_momentum_recalibration_in_online_gradient_learning.md)
-- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](../../NeurIPS2025/optimization/perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
 - [FedQS: Optimizing Gradient and Model Aggregation for Semi-Asynchronous Federated Learning](../../NeurIPS2025/optimization/fedqs_optimizing_gradient_and_model_aggregation_for_semi-asynchronous_federated_.md)
+- [Escaping Saddle Points without Lipschitz Smoothness: The Power of Nonlinear Preconditioning](../../NeurIPS2025/optimization/escaping_saddle_points_without_lipschitz_smoothness_the_power_of_nonlinear_preco.md)
 
 <!-- RELATED:END -->

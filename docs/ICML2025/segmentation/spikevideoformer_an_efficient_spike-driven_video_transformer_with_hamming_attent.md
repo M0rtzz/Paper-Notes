@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpikeVideoFormer: An Efficient Spike-Driven Video Transformer with Hamming Attention and $\mathcal{O}(T)$ Complexity
 description: >-
@@ -159,8 +159,8 @@ Hamming 注意力贡献最显著之一，去掉时序建模性能断崖式下降
 
 - [Data Warmup: Complexity-Aware Curricula for Efficient Diffusion Training](../../CVPR2026/segmentation/data_warmup_complexity-aware_curricula_for_efficient_diffusion_training.md)
 - [Inter2Former: Dynamic Hybrid Attention for Efficient High-Precision Interactive Segmentation](../../ICCV2025/segmentation/inter2former_dynamic_hybrid_attention_for_efficient_high-precision_interactive_s.md)
+- [SAMWise: Infusing Wisdom in SAM2 for Text-Driven Video Segmentation](../../CVPR2025/segmentation/samwise_infusing_wisdom_in_sam2_for_text-driven_video_segmentation.md)
+- [Rethinking Query-Based Transformer for Continual Image Segmentation](../../CVPR2025/segmentation/rethinking_query-based_transformer_for_continual_image_segmentation.md)
 - [MambaVision: A Hybrid Mamba-Transformer Vision Backbone](../../CVPR2025/segmentation/mambavision_a_hybrid_mamba-transformer_vision_backbone.md)
-- [MixerCSeg: An Efficient Mixer Architecture for Crack Segmentation via Decoupled Mamba Attention](../../CVPR2026/segmentation/mixercseg_an_efficient_mixer_architecture_for_crack_segmentation_via_decoupled_m.md)
-- [Locality-Attending Vision Transformer](../../ICLR2026/segmentation/locality-attending_vision_transformer.md)
 
 <!-- RELATED:END -->

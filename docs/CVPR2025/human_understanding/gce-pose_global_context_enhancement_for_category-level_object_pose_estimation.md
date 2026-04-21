@@ -1,7 +1,16 @@
-﻿---
-title: "GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation"
-description: "提出GCE-Pose方法，通过语义形状重建模块和全局上下文增强特征融合模块，整合几何与语义全局先验提升类别级物体位姿估计精度"
-tags: ["位姿估计", "3D视觉", "形状重建", "特征融合", "CVPR2025"]
+---
+title: >-
+  [论文解读] GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation
+description: >-
+  [CVPR 2025][人体理解][类别级位姿估计] GCE-Pose 提出一种"先补全再聚合"的策略，通过语义形状重建（SSR）模块将部分观测补全为完整的几何+语义 3D 表示，再通过全局上下文增强（GCE）特征融合模块将全局信息注入局部关键点特征，在 HouseCat6D 和 NOCS-REAL275 上显著超越现有方法。
+tags:
+  - CVPR 2025
+  - 人体理解
+  - 类别级位姿估计
+  - 全局上下文
+  - 语义形状重建
+  - 深度线性形状模型
+  - 特征融合
 ---
 
 # GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation
@@ -120,10 +129,10 @@ GCE-Pose 由四个模块组成：(A) 从 RGB-D 输入提取点云和图像特征
 
 ## 相关论文
 
-- [Co-op: Correspondence-Based Novel Object Pose Estimation](co-op_correspondence-based_novel_object_pose_estimation.md)
 - [CleanPose: Category-Level Object Pose Estimation via Causal Learning and Knowledge Distillation](../../ICCV2025/human_understanding/cleanpose_category-level_object_pose_estimation_via_causal_learning_and_knowledg.md)
 - [GS-Pose: Category-Level Object Pose Estimation via Geometric and Semantic Correspondence](../../ECCV2024/human_understanding/gs-pose_category-level_object_pose_estimation_via_geometric_and_semantic_corresp.md)
-- [LaPose: Laplacian Mixture Shape Modeling for RGB-Based Category-Level Object Pose Estimation](../../ECCV2024/human_understanding/lapose_laplacian_mixture_shape_modeling_for_rgb-based_category-level_object_pose.md)
 - [U-COPE: Taking a Further Step to Universal 9D Category-Level Object Pose Estimation](../../ECCV2024/human_understanding/u-cope_taking_a_further_step_to_universal_9d_category-level_object_pose_estimati.md)
+- [One2Any: One-Reference 6D Pose Estimation for Any Object](one2any_one-reference_6d_pose_estimation_for_any_object.md)
+- [Recurrent Feature Mining and Keypoint Mixup Padding for Category-Agnostic Pose Estimation](recurrent_feature_mining_and_keypoint_mixup_padding_for_category-agnostic_pose_e.md)
 
 <!-- RELATED:END -->

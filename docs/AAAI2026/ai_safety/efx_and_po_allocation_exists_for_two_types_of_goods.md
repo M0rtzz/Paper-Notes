@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EFX and PO Allocation Exists for Two Types of Goods
 description: >-
@@ -151,6 +151,6 @@ EFX（Envy-Freeness up to Any good）是 EF 的一个重要松弛：允许代理
 - [Beyond Match Maximization and Fairness: Retention-Optimized Two-Sided Matching](../../ICLR2026/ai_safety/beyond_match_maximization_and_fairness_retention-optimized_two-sided_matching.md)
 - [Adaptive LoRA Experts Allocation and Selection for Federated Fine-Tuning](../../NeurIPS2025/ai_safety/adaptive_lora_experts_allocation_and_selection_for_federated_fine-tuning.md)
 - [PubSub-VFL: Towards Efficient Two-Party Split Learning in Heterogeneous Environments via Publisher/Subscriber Architecture](../../NeurIPS2025/ai_safety/pubsub-vfl_towards_efficient_two-party_split_learning_in_heterogeneous_environme.md)
-- [Can Editing LLMs Inject Harm?](can_editing_llms_inject_harm.md)
+- [LAMP: Learning Universal Adversarial Perturbations for Multi-Image Tasks via Pre-trained Models](lamp_learning_universal_adversarial_perturbations_for_multi-image_tasks_via_pre-.md)
 
 <!-- RELATED:END -->

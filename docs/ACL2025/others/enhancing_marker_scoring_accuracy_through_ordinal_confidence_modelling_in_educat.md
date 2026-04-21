@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Marker Scoring Accuracy through Ordinal Confidence Modelling in Educational Assessments
 description: >-

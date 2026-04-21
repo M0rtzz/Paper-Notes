@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Evaluation to Defense: Advancing Safety in Video Large Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks for Sets
 description: >-

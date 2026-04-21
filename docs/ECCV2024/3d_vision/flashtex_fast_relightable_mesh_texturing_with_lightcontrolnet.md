@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FlashTex: Fast Relightable Mesh Texturing with LightControlNet
 description: >-

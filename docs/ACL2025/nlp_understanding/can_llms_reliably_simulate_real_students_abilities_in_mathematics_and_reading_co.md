@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Can LLMs Reliably Simulate Real Students' Abilities in Mathematics and Reading Comprehension?
 description: >-

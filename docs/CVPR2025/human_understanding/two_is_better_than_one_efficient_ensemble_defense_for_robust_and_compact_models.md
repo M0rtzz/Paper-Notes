@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Two is Better than One: Efficient Ensemble Defense for Robust and Compact Models
 description: >-
@@ -89,9 +89,9 @@ $\mathcal{L}_{EED} = \mathcal{L}_E + \omega\mathcal{L}_R + \gamma\mathcal{L}_C$�
 ## 相关论文
 
 - [AdvMark: Decoupling Defense Strategies for Robust Image Watermarking](../../CVPR2026/human_understanding/decoupling_defense_strategies_for_robust_image_watermarking.md)
-- [One Language, Two Scripts: Probing Script-Invariance in LLM Concept Representations](../../ICLR2026/human_understanding/one_language_two_scripts_probing_script-invariance_in_llm_concept_representation.md)
+- [Two by Two: Learning Multi-Task Pairwise Objects Assembly for Generalizable Robot Manipulation](two_by_two_learning_multi-task_pairwise_objects_assembly_for_generalizable_robot.md)
 - [One2Any: One-Reference 6D Pose Estimation for Any Object](one2any_one-reference_6d_pose_estimation_for_any_object.md)
-- [ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning](maniptrans_efficient_dexterous_bimanual_manipulation_transfer_via_residual_learn.md)
-- [Less is More: Efficient Model Merging with Binary Task Switch](less_is_more_efficient_model_merging_with_binary_task_switch.md)
+- [One Language, Two Scripts: Probing Script-Invariance in LLM Concept Representations](../../ICLR2026/human_understanding/one_language_two_scripts_probing_script-invariance_in_llm_concept_representation.md)
+- [ShowUI: One Vision-Language-Action Model for GUI Visual Agent](showui_one_vision-language-action_model_for_gui_visual_agent.md)
 
 <!-- RELATED:END -->

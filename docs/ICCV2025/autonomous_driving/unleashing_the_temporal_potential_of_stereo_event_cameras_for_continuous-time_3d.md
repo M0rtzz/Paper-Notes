@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unleashing the Temporal Potential of Stereo Event Cameras for Continuous-Time 3D Perception
 description: >-

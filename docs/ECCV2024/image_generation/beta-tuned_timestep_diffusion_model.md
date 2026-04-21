@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beta-Tuned Timestep Diffusion Model
 description: >-

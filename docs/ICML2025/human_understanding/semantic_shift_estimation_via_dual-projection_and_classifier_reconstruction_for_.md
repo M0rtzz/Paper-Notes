@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Semantic Shift Estimation via Dual-Projection and Classifier Reconstruction for Exemplar-Free Class-Incremental Learning
 description: >-

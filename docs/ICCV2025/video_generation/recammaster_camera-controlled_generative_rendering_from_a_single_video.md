@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] ReCamMaster: Camera-Controlled Generative Rendering from A Single Video
 description: >-
-  [ICCV 2025][视频理解][相机控制] 提出 ReCamMaster，通过帧维度拼接的视频条件注入机制和 UE5 合成的多相机同步数据集，实现从单视频输入以新相机轨迹重新生成视频，显著超越现有方法。
+  [ICCV 2025][相机控制] 提出 ReCamMaster，通过帧维度拼接的视频条件注入机制和 UE5 合成的多相机同步数据集，实现从单视频输入以新相机轨迹重新生成视频，显著超越现有方法。
 tags:
   - ICCV 2025
-  - 视频理解
   - 相机控制
   - 视频重渲染
   - 视频生成
@@ -131,10 +130,10 @@ VBench 质量评估：
 
 ## 相关论文
 
-- [Mind the Time: Temporally-Controlled Multi-Event Video Generation](../../CVPR2025/video_generation/mind_the_time_temporally-controlled_multi-event_video_generation.md)
 - [RealCam-I2V: Real-World Image-to-Video Generation with Interactive Complex Camera Control](realcam-i2v_real-world_image-to-video_generation_with_interactive_complex_camera.md)
 - [Free-Form Motion Control: Controlling the 6D Poses of Camera and Objects in Video Generation](free-form_motion_control_controlling_the_6d_poses_of_camera_and_objects_in_video.md)
-- [IDOL: Instant Photorealistic 3D Human Creation from a Single Image](../../CVPR2025/video_generation/idol_instant_photorealistic_3d_human_creation_from_a_single_image.md)
+- [Mind the Time: Temporally-Controlled Multi-Event Video Generation](../../CVPR2025/video_generation/mind_the_time_temporally-controlled_multi-event_video_generation.md)
+- [PhysCtrl: Generative Physics for Controllable and Physics-Grounded Video Generation](../../NeurIPS2025/video_generation/physctrl_generative_physics_for_controllable_and_physicsgrou.md)
 - [Dynamic Camera Poses and Where to Find Them](../../CVPR2025/video_generation/dynamic_camera_poses_and_where_to_find_them.md)
 
 <!-- RELATED:END -->

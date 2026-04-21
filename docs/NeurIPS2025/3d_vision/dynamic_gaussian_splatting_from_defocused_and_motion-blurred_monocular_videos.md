@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos
 description: >-
@@ -153,10 +153,10 @@ $$\mathcal{L} = \mathcal{L}_{\text{rec}} + \mathcal{L}_{\text{geo}} + \mathcal{L
 
 ## 相关论文
 
-- [DGH: Dynamic Gaussian Hair](dgh_dynamic_gaussian_hair.md)
 - [CoMoGaussian: Continuous Motion-Aware Gaussian Splatting from Motion-Blurred Images](../../ICCV2025/3d_vision/comogaussian_continuous_motionaware_gaussian_splatting_from.md)
-- [Learning Explicit Continuous Motion Representation for Dynamic Gaussian Splatting from Monocular Videos](../../CVPR2026/3d_vision/learning_explicit_continuous_motion_representation_for_dynamic_gaussian_splattin.md)
+- [DGH: Dynamic Gaussian Hair](dgh_dynamic_gaussian_hair.md)
 - [Dynamic Neural Radiance Field from Defocused Monocular Video](../../ECCV2024/3d_vision/dynamic_neural_radiance_field_from_defocused_monocular_video.md)
+- [Learning Explicit Continuous Motion Representation for Dynamic Gaussian Splatting from Monocular Videos](../../CVPR2026/3d_vision/learning_explicit_continuous_motion_representation_for_dynamic_gaussian_splattin.md)
 - [CoCoGaussian: Leveraging Circle of Confusion for Gaussian Splatting from Defocused Images](../../CVPR2025/3d_vision/cocogaussian_leveraging_circle_of_confusion_for_gaussian_splatting_from_defocuse.md)
 
 <!-- RELATED:END -->

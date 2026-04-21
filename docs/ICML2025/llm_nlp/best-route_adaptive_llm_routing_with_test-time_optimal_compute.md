@@ -201,6 +201,6 @@ BEST-Route 的核心创新在于将 test-time compute scaling（Snell et al., 20
 - [Test-Time Visual In-Context Tuning](../../CVPR2025/llm_nlp/test-time_visual_in-context_tuning.md)
 - [Near-Optimal Online Deployment and Routing for Streaming LLMs](../../ICLR2026/llm_nlp/near-optimal_online_deployment_and_routing_for_streaming_llms.md)
 - [LaRoSA: Enhancing LLM Efficiency via Layerwise Rotated Sparse Activation](la_rosa_enhancing_llm_efficiency_via_layerwise_rotated_sparse_activation.md)
-- [Q♯: Provably Optimal Distributional RL for LLM Post-Training](../../NeurIPS2025/llm_nlp/qsharp_provably_optimal_distributional_rl_for_llm_post-training.md)
+- [TIDE: Training Locally Interpretable Domain Generalization Models Enables Test-time Correction](../../CVPR2025/llm_nlp/tide_training_locally_interpretable_domain_generalization_models_enables_test-ti.md)
 
 <!-- RELATED:END -->

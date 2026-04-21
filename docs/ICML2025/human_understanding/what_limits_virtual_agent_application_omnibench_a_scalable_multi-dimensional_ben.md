@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] What Limits Virtual Agent Application? OmniBench: A Scalable Multi-Dimensional Benchmark for Essential Virtual Agent Capabilities
 description: >-
@@ -153,6 +153,6 @@ Pipeline:
 - [Collaborative Tree Search for Enhancing Embodied Multi-Agent Collaboration](../../CVPR2025/human_understanding/collaborative_tree_search_for_enhancing_embodied_multi-agent_collaboration.md)
 - [EgoAgent: A Joint Predictive Agent Model in Egocentric Worlds](../../ICCV2025/human_understanding/egoagent_a_joint_predictive_agent_model_in_egocentric_worlds.md)
 - [Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback](../../CVPR2025/human_understanding/reference-free_image_quality_assessment_for_virtual_try-on_via_human_feedback.md)
-- [Evolutionary Learning in Spatial Agent-Based Models for Physical Climate Risk Assessment](../../NeurIPS2025/human_understanding/evolutionary_learning_in_spatial_agent-based_models_for_physical_climate_risk_as.md)
+- [ShowUI: One Vision-Language-Action Model for GUI Visual Agent](../../CVPR2025/human_understanding/showui_one_vision-language-action_model_for_gui_visual_agent.md)
 
 <!-- RELATED:END -->

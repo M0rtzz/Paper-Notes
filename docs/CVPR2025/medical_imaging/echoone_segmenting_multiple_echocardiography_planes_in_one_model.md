@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EchoONE: Segmenting Multiple Echocardiography Planes in One Model
 description: >-
@@ -128,9 +128,9 @@ EchoONE 在所有切面上均取得最高 Dice，且在 PSAX 短轴切面上优�
 ## 相关论文
 
 - [Iterative Foundation Model Fine-Tuning on Multiple Rewards](../../NeurIPS2025/medical_imaging/iterative_foundation_model_fine-tuning_on_multiple_rewards.md)
+- [Towards All-in-One Medical Image Re-Identification](towards_all-in-one_medical_image_re-identification.md)
 - [EchoWorld: Learning Motion-Aware World Models for Echocardiography Probe Guidance](echoworld_learning_motion-aware_world_models_for_echocardiography_probe_guidance.md)
 - [One Small Step with Fingerprints, One Giant Leap for De Novo Molecule Generation from Mass Spectra](../../NeurIPS2025/medical_imaging/one_small_step_with_fingerprints_one_giant_leap_for_de_novo_molecule_generation_.md)
-- [MIL-PF: Multiple Instance Learning on Precomputed Features for Mammography Classification](mil-pf_multiple_instance_learning_on_precomputed_features_for_mammography_classi.md)
-- [Domain Adaptive Diabetic Retinopathy Grading with Model Absence and Flowing Data](domain_adaptive_diabetic_retinopathy_grading_with_model_absence_and_flowing_data.md)
+- [TopoCellGen: Generating Histopathology Cell Topology with a Diffusion Model](topocellgen_generating_histopathology_cell_topology_with_a_diffusion_model.md)
 
 <!-- RELATED:END -->

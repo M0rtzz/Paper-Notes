@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3DGS-LM: Faster Gaussian-Splatting Optimization with Levenberg-Marquardt
 description: >-
@@ -264,8 +264,8 @@ $$(J^T J + \lambda_{\text{reg}} \cdot \text{diag}(J^T J)) \Delta = -J^T F(\mathb
 
 - [RegGS: Unposed Sparse Views Gaussian Splatting with 3DGS Registration](reggs_unposed_sparse_views_gaussian_splatting_with_3dgs_registration.md)
 - [Faster and Better 3D Splatting via Group Training](faster_and_better_3d_splatting_via_group_training.md)
+- [GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering](geosplatting_towards_geometry_guided_gaussian_splatting_for_physically-based_inv.md)
 - [EvaGaussians: Event Stream Assisted Gaussian Splatting from Blurry Images](evagaussians_event_stream_assisted_gaussian_splatting_from_blurry_images.md)
 - [Lightweight Gradient-Aware Upscaling of 3D Gaussian Splatting Images](lightweight_gradient-aware_upscaling_of_3d_gaussian_splatting_images.md)
-- [GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering](geosplatting_towards_geometry_guided_gaussian_splatting_for_physically-based_inv.md)
 
 <!-- RELATED:END -->

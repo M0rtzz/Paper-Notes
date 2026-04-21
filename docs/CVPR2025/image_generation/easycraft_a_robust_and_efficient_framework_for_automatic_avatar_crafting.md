@@ -1,12 +1,10 @@
 ---
-title: "EasyCraft: A Robust and Efficient Framework for Automatic Avatar Crafting"
-conference: "CVPR 2025"
-arXiv: "2503.01158"
-link: "https://arxiv.org/abs/2503.01158"
-code: ""
-domain: "图像/视频生成"
-keywords: ["角色定制", "虚拟形象", "自监督学习", "MAE", "Stable Diffusion", "RPG游戏"]
-rating: ⭐⭐⭐⭐
+title: >-
+  [论文解读] EasyCraft: A Robust and Efficient Framework for Automatic Avatar Crafting
+description: >-
+  [图像生成] EasyCraft 提出了一个端到端的自动角色捏脸框架，通过 MAE 预训练的通用 ViT 编码器将任意风格的面部图像映射为统一特征分布，再转换为游戏引擎捏脸参数，同时集成文本到图像技术支持文本输入，可轻松适配不同游戏引擎。
+tags:
+  - 图像生成
 ---
 
 # EasyCraft: A Robust and Efficient Framework for Automatic Avatar Crafting
@@ -126,10 +124,10 @@ $$\mathcal{L} = \alpha\|\delta_s - \hat{\delta}_s\|_1 + \gamma\|\delta_a \cdot \
 
 ## 相关论文
 
-- [ChatGen: Automatic Text-to-Image Generation From FreeStyle Chatting](chatgen_automatic_text-to-image_generation_from_freestyle_chatting.md)
-- [From Elements to Design: A Layered Approach for Automatic Graphic Design Composition](from_elements_to_design_a_layered_approach_for_automatic_graphic_design_composit.md)
-- [TeRA: Rethinking Text-guided Realistic 3D Avatar Generation](../../ICCV2025/image_generation/tera_rethinking_text-guided_realistic_3d_avatar_generation.md)
-- [FaceCraft4D: Animated 3D Facial Avatar Generation from a Single Image](../../ICCV2025/image_generation/facecraft4d_animated_3d_facial_avatar_generation_from_a_single_image.md)
-- [D-GEN: Automatic Distractor Generation and Evaluation for Reliable Assessment of Generative Models](../../ACL2025/image_generation/d-gen_automatic_distractor_generation_and_evaluation_for_reliable_assessment_of_.md)
+- [Trans-Adapter: A Plug-and-Play Framework for Transparent Image Inpainting](../../ICCV2025/image_generation/trans-adapter_a_plug-and-play_framework_for_transparent_image_inpainting.md)
+- [LoRAverse: A Submodular Framework to Retrieve Diverse Adapters for Diffusion Models](../../ICCV2025/image_generation/loraverse_a_submodular_framework_to_retrieve_diverse_adapters_for_diffusion_mode.md)
+- [EDiT: Efficient Diffusion Transformers with Linear Compressed Attention](../../ICCV2025/image_generation/edit_efficient_diffusion_transformers_with_linear_compressed_attention.md)
+- [EEdit: Rethinking the Spatial and Temporal Redundancy for Efficient Image Editing](../../ICCV2025/image_generation/eedit_rethinking_the_spatial_and_temporal_redundancy_for_efficient_image_editing.md)
+- [TAP: A Token-Adaptive Predictor Framework for Training-Free Diffusion Acceleration](../../CVPR2026/image_generation/tap_a_token-adaptive_predictor_framework_for_training-free_diffusion_acceleratio.md)
 
 <!-- RELATED:END -->

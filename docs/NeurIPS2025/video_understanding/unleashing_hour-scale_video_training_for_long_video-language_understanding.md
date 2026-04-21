@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unleashing Hour-Scale Video Training for Long Video-Language Understanding
 description: >-

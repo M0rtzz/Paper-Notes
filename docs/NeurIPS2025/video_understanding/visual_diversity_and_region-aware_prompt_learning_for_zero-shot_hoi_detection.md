@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VDRP: Visual Diversity and Region-aware Prompt Learning for Zero-shot HOI Detection
 description: >-
@@ -113,8 +113,8 @@ tags:
 
 ## 相关论文
 
-- [Locality-Aware Zero-Shot Human-Object Interaction Detection](../../CVPR2025/video_understanding/locality-aware_zero-shot_human-object_interaction_detection.md)
 - [RainbowPrompt: Diversity-Enhanced Prompt-Evolving for Continual Learning](../../ICCV2025/video_understanding/rainbowprompt_diversity-enhanced_prompt-evolving_for_continual_learning.md)
+- [Locality-Aware Zero-Shot Human-Object Interaction Detection](../../CVPR2025/video_understanding/locality-aware_zero-shot_human-object_interaction_detection.md)
 - [INST-IT: Boosting Instance Understanding via Explicit Visual Prompt Instruction Tuning](inst-it_boosting_instance_understanding_via_explicit_visual_prompt_instruction_t.md)
 - [SkeletonContext: Skeleton-side Context Prompt Learning for Zero-Shot Skeleton-based Action Recognition](../../CVPR2026/video_understanding/skeletoncontext_skeleton-side_context_prompt_learning_for_zero-shot_skeleton-bas.md)
 - [Part-Aware Bottom-Up Group Reasoning for Fine-Grained Social Interaction Detection](part-aware_bottom-up_group_reasoning_for_fine-grained_social_interaction_detecti.md)

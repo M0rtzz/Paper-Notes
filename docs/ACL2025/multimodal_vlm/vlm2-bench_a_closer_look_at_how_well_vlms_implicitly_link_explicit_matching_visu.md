@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VLM2-Bench: A Closer Look at How Well VLMs Implicitly Link Explicit Matching Visual Cues
 description: >-

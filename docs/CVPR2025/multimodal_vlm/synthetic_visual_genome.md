@@ -1,7 +1,16 @@
 ---
-title: "Synthetic Visual Genome"
-description: "提出自动化场景图数据引擎SVG，通过GPT-4补全缺失关系+自蒸馏管道SG-Edit生成146K图像5.6M关系的密集场景图数据，训练Robin-3B在关系理解和指代表达上超越300M数据训练的模型"
-tags: ["场景图", "关系推理", "合成数据", "指代表达", "多模态大模型"]
+title: >-
+  [论文解读] Synthetic Visual Genome
+description: >-
+  [CVPR 2025][多模态][场景图] 提出**SVG**（Synthetic Visual Genome）数据引擎，通过GPT-4在已有人工标注基础上**补全缺失关系**（Stage 1）和**Robin自蒸馏+GPT-4编辑**（Stage 2/SG-Edit）两阶段管道，生成146K图像、2.6M物体、5.6M关系的密集场景图数据集，训练的**Robin-3B**模型仅用<3M实例即超越300M实例训练的同尺寸模型，在指代表达理解上达到88.9的SOTA。
+tags:
+  - CVPR 2025
+  - 多模态
+  - 场景图
+  - 关系推理
+  - 合成数据
+  - 自蒸馏
+  - 指代表达理解
 ---
 
 # Synthetic Visual Genome

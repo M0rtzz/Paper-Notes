@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Transparent Earth: A Multimodal Foundation Model for the Earth's Subsurface
 description: >-

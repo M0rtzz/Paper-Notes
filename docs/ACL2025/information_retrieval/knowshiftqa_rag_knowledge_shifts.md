@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] KnowShiftQA: How Robust are RAG Systems when Textbook Knowledge Shifts in K-12 Education?
 description: >-

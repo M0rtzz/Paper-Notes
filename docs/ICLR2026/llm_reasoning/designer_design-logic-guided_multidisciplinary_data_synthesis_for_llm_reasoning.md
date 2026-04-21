@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DESIGNER: Design-Logic-Guided Multidisciplinary Data Synthesis for LLM Reasoning
 description: >-

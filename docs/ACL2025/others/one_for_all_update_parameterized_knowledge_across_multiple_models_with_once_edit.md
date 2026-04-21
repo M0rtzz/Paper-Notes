@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] One for All: Update Parameterized Knowledge Across Multiple Models with Once Edit
 description: >-

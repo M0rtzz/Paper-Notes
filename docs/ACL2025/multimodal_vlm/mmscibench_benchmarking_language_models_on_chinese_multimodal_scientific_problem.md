@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MMSciBench: Benchmarking Language Models on Chinese Multimodal Scientific Problems
 description: >-

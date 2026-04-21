@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Robust and Diverse Multi-Agent Learning via Rational Policy Gradient
 description: >-

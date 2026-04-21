@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From IDs to Semantics: A Generative Framework for Cross-Domain Recommendation with Adaptive Semantic Tokenization
 description: >-
@@ -158,7 +158,7 @@ GenCDR 在所有场景和指标上均显著优于现有 SOTA（包括单域 SDSR
 - [From Imitation to Discrimination: Toward A Generalized Curriculum Advantage Mechanism Enhancing Cross-Domain Reasoning Tasks](from_imitation_to_discrimination_toward_a_generalized_curriculum_advantage_mecha.md)
 - [Semantic Retrieval Augmented Contrastive Learning for Sequential Recommendation](../../NeurIPS2025/human_understanding/semantic_retrieval_augmented_contrastive_learning_for_sequential_recommendation.md)
 - [Cross-Domain Policy Optimization via Bellman Consistency and Hybrid Critics](../../ICLR2026/human_understanding/cross-domain_policy_optimization_via_bellman_consistency_and_hybrid_critics.md)
-- [SemGes: Semantics-aware Co-Speech Gesture Generation using Semantic Coherence and Relevance Learning](../../ICCV2025/human_understanding/semges_semantics-aware_co-speech_gesture_generation_using_semantic_coherence_and.md)
 - [Towards a Common Framework for Autoformalization](towards_a_common_framework_for_autoformalization.md)
+- [SemGes: Semantics-aware Co-Speech Gesture Generation using Semantic Coherence and Relevance Learning](../../ICCV2025/human_understanding/semges_semantics-aware_co-speech_gesture_generation_using_semantic_coherence_and.md)
 
 <!-- RELATED:END -->

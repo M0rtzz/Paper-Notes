@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The World Is Bigger! A Computationally-Embedded Perspective on the Big World Hypothesis
 description: >-

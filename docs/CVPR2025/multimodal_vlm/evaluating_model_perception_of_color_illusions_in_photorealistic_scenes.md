@@ -1,7 +1,16 @@
-﻿---
-title: "Evaluating Model Perception of Color Illusions in Photorealistic Scenes"
-description: "构建大规模真实感颜色错觉数据集RCID，系统评估VLM对颜色错觉的感知偏差，揭示视觉系统和先验知识对模型感知的双重影响"
-tags: ["color-illusion", "visual-perception", "VLM-evaluation", "dataset", "cognitive-bias"]
+---
+title: >-
+  [论文解读] Evaluating Model Perception of Color Illusions in Photorealistic Scenes
+description: >-
+  [CVPR 2025][多模态][颜色错觉] 本文提出了一套自动化框架生成包含 19,000 张真实感颜色错觉图像的 RCID 数据集，首次系统性揭示了 VLM 确实存在类人的颜色感知偏差，并通过混合训练方法使模型能同时理解人类感知和真实像素值。
+tags:
+  - CVPR 2025
+  - 多模态
+  - 颜色错觉
+  - 视觉感知
+  - VLM 评估
+  - 人类视觉偏差
+  - 感知对齐
 ---
 
 # Evaluating Model Perception of Color Illusions in Photorealistic Scenes
@@ -121,8 +130,8 @@ tags: ["color-illusion", "visual-perception", "VLM-evaluation", "dataset", "cogn
 
 - [Evaluating Multimodal Large Language Models on Core Music Perception Tasks](../../NeurIPS2025/multimodal_vlm/evaluating_multimodal_large_language_models_on_core_music_perception_tasks.md)
 - [Bring Reason to Vision: Understanding Perception and Reasoning through Model Merging](../../ICML2025/multimodal_vlm/bring_reason_to_vision_understanding_perception_and_reasoning_through_model_merg.md)
-- [FineGRAIN: Evaluating Failure Modes of Text-to-Image Models with Vision Language Model Judges](../../NeurIPS2025/multimodal_vlm/finegrain_evaluating_failure_modes_of_text-to-image_models_with_vision_language_.md)
 - [Revisiting Model Stitching in the Foundation Model Era](revisiting_model_stitching_in_the_foundation_model_era.md)
-- [Struct2D: A Perception-Guided Framework for Spatial Reasoning in MLLMs](../../NeurIPS2025/multimodal_vlm/struct2d_a_perception-guided_framework_for_spatial_reasoning_in_mllms.md)
+- [MV-MATH: Evaluating Multimodal Math Reasoning in Multi-Visual Contexts](mv-math_evaluating_multimodal_math_reasoning_in_multi-visual_contexts.md)
+- [FineGRAIN: Evaluating Failure Modes of Text-to-Image Models with Vision Language Model Judges](../../NeurIPS2025/multimodal_vlm/finegrain_evaluating_failure_modes_of_text-to-image_models_with_vision_language_.md)
 
 <!-- RELATED:END -->

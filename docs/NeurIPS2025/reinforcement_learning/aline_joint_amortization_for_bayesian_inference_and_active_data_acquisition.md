@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ALINE: Joint Amortization for Bayesian Inference and Active Data Acquisition
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Is the Reversal Curse a Binding Problem? Uncovering Limitations of Transformers from a Basic Generalization Failure
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PhysX-3D: Physical-Grounded 3D Asset Generation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CostFilter-AD: Enhancing Anomaly Detection through Matching Cost Filtering
 description: >-
@@ -196,10 +196,10 @@ $$\mathcal{L} = \mathcal{L}_{\text{Focal}}(\mathcal{M}, \mathcal{M}_s, \sigma(\h
 
 ## 相关论文
 
-- [Fourier Position Embedding: Enhancing Attention's Periodic Extension for Length Generalization](fourier_position_embedding_enhancing_attentions_periodic_extension_for_length_ge.md)
 - [Obliviator Reveals the Cost of Nonlinear Guardedness in Concept Erasure](../../NeurIPS2025/llm_efficiency/obliviator_reveals_the_cost_of_nonlinear_guardedness_in_concept_erasure.md)
 - [Addressing Imbalanced Domain-Incremental Learning through Dual-Balance Collaborative Experts (DCE)](addressing_imbalanced_domain-incremental_learning_through_dual-balance_collabora.md)
 - [SPARTA Alignment: Collectively Aligning Multiple Language Models through Combat](../../NeurIPS2025/llm_efficiency/sparta_alignment_collectively_aligning_multiple_language_models_through_combat.md)
 - [GigaChat Family: Efficient Russian Language Modeling Through Mixture of Experts Architecture](../../ACL2025/llm_efficiency/gigachat_family_efficient_russian_language_modeling_through_mixture_of_experts_a.md)
+- [StreamMind: Unlocking Full Frame Rate Streaming Video Dialogue through Event-Gated Cognition](../../ICCV2025/llm_efficiency/streammind_unlocking_full_frame_rate_streaming_video_dialogue_through_event-gate.md)
 
 <!-- RELATED:END -->

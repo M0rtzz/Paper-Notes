@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Visual Autoregressive Modeling for Instruction-Guided Image Editing
 description: >-

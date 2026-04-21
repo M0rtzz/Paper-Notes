@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LogicXGNN: Grounded Logical Rules for Explaining Graph Neural Networks
 description: >-

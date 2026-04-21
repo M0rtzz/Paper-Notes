@@ -2,15 +2,16 @@
 title: >-
   [论文解读] LiDAR-RT: Gaussian-based Ray Tracing for Dynamic LiDAR Re-Simulation
 description: >-
-  [CVPR 2025][自动驾驶][LiDAR仿真] 本文提出LiDAR-RT，首次将3D高斯表示与硬件加速光线追踪相结合，实现动态驾驶场景下的实时LiDAR重新仿真，在Waymo和KITTI-360数据集上以30 FPS的渲染速度和2小时训练时间达到SOTA质量，较NeRF方案提速100倍以上。
+  [CVPR 2025][自动驾驶][LiDAR仿真] 本文提出LiDAR-RT，将3D高斯原语与NVIDIA OptiX硬件加速光线追踪相结合，首次实现动态驾驶场景下实时且物理精确的LiDAR重新仿真，渲染速度达30 FPS，训练仅需2小时，远超NeRF方案的0.2 FPS和15小时。
 tags:
   - CVPR 2025
   - 自动驾驶
   - LiDAR仿真
   - 3D高斯
   - 光线追踪
-  - 动态场景重建
+  - 动态场景
   - 新视角合成
+  - OptiX
 ---
 
 # LiDAR-RT: Gaussian-based Ray Tracing for Dynamic LiDAR Re-Simulation
@@ -136,8 +137,8 @@ $$\mathcal{L} = \lambda_d \mathcal{L}_d + \lambda_i \mathcal{L}_i + \lambda_r \m
 
 - [LR-SGS: Robust LiDAR-Reflectance-Guided Salient Gaussian Splatting for Self-Driving Scene Reconstruction](lr-sgs_robust_lidar-reflectance-guided_salient_gaussian_splatting_for_self-drivi.md)
 - [LiDAR-GS++: Improving LiDAR Gaussian Reconstruction via Diffusion Priors](../../AAAI2026/autonomous_driving/lidar-gsimproving_lidar_gaussian_reconstruction_via_diffusion_priors.md)
-- [FreeSim: Toward Free-Viewpoint Camera Simulation in Driving Scenes](freesim_toward_free-viewpoint_camera_simulation_in_driving_scenes.md)
 - [Splat-LOAM: Gaussian Splatting LiDAR Odometry and Mapping](../../ICCV2025/autonomous_driving/splat-loam_gaussian_splatting_lidar_odometry_and_mapping.md)
-- [3D-AVS: LiDAR-based 3D Auto-Vocabulary Segmentation](3d-avs_lidar-based_3d_auto-vocabulary_segmentation.md)
+- [LiDARCrafter: Dynamic 4D World Modeling from LiDAR Sequences](../../AAAI2026/autonomous_driving/lidarcrafter_dynamic_4d_world_modeling_from_lidar_sequences.md)
+- [GS-LIVM: Real-Time Photo-Realistic LiDAR-Inertial-Visual Mapping with Gaussian Splatting](../../ICCV2025/autonomous_driving/gs-livm_real-time_photo-realistic_lidar-inertial-visual_mapping_with_gaussian_sp.md)
 
 <!-- RELATED:END -->

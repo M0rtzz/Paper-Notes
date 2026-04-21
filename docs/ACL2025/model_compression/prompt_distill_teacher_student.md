@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Prompt Candidates, then Distill: A Teacher-Student Framework for LLM-driven Data Annotation
 description: >-

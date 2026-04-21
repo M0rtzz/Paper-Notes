@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamic Derivation and Elimination: Audio Visual Segmentation with Enhanced Audio Semantics
 description: >-
-  [CVPR 2025][图像分割][音频视觉分割] DDESeg 提出动态推导与消除框架，通过从混合音频信号中推导独立声源语义表征并利用类内判别特征增强，再动态消除与视觉无关的音频语义，在 AVS 数据集上全面超越现有方法，AVS-Semantic 比次优方法提升 6.4%。
+  [CVPR 2025][图像分割][音频视觉分割] DDESeg 从音频的本质特性出发，针对混合音频的特征混淆和同物体不同声音的类内变异两大问题，提出动态推导模块从混合信号中衍生独立声源表征并增强判别性，再通过动态消除模块过滤掉画外音等无关音频语义，在 AVS 所有基准上取得 SOTA。
 tags:
   - CVPR 2025
   - 图像分割
   - 音频视觉分割
-  - 多模态融合
-  - 语义消除
-  - 声源分割
+  - 声源语义推导
+  - 动态消除
+  - 类内判别增强
+  - 多模态对齐
 ---
 
 # Dynamic Derivation and Elimination: Audio Visual Segmentation with Enhanced Audio Semantics
@@ -142,10 +143,10 @@ DDESeg (HTSAT) vs 次优方法：S4 +3.7, MS3 +3.9, **Semantic +6.4**
 
 ## 相关论文
 
+- [Robust Audio-Visual Segmentation via Audio-Guided Visual Convergent Alignment](robust_audio-visual_segmentation_via_audio-guided_visual_convergent_alignment.md)
+- [Revisiting Audio-Visual Segmentation with Vision-Centric Transformer](revisiting_audio-visual_segmentation_with_vision-centric_transformer.md)
 - [Audio-Visual Instance Segmentation](audio-visual_instance_segmentation.md)
+- [SAM2-LOVE: Segment Anything Model 2 in Language-Aided Audio-Visual Scenes](sam2-love_segment_anything_model_2_in_language-aided_audio-visual_scenes.md)
 - [Towards Omnimodal Expressions and Reasoning in Referring Audio-Visual Segmentation](../../ICCV2025/segmentation/towards_omnimodal_expressions_and_reasoning_in_referring_audio-visual_segmentati.md)
-- [TAViS: Text-bridged Audio-Visual Segmentation with Foundation Models](../../ICCV2025/segmentation/tavis_text-bridged_audio-visual_segmentation_with_foundation_models.md)
-- [SouPLe: Enhancing Audio-Visual Localization and Segmentation with Learnable Prompt Contexts](../../CVPR2026/segmentation/souple_enhancing_audio-visual_localization_and_segmentation_with_learnable_promp.md)
-- [CPM: Class-Conditional Prompting Machine for Audio-Visual Segmentation](../../ECCV2024/segmentation/cpm_class-conditional_prompting_machine_for_audio-visual_segmentation.md)
 
 <!-- RELATED:END -->

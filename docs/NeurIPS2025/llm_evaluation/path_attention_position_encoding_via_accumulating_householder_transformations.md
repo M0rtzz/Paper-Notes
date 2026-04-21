@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PaTH Attention: Position Encoding via Accumulating Householder Transformations
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Effective Policy Learning for Multi-Agent Online Coordination Beyond Submodular Objectives
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] COVR: Collaborative Optimization of VLMs and RL Agent for Visual-Based Control
 description: >-

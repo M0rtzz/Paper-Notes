@@ -1,7 +1,17 @@
 ---
-title: "Teaching Large Language Models to Regress Accurate Image Quality Scores Using Score Distribution"
-description: "提出DeQA-Score，通过将质量分数的连续分布离散化为soft label来训练MLLM回归精确的图像质量分数，解决one-hot标签的信息损失问题"
-tags: ["CVPR2025", "图像质量评估", "MLLM", "soft label", "分数回归"]
+title: >-
+  [论文解读] Teaching Large Language Models to Regress Accurate Image Quality Scores Using Score Distribution
+description: >-
+  [CVPR 2025][多模态][图像质量评估] 提出DeQA-Score，通过将质量分数的**高斯分布离散化为soft label**（替代Q-Align的one-hot label），大幅减少离散化信息损失（10-35倍），并引入基于Thurstone模型的**fidelity loss**实现多IQA数据集联合训练，在分数回归任务上全面超越基线。
+tags:
+  - CVPR 2025
+  - 多模态
+  - 图像质量评估
+  - MLLM
+  - 分数回归
+  - 分布离散化
+  - soft label
+  - 多数据集联合训练
 ---
 
 # Teaching Large Language Models to Regress Accurate Image Quality Scores Using Score Distribution
@@ -118,9 +128,9 @@ DeQA-Score基于mPLUG-Owl2架构（CLIP ViT-L + Q-Former视觉抽象器 + LLaMA-
 ## 相关论文
 
 - [DisCode: Distribution-Aware Score Decoder for Robust Automatic Evaluation of Image Captioning](../../AAAI2026/multimodal_vlm/discode_distribution-aware_score_decoder_for_robust_automatic_evaluation_of_imag.md)
-- [SlimLLM: Accurate Structured Pruning for Large Language Models](../../ICML2025/multimodal_vlm/slimllm_accurate_structured_pruning_for_large_language_models.md)
-- [Grounding-IQA: Grounding Multimodal Language Models for Image Quality Assessment](../../ICLR2026/multimodal_vlm/grounding-iqa_grounding_multimodal_language_model_for_image_quality_assessment.md)
 - [COUNTS: Benchmarking Object Detectors and Multimodal Large Language Models under Distribution Shifts](counts_benchmarking_object_detectors_and_multimodal_large_language_models_under_.md)
-- [Self-Evolving Vision-Language Models for Image Quality Assessment via Voting and Ranking](../../ICLR2026/multimodal_vlm/self-evolving_vision-language_models_for_image_quality_assessment_via_voting_and.md)
+- [On the Out-of-Distribution Generalization of Multimodal Large Language Models](on_the_out-of-distribution_generalization_of_large_multimodal_models.md)
+- [SlimLLM: Accurate Structured Pruning for Large Language Models](../../ICML2025/multimodal_vlm/slimllm_accurate_structured_pruning_for_large_language_models.md)
+- [RoboSpatial: Teaching Spatial Understanding to 2D and 3D Vision-Language Models for Robotics](robospatial_teaching_spatial_understanding_to_2d_and_3d_vision-language_models_f.md)
 
 <!-- RELATED:END -->

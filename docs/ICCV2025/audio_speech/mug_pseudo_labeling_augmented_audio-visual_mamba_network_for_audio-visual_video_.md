@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MUG: Pseudo Labeling Augmented Audio-Visual Mamba Network for Audio-Visual Video Parsing
 description: >-

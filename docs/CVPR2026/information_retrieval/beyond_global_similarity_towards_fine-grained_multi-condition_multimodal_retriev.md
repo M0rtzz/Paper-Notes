@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Global Similarity: Towards Fine-Grained, Multi-Condition Multimodal Retrieval
 description: >-
@@ -156,10 +156,10 @@ tags:
 
 ## 相关论文
 
+- [MuCo: Multi-turn Contrastive Learning for Multimodal Embedding Model](muco_multi-turn_contrastive_learning_for_multimodal_embedding_model.md)
 - [M4-RAG: A Massive-Scale Multilingual Multi-Cultural Multimodal RAG](m4-rag_a_massive-scale_multilingual_multi-cultural_multimodal_rag.md)
 - [GOAL: Global-Local Object Alignment Learning](../../CVPR2025/information_retrieval/goal_global-local_object_alignment_learning.md)
 - [Beyond Perplexity: Let the Reader Select Retrieval Summaries via Spectrum Projection Score](../../AAAI2026/information_retrieval/beyond_perplexity_let_the_reader_select_retrieval_summaries_via_spectrum_project.md)
 - [Improving Consistency in Retrieval-Augmented Systems with Group Similarity Rewards](../../NeurIPS2025/information_retrieval/improving_consistency_in_retrieval-augmented_systems_with_group_similarity_rewar.md)
-- [Magnitude Matters: A Superior Class of Similarity Metrics for Holistic Semantic Understanding](../../AAAI2026/information_retrieval/magnitude_matters_a_superior_class_of_similarity_metrics_for_holistic_semantic_u.md)
 
 <!-- RELATED:END -->

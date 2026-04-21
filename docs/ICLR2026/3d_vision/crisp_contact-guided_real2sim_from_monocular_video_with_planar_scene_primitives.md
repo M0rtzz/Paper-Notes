@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CRISP: Contact-Guided Real2Sim from Monocular Video with Planar Scene Primitives
 description: >-

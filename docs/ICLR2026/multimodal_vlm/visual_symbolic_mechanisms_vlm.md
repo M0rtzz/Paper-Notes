@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Visual Symbolic Mechanisms: Emergent Symbol Processing in Vision Language Models
 description: >-

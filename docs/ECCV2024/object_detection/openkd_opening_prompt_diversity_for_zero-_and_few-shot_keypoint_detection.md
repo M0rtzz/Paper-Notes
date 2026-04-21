@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OpenKD: Opening Prompt Diversity for Zero- and Few-shot Keypoint Detection
 description: >-

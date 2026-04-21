@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Shoot First, Ask Questions Later? Building Rational Agents that Explore and Act Like People
 description: >-

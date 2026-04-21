@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mobile-GS: Real-time Gaussian Splatting for Mobile Devices
 description: >-
@@ -127,9 +127,9 @@ tags:
 ## 相关论文
 
 - [EmbodiedSplat: Personalized Real-to-Sim-to-Real Navigation with Gaussian Splats from a Mobile Device](../../ICCV2025/3d_vision/embodiedsplat_personalized_real-to-sim-to-real_navigation_with_gaussian_splats_f.md)
-- [BANet: Bilateral Aggregation Network for Mobile Stereo Matching](../../ICCV2025/3d_vision/banet_bilateral_aggregation_network_for_mobile_stereo_matchi.md)
-- [FruitNinja: 3D Object Interior Texture Generation with Gaussian Splatting](fruitninja_3d_object_interior_texture_generation_with_gaussian_splatting.md)
-- [Horizon-GS: Unified 3D Gaussian Splatting for Large-Scale Aerial-to-Ground Scenes](horizon-gs_unified_3d_gaussian_splatting_for_large-scale_aerial-to-ground_scenes.md)
 - [MNE-SLAM: Multi-Agent Neural SLAM for Mobile Robots](mne-slam_multi-agent_neural_slam_for_mobile_robots.md)
+- [PUP 3D-GS: Principled Uncertainty Pruning for 3D Gaussian Splatting](pup_3d-gs_principled_uncertainty_pruning_for_3d_gaussian_splatting.md)
+- [BANet: Bilateral Aggregation Network for Mobile Stereo Matching](../../ICCV2025/3d_vision/banet_bilateral_aggregation_network_for_mobile_stereo_matching.md)
+- [FruitNinja: 3D Object Interior Texture Generation with Gaussian Splatting](fruitninja_3d_object_interior_texture_generation_with_gaussian_splatting.md)
 
 <!-- RELATED:END -->

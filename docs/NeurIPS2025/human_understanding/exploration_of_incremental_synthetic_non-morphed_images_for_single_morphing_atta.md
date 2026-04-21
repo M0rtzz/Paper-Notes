@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploration of Incremental Synthetic Non-Morphed Images for Single Morphing Attack Detection
 description: >-

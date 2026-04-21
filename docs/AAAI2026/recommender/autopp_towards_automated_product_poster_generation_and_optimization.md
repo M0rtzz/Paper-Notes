@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AutoPP: Towards Automated Product Poster Generation and Optimization
 description: >-

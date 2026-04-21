@@ -2,16 +2,17 @@
 title: >-
   [论文解读] Distilled Prompt Learning for Incomplete Multimodal Survival Prediction
 description: >-
-  [CVPR 2025][医学影像][生存预测] 本文提出DisPro框架，利用LLM对缺失模态的鲁棒性，通过两阶段提示学习（单模态提示蒸馏模态特异性知识+多模态提示推断缺失模态），同时补偿缺失模态的特异性和共享信息，在5个基准数据集上显著超越现有缺失模态方法。
+  [CVPR 2025][医学图像][生存预测] 本文提出DisPro (Distilled Prompt Learning)，通过两阶段提示学习——UniPro蒸馏各模态知识分布 + MultiPro利用LLM从可用模态推断缺失模态——同时补偿缺失模态的特异性和共享信息，在5个TCGA生存预测数据集上取得SOTA。
 tags:
   - CVPR 2025
-  - 医学影像
+  - 医学图像
   - 生存预测
   - 缺失模态
   - 提示学习
-  - LLM
-  - 多模态融合
-  - 病理图像
+  - LLM鲁棒性
+  - 病理WSI
+  - 基因组学
+  - 知识蒸馏
 ---
 
 # Distilled Prompt Learning for Incomplete Multimodal Survival Prediction
@@ -150,8 +151,8 @@ $$\mathcal{L} = \mathcal{L}_{surv}^{cls} + \alpha_1 \mathcal{L}_{ud}^p + \alpha_
 
 - [MUST: Modality-Specific Representation-Aware Transformer for Diffusion-Enhanced Survival Prediction with Missing Modality](../../CVPR2026/medical_imaging/must_modality-specific_representation-aware_transformer_for_diffusion-enhanced_s.md)
 - [Inference-Time Dynamic Modality Selection for Incomplete Multimodal Classification](../../ICLR2026/medical_imaging/inference-time_dynamic_modality_selection_for_incomplete_multimodal_classificati.md)
-- [GROVER: Graph-guided Representation of Omics and Vision with Expert Regulation for Cancer Survival Prediction](../../AAAI2026/medical_imaging/grover_graph-guided_representation_of_omics_and_vision_with_expert_regulation_fo.md)
 - [TIP: Tabular-Image Pre-training for Multimodal Classification with Incomplete Data](../../ECCV2024/medical_imaging/tip_tabular-image_pre-training_for_multimodal_classification_with_incomplete_dat.md)
-- [iDPA: Instance Decoupled Prompt Attention for Incremental Medical Object Detection](../../ICML2025/medical_imaging/idpa_instance_decoupled_prompt_attention_for_incremental_medical_object_detectio.md)
+- [Few-Shot Personalized Scanpath Prediction](few-shot_personalized_scanpath_prediction.md)
+- [GROVER: Graph-guided Representation of Omics and Vision with Expert Regulation for Cancer Survival Prediction](../../AAAI2026/medical_imaging/grover_graph-guided_representation_of_omics_and_vision_with_expert_regulation_fo.md)
 
 <!-- RELATED:END -->

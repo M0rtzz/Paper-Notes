@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WhiSPA: Semantically and Psychologically Aligned Whisper with Self-Supervised Contrastive and Student-Teacher Learning
 description: >-
@@ -119,8 +119,8 @@ NCE 对比损失（温度 τ=0.1）在 50 万+语音段上训练，数据来自 
 
 - [Collapse-Proof Non-Contrastive Self-Supervised Learning](../../ICML2025/self_supervised/collapse-proof_non-contrastive_self-supervised_learning.md)
 - [QAEncoder: Towards Aligned Representation Learning in Question Answering Systems](qaencoder_aligned_representation.md)
+- [Contrastive Learning on LLM Back Generation Treebank for Cross-domain Constituency Parsing](llm_back_gen_treebank.md)
 - [ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders](../../ECCV2024/self_supervised/vic-mae_self-supervised_representation_learning_from_images_and_video_with_contr.md)
 - [Improving Low-Resource Morphological Inflection via Self-Supervised Objectives](improving_low-resource_morphological_inflection_via_self-supervised_objectives.md)
-- [SHuBERT: Self-Supervised Sign Language Representation Learning via Multi-Stream Cluster Prediction](shubert_self-supervised_sign_language_representation_learning_via_multi-stream_c.md)
 
 <!-- RELATED:END -->

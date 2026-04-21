@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Advancing Textual Prompt Learning with Anchored Attributes
 description: >-
@@ -135,6 +135,6 @@ ATPrompt 将传统的"软 prompt + 类别 token"格式改造为"属性软 prompt
 - [FG-CLIP: Fine-Grained Visual and Textual Alignment](../../ICML2025/object_detection/fg-clip_fine-grained_visual_and_textual_alignment.md)
 - [UPRE: Zero-Shot Domain Adaptation for Object Detection via Unified Prompt and Representation Enhancement](upre_zero-shot_domain_adaptation_for_object_detection_via_unified_prompt_and_rep.md)
 - [Resource Efficient Sleep Staging via Multi-Level Masking and Prompt Learning](../../AAAI2026/object_detection/resource_efficient_sleep_staging_via_multi-level_masking_and_prompt_learning.md)
-- [TIACam: Text-Anchored Invariant Feature Learning with Auto-Augmentation for Camera-Robust Zero-Watermarking](../../CVPR2026/object_detection/tiacam_text-anchored_invariant_feature_learning_with_auto-augmentation_for_camer.md)
+- [Visual Modality Prompt for Adapting Vision-Language Object Detectors](visual_modality_prompt_for_adapting_vision-language_object_detectors.md)
 
 <!-- RELATED:END -->

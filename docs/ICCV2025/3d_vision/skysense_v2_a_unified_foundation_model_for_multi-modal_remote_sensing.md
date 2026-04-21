@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SkySense V2: A Unified Foundation Model for Multi-Modal Remote Sensing
 description: >-

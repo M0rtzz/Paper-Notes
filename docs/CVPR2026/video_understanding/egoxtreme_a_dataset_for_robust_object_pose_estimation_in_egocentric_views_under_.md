@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EgoXtreme: A Dataset for Robust Object Pose Estimation in Egocentric Views under Extreme Conditions
 description: >-

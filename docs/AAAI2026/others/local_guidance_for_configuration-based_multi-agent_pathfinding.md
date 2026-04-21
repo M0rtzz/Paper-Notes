@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Local Guidance for Configuration-Based Multi-Agent Pathfinding
 description: >-

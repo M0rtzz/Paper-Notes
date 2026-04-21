@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AI Should Sense Better, Not Just Scale Bigger: Adaptive Sensing as a Paradigm Shift
 description: >-

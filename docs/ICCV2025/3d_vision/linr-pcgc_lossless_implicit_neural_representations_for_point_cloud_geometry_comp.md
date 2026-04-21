@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LINR-PCGC: Lossless Implicit Neural Representations for Point Cloud Geometry Compression
 description: >-
@@ -189,8 +189,8 @@ AQ&MC 降低 8.1% bpp，SCE 进一步降低 3.1% bpp。
 
 - [Neural Compression for 3D Geometry Sets](neural_compression_for_3d_geometry_sets.md)
 - [End-to-End Implicit Neural Representations for Classification](../../CVPR2025/3d_vision/end-to-end_implicit_neural_representations_for_classification.md)
+- [SiNR: Sparsity Driven Compressed Implicit Neural Representations](../../CVPR2025/3d_vision/sinr_sparsity_driven_compressed_implicit_neural_representations.md)
 - [SL2A-INR: Single-Layer Learnable Activation for Implicit Neural Representation](sl2a-inr_single-layer_learnable_activation_for_implicit_neural_representation.md)
 - [Efficient Spiking Point Mamba for Point Cloud Analysis](efficient_spiking_point_mamba_for_point_cloud_analysis.md)
-- [UPP: Unified Point-Level Prompting for Robust Point Cloud Analysis](upp_unified_point-level_prompting_for_robust_point_cloud_analysis.md)
 
 <!-- RELATED:END -->

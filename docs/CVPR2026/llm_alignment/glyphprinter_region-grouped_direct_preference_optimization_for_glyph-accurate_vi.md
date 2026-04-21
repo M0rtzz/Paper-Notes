@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GlyphPrinter: Region-Grouped Direct Preference Optimization for Glyph-Accurate Visual Text Rendering
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rubrik's Cube: Testing a New Rubric for Evaluating Explanations on the CUBE Dataset
 description: >-
@@ -129,6 +129,6 @@ tags:
 - [TabXEval: Why this is a Bad Table? An eXhaustive Rubric for Table Evaluation](tabxeval_why_this_is_a_bad_table_an_exhaustive_rubric_for_table_evaluation.md)
 - [Evaluating the Evaluation of Diversity in Commonsense Generation](evaluating_the_evaluation_of_diversity_in_commonsense_generation.md)
 - [SynDaCaTE: A Synthetic Dataset for Evaluating Part-Whole Hierarchical Inference](../../ICML2025/others/syndacate_a_synthetic_dataset_for_evaluating_part-whole_hierarchical_inference.md)
-- [Evaluating Design Decisions for Dual Encoder-based Entity Disambiguation](evaluating_design_decisions_for_dual_encoder-based_entity_disambiguation.md)
+- [Substance over Style: Evaluating Proactive Conversational Coaching Agents](proactive_conversational_coaching.md)
 
 <!-- RELATED:END -->

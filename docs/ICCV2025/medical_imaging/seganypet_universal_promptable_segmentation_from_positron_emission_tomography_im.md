@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SegAnyPET: Universal Promptable Segmentation from Positron Emission Tomography Images
 description: >-
@@ -130,8 +130,8 @@ SegAnyPET的pipeline：输入为3D PET体积图像和位置提示（点或框）
 
 - [Developing Foundation Models for Universal Segmentation from 3D Whole-Body Positron Emission Tomography](../../CVPR2026/medical_imaging/developing_foundation_models_for_universal_segment.md)
 - [Coordinate-based Speed of Sound Recovery for Aberration-Corrected Photoacoustic Computed Tomography](coordinate-based_speed_of_sound_recovery_for_aberration-corrected_photoacoustic_.md)
+- [vesselFM: A Foundation Model for Universal 3D Blood Vessel Segmentation](../../CVPR2025/medical_imaging/vesselfm_a_foundation_model_for_universal_3d_blood_vessel_segmentation.md)
 - [An OpenMind for 3D Medical Vision Self-Supervised Learning](an_openmind_for_3d_medical_vision_self-supervised_learning.md)
 - [Controllable Latent Space Augmentation for Digital Pathology](controllable_latent_space_augmentation_for_digital_pathology.md)
-- [AcZeroTS: Active Learning for Zero-shot Tissue Segmentation in Pathology Images](aczerots_active_learning_for_zeroshot_tissue_segmentation_in.md)
 
 <!-- RELATED:END -->

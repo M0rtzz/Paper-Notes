@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] OmniVDiff: Omni Controllable Video Diffusion for Generation and Understanding
 description: >-
-  [AAAI 2026][图像分割][视频扩散模型] 提出 OmniVDiff，一个统一的可控视频扩散框架，通过将多种视觉模态（RGB、深度、分割、Canny）在颜色空间中联合建模，并引入自适应模态控制策略（AMCS），在单一扩散模型中同时支持文本条件生成、X 条件生成和视频理解三种任务，在 VBench 上达到 SOTA。
+  [AAAI 2026][视频扩散模型] 提出 OmniVDiff，一个统一的可控视频扩散框架，通过将多种视觉模态（RGB、深度、分割、Canny）在颜色空间中联合建模，并引入自适应模态控制策略（AMCS），在单一扩散模型中同时支持文本条件生成、X 条件生成和视频理解三种任务，在 VBench 上达到 SOTA。
 tags:
   - AAAI 2026
-  - 图像分割
   - 视频扩散模型
   - 多模态生成
   - 可控视频生成
@@ -151,10 +150,10 @@ $$\mathcal{L} = \sum_{m, m \notin Cond} \mathbb{E}_{x_m, t, \epsilon, m} [\|\eps
 
 ## 相关论文
 
+- [VideoDPO: Omni-Preference Alignment for Video Diffusion Generation](../../CVPR2025/video_generation/videodpo_omni-preference_alignment_for_video_diffusion_generation.md)
 - [MotionCharacter: Fine-Grained Motion Controllable Human Video Generation](motioncharacter_fine-grained_motion_controllable_human_video_generation.md)
 - [Mimir: Improving Video Diffusion Models for Precise Text Understanding](../../CVPR2025/video_generation/mimir_improving_video_diffusion_models_for_precise_text_understanding.md)
-- [AnimateAnything: Consistent and Controllable Animation for Video Generation](../../CVPR2025/video_generation/animateanything_consistent_and_controllable_animation_for_video_generation.md)
+- [FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](../../CVPR2026/video_generation/flashmotion_fewstep_controllable_video_generation.md)
 - [InterDyn: Controllable Interactive Dynamics with Video Diffusion Models](../../CVPR2025/video_generation/interdyn_controllable_interactive_dynamics_with_video_diffusion_models.md)
-- [FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](../../CVPR2026/video_generation/flashmotion_few-step_controllable_video_generation_with_trajectory_guidance.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LoST: Level of Semantics Tokenization for 3D Shapes
 description: >-

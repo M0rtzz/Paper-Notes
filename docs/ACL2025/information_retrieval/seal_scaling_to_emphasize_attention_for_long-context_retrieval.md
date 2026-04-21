@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SEAL: Scaling to Emphasize Attention for Long-Context Retrieval
 description: >-

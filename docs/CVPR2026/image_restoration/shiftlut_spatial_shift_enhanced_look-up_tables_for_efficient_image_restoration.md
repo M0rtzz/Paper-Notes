@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ShiftLUT: Spatial Shift Enhanced Look-Up Tables for Efficient Image Restoration
 description: >-
@@ -152,8 +152,8 @@ ShiftLUT 采用三阶段设计：
 
 - [Beyond the Ground Truth: Enhanced Supervision for Image Restoration](beyond_the_ground_truth_enhanced_supervision_for_image_restoration.md)
 - [Lightweight and Fast Real-time Image Enhancement via Decomposition of the Spatial-aware Lookup Tables](../../ICCV2025/image_restoration/lightweight_and_fast_real-time_image_enhancement_via_decomposition_of_the_spatia.md)
+- [DnLUT: Ultra-Efficient Color Image Denoising via Channel-Aware Lookup Tables](../../CVPR2025/image_restoration/dnlut_ultra-efficient_color_image_denoising_via_channel-aware_lookup_tables.md)
 - [Blink: Dynamic Visual Token Resolution for Enhanced Multimodal Understanding](blink_dynamic_visual_token_resolution_for_enhanced_multimodal_understanding.md)
 - [Beyond Ground-Truth: Leveraging Image Quality Priors for Real-World Image Restoration](beyond_ground-truth_leveraging_image_quality_priors_for_real-world_image_restora.md)
-- [Efficient Cascaded Multiscale Adaptive Network for Image Restoration](../../ECCV2024/image_restoration/efficient_cascaded_multiscale_adaptive_network_for_image_restoration.md)
 
 <!-- RELATED:END -->

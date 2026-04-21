@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Emulating Self-Attention with Convolution for Efficient Image Super-Resolution
 description: >-
@@ -162,6 +162,6 @@ ESC 在 Urban100×4 上超越 ATD-light 0.1 dB PSNR，同时快 **8.7倍**。
 - [Outlier-Aware Post-Training Quantization for Image Super-Resolution](outlier-aware_post-training_quantization_for_image_super-resolution.md)
 - [Efficient Concertormer for Image Deblurring and Beyond](efficient_concertormer_for_image_deblurring_and_beyond.md)
 - [Self-Calibrated Variance-Stabilizing Transformations for Real-World Image Denoising](self-calibrated_variance-stabilizing_transformations_for_real-world_image_denois.md)
-- [EAMamba: Efficient All-Around Vision State Space Model for Image Restoration](eamamba_efficient_all-around_vision_state_space_model_for_image_restoration.md)
+- [UCAN: Unified Convolutional Attention Network for Expansive Receptive Fields in Lightweight Super-Resolution](../../CVPR2026/image_restoration/ucan_unified_convolutional_attention_network_for_expansive_receptive_fields_in_l.md)
 
 <!-- RELATED:END -->

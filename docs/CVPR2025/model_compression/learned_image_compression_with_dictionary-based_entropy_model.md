@@ -1,14 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Learned Image Compression with Dictionary-based Entropy Model
 description: >-
-  [CVPR 2025][image compression] 提出基于字典的交叉注意力熵模型 (DCAE)，通过可学习字典从训练数据中提取典型纹理先验、多尺度特征聚合实现精确字典查询，在性能和延迟之间取得最好平衡，三个基准上超越 SOTA。
+  [CVPR 2025][模型压缩][learned image compression] 提出基于字典的交叉注意力熵模型 (DCAE)，引入可学习字典从训练数据集中提取自然图像的典型纹理结构先验，通过多尺度特征聚合 + 交叉注意力实现精确的概率分布估计，在编解码速度仅 193ms 的条件下实现 -17.0%/-21.1%/-19.7% 的 BD-rate（Kodak/Tecnick/CLIC），全面超越 SOTA。
 tags:
   - CVPR 2025
+  - 模型压缩
   - learned image compression
   - entropy model
   - dictionary learning
-  - cross attention
+  - 注意力机制
   - rate-distortion
 ---
 
@@ -143,8 +144,8 @@ tags:
 
 ## 相关论文
 
-- [MambaIC: State Space Models for High-Performance Learned Image Compression](mambaic_state_space_models_for_high-performance_learned_image_compression.md)
 - [LALIC: Linear Attention Modeling for Learned Image Compression](linear_attention_modeling_for_learned_image_compression.md)
+- [MambaIC: State Space Models for High-Performance Learned Image Compression](mambaic_state_space_models_for_high-performance_learned_image_compression.md)
 - [Bidirectional Stereo Image Compression with Cross-Dimensional Entropy Model](../../ECCV2024/model_compression/bidirectional_stereo_image_compression_with_cross-dimensional_entropy_model.md)
 - [Learned Image Compression with Hierarchical Progressive Context Modeling](../../ICCV2025/model_compression/learned_image_compression_with_hierarchical_progressive_context_modeling.md)
 - [CoA: Towards Real Image Dehazing via Compression-and-Adaptation](coa_towards_real_image_dehazing_via_compression-and-adaptation.md)

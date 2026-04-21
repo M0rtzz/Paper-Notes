@@ -2,9 +2,16 @@
 title: >-
   [论文解读] Improve Language Model and Brain Alignment via Associative Memory
 description: >-
-  [LLM/NLP] 通过模拟联想记忆对文本进行数据增强，以及对 LLM 进行联想记忆指令微调，本文证明两种方式均能显著提升语言模型与人脑在语音理解任务中的对齐程度，尤其在内侧颞叶等联想记忆相关脑区。
+  [ACL 2025][LLM/NLP][brain alignment] 通过模拟联想记忆对文本进行数据增强，以及对 LLM 进行联想记忆指令微调，本文证明两种方式均能显著提升语言模型与人脑在语音理解任务中的对齐程度，尤其在内侧颞叶等联想记忆相关脑区。
 tags:
+  - ACL 2025
   - LLM/NLP
+  - brain alignment
+  - associative memory
+  - fMRI
+  - 指令微调
+  - GPT-2
+  - LLaMA-2
 ---
 
 # Improve Language Model and Brain Alignment via Associative Memory
@@ -112,10 +119,10 @@ LLaMA-2 因参数量更大、训练数据更多，对齐度更高。左脑半球
 
 ## 相关论文
 
-- [InfiniSST: Simultaneous Translation of Unbounded Speech with Large Language Model](infinisst_simultaneous_translation_of_unbounded_speech_with_large_language_model.md)
-- [SongComposer: A Large Language Model for Lyric and Melody Generation in Song Composition](songcomposer_llm_lyric_melody_generation.md)
-- [A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](a_survey_on_efficient_large_language.md)
-- [SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence](selfelicit_evidence_highlighting.md)
-- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
+- [Binary Classifier Optimization for Large Language Model Alignment](bco_binary_classifier_alignment.md)
+- [Beyond Dialogue: A Profile-Dialogue Alignment Framework Towards General Role-Playing Language Model](beyond_dialogue_a_profile-dialogue_alignment_framework_towards_general_role-play.md)
+- [Disentangling Memory and Reasoning Ability in Large Language Models](disentangle_memory_reasoning.md)
+- [From Neurons to Semantics: Evaluating Cross-Linguistic Alignment Capabilities of Large Language Models via Neurons Alignment](from_neurons_to_semantics_evaluating_cross-linguistic_alignment_capabilities_of_.md)
+- [DeAL: Decoding-time Alignment for Large Language Models](deal_decoding_time_alignment.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bridging the Language Gap: Synthetic Voice Diversity via Latent Mixup for Equitable Speech Recognition
 description: >-
@@ -136,6 +136,6 @@ LatentVoiceMix 的 pipeline：输入是低资源语言的音频数据集 → 去
 - [Latent Speech-Text Transformer](../../ICLR2026/audio_speech/latent_speech_text_transformer.md)
 - [SpeechIQ: Speech-Agentic Intelligence Quotient Across Cognitive Levels in Voice Understanding by Large Language Models](../../ACL2025/audio_speech/speechiq_speechagentic_intelligence_quotient_across_cognitive.md)
 - [Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](../../ICCV2025/audio_speech/zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
-- [Dialectal Coverage and Generalization in Arabic Speech Recognition](../../ACL2025/audio_speech/dialectal_coverage_and_generalization_in_arabic_speech_recognition.md)
+- [SpeechWeave: Diverse Multilingual Synthetic Text & Audio Data Generation Pipeline for Training Text to Speech Models](../../ACL2025/audio_speech/speechweave_diverse_multilingual_synthetic_text_audio_data_generation_pipeline_f.md)
 
 <!-- RELATED:END -->

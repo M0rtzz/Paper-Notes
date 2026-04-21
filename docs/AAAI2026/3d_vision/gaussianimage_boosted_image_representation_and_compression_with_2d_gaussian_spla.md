@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GaussianImage++: Boosted Image Representation and Compression with 2D Gaussian Splatting
 description: >-

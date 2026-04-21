@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploring Graph Representations of Logical Forms for Language Modeling
 description: >-

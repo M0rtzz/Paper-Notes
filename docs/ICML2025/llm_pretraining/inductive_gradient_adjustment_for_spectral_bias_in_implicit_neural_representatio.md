@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Inductive Gradient Adjustment for Spectral Bias in Implicit Neural Representations
 description: >-

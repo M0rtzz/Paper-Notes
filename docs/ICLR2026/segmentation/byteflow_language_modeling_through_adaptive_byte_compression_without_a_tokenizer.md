@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ByteFlow: Language Modeling through Adaptive Byte Compression without a Tokenizer
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Physics-Informed Deformable Gaussian Splatting: Towards Unified Constitutive Laws for Time-Evolving Material Field
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploring the Limits of Strong Membership Inference Attacks on Large Language Models
 description: >-
@@ -166,8 +166,8 @@ $$\text{flip}_\eta(x) \coloneqq \Pr_{r,r' \sim \mu}[b_r^{(\eta)}(x) \neq b_{r'}^
 
 - [Membership Inference Attacks Against Fine-tuned Diffusion Language Models (SAMA)](../../ICLR2026/ai_safety/membership_inference_attacks_against_fine-tuned_diffusion_language_models.md)
 - [Distributive Fairness in Large Language Models: Evaluating Alignment with Human Values](distributive_fairness_in_large_language_models_evaluating_alignment_with_human_v.md)
+- [Impact of Dataset Properties on Membership Inference Vulnerability of Deep Transfer Learning](impact_of_dataset_properties_on_membership_inference.md)
 - [ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](../../ACL2025/ai_safety/elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)
 - [Ensemble Watermarks for Large Language Models](../../ACL2025/ai_safety/ensemble_watermarks_llm.md)
-- [Impact of Dataset Properties on Membership Inference Vulnerability of Deep Transfer Learning](impact_of_dataset_properties_on_membership_inference_vulnerability_of_deep_trans.md)
 
 <!-- RELATED:END -->

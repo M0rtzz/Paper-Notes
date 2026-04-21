@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Chromosome Parallelization for Precision Medicine Genomic Workflows
 description: >-

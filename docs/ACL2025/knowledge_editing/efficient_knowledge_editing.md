@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Knowledge Editing via Minimal Precomputation
 description: >-
@@ -129,7 +129,7 @@ MEMIT 等方法的闭式解为 $\hat{W} = W_0 + (V_E - W_0 K_E) K_E^T (\lambda C
 - [MEMOIR: Lifelong Model Editing with Minimal Overwrite and Informed Retention for LLMs](../../NeurIPS2025/knowledge_editing/memoir_lifelong_model_editing_with_minimal_overwrite_and_informed_retention_for_.md)
 - [Context-Robust Knowledge Editing for Language Models](context-robust_knowledge_editing_for_language_models.md)
 - [Towards a Principled Evaluation of Knowledge Editors](towards_a_principled_evaluation_of_knowledge_editors.md)
-- [ScEdit: Script-based Assessment of Knowledge Editing](scedit_script-based_assessment_of_knowledge_editing.md)
 - [SAKE: Steering Activations for Knowledge Editing](sake_steering_activations_for_knowledge_editing.md)
+- [ScEdit: Script-based Assessment of Knowledge Editing](scedit_script-based_assessment_of_knowledge_editing.md)
 
 <!-- RELATED:END -->

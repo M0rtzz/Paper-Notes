@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neuro-Spectral Architectures for Causal Physics-Informed Networks
 description: >-

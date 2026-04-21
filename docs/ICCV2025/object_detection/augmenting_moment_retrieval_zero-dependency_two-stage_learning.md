@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Augmenting Moment Retrieval: Zero-Dependency Two-Stage Learning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks
 description: >-

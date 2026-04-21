@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Grouped Lattice Vector Quantizers for Low-Bit LLM Compression
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spatial Preference Rewarding for MLLMs Spatial Understanding
 description: >-
@@ -168,9 +168,9 @@ SPR 的提升随 IoU 阈值升高而显著增大——**在 0.9 阈值下 7B 模
 ## 相关论文
 
 - [ASCIIBench: Evaluating Language-Model-Based Understanding of Visually-Oriented Text](../../NeurIPS2025/aigc_detection/asciibench_evaluating_language-model-based_understanding_of_visually-oriented_te.md)
-- [Are We in the AI-Generated Text World Already? Quantifying and Monitoring AIGT on Social Media](../../ACL2025/aigc_detection/aigt_social_media_monitoring.md)
-- [Who Writes What: Unveiling the Impact of Author Roles on AI-generated Text Detection](../../ACL2025/aigc_detection/who_writes_what_ai_detection.md)
-- [Classical Planning with LLM-Generated Heuristics: Challenging the State of the Art with Python Code](../../NeurIPS2025/aigc_detection/classical_planning_with_llm-generated_heuristics_challenging_the_state_of_the_ar.md)
-- [Iron Sharpens Iron: Defending Against Attacks in Machine-Generated Text Detection with Adversarial Training](../../ACL2025/aigc_detection/greater_adversarial_mgt_detection.md)
+- [Learning to Rewrite: Generalized LLM-Generated Text Detection](../../ACL2025/aigc_detection/learning_to_rewrite_generalized_llm-generated_text_detection.md)
+- [CLAWS: Creativity Detection for LLM-Generated Solutions Using Attention Window of Sections](../../NeurIPS2025/aigc_detection/clawscreativity_detection_for_llm-generated_solutions_using_attention_window_of_.md)
+- [People who frequently use ChatGPT for writing tasks are accurate and robust detectors of AI-generated text](../../ACL2025/aigc_detection/chatgpt_user_ai_text_detection.md)
+- [Synthesizing Performance Constraints for Evaluating and Improving Code Efficiency](../../NeurIPS2025/aigc_detection/synthesizing_performance_constraints_for_evaluating_and_improving_code_efficienc.md)
 
 <!-- RELATED:END -->

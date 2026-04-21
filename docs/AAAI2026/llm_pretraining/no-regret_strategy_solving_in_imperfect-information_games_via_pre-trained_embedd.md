@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] No-Regret Strategy Solving in Imperfect-Information Games via Pre-Trained Embedding
 description: >-

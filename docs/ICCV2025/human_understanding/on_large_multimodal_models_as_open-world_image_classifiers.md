@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On Large Multimodal Models as Open-World Image Classifiers
 description: >-

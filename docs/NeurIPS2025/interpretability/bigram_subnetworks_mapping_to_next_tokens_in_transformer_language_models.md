@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bigram Subnetworks: Mapping to Next Tokens in Transformer Language Models
 description: >-
@@ -117,10 +117,10 @@ tags:
 
 ## 相关论文
 
-- [Born a Transformer – Always a Transformer? On the Effect of Pretraining on Architectural Abilities](born_a_transformer_--_always_a_transformer_on_the_effect_of_pretraining_on_archi.md)
 - [The Trilemma of Truth in Large Language Models](the_trilemma_of_truth_in_large_language_models.md)
 - [Emergence of Linear Truth Encodings in Language Models](emergence_of_linear_truth_encodings_in_language_models.md)
 - [Why Is Attention Sparse in Particle Transformer?](why_is_attention_sparse_in_particle_transformer.md)
 - [Noise Stability of Transformer Models](../../ICLR2026/interpretability/noise_stability_of_transformer_models.md)
+- [Better Estimation of the Kullback-Leibler Divergence Between Language Models](better_estimation_of_the_kullback--leibler_divergence_between_language_models.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Pessimism Principle Can Be Effective: Towards a Framework for Zero-Shot Transfer RL
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DASH: Detection and Assessment of Systematic Hallucinations of VLMs
 description: >-

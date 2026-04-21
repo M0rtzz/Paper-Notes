@@ -175,6 +175,6 @@ L = (1 - 0.2)·L1 + 0.2·L_SSIM + 0.001·L_v
 - [ATLAS: Decoupling Skeletal and Shape Parameters for Expressive Parametric Human Modeling](atlas_decoupling_skeletal_and_shape_parameters_for_expressiv.md)
 - [CA-I2P: Channel-Adaptive Registration Network with Global Optimal Selection](ca-i2p_channel-adaptive_registration_network_with_global_optimal_selection.md)
 - [Global-Local Tree Search in VLMs for 3D Indoor Scene Generation](../../CVPR2025/3d_vision/global-local_tree_search_in_vlms_for_3d_indoor_scene_generation.md)
-- [Diorama: Unleashing Zero-shot Single-view 3D Indoor Scene Modeling](diorama_unleashing_zero-shot_single-view_3d_indoor_scene_modeling.md)
+- [Diorama: Unleashing Zero-shot Single-view 3D Indoor Scene Modeling](diorama_unleashing_zeroshot_singleview_3d_indoor_scene_model.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] mDP3: A Training-free Approach for List-wise Frame Selection in Video-LLMs
 description: >-

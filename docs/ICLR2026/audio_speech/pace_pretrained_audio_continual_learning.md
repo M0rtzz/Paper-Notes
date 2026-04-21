@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PACE: Pretrained Audio Continual Learning
 description: >-
@@ -190,6 +190,6 @@ PACE 在 SSLAM 骨干上同样保持优势，验证骨干无关性。
 - [EmotionThinker: Prosody-Aware Reinforcement Learning for Explainable Speech Emotion Reasoning](emotionthinker_prosody-aware_reinforcement_learning_for_explainable_speech_emoti.md)
 - [AC-Foley: Reference-Audio-Guided Video-to-Audio Synthesis with Acoustic Transfer](ac-foley_reference-audio-guided_video-to-audio_synthesis_with_acoustic_transfer.md)
 - [CoLeaF: A Contrastive-Collaborative Learning Framework for Weakly Supervised Audio-Visual Video Parsing](../../ECCV2024/audio_speech/coleaf_a_contrastive-collaborative_learning_framework_for_weakly_supervised_audi.md)
-- [FlexiCodec: A Dynamic Neural Audio Codec for Low Frame Rates](flexicodec_a_dynamic_neural_audio_codec_for_low_frame_rates.md)
+- [Cleaning the Pool: Progressive Filtering of Unlabeled Pools in Deep Active Learning](../../CVPR2026/audio_speech/cleaning_the_pool_progressive_filtering_of_unlabeled_pools_in_deep_active_learni.md)
 
 <!-- RELATED:END -->

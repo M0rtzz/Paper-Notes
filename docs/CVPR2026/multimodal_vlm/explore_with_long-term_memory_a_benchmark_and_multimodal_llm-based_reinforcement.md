@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Explore with Long-term Memory: A Benchmark and Multimodal LLM-based Reinforcement Learning Framework for Embodied Exploration
 description: >-

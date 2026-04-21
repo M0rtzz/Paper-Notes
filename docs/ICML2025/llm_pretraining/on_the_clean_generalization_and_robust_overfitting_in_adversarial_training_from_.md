@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the Clean Generalization and Robust Overfitting in Adversarial Training from Two Theoretical Views: Representation Complexity and Training Dynamics
 description: >-
@@ -150,8 +150,8 @@ $$\underbrace{\text{Clean Classifier}}_{\text{poly}(D)} \lesssim \underbrace{\te
 
 - [Disaggregation Reveals Hidden Training Dynamics: The Case of Agreement Attraction](../../NeurIPS2025/llm_pretraining/disaggregation_reveals_hidden_training_dynamics_the_case_of_agreement_attraction.md)
 - [ConstStyle: Robust Domain Generalization with Unified Style Transformation](../../ICCV2025/llm_pretraining/conststyle_robust_domain_generalization_with_unified_style_transformation.md)
-- [Adversarial Tokenization](../../ACL2025/llm_pretraining/adversarial_tokenization.md)
 - [Intrinsic Training Dynamics of Deep Neural Networks](../../ICLR2026/llm_pretraining/intrinsic_training_dynamics_of_deep_neural_networks.md)
+- [Adversarial Tokenization](../../ACL2025/llm_pretraining/adversarial_tokenization.md)
 - [PreLAR: World Model Pre-training with Learnable Action Representation](../../ECCV2024/llm_pretraining/prelar_world_model_pre-training_with_learnable_action_representation.md)
 
 <!-- RELATED:END -->

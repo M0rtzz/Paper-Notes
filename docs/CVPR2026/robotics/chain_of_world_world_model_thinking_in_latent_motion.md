@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Chain of World: World Model Thinking in Latent Motion (CoWVLA)
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Flowing from Words to Pixels: A Noise-Free Framework for Cross-Modality Evolution
 description: >-
@@ -121,10 +121,10 @@ tags:
 
 ## 相关论文
 
-- [CrossOver: 3D Scene Cross-Modal Alignment](crossover_3d_scene_cross-modal_alignment.md)
-- [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
+- [Speedy-Splat: Fast 3D Gaussian Splatting with Sparse Pixels and Sparse Primitives](speedy-splat_fast_3d_gaussian_splatting_with_sparse_pixels_and_sparse_primitives.md)
+- [SelfSplat: Pose-Free and 3D Prior-Free Generalizable 3D Gaussian Splatting](selfsplat_pose-free_and_3d_prior-free_generalizable_3d_gaussian_splatting.md)
+- [Stable-SCore: A Stable Registration-Based Framework for 3D Shape Correspondence](stable-score_a_stable_registration-based_framework_for_3d_shape_correspondence.md)
 - [CMMLoc: Advancing Text-to-PointCloud Localization with Cauchy-Mixture-Model Based Framework](cmmloc_advancing_text-to-pointcloud_localization_with_cauchy-mixture-model_based.md)
-- [Hash3D: Training-free Acceleration for 3D Generation](hash3d_training-free_acceleration_for_3d_generation.md)
-- [Evolving High-Quality Rendering and Reconstruction in a Unified Framework with Contribution-Adaptive Regularization](evolving_high-quality_rendering_and_reconstruction_in_a_unified_framework_with_c.md)
+- [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
 
 <!-- RELATED:END -->

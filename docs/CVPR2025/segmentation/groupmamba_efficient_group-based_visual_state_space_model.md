@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] GroupMamba: Efficient Group-Based Visual State Space Model
 description: >-
-  [CVPR 2025][state space model] 提出 Modulated Group Mamba 层，将输入通道分为四组并按不同方向扫描，配合通道亲和调制和蒸馏损失，构建了参数高效且训练稳定的视觉状态空间模型。
+  [CVPR 2025][图像分割][state space model] 提出 Modulated Group Mamba 层，将输入通道分为四组分别按四个方向执行单向 SSM 扫描，通过 Channel Affinity Modulation（CAM）增强跨组通道交互，配合蒸馏训练目标解决大模型不稳定问题，在 ImageNet-1K 上以 23M 参数达到 83.3% Top-1 精度。
 tags:
   - CVPR 2025
+  - 图像分割
   - state space model
   - Mamba
-  - 分组扫描
+  - group convolution
+  - channel modulation
   - 知识蒸馏
-  - 图像分类
+  - ImageNet
 ---
 
 # GroupMamba: Efficient Group-Based Visual State Space Model
@@ -145,7 +147,7 @@ $$\mathcal{L}_{total} = \alpha \mathcal{L}_{CE}(Z_s, y) + (1-\alpha) \mathcal{L}
 - [DefMamba: Deformable Visual State Space Model](defmamba_deformable_visual_state_space_model.md)
 - [2DMamba: Efficient State Space Model for Image Representation with Applications on Giga-Pixel Whole Slide Image Classification](2dmamba_efficient_state_space_model_for_image_representation_with_applications_o.md)
 - [Exploiting Temporal State Space Sharing for Video Semantic Segmentation](exploiting_temporal_state_space_sharing_for_video_semantic_segmentation.md)
+- [MV-SSM: Multi-View State Space Modeling for 3D Human Pose Estimation](mv-ssm_multi-view_state_space_modeling_for_3d_human_pose_estimation.md)
 - [EdgeTAM: On-Device Track Anything Model](edgetam_on-device_track_anything_model.md)
-- [MambaOut: Do We Really Need Mamba for Vision?](mambaout_do_we_really_need_mamba_for_vision.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DynRefer: Delving into Region-level Multimodal Tasks via Dynamic Resolution
 description: >-
@@ -120,10 +120,10 @@ tags:
 
 ## 相关论文
 
-- [HiFICL: High-Fidelity In-Context Learning for Multimodal Tasks](hificl_high-fidelity_in-context_learning_for_multimodal_tasks.md)
 - [Mimic In-Context Learning for Multimodal Tasks](mimic_in-context_learning_for_multimodal_tasks.md)
+- [HiFICL: High-Fidelity In-Context Learning for Multimodal Tasks](hificl_high-fidelity_in-context_learning_for_multimodal_tasks.md)
+- [VideoGLaMM: A Large Multimodal Model for Pixel-Level Visual Grounding in Videos](videoglamm_a_large_multimodal_model_for_pixel-level_visual_grounding_in_videos.md)
 - [CLIPSym: Delving into Symmetry Detection with CLIP](../../ICCV2025/multimodal_vlm/clipsym_delving_into_symmetry_detection_with_clip.md)
-- [Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach](../../ACL2025/multimodal_vlm/multimodal_coreference_resolution_for_chinese_social_media_dialogues_dataset_and.md)
-- [Efficient Quantification of Multimodal Interaction at Sample Level](../../ICML2025/multimodal_vlm/efficient_quantification_of_multimodal_interaction_at_sample_level.md)
+- [HalLoc: Token-Level Localization of Hallucinations for Vision Language Models](halloc_token-level_localization_of_hallucinations_for_vision_language_models.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OCR Hinders RAG: Evaluating the Cascading Impact of OCR on Retrieval-Augmented Generation
 description: >-

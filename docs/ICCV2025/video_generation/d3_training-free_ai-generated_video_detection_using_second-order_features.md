@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] D3: Training-Free AI-Generated Video Detection Using Second-Order Features
 description: >-
-  [ICCV 2025][视频理解][AI-generated video detection] 本文从牛顿力学的二阶控制系统出发，发现真实视频和 AI 生成视频在二阶时序特征（"加速度"）上存在本质差异——真实视频波动大而生成视频平坦，据此提出 D3，一种完全免训练的 AI 生成视频检测方法，仅需计算帧间特征的二阶差分标准差即可判别，在 40 个测试子集上达到 SOTA。
+  [ICCV 2025][AI-generated video detection] 本文从牛顿力学的二阶控制系统出发，发现真实视频和 AI 生成视频在二阶时序特征（"加速度"）上存在本质差异——真实视频波动大而生成视频平坦，据此提出 D3，一种完全免训练的 AI 生成视频检测方法，仅需计算帧间特征的二阶差分标准差即可判别，在 40 个测试子集上达到 SOTA。
 tags:
   - ICCV 2025
-  - 视频理解
   - AI-generated video detection
   - training-free
   - second-order features
@@ -167,9 +166,9 @@ VideoPhy 数据集（10 个子集）：D3 mAP = **99.16%**（对比 DeMamba 51.4
 ## 相关论文
 
 - [GenVidBench: A 6-Million Benchmark for AI-Generated Video Detection](../../AAAI2026/video_generation/genvidbench_a_6-million_benchmark_for_ai-generated_video_detection.md)
+- [When to Lock Attention: Training-Free KV Control in Video Diffusion](../../CVPR2025/video_generation/when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
 - [SWIFT: Sliding Window Reconstruction for Few-Shot Training-Free Generated Video Attribution](../../CVPR2026/video_generation/swift_sliding_window_reconstruction_for_few-shot_training-free_generated_video_a.md)
 - [DualReal: Adaptive Joint Training for Lossless Identity-Motion Fusion in Video Customization](dualreal_adaptive_joint_training_for_lossless_identity-motion_fusion_in_video_cu.md)
-- [MotionShot: Adaptive Motion Transfer across Arbitrary Objects for Text-to-Video Generation](motionshot_adaptive_motion_transfer_across_arbitrary_objects_for_text-to-video_g.md)
-- [When to Lock Attention: Training-Free KV Control in Video Diffusion](../../CVPR2025/video_generation/when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
+- [Free-Form Motion Control: Controlling the 6D Poses of Camera and Objects in Video Generation](free-form_motion_control_controlling_the_6d_poses_of_camera_and_objects_in_video.md)
 
 <!-- RELATED:END -->

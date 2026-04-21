@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Copresheaf Topological Neural Networks: A Generalized Deep Learning Framework
 description: >-

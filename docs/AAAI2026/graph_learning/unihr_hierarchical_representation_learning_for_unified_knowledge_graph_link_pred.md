@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UniHR: Hierarchical Representation Learning for Unified Knowledge Graph Link Prediction
 description: >-

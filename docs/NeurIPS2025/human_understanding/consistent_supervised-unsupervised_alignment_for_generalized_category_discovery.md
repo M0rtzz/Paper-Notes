@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Consistent Supervised-Unsupervised Alignment for Generalized Category Discovery
 description: >-

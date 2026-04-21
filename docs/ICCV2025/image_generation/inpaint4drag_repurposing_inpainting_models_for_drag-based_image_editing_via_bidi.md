@@ -163,6 +163,6 @@ $$I_{\text{edit}} = \text{Inpaint}(I_{\text{warped}}, M_{\text{inpaint}})$$
 - [BVINet: Unlocking Blind Video Inpainting with Zero Annotations](bvinet_unlocking_blind_video_inpainting_with_zero_annotations.md)
 - [OmniPaint: Mastering Object-Oriented Editing via Disentangled Insertion-Removal Inpainting](omnipaint_mastering_object-oriented_editing_via_disentangled_insertion-removal_i.md)
 - [Dense Policy: Bidirectional Autoregressive Learning of Actions](dense_policy_bidirectional_autoregressive_learning_of_actions.md)
-- [Trans-Adapter: A Plug-and-Play Framework for Transparent Image Inpainting](trans-adapter_a_plug-and-play_framework_for_transparent_image_inpainting.md)
+- [RAD: Region-Aware Diffusion Models for Image Inpainting](../../CVPR2025/image_generation/rad_region-aware_diffusion_models_for_image_inpainting.md)
 
 <!-- RELATED:END -->

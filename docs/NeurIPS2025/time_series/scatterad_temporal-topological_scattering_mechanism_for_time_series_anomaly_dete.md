@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ScatterAD: Temporal-Topological Scattering Mechanism for Time Series Anomaly Detection
 description: >-

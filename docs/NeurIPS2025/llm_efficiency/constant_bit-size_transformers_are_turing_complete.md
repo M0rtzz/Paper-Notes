@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Constant Bit-Size Transformers Are Turing Complete
 description: >-

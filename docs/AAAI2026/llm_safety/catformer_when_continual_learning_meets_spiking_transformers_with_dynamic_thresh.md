@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CATFormer: When Continual Learning Meets Spiking Transformers With Dynamic Thresholds
 description: >-

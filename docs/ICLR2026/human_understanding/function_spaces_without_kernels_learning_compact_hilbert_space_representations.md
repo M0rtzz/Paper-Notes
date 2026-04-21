@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Function Spaces Without Kernels: Learning Compact Hilbert Space Representations
 description: >-

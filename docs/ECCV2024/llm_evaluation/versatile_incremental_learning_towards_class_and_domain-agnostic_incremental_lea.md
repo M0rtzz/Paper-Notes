@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Versatile Incremental Learning: Towards Class and Domain-Agnostic Incremental Learning
 description: >-

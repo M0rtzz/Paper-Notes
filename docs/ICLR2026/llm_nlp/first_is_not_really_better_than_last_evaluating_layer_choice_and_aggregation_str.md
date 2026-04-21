@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] First is Not Really Better Than Last: Evaluating Layer Choice and Aggregation Strategies in Language Model Data Influence Estimation
 description: >-

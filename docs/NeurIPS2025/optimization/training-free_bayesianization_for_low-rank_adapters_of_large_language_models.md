@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Training-Free Bayesianization for Low-Rank Adapters of Large Language Models
 description: >-
@@ -176,6 +176,6 @@ TFB 在不做任何训练的情况下，ECE（校准误差）大幅下降：MLE 
 - [Doubly Robust Alignment for Large Language Models](doubly_robust_alignment_for_large_language_models.md)
 - [Covariances for Free: Exploiting Mean Distributions for Training-free Federated Learning](covariances_for_free_exploiting_mean_distributions_for_training-free_federated_l.md)
 - [VERA: Variational Inference Framework for Jailbreaking Large Language Models](vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
-- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
+- [Subspace Optimization for Large Language Models with Convergence Guarantees](../../ICML2025/optimization/subspace_optimization_for_large_language_models_with_convergence_guarantees.md)
 
 <!-- RELATED:END -->

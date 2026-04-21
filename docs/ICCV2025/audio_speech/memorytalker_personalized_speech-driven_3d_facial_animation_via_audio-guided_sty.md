@@ -168,10 +168,10 @@ $$\mathcal{L}_{2\text{-stage}} = \mathcal{L}_{mse} + \mathcal{L}_{vel} + \lambda
 
 ## 相关论文
 
-- [Dialectal Coverage and Generalization in Arabic Speech Recognition](../../ACL2025/audio_speech/dialectal_coverage_and_generalization_in_arabic_speech_recognition.md)
+- [LeVo: High-Quality Song Generation with Multi-Preference Alignment](../../NeurIPS2025/audio_speech/levo_high-quality_song_generation_with_multi-processing_refined_supervision.md)
+- [Wav2Sem: Plug-and-Play Audio Semantic Decoupling for 3D Speech-Driven Facial Animation](../../CVPR2025/audio_speech/wav2sem_plug-and-play_audio_semantic_decoupling_for_3d_speech-driven_facial_anim.md)
+- [Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
 - [In-the-wild Audio Spatialization with Flexible Text-guided Localization](../../ACL2025/audio_speech/tas_audio_spatialization.md)
 - [BNMusic: Blending Environmental Noises into Personalized Music](../../NeurIPS2025/audio_speech/bnmusic_blending_environmental_noises_into_personalized_music.md)
-- [Exploring Timeline Control for Facial Motion Generation](../../CVPR2025/audio_speech/exploring_timeline_control_for_facial_motion_generation.md)
-- [Talking Together: Synthesizing Co-Located 3D Conversations from Audio](../../CVPR2026/audio_speech/talking_together_synthesizing_co-located_3d_conversations_from_audio.md)
 
 <!-- RELATED:END -->

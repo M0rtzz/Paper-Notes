@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Greedy Algorithm for Structured Bandits: A Sharp Characterization of Asymptotic Success / Failure
 description: >-

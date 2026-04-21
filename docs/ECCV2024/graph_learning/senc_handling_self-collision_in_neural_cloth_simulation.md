@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SENC: Handling Self-collision in Neural Cloth Simulation
 description: >-

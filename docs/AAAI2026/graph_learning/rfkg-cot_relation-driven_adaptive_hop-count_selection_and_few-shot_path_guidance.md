@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RFKG-CoT: Relation-Driven Adaptive Hop-count Selection and Few-Shot Path Guidance for Knowledge-Aware QA
 description: >-
@@ -108,7 +108,7 @@ sync**关键词**: 知识图谱问答, Chain-of-Thought, 关系感知, 自适应
 - [MUG: Meta-path-aware Universal Heterogeneous Graph Pre-Training](mug_meta-path-aware_universal_heterogeneous_graph_pre-training.md)
 - [PKD: Preference-driven Knowledge Distillation for Few-shot Node Classification](../../NeurIPS2025/graph_learning/preference-driven_knowledge_distillation_for_few-shot_node_classification.md)
 - [Commonality in Few: Few-Shot Multimodal Anomaly Detection via Hypergraph-Enhanced Memory](commonality_in_few_few-shot_multimodal_anomaly_detection_via_hypergraph-enhanced.md)
+- [Enhancing Logical Expressiveness in GNNs via Path-Neighbor Aggregation](enhancing_logical_expressiveness_in_graph_neural_networks_via_path-neighbor_aggr.md)
 - [Adaptive Riemannian Graph Neural Networks](adaptive_riemannian_graph_neural_networks.md)
-- [Self-Adaptive Graph Mixture of Models](self-adaptive_graph_mixture_of_models.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Regular Games – an Automata-Based General Game Playing Language
 description: >-

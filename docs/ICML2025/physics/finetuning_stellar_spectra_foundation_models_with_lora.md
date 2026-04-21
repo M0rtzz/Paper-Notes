@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Finetuning Stellar Spectra Foundation Models with LoRA
 description: >-
@@ -131,6 +131,6 @@ tags:
 - [Neural Deprojection of Galaxy Stellar Mass Profiles](../../NeurIPS2025/physics/neural_deprojection_of_galaxy_stellar_mass_profiles.md)
 - [Gravity-Bench-v1: A Benchmark on Gravitational Physics Discovery for Agents](gravity-bench-v1_a_benchmark_on_gravitational_physics_discovery_for_agents.md)
 - [Teaching LLMs to Speak Spectroscopy](teaching_llms_to_speak_spectroscopy.md)
-- [Rethink the Role of Deep Learning towards Large-scale Quantum Systems](rethink_the_role_of_deep_learning_towards_large-scale_quantum_systems.md)
+- [Transfer Learning Beyond the Standard Model](../../NeurIPS2025/physics/transfer_learning_beyond_the_standard_model.md)
 
 <!-- RELATED:END -->

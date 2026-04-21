@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Perspective from a Broader Context: Can Room Style Knowledge Help Visual Floorplan Localization?
 description: >-
@@ -167,9 +167,9 @@ tags:
 ## 相关论文
 
 - [Supercharging Floorplan Localization with Semantic Rays](../../ICCV2025/llm_evaluation/supercharging_floorplan_localization_with_semantic_rays.md)
+- [Scene-Agnostic Pose Regression for Visual Localization](../../CVPR2025/llm_evaluation/scene-agnostic_pose_regression_for_visual_localization.md)
+- [Can Vision–Language Models Assess Graphic Design Aesthetics? A Benchmark, Evaluation, and Dataset Perspective](../../ICLR2026/llm_evaluation/can_vision_language_models_assess_graphic_design_aesthetics_a_benchmark_evaluati.md)
 - [Benchmarking LLMs for Political Science: A United Nations Perspective](benchmarking_llms_for_political_science_a_united_nations_perspective.md)
 - [TacSIm: A Dataset and Benchmark for Football Tactical Style Imitation](../../CVPR2026/llm_evaluation/tacsim_a_dataset_and_benchmark_for_football_tactical_style_imitation.md)
-- [Free-Grained Hierarchical Visual Recognition](../../CVPR2026/llm_evaluation/free-grained_hierarchical_visual_recognition.md)
-- [MCTS-SQL: Light-Weight LLMs can Master the Text-to-SQL through Monte Carlo Tree Search](mcts-sql_light-weight_llms_can_master_the_text-to-sql_through_monte_carlo_tree_s.md)
 
 <!-- RELATED:END -->

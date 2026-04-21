@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hyperbolic Hierarchical Alignment Reasoning Network for Text-3D Retrieval
 description: >-

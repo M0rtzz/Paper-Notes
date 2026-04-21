@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Predict Training Data Quality via Its Geometry in Metric Space
 description: >-

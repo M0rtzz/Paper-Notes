@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LangSplatV2: High-dimensional 3D Language Gaussian Splatting with 450+ FPS
 description: >-

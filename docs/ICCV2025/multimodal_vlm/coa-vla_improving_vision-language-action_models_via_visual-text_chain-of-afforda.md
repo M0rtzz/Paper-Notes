@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoA-VLA: Improving Vision-Language-Action Models via Visual-Textual Chain-of-Affordance
 description: >-

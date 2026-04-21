@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TROVE: A Challenge for Fine-Grained Text Provenance via Source Sentence Tracing and Relationship Classification
 description: >-

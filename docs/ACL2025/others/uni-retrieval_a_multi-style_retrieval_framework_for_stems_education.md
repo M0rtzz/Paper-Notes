@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education
 description: >-
@@ -141,8 +141,8 @@ SER 数据集上的检索性能:
 ## 相关论文
 
 - [ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval](acord_an_expert-annotated_retrieval_dataset_for_legal_contract_drafting.md)
-- [GeAR: Generation Augmented Retrieval](gear_generation_augmented_retrieval.md)
 - [Towards Text-Image Interleaved Retrieval](towards_text-image_interleaved_retrieval.md)
+- [GeAR: Generation Augmented Retrieval](gear_generation_augmented_retrieval.md)
 - [Multi-Facet Blending for Faceted Query-by-Example Retrieval](multi-facet_blending_for_faceted_query-by-example_retrieval.md)
 - [HASH-RAG: Bridging Deep Hashing with Retriever for Efficient, Fine Retrieval and Augmented Generation](hash-rag_bridging_deep_hashing_with_retriever_for_efficient_fine_retrieval_and_a.md)
 

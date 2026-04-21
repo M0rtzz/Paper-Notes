@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Online Generic Event Boundary Detection
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Barec: A Large and Balanced Corpus for Fine-grained Arabic Readability Assessment
 description: >-

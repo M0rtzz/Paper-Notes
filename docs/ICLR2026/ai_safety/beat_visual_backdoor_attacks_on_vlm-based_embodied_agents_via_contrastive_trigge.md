@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BEAT: Visual Backdoor Attacks on VLM-based Embodied Agents via Contrastive Trigger Learning
 description: >-

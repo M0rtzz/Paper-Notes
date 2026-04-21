@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LEDiff: Latent Exposure Diffusion for HDR Generation
 description: >-
@@ -111,10 +111,10 @@ tags:
 
 ## 相关论文
 
+- [UltraFusion: Ultra High Dynamic Imaging using Exposure Fusion](ultrafusion_ultra_high_dynamic_imaging_using_exposure_fusion.md)
 - [Enhancing Dance-to-Music Generation via Negative Conditioning Latent Diffusion Model](enhancing_dance-to-music_generation_via_negative_conditioning_latent_diffusion_m.md)
 - [GLASS: Guided Latent Slot Diffusion for Object-Centric Learning](glass_guided_latent_slot_diffusion_for_object-centric_learning.md)
-- [LaTexBlend: Scaling Multi-concept Customized Generation with Latent Textual Blending](latexblend_scaling_multi-concept_customized_generation_with_latent_textual_blend.md)
-- [Latent Space Imaging](latent_space_imaging.md)
-- [EvoTok: A Unified Image Tokenizer via Residual Latent Evolution for Visual Understanding and Generation](evotok_a_unified_image_tokenizer_via_residual_latent_evolution_for_visual_unders.md)
+- [SALAD: Skeleton-aware Latent Diffusion for Text-driven Motion Generation and Editing](salad_skeleton-aware_latent_diffusion_for_text-driven_motion_generation_and_edit.md)
+- [Nested Diffusion Models Using Hierarchical Latent Priors](nested_diffusion_models_using_hierarchical_latent_priors.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MaskHand: Generative Masked Modeling for Robust Hand Mesh Reconstruction in the Wild
 description: >-

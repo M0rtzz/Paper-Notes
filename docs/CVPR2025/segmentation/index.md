@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 语义分割方向 54篇论文解读
+  CVPR2025 语义分割方向 92篇论文解读
 description: >-
-  54篇CVPR2025 语义分割方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  92篇CVPR2025 语义分割方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**📷 CVPR2025** · **54** 篇论文解读
+**📷 CVPR2025** · **92** 篇论文解读
 
 **[2DMamba: Efficient State Space Model for Image Representation with Applications on Giga-Pixel Whole Slide Image Classification](2dmamba_efficient_state_space_model_for_image_representation_with_applications_o.md)**
 
@@ -17,6 +17,10 @@ description: >-
 **[A Distractor-Aware Memory for Visual Object Tracking with SAM2](a_distractor-aware_memory_for_visual_object_tracking_with_sam2.md)**
 
 :   提出SAM2.1++的干扰物感知记忆模型（DAM），将SAM2的记忆拆分为近期外观记忆（RAM，确保分割精度）和干扰物解析记忆（DRM，确保跟踪鲁棒性），通过内省式更新策略检测干扰物并自动存储锚帧，在7个基准上设立新SOTA。
+
+**[Assessing and Learning Alignment of Unimodal Vision and Language Models (SAIL)](assessing_and_learning_alignment_of_unimodal_vision_and_language_model.md)**
+
+:   提出 SAIL 框架——先通过 alignment probing 评估单模态视觉和语言模型的对齐潜力（发现 k-NN 聚类质量比线性可分性更重要），再用轻量级 GLU 对齐层 + Sigmoid 损失 + 多正样本策略高效对齐 DINOv2 和预训练语言模型，仅用 6% 的 CLIP 训练数据即超越 CLIP。
 
 **[SAIL: Assessing and Learning Alignment of Unimodal Vision and Language Models](assessing_and_learning_alignment_of_unimodal_vision_and_language_models.md)**
 
@@ -39,6 +43,10 @@ description: >-
 **[CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation](crossearth-sar_a_sar-centric_and_billion-scale_geospatial_foundation_model_for_d.md)**
 
 :   提出首个十亿参数级 SAR 视觉基础模型 CrossEarth-SAR，基于物理引导的稀疏混合专家 (MoE) 架构，构建了包含 200K 图像的训练集和 22 个子基准的评估体系，在 20/22 个跨域语义分割基准上达到 SOTA。
+
+**[DA-VPT: Semantic-Guided Visual Prompt Tuning for Vision Transformers](da-vpt_semantic-guided_visual_prompt_tuning_for_vision_transformers.md)**
+
+:   DA-VPT 提出了一种分布感知的视觉提示微调框架，通过在 ViT 深层利用度量学习构建 prompt 与视觉 token/CLS token 之间的语义度量空间，引导 prompt 作为"语义桥梁"传递图像 patch 的类特异性信息到 CLS token，在 24 个识别任务和 2 个分割任务上以极少参数显著超越标准 VPT。
 
 **[DeCLIP: Decoupled Learning for Open-Vocabulary Dense Perception](declip_decoupled_learning_for_open-vocabulary_dense_perception.md)**
 
@@ -180,13 +188,25 @@ description: >-
 
 :   提出 MatAnyone 框架，通过区域自适应记忆融合机制在记忆空间中实现一致性传播（核心区域保持语义稳定，边界区域捕获精细 alpha 细节），配合新数据集 VM800 和利用分割数据直接监督 matting head 的训练策略，实现了鲁棒且高质量的目标指定视频抠图。
 
-**[A Two-Stage Progressive Pre-training using Multi-Modal Contrastive Masked Autoencoders](multi-modal_contrastive_masked_autoencoders_a_two-stage_progressive_pre-training.md)**
+**[MV-SSM: Multi-View State Space Modeling for 3D Human Pose Estimation](mv-ssm_multi-view_state_space_modeling_for_3d_human_pose_estimation.md)**
 
-:   本文提出渐进式两阶段预训练策略——第一阶段用patch级对比学习对齐RGB和深度模态的跨模态表示，第二阶段用掩码自编码+受扩散模型启发的去噪+特征蒸馏联合训练，在ScanNet语义分割上比Mask3D提升+1.3% mIoU，在多个RGB-D下游任务上达到SOTA。
+:   MV-SSM 首次将状态空间模型（Mamba）引入多视图 3D 人体姿态估计，通过投影状态空间块 (PSS) 和网格 token 引导的双向扫描 (GTBS) 显式建模关节空间序列，在 CMU Panoptic 上达到 93.5 AP25 且在跨相机、跨场景泛化测试中大幅超越 SOTA。
+
+**[OverLoCK: An Overview-first-Look-Closely-next ConvNet with Context-Mixing Dynamic Kernels](overlock_an_overview-first-look-closely-next_convnet_with_context-mixing_dynamic.md)**
+
+:   提出OverLoCK，首个显式融入自顶向下注意力机制的纯卷积骨干网络，通过深层分解策略（DDS）和上下文混合动态卷积（ContMix），在ImageNet-1K上以仅1/3的FLOPs超越ConvNeXt-B，在检测和分割任务上全面领先。
+
+**[Paint by Inpaint: Learning to Add Image Objects by Removing Them First](paint_by_inpaint_learning_to_add_image_objects_by_removing_them_first.md)**
+
+:   提出"Paint by Inpaint"框架，利用"添加对象是移除对象的逆过程"这一洞察，通过自动化 inpainting 管线构建包含约 100 万高质量图像对的 PIPE 数据集，训练的扩散模型在对象添加和通用编辑任务上达到 SOTA。
 
 **[PicoSAM3: Real-Time In-Sensor Region-of-Interest Segmentation](picosam3_real-time_in-sensor_region-of-interest_segmentation.md)**
 
 :   PicoSAM3 是一个 1.3M 参数的超轻量可提示分割模型，通过 ROI 隐式提示编码、密集 CNN 架构（无 Transformer）、SAM3 知识蒸馏和 INT8 量化，在 COCO 上达 65.45% mIoU，并实现在 Sony IMX500 视觉传感器上 11.82ms 实时推理。
+
+**[POSTA: A Go-to Framework for Customized Artistic Poster Generation](posta_a_go-to_framework_for_customized_artistic_poster_generation.md)**
+
+:   提出 POSTA，一个由扩散模型和多模态大语言模型驱动的模块化艺术海报生成框架，通过背景生成、版式设计规划和艺术文字风格化三个模块实现高度可定制的专业级海报创作。
 
 **[Prompt-Driven Lightweight Foundation Model for Instance Segmentation-Based Fault Detection in Freight Trains](prompt-driven_lightweight_foundation_model_for_instance_segmentation-based_fault.md)**
 
@@ -196,21 +216,101 @@ description: >-
 
 :   RDNet 针对遥感图像中目标尺度剧烈变化的问题，提出区域比例感知的动态自适应显著性检测网络，通过动态自适应细节感知模块（DAD，根据目标区域比例选择不同大小卷积核组合）、频率匹配上下文增强模块（FCE，小波域特征交互）和区域比例感知定位模块（RPL，交叉注意力+比例引导），在 EORSSD/ORSSD/ORSI-4199 三个数据集上取得 SOTA。
 
+**[ResCLIP: Residual Attention for Training-free Dense Vision-language Inference](resclip_residual_attention_for_training-free_dense_vision-language_inference.md)**
+
+:   发现 CLIP 中间层的交叉相关自注意力具有定位属性，提出残差交叉相关自注意力（RCS）和语义反馈精炼（SFR）两个即插即用模块，显著提升 CLIP 在开放词汇语义分割中的密集推理能力。
+
+**[Rethinking Query-Based Transformer for Continual Image Segmentation](rethinking_query-based_transformer_for_continual_image_segmentation.md)**
+
+:   本文深入分析了 query-based Transformer 中 built-in objectness 的产生与消亡机制，提出 SimCIS 方法通过懒惰查询预对齐（QPA）、一致选择损失（CSL）和虚拟查询（VQ）三个模块，在保持 objectness 的同时提升可塑性，在 ADE20K 上的持续全景分割和持续语义分割任务中显著超越 SOTA。
+
+**[Revisiting Audio-Visual Segmentation with Vision-Centric Transformer](revisiting_audio-visual_segmentation_with_vision-centric_transformer.md)**
+
+:   本文提出以视觉为中心的 Transformer（VCT）框架来解决音频-视觉分割任务，用从视觉特征衍生的 query 替代传统的音频衍生 query，配合原型提示查询生成模块（PPQG），在 AVSBench 三个子集上达到新 SOTA，尤其在最具挑战性的 AVSS 子集上取得显著提升。
+
+**[RipVIS: Rip Currents Video Instance Segmentation Benchmark for Beach Monitoring](ripvis_rip_currents_video_instance_segmentation_benchmark_for_beach_monitoring_a.md)**
+
+:   RipVIS 提出首个大规模离岸流（rip current）视频实例分割基准数据集（184 视频/21 万帧），同时提出时序置信度聚合（TCA）后处理方法，通过跨帧置信度累积提升离岸流分割的稳定性和召回率，为海滩安全监测提供系统化的 CV 解决方案。
+
+**[Robust 3D Shape Reconstruction in Zero-Shot from a Single Image in the Wild](robust_3d_shape_reconstruction_in_zero-shot_from_a_single_image_in_the_wild.md)**
+
+:   ZeroShape-W 提出了一个遮挡感知的单视图三维形状重建模型，通过联合回归可见掩码、遮挡掩码、深度图和相机内参来估计完整 3D 形状（包括被遮挡部分），同时设计了一个可扩展的合成数据管线来模拟多样化的前景、遮挡物和背景，以仅 194M 参数在 Pix3D 基准上大幅超越了使用 >1100M 参数的 SOTA 方法。
+
+**[Robust Audio-Visual Segmentation via Audio-Guided Visual Convergent Alignment](robust_audio-visual_segmentation_via_audio-guided_visual_convergent_alignment.md)**
+
+:   本文通过音频引导的模态对齐（AMA）和不确定性估计（UE）两个模块，解决音视频分割中视觉相似物体的错误关联和发声状态频繁变化导致的过/欠分割问题，在AVS-Semantic上提升4.2%。
+
+**[ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting](rocket-1_mastering_open-world_interaction_with_visual-temporal_context_prompting.md)**
+
+:   ROCKET-1 提出了一种新的视觉时序上下文提示（visual-temporal context prompting）通信协议，通过在历史视觉观测上标注物体分割来引导策略模型与环境交互，训练了一个基于分割条件的低层策略，结合 GPT-4o、Molmo、SAM-2 构建层级智能体，在 Minecraft 中实现了 76% 的开放世界交互性能绝对提升。
+
+**[ROS-SAM: High-Quality Interactive Segmentation for Remote Sensing Moving Object](ros-sam_high-quality_interactive_segmentation_for_remote_sensing_moving_object.md)**
+
+:   ROS-SAM通过LoRA微调编码器、改进HQ解码器和重设计数据流水线，使SAM适配遥感视频运动目标的高质量交互分割任务，IoU提升13%并展现强零样本泛化能力。
+
 **[RSONet: Region-guided Selective Optimization Network for RGB-T Salient Object Detection](rsonet_region-guided_selective_optimization_network_for_rgb-t_salient_object_det.md)**
 
 :   提出区域引导选择性优化网络 RSONet，通过两阶段（区域引导+显著性生成）解决 RGB 与热红外图像中显著区域不一致问题，利用相似度分数自动选择信息更准确的模态主导后续融合。
+
+**[SAM2-LOVE: Segment Anything Model 2 in Language-Aided Audio-Visual Scenes](sam2-love_segment_anything_model_2_in_language-aided_audio-visual_scenes.md)**
+
+:   SAM2-LOVE 通过设计多模态融合 Transformer 将文本、音频、视觉三模态信息压缩为可学习 token 来提示 SAM2，结合 token 传播与累积策略增强时空一致性，在 Ref-AVS 基准上以 $\mathcal{J\&F}$ 58.5% 的成绩超越 SOTA（EEMC）8.5个百分点。
+
+**[SAMWise: Infusing Wisdom in SAM2 for Text-Driven Video Segmentation](samwise_infusing_wisdom_in_sam2_for_text-driven_video_segmentation.md)**
+
+:   SAMWISE 通过设计跨模态时序适配器（CMT）和条件记忆编码器（CME），在不微调 SAM2 权重的前提下为其注入自然语言理解和显式时序建模能力，以流式处理方式在参考视频目标分割（RVOS）任务上取得了 SOTA 性能，仅增加不到 5M 参数。
 
 **[SAP: Segment Any 4K Panorama](sap_segment_any_4k_panorama.md)**
 
 :   将 360° 全景图分割重新定义为透视视频分割问题，通过沿 zigzag 轨迹分解全景图为重叠 patch 序列并微调 SAM2 的 memory 模块，配合 183K 合成 4K 全景图的大规模训练，实现零样本全景分割 +17.2 mIoU 的提升。
 
+**[Scale Efficient Training for Large Datasets](scale_efficient_training_for_large_datasets.md)**
+
+:   提出 SeTa（Scale Efficient Training），一种基于 loss 的动态样本剪枝框架，通过随机采样去冗余、loss 聚类分难度、滑动窗口渐进式课程学习三步策略，在 11 个数据集 10 类任务 14 种模型上实现最高 50% 训练成本削减且性能无损。
+
+**[Scene-Centric Unsupervised Panoptic Segmentation](scene-centric_unsupervised_panoptic_segmentation.md)**
+
+:   CUPS 是首个直接在场景中心图像（如自动驾驶场景）上训练的无监督全景分割方法，通过融合自监督视觉特征、立体深度和光流运动线索生成高质量伪标签，在 Cityscapes 上的 PQ 超越此前 SOTA U2Seg 9.4 个点。
+
 **[SegAgent: Exploring Pixel Understanding Capabilities in MLLMs by Imitating Human Annotator Trajectories](segagent_exploring_pixel_understanding_capabilities_in_mllms_by_imitating_human_.md)**
 
 :   SegAgent 将 referring expression segmentation 建模为人类标注员的迭代操作过程——MLLM 观察当前 mask 状态后预测下一个点击位置，交互式分割模型据此更新 mask，经过多轮迭代得到最终分割结果；通过 StaR+ 策略改进和 PRM+树搜索，在复杂场景下大幅提升分割精度。
 
+**[GleSAM: Segment Any-Quality Images with Generative Latent Space Enhancement](segment_any-quality_images_with_generative_latent_space_enhancement.md)**
+
+:   GleSAM将预训练潜在扩散模型（LDM）的去噪能力引入SAM的隐空间，通过单步去噪增强低质量图像的特征表示，实现对任意质量图像的鲁棒分割。
+
+**[Segment Any Motion in Videos](segment_any_motion_in_videos.md)**
+
+:   本文提出了一种结合长程点轨迹运动线索、DINO 语义特征和 SAM2 像素级掩码致密化的运动物体分割方法，通过时空轨迹注意力和运动-语义解耦嵌入，在多个基准上显著超越了基于光流的传统方法，尤其在细粒度多物体分割场景中表现出色。
+
+**[Semantic Library Adaptation: LoRA Retrieval and Fusion for Open-Vocabulary Semantic Segmentation](semantic_library_adaptation_lora_retrieval_and_fusion_for_open-vocabulary_semant.md)**
+
+:   SemLA 提出了一个无需训练的测试时域适应框架，通过构建基于 CLIP 索引的 LoRA 适配器库，在推理时根据输入图像与各域质心的嵌入距离动态检索和融合最相关的适配器，为开放词汇语义分割模型实现了即时、高效的域适应。
+
 **[SGMA: Semantic-Guided Modality-Aware Segmentation for Remote Sensing with Incomplete Multimodal Data](sgma_semantic-guided_modality-aware_segmentation_for_remote_sensing_with_incompl.md)**
 
 :   提出SGMA框架，通过语义引导融合(SGF)模块构建全局语义原型估计模态鲁棒性并自适应加权融合，以及模态感知采样(MAS)模块动态优先训练脆弱模态，解决遥感不完整多模态分割中的模态不平衡、类内变化和跨模态异质性三大挑战。
+
+**[ShiftwiseConv: Small Convolutional Kernel with Large Kernel Effect](shiftwiseconv_small_convolutional_kernel_with_large_kernel_effect.md)**
+
+:   本文揭示大卷积核的有效性可解耦为"特定粒度的特征提取"和"多路径特征融合"两个因素，据此提出ShiftwiseConv（SW Conv）——一个使用标准3×3卷积通过空间移位和多路径连接来模拟大卷积核效果的即插即用CNN模块，在分类、检测、分割等任务上超越了SLaK和UniRepLKNet等大核CNN以及多种Transformer架构。
+
+**[Show and Tell: Visually Explainable Deep Neural Nets via Spatially-Aware Concept Bottleneck Models](show_and_tell_visually_explainable_deep_neural_nets_via_spatially-aware_concept_.md)**
+
+:   提出SALF-CBM，将任意视觉网络转化为空间感知的概念瓶颈模型，通过CLIP视觉提示生成空间化概念图，同时提供"在哪里"（热力图）和"是什么"（概念）的双重解释，在ImageNet上甚至超越原始backbone精度。
+
+**[SketchFusion: Learning Universal Sketch Features through Fusing Foundation Models](sketchfusion_learning_universal_sketch_features_through_fusing_foundation_models.md)**
+
+:   提出 SketchFusion，通过将 CLIP 视觉特征动态注入 Stable Diffusion 的去噪过程以互补 SD 的高频偏置和草图特征缺陷，结合自适应多尺度特征聚合，首次实现了基础模型时代的通用草图特征表示，在检索、识别、分割和对应学习四项任务上均达 SOTA。
+
+**[SmartEraser: Remove Anything from Images using Masked-Region Guidance](smarteraser_remove_anything_from_images_using_masked-region_guidance.md)**
+
+:   SmartEraser 提出 Masked-Region Guidance 新范式，保留掩码区域作为引导而非丢弃，配合百万级合成 Syn4Removal 数据集，在目标移除任务上大幅超越现有 mask-and-inpaint 方法。
+
+**[Soft Self-Labeling and Potts Relaxations for Weakly-Supervised Segmentation](soft_self-labeling_and_potts_relaxations_for_weakly-supervised_segmentation.md)**
+
+:   本文提出一种基于软伪标签的自标注方法，通过系统性评估多种 Potts 松弛形式和交叉熵变体，在标准网络架构上仅使用涂鸦（3% 像素）监督就实现了接近甚至超过全像素监督的分割性能，无需任何网络结构修改。
 
 **[SPARROW: Learning Spatial Precision and Temporal Referential Consistency in Pixel-Grounded Video MLLMs](sparrow_learning_spatial_precision_and_temporal_referential_consistency_in_pixel.md)**
 
@@ -219,3 +319,55 @@ description: >-
 **[Spatio-Semantic Expert Routing Architecture with Mixture-of-Experts for Referring Image Segmentation](spatio-semantic_expert_routing_architecture_with_mixture-of-experts_for_referrin.md)**
 
 :   提出 SERA 框架，在预训练视觉语言模型中引入轻量级表达感知的混合专家（MoE）精细化，分别在 backbone 层（SERA-Adapter）和融合层（SERA-Fusion）进行专家路由，仅更新 <1% 参数即在参考图像分割基准上达到 SOTA。
+
+**[StoryGPT-V: Large Language Models as Consistent Story Visualizers](storygpt-v_large_language_models_as_consistent_story_visualizers.md)**
+
+:   本文提出StoryGPT-V，通过两阶段训练——先训练角色感知的潜在扩散模型（Char-LDM）实现高质量角色生成，再将LLM输出与Char-LDM输入空间对齐实现指代消解和上下文一致性——在故事可视化任务上生成准确、高质量且时间一致的角色图像，内存消耗低。
+
+**[Style-Editor: Text-driven Object-Centric Style Editing](style-editor_text-driven_object-centric_style_editing.md)**
+
+:   提出 Style-Editor，利用 CLIP 空间中的 patch 级方向损失和自适应背景保持损失，实现仅通过文本描述即可对目标对象进行精确风格编辑，无需分割掩码或参考图像。
+
+**[Task-driven Image Fusion with Learnable Fusion Loss](task-driven_image_fusion_with_learnable_fusion_loss.md)**
+
+:   本文提出 TDFusion，通过元学习方式训练一个损失生成模块，使融合损失函数能够根据下游任务（语义分割或目标检测）自适应地调整，从而让红外-可见光融合图像在下游任务上表现最优。
+
+**[The Devil is in Low-Level Features for Cross-Domain Few-Shot Segmentation](the_devil_is_in_low-level_features_for_cross-domain_few-shot_segmentation.md)**
+
+:   本文深入分析了 CDFSS（跨域小样本分割）中"性能在训练早期即达峰值随后骤降"的现象，发现罪魁祸首是低级特征对域偏移的脆弱性导致损失景观变尖锐，据此提出两个即插即用模块：LEM（训练时通过随机卷积+FFT 实现面向低级特征的锐度感知最小化）和 LCM（测试时利用低级查询特征直接校准分割结果），在四个目标域上以平均 3.71%/5.34% 的 MIoU 提升超越 SOTA。
+
+**[The Devil is in Temporal Token: High Quality Video Reasoning Segmentation](the_devil_is_in_temporal_token_high_quality_video_reasoning_segmentation.md)**
+
+:   VRS-HQ 提出分层时间 token 编码（帧级 `<SEG>` + 视频级 `<TAK>`）和基于 token 驱动的关键帧选择策略，结合 SAM2 实现端到端的视频推理分割，在 ReVOS 上超越 VISA 达 9.1%。
+
+**[The Power of Context: How Multimodality Improves Image Super-Resolution](the_power_of_context_how_multimodality_improves_image_super-resolution.md)**
+
+:   提出 MMSR，一种融合深度、语义分割、边缘和文本描述等多模态信息的扩散模型超分辨率方法，通过多模态潜在连接器和多模态 CFG 有效抑制幻觉并提升 SR 质量。
+
+**[Token CropR: Faster ViTs for Quite a Few Tasks](token_cropr_faster_vits_for_quite_a_few_tasks.md)**
+
+:   提出 Token CropR (Cropr)，一种基于交叉注意力的 ViT token 剪枝方法，通过辅助预测头端到端学习按任务相关性选择 token，训练后可移除辅助头实现接近随机剪枝器的吞吐量，在分类/语义分割/目标检测/实例分割四类任务上均实现 1.5-4× 加速且性能损失极小。
+
+**[Towards Generalizable Scene Change Detection](towards_generalizable_scene_change_detection.md)**
+
+:   提出首个零样本场景变化检测框架 GeSCF，利用 SAM 内部特征实现跨域泛化且时序一致的变化掩码生成，同时定义了泛化 SCD 基准。
+
+**[Uni4D: Unifying Visual Foundation Models for 4D Modeling from a Single Video](uni4d_unifying_visual_foundation_models_for_4d_modeling_from_a_single_video.md)**
+
+:   Uni4D 提出一个多阶段优化框架，将多个预训练视觉基础模型（深度估计、点跟踪、分割等）统一为能量最小化问题，无需重新训练或微调，即可从单目随机视频中联合恢复相机位姿、静态/动态三维几何和稠密三维运动轨迹，在多个动态场景数据集上达到 SOTA。
+
+**[Universal Domain Adaptation for Semantic Segmentation](universal_domain_adaptation_for_semantic_segmentation.md)**
+
+:   首次提出语义分割的通用域适应（UniDA-SS）任务和 UniMAP 框架，通过域特定原型区分（DSPD）和基于目标的图像匹配（TIM）两个核心组件，在不需要预先知道类别配置的情况下实现从合成数据到真实数据的有效适应，显著超越现有 UDA-SS 方法。
+
+**[Using Diffusion Priors for Video Amodal Segmentation](using_diffusion_priors_for_video_amodal_segmentation.md)**
+
+:   本文将视频非模态分割（video amodal segmentation）重新建模为条件生成任务，利用预训练视频扩散模型（Stable Video Diffusion）的形状先验，以模态掩码和伪深度图为条件，在遮挡区域实现高达 13% mIoU 提升的补全效果，并首次实现视频级非模态内容补全。
+
+**[V-CLR: View-Consistent Learning for Open-World Instance Segmentation](v-clr_view-consistent_learning_for_open-world_instance_segmentation.md)**
+
+:   v-CLR 提出视图一致性学习框架，通过将自然图像变换为深度图/风格化图等外观不变视图，并在 DETR 架构中强制跨视图 query 特征一致 + 利用无监督物体 proposal 引导匹配方向，有效克服了检测网络的纹理偏差问题，在多个开放世界分割基准上达到 SOTA。
+
+**[Visual Consensus Prompting for Co-Salient Object Detection](visual_consensus_prompting_for_co-salient_object_detection.md)**
+
+:   本文首次将参数高效的提示学习范式引入共显著物体检测（CoSOD）任务，提出视觉共识提示（VCP），通过将共识提取与分散过程嵌入可学习的提示中，在冻结基础模型的条件下以极少可训练参数超越 13 个全参数微调方法。

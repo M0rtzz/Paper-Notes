@@ -170,9 +170,9 @@ $$R_{M_\theta}(d) = \mathbb{E}_{(p,t,e) \sim X_d}\left(\mathbb{E}_{p^- \sim \mat
 ## 相关论文
 
 - [Retrospective In-Context Learning for Temporal Credit Assignment with Large Language Models](retrospective_incontext_learning_for_temporal_credit_assignm.md)
+- [Scaling Embedding Layers in Language Models](scaling_embedding_layers_in_language_models.md)
 - [Scalable Fingerprinting of Large Language Models](scalable_fingerprinting_of_large_language_models.md)
 - [The Curse of Depth in Large Language Models](the_curse_of_depth_in_large_language_models.md)
-- [Scaling Embedding Layers in Language Models](scaling_embedding_layers_in_language_models.md)
 - [Revisiting Continuity of Image Tokens for Cross-Domain Few-Shot Learning](../../ICML2025/llm_pretraining/revisiting_continuity_of_image_tokens_for_cross-domain_few-shot_learning.md)
 
 <!-- RELATED:END -->

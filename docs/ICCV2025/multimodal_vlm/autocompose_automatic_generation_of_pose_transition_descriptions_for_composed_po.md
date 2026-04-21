@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AutoComPose: Automatic Generation of Pose Transition Descriptions for Composed Pose Retrieval Using Multimodal LLMs
 description: >-

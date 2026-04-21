@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Geometry Meets Light: Leveraging Geometric Priors for Universal Photometric Stereo under Limited Multi-Illumination Cues
 description: >-
@@ -407,6 +407,6 @@ $$\mathcal{F} = \text{Concat}(\mathcal{F}_{\text{Geo}}, \mathcal{F}_{\text{IL}})
 - [Generalized Geometry Encoding Volume for Real-time Stereo Matching](generalized_geometry_encoding_volume_for_real-time_stereo_matching.md)
 - [Relative Illumination Fields: Learning Medium and Light Independent Underwater Scenes](../../ICCV2025/3d_vision/relative_illumination_fields_learning_medium_and_light_independent_underwater_sc.md)
 - [AnchorSplat: Feed-Forward 3D Gaussian Splatting with 3D Geometric Priors](../../CVPR2026/3d_vision/anchorsplat_feed-forward_3d_gaussian_splatting_with_3d_geometric_priors.md)
-- [VGGT-Det: Mining VGGT Internal Priors for Sensor-Geometry-Free Multi-View Indoor 3D Object Detection](../../CVPR2026/3d_vision/vggt-det_mining_vggt_internal_priors_for_sensor-geometry-free_multi-view_indoor_.md)
+- [Generative Multiview Relighting for 3D Reconstruction under Extreme Illumination Variation](../../CVPR2025/3d_vision/generative_multiview_relighting_for_3d_reconstruction_under_extreme_illumination.md)
 
 <!-- RELATED:END -->

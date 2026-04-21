@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Policy-as-Prompt: Turning AI Governance Rules into Guardrails for AI Agents
 description: >-
@@ -137,6 +137,6 @@ tags:
 - [Factor(U,T): Controlling Untrusted AI by Monitoring their Plans](../../AAAI2026/social_computing/factorut_controlling_untrusted_ai_by_monitoring_their_plans.md)
 - [OS-Harm: A Benchmark for Measuring Safety of Computer Use Agents](os-harm_a_benchmark_for_measuring_safety_of_computer_use_agents.md)
 - [Propaganda AI: An Analysis of Semantic Divergence in Large Language Models](../../ICLR2026/social_computing/propaganda_ai_an_analysis_of_semantic_divergence_in_large_language_models.md)
-- [A Multi-Task Benchmark for Abusive Language Detection in Low-Resource Settings](a_multitask_benchmark_for_abusive_language_detection_in_lowr.md)
+- [DATE-LM: Benchmarking Data Attribution Evaluation for Large Language Models](date-lm_benchmarking_data_attribution_evaluation_for_large_language_models.md)
 
 <!-- RELATED:END -->

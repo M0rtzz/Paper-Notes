@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 2HandedAfforder: Learning Precise Actionable Bimanual Affordances from Human Videos
 description: >-

@@ -123,9 +123,9 @@ tags:
 
 ## 相关论文
 
+- [VTON 360: High-Fidelity Virtual Try-On from Any Viewing Direction](vton_360_high-fidelity_virtual_try-on_from_any_viewing_direction.md)
+- [X-Dyna: Expressive Dynamic Human Image Animation](x-dyna_expressive_dynamic_human_image_animation.md)
 - [FreeCloth: Free-Form Generation Enhances Challenging Clothed Human Modeling](freecloth_free-form_generation_enhances_challenging_clothed_human_modeling.md)
-- [MM-CondChain: A Programmatically Verified Benchmark for Visually Grounded Deep Compositional Reasoning](mm-condchain_a_programmatically_verified_benchmark_for_visually_grounded_deep_co.md)
-- [Perceive What Matters: Relevance-Driven Scheduling for Multimodal Streaming Perception](perceive_what_matters_relevance-driven_scheduling_for_multimodal_streaming_perce.md)
 - [NBAvatar: Neural Billboards Avatars with Realistic Hand-Face Interaction](nbavatar_neural_billboards_avatars_with_realistic_hand-face_interaction.md)
 - [Team RAS in 10th ABAW Competition: Multimodal Valence and Arousal Estimation Approach](team_ras_in_10th_abaw_competition_multimodal_valence_and_arousal_estimation_appr.md)
 

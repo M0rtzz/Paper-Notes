@@ -172,8 +172,8 @@ $$
 
 - [Time-Evolving Dynamical System for Learning Latent Representations of Mouse Visual Cortex](../../NeurIPS2025/interpretability/time-evolving_dynamical_system_for_learning_latent_representations_of_mouse_visu.md)
 - [MATA: A Trainable Hierarchical Automaton System for Multi-Agent Visual Reasoning](mata_a_trainable_hierarchical_automaton_system_for_multi-agent_visual_reasoning.md)
-- [Beyond the Fold: Quantifying Split-Level Noise and the Case for Leave-One-Dataset-Out AU Evaluation](../../CVPR2026/interpretability/beyond_the_fold_quantifying_split-level_noise_and_the_case_for_leave-one-dataset.md)
-- [TDATR: Improving End-to-End Table Recognition via Table Detail-Aware Learning and Cell-Level Visual Alignment](../../CVPR2026/interpretability/tdatr_improving_end-to-end_table_recognition_via_table_detail-aware_learning_and.md)
 - [Evolving Prompts In-Context: An Open-ended, Self-replicating Perspective](../../ICML2025/interpretability/evolving_prompts_in-context_an_open-ended_self-replicating_perspective.md)
+- [Beyond the Fold: Quantifying Split-Level Noise and the Case for Leave-One-Dataset-Out AU Evaluation](../../CVPR2026/interpretability/beyond_the_fold_quantifying_split-level_noise_and_the_case_for_leave-one-dataset.md)
+- [VL-SAE: Interpreting and Enhancing Vision-Language Alignment with a Unified Concept Set](../../NeurIPS2025/interpretability/vlsae_interpreting_and_enhancing_visionlanguage_alignment_wi.md)
 
 <!-- RELATED:END -->

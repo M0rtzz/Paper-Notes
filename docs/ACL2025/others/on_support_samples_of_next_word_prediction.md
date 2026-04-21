@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On Support Samples of Next Word Prediction
 description: >-

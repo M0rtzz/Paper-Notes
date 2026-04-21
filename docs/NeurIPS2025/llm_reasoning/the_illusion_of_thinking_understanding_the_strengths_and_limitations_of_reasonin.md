@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Illusion of Thinking: Understanding the Strengths and Limitations of Reasoning Models via the Lens of Problem Complexity
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Retrv-R1: A Reasoning-Driven MLLM Framework for Universal and Efficient Multimodal Retrieval
 description: >-

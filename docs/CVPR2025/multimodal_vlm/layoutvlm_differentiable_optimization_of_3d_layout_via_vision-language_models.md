@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] LayoutVLM: Differentiable Optimization of 3D Layout via Vision-Language Models
 description: >-
-  [CVPR 2025][多模态VLM] 利用VLM的语义知识生成可微分的场景布局表示，结合物理约束优化生成物理合理且语义一致的3D布局
+  [CVPR 2025][多模态][3D布局生成] 提出LayoutVLM，利用VLM的语义知识生成包含数值位姿估计和空间关系约束的双重场景布局表示，通过可微分优化联合优化语义目标和物理合理性约束，在11种房间类型上显著超越现有方法。
 tags:
   - CVPR 2025
-  - 3D场景生成
-  - 视觉语言模型
+  - 多模态
+  - 3D布局生成
   - 可微分优化
-  - 空间推理
-  - 室内场景
+  - 空间关系
+  - VLM空间推理
+  - 开放语义场景合成
 ---
 
 # LayoutVLM: Differentiable Optimization of 3D Layout via Vision-Language Models
@@ -165,8 +166,8 @@ $$\mathcal{L}_{\text{physics}} = \sum_{i=1}^{N}\sum_{j \neq i}^{N} \mathcal{L}_{
 
 - [RoboSpatial: Teaching Spatial Understanding to 2D and 3D Vision-Language Models for Robotics](robospatial_teaching_spatial_understanding_to_2d_and_3d_vision-language_models_f.md)
 - [Generalized Few-Shot 3D Point Cloud Segmentation with Vision-Language Model](generalized_few-shot_3d_point_cloud_segmentation_with_vision-language_model.md)
-- [HiSpatial: Taming Hierarchical 3D Spatial Understanding in Vision-Language Models](../../CVPR2026/multimodal_vlm/hispatial_taming_hierarchical_3d_spatial_understanding_in_vision-language_models.md)
 - [Balanced Token Pruning: Accelerating Vision Language Models Beyond Local Optimization](../../NeurIPS2025/multimodal_vlm/balanced_token_pruning_accelerating_vision_language_models_b.md)
 - [Better Tokens for Better 3D: Advancing Vision-Language Modeling in 3D Medical Imaging](../../NeurIPS2025/multimodal_vlm/better_tokens_for_better_3d_advancing_vision-language_modeling_in_3d_medical_ima.md)
+- [SeqAfford: Sequential 3D Affordance Reasoning via Multimodal Large Language Model](seqafford_sequential_3d_affordance_reasoning_via_multimodal_large_language_model.md)
 
 <!-- RELATED:END -->

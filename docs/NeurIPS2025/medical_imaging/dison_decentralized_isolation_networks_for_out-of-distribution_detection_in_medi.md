@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DIsoN: Decentralized Isolation Networks for Out-of-Distribution Detection in Medical Imaging
 description: >-

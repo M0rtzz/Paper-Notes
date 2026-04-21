@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Vanish into Thin Air: Cross-prompt Universal Adversarial Attacks for SAM2
 description: >-
@@ -124,6 +124,6 @@ UAP-SAM2在视频分割上的平均mIoU为37.72%，比最好的基线UAPGD低10.
 - [RS2-SAM2: Customized SAM2 for Referring Remote Sensing Image Segmentation](../../AAAI2026/segmentation/rs2-sam2_customized_sam2_for_referring_remote_sensing_image_segmentation.md)
 - [Efficient-SAM2: Accelerating SAM2 with Object-Aware Visual Encoding and Memory Retrieval](../../ICLR2026/segmentation/efficient-sam2_accelerating_sam2_with_object-aware_visual_encoding_and_memory_re.md)
 - [HAODiff: Human-Aware One-Step Diffusion via Dual-Prompt Guidance](haodiff_human-aware_one-step_diffusion_via_dual-prompt_guidance.md)
-- [A Distractor-Aware Memory for Visual Object Tracking with SAM2](../../CVPR2025/segmentation/a_distractor-aware_memory_for_visual_object_tracking_with_sam2.md)
+- [Universal Domain Adaptation for Semantic Segmentation](../../CVPR2025/segmentation/universal_domain_adaptation_for_semantic_segmentation.md)
 
 <!-- RELATED:END -->

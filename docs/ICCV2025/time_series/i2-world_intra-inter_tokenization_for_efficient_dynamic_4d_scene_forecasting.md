@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] I²-World: Intra-Inter Tokenization for Efficient Dynamic 4D Scene Forecasting
 description: >-

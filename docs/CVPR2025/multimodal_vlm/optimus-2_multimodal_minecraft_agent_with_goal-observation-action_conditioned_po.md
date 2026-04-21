@@ -1,16 +1,18 @@
-﻿---
+---
 title: >-
   [论文解读] Optimus-2: Multimodal Minecraft Agent with Goal-Observation-Action Conditioned Policy
 description: >-
-  [CVPR 2025][多模态Agent][Minecraft][行为克隆] 提出GOAP策略建模观察-动作因果关系，结合MLLM实现开放式指令理解，在原子/长程/开放任务上全面超越SOTA
+  [CVPR 2025][多模态][Minecraft Agent] 提出Optimus-2，通过MLLM进行高层规划，结合Goal-Observation-Action Conditioned Policy (GOAP)进行底层控制，其中GOAP使用Action-guided Behavior Encoder建模观察-动作因果关系，并用MLLM对齐行为token与语言指令，在Minecraft原子任务上平均提升27%、长程任务提升10%、开放指令任务提升18%。
 tags:
   - CVPR 2025
-  - 多模态大模型
-  - 具身智能
-  - Minecraft
+  - 多模态
+  - Minecraft Agent
+  - 多模态大语言模型
   - 行为克隆
-  - 开放世界Agent
-  - MLLM
+  - 目标条件策略
+  - 观察-动作因果建模
+  - GOAP
+  - MGOA数据集
 ---
 
 # Optimus-2: Multimodal Minecraft Agent with Goal-Observation-Action Conditioned Policy
@@ -93,8 +95,8 @@ Optimus-2采用规划器-策略架构：MLLM规划器（GPT-4V）将复杂任务
 
 - [From Observation to Action: Latent Action-based Primitive Segmentation for VLA Pre-training in Industrial Settings](../../CVPR2026/multimodal_vlm/from_observation_to_action_latent_action-based_primitive_segmentation_for_vla_pr.md)
 - [Dita: Scaling Diffusion Transformer for Generalist Vision-Language-Action Policy](../../ICCV2025/multimodal_vlm/dita_scaling_diffusion_transformer_for_generalist_visionlang.md)
-- [HomeSafe-Bench: Evaluating Vision-Language Models on Unsafe Action Detection for Embodied Agents in Household Scenarios](homesafe-bench_evaluating_vision-language_models_on_unsafe_action_detection_for_.md)
 - [GoalLadder: Incremental Goal Discovery with Vision-Language Models](../../NeurIPS2025/multimodal_vlm/goalladder_incremental_goal_discovery_with_vision-language_models.md)
+- [HomeSafe-Bench: Evaluating Vision-Language Models on Unsafe Action Detection for Embodied Agents in Household Scenarios](homesafe-bench_evaluating_vision-language_models_on_unsafe_action_detection_for_.md)
 - [MMAT-1M: A Large Reasoning Dataset for Multimodal Agent Tuning](../../ICCV2025/multimodal_vlm/mmat1m_a_large_reasoning_dataset_for_multimodal_agent_tuning.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NTPP: Generative Speech Language Modeling for Dual-Channel Spoken Dialogue via Next-Token-Pair Prediction
 description: >-

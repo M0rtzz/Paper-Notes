@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] Ca2-VDM: Efficient Autoregressive Video Diffusion Model with Causal Generation and Cache Sharing
 description: >-
-  [ICML 2025][图像生成][视频扩散模型] 提出 Ca2-VDM，通过因果生成（Causal Generation）和缓存共享（Cache Sharing）两大设计，消除自回归视频扩散模型中条件帧的冗余计算，将计算复杂度从二次降至线性，生成 80 帧视频速度比基线快 2.5 倍，同时保持 SOTA 级生成质量。
+  [ICML 2025][视频扩散模型] 提出 Ca2-VDM，通过因果生成（Causal Generation）和缓存共享（Cache Sharing）两大设计，消除自回归视频扩散模型中条件帧的冗余计算，将计算复杂度从二次降至线性，生成 80 帧视频速度比基线快 2.5 倍，同时保持 SOTA 级生成质量。
 tags:
   - ICML 2025
-  - 图像生成
   - 视频扩散模型
   - 自回归生成
   - KV-Cache
@@ -190,10 +189,10 @@ $$\widetilde{\mathcal{L}}_{\text{simple}}(\theta) = \mathbb{E}_{\mathbf{z}, \bol
 
 ## 相关论文
 
+- [Timestep Embedding Tells: It's Time to Cache for Video Diffusion Model](../../CVPR2025/video_generation/timestep_embedding_tells_its_time_to_cache_for_video_diffusion_model.md)
 - [FilmWeaver: Weaving Consistent Multi-Shot Videos with Cache-Guided Autoregressive Diffusion](../../AAAI2026/video_generation/filmweaver_weaving_consistent_multi-shot_videos_with_cache-guided_autoregressive.md)
 - [Lumos-1: On Autoregressive Video Generation with Discrete Diffusion from a Unified Model Perspective](../../ICLR2026/video_generation/lumos-1_on_autoregressive_video_generation_with_discrete_diffusion_from_a_unifie.md)
-- [MagCache: Fast Video Generation with Magnitude-Aware Cache](../../NeurIPS2025/video_generation/magcache_fast_video_generation_with_magnitudeaware_cache.md)
 - [Dual-Expert Consistency Model for Efficient and High-Quality Video Generation](../../ICCV2025/video_generation/dual-expert_consistency_model_for_efficient_and_high-quality_video_generation.md)
-- [LeanVAE: An Ultra-Efficient Reconstruction VAE for Video Diffusion Models](../../ICCV2025/video_generation/leanvae_an_ultra-efficient_reconstruction_vae_for_video_diffusion_models.md)
+- [Parallelized Autoregressive Visual Generation](../../CVPR2025/video_generation/parallelized_autoregressive_visual_generation.md)
 
 <!-- RELATED:END -->

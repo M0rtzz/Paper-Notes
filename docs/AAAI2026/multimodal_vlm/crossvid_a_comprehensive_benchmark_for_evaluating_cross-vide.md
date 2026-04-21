@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CrossVid: A Comprehensive Benchmark for Evaluating Cross-Video Reasoning in Multimodal Large Language Models
 description: >-

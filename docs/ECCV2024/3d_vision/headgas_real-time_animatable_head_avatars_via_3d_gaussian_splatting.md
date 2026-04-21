@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HeadGaS: Real-Time Animatable Head Avatars via 3D Gaussian Splatting
 description: >-

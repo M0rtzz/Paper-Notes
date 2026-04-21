@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] StyleTokenizer: Defining Image Style by a Single Instance for Controlling Diffusion Models
 description: >-
@@ -125,8 +125,8 @@ StyleTokenizer的工作流程：(1) 使用风格编码器从参考图像中提�
 
 - [Controlling the World by Sleight of Hand](controlling_the_world_by_sleight_of_hand.md)
 - [ZigMa: A DiT-style Zigzag Mamba Diffusion Model](zigma_a_dit-style_zigzag_mamba_diffusion_model.md)
-- [Implicit Style-Content Separation using B-LoRA](implicit_style-content_separation_using_b-lora.md)
 - [L-DiffER: Single Image Reflection Removal with Language-Based Diffusion Model](l-differ_single_image_reflection_removal_with_language-based_diffusion_model.md)
+- [Implicit Style-Content Separation using B-LoRA](implicit_style-content_separation_using_b-lora.md)
 - [ZipLoRA: Any Subject in Any Style by Effectively Merging LoRAs](ziplora_any_subject_in_any_style_by_effectively_merging_loras.md)
 
 <!-- RELATED:END -->

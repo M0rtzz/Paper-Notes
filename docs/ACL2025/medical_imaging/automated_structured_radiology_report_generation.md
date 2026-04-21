@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Automated Structured Radiology Report Generation
 description: >-

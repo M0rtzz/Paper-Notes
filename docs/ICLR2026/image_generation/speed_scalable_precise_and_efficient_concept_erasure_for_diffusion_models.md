@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SPEED: Scalable, Precise, and Efficient Concept Erasure for Diffusion Models
 description: >-
@@ -133,8 +133,8 @@ $$(\bm{\Delta}\mathbf{P})_{\text{Ours}} = \mathbf{W}(\mathbf{C}_*\mathbf{C}_1^\t
 
 - [Localized Concept Erasure in Text-to-Image Diffusion Models via High-Level Representation Misdirection](localized_concept_erasure_in_text-to-image_diffusion_models_via_high-level_repre.md)
 - [Mass Concept Erasure in Diffusion Models with Concept Hierarchy](../../AAAI2026/image_generation/mass_concept_erasure_in_diffusion_models_with_concept_hierarchy.md)
+- [Precise, Fast, and Low-cost Concept Erasure in Value Space: Orthogonal Complement Matters](../../CVPR2025/image_generation/precise_fast_and_low-cost_concept_erasure_in_value_space_orthogonal_complement_m.md)
 - [Prototype-Guided Concept Erasure in Diffusion Models](../../CVPR2026/image_generation/prototype-guided_concept_erasure_in_diffusion_models.md)
 - [Neighbor-Aware Localized Concept Erasure in Text-to-Image Diffusion Models](../../CVPR2026/image_generation/neighbor-aware_localized_concept_erasure_in_text-to-image_diffusion_models.md)
-- [Semantic Surgery: Zero-Shot Concept Erasure in Diffusion Models](../../NeurIPS2025/image_generation/semantic_surgery_zero-shot_concept_erasure_in_diffusion_models.md)
 
 <!-- RELATED:END -->

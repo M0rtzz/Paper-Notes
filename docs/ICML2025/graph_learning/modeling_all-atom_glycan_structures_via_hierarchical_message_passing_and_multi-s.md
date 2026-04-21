@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GlycanAA: Modeling All-Atom Glycan Structures via Hierarchical Message Passing and Multi-Scale Pre-training
 description: >-

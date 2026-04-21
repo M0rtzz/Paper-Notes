@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AutoToM: Scaling Model-based Mental Inference via Automated Agent Modeling
 description: >-

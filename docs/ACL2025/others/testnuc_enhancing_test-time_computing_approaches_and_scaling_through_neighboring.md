@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TestNUC: Enhancing Test-Time Computing Approaches and Scaling through Neighboring Unlabeled Data Consistency
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Nearly Optimal Sample Complexity for Learning with Label Proportions
 description: >-
@@ -126,7 +126,7 @@ tags:
 - [Improved Sample Complexity for Private Nonsmooth Nonconvex Optimization](improved_sample_complexity_for_private_nonsmooth_nonconvex_optimization.md)
 - [Second-Order Optimization Under Heavy-Tailed Noise: Hessian Clipping and Sample Complexity](../../NeurIPS2025/optimization/second-order_optimization_under_heavy-tailed_noise_hessian_clipping_and_sample_c.md)
 - [A Near-Optimal Single-Loop Stochastic Algorithm for Convex Finite-Sum Coupled Compositional Optimization](a_near-optimal_single-loop_stochastic_algorithm_for_convex_finite-sum_coupled_co.md)
-- [Estimation of Stochastic Optimal Transport Maps](../../NeurIPS2025/optimization/estimation_of_stochastic_optimal_transport_maps.md)
 - [A Generalization Result for Convergence in Learning-to-Optimize](a_generalization_result_for_convergence_in_learning-to-optimize.md)
+- [Learning to Plan & Reason for Evaluation with Thinking-LLM-as-a-Judge](learning_to_plan_reason_for_evaluation_with_thinking-llm-as-a-judge.md)
 
 <!-- RELATED:END -->

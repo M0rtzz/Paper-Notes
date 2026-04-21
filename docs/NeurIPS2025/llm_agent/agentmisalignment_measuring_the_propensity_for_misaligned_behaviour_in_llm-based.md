@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AgentMisalignment: Measuring the Propensity for Misaligned Behaviour in LLM-Based Agents
 description: >-

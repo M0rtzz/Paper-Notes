@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] C²Prompt: Class-aware Client Knowledge Interaction for Federated Continual Learning
 description: >-

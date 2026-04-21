@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EvoLMM: Self-Evolving Large Multimodal Models with Continuous Rewards
 description: >-

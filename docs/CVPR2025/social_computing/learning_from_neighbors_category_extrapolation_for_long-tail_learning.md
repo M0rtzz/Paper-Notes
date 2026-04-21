@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning from Neighbors: Category Extrapolation for Long-Tail Learning
 description: >-

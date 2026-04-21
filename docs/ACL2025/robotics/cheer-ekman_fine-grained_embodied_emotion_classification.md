@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CHEER-Ekman: Fine-grained Embodied Emotion Classification
 description: >-

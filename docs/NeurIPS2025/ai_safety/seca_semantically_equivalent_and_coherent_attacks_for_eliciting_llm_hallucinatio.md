@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SECA: Semantically Equivalent and Coherent Attacks for Eliciting LLM Hallucinations
 description: >-
@@ -133,7 +133,7 @@ SECA 将幻觉诱发形式化为约束优化：在输入 prompt 空间中搜索�
 - [MaskSQL: Safeguarding Privacy for LLM-Based Text-to-SQL via Abstraction](masksql_safeguarding_privacy_for_llm-based_text-to-sql_via_abstraction.md)
 - [When Backdoors Speak: Understanding LLM Backdoor Attacks Through Model-Generated Explanations](../../ACL2025/ai_safety/when_backdoors_speak_understanding_llm_backdoor_attacks_through_model-generated_.md)
 - [SHIELD: Suppressing Hallucinations In LVLM Encoders via Bias and Vulnerability Defense](../../ICLR2026/ai_safety/shield_suppressing_hallucinations_in_lvlm_encoders_via_bias_and_vulnerability_de.md)
-- [Provable Watermarking for Data Poisoning Attacks](provable_watermarking_for_data_poisoning_attacks.md)
+- [Bias in the Picture: Benchmarking VLMs with Social-Cue News Images and LLM-as-Judge Assessment](bias_in_the_picture_benchmarking_vlms_with_social-cue_news_images_and_llm-as-jud.md)
 - [SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders](saemark_steering_personalized_multilingual_llm_watermarks_with_sparse_autoencode.md)
 
 <!-- RELATED:END -->

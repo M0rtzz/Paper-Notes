@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Accelerate 3D Object Detection Models via Zero-Shot Attention Key Pruning
 description: >-
@@ -133,7 +133,7 @@ tgGBC 在 FocalPETR 上甚至提升了 mAP（42.38% vs 42.36%），表明适度�
 - [MonoMobility: Zero-Shot 3D Mobility Analysis from Monocular Videos](monomobility_zero-shot_3d_mobility_analysis_from_monocular_videos.md)
 - [DSPDet3D: 3D Small Object Detection with Dynamic Spatial Pruning](../../ECCV2024/3d_vision/dspdet3d_3d_small_object_detection_with_dynamic_spatial_pruning.md)
 - [Diorama: Unleashing Zero-shot Single-view 3D Indoor Scene Modeling](diorama_unleashing_zero-shot_single-view_3d_indoor_scene_modeling.md)
-- [BUFFER-X: Towards Zero-Shot Point Cloud Registration in Diverse Scenes](buffer-x_towards_zero-shot_point_cloud_registration_in_diverse_scenes.md)
+- [Back to Point: Exploring Point-Language Models for Zero-Shot 3D Anomaly Detection](../../CVPR2026/3d_vision/back_to_point_exploring_point-language_models_for_zero-shot_3d_anomaly_detection.md)
 - [Zero-Shot Inexact CAD Model Alignment from a Single Image](zero-shot_inexact_cad_model_alignment_from_a_single_image.md)
 
 <!-- RELATED:END -->

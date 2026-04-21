@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ReCon-GS: Continuum-Preserved Gaussian Streaming for Fast and Compact Reconstruction
 description: >-

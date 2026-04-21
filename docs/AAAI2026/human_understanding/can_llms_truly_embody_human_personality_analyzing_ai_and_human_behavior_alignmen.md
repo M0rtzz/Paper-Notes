@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Can LLMs Truly Embody Human Personality? Analyzing AI and Human Behavior Alignment in Dispute Resolution
 description: >-

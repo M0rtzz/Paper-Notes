@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Closed-Form Solution for Debiasing Vision-Language Models with Utility Guarantees Across Modalities and Tasks
 description: >-
@@ -130,8 +130,8 @@ tags:
 
 - [Self-Supervised Spatial Correspondence Across Modalities](self-supervised_spatial_correspondence_across_modalities.md)
 - [HiFICL: High-Fidelity In-Context Learning for Multimodal Tasks](hificl_high-fidelity_in-context_learning_for_multimodal_tasks.md)
+- [Mosaic of Modalities: A Comprehensive Benchmark for Multimodal Graph Learning](mosaic_of_modalities_a_comprehensive_benchmark_for_multimodal_graph_learning.md)
 - [DynRefer: Delving into Region-level Multimodal Tasks via Dynamic Resolution](dynrefer_delving_into_region-level_multimodal_tasks_via_dynamic_resolution.md)
-- [FastVLM: Efficient Vision Encoding for Vision Language Models](fastvlm_efficient_vision_encoding_for_vision_language_models.md)
-- [What's in the Image? A Deep-Dive into the Vision of Vision Language Models](whats_in_the_image_a_deep-dive_into_the_vision_of_vision_language_models.md)
+- [Mimic In-Context Learning for Multimodal Tasks](mimic_in-context_learning_for_multimodal_tasks.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TheoremExplainAgent: Towards Video-based Multimodal Explanations for LLM Theorem Understanding
 description: >-

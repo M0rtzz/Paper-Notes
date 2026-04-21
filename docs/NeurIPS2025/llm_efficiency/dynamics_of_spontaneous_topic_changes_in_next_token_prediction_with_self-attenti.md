@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamics of Spontaneous Topic Changes in Next Token Prediction with Self-Attention
 description: >-
@@ -120,8 +120,8 @@ tags:
 ## 相关论文
 
 - [L-MTP: Leap Multi-Token Prediction Beyond Adjacent Context for Large Language Models](l-mtp_leap_multi-token_prediction_beyond_adjacent_context_for_large_language_mod.md)
+- [Spiking Transformer: Introducing Accurate Addition-Only Spiking Self-Attention for Transformer](../../CVPR2025/llm_efficiency/spiking_transformer_introducing_accurate_addition-only_spiking_self-attention_fo.md)
 - [Frequency-Aware Token Reduction for Efficient Vision Transformer](frequency-aware_token_reduction_for_efficient_vision_transformer.md)
-- [Linear Attention for Efficient Bidirectional Sequence Modeling](linear_attention_for_efficient_bidirectional_sequence_modeling.md)
 - [Tensor Product Attention Is All You Need](tensor_product_attention_is_all_you_need.md)
 - [The Emergence of Sparse Attention: Impact of Data Distribution and Benefits of Repetition](the_emergence_of_sparse_attention_impact_of_data_distribution_and_benefits_of_re.md)
 

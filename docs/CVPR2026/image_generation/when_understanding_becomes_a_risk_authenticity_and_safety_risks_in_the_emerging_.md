@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When Understanding Becomes a Risk: Authenticity and Safety Risks in the Emerging Image Generation Paradigm
 description: >-

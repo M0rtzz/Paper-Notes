@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Modal Aphasia: Can Unified Multimodal Models Describe Images From Memory?
 description: >-

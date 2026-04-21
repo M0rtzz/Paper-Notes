@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sleepless Nights, Sugary Days: Creating Synthetic Users with Health Conditions for Realistic Coaching Agent Interactions
 description: >-

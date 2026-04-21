@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SynWeather: Weather Observation Data Synthesis across Multiple Regions and Variables via a General Diffusion Transformer
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mining Instance-Centric Vision-Language Contexts for Human-Object Interaction Detection
 description: >-
@@ -136,8 +136,8 @@ ViT-B 版本：HICO-DET Full 39.53（超 HORP +0.92），V-COCO S1 72.2（超 SC
 
 ## 相关论文
 
-- [UI-Vision: A Desktop-centric GUI Benchmark for Visual Perception and Interaction](../../ICML2025/object_detection/ui-vision_a_desktop-centric_gui_benchmark_for_visual_perception_and_interaction.md)
 - [Saliency-R1: Enforcing Interpretable and Faithful Vision-language Reasoning via Saliency-map Alignment Reward](saliency-r1_enforcing_interpretable_and_faithful_vision-language_reasoning_via_s.md)
+- [UI-Vision: A Desktop-centric GUI Benchmark for Visual Perception and Interaction](../../ICML2025/object_detection/ui-vision_a_desktop-centric_gui_benchmark_for_visual_perception_and_interaction.md)
 - [Token Reduction via Local and Global Contexts Optimization for Efficient Video Large Language Models](token_reduction_via_local_and_global_contexts_optimization_for_efficient_video_l.md)
 - [ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation](rehark_refined_hybrid_adaptive_rbf_kernels_for_rob.md)
 - [PHAC: Promptable Human Amodal Completion](phac_promptable_human_amodal_completion.md)

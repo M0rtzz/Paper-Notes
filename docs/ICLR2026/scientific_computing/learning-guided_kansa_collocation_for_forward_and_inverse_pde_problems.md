@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning-guided Kansa Collocation for Forward and Inverse PDE Problems
 description: >-

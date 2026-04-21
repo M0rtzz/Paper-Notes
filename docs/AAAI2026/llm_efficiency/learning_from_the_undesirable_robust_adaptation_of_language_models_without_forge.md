@@ -148,6 +148,6 @@ $$\ell_{\text{LfU}}(\theta, \theta_{\text{aux}}) = \ell_{\text{SFT}}(\theta) + \
 - [Expert Divergence Learning for MoE-based Language Models](../../ICLR2026/llm_efficiency/expert_divergence_learning_for_moe-based_language_models.md)
 - [Harnessing the Unseen: The Hidden Influence of Intrinsic Knowledge in Long-Context Language Models](harnessing_the_unseen_the_hidden_influence_of_intrinsic_knowledge_in_long-contex.md)
 - [Attention Retention for Continual Learning with Vision Transformers](attention_retention_for_continual_learning_with_vision_transformers.md)
-- [Steering Language Models with Weight Arithmetic](../../ICLR2026/llm_efficiency/steering_language_models_with_weight_arithmetic.md)
+- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](../../CVPR2025/llm_efficiency/language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
 
 <!-- RELATED:END -->

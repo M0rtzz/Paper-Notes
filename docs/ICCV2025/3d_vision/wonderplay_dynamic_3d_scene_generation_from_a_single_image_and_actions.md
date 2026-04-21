@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WonderPlay: Dynamic 3D Scene Generation from a Single Image and Actions
 description: >-
@@ -146,10 +146,10 @@ Pipeline 分三步：
 
 ## 相关论文
 
-- [Sat2City: 3D City Generation from A Single Satellite Image with Cascaded Latent Diffusion](sat2city_3d_city_generation_from_a_single_satellite_image_with_cascaded_latent_d.md)
+- [WonderWorld: Interactive 3D Scene Generation from a Single Image](../../CVPR2025/3d_vision/wonderworld_interactive_3d_scene_generation_from_a_single_image.md)
 - [AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction](ar1to3_single_image_to_consistent_3d_object_via_nextview_pre.md)
-- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](../../CVPR2025/3d_vision/midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
+- [Sat2City: 3D City Generation from A Single Satellite Image with Cascaded Latent Diffusion](sat2city_3d_city_generation_from_a_single_satellite_image_with_cascaded_latent_d.md)
 - [A Recipe for Generating 3D Worlds from a Single Image](a_recipe_for_generating_3d_worlds_from_a_single_image.md)
-- [Baking Gaussian Splatting into Diffusion Denoiser for Fast and Scalable Single-stage Image-to-3D Generation and Reconstruction](baking_gaussian_splatting_into_diffusion_denoiser_for_fast_a.md)
+- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](../../CVPR2025/3d_vision/midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
 
 <!-- RELATED:END -->

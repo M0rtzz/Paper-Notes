@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Deconstructing Positional Information: From Attention Logits to Training Biases
 description: >-
@@ -100,8 +100,8 @@ tags:
 
 - [Explaining Grokking and Information Bottleneck through Neural Collapse Emergence](explaining_grokking_and_information_bottleneck_through_neural_collapse_emergence.md)
 - [Benign Overfitting in Token Selection of Attention Mechanism](../../ICML2025/llm_pretraining/benign_overfitting_in_token_selection_of_attention_mechanism.md)
-- [Robust Message Embedding via Attention Flow-Based Steganography](../../CVPR2025/llm_pretraining/robust_message_embedding_via_attention_flow-based_steganography.md)
-- [No-Regret Strategy Solving in Imperfect-Information Games via Pre-Trained Embedding](../../AAAI2026/llm_pretraining/no-regret_strategy_solving_in_imperfect-information_games_via_pre-trained_embedd.md)
 - [Counting in Small Transformers: The Delicate Interplay between Attention and Feed-Forward Layers](../../ICML2025/llm_pretraining/counting_in_small_transformers_the_delicate_interplay_between_attention_and_feed.md)
+- [No-Regret Strategy Solving in Imperfect-Information Games via Pre-Trained Embedding](../../AAAI2026/llm_pretraining/no-regret_strategy_solving_in_imperfect-information_games_via_pre-trained_embedd.md)
+- [Between Circuits and Chomsky: Pre-pretraining on Formal Languages Imparts Linguistic Biases](../../ACL2025/llm_pretraining/between_circuits_chomsky.md)
 
 <!-- RELATED:END -->

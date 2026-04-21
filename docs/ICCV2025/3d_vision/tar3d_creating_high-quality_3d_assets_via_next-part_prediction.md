@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TAR3D: Creating High-Quality 3D Assets via Next-Part Prediction
 description: >-
@@ -174,7 +174,7 @@ TAR3D包含两个核心模块：**3D VQ-VAE**（将3D形状编码为离散三平
 - [AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction](ar1to3_single_image_to_consistent_3d_object_via_nextview_pre.md)
 - [ARMesh: Autoregressive Mesh Generation via Next-Level-of-Detail Prediction](../../NeurIPS2025/3d_vision/armesh_autoregressive_mesh_generation_via_next-level-of-detail_prediction.md)
 - [Bridging 3D Anomaly Localization and Repair via High-Quality Continuous Geometric Representation](bridging_3d_anomaly_localization_and_repair_via_high-quality_continuous_geometri.md)
-- [Find Any Part in 3D](find_any_part_in_3d.md)
 - [PASDF: Bridging 3D Anomaly Localization and Repair via High-Quality Continuous Geometric Representation](bridging_3d_anomaly_localization_and_repair_via_highquality.md)
+- [Find Any Part in 3D](find_any_part_in_3d.md)
 
 <!-- RELATED:END -->

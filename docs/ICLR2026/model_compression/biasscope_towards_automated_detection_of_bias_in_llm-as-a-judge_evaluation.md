@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BiasScope: Towards Automated Detection of Bias in LLM-as-a-Judge Evaluation
 description: >-

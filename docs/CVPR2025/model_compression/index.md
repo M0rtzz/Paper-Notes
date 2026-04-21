@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 模型压缩方向 46篇论文解读
+  CVPR2025 模型压缩方向 58篇论文解读
 description: >-
-  46篇CVPR2025 模型压缩方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  58篇CVPR2025 模型压缩方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**📷 CVPR2025** · **46** 篇论文解读
+**📷 CVPR2025** · **58** 篇论文解读
 
 **[Adapter Merging with Centroid Prototype Mapping for Scalable Class-Incremental Learning](adapter_merging_with_centroid_prototype_mapping_for_scalable_class-incremental_l.md)**
 
@@ -25,6 +25,10 @@ description: >-
 **[ARCHE: Autoregressive Residual Compression with Hyperprior and Excitation](arche_autoregressive_residual_compression_with_hyperprior_and_excitation.md)**
 
 :   提出ARCHE端到端学习型图像压缩框架，在统一概率架构中整合分层Hyperprior、掩码空间自回归上下文、通道条件化和SE激励通道重校准，无需Transformer或循环组件，在Kodak上相对Ballé基线BD-Rate降低约48%，相对VVC Intra降低约5.6%，仅95M参数和222ms解码时间。
+
+**[AutoSSVH: Exploring Automated Frame Sampling for Efficient Self-Supervised Video Hashing](autossvh_exploring_automated_frame_sampling_for_efficient_self-supervised_video_h.md)**
+
+:   提出AutoSSVH方法，通过对抗式自动帧采样网络（Grade-Net）选择最具挑战性的帧子集作为训练信号，并设计P2Set（Point-to-Set）哈希对比学习范式，实现了高效的自监督视频哈希检索，在UCF101和HMDB51上大幅超越现有方法。
 
 **[BHViT: Binarized Hybrid Vision Transformer](bhvit_binarized_hybrid_vision_transformer.md)**
 
@@ -184,10 +188,54 @@ description: >-
 
 :   NADER 将神经架构设计建模为多 LLM Agent 协作任务——Reader 读论文提炼知识、Proposer 生成改进方案、Modifier 用 DAG 图实现修改、Reflector 从失败中学习经验，仅 10 次试验即突破 NAS-Bench-201 搜索空间的准确率上限，在 CIFAR-100 上达 74.51%（搜索空间最优 73.51%）。
 
+**[Parameter Efficient Mamba Tuning via Projector-targeted Diagonal-centric Linear Transformation](parameter_efficient_mamba_tuning_via_projector-targeted_diagonal-centric_linear_.md)**
+
+:   本文揭示了 Mamba 架构中 Projector（投影层）而非 SSM 才是迁移学习的关键组件，并提出 ProDiaL 方法——通过对角中心线性变换矩阵间接微调冻结的 Projector 权重，仅训练不到 1% 的参数即可在视觉和语言 Mamba 模型上实现超越 LoRA/DoRA 的下游任务性能。
+
+**[Plug-and-Play Versatile Compressed Video Enhancement](plug-and-play_versatile_compressed_video_enhancement.md)**
+
+:   本文提出一种编解码器感知的压缩视频增强框架，通过复用码流中的压缩因子、运动向量和分区图等信息，以单一模型自适应增强不同压缩级别的视频，同时作为即插即用模块辅助多种下游视觉任务。
+
+**[Reversible Decoupling Network for Single Image Reflection Removal](reversible_decoupling_network_for_single_image_reflection_removal.md)**
+
+:   RDNet 提出了一种基于可逆解耦架构的单图像反射去除方法，通过多列可逆编码器保证多尺度语义信息在前向传播中的无损传递，并设计传输率感知提示生成器来自适应不同反射强度，在五个基准数据集上全面超越 SOTA，赢得 NTIRE 2025 挑战赛。
+
+**[Sampling Innovation-Based Adaptive Compressive Sensing](sampling_innovation-based_adaptive_compressive_sensing.md)**
+
+:   提出 SIB-ACS 框架，通过"采样创新"准则（衡量采样增量带来的重建误差下降）指导多阶段自适应采样分配，并设计主成分压缩域网络（PCCD-Net）进行高保真图像重建，显著超越 SOTA 压缩感知方法。
+
+**[Sketch Down the FLOPs: Towards Efficient Networks for Human Sketch](sketch_down_the_flops_towards_efficient_networks_for_human_sketch.md)**
+
+:   首次针对人类草图（sketch）数据的特有特性设计高效推理网络：通过跨模态知识蒸馏（SketchyNetV1）将大网络压缩到轻量级网络并保持 FG-SBIR 精度，再通过强化学习驱动的自适应画布尺寸选择器（SketchyNetV2）利用草图的稀疏抽象特性进一步减少 FLOPs，最终实现 99.37% 的 FLOPs 缩减（40.18G→0.254G）而几乎不损失精度。
+
+**[Style Quantization for Data-Efficient GAN Training](style_quantization_for_data-efficient_gan_training.md)**
+
+:   SQ-GAN 通过将 StyleGAN 的中间 style 空间离散量化为可学习码本，把稀疏连续潜变量空间压缩为紧凑结构化的离散代理空间，增强有限数据下判别器一致性正则化的效果，并利用 CLIP 嵌入+最优传输距离初始化码本，将外部语义知识注入码本，显著提升小样本 GAN 的生成质量。
+
+**[TADFormer: Task-Adaptive Dynamic Transformer for Efficient Multi-Task Learning](tadformer_task-adaptive_dynamic_transformer_for_efficient_multi-task_learning.md)**
+
+:   TADFormer 提出一种面向多任务学习的参数高效微调框架，通过动态任务滤波器（DTF）根据输入上下文动态提取细粒度任务特征，结合任务提示条件操作和跨任务交互，在 PASCAL-Context 上以少于全微调 8.4 倍的参数量实现更高精度。
+
 **[Targeted Forgetting of Image Subgroups in CLIP Models](targeted_forgetting_of_image_subgroups_in_clip_models.md)**
 
 :   提出三阶段 CLIP 模型子群遗忘方法：遗忘阶段用相对 Fisher 信息定位关键层+LoRA 微调遗忘目标类；提醒阶段用分布对齐在保留集上恢复；恢复阶段用模型汤（model souping）恢复零样本能力。在 ImageNet-1K 上遗忘分数达 91.0（基线 68.9）。
 
+**[Task Singular Vectors: Reducing Task Interference in Model Merging](task_singular_vectors_reducing_task_interference_in_model_merging.md)**
+
+:   提出 Task Singular Vectors (TSV) 框架，在逐层任务矩阵的 SVD 空间中分析和解决模型合并中的任务干扰问题：TSV-Compress 将任务向量压缩至 10% 保留 99% 精度，TSV-Merge 通过白化变换去相关化不同任务的奇异向量，在 8/14/20 任务合并上平均超过现有方法约 15 个百分点。
+
+**[Towards Practical Real-Time Neural Video Compression](towards_practical_real-time_neural_video_compression.md)**
+
+:   提出DCVC-RT，首个在消费级硬件上实现1080p实时编解码且压缩率超越H.266/VTM的神经视频编解码器，核心发现是操作复杂度（而非计算复杂度）才是速度瓶颈，据此设计隐式时序建模和单尺度低分辨率潜表示，在A100上达到125/113 fps编解码速度，同时节省21%码率。
+
+**[Tripartite Weight-Space Ensemble for Few-Shot Class-Incremental Learning](tripartite_weight-space_ensemble_for_few-shot_class-incremental_learning.md)**
+
+:   本文提出 Tri-WE 方法通过在权重空间插值 base、前一 session 和当前 session 三个分类头来更新整个模型（而非冻结特征提取器），并用 amplified data 知识蒸馏（ADKD）缓解少样本场景下的遗忘问题，在 miniImageNet/CUB200/CIFAR100 上达到 FSCIL SOTA。
+
 **[Understanding Multi-Layered Transmission Matrices](understanding_multi-layered_transmission_matrices.md)**
 
 :   分析体散射介质的多层传输矩阵近似，发现"缺失锥"（光学孔径导致的频率域约束）使所需 SLM 层数远少于 Nyquist 采样预测——200μm 组织理论需要 100 层但实际只需 3-4 层即可实现良好聚焦，视场从 1×1μm 扩展到 13×13μm。
+
+**[WAVE: Weight Templates for Adaptive Initialization of Variable-sized Models](wave_weight_templates_for_adaptive_initialization_of_variable-sized_models.md)**
+
+:   提出 WAVE，将变尺寸模型初始化重新定义为多任务学习问题，通过共享的尺寸无关权重模板和轻量级尺寸特定的权重缩放器（via Kronecker 积）实现高效初始化，仅需 3.3% 预训练参数即可在 10 个 epoch 内超越 150 epoch 训练的模型。

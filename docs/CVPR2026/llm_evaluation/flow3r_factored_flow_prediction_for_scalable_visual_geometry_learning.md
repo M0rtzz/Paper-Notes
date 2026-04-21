@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Flow3r: Factored Flow Prediction for Scalable Visual Geometry Learning
 description: >-
@@ -158,8 +158,8 @@ Flow3r 在全部 4 个动态数据集的全部指标上取得最优，位姿和�
 
 - [Reframing Long-Tailed Learning via Loss Landscape Geometry](reframing_long-tailed_learning_via_loss_landscape_geometry.md)
 - [Free-Grained Hierarchical Visual Recognition](free-grained_hierarchical_visual_recognition.md)
-- [Scalable Vision-Guided Crop Yield Estimation](../../AAAI2026/llm_evaluation/scalable_vision-guided_crop_yield_estimation.md)
 - [LLM-as-a-Judge for Scalable Test Coverage Evaluation](../../AAAI2026/llm_evaluation/llm-as-a-judge_for_scalable_test_coverage_evaluation_accuracy_operational_reliab.md)
+- [Scalable Vision-Guided Crop Yield Estimation](../../AAAI2026/llm_evaluation/scalable_vision-guided_crop_yield_estimation.md)
 - [Semi-Supervised Conformal Prediction With Unlabeled Nonconformity Score](semi-supervised_conformal_prediction_with_unlabeled_nonconformity_score.md)
 
 <!-- RELATED:END -->

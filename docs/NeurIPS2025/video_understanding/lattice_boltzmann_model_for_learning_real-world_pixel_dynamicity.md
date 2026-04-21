@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Lattice Boltzmann Model for Learning Real-World Pixel Dynamicity
 description: >-
@@ -164,6 +164,6 @@ LBM 在 BFT 上 OWTA 达 50.3、在 OVT-B 上 TETA 达 41.2，均为无额外训
 - [LiveStar: Live Streaming Assistant for Real-World Online Video Understanding](livestar_live_streaming_assistant_for_real-world_online_video_understanding.md)
 - [Real-World Point Tracking with Verifier-Guided Pseudo-Labeling](../../CVPR2026/video_understanding/realworld_point_tracking_with_verifierguided_pseud.md)
 - [PiTe: Pixel-Temporal Alignment for Large Video-Language Model](../../ECCV2024/video_understanding/pite_pixel-temporal_alignment_for_large_video-language_model.md)
-- [Open-World Drone Active Tracking with Goal-Centered Rewards](open-world_drone_active_tracking_with_goal-centered_rewards.md)
+- [OVO-Bench: How Far is Your Video-LLMs from Real-World Online Video Understanding?](../../CVPR2025/video_understanding/ovo-bench_how_far_is_your_video-llms_from_real-world_online_video_understanding.md)
 
 <!-- RELATED:END -->

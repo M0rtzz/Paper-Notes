@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DeepRAHT: Learning Predictive RAHT for Point Cloud Attribute Compression
 description: >-

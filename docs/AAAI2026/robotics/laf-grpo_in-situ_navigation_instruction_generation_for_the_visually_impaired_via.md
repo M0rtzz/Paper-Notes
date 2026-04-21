@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LaF-GRPO: In-Situ Navigation Instruction Generation for the Visually Impaired via GRPO with LLM-as-Follower Reward
 description: >-

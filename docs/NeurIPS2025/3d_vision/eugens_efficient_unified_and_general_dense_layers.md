@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EUGens: Efficient, Unified, and General Dense Layers
 description: >-

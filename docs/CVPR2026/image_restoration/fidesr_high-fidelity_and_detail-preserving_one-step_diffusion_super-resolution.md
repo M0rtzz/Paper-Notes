@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FiDeSR: High-Fidelity and Detail-Preserving One-Step Diffusion Super-Resolution
 description: >-
@@ -149,8 +149,8 @@ FiDeSR 基于 SD 2.1-base，采用 LoRA 微调的单步扩散框架：
 
 - [Disentangled Textual Priors for Diffusion-based Image Super-Resolution](disentangled_textual_priors_for_diffusion-based_image_super-resolution.md)
 - [Detail-Preserving Latent Diffusion for Stable Shadow Removal](../../CVPR2025/image_restoration/detail-preserving_latent_diffusion_for_stable_shadow_removal.md)
+- [One-Step Event-Driven High-Speed Autofocus](../../CVPR2025/image_restoration/one-step_event-driven_high-speed_autofocus.md)
 - [Statistical Characteristic-Guided Denoising for Rapid High-Resolution Transmission Electron Microscopy Imaging](statistical_characteristic-guided_denoising_for_rapid_high-resolution_transmissi.md)
 - [Bridging the Perception Gap in Image Super-Resolution Evaluation](bridging_the_perception_gap_in_image_super-resolution_evaluation.md)
-- [RAW-Domain Degradation Models for Realistic Smartphone Super-Resolution](raw-domain_degradation_models_for_realistic_smartphone_super-resolution.md)
 
 <!-- RELATED:END -->

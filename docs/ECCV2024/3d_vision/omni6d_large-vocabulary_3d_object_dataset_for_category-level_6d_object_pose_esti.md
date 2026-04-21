@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Omni6D: Large-Vocabulary 3D Object Dataset for Category-Level 6D Object Pose Estimation
 description: >-

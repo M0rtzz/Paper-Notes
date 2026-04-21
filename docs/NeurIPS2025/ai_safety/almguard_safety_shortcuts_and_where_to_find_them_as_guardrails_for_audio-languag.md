@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ALMGuard: Safety Shortcuts and Where to Find Them as Guardrails for Audio-Language Models
 description: >-

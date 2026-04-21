@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLMs Encode Their Failures: Predicting Success from Pre-Generation Activations
 description: >-

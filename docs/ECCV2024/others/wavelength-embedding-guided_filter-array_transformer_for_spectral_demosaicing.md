@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Wavelength-Embedding-guided Filter-Array Transformer for Spectral Demosaicing
 description: >-
@@ -123,7 +123,7 @@ WeFAT（Wavelength Embedding guided Filter Array Attention Transformer）接受 
 
 - [Online Temporal Action Localization with Memory-Augmented Transformer](online_temporal_action_localization_with_memory-augmented_transformer.md)
 - [Adaptive High-Frequency Transformer for Diverse Wildlife Re-Identification](adaptive_highfrequency_transformer_for_diverse_wildlife_reid.md)
-- [SHREC: A Spectral Embedding-Based Approach for Ab-Initio Reconstruction of Helical Molecules](../../CVPR2026/others/shrec_a_spectral_embedding-based_approach_for_ab-initio_reconstruction_of_helica.md)
+- [SHREC: A Spectral Embedding-Based Approach for Ab-Initio Reconstruction of Helical Molecules](../../CVPR2026/others/shrec_a_spectral_embeddingbased_approach_for_abini.md)
 - [Exploring Guided Sampling of Conditional GANs](exploring_guided_sampling_of_conditional_gans.md)
 - [Rethinking Data Bias: Dataset Copyright Protection via Embedding Class-Wise Hidden Bias](rethinking_data_bias_dataset_copyright_protection_via_embedding_class-wise_hidde.md)
 

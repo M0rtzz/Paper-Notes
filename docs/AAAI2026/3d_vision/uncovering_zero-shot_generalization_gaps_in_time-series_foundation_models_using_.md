@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Uncovering Zero-Shot Generalization Gaps in Time-Series Foundation Models Using Real-World Videos
 description: >-
@@ -163,8 +163,8 @@ $$e_{fb}(\mathbf{p}_0) = \|\mathbf{p}_0 - (f_{backward} \circ f_{forward})(\math
 ## 相关论文
 
 - [Multi-Scale Finetuning for Encoder-based Time Series Foundation Models](../../NeurIPS2025/3d_vision/multi-scale_finetuning_for_encoder-based_time_series_foundation_models.md)
-- [FeDaL: Federated Dataset Learning for General Time Series Foundation Models](../../ICLR2026/3d_vision/fedal_federated_dataset_learning_for_general_time_series_foundation_models.md)
 - [ProbFM: Probabilistic Time Series Foundation Model with Uncertainty Decomposition](probfm_probabilistic_time_series_foundation_model_with_uncertainty_decomposition.md)
+- [FeDaL: Federated Dataset Learning for General Time Series Foundation Models](../../ICLR2026/3d_vision/fedal_federated_dataset_learning_for_general_time_series_foundation_models.md)
 - [Less is More: Unlocking Specialization of Time Series Foundation Models via Structured Pruning](../../NeurIPS2025/3d_vision/less_is_more_unlocking_specialization_of_time_series_foundation_models_via_struc.md)
 - [Generalized Geometry Encoding Volume for Real-time Stereo Matching](generalized_geometry_encoding_volume_for_real-time_stereo_matching.md)
 

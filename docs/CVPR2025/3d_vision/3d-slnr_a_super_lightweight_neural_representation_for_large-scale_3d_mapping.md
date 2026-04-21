@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3D-SLNR: A Super Lightweight Neural Representation for Large-scale 3D Mapping
 description: >-
@@ -106,9 +106,9 @@ tags:
 ## 相关论文
 
 - [IM360: Large-scale Indoor Mapping with 360 Cameras](../../ICCV2025/3d_vision/im360_large-scale_indoor_mapping_with_360_cameras.md)
-- [Digital Twin Catalog: A Large-Scale Photorealistic 3D Object Digital Twin Dataset](digital_twin_catalog_a_large-scale_photorealistic_3d_object_digital_twin_dataset.md)
 - [Horizon-GS: Unified 3D Gaussian Splatting for Large-Scale Aerial-to-Ground Scenes](horizon-gs_unified_3d_gaussian_splatting_for_large-scale_aerial-to-ground_scenes.md)
+- [Digital Twin Catalog: A Large-Scale Photorealistic 3D Object Digital Twin Dataset](digital_twin_catalog_a_large-scale_photorealistic_3d_object_digital_twin_dataset.md)
 - [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
-- [FoundHand: Large-Scale Domain-Specific Learning for Controllable Hand Image Generation](foundhand_large-scale_domain-specific_learning_for_controllable_hand_image_gener.md)
+- [S2Gaussian: Sparse-View Super-Resolution 3D Gaussian Splatting](s2gaussian_sparse-view_super-resolution_3d_gaussian_splatting.md)
 
 <!-- RELATED:END -->

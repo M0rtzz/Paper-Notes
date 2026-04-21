@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stable Preference: Redefining Training Paradigm of Human Preference Model for Text-to-Image Synthesis
 description: >-
@@ -140,7 +140,7 @@ Stable Preference在标准的偏好模型训练框架上进行改进。输入仍
 - [OmniSSR: Zero-shot Omnidirectional Image Super-Resolution using Stable Diffusion Model](omnissr_zero-shot_omnidirectional_image_super-resolution_using_stable_diffusion_.md)
 - [Unveiling Advanced Frequency Disentanglement Paradigm for Low-Light Image Enhancement](unveiling_advanced_frequency_disentanglement_paradigm_for_low-light_image_enhanc.md)
 - [Text2Place: Affordance-aware Text Guided Human Placement](text2place_affordance-aware_text_guided_human_placement.md)
-- [Pixel-Aware Stable Diffusion for Realistic Image Super-Resolution and Personalized Stylization](pixel-aware_stable_diffusion_for_realistic_image_super-resolution_and_personaliz.md)
 - [HPSv3: Towards Wide-Spectrum Human Preference Score](../../ICCV2025/image_generation/hpsv3_towards_wide-spectrum_human_preference_score.md)
+- [Pixel-Aware Stable Diffusion for Realistic Image Super-Resolution and Personalized Stylization](pixel-aware_stable_diffusion_for_realistic_image_super-resolution_and_personaliz.md)
 
 <!-- RELATED:END -->

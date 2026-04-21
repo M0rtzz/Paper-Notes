@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Provably Improving Generalization of Few-Shot Models with Synthetic Data
 description: >-

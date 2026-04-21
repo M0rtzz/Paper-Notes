@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The AI Gap: How Socioeconomic Status Affects Language Technology Interactions
 description: >-

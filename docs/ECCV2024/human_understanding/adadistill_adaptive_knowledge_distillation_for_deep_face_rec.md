@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdaDistill: Adaptive Knowledge Distillation for Deep Face Recognition
 description: >-

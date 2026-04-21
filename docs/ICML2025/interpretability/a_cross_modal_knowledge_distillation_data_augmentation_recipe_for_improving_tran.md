@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Cross Modal Knowledge Distillation & Data Augmentation Recipe for Improving Transcriptomics Representations through Morphological Features
 description: >-

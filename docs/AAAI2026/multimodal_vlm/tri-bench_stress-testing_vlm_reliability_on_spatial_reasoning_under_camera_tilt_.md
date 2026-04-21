@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tri-Bench: Stress-Testing VLM Reliability on Spatial Reasoning under Camera Tilt and Object Interference
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Harnessing PDF Data for Improving Japanese Large Multimodal Models
 description: >-

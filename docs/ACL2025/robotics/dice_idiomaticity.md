@@ -122,6 +122,6 @@ DICE (Dataset for Idiomatic Contrastive Evaluation) 的核心设计原则：**�
 - [Unable to Forget: Proactive Interference Reveals Working Memory Limits in LLMs Beyond Context Length](../../ICML2025/robotics/unable_to_forget_proactive_interference_reveals_working_memory_limits_in_llms_be.md)
 - [Instruction-based Image Manipulation by Watching How Things Move](../../CVPR2025/robotics/instruction-based_image_manipulation_by_watching_how_things_move.md)
 - [Understanding Prompt Tuning and In-Context Learning via Meta-Learning](../../NeurIPS2025/robotics/understanding_prompt_tuning_and_in-context_learning_via_meta-learning.md)
-- [DexVLG: Dexterous Vision-Language-Grasp Model at Scale](../../ICCV2025/robotics/dexvlg_dexterous_vision-language-grasp_model_at_scale.md)
+- [Vulnerability of LLMs to Vertically Aligned Text Manipulations](vulnerability_of_llms_to_vertically_aligned_text_manipulations.md)
 
 <!-- RELATED:END -->

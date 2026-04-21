@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] IterResearch: Rethinking Long-Horizon Agents with Interaction Scaling
 description: >-

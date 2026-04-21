@@ -2,15 +2,16 @@
 title: >-
   [论文解读] InteractionMap: Improving Online Vectorized HDMap Construction with Interaction
 description: >-
-  [CVPR 2025][自动驾驶][HD地图] 本文提出InteractionMap，通过关系嵌入模块(REM)、关键帧分层时序融合模块(TFM)和几何感知对齐模块(GAM)，充分利用时空局部到全局的信息交互，在nuScenes和Argoverse2两个基准上达到SOTA性能，mAP分别达到71.8和74.7。
+  [CVPR 2025][自动驾驶][HD地图构建] 本文提出InteractionMap，通过点级和实例级关系嵌入、关键帧分层时序融合和几何感知分类-定位对齐三个模块，全面增强在线矢量化HD地图构建中的信息交互，在nuScenes (mAP 71.8) 和Argoverse2 (mAP 74.7) 上均取得SOTA。
 tags:
   - CVPR 2025
   - 自动驾驶
-  - HD地图
+  - HD地图构建
   - 在线矢量化
   - 时序融合
-  - DETR
+  - 关系嵌入
   - 几何感知对齐
+  - DETR
 ---
 
 # InteractionMap: Improving Online Vectorized HDMap Construction with Interaction
@@ -133,9 +134,9 @@ $$\mathcal{L}_{GFL} = \sum_{i=1}^{N_{pos}} s_{geo_i} BCE(s_{geo_i}, p_i) + \sum_
 ## 相关论文
 
 - [MapGCLR: Geospatial Contrastive Learning of Representations for Online Vectorized HD Map Construction](mapgclr_geospatial_contrastive_learning_of_representations_for_online_vectorized.md)
-- [DecoupledGaussian: Object-Scene Decoupling for Physics-Based Interaction](decoupledgaussian_object-scene_decoupling_for_physics-based_interaction.md)
+- [Uncertainty-Instructed Structure Injection for Generalizable HD Map Construction](uncertainty-instructed_structure_injection_for_generalizable_hd_map_construction.md)
 - [Stream Query Denoising for Vectorized HD-Map Construction](../../ECCV2024/autonomous_driving/stream_query_denoising_for_vectorized_hd-map_construction.md)
-- [SDTagNet: Leveraging Text-Annotated Navigation Maps for Online HD Map Construction](../../NeurIPS2025/autonomous_driving/sdtagnet_leveraging_text-annotated_navigation_maps_for_online_hd_map_constructio.md)
-- [Scenario Dreamer: Vectorized Latent Diffusion for Generating Driving Simulation Environments](scenario_dreamer_vectorized_latent_diffusion_for_generating_driving_simulation_e.md)
+- [Online Video Understanding: OVBench and VideoChat-Online](online_video_understanding_ovbench_and_videochat-online.md)
+- [DecoupledGaussian: Object-Scene Decoupling for Physics-Based Interaction](decoupledgaussian_object-scene_decoupling_for_physics-based_interaction.md)
 
 <!-- RELATED:END -->

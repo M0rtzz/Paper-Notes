@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GM-MoE: Low-Light Enhancement with Gated-Mechanism Mixture-of-Experts
 description: >-
@@ -140,6 +140,6 @@ $$\text{PSNR loss} = -\frac{10}{\log(10)} \cdot \log(\text{MSE} + \epsilon)$$
 - [OD-RASE: Ontology-Driven Risk Assessment and Safety Enhancement for Autonomous Driving](od-rase_ontology-driven_risk_assessment_and_safety_enhancement_for_autonomous_dr.md)
 - [MAESTRO: Task-Relevant Optimization via Adaptive Feature Enhancement and Suppression for Multi-task 3D Perception](maestro_task-relevant_optimization_via_adaptive_feature_enhancement_and_suppress.md)
 - [LiMoE: Mixture of LiDAR Representation Learners from Automotive Scenes](../../CVPR2025/autonomous_driving/limoe_mixture_of_lidar_representation_learners_from_automotive_scenes.md)
-- [LightLoc: Learning Outdoor LiDAR Localization at Light Speed](../../CVPR2025/autonomous_driving/lightloc_learning_outdoor_lidar_localization_at_light_speed.md)
+- [Neural Inverse Rendering from Propagating Light](../../CVPR2025/autonomous_driving/neural_inverse_rendering_from_propagating_light.md)
 
 <!-- RELATED:END -->

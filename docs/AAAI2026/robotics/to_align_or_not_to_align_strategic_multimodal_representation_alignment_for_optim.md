@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] To Align or Not to Align: Strategic Multimodal Representation Alignment for Optimal Performance
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Burden of Interactive Alignment with Inconsistent Preferences
 description: >-

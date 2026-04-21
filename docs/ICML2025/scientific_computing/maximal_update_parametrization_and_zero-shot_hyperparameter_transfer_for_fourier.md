@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Maximal Update Parametrization and Zero-Shot Hyperparameter Transfer for Fourier Neural Operators
 description: >-
@@ -161,10 +161,10 @@ $$a(K)=1, \quad b(K) = c(K) = \Theta\!\left(\frac{1}{\sqrt{d\log K}}\right)$$
 
 ## 相关论文
 
+- [Accurate Differential Operators for Hybrid Neural Fields](../../CVPR2025/scientific_computing/accurate_differential_operators_for_hybrid_neural_fields.md)
 - [Towards Universal Neural Operators through Multiphysics Pretraining](../../NeurIPS2025/scientific_computing/towards_universal_neural_operators_through_multiphysics_pretraining.md)
 - [Physics-Informed Neural Networks with Fourier Features and Attention-Driven Decoding](../../NeurIPS2025/scientific_computing/physics-informed_neural_networks_with_fourier_features_and_attention-driven_deco.md)
 - [DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving](../../NeurIPS2025/scientific_computing/deltaphi_physical_states_residual_learning_for_neural_operators_in_data-limited_.md)
-- [Accurate Differential Operators for Hybrid Neural Fields](../../CVPR2025/scientific_computing/accurate_differential_operators_for_hybrid_neural_fields.md)
 - [Multi-Trajectory Physics-Informed Neural Networks for HJB Equations with Hard-Zero Terminal Inventory: Optimal Execution on Synthetic & SPY Data](../../NeurIPS2025/scientific_computing/multi-trajectory_physics-informed_neural_networks_for_hjb_equations_with_hard-ze.md)
 
 <!-- RELATED:END -->

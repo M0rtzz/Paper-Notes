@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaf-GRPO: Scaffolded Group Relative Policy Optimization for Enhancing LLM Reasoning
 description: >-

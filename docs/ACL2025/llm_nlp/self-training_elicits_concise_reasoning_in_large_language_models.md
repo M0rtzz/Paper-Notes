@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-Training Elicits Concise Reasoning in Large Language Models
 description: >-
@@ -155,6 +155,6 @@ Pipeline 分为三个阶段：
 - [Disentangling Memory and Reasoning Ability in Large Language Models](disentangle_memory_reasoning.md)
 - [The Role of Deductive and Inductive Reasoning in Large Language Models](the_role_of_deductive_and_inductive_reasoning_in_large_language_models.md)
 - [ExpliCa: Evaluating Explicit Causal Reasoning in Large Language Models](explica_evaluating_explicit_causal_reasoning_in_large_language_models.md)
-- [Do Large Language Models Perform Latent Multi-Hop Reasoning without Exploiting Shortcuts?](do_large_language_models_perform_latent_multi-hop_reasoning_without_exploiting_s.md)
+- [A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](a_survey_on_efficient_large_language.md)
 
 <!-- RELATED:END -->

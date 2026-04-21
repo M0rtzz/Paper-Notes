@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unraveling the Effects of Synthetic Data on End-to-End Autonomous Driving
 description: >-

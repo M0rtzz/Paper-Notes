@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dense2MoE: Restructuring Diffusion Transformer to MoE for Efficient Text-to-Image Generation
 description: >-

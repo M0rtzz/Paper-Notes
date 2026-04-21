@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EnerVerse: Envisioning Embodied Future Space for Robotics Manipulation
 description: >-
@@ -144,8 +144,8 @@ $$\min_{\theta} \mathbb{E}_{t, \mathbf{z}, \boldsymbol{\epsilon}} \|\boldsymbol{
 
 - [DynaRend: Learning 3D Dynamics via Masked Future Rendering for Robotic Manipulation](dynarend_learning_3d_dynamics_via_masked_future_rendering_for_robotic_manipulati.md)
 - [SoFar: Language-Grounded Orientation Bridges Spatial Reasoning and Object Manipulation](sofar_language-grounded_orientation_bridges_spatial_reasoning_and_object_manipul.md)
-- [TesserAct: Learning 4D Embodied World Models](../../ICCV2025/3d_vision/learning_4d_embodied_world_models.md)
+- [ManiVideo: Generating Hand-Object Manipulation Video with Dexterous and Generalizable Grasping](../../CVPR2025/3d_vision/manivideo_generating_hand-object_manipulation_video_with_dexterous_and_generaliz.md)
+- [RoomTour3D: Geometry-Aware Video-Instruction Tuning for Embodied Navigation](../../CVPR2025/3d_vision/roomtour3d_geometry-aware_video-instruction_tuning_for_embodied_navigation.md)
 - [3D-Mem: 3D Scene Memory for Embodied Exploration and Reasoning](../../CVPR2025/3d_vision/3d-mem_3d_scene_memory_for_embodied_exploration_and_reasoning.md)
-- [RoboPearls: Editable Video Simulation for Robot Manipulation](../../ICCV2025/3d_vision/robopearls_editable_video_simulation_for_robot_manipulation.md)
 
 <!-- RELATED:END -->

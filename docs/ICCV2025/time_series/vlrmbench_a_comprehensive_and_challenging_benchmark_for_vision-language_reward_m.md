@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VLRMBench: A Comprehensive and Challenging Benchmark for Vision-Language Reward Models
 description: >-

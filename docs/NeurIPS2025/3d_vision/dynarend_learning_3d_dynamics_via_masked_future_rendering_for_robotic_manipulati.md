@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DynaRend: Learning 3D Dynamics via Masked Future Rendering for Robotic Manipulation
 description: >-

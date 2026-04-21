@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OptiTree: Hierarchical Thoughts Generation with Tree Search for LLM Optimization Modeling
 description: >-

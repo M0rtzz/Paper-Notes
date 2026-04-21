@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Compensating Distribution Drifts in Class-incremental Learning of Pre-trained Vision Transformers
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hallucination Begins Where Saliency Drops
 description: >-
@@ -142,9 +142,9 @@ $\alpha$（SGRS）和 $\beta$（LocoRE）的超参数消融（LLaVA-1.5-7B）：
 ## 相关论文
 
 - [Reallocating Attention Across Layers to Reduce Multimodal Hallucination](../../CVPR2026/interpretability/reallocating_attention_across_layers_to_reduce_multimodal_hallucination.md)
-- [KVQ: Boosting Video Quality Assessment via Saliency-Guided Local Perception](../../CVPR2025/interpretability/kvq_boosting_video_quality_assessment_via_saliency-guided_local_perception.md)
 - [H-SPLID: HSIC-based Saliency Preserving Latent Information Decomposition](../../NeurIPS2025/interpretability/h-splid_hsic-based_saliency_preserving_latent_information_decomposition.md)
 - [Where MLLMs Attend and What They Rely On: Explaining Autoregressive Token Generation](../../CVPR2026/interpretability/where_mllms_attend_and_what_they_rely_on_explaining_autoregressive_token_generat.md)
+- [KVQ: Boosting Video Quality Assessment via Saliency-Guided Local Perception](../../CVPR2025/interpretability/kvq_boosting_video_quality_assessment_via_saliency-guided_local_perception.md)
 - [Beyond Token Probes: Hallucination Detection via Activation Tensors with ACT-ViT](../../NeurIPS2025/interpretability/beyond_token_probes_hallucination_detection_via_activation_tensors_with_act-vit.md)
 
 <!-- RELATED:END -->

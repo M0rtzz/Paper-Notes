@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LOTUS: A Leaderboard for Detailed Image Captioning from Quality to Societal Bias and User Preferences
 description: >-

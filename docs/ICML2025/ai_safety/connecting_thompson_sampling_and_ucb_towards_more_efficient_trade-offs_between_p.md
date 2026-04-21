@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Connecting Thompson Sampling and UCB: Towards More Efficient Trade-offs Between Privacy and Regret
 description: >-
@@ -120,10 +120,10 @@ DP-TS-UCB 是一个两阶段算法：
 
 ## 相关论文
 
-- [Improving the Trade-off Between Watermark Strength and Speculative Sampling Efficiency for Language Models](../../ICLR2026/ai_safety/improving_the_trade-off_between_watermark_strength_and_speculative_sampling_effi.md)
-- [Clients Collaborate: Flexible Differentially Private Federated Learning with Guaranteed Improvement of Utility-Privacy Trade-off](clients_collaborate_flexible_differentially_private_federated_learning_with_guar.md)
 - [Empirical Privacy Variance](empirical_privacy_variance.md)
+- [Clients Collaborate: Flexible Differentially Private Federated Learning with Guaranteed Improvement of Utility-Privacy Trade-off](clients_collaborate_flexible_differentially_private_federated_learning_with_guar.md)
 - [Activation Space Interventions Can Be Transferred Between Large Language Models](activation_space_interventions_can_be_transferred_between_large_language_models.md)
-- [Mitigating Privacy-Utility Trade-off in Decentralized Federated Learning via f-Differential Privacy](../../NeurIPS2025/ai_safety/mitigating_privacy-utility_trade-off_in_decentralized_federated_learning_via_f-d.md)
+- [On Differential Privacy for Adaptively Solving Search Problems via Sketching](on_differential_privacy_for_adaptively_solving_search_problems_via_sketching.md)
+- [Cape: Context-Aware Prompt Perturbation Mechanism with Differential Privacy](cape_context-aware_prompt_perturbation_mechanism_with_differential_privacy.md)
 
 <!-- RELATED:END -->

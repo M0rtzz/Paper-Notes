@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Autoformulation of Mathematical Optimization Models Using LLMs
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OmniSat: Self-Supervised Modality Fusion for Earth Observation
 description: >-

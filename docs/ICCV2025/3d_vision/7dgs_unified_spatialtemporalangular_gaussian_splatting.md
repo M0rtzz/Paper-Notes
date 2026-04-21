@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 7DGS: Unified Spatial-Temporal-Angular Gaussian Splatting
 description: >-

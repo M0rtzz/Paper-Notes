@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spiking Meets Attention: Efficient Remote Sensing Image Super-Resolution with Attention Spiking Neural Networks
 description: >-

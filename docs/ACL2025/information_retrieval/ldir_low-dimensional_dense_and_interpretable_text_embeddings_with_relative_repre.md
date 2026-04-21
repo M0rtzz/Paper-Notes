@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LDIR: Low-Dimensional Dense and Interpretable Text Embeddings with Relative Representations
 description: >-

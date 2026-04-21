@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] KLASS: KL-Guided Fast Inference in Masked Diffusion Models
 description: >-
@@ -148,6 +148,6 @@ KLASS 在几乎所有任务上都优于标准 Top-1 解码，同时步数减少 
 - [Progressive Inference-Time Annealing of Diffusion Models for Sampling from Boltzmann Densities](progressive_inference-time_annealing_of_diffusion_models_for_sampling_from_boltz.md)
 - [Safe and Stable Control via Lyapunov-Guided Diffusion Models](safe_and_stable_control_via_lyapunov-guided_diffusion_models.md)
 - [Beyond Masked and Unmasked: Discrete Diffusion Models via Partial Masking](beyond_masked_and_unmasked_discrete_diffusion_models_via_par.md)
-- [Fast Data Attribution for Text-to-Image Models](fast_data_attribution_for_text-to-image_models.md)
+- [Remasking Discrete Diffusion Models with Inference-Time Scaling](remasking_discrete_diffusion_models_with_inference-time_scaling.md)
 
 <!-- RELATED:END -->

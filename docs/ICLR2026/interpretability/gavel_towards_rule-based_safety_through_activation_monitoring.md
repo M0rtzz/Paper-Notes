@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GAVEL: Towards Rule-Based Safety through Activation Monitoring
 description: >-

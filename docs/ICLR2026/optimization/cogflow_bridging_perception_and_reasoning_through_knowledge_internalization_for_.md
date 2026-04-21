@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CogFlow: Bridging Perception and Reasoning through Knowledge Internalization for Visual Mathematical Problem Solving
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Semantic Features: Pixel-Level Mapping for Generalized AI-Generated Image Detection
 description: >-

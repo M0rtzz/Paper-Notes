@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FAIR Universe HiggsML Uncertainty Dataset and Competition
 description: >-
@@ -140,8 +140,8 @@ tags:
 
 - [The Platonic Universe: Do Foundation Models See the Same Sky?](the_platonic_universe_do_foundation_models_see_the_same_sky.md)
 - [POLARIS: A High-contrast Polarimetric Imaging Benchmark Dataset for Exoplanetary Disk Representation Learning](polaris_a_high-contrast_polarimetric_imaging_benchmark_dataset_for_exoplanetary_.md)
-- [FEAT: Free Energy Estimators with Adaptive Transport](feat_free_energy_estimators_with_adaptive_transport.md)
-- [Knowledge is Overrated: A Zero-Knowledge ML and Cryptographic Hashing-Based Framework for Verifiable, Low Latency Inference at the LHC](knowledge_is_overrated_a_zero-knowledge_machine_learning_and_cryptographic_hashi.md)
-- [Quantum Doubly Stochastic Transformers](quantum_doubly_stochastic_transformers.md)
+- [Transfer Learning Beyond the Standard Model](transfer_learning_beyond_the_standard_model.md)
+- [Simulation-Based Inference for Neutrino Interaction Model Parameter Tuning](simulation-based_inference_for_neutrino_interaction_model_parameter_tuning.md)
+- [Neural Deprojection of Galaxy Stellar Mass Profiles](neural_deprojection_of_galaxy_stellar_mass_profiles.md)
 
 <!-- RELATED:END -->

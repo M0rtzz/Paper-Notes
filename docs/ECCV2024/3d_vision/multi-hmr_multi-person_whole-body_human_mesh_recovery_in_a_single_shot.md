@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multi-HMR: Multi-Person Whole-Body Human Mesh Recovery in a Single Shot
 description: >-

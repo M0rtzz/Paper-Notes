@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fractals made Practical: Denoising Diffusion as Partitioned Iterated Function Systems
 description: >-
@@ -138,10 +138,10 @@ tags:
 
 ## 相关论文
 
+- [Optimizing for the Shortest Path in Denoising Diffusion Model](optimizing_for_the_shortest_path_in_denoising_diffusion_model.md)
+- [Visual Lexicon: Rich Image Features in Language Space](visual_lexicon_rich_image_features_in_language_space.md)
+- [Tiled Diffusion](tiled_diffusion.md)
 - [Color Alignment in Diffusion](color_alignment_in_diffusion.md)
-- [Erasing Undesirable Influence in Diffusion Models (EraseDiff)](erasing_undesirable_influence_in_diffusion_models.md)
 - [LEDiff: Latent Exposure Diffusion for HDR Generation](lediff_latent_exposure_diffusion_for_hdr_generation.md)
-- [Hierarchical Flow Diffusion for Efficient Frame Interpolation](hierarchical_flow_diffusion_for_efficient_frame_interpolation.md)
-- [Hiding Images in Diffusion Models by Editing Learned Score Functions](hiding_images_in_diffusion_models_by_editing_learned_score_functions.md)
 
 <!-- RELATED:END -->

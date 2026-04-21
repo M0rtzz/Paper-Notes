@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MetaBox-v2: A Unified Benchmark Platform for Meta-Black-Box Optimization
 description: >-

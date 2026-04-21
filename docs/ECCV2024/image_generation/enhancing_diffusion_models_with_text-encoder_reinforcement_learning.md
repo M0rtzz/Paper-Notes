@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Diffusion Models with Text-Encoder Reinforcement Learning
 description: >-

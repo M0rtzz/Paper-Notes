@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bring Reason to Vision: Understanding Perception and Reasoning through Model Merging
 description: >-
@@ -118,6 +118,6 @@ tags:
 - [RTV-Bench: Benchmarking MLLM Continuous Perception, Understanding and Reasoning through Real-Time Video](../../NeurIPS2025/multimodal_vlm/rtv-bench_benchmarking_mllm_continuous_perception_understanding_and_reasoning_th.md)
 - [Defending LVLMs Against Vision Attacks through Partial-Perception Supervision](defending_lvlms_against_vision_attacks_through_partial-perception_supervision.md)
 - [MODA: MOdular Duplex Attention for Multimodal Perception, Cognition, and Emotion Understanding](moda_modular_duplex_attention_for_multimodal_perception_cognition_and_emotion_un.md)
-- [Enhancing Target-unspecific Tasks through a Features Matrix](enhancing_target-unspecific_tasks_through_a_features_matrix.md)
+- [Understanding and Mitigating Miscalibration in Prompt Tuning for Vision-Language Models](understanding_and_mitigating_miscalibration_in_prompt_tuning_for_vision-language.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adaptive High-Frequency Transformer for Diverse Wildlife Re-Identification
 description: >-

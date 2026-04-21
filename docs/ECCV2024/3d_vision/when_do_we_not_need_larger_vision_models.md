@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When Do We Not Need Larger Vision Models?
 description: >-

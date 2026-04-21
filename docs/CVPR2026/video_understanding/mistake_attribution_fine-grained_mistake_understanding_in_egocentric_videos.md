@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mistake Attribution: Fine-Grained Mistake Understanding in Egocentric Videos
 description: >-

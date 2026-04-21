@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LangTraj: Diffusion Model and Dataset for Language-Conditioned Trajectory Simulation
 description: >-

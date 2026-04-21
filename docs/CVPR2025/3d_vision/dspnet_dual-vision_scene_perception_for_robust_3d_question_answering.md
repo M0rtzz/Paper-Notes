@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DSPNet: Dual-vision Scene Perception for Robust 3D Question Answering
 description: >-
@@ -130,7 +130,7 @@ DSPNet 输入 3D 点云、多视图图像和问题文本，输出答案。流程
 - [DepthCues: Evaluating Monocular Depth Perception in Large Vision Models](depthcues_evaluating_monocular_depth_perception_in_large_vision_models.md)
 - [Robust Neural Rendering in the Wild with Asymmetric Dual 3D Gaussian Splatting](../../NeurIPS2025/3d_vision/robust_neural_rendering_in_the_wild_with_asymmetric_dual_3d_gaussian_splatting.md)
 - [Continuous 3D Perception Model with Persistent State](continuous_3d_perception_model_with_persistent_state.md)
+- [Dual Exposure Stereo for Extended Dynamic Range 3D Imaging](dual_exposure_stereo_for_extended_dynamic_range_3d_imaging.md)
 - [EventFly: Event Camera Perception from Ground to the Sky](eventfly_event_camera_perception_from_ground_to_the_sky.md)
-- [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
 
 <!-- RELATED:END -->

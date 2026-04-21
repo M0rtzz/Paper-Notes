@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences
 description: >-

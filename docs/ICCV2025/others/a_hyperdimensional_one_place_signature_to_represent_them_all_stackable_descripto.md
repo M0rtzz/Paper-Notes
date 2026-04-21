@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Hyperdimensional One Place Signature to Represent Them All: Stackable Descriptors For Visual Place Recognition
 description: >-
@@ -124,8 +124,8 @@ HOPS 无需任何训练，完全在推理阶段操作。所有融合和匹配仅
 
 - [HypeVPR: Exploring Hyperbolic Space for Perspective to Equirectangular Visual Place Recognition](../../CVPR2026/others/hypevpr_exploring_hyperbolic_space_for_perspective_to_equirectangular_visual_pla.md)
 - [LapSum -- One Method to Differentiate Them All: Ranking, Sorting and Top-k Selection](../../ICML2025/others/lapsum_--_one_method_to_differentiate_them_all_ranking_sorting_and_top-k_selecti.md)
-- [Learning Visual Hierarchies in Hyperbolic Space for Image Retrieval](learning_visual_hierarchies_in_hyperbolic_space_for_image_retrieval.md)
 - [Kaputt: A Large-Scale Dataset for Visual Defect Detection](kaputt_a_large-scale_dataset_for_visual_defect_detection.md)
+- [Learning Visual Hierarchies in Hyperbolic Space for Image Retrieval](learning_visual_hierarchies_in_hyperbolic_space_for_image_retrieval.md)
 - [One for All: Update Parameterized Knowledge Across Multiple Models with Once Edit](../../ACL2025/others/one_for_all_update_parameterized_knowledge_across_multiple_models_with_once_edit.md)
 
 <!-- RELATED:END -->

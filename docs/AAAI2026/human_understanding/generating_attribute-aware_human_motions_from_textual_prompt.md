@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generating Attribute-Aware Human Motions from Textual Prompt
 description: >-
@@ -194,10 +194,10 @@ AttrMoGen 将 FID 从 MoMask 的 0.245 大幅降低到 0.089（-63.7%），MM-Di
 
 ## 相关论文
 
-- [GraspXL: Generating Grasping Motions for Diverse Objects at Scale](../../ECCV2024/human_understanding/graspxl_generating_grasping_motions_for_diverse_objects_at_scale.md)
+- [StickMotion: Generating 3D Human Motions by Drawing a Stickman](../../CVPR2025/human_understanding/stickmotion_generating_3d_human_motions_by_drawing_a_stickman.md)
+- [Shape My Moves: Text-Driven Shape-Aware Synthesis of Human Motions](../../CVPR2025/human_understanding/shape_my_moves_text-driven_shape-aware_synthesis_of_human_motions.md)
 - [CLIP-FTI: Fine-Grained Face Template Inversion via CLIP-Driven Attribute Conditioning](clip-fti_fine-grained_face_template_inversion_via_clip-driven_attribute_conditio.md)
+- [GraspXL: Generating Grasping Motions for Diverse Objects at Scale](../../ECCV2024/human_understanding/graspxl_generating_grasping_motions_for_diverse_objects_at_scale.md)
 - [SOSControl: Enhancing Human Motion Generation through Saliency-Aware Symbolic Orientation and Timing Control](soscontrol_enhancing_human_motion_generation_through_saliency-aware_symbolic_ori.md)
-- [Scaling Large Motion Models with Million-Level Human Motions](../../ICML2025/human_understanding/scaling_large_motion_models_with_million-level_human_motions.md)
-- [Transferable Backdoor Attacks for Code Models via Sharpness-Aware Adversarial Perturbation](transferable_backdoor_attacks_for_code_models_via_sharpness-aware_adversarial_pe.md)
 
 <!-- RELATED:END -->

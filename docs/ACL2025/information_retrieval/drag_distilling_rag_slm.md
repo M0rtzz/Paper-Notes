@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DRAG: Distilling RAG for SLMs from LLMs to Transfer Knowledge and Mitigate Hallucination
 description: >-

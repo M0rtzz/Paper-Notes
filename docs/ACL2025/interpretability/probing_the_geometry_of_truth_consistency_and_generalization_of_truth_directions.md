@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Probing the Geometry of Truth: Consistency and Generalization of Truth Directions
 description: >-

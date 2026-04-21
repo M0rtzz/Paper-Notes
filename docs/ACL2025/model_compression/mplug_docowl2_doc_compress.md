@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] mPLUG-DocOwl2: High-resolution Compressing for OCR-free Multi-page Document Understanding
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CAS-Spec: Cascade Adaptive Self-Speculative Decoding for On-the-Fly Lossless Inference Acceleration of LLMs
 description: >-

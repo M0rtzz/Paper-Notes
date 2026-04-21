@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Role of Visual Modality in Multimodal Mathematical Reasoning: Challenges and Insights
 description: >-

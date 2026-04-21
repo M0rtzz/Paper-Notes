@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Pre-Training of LLMs via Topology-Aware Communication Alignment on More Than 9600 GPUs
 description: >-

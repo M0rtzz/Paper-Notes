@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Geometry-to-Image Synthesis-Driven Generative Point Cloud Registration
 description: >-
@@ -132,10 +132,10 @@ tags:
 
 ## 相关论文
 
-- [IGASA: Integrated Geometry-Aware and Skip-Attention Modules for Enhanced Point Cloud Registration](../../CVPR2026/autonomous_driving/igasa_integrated_geometryaware_and_skipattention_m.md)
+- [Unlocking Generalization Power in LiDAR Point Cloud Registration](../../CVPR2025/autonomous_driving/unlocking_generalization_power_in_lidar_point_cloud_registration.md)
+- [IGASA: Integrated Geometry-Aware and Skip-Attention Modules for Enhanced Point Cloud Registration](../../CVPR2026/autonomous_driving/igasa_integrated_geometry-aware_and_skip-attention_modules_for_enhanced_point_cl.md)
 - [MGSfM: Multi-Camera Geometry Driven Global Structure-from-Motion](../../ICCV2025/autonomous_driving/mgsfm_multi-camera_geometry_driven_global_structure-from-motion.md)
 - [SkyDiffusion: Leveraging BEV Paradigm for Ground-to-Aerial Image Synthesis](../../ICCV2025/autonomous_driving/leveraging_bev_paradigm_for_ground-to-aerial_image_synthesis.md)
-- [InfoCons: Identifying Interpretable Critical Concepts in Point Clouds via Information Theory](infocons_identifying_interpretable_critical_concepts_in_point_clouds_via_informa.md)
 - [Don't be so Negative! Score-based Generative Modeling with Oracle-assisted Guidance](dont_be_so_negative_score-based_generative_modeling_with_oracle-assisted_guidanc.md)
 
 <!-- RELATED:END -->

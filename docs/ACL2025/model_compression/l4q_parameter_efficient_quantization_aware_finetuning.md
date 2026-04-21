@@ -146,6 +146,6 @@ L4Q 的核心思想是**"先合并，再量化"**：
 - [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
 - [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](state_offset_tuning_ssm_peft.md)
 - [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/model_compression/parameter-efficient_fine-tuning_of_state_space_models.md)
-- [Trans-PEFT: Transferable Parameter-Efficient Fine-Tuning on Evolving Base Models](trans_peft_transferable.md)
+- [BlockPruner: Fine-grained Pruning for Large Language Models](blockpruner_fine-grained_pruning_for_large_language_models.md)
 
 <!-- RELATED:END -->

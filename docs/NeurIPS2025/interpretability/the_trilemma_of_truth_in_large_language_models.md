@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Trilemma of Truth in Large Language Models
 description: >-

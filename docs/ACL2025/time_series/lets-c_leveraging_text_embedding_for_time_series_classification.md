@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LETS-C: Leveraging Text Embedding for Time Series Classification
 description: >-

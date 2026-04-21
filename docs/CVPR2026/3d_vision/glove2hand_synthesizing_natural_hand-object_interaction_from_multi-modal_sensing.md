@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Glove2Hand: Synthesizing Natural Hand-Object Interaction from Multi-Modal Sensing Gloves
 description: >-

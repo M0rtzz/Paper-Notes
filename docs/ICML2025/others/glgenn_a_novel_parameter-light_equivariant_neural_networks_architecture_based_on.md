@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GLGENN: 基于Clifford几何代数的轻参数等变神经网络架构
 description: >-
@@ -158,10 +158,10 @@ $$\langle x \rangle_{\bar{k}} \mapsto \frac{\langle x \rangle_{\bar{k}}}{\sigma(
 
 ## 相关论文
 
-- [Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update](heavy-tailed_linear_bandits_huber_regression_with_one-pass_update.md)
+- [Prediction-Powered Adaptive Shrinkage Estimation](prediction-powered_adaptive_shrinkage_estimation.md)
 - [Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method](efficient_optimization_with_orthogonality_constraint_a_randomized_riemannian_sub.md)
-- [Diverse Prototypical Ensembles Improve Robustness to Subpopulation Shift](diverse_prototypical_ensembles_improve_robustness_to_subpopulation_shift.md)
-- [Understanding Mode Connectivity via Parameter Space Symmetry](understanding_mode_connectivity_via_parameter_space_symmetry.md)
-- [Sparse-Pivot: Dynamic Correlation Clustering for Node Insertions](sparse-pivot_dynamic_correlation_clustering_for_node_insertions.md)
+- [Positional Attention: Expressivity and Learnability of Algorithmic Computation](positional_attention_expressivity_and_learnability_of_algorithmic_computation.md)
+- [Optimal Auction Design in the Joint Advertising](optimal_auction_design_in_the_joint_advertising.md)
+- [Near Optimal Best Arm Identification for Clustered Bandits](near_optimal_best_arm_identification_for_clustered_bandits.md)
 
 <!-- RELATED:END -->

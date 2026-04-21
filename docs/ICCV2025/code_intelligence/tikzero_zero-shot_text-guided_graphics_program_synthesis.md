@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TikZero: Zero-Shot Text-Guided Graphics Program Synthesis
 description: >-

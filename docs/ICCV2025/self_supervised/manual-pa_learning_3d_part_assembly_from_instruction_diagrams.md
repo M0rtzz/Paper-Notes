@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Manual-PA: Learning 3D Part Assembly from Instruction Diagrams
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LaVCa: LLM-assisted Visual Cortex Captioning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rotary Position Embedding for Vision Transformer
 description: >-
@@ -165,7 +165,7 @@ $$\mathbf{A}'_{(n,m)} = \mathrm{Re}[\mathbf{q}_n \mathbf{k}_m^* e^{i(n-m)\theta}
 - [GiT: Towards Generalist Vision Transformer through Universal Language Interface](git_towards_generalist_vision_transformer_through_universal_language_interface.md)
 - [Locality-Attending Vision Transformer](../../ICLR2026/segmentation/locality-attending_vision_transformer.md)
 - [MambaVision: A Hybrid Mamba-Transformer Vision Backbone](../../CVPR2025/segmentation/mambavision_a_hybrid_mamba-transformer_vision_backbone.md)
+- [Revisiting Audio-Visual Segmentation with Vision-Centric Transformer](../../CVPR2025/segmentation/revisiting_audio-visual_segmentation_with_vision-centric_transformer.md)
 - [SCLIP: Rethinking Self-Attention for Dense Vision-Language Inference](sclip_rethinking_self-attention_for_dense_vision-language_inference.md)
-- [SiLC: Improving Vision Language Pretraining with Self-Distillation](silc_improving_vision_language_pretraining_with_self-distillation.md)
 
 <!-- RELATED:END -->

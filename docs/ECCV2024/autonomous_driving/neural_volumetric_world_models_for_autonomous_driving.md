@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neural Volumetric World Models for Autonomous Driving
 description: >-

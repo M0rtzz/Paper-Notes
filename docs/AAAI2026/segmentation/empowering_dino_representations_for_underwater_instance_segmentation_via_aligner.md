@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Empowering DINO Representations for Underwater Instance Segmentation via Aligner and Prompter
 description: >-

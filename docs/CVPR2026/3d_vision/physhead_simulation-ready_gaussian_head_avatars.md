@@ -1,16 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] PhysHead: Simulation-Ready Gaussian Head Avatars
 description: >-
-  [CVPR 2026][3D视觉][头部重建] 提出PhysHead，结合3DMM参数化面部和基于发丝的头发表示，通过VLM生成秃头训练图像实现分层优化，使用物理引擎模拟头发动力学，创建首个支持物理驱动头发动画的3DGS头部avatar。
+  [CVPR 2026][3D视觉][头部Avatar重建] 提出PhysHead——首个将物理驱动头发动力学与可动画3DGS头部Avatar结合的方法：用FLAME网格+3DGS建模可表达面部、用发丝(strand)+3DGS建模头发外观、用物理引擎驱动头发动画，并通过VLM生成秃头图像实现头发与面部的分层优化。
 tags:
   - CVPR 2026
   - 3D视觉
-  - 头部Avatar
-  - 高斯溅射
-  - 发丝模拟
-  - 物理引擎
-  - VLM
+  - 头部Avatar重建
+  - 3D高斯溅射
+  - 发丝物理模拟
+  - 分层表示
+  - VLM辅助
 ---
 
 # PhysHead: Simulation-Ready Gaussian Head Avatars
@@ -129,10 +129,10 @@ tags:
 
 ## 相关论文
 
-- [MotionAnymesh: Physics-Grounded Articulation for Simulation-Ready Digital Twins](motionanymesh_physics-grounded_articulation_for_simulation-ready_digital_twins.md)
-- [ReWeaver: Towards Simulation-Ready and Topology-Accurate Garment Reconstruction](reweaver_towards_simulation-ready_and_topology-accurate_garment_reconstruction.md)
-- [HyperGaussians: High-Dimensional Gaussian Splatting for High-Fidelity Animatable Face Avatars](hypergaussians_high-dimensional_gaussian_splatting_for_high-fidelity_animatable_.md)
+- [SimAvatar: Simulation-Ready Avatars with Layered Hair and Clothing](../../CVPR2025/3d_vision/simavatar_simulation-ready_avatars_with_layered_hair_and_clothing.md)
+- [MotionAnymesh: Physics-Grounded Articulation for Simulation-Ready Digital Twins](motionanymesh_physicsgrounded_articulation_for_sim.md)
 - [ProgressiveAvatars: Progressive Animatable 3D Gaussian Avatars](progressiveavatars_progressive_animatable_3d_gaussian_avatars.md)
 - [Motion-Aware Animatable Gaussian Avatars Deblurring](motion-aware_animatable_gaussian_avatars_deblurring.md)
+- [ReWeaver: Towards Simulation-Ready and Topology-Accurate Garment Reconstruction](reweaver_towards_simulation-ready_and_topology-accurate_garment_reconstruction.md)
 
 <!-- RELATED:END -->

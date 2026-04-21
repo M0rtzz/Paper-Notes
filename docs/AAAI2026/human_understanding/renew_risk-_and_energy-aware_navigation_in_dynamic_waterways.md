@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RENEW: Risk- and Energy-Aware Navigation in Dynamic Waterways
 description: >-
@@ -163,6 +163,6 @@ Oral 论文，问题定义清晰，方法严谨。应急碰撞 0 的结果令人
 - [Dynamic Reconstruction of Hand-Object Interaction with Distributed Force-aware Contact Representation](../../ICCV2025/human_understanding/dynamic_reconstruction_of_hand-object_interaction_with_distributed_force-aware_c.md)
 - [Dexterous Manipulation Transfer via Progressive Kinematic-Dynamic Alignment](dexterous_manipulation_transfer_via_progressive_kinematic-dynamic_alignment.md)
 - [DecoVLN: Decoupling Observation, Reasoning, and Correction for Vision-and-Language Navigation](../../CVPR2026/human_understanding/decovln_decoupling_observation_reasoning_and_correction_for_vision-and-language_.md)
-- [4DSurf: High-Fidelity Dynamic Scene Surface Reconstruction](../../CVPR2026/human_understanding/textit4dsurf_high-fidelity_dynamic_scene_surface_reconstruction.md)
+- [Generating Attribute-Aware Human Motions from Textual Prompt](generating_attribute-aware_human_motions_from_textual_prompt.md)
 
 <!-- RELATED:END -->

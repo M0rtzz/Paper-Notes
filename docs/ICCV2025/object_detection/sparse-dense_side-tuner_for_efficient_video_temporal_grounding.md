@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sparse-Dense Side-Tuner for Efficient Video Temporal Grounding
 description: >-

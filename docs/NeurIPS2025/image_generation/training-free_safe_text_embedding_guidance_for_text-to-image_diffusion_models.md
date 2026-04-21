@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models
 description: >-

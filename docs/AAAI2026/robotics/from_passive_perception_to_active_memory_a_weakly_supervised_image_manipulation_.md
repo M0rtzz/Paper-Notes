@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Passive Perception to Active Memory: A Weakly Supervised Image Manipulation Localization Framework Driven by Coarse-Grained Annotations
 description: >-

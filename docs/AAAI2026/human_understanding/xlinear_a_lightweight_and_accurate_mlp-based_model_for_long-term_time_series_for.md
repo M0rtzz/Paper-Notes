@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] XLinear: A Lightweight and Accurate MLP-Based Model for Long-Term Time Series Forecasting with Exogenous Inputs
 description: >-

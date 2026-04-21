@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ParaS2S: Benchmarking and Aligning Spoken Language Models for Paralinguistic-Aware Speech-to-Speech Interaction
 description: >-

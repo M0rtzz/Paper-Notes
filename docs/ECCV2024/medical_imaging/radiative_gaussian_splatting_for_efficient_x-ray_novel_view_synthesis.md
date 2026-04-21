@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Radiative Gaussian Splatting for Efficient X-ray Novel View Synthesis
 description: >-

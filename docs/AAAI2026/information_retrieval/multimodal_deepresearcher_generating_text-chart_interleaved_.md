@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multimodal DeepResearcher: Generating Text-Chart Interleaved Reports From Scratch with Agentic Framework
 description: >-

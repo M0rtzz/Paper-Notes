@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Incremental Gradient Descent with Small Epoch Counts is Surprisingly Slow on Ill-Conditioned Problems
 description: >-

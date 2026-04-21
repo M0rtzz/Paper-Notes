@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection
 description: >-
-  [CVPR 2025][3D detection] 提出统一的稀疏监督 3D 目标检测方法 CPDet3D，通过类感知原型聚类（最优传输匹配）挖掘未标注物体、多标签协同精化恢复漏检，首次在室内外场景均有效，ScanNet V2 上达到全监督 78% 的性能。
+  [CVPR 2025][3D视觉][目标检测] 提出首个统一室内外稀疏监督 3D 目标检测方法 CPDet3D，通过类感知原型聚类（跨场景 Sinkhorn-Knopp 最优传输匹配）挖掘未标注物体的类别，再用多标签协同精化（伪标签 + 原型标签）恢复漏检，仅用每场景 1 个标注即达 ScanNet V2 全监督 78% / SUN RGB-D 90% / KITTI 96% 性能。
 tags:
   - CVPR 2025
-  - 3D object detection
+  - 3D视觉
+  - 目标检测
   - sparse supervision
   - prototype learning
   - optimal transport
-  - point cloud
+  - self-training
 ---
 
 # Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection
@@ -160,7 +161,7 @@ Moderate 上比 CoIn++ 提升 **+2.7 AP**，达全监督 **96%**。
 - [FSHNet: Fully Sparse Hybrid Network for 3D Object Detection](fshnet_fully_sparse_hybrid_network_for_3d_object_detection.md)
 - [Unified Category-Level Object Detection and Pose Estimation from RGB Images using 3D Prototypes](../../ICCV2025/3d_vision/unified_category-level_object_detection_and_pose_estimation_from_rgb_images_usin.md)
 - [MonoPlace3D: Learning 3D-Aware Object Placement for 3D Monocular Detection](monoplace3d_learning_3d-aware_object_placement_for_3d_monocular_detection.md)
-- [P-SLCR: Unsupervised Point Cloud Semantic Segmentation via Prototypes Structure Learning and Consistent Reasoning](p-slcr_unsupervised_point_cloud_semantic_segmentation_via_prototypes_structure_l.md)
-- [MoST: Efficient Monarch Sparse Tuning for 3D Representation Learning](most_efficient_monarch_sparse_tuning_for_3d_representation_learning.md)
+- [SP3D: Boosting Sparsely-Supervised 3D Object Detection via Accurate Cross-Modal Semantic Prompts](sp3d_boosting_sparsely-supervised_3d_object_detection_via_accurate_cross-modal_s.md)
+- [SemAlign3D: Semantic Correspondence Between RGB-Images Through Aligning 3D Object-Class Representations](semalign3d_semantic_correspondence_between_rgb-images_through_aligning_3d_object.md)
 
 <!-- RELATED:END -->

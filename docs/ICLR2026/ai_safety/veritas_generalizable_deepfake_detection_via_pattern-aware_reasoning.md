@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Veritas: Generalizable Deepfake Detection via Pattern-Aware Reasoning
 description: >-

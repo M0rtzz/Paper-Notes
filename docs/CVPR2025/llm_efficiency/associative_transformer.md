@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Associative Transformer
 description: >-
@@ -127,8 +127,8 @@ AiT-Medium（45.9M 参数）超过 ViT-Base（85.7M），参数量仅一半。Im
 
 ## 相关论文
 
-- [Dense Associative Memory with Epanechnikov Energy](../../NeurIPS2025/llm_efficiency/dense_associative_memory_with_epanechnikov_energy.md)
 - [Spiking Transformer: Introducing Accurate Addition-Only Spiking Self-Attention for Transformer](spiking_transformer_introducing_accurate_addition-only_spiking_self-attention_fo.md)
+- [Dense Associative Memory with Epanechnikov Energy](../../NeurIPS2025/llm_efficiency/dense_associative_memory_with_epanechnikov_energy.md)
 - [CARE Transformer: Mobile-Friendly Linear Visual Transformer via Decoupled Dual Interaction](care_transformer_mobile-friendly_linear_visual_transformer_via_decoupled_dual_in.md)
 - [Frequency-Aware Token Reduction for Efficient Vision Transformer](../../NeurIPS2025/llm_efficiency/frequency-aware_token_reduction_for_efficient_vision_transformer.md)
 - [A Unified Framework for Establishing the Universal Approximation of Transformer-Type Architectures](../../NeurIPS2025/llm_efficiency/a_unified_framework_for_establishing_the_universal_approxima.md)

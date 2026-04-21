@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] anyECG-chat: A Generalist ECG-MLLM for Flexible ECG Input and Multi-Task Understanding
 description: >-

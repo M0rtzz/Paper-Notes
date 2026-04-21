@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Can You Hear Me Now? A Benchmark for Long-Range Graph Propagation and Beyond
 description: >-
@@ -173,9 +173,9 @@ ECHO-Chem 两个化学任务（Test MAE，越低越好）：
 ## 相关论文
 
 - [BLINK-Twice: You See But Do You Observe? A Reasoning Benchmark on Visual Perception](../../NeurIPS2025/llm_evaluation/blink-twice_you_see_but_do_you_observe_a_reasoning_benchmark_on_visual_perceptio.md)
+- [Can Vision–Language Models Assess Graphic Design Aesthetics? A Benchmark, Evaluation, and Dataset Perspective](can_vision_language_models_assess_graphic_design_aesthetics_a_benchmark_evaluati.md)
 - [When and Where to Reset Matters for Long-Term Test-Time Adaptation](when_and_where_to_reset_matters_for_long-term_test-time_adaptation.md)
 - [Feedforward Few-shot Species Range Estimation](../../ICML2025/llm_evaluation/feedforward_few-shot_species_range_estimation.md)
 - [Towards Anomaly-Aware Pre-Training and Fine-Tuning for Graph Anomaly Detection](towards_anomaly-aware_pre-training_and_fine-tuning_for_graph_anomaly_detection.md)
-- [Beyond the Singular: Revealing the Value of Multiple Generations in Benchmark Evaluation](../../NeurIPS2025/llm_evaluation/beyond_the_singular_revealing_the_value_of_multiple_generations_in_benchmark_eva.md)
 
 <!-- RELATED:END -->

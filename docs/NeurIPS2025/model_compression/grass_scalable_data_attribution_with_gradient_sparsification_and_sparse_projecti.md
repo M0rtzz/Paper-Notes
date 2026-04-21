@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GraSS: Scalable Data Attribution with Gradient Sparsification and Sparse Projection
 description: >-
@@ -152,6 +152,6 @@ $$S^* = \arg\max_{S \in \mathbb{R}^p} \mathbb{E}_{z_{\text{test}}} \left[\text{c
 - [GoRA: Gradient-Driven Adaptive Low Rank Adaptation](gora_gradient-driven_adaptive_low_rank_adaptation.md)
 - [Lego Sketch: A Scalable Memory-augmented Neural Network for Sketching Data Streams](../../ICML2025/model_compression/lego_sketch_a_scalable_memory-augmented_neural_network_for_sketching_data_stream.md)
 - [Dense Backpropagation Improves Training for Sparse Mixture-of-Experts](dense_backpropagation_improves_training_for_sparse_mixture-of-experts.md)
-- [MSQ: Memory-Efficient Bit Sparsification Quantization](../../ICCV2025/model_compression/msq_memory-efficient_bit_sparsification_quantization.md)
+- [Ensemble++: Scalable Exploration via Ensemble](scalable_exploration_via_ensemble.md)
 
 <!-- RELATED:END -->

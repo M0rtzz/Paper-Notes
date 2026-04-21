@@ -125,9 +125,9 @@ tags:
 ## 相关论文
 
 - [TRAM: Global Trajectory and Motion of 3D Humans from in-the-wild Videos](tram_global_trajectory_and_motion_of_3d_humans_from_in-the-wild_videos.md)
+- [Reconstructing Animals and the Wild](../../CVPR2025/3d_vision/reconstructing_animals_and_the_wild.md)
+- [Reconstructing Humans with a Biomechanically Accurate Skeleton](../../CVPR2025/3d_vision/reconstructing_humans_with_a_biomechanically_accurate_skeleton.md)
 - [Dynamic Neural Radiance Field from Defocused Monocular Video](dynamic_neural_radiance_field_from_defocused_monocular_video.md)
-- [Vivid4D: Improving 4D Reconstruction from Monocular Video by Video Inpainting](../../ICCV2025/3d_vision/vivid4d_improving_4d_reconstruction_from_monocular_video_by_video_inpainting.md)
-- [RPBG: Towards Robust Neural Point-based Graphics in the Wild](rpbg_towards_robust_neural_point-based_graphics_in_the_wild.md)
-- [Generative Camera Dolly: Extreme Monocular Dynamic Novel View Synthesis](generative_camera_dolly_extreme_monocular_dynamic_novel_view_synthesis.md)
+- [ODHSR: Online Dense 3D Reconstruction of Humans and Scenes from Monocular Videos](../../CVPR2025/3d_vision/odhsr_online_dense_3d_reconstruction_of_humans_and_scenes_from_monocular_videos.md)
 
 <!-- RELATED:END -->

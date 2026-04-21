@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VoxRAG: A Step Toward Transcription-Free RAG Systems in Spoken Question Answering
 description: >-

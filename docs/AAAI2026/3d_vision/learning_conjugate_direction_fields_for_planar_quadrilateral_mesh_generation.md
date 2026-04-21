@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Conjugate Direction Fields for Planar Quadrilateral Mesh Generation
 description: >-

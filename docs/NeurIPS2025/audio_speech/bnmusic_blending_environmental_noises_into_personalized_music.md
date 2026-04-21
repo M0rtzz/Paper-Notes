@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BNMusic: Blending Environmental Noises into Personalized Music
 description: >-

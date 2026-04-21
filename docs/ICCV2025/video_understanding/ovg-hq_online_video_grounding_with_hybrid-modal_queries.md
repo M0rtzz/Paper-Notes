@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OVG-HQ: Online Video Grounding with Hybrid-modal Queries
 description: >-
@@ -167,6 +167,6 @@ $$\mathcal{L}_d = \frac{1}{N}\sum_{i=1}^{N}\left(\mathcal{L}_{\text{KL}}(\mathbf
 - [Cross-modal Causal Relation Alignment for Video Question Grounding](../../CVPR2025/video_understanding/cross-modal_causal_relation_alignment_for_video_question_grounding.md)
 - [Estimating 2D Camera Motion with Hybrid Motion Basis](estimating_2d_camera_motion_with_hybrid_motion_basis.md)
 - [Vamba: Understanding Hour-Long Videos with Hybrid Mamba-Transformers](vamba_understanding_hour-long_videos_with_hybrid_mamba-transformers.md)
-- [Moment Quantization for Video Temporal Grounding](moment_quantization_for_video_temporal_grounding.md)
+- [PixFoundation 2.0: Do Video Multi-Modal LLMs Use Motion in Visual Grounding?](../../NeurIPS2025/video_understanding/pixfoundation_20_do_video_multi-modal_llms_use_motion_in_visual_grounding.md)
 
 <!-- RELATED:END -->

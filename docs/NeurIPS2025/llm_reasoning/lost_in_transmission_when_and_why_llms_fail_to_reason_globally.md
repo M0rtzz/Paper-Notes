@@ -125,9 +125,9 @@ tags:
 ## 相关论文
 
 - [When Reasoning Meets Compression: Understanding the Effects of LLMs Compression on Large Reasoning Models](../../ICLR2026/llm_reasoning/when_reasoning_meets_compression_understanding_the_effects_of_llms_compression_o.md)
-- [笔记6：Self-Evaluating LLMs - 多步任务的步级置信度估计](value-guided_search_for_efficient_chain-of-thought_reasoning.md)
 - [Why is Your Language Model a Poor Implicit Reward Model?](../../ICLR2026/llm_reasoning/why_is_your_language_model_a_poor_implicit_reward_model.md)
-- [Many LLMs Are More Utilitarian Than One](many_llms_are_more_utilitarian_than_one.md)
+- [笔记6：Self-Evaluating LLMs - 多步任务的步级置信度估计](value-guided_search_for_efficient_chain-of-thought_reasoning.md)
 - [Native Reasoning Models: Training Language Models to Reason on Unverifiable Data](../../ICLR2026/llm_reasoning/native_reasoning_models_training_language_models_to_reason_on_unverifiable_data.md)
+- [Many LLMs Are More Utilitarian Than One](many_llms_are_more_utilitarian_than_one.md)
 
 <!-- RELATED:END -->

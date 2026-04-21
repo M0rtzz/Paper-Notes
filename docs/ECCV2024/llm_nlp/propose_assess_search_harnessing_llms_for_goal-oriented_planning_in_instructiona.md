@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Propose, Assess, Search: Harnessing LLMs for Goal-Oriented Planning in Instructional Videos
 description: >-
@@ -168,8 +168,8 @@ VidAssist是零/少样本框架，**不需要训练**。核心是prompt设计和
 
 - [LLMs Can Be Easily Confused by Instructional Distractions](../../ACL2025/llm_nlp/llms_can_be_easily_confused_by_instructional_distractions.md)
 - [Composing Concepts from Images and Videos via Concept-prompt Binding](../../CVPR2026/llm_nlp/composing_concepts_from_images_and_videos_via_concept-prompt_binding.md)
-- [LLEMA: Evolutionary Search with LLMs for Multi-Objective Materials Discovery](../../ICLR2026/llm_nlp/llema_evolutionary_search_with_llms_for_multi-objective_materials_discovery.md)
-- [AceSearcher: Bootstrapping Reasoning and Search for LLMs via Reinforced Self-Play](../../NeurIPS2025/llm_nlp/acesearcher_bootstrapping_reasoning_and_search_for_llms_via_reinforced_self-play.md)
 - [PlanGenLLMs: A Modern Survey of LLM Planning Capabilities](../../ACL2025/llm_nlp/plangenllms_planning_survey.md)
+- [AceSearcher: Bootstrapping Reasoning and Search for LLMs via Reinforced Self-Play](../../NeurIPS2025/llm_nlp/acesearcher_bootstrapping_reasoning_and_search_for_llms_via_reinforced_self-play.md)
+- [LLEMA: Evolutionary Search with LLMs for Multi-Objective Materials Discovery](../../ICLR2026/llm_nlp/llema_evolutionary_search_with_llms_for_multi-objective_materials_discovery.md)
 
 <!-- RELATED:END -->

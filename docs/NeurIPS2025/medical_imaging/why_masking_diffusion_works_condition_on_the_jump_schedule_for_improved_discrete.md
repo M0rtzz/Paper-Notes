@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Why Masking Diffusion Works: Condition on the Jump Schedule for Improved Discrete Diffusion
 description: >-

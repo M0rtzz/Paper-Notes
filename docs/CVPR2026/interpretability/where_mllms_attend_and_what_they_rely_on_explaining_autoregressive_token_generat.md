@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Where MLLMs Attend and What They Rely On: Explaining Autoregressive Token Generation
 description: >-

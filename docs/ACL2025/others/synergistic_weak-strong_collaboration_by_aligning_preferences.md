@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Synergistic Weak-Strong Collaboration by Aligning Preferences
 description: >-

@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] PhysDreamer: Physics-Based Interaction with 3D Objects via Video Generation
 description: >-
-  [ECCV 2024][3D视觉][物理仿真] 利用视频生成模型中隐含的物理动力学先验，为静态3D高斯对象估计空间变化的杨氏模量材料场，从而实现物理合理的交互式3D动力学合成。
+  [ECCV 2024][物理仿真] 利用视频生成模型中隐含的物理动力学先验，为静态3D高斯对象估计空间变化的杨氏模量材料场，从而实现物理合理的交互式3D动力学合成。
 tags:
   - ECCV 2024
-  - 3D视觉
   - 物理仿真
   - 3D高斯
   - 视频生成先验
@@ -146,6 +145,6 @@ $$L_{\text{tv}} = \sum_{i,j} \|\bm{u}_{i+1,j} - \bm{u}_{i,j}\|_2^2 + \|\bm{u}_{i
 - [PhysCtrl: Generative Physics for Controllable and Physics-Grounded Video Generation](../../NeurIPS2025/video_generation/physctrl_generative_physics_for_controllable_and_physicsgrou.md)
 - [SV3D: Novel Multi-view Synthesis and 3D Generation from a Single Image using Latent Video Diffusion](sv3d_novel_multi-view_synthesis_and_3d_generation_from_a_single_image_using_late.md)
 - [Mask2IV: Interaction-Centric Video Generation via Mask Trajectories](../../AAAI2026/video_generation/mask2iv_interaction-centric_video_generation_via_mask_trajectories.md)
-- [Free-Form Motion Control: Controlling the 6D Poses of Camera and Objects in Video Generation](../../ICCV2025/video_generation/free-form_motion_control_controlling_the_6d_poses_of_camera_and_objects_in_video.md)
+- [MotionShot: Adaptive Motion Transfer across Arbitrary Objects for Text-to-Video Generation](../../ICCV2025/video_generation/motionshot_adaptive_motion_transfer_across_arbitrary_objects_for_text-to-video_g.md)
 
 <!-- RELATED:END -->

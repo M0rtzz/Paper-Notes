@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SubSpec: Speculate Deep and Accurate — Lossless and Training-Free Acceleration for Offloaded LLMs
 description: >-

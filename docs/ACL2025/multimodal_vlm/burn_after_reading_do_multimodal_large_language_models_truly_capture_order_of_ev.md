@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Burn After Reading: Do Multimodal Large Language Models Truly Capture Order of Events in Image Sequences?
 description: >-

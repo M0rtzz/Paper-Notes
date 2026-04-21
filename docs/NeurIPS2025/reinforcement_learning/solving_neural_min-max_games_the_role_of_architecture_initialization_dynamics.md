@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Solving Neural Min-Max Games: The Role of Architecture, Initialization & Dynamics
 description: >-

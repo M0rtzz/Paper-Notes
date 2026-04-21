@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Dynamics under Environmental Constraints via Measurement-Induced Bundle Structures
 description: >-
@@ -145,7 +145,7 @@ tags:
 - [MoMaGen: Generating Demonstrations under Soft and Hard Constraints for Multi-Step Bimanual Mobile Manipulation](../../ICLR2026/reinforcement_learning/momagen_generating_demonstrations_under_soft_and_hard_constraints_for_multi-step.md)
 - [Safety Certificate against Latent Variables with Partially Unidentifiable Dynamics](safety_certificate_against_latent_variables_with_partially_unidentifiable_dynami.md)
 - [Massively Parallel Imitation Learning of Mouse Forelimb Musculoskeletal Reaching Dynamics](../../NeurIPS2025/reinforcement_learning/massively_parallel_imitation_learning_of_mouse_forelimb_musculoskeletal_reaching.md)
-- [Octopus: Embodied Vision-Language Programmer from Environmental Feedback](../../ECCV2024/reinforcement_learning/octopus_embodied_vision-language_programmer_from_environmental_feedback.md)
 - [EvoLM: In Search of Lost Language Model Training Dynamics](../../NeurIPS2025/reinforcement_learning/evolm_in_search_of_lost_language_model_training_dynamics.md)
+- [Octopus: Embodied Vision-Language Programmer from Environmental Feedback](../../ECCV2024/reinforcement_learning/octopus_embodied_visionlanguage_programmer_from_environmental_feedback.md)
 
 <!-- RELATED:END -->

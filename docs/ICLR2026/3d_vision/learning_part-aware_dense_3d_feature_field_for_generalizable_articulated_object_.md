@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Part-Aware Dense 3D Feature Field for Generalizable Articulated Object Manipulation
 description: >-

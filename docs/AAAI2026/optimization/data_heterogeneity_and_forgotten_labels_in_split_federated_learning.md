@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Data Heterogeneity and Forgotten Labels in Split Federated Learning
 description: >-

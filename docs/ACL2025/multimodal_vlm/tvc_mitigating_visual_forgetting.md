@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mitigating Visual Forgetting via Take-along Visual Conditioning for Multi-modal Long CoT Reasoning
 description: >-

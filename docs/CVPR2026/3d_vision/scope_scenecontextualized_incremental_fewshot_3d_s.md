@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SCOPE: Scene-Contextualized Incremental Few-Shot 3D Segmentation
 description: >-

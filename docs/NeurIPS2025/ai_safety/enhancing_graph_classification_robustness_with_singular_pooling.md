@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Graph Classification Robustness with Singular Pooling
 description: >-

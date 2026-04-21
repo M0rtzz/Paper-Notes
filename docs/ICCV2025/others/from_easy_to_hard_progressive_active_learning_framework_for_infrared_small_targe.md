@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Easy to Hard: Progressive Active Learning Framework for Infrared Small Target Detection with Single Point Supervision
 description: >-

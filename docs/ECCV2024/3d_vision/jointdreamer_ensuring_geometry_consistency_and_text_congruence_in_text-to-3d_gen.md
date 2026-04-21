@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] JointDreamer: Ensuring Geometry Consistency and Text Congruence in Text-to-3D Generation via Joint Score Distillation
 description: >-
@@ -163,7 +163,7 @@ $$\nabla_\theta L_{JSD}(\theta) = \sum_{i=1}^{V} \mathbb{E}_{t, \epsilon^i_\Phi}
 - [AnimatableDreamer: Text-Guided Non-rigid 3D Model Generation and Reconstruction with Canonical Score Distillation](animatabledreamer_text-guided_non-rigid_3d_model_generation_and_reconstruction_w.md)
 - [TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)
 - [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
-- [Advancing Text-to-3D Generation with Linearized Lookahead Variational Score Distillation](../../ICCV2025/3d_vision/advancing_text-to-3d_generation_with_linearized_lookahead_variational_score_dist.md)
 - [DreamDissector: Learning Disentangled Text-to-3D Generation from 2D Diffusion Priors](dreamdissector_learning_disentangled_text-to-3d_generation_from_2d_diffusion_pri.md)
+- [VCD-Texture: Variance Alignment based 3D-2D Co-Denoising for Text-Guided Texturing](vcd-texture_variance_alignment_based_3d-2d_co-denoising_for_text-guided_texturin.md)
 
 <!-- RELATED:END -->

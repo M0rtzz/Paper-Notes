@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] You Only Learn One Query: Learning Unified Human Query for Single-Stage Multi-Person Multi-Task Human-Centric Perception
 description: >-

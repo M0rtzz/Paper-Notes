@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Auto-Regressively Generating Multi-View Consistent Images (MV-AR)
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Medical Dialogue Generation through Knowledge Refinement and Dynamic Prompt Adjustment
 description: >-

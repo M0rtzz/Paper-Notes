@@ -146,7 +146,7 @@ Gravity-Bench-v1 由三部分组成：
 - [Unsupervised Discovery of High-Redshift Galaxy Populations with Variational Autoencoders](../../NeurIPS2025/physics/unsupervised_discovery_of_high-redshift_galaxy_populations_with_variational_auto.md)
 - [POLARIS: A High-contrast Polarimetric Imaging Benchmark Dataset for Exoplanetary Disk Representation Learning](../../NeurIPS2025/physics/polaris_a_high-contrast_polarimetric_imaging_benchmark_dataset_for_exoplanetary_.md)
 - [Finetuning Stellar Spectra Foundation Models with LoRA](finetuning_stellar_spectra_foundation_models_with_lora.md)
-- [Rethink the Role of Deep Learning towards Large-scale Quantum Systems](rethink_the_role_of_deep_learning_towards_large-scale_quantum_systems.md)
 - [Mixture-of-Expert Variational Autoencoders for Cross-Modality Embedding of Type Ia Supernova Data](mixture-of-expert_variational_autoencoders_for_cross-modality_embedding_of_type_.md)
+- [Compact Matrix Quantum Group Equivariant Neural Networks](compact_matrix_quantum_group_equivariant_neural_networks.md)
 
 <!-- RELATED:END -->

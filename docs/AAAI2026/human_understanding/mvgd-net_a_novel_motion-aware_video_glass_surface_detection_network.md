@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MVGD-Net: A Novel Motion-aware Video Glass Surface Detection Network
 description: >-
@@ -184,9 +184,9 @@ $$\mathcal{L} = \alpha \mathcal{L}_P + \mathcal{L}_M$$
 ## 相关论文
 
 - [Failures to Surface Harmful Contents in Video Large Language Models](failures_to_surface_harmful_contents_in_video_large_language_models.md)
+- [SGC-Net: Stratified Granular Comparison Network for Open-Vocabulary HOI Detection](../../CVPR2025/human_understanding/sgc-net_stratified_granular_comparison_network_for_open-vocabulary_hoi_detection.md)
 - [Personality-guided Public-Private Domain Disentangled Hypergraph-Former Network for Multimodal Depression Detection](personality-guided_public-private_domain_disentangled_hypergraph-former_network_.md)
 - [SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](../../CVPR2026/human_understanding/save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
 - [Renormalization Group Guided Tensor Network Structure Search](renormalization_group_guided_tensor_network_structure_search.md)
-- [Unleashing Vision-Language Semantics for Deepfake Video Detection](../../CVPR2026/human_understanding/unleashing_vision-language_semantics_for_deepfake_video_detection.md)
 
 <!-- RELATED:END -->

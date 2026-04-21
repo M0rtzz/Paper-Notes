@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PinPoint: Focus, Don't Prune — Identifying Instruction-Relevant Regions for Information-Rich Image Understanding
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HandVQA: Diagnosing and Improving Fine-Grained Spatial Reasoning about Hands in Vision-Language Models
 description: >-

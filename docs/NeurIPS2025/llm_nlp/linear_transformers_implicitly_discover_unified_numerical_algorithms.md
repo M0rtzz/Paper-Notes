@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Linear Transformers Implicitly Discover Unified Numerical Algorithms
 description: >-

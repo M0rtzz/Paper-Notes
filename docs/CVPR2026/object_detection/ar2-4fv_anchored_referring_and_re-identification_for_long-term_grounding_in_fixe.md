@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AR²-4FV: Anchored Referring and Re-identification for Long-Term Grounding in Fixed-View Videos
 description: >-

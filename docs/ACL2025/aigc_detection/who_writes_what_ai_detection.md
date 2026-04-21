@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Who Writes What: Unveiling the Impact of Author Roles on AI-generated Text Detection
 description: >-

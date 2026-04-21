@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OmniAudio: Generating Spatial Audio from 360-Degree Video
 description: >-

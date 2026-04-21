@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Impact of Auxiliary Patient Data on Automated Chest X-Ray Report Generation and How to Incorporate It
 description: >-
@@ -130,6 +130,6 @@ tags:
 - [Enhanced Contrastive Learning with Multi-view Longitudinal Data for Chest X-ray Report Generation](../../CVPR2025/medical_imaging/enhanced_contrastive_learning_with_multi-view_longitudinal_data_for_chest_x-ray_.md)
 - [A Disease-Aware Dual-Stage Framework for Chest X-ray Report Generation](../../AAAI2026/medical_imaging/a_disease-aware_dual-stage_framework_for_chest_x-ray_report_.md)
 - [PriorRG: Prior-Guided Contrastive Pre-training and Coarse-to-Fine Decoding for Chest X-ray Report Generation](../../AAAI2026/medical_imaging/priorrg_prior-guided_contrastive_pre-training_and_coarse-to-fine_decoding_for_ch.md)
-- [Radar: Enhancing Radiology Report Generation with Supplementary Knowledge Injection](radar_radiology_report_gen.md)
+- [CheXalign: Preference Fine-tuning in Chest X-ray Interpretation Models without Human Feedback](chexalign_preference_finetuning.md)
 
 <!-- RELATED:END -->

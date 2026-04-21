@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Color3D: Controllable and Consistent 3D Colorization with Personalized Colorizer
 description: >-

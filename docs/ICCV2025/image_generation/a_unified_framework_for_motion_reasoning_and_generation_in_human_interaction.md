@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Unified Framework for Motion Reasoning and Generation in Human Interaction
 description: >-
@@ -162,6 +162,6 @@ MoLaM 在逻辑一致性上超过最佳两阶段方法 1.9+ 分，MAUVE 更是�
 - [PINO: Person-Interaction Noise Optimization for Long-Duration and Customizable Motion Generation of Arbitrary-Sized Groups](pino_person-interaction_noise_optimization_for_long-duration_and_customizable_mo.md)
 - [ScoreHOI: Physically Plausible Reconstruction of Human-Object Interaction via Score-Guided Diffusion](scorehoi_physically_plausible_reconstruction_of_human-object_interaction_via_sco.md)
 - [A Unified Agentic Framework for Evaluating Conditional Image Generation](../../ACL2025/image_generation/a_unified_agentic_framework_for_evaluating_conditional_image_generation.md)
-- [InterAct: Advancing Large-Scale Versatile 3D Human-Object Interaction Generation](../../CVPR2025/image_generation/interact_advancing_large-scale_versatile_3d_human-object_interaction_generation.md)
+- [Move-in-2D: 2D-Conditioned Human Motion Generation](../../CVPR2025/image_generation/move-in-2d_2d-conditioned_human_motion_generation.md)
 
 <!-- RELATED:END -->

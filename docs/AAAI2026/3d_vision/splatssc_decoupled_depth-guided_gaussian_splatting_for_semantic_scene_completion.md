@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SplatSSC: Decoupled Depth-Guided Gaussian Splatting for Semantic Scene Completion
 description: >-

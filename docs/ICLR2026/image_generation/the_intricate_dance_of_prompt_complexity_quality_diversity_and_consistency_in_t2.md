@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Intricate Dance of Prompt Complexity, Quality, Diversity, and Consistency in T2I Models
 description: >-

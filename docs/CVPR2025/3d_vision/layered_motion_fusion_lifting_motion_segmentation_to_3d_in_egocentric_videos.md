@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Layered Motion Fusion: Lifting Motion Segmentation to 3D in Egocentric Videos
 description: >-

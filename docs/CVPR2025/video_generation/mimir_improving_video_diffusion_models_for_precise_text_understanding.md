@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mimir: Improving Video Diffusion Models for Precise Text Understanding
 description: >-
@@ -122,10 +122,10 @@ Mimir 在标准 T2V 扩散模型（3D Causal VAE + DiT）基础上，增加 deco
 
 ## 相关论文
 
+- [VideoDirector: Precise Video Editing via Text-to-Video Models](videodirector_precise_video_editing_via_text-to-video_models.md)
+- [VideoGuide: Improving Video Diffusion Models without Training Through a Teacher's Guide](videoguide_improving_video_diffusion_models_without_training_through_a_teachers_.md)
+- [Towards Precise Scaling Laws for Video Diffusion Transformers](towards_precise_scaling_laws_for_video_diffusion_transformers.md)
+- [ShotAdapter: Text-to-Multi-Shot Video Generation with Diffusion Models](shotadapter_text-to-multi-shot_video_generation_with_diffusion_models.md)
 - [From Slow Bidirectional to Fast Autoregressive Video Diffusion Models](from_slow_bidirectional_to_fast_autoregressive_video_diffusion_models.md)
-- [MotionPro: A Precise Motion Controller for Image-to-Video Generation](motionpro_a_precise_motion_controller_for_image-to-video_generation.md)
-- [NeuS-V: Neuro-Symbolic Evaluation of Text-to-Video Models using Formal Verification](neuro-symbolic_evaluation_of_text-to-video_models_using_formal_verification.md)
-- [Decouple and Track: Benchmarking and Improving Video Diffusion Transformers for Motion Transfer](../../ICCV2025/video_generation/decouple_and_track_benchmarking_and_improving_video_diffusion_transformers_for_m.md)
-- [InterDyn: Controllable Interactive Dynamics with Video Diffusion Models](interdyn_controllable_interactive_dynamics_with_video_diffusion_models.md)
 
 <!-- RELATED:END -->

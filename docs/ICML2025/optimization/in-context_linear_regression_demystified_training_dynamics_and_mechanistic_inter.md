@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] In-Context Linear Regression Demystified: Training Dynamics and Mechanistic Interpretability of Multi-Head Softmax Attention
 description: >-

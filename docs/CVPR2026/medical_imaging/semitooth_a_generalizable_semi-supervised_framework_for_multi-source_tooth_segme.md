@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation
 description: >-

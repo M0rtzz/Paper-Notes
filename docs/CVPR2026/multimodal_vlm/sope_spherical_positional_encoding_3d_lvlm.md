@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SoPE: Spherical Coordinate-Based Positional Embedding for 3D LVLMs
 description: >-

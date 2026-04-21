@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Geo-Sign: Hyperbolic Contrastive Regularisation for Geometrically Aware Sign Language Translation
 description: >-

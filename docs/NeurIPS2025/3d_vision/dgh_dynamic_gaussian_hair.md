@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DGH: Dynamic Gaussian Hair
 description: >-

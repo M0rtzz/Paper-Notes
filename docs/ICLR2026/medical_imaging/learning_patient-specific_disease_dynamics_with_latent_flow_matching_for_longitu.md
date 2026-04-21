@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Patient-Specific Disease Dynamics with Latent Flow Matching for Longitudinal Imaging Generation
 description: >-

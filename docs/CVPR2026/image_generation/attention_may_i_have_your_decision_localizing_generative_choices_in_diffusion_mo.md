@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Attention, May I Have Your Decision? Localizing Generative Choices in Diffusion Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Greedy Sampling Is Provably Efficient for RLHF
 description: >-

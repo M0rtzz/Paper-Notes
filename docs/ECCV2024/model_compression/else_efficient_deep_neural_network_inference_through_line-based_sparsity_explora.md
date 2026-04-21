@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ELSE: Efficient Deep Neural Network Inference through Line-based Sparsity Exploration
 description: >-
@@ -127,9 +127,9 @@ ELSE是一种推理时的事件抑制方法，不涉及额外的训练过程或�
 ## 相关论文
 
 - [Efficient Thought Space Exploration Through Strategic Intervention](../../AAAI2026/model_compression/efficient_thought_space_exploration_through_strategic_intervention.md)
-- [PYRA: Parallel Yielding Re-Activation for Training-Inference Efficient Task Adaptation](pyra_parallel_yielding_re-activation_for_training-inference_efficient_task_adapt.md)
 - [IAM: Efficient Inference through Attention Mapping between Different-scale LLMs](../../ACL2025/model_compression/iam_efficient_inference_through_attention_mapping_between_different-scale_llms.md)
 - [QuadEnhancer: Leveraging Quadratic Transformations to Enhance Deep Neural Networks](../../NeurIPS2025/model_compression/quadenhancer_leveraging_quadratic_transformations_to_enhance_deep_neural_network.md)
 - [An Efficient Matrix Multiplication Algorithm for Accelerating Inference in Binary and Ternary Neural Networks](../../ICML2025/model_compression/an_efficient_matrix_multiplication_algorithm_for_accelerating_inference_in_binar.md)
+- [DuoGPT: Training-free Dual Sparsity through Activation-aware Pruning in LLMs](../../NeurIPS2025/model_compression/duogpt_training-free_dual_sparsity_through_activation-aware_pruning_in_llms.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DeepShield: Fortifying Deepfake Video Detection with Local and Global Forgery Analysis
 description: >-

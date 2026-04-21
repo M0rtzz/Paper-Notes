@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Composing Parts for Expressive Object Generation
 description: >-
@@ -130,7 +130,7 @@ tags:
 - [InterAct: Advancing Large-Scale Versatile 3D Human-Object Interaction Generation](interact_advancing_large-scale_versatile_3d_human-object_interaction_generation.md)
 - [ExpPortrait: Expressive Portrait Generation via Personalized Representation](../../CVPR2026/image_generation/expportrait_expressive_portrait_generation_via_personalized_representation.md)
 - [BootPlace: Bootstrapped Object Placement with Detection Transformers](bootplace_bootstrapped_object_placement_with_detection_transformers.md)
-- [MetaShadow: Object-Centered Shadow Detection, Removal, and Synthesis](metashadow_object-centered_shadow_detection_removal_and_synthesis.md)
+- [RORem: Training a Robust Object Remover with Human-in-the-Loop](rorem_training_a_robust_object_remover_with_human-in-the-loop.md)
 - [Multitwine: Multi-Object Compositing with Text and Layout Control](multitwine_multi-object_compositing_with_text_and_layout_control.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bias for Action: Video Implicit Neural Representations with Bias Modulation
 description: >-

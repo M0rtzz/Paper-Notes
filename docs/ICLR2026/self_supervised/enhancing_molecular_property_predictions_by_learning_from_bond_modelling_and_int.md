@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Molecular Property Predictions by Learning from Bond Modelling and Interactions
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TopoReformer: Mitigating Adversarial Attacks Using Topological Purification in OCR Models
 description: >-

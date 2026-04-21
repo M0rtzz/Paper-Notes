@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Theoretical and Empirical Analysis of Lehmer Codes to Search Permutation Spaces with Evolutionary Algorithms
 description: >-
@@ -124,9 +124,9 @@ Lehmer 编码将排列 $\sigma \in S_n$ 编码为向量 $L(\sigma) = (L(\sigma)_
 ## 相关论文
 
 - [Double Descent Meets Out-of-Distribution Detection: Theoretical Insights and Empirical Analysis](../../NeurIPS2025/others/double_descent_meets_out-of-distribution_detection_theoretical_insights_and_empi.md)
-- [A Graph-Theoretical Perspective on Law Design for Multiagent Systems](a_graph-theoretical_perspective_on_law_design_for_multiagent.md)
 - [Improved Differentially Private Algorithms for Rank Aggregation](improved_differentially_private_algorithms_for_rank_aggregation.md)
+- [A Graph-Theoretical Perspective on Law Design for Multiagent Systems](a_graph-theoretical_perspective_on_law_design_for_multiagent.md)
 - [Parameterized Approximation Algorithms for TSP on Non-Metric Graphs](parameterized_approximation_algorithms_for_tsp_on_non-metric_graphs.md)
-- [Extreme Value Monte Carlo Tree Search for Classical Planning](extreme_value_monte_carlo_tree_search_for_classical_planning.md)
+- [Bayesian Network Structural Consensus via Greedy Min-Cut Analysis](bayesian_network_structural_consensus_via_greedy_min-cut_analysis.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OCN: Effectively Utilizing Higher-Order Common Neighbors for Better Link Prediction
 description: >-

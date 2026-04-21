@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3D Gaussian Head Avatars with Expressive Dynamic Appearances by Compact Tensorial Representations
 description: >-
@@ -121,10 +121,10 @@ $$\mathcal{L} = \mathcal{L}_{image} + \mathcal{L}_{geom} + \mathcal{L}_{op}$$
 
 ## 相关论文
 
+- [Steepest Descent Density Control for Compact 3D Gaussian Splatting](steepest_descent_density_control_for_compact_3d_gaussian_splatting.md)
 - [GASP: Gaussian Avatars with Synthetic Priors](gasp_gaussian_avatars_with_synthetic_priors.md)
 - [PhysHead: Simulation-Ready Gaussian Head Avatars](../../CVPR2026/3d_vision/physhead_simulation-ready_gaussian_head_avatars.md)
 - [StrandHead: Text to Hair-Disentangled 3D Head Avatars Using Human-Centric Priors](../../ICCV2025/3d_vision/strandhead_text_to_hair-disentangled_3d_head_avatars_using_human-centric_priors.md)
-- [HyPlaneHead: Rethinking Tri-plane-like Representations in Full-Head Image Synthesis](../../NeurIPS2025/3d_vision/hyplanehead_rethinking_tri-plane-like_representations_in_full-head_image_synthes.md)
 - [HRAvatar: High-Quality and Relightable Gaussian Head Avatar](hravatar_high-quality_and_relightable_gaussian_head_avatar.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Double-Ellipsoid Geometry of CLIP
 description: >-
@@ -135,7 +135,7 @@ tags:
 - [Whitened CLIP as a Likelihood Surrogate of Images and Captions](whitened_clip_as_a_likelihood_surrogate_of_images_and_captions.md)
 - [Algebra Unveils Deep Learning -- An Invitation to Neuroalgebraic Geometry](algebra_unveils_deep_learning_--_an_invitation_to_neuroalgebraic_geometry.md)
 - [Predict Training Data Quality via Its Geometry in Metric Space](../../NeurIPS2025/llm_pretraining/predict_training_data_quality_via_its_geometry_in_metric_space.md)
+- [Language Model Developers Should Report Train-Test Overlap](language_model_developers_should_report_train-test_overlap.md)
 - [Towards Robust Influence Functions with Flat Validation Minima](towards_robust_influence_functions_with_flat_validation_minima.md)
-- [Benign Overfitting in Token Selection of Attention Mechanism](benign_overfitting_in_token_selection_of_attention_mechanism.md)
 
 <!-- RELATED:END -->

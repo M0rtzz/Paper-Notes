@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Theoretical Guarantees on the Best-of-n Alignment Policy
 description: >-

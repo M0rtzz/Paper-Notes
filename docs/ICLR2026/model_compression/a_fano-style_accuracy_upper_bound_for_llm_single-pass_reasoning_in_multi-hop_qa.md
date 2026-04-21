@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Fano-Style Accuracy Upper Bound for LLM Single-Pass Reasoning in Multi-Hop QA
 description: >-

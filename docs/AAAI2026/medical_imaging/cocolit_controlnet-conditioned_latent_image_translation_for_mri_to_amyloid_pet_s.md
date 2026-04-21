@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoCoLIT: ControlNet-Conditioned Latent Image Translation for MRI to Amyloid PET Synthesis
 description: >-

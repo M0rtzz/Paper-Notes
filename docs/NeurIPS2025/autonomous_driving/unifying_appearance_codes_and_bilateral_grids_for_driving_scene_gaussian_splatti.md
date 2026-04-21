@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unifying Appearance Codes and Bilateral Grids for Driving Scene Gaussian Splatting
 description: >-

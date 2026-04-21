@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Better Chain-of-Thought: A Reflection on Effectiveness and Faithfulness
 description: >-
@@ -153,10 +153,10 @@ QUIRE 在 Gemma2-9B 上同样有效，ProntoQA FBS 从 60.5 提升至 69.5。
 
 ## 相关论文
 
-- [The Surprising Effectiveness of Negative Reinforcement in LLM Reasoning](../../NeurIPS2025/llm_reasoning/the_surprising_effectiveness_of_negative_reinforcement_in_llm_reasoning.md)
-- [Reasoning Models Better Express Their Confidence](../../NeurIPS2025/llm_reasoning/reasoning_models_better_express_their_confidence.md)
 - [CoT-Valve: Length-Compressible Chain-of-Thought Tuning](cot-valve_length-compressible_chain-of-thought_tuning.md)
 - [Unveiling the Key Factors for Distilling Chain-of-Thought Reasoning](unveiling_the_key_factors_for_distilling_chain-of-thought_reasoning.md)
+- [SoftCoT: Soft Chain-of-Thought for Efficient Reasoning with LLMs](softcot_soft_chain_of_thought.md)
+- [Improving Chain-of-Thought Reasoning via Quasi-Symbolic Abstractions](improving_chain-of-thought_reasoning_via_quasi-symbolic_abstractions.md)
 - [DRT: Deep Reasoning Translation via Long Chain-of-Thought](drt_deep_reasoning_translation_via_long_chain-of-thought.md)
 
 <!-- RELATED:END -->

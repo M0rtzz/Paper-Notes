@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpHOR: A Representation Learning Perspective on Open-set Recognition
 description: >-

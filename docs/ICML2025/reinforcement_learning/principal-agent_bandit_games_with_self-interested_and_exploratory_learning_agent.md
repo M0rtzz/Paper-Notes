@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Principal-Agent Bandit Games with Self-Interested and Exploratory Learning Agents
 description: >-

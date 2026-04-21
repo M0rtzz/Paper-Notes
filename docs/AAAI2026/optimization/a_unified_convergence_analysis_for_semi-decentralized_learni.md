@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Unified Convergence Analysis for Semi-Decentralized Learning: Sampled-to-Sampled vs. Sampled-to-All Communication
 description: >-

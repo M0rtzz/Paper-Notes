@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Semantically Disentangled Unified Model for Multi-category 3D Anomaly Detection
 description: >-
@@ -128,7 +128,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{C3L}} + \mathcal{L}_{\text{rec
 - [Back to Point: Exploring Point-Language Models for Zero-Shot 3D Anomaly Detection](back_to_point_exploring_point-language_models_for_zero-shot_3d_anomaly_detection.md)
 - [GS-CLIP: Zero-shot 3D Anomaly Detection by Geometry-Aware Prompt and Synergistic View Representation Learning](gs-clip_zero-shot_3d_anomaly_detection_by_geometry-aware_prompt_and_synergistic_.md)
 - [Unified Category-Level Object Detection and Pose Estimation from RGB Images using 3D Prototypes](../../ICCV2025/3d_vision/unified_category-level_object_detection_and_pose_estimation_from_rgb_images_usin.md)
-- [CASL: Curvature-Augmented Self-supervised Learning for 3D Anomaly Detection](../../AAAI2026/3d_vision/casl_curvature-augmented_self-supervised_learning_for_3d_anomaly_detection.md)
 - [Changes in Real Time: Online Scene Change Detection with Multi-View Fusion](changes_in_real_time_online_scene_change_detection_with_multi-view_fusion.md)
+- [CASL: Curvature-Augmented Self-supervised Learning for 3D Anomaly Detection](../../AAAI2026/3d_vision/casl_curvature-augmented_self-supervised_learning_for_3d_anomaly_detection.md)
 
 <!-- RELATED:END -->

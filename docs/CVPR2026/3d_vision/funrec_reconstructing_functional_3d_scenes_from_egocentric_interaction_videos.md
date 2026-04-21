@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FunREC: Reconstructing Functional 3D Scenes from Egocentric Interaction Videos
 description: >-
@@ -144,8 +144,8 @@ mIoU 提升 50+ 个百分点。
 
 - [MotionScale: Reconstructing Appearance, Geometry, and Motion of Dynamic Scenes with Scalable 4D Gaussian Splatting](motionscale_reconstructing_appearance_geometry_and_motion_of_dynamic_scenes_with.md)
 - [Human Interaction-Aware 3D Reconstruction from a Single Image](human_interaction-aware_3d_reconstruction_from_a_single_image.md)
+- [Reconstructing Close Human Interaction with Appearance and Proxemics Reasoning](../../CVPR2025/3d_vision/reconstructing_close_human_interaction_with_appearance_and_proxemics_reasoning.md)
 - [CrowdGaussian: Reconstructing High-Fidelity 3D Gaussians for Human Crowd from a Single Image](crowdgaussian_reconstructing_high-fidelity_3d_gaussians_for_human_crowd_from_a_s.md)
-- [Layered Motion Fusion: Lifting Motion Segmentation to 3D in Egocentric Videos](../../CVPR2025/3d_vision/layered_motion_fusion_lifting_motion_segmentation_to_3d_in_egocentric_videos.md)
-- [HOT3D: Hand and Object Tracking in 3D from Egocentric Multi-View Videos](../../CVPR2025/3d_vision/hot3d_hand_and_object_tracking_in_3d_from_egocentric_multi-view_videos.md)
+- [AffordMatcher: Affordance Learning in 3D Scenes from Visual Signifiers](affordmatcher_affordance_learning_in_3d_scenes_from_visual_signifiers.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spectral Defense Against Resource-Targeting Attack in 3D Gaussian Splatting
 description: >-
@@ -174,10 +174,10 @@ tags:
 
 ## 相关论文
 
+- [Spectral Informed Mamba for Robust Point Cloud Processing](spectral_informed_mamba_for_robust_point_cloud_processing.md)
 - [3D-HGS: 3D Half-Gaussian Splatting](3d-hgs_3d_half-gaussian_splatting.md)
+- [HyperGS: Hyperspectral 3D Gaussian Splatting](hypergs_hyperspectral_3d_gaussian_splatting.md)
 - [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
-- [Mitigating Ambiguities in 3D Classification with Gaussian Splatting](mitigating_ambiguities_in_3d_classification_with_gaussian_splatting.md)
-- [DashGaussian: Optimizing 3D Gaussian Splatting in 200 Seconds](dashgaussian_optimizing_3d_gaussian_splatting_in_200_seconds.md)
-- [FruitNinja: 3D Object Interior Texture Generation with Gaussian Splatting](fruitninja_3d_object_interior_texture_generation_with_gaussian_splatting.md)
+- [NoPain: No-box Point Cloud Attack via Optimal Transport Singular Boundary](nopain_no-box_point_cloud_attack_via_optimal_transport_singular_boundary.md)
 
 <!-- RELATED:END -->

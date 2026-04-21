@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] As Language Models Scale, Low-order Linear Depth Dynamics Emerge
 description: >-

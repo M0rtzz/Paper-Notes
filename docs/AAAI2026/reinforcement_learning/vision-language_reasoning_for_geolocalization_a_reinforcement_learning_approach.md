@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Vision-Language Reasoning for Geolocalization: A Reinforcement Learning Approach
 description: >-

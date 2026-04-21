@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mind the Gap: Removing the Discretization Gap in Differentiable Logic Gate Networks
 description: >-

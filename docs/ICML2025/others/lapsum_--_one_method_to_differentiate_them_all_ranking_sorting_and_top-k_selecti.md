@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LapSum -- One Method to Differentiate Them All: Ranking, Sorting and Top-k Selection
 description: >-

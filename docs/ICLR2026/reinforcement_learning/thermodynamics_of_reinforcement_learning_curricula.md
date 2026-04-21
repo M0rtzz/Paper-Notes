@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Thermodynamics of Reinforcement Learning Curricula
 description: >-
@@ -125,6 +125,6 @@ MEW无需额外损失函数，而是提供温度调度策略。以ASAC（Average
 - [Stackelberg Coupling of Online Representation Learning and Reinforcement Learning](stackelberg_coupling_of_online_representation_learning_and_reinforcement_learnin.md)
 - [Learning to Generate Unit Test via Adversarial Reinforcement Learning](learning_to_generate_unit_test_via_adversarial_reinforcement_learning.md)
 - [Spotlight on Token Perception for Multimodal Reinforcement Learning](spotlight_on_token_perception_for_multimodal_reinforcement_learning.md)
-- [QuRL: Efficient Reinforcement Learning with Quantized Rollout](qurl_efficient_reinforcement_learning_with_quantized_rollout.md)
+- [ReMoT: Reinforcement Learning with Motion Contrast Triplets](remot_reinforcement_learning_with_motion_contrast_triplets.md)
 
 <!-- RELATED:END -->

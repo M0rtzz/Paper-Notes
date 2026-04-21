@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] T2A-Feedback: Improving Basic Capabilities of Text-to-Audio Generation via Fine-grained AI Feedback
 description: >-

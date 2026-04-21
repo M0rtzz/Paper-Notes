@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Global AI Inclusivity: A Large-Scale Multilingual Terminology Dataset (GIST)
 description: >-

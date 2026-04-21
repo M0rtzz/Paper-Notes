@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TGDPO: Harnessing Token-Level Reward Guidance for Enhancing Direct Preference Optimization
 description: >-

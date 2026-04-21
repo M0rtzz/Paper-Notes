@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Step-CoT: Stepwise Visual Chain-of-Thought for Medical Visual Question Answering
 description: >-

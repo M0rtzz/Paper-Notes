@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EXPERT: An Explainable Image Captioning Evaluation Metric with Structured Explanations
 description: >-

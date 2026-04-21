@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DynamicVL: Benchmarking MLLMs for Dynamic City Understanding
 description: >-

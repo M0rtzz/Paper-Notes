@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CORAL: Learning Consistent Representations across Multi-step Training with Lighter Speculative Drafter
 description: >-

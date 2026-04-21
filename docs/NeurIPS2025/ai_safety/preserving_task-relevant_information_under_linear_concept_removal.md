@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Preserving Task-Relevant Information Under Linear Concept Removal
 description: >-
@@ -134,9 +134,9 @@ SPLINCE是一种线性代数方法，计算一个投影矩阵 $\mathbf{P}^*_{SPL
 ## 相关论文
 
 - [Causally Reliable Concept Bottleneck Models](causally_reliable_concept_bottleneck_models.md)
+- [Fairness under Competition](fairness_under_competition.md)
 - [Nearly-Linear Time Private Hypothesis Selection with the Optimal Approximation Factor](nearly-linear_time_private_hypothesis_selection_with_the_optimal_approximation_f.md)
 - [Factor Decorrelation Enhanced Data Removal from Deep Predictive Models](factor_decorrelation_enhanced_data_removal_from_deep_predictive_models.md)
-- [Fairness under Competition](fairness_under_competition.md)
 - [Matchings Under Biased and Correlated Evaluations](matchings_under_biased_and_correlated_evaluations.md)
 
 <!-- RELATED:END -->

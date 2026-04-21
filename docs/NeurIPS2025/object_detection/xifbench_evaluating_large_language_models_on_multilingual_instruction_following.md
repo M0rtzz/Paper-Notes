@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] XIFBench: Evaluating Large Language Models on Multilingual Instruction Following
 description: >-

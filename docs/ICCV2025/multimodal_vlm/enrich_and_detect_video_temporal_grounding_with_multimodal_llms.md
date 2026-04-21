@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enrich and Detect: Video Temporal Grounding with Multimodal LLMs
 description: >-
@@ -163,6 +163,6 @@ ED-VTG 在所有三个 zero-shot 基准上大幅领先全部已有方法，包�
 - [MM-Spatial: Exploring 3D Spatial Understanding in Multimodal LLMs](mm-spatial_exploring_3d_spatial_understanding_in_multimodal_llms.md)
 - [GroundVTS: Visual Token Sampling in Multimodal Large Language Models for Video Temporal Grounding](../../CVPR2026/multimodal_vlm/groundvts_visual_token_sampling_in_multimodal_large_language_models_for_video_te.md)
 - [Controlling Multimodal LLMs via Reward-guided Decoding](controlling_multimodal_llms_via_rewardguided_decoding.md)
-- [Analyzing Finetuning Representation Shift for Multimodal LLMs Steering](analyzing_finetuning_representation_shift_for_multimodal_llms_steering.md)
+- [Dynamic Group Detection using VLM-augmented Temporal Groupness Graph](dynamic_group_detection_using_vlm-augmented_temporal_groupness_graph.md)
 
 <!-- RELATED:END -->

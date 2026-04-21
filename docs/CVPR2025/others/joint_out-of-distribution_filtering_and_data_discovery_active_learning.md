@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Joint Out-of-Distribution Filtering and Data Discovery Active Learning
 description: >-
-  [CVPR 2025][active learning] 提出 OSDAL 场景和 Joda 算法，首次在主动学习中同时处理 OOD 过滤和新类别发现，无需额外模型，仅用标注池训练，在 18 个配置上全面超越 SOTA。
+  [CVPR 2025][active learning] 提出 Open-Set Discovery Active Learning (OSDAL) 场景，并设计 Joda 算法，通过训练-过滤-选择三阶段流程，用单一模型同时过滤 OOD 数据和发现新类别，无需额外辅助模型，在 18 个配置上持续达到最高准确率。
 tags:
   - CVPR 2025
   - active learning
   - OOD detection
   - category discovery
-  - 开放世界
+  - open-set
   - energy score
+  - SISOMe
 ---
 
 # Joint Out-of-Distribution Filtering and Data Discovery Active Learning
@@ -134,8 +135,8 @@ Joda 包含三个阶段：
 
 ## 相关论文
 
-- [Open Set Label Shift with Test Time Out-of-Distribution Reference](open_set_label_shift_with_test_time_out-of-distribution_reference.md)
 - [H2ST: Hierarchical Two-Sample Tests for Continual Out-of-Distribution Detection](h2st_hierarchical_two-sample_tests_for_continual_out-of-distribution_detection.md)
+- [Open Set Label Shift with Test Time Out-of-Distribution Reference](open_set_label_shift_with_test_time_out-of-distribution_reference.md)
 - [Instance-wise Supervision-level Optimization in Active Learning](instance-wise_supervision-level_optimization_in_active_learning.md)
 - [Redundancy-Aware Test-Time Graph Out-of-Distribution Detection](../../NeurIPS2025/others/redundancy-aware_test-time_graph_out-of-distribution_detection.md)
 - [Harnessing Feature Resonance under Arbitrary Target Alignment for Out-of-Distribution Node Detection](../../NeurIPS2025/others/harnessing_feature_resonance_under_arbitrary_target_alignment_for_out-of-distrib.md)

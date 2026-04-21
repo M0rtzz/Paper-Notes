@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BubbleFormer: Forecasting Boiling with Transformers
 description: >-

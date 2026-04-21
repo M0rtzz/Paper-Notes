@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Robust Adversarial Reinforcement Learning in Stochastic Games via Sequence Modeling
 description: >-

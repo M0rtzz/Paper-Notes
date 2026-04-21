@@ -2,9 +2,15 @@
 title: >-
   [论文解读] Explaining Puzzle Solutions in Natural Language: An Exploratory Study on 6×6 Sudoku
 description: >-
-  [模型压缩] 评估五个LLM在求解和解释6×6数独谜题上的能力，发现即使o1-preview能解出65%的题目，其推理解释在忠实性、清晰度和教育价值方面仍严重不足。
+  [ACL 2025][模型压缩][LLM reasoning] 评估五个LLM在求解和解释6×6数独谜题上的能力，发现即使o1-preview能解出65%的题目，其推理解释在忠实性、清晰度和教育价值方面仍严重不足。
 tags:
+  - ACL 2025
   - 模型压缩
+  - LLM reasoning
+  - Sudoku
+  - explanation generation
+  - human-AI collaboration
+  - puzzle solving
 ---
 
 # Explaining Puzzle Solutions in Natural Language: An Exploratory Study on 6×6 Sudoku
@@ -109,10 +115,10 @@ tags:
 
 ## 相关论文
 
-- [EAC-MoE: Expert-Selection Aware Compressor for Mixture-of-Experts Large Language Models](eac_moe_expert_aware_compression.md)
-- [Who Taught You That? Tracing Teachers in Model Distillation](who_taught_you_that_tracing_teachers_in_model_distillation.md)
-- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](see_strategic_exploration_exploitation_prompt_optimization.md)
-- [Structured Language Generation Model: Loss Calibration and Formatted Decoding for Efficient Text](../../AAAI2026/model_compression/structured_language_generation_model_loss_calibration_and_formatted_decoding_for.md)
-- [DataDecide: How to Predict Best Pretraining Data with Small Experiments](../../ICML2025/model_compression/datadecide_how_to_predict_best_pretraining_data_with_small_experiments.md)
+- [A Silver Bullet or a Compromise for Full Attention? A Comprehensive Study of Gist Token-based Context Compression](gist_token_context_compression.md)
+- [CoEvo: Continual Evolution of Symbolic Solutions Using Large Language Models](../../AAAI2026/model_compression/coevo_continual_evolution_of_symbolic_solutions_using_large_language_models.md)
+- [Wanda++: Pruning Large Language Models via Regional Gradients](wanda_pruning_large_language_models_via_regional_gradients.md)
+- [A Granular Study of Safety Pretraining under Model Abliteration](../../NeurIPS2025/model_compression/a_granular_study_of_safety_pretraining_under_model_abliteration.md)
+- [Unveiling Language-Specific Features in Large Language Models via Sparse Autoencoders](language_specific_features.md)
 
 <!-- RELATED:END -->

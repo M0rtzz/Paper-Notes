@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SafePath: Preventing Harmful Reasoning in Chain-of-Thought via Early Alignment
 description: >-

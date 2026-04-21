@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CasP: Improving Semi-Dense Feature Matching Pipeline Leveraging Cascaded Correspondence Priors for Guidance
 description: >-
@@ -152,8 +152,8 @@ $$L = \lambda_1 L_{1/16}^c + \lambda_2 L_{1/8}^c + \lambda_3 L_{1/1}^f + \lambda
 
 - [Diving into the Fusion of Monocular Priors for Generalized Stereo Matching](diving_into_the_fusion_of_monocular_priors_for_generalized_stereo_matching.md)
 - [Dense-SfM: Structure from Motion with Dense Consistent Matching](../../CVPR2025/3d_vision/dense-sfm_structure_from_motion_with_dense_consistent_matching.md)
-- [Do It Yourself: Learning Semantic Correspondence from Pseudo-Labels](do_it_yourself_learning_semantic_correspondence_from_pseudo-labels.md)
-- [Sat2City: 3D City Generation from A Single Satellite Image with Cascaded Latent Diffusion](sat2city_3d_city_generation_from_a_single_satellite_image_with_cascaded_latent_d.md)
 - [CoMatcher: Multi-View Collaborative Feature Matching](../../CVPR2025/3d_vision/comatcher_multi-view_collaborative_feature_matching.md)
+- [Sat2City: 3D City Generation from A Single Satellite Image with Cascaded Latent Diffusion](sat2city_3d_city_generation_from_a_single_satellite_image_with_cascaded_latent_d.md)
+- [S3R-GS: Streamlining the Pipeline for Large-Scale Street Scene Reconstruction](s3r-gs_streamlining_the_pipeline_for_large-scale_street_scene_reconstruction.md)
 
 <!-- RELATED:END -->

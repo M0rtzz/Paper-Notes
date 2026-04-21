@@ -1,7 +1,10 @@
-﻿---
-title: "CRISP: Object Pose and Shape Estimation with Test-Time Adaptation"
-description: "类别无关的物体姿态与形状估计pipeline，结合优化校正器和自训练实现测试时域适应"
-tags: ["object pose estimation", "shape estimation", "test-time adaptation", "self-training", "neural implicit field"]
+---
+title: >-
+  [论文解读] CRISP: Object Pose and Shape Estimation with Test-Time Adaptation
+description: >-
+  [人体理解] 提出 CRISP，一个类别无关的物体姿态与形状估计 pipeline，核心创新在于基于 active shape model 的优化校正器和 correct-and-certify 自训练策略，可在测试时自适应弥合大的域差距。
+tags:
+  - 人体理解
 ---
 
 # CRISP: Object Pose and Shape Estimation with Test-Time Adaptation
@@ -123,10 +126,10 @@ CRISP pipeline 包含三个层次：(1) 编码器-解码器形状估计（DINOv2
 
 ## 相关论文
 
-- [Co-op: Correspondence-Based Novel Object Pose Estimation](co-op_correspondence-based_novel_object_pose_estimation.md)
-- [GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation](gce-pose_global_context_enhancement_for_category-level_object_pose_estimation.md)
-- [One2Any: One-Reference 6D Pose Estimation for Any Object](one2any_one-reference_6d_pose_estimation_for_any_object.md)
-- [FOZO: Forward-Only Zeroth-Order Prompt Optimization for Test-Time Adaptation](../../CVPR2026/human_understanding/fozo_forward-only_zeroth-order_prompt_optimization_for_test-time_adaptation.md)
-- [LaPose: Laplacian Mixture Shape Modeling for RGB-Based Category-Level Object Pose Estimation](../../ECCV2024/human_understanding/lapose_laplacian_mixture_shape_modeling_for_rgb-based_category-level_object_pose.md)
+- [RayPose: Ray Bundling Diffusion for Template Views in Unseen 6D Object Pose Estimation](../../ICCV2025/human_understanding/raypose_ray_bundling_diffusion_for_template_views_in_unseen_6d_object_pose_estim.md)
+- [Multi-Sensor Object Anomaly Detection: Unifying Appearance, Geometry, and Internal Properties](multi-sensor_object_anomaly_detection_unifying_appearance_geometry_and_internal_.md)
+- [WIR3D: Visually-Informed and Geometry-Aware 3D Shape Abstraction](../../ICCV2025/human_understanding/wir3d_visually-informed_and_geometry-aware_3d_shape_abstraction.md)
+- [DualTalk: Dual-Speaker Interaction for 3D Talking Head Conversations](dualtalk_dual-speaker_interaction_for_3d_talking_head_conversations.md)
+- [ControlFace: Harnessing Facial Parametric Control for Face Rigging](controlface_harnessing_facial_parametric_control_for_face_rigging.md)
 
 <!-- RELATED:END -->

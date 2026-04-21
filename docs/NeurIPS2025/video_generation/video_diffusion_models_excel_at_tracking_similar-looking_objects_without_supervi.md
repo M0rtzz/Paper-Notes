@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Video Diffusion Models Excel at Tracking Similar-Looking Objects Without Supervision
 description: >-
@@ -142,10 +142,10 @@ TED (Temporal Enhanced Diffusion) 框架：(1) 从视频扩散模型提取运动
 
 ## 相关论文
 
+- [VideoGuide: Improving Video Diffusion Models without Training Through a Teacher's Guide](../../CVPR2025/video_generation/videoguide_improving_video_diffusion_models_without_training_through_a_teachers_.md)
 - [Exploring Temporally-Aware Features for Point Tracking](../../CVPR2025/video_generation/exploring_temporally-aware_features_for_point_tracking.md)
 - [InterDyn: Controllable Interactive Dynamics with Video Diffusion Models](../../CVPR2025/video_generation/interdyn_controllable_interactive_dynamics_with_video_diffusion_models.md)
-- [Target-Aware Video Diffusion Models](../../ICLR2026/video_generation/target-aware_video_diffusion_models.md)
-- [Articulated Kinematics Distillation from Video Diffusion Models](../../CVPR2025/video_generation/articulated_kinematics_distillation_from_video_diffusion_models.md)
 - [VMDT: Decoding the Trustworthiness of Video Foundation Models](vmdt_decoding_the_trustworthiness_of_video_foundation_models.md)
+- [StreetCrafter: Street View Synthesis with Controllable Video Diffusion Models](../../CVPR2025/video_generation/streetcrafter_street_view_synthesis_with_controllable_video_diffusion_models.md)
 
 <!-- RELATED:END -->

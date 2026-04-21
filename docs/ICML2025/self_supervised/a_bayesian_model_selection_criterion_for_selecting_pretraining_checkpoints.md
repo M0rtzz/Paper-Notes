@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Bayesian Model Selection Criterion for Selecting Pretraining Checkpoints
 description: >-

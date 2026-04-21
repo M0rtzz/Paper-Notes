@@ -1,7 +1,16 @@
-﻿---
-title: "Efficient Video Face Enhancement with Enhanced Spatial-Temporal Consistency"
-description: "基于3D-VQGAN和时空码本的高效视频人脸增强方法，同时解决盲人脸视频修复和去闪烁问题"
-tags: ["face-restoration", "video-enhancement", "VQGAN", "codebook", "de-flickering"]
+---
+title: >-
+  [论文解读] Efficient Video Face Enhancement with Enhanced Spatial-Temporal Consistency
+description: >-
+  [CVPR 2025][人体理解][盲人脸视频修复] 本文提出一种基于 3D-VQGAN 的高效盲人脸视频增强框架，通过设计空间-时间双码本记录高质量肖像特征和运动残差信息，配合边际先验正则化缓解码本崩溃问题，在 BFVR 和去闪烁任务上实现了 SOTA 效果且推理速度提升 2-140 倍。
+tags:
+  - CVPR 2025
+  - 人体理解
+  - 盲人脸视频修复
+  - 时空码本
+  - GAN
+  - 去闪烁
+  - 视频增强
 ---
 
 # Efficient Video Face Enhancement with Enhanced Spatial-Temporal Consistency
@@ -133,10 +142,10 @@ VFHQ-Test 上盲人脸视频修复对比（24帧/1秒视频）：
 
 ## 相关论文
 
+- [GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation](gce-pose_global_context_enhancement_for_category-level_object_pose_estimation.md)
 - [RePOSE: 3D Human Pose Estimation via Spatio-Temporal Depth Relational Consistency](../../ECCV2024/human_understanding/repose_3d_human_pose_estimation_via_spatio-temporal_depth_relational_consistency.md)
 - [IDFace: Face Template Protection for Efficient and Secure Identification](../../ICCV2025/human_understanding/idface_face_template_protection_for_efficient_and_secure_identification.md)
 - [Recurrent Attention-based Token Selection for Efficient Streaming Video-LLMs](../../NeurIPS2025/human_understanding/recurrent_attention-based_token_selection_for_efficient_streaming_video-llms.md)
-- [GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation](gce-pose_global_context_enhancement_for_category-level_object_pose_estimation.md)
-- [MOSPA: Human Motion Generation Driven by Spatial Audio](../../NeurIPS2025/human_understanding/mospa_human_motion_generation_driven_by_spatial_audio.md)
+- [3D Face Reconstruction From Radar Images](3d_face_reconstruction_from_radar_images.md)
 
 <!-- RELATED:END -->

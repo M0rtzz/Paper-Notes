@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamic-VLM: Simple Dynamic Visual Token Compression for VideoLLM
 description: >-

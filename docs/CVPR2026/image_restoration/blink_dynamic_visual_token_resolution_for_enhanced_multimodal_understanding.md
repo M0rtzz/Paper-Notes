@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Blink: Dynamic Visual Token Resolution for Enhanced Multimodal Understanding
 description: >-

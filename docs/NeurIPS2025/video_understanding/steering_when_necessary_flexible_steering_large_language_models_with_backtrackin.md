@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Steering When Necessary: Flexible Steering Large Language Models with Backtracking
 description: >-
@@ -145,8 +145,8 @@ TruthfulQA 开放生成任务（LLaMA2-7B-CHAT）：
 
 - [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
 - [SAMA: Towards Multi-Turn Referential Grounded Video Chat with Large Language Models](sama_towards_multi-turn_referential_grounded_video_chat_with_large_language_mode.md)
-- [Seeing the Arrow of Time in Large Multimodal Models](seeing_the_arrow_of_time_in_large_multimodal_models.md)
+- [Video Summarization with Large Language Models](../../CVPR2025/video_understanding/video_summarization_with_large_language_models.md)
 - [Reinforcement Learning with Backtracking Feedback](reinforcement_learning_with_backtracking_feedback.md)
-- [DisTime: Distribution-based Time Representation for Video Large Language Models](../../ICCV2025/video_understanding/distime_distribution-based_time_representation_for_video_large_language_models.md)
+- [Seeing the Arrow of Time in Large Multimodal Models](seeing_the_arrow_of_time_in_large_multimodal_models.md)
 
 <!-- RELATED:END -->

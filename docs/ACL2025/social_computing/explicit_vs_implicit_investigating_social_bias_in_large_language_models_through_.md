@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Explicit vs. Implicit: Investigating Social Bias in Large Language Models through Self-Reflection
 description: >-

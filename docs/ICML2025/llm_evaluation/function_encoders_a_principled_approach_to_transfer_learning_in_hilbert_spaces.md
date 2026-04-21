@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Function Encoders: A Principled Approach to Transfer Learning in Hilbert Spaces
 description: >-

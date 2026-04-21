@@ -1,7 +1,16 @@
 ---
-title: "DeCafNet: Delegate and Conquer for Efficient Temporal Grounding in Long Videos"
-description: "提出DeCafNet，采用delegate-and-conquer策略，引入高效sidekick encoder生成显著性图筛选关键clip，仅对top-c%的clip使用expert encoder处理，配合DeCaf-Grounder统一多分辨率特征，在LVTG任务上以47%的计算量节省实现SOTA性能。"
-tags: ["长视频时序定位", "高效推理", "双编码器", "显著性选择", "多尺度特征"]
+title: >-
+  [论文解读] DeCafNet: Delegate and Conquer for Efficient Temporal Grounding in Long Videos
+description: >-
+  [CVPR 2025][视频理解][长视频时序定位] 提出DeCafNet，通过**delegate-and-conquer双编码器策略**（轻量sidekick encoder密集提特征+生成显著性图，expert encoder仅处理top-c%关键clip），配合**DeCaf-Grounder**统一不同时序分辨率特征，在长视频时序定位任务上以**减少47% TFLOPs**的代价超越所有先前方法。
+tags:
+  - CVPR 2025
+  - 视频理解
+  - 长视频时序定位
+  - 高效推理
+  - 双编码器
+  - 显著性选择
+  - 多尺度时序精炼
 ---
 
 # DeCafNet: Delegate and Conquer for Efficient Temporal Grounding in Long Videos
@@ -114,10 +123,10 @@ DeCafNet由三部分组成：(1) **Sidekick Encoder** $\Psi_D$：高效提取所
 
 ## 相关论文
 
+- [Number it: Temporal Grounding Videos like Flipping Manga](number_it_temporal_grounding_videos_like_flipping_manga.md)
 - [VCBench: A Streaming Counting Benchmark for Spatial-Temporal State Maintenance in Long Videos](vcbench_a_streaming_counting_benchmark_for_spatial-temporal_state_maintenance_in.md)
-- [RGNet: A Unified Clip Retrieval and Grounding Network for Long Videos](../../ECCV2024/video_understanding/rgnet_a_unified_clip_retrieval_and_grounding_network_for_long_videos.md)
-- [Fine-grained Spatiotemporal Grounding on Egocentric Videos](../../ICCV2025/video_understanding/fine-grained_spatiotemporal_grounding_on_egocentric_videos.md)
-- [Moment Quantization for Video Temporal Grounding](../../ICCV2025/video_understanding/moment_quantization_for_video_temporal_grounding.md)
-- [VideoMiner: Iteratively Grounding Key Frames of Hour-Long Videos via Tree-based Group Relative Policy Optimization](../../ICCV2025/video_understanding/videominer_iteratively_grounding_key_frames_of_hour-long_videos_via_tree-based_g.md)
+- [VideoGEM: Training-Free Action Grounding in Videos](videogem_training-free_action_grounding_in_videos.md)
+- [ReWind: Understanding Long Videos with Instructed Learnable Memory](rewind_understanding_long_videos_with_instructed_learnable_memory.md)
+- [Seq2Time: Sequential Knowledge Transfer for Video LLM Temporal Grounding](seq2time_sequential_knowledge_transfer_for_video_llm_temporal_grounding.md)
 
 <!-- RELATED:END -->

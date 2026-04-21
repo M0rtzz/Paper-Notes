@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HAWK: Head Importance-Aware Visual Token Pruning in Multimodal Models
 description: >-

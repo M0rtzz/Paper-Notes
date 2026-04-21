@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving Contextual Faithfulness of Large Language Models via Retrieval Heads-Induced Optimization
 description: >-
@@ -129,8 +129,8 @@ Rhio-7B相比SFT-7B提升12.84%忠实度，Rhio-13B超越GPT-4o达1.74%。
 
 ## 相关论文
 
-- [CogniBench: A Legal-inspired Framework and Dataset for Assessing Cognitive Faithfulness of Large Language Models](cognibench_cognitive_faithfulness.md)
 - [Investigating Context-Faithfulness in Large Language Models: The Roles of Memory Strength and Evidence Style](investigating_context-faithfulness_in_large_language_models_the_roles_of_memory_.md)
+- [CogniBench: A Legal-inspired Framework and Dataset for Assessing Cognitive Faithfulness of Large Language Models](cognibench_cognitive_faithfulness.md)
 - [Gradient-Adaptive Policy Optimization: Towards Multi-Objective Alignment of Large Language Models](gapo_multi_objective_alignment.md)
 - [Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models](astute_rag_knowledge_conflicts.md)
 - [Binary Classifier Optimization for Large Language Model Alignment](bco_binary_classifier_alignment.md)

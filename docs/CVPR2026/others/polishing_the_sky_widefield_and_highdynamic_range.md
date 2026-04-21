@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction
 description: >-
@@ -103,6 +103,6 @@ POLISH++是一个端到端CNN模型（基于WDSR架构），输入低分辨率di
 - [Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods](rooftop_wind_field_reconstruction_using_sparse_sen.md)
 - [Image Demoiréing in RAW and sRGB Domains](../../ECCV2024/others/image_demoiréing_in_raw_and_srgb_domains.md)
 - [SimRecon: SimReady Compositional Scene Reconstruction from Real Videos](simrecon_simready_compositional_scene_reconstruction_from_real_videos.md)
-- [SHREC: A Spectral Embedding-Based Approach for Ab-Initio Reconstruction of Helical Molecules](shrec_a_spectral_embedding-based_approach_for_ab-initio_reconstruction_of_helica.md)
+- [SHREC: A Spectral Embedding-Based Approach for Ab-Initio Reconstruction of Helical Molecules](shrec_a_spectral_embeddingbased_approach_for_abini.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Any-Resolution AI-Generated Image Detection by Spectral Learning
 description: >-
@@ -117,10 +117,10 @@ tags:
 
 ## 相关论文
 
+- [Where's the Liability in the Generative Era? Recovery-Based Black-Box Detection of AI-Generated Content](wheres_the_liability_in_the_generative_era_recovery-based_black-box_detection_of.md)
 - [Physics-Driven Spatiotemporal Modeling for AI-Generated Video Detection](../../NeurIPS2025/image_generation/physics-driven_spatiotemporal_modeling_for_ai-generated_video_detection.md)
+- [Symbolic Representation for Any-to-Any Generative Tasks](symbolic_representation_for_any-to-any_generative_tasks.md)
 - [Aggregating Diverse Cue Experts for AI-Generated Image Detection](../../AAAI2026/image_generation/aggregating_diverse_cue_experts_for_ai-generated_image_detec.md)
 - [Epistemic Uncertainty for Generated Image Detection](../../NeurIPS2025/image_generation/epistemic_uncertainty_for_generated_image_detection.md)
-- [Is Artificial Intelligence Generated Image Detection a Solved Problem?](../../NeurIPS2025/image_generation/is_artificial_intelligence_generated_image_detection_a_solved_problem.md)
-- [Arbitrary-Steps Image Super-Resolution via Diffusion Inversion](arbitrary-steps_image_super-resolution_via_diffusion_inversion.md)
 
 <!-- RELATED:END -->

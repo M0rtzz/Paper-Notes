@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DP²O-SR: Direct Perceptual Preference Optimization for Real-World Image Super-Resolution
 description: >-

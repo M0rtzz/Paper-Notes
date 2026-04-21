@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Robust-Wide: Robust Watermarking against Instruction-driven Image Editing
 description: >-

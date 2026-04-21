@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unveiling Language-Specific Features in Large Language Models via Sparse Autoencoders
 description: >-
@@ -184,8 +184,8 @@ $$v = \frac{1}{|\mathcal{X}_+|}\sum_{x \in \mathcal{X}_+} a_L(x) - \frac{1}{|\ma
 
 - [Wanda++: Pruning Large Language Models via Regional Gradients](wanda_pruning_large_language_models_via_regional_gradients.md)
 - [Persistent Topological Features in Large Language Models](../../ICML2025/model_compression/persistent_topological_features_in_large_language_models.md)
-- [500xCompressor: Generalized Prompt Compression for Large Language Models](500xcompressor_generalized_prompt_compression_for_large_language_models.md)
 - [BlockPruner: Fine-grained Pruning for Large Language Models](blockpruner_fine-grained_pruning_for_large_language_models.md)
+- [500xCompressor: Generalized Prompt Compression for Large Language Models](500xcompressor_generalized_prompt_compression_for_large_language_models.md)
 - [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
 
 <!-- RELATED:END -->

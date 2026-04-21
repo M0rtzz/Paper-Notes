@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Lifting Motion to the 3D World via 2D Diffusion
 description: >-
@@ -143,9 +143,9 @@ Stage 1：$\mathcal{L} = \mathbb{E}[\|\hat{X}_\theta - X_0\|_1] + \mathcal{L}_{\
 ## 相关论文
 
 - [Move-in-2D: 2D-Conditioned Human Motion Generation](move-in-2d_2d-conditioned_human_motion_generation.md)
+- [Nonisotropic Gaussian Diffusion for Realistic 3D Human Motion Prediction](nonisotropic_gaussian_diffusion_for_realistic_3d_human_motion_prediction.md)
 - [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
 - [MirrorVerse: Pushing Diffusion Models to Realistically Reflect the World](mirrorverse_pushing_diffusion_models_to_realistically_reflect_the_world.md)
-- [DreamDance: Animating Human Images by Enriching 3D Geometry Cues from 2D Poses](../../ICCV2025/image_generation/dreamdance_animating_human_images_by_enriching_3d_geometry_cues_from_2d_poses.md)
-- [Diffusion-based 3D Hand Motion Recovery with Intuitive Physics](../../ICCV2025/image_generation/diffusion-based_3d_hand_motion_recovery_with_intuitive_physics.md)
+- [OpenSDI: Spotting Diffusion-Generated Images in the Open World](opensdi_spotting_diffusion-generated_images_in_the_open_world.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Accuracy: A Cognitive Load Framework for Mapping the Capability Boundaries of Tool-use Agents
 description: >-
@@ -136,8 +136,8 @@ Hosmer-Lemeshow 拟合优度检验（p-value > 0.05 表示模型与现实无统�
 
 - [UI-Evol: Automatic Knowledge Evolving for Computer Use Agents](../../ICML2025/llm_evaluation/ui-evol_automatic_knowledge_evolving_for_computer_use_agents.md)
 - [Beyond Cosine Similarity: Magnitude-Aware CLIP for No-Reference Image Quality Assessment](beyond_cosine_similarity_magnitude-aware_clip_for_no-reference_image_quality_ass.md)
-- [GranAlign: Granularity-Aware Alignment Framework for Zero-Shot Video Moment Retrieval](granalign_granularity-aware_alignment_framework_for_zero-shot_video_moment_retri.md)
 - [NeSTR: A Neuro-Symbolic Abductive Framework for Temporal Reasoning in Large Language Models](nestr_a_neuro-symbolic_abductive_framework_for_temporal_reasoning_in_large_langu.md)
+- [GranAlign: Granularity-Aware Alignment Framework for Zero-Shot Video Moment Retrieval](granalign_granularity-aware_alignment_framework_for_zero-shot_video_moment_retri.md)
 - [Retrieval Models Aren't Tool-Savvy: Benchmarking Tool Retrieval for Large Language Models](../../ACL2025/llm_evaluation/retrieval_models_arent_tool-savvy_benchmarking_tool_retrieval_for_large_language.md)
 
 <!-- RELATED:END -->

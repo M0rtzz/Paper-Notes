@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning 3D-Aware GANs from Unposed Images with Template Feature Field
 description: >-

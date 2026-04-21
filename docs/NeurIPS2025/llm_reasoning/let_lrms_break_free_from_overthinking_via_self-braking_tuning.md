@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Let LRMs Break Free from Overthinking via Self-Braking Tuning
 description: >-

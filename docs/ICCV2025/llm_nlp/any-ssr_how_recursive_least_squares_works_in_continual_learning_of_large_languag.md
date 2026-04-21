@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Any-SSR: How Recursive Least Squares Works in Continual Learning of Large Language Models
 description: >-
@@ -201,8 +201,8 @@ Any-SSR在无需回放的情况下，通用能力损失仅-1.26，接近使用1%
 ## 相关论文
 
 - [Recurrent Knowledge Identification and Fusion for Language Model Continual Learning](../../ACL2025/llm_nlp/recurrent_kif_continual_learning.md)
-- [Large Language Models for Predictive Analysis: How Far Are They?](../../ACL2025/llm_nlp/large_language_models_for_predictive_analysis_how_far_are_they.md)
 - [AfroBench: How Good are Large Language Models on African Languages?](../../ACL2025/llm_nlp/afrobench_how_good_are_large_language_models_on_african_languages.md)
+- [Large Language Models for Predictive Analysis: How Far Are They?](../../ACL2025/llm_nlp/large_language_models_for_predictive_analysis_how_far_are_they.md)
 - [C²Prompt: Class-aware Client Knowledge Interaction for Federated Continual Learning](../../NeurIPS2025/llm_nlp/c2prompt_class-aware_client_knowledge_interaction_for_federated_continual_learni.md)
 - [MIRAGE: Exploring How Large Language Models Perform in Complex Social Interactive Environments](../../ACL2025/llm_nlp/mirage_exploring_how_large_language_models_perform_in_complex_social_interactive.md)
 

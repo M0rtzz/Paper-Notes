@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] S³D-NeRF: Single-Shot Speech-Driven Neural Radiance Field for High Fidelity Talking Head Synthesis
 description: >-

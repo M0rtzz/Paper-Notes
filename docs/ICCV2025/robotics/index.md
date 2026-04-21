@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICCV2025 具身智能方向 23篇论文解读
+  ICCV2025 具身智能方向 24篇论文解读
 description: >-
-  23篇ICCV2025 具身智能方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  24篇ICCV2025 具身智能方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🤖 具身智能
 
-**📹 ICCV2025** · **23** 篇论文解读
+**📹 ICCV2025** · **24** 篇论文解读
 
 **[Adaptive Articulated Object Manipulation On The Fly with Foundation Model Reasoning and Part Grounding](adaptive_articulated_object_manipulation_on_the_fly_with_foundation_model_reason.md)**
 
@@ -57,6 +57,10 @@ description: >-
 **[Interaction-Merged Motion Planning: Effectively Leveraging Diverse Motion Datasets for Robust Planning](interaction-merged_motion_planning_effectively_leveraging_diverse_motion_dataset.md)**
 
 :   提出 IMMP（Interaction-Merged Motion Planning），通过两阶段策略——交互保持预合并（构建多指标检查点池）和交互迁移合并（按交互模块分组的任务向量加权合并）——将来自不同轨迹数据集的智能体行为和交互知识迁移到目标域，有效提升运动规划的跨域适应性。
+
+**[TesserAct: Learning 4D Embodied World Models](learning_4d_embodied_world_models.md)**
+
+:   提出 TesserAct——一种 4D 具身世界模型，通过训练视频生成模型联合预测 RGB、深度和法线视频，再转换为高质量 4D 场景，实现空间-时间一致的 3D 世界动态模拟和机器人动作规划。
 
 **[Moto: Latent Motion Token as the Bridging Language for Learning Robot Manipulation from Videos](moto_latent_motion_token_as_the_bridging_language_for_learning_robot_manipulatio.md)**
 

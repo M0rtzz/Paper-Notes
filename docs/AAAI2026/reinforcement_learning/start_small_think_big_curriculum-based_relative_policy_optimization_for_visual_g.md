@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Start Small, Think Big: Curriculum-based Relative Policy Optimization for Visual Grounding
 description: >-

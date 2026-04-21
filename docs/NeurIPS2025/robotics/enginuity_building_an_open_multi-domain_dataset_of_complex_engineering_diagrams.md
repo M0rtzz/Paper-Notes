@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enginuity: Building an Open Multi-Domain Dataset of Complex Engineering Diagrams
 description: >-

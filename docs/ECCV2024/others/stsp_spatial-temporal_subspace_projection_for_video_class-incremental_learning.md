@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning
 description: >-
@@ -123,7 +123,7 @@ STSP的输入是视频帧序列，经过共享的特征提取器（如ResNet/ViT
 - [An Incremental Unified Framework for Small Defect Inspection](an_incremental_unified_framework_for_small_defect_inspection.md)
 - [Rebalancing Using Estimated Class Distribution for Imbalanced Semi-Supervised Learning under Class Distribution Mismatch](rebalancing_using_estimated_class_distribution_for_imbalanced_semi-supervised_le.md)
 - [Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection](learning_anomalies_with_normality_prior_for_unsupervised_video_anomaly_detection.md)
+- [Task-Agnostic Guided Feature Expansion for Class-Incremental Learning](../../CVPR2025/others/task-agnostic_guided_feature_expansion_for_class-incremental_learning.md)
 - [ABC Easy as 123: A Blind Counter for Exemplar-Free Multi-Class Class-Agnostic Counting](abc_easy_as_123_a_blind_counter_for_exemplar-free_multi-class_class-agnostic_cou.md)
-- [AnalyticKWS: Towards Exemplar-Free Analytic Class Incremental Learning for Small-footprint Keyword Spotting](../../ACL2025/others/analytickws_towards_exemplar-free_analytic_class_incremental_learning_for_small-.md)
 
 <!-- RELATED:END -->

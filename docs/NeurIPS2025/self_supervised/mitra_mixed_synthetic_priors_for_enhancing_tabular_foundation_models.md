@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mitra: Mixed Synthetic Priors for Enhancing Tabular Foundation Models
 description: >-

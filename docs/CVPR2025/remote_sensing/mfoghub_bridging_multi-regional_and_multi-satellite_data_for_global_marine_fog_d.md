@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MFogHub: Bridging Multi-Regional and Multi-Satellite Data for Global Marine Fog Detection and Forecasting
 description: >-

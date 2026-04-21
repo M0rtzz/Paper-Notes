@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generative Neural Video Compression via Video Diffusion Prior
 description: >-
@@ -139,7 +139,7 @@ GNVC-VD 在所有基准和指标上均取得最优感知质量，相较 GLC-Vide
 - [LightMover: Generative Light Movement with Color and Intensity Controls](lightmover_generative_light_movement_with_color_and_intensity_controls.md)
 - [JavisDiT: Joint Audio-Video Diffusion Transformer with Hierarchical Spatio-Temporal Prior Synchronization](../../ICLR2026/video_generation/javisdit_joint_audio-video_diffusion_transformer_with_hierarchical_spatio-tempor.md)
 - [HyperNVD: Accelerating Neural Video Decomposition via Hypernetworks](../../CVPR2025/video_generation/hypernvd_accelerating_neural_video_decomposition_via_hypernetworks.md)
-- [Arbitrary Generative Video Interpolation](../../ICLR2026/video_generation/arbitrary_generative_video_interpolation.md)
 - [Goal-Driven Reward by Video Diffusion Models for Reinforcement Learning](goal-driven_reward_by_video_diffusion_models_for_reinforcement_learning.md)
+- [Diff4Splat: Repurposing Video Diffusion Models for Dynamic Scene Generation](diff4splat_controllable_4d_scene_generation_with_latent_dynamic_reconstruction_m.md)
 
 <!-- RELATED:END -->

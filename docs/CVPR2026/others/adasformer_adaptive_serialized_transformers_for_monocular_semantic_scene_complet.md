@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdaSFormer: Adaptive Serialized Transformers for Monocular Semantic Scene Completion from Indoor Environments
 description: >-

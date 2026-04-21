@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Copy-Paste to Mitigate Large Language Model Hallucinations
 description: >-
@@ -109,10 +109,10 @@ tags:
 
 ## 相关论文
 
-- [Alignment of Large Language Models with Constrained Learning](../../NeurIPS2025/causal_inference/alignment_of_large_language_models_with_constrained_learning.md)
-- [Revealing Multimodal Causality with Large Language Models](../../NeurIPS2025/causal_inference/revealing_multimodal_causality_with_large_language_models.md)
 - [On the Reliability of Large Language Models for Causal Discovery](../../ACL2025/causal_inference/llm_causal_discovery_reliability.md)
+- [Revealing Multimodal Causality with Large Language Models](../../NeurIPS2025/causal_inference/revealing_multimodal_causality_with_large_language_models.md)
 - [Hallucinate Less by Thinking More: Aspect-Based Causal Abstention for Large Language Models](../../AAAI2026/causal_inference/hallucinate_less_by_thinking_more_aspect-based_causal_absten.md)
 - [Counterfactual Reasoning for Steerable Pluralistic Value Alignment of Large Language Models](../../NeurIPS2025/causal_inference/counterfactual_reasoning_for_steerable_pluralistic_value_alignment_of_large_lang.md)
+- [Sparse Additive Model Pruning for Order-Based Causal Structure Learning](../../AAAI2026/causal_inference/sparse_additive_model_pruning_for_order-based_causal_structure_learning.md)
 
 <!-- RELATED:END -->

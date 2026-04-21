@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Attention to Trajectory: Trajectory-Aware Open-Vocabulary Tracking
 description: >-

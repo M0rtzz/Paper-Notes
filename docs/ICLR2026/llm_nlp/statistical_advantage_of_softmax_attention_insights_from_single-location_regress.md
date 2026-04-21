@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Statistical Advantage of Softmax Attention: Insights from Single-Location Regression
 description: >-

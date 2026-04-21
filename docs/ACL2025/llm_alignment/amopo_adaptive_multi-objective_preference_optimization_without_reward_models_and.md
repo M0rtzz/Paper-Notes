@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AMoPO: Adaptive Multi-objective Preference Optimization without Reward Models and Reference Models
 description: >-
@@ -147,8 +147,8 @@ $$\mathcal{L}_{total} = \sum_{d \in D} w_d \cdot \mathcal{L}_d + \gamma_{ftx} \c
 
 - [Margin-aware Preference Optimization for Aligning Diffusion Models without Reference](../../AAAI2026/llm_alignment/margin-aware_preference_optimization_for_aligning_diffusion_models_without_refer.md)
 - [AutoMixAlign: Adaptive Data Mixing for Multi-Task Preference Optimization in LLMs](automixalign_adaptive_data_mixing.md)
-- [Calibrated Multi-Preference Optimization for Aligning Diffusion Models](../../CVPR2025/llm_alignment/calibrated_multi-preference_optimization_for_aligning_diffusion_models.md)
 - [SynthesizeMe! Inducing Persona-Guided Prompts for Personalized Reward Models in LLMs](synthesizeme_persona_prompts.md)
+- [Calibrated Multi-Preference Optimization for Aligning Diffusion Models](../../CVPR2025/llm_alignment/calibrated_multi-preference_optimization_for_aligning_diffusion_models.md)
 - [T-REG: Preference Optimization with Token-Level Reward Regularization](t-reg_preference_optimization_with_token-level_reward_regularization.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MultiMorph: On-demand Atlas Construction
 description: >-
@@ -131,9 +131,9 @@ $$\mathcal{L}(\phi_i) = \mathcal{L}_{sim}(\mathbf{t}, \mathbf{x}_i \circ \phi_i)
 ## 相关论文
 
 - [Human Behavior Atlas: Benchmarking Unified Psychological and Social Behavior Understanding](../../ICLR2026/medical_imaging/human_behavior_atlas_benchmarking_unified_psychological_and_social_behavior_unde.md)
-- [BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical.md)
+- [vesselFM: A Foundation Model for Universal 3D Blood Vessel Segmentation](vesselfm_a_foundation_model_for_universal_3d_blood_vessel_segmentation.md)
+- [MoEdit: On Learning Quantity Perception for Multi-Object Image Editing](moedit_on_learning_quantity_perception_for_multi-object_image_editing.md)
+- [Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](decoding_matters_efficient_mamba-based_decoder_with_distribution-aware_deep_supe.md)
 - [Multi-modal Vision Pre-training for Medical Image Analysis (BrainMVP)](multi-modal_vision_pre-training_for_medical_image_analysis.md)
-- [Knowledge Bridger: Towards Training-Free Missing Modality Completion](knowledge_bridger_towards_training-free_missing_modality_completion.md)
-- [DFLMoE: Decentralized Federated Learning via Mixture of Experts for Medical Data](dflmoe_decentralized_federated_learning_via_mixture_of_experts_for_medical_data_.md)
 
 <!-- RELATED:END -->

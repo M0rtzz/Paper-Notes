@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the Edge of Core (Non-)Emptiness: An Automated Reasoning Approach to Approval-Based Multi-Winner Voting
 description: >-

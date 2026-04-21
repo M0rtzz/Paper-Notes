@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Agint: Agentic Graph Compilation for Software Engineering Agents
 description: >-
@@ -219,8 +219,8 @@ tags:
 
 - [Distribution Learning Meets Graph Structure Sampling](distribution_learning_meets_graph_structure_sampling.md)
 - [Stealthy Yet Effective: Distribution-Preserving Backdoor Attacks on Graph Classification](stealthy_yet_effective_distribution-preserving_backdoor_attacks_on_graph_classif.md)
-- [TopInG: Topologically Interpretable Graph Learning via Persistent Rationale Filtration](../../ICML2025/human_understanding/toping_topologically_interpretable_graph_learning_via_persistent_rationale_filtr.md)
 - [Scaling Generalist Data-Analytic Agents](../../ICLR2026/human_understanding/scaling_generalist_data-analytic_agents.md)
+- [TopInG: Topologically Interpretable Graph Learning via Persistent Rationale Filtration](../../ICML2025/human_understanding/toping_topologically_interpretable_graph_learning_via_persistent_rationale_filtr.md)
 - [GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
 
 <!-- RELATED:END -->

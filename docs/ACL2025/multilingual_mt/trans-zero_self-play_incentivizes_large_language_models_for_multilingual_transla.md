@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Trans-Zero: Self-Play Incentivizes Large Language Models for Multilingual Translation
 description: >-

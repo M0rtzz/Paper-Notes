@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FQ-PETR: Fully Quantized Position Embedding Transformation for Multi-View 3D Object Detection
 description: >-

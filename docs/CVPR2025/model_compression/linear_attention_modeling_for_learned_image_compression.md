@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] LALIC: Linear Attention Modeling for Learned Image Compression
 description: >-
-  [CVPR 2025][learned image compression] 首次将 RWKV 线性注意力引入学习图像压缩，提出 Bi-RWKV 变换块和 RWKV-SCCTX 熵模型，以线性复杂度实现全局感受野，BD-rate 超越 VTM-9.1 达 15.26%。
+  [CVPR 2025][模型压缩][learned image compression] 首次将 RWKV 线性注意力机制引入学习图像压缩，设计 Bi-RWKV 变换块实现线性复杂度的全局感受野特征提取，配合 RWKV 时空通道上下文熵模型，以较低复杂度超越 VTM-9.1 达 15.26% BD-rate。
 tags:
   - CVPR 2025
+  - 模型压缩
   - learned image compression
-  - linear attention
+  - 注意力机制
   - RWKV
+  - Bi-RWKV
   - entropy modeling
-  - transform coding
+  - rate-distortion
 ---
 
 # LALIC: Linear Attention Modeling for Learned Image Compression
@@ -141,9 +143,9 @@ tags:
 ## 相关论文
 
 - [Learned Image Compression with Dictionary-based Entropy Model](learned_image_compression_with_dictionary-based_entropy_model.md)
+- [MambaIC: State Space Models for High-Performance Learned Image Compression](mambaic_state_space_models_for_high-performance_learned_image_compression.md)
 - [Learned Image Compression with Hierarchical Progressive Context Modeling](../../ICCV2025/model_compression/learned_image_compression_with_hierarchical_progressive_context_modeling.md)
 - [Linear Attention for Efficient Bidirectional Sequence Modeling](../../NeurIPS2025/model_compression/linear_attention_for_efficient_bidirectional_sequence_modeling.md)
-- [MambaIC: State Space Models for High-Performance Learned Image Compression](mambaic_state_space_models_for_high-performance_learned_image_compression.md)
 - [CoA: Towards Real Image Dehazing via Compression-and-Adaptation](coa_towards_real_image_dehazing_via_compression-and-adaptation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiT-IC: Aligned Diffusion Transformer for Efficient Image Compression
 description: >-

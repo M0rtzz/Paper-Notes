@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Random Registers for Cross-Domain Few-Shot Learning
 description: >-
@@ -186,7 +186,7 @@ REAP 在所有设置下（有/无微调、1-shot/5-shot、inductive/transductive
 - [Feedforward Few-shot Species Range Estimation](feedforward_few-shot_species_range_estimation.md)
 - [Unlocking Transfer Learning for Open-World Few-Shot Recognition](../../NeurIPS2025/llm_evaluation/unlocking_transfer_learning_for_open-world_few-shot_recognition.md)
 - [Benchmarking Large Language Models for Zero-Shot and Few-Shot Phishing URL Detection](../../NeurIPS2025/llm_evaluation/benchmarking_large_language_models_for_zero-shot_and_few-shot_phishing_url_detec.md)
-- [A Conditional Probability Framework for Compositional Zero-shot Learning](../../ICCV2025/llm_evaluation/a_conditional_probability_framework_for_compositional_zero-shot_learning.md)
+- [A Conditional Probability Framework for Compositional Zero-shot Learning](../../ICCV2025/llm_evaluation/a_conditional_probability_framework_for_compositional_zerosh.md)
 - [FEDTAIL: Federated Long-Tailed Domain Generalization with Sharpness-Guided Gradient Matching](fedtail_federated_long-tailed_domain_generalization_with_sharpness-guided_gradie.md)
 
 <!-- RELATED:END -->

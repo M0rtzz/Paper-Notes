@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CIARD: Cyclic Iterative Adversarial Robustness Distillation
 description: >-
@@ -131,6 +131,6 @@ CIARD包含固定的clean teacher + 持续更新的robust teacher + push loss机
 - [Knowledge Distillation with Refined Logits](knowledge_distillation_with_refined_logits.md)
 - [RISE: Reasoning Enhancement via Iterative Self-Exploration in Multi-hop Question Answering](../../ACL2025/model_compression/rise_reasoning_enhancement_via_iterative_self-exploration_in_multi-hop_question_.md)
 - [A Good Teacher Adapts Their Knowledge for Distillation](a_good_teacher_adapts_their_knowledge_for_distillation.md)
-- [Perspective-Aware Teaching: Adapting Knowledge for Heterogeneous Distillation](perspective-aware_teaching_adapting_knowledge_for_heterogeneous_distillation.md)
+- [Local Dense Logit Relations for Enhanced Knowledge Distillation](local_dense_logit_relations_for_enhanced_knowledge_distillation.md)
 
 <!-- RELATED:END -->

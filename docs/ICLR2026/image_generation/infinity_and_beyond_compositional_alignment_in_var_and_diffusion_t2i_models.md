@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Infinity and Beyond: Compositional Alignment in VAR and Diffusion T2I Models
 description: >-

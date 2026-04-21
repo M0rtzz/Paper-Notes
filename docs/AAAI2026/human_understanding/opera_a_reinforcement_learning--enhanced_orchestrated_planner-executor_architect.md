@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OPERA: A Reinforcement Learning--Enhanced Orchestrated Planner-Executor Architecture for Reasoning-Oriented Multi-Hop Retrieval
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SR-KI: Scalable and Real-Time Knowledge Integration into LLMs via Supervised Attention
 description: >-

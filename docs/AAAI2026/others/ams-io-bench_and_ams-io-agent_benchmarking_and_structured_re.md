@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AMS-IO-Bench and AMS-IO-Agent: Benchmarking and Structured Reasoning for Analog and Mixed-Signal Integrated Circuit Input/Output Design
 description: >-
@@ -117,6 +117,6 @@ Intent Graph正确率 → Shape Score(VLM视觉评估) → DRC通过率 → LVS�
 - [Lost in Time? A Meta-Learning Framework for Time-Shift-Tolerant Physiological Signal Transformation](lost_in_time_a_meta-learning_framework_for_time-shift-tolerant_physiological_sig.md)
 - [An Epistemic Perspective on Agent Awareness](an_epistemic_perspective_on_agent_awareness.md)
 - [TARGA: Targeted Synthetic Data Generation for Practical Reasoning over Structured Data](../../ACL2025/others/targa_targeted_synthetic_data_generation_for_practical_reasoning_over_structured.md)
-- [A Graph-Theoretical Perspective on Law Design for Multiagent Systems](a_graph-theoretical_perspective_on_law_design_for_multiagent.md)
+- [A Graph-Theoretical Perspective on Law Design for Multiagent Systems](a_graph-theoretical_perspective_on_law_design_for_multiagent_systems.md)
 
 <!-- RELATED:END -->

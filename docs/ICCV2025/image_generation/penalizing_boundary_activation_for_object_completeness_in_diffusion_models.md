@@ -129,7 +129,7 @@ $$z_t' = z_t - \alpha_t \cdot \nabla_{z_t}(\mathcal{L}^{cross} + \mathcal{L}^{se
 - [Synthesizing Near-Boundary OOD Samples for Out-of-Distribution Detection](synthesizing_near-boundary_ood_samples_for_out-of-distribution_detection.md)
 - [Efficient Input-Level Backdoor Defense on Text-to-Image Synthesis via Neuron Activation Variation](efficient_input-level_backdoor_defense_on_text-to-image_synthesis_via_neuron_act.md)
 - [ScoreHOI: Physically Plausible Reconstruction of Human-Object Interaction via Score-Guided Diffusion](scorehoi_physically_plausible_reconstruction_of_human-object_interaction_via_sco.md)
+- [Verify Claimed Text-to-Image Models via Boundary-Aware Prompt Optimization](../../CVPR2026/image_generation/verify_claimed_text-to-image_models_via_boundary-aware_prompt_optimization.md)
 - [Your Text Encoder Can Be An Object-Level Watermarking Controller](your_text_encoder_can_be_an_object-level_watermarking_controller.md)
-- [CountSteer: Steering Attention for Object Counting in Diffusion Models](../../AAAI2026/image_generation/countsteer_steering_attention_for_object_counting_in_diffusion_models.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Synthesizing Images on Perceptual Boundaries of ANNs for Uncovering and Manipulating Human Perceptual Variability
 description: >-
@@ -181,6 +181,6 @@ $$\mathcal{L}_{surr} = \mathcal{L} + \max((1 - f_{surr}(x))^2, 0.5)$$
 - [Manipulating Feature Visualizations with Gradient Slingshots](../../NeurIPS2025/robotics/manipulating_feature_visualizations_with_gradient_slingshots.md)
 - [Visual Planning: Let's Think Only with Images](../../ICLR2026/robotics/visual_planning_lets_think_only_with_images.md)
 - [Knolling Bot: Teaching Robots the Human Notion of Tidiness](../../NeurIPS2025/robotics/knolling_bot_teaching_robots_the_human_notion_of_tidiness.md)
-- [Efficient Robotic Policy Learning via Latent Space Backward Planning](efficient_robotic_policy_learning_via_latent_space_backward_planning.md)
+- [Mitigating the Human-Robot Domain Discrepancy in Visual Pre-training for Robotic Manipulation](../../CVPR2025/robotics/mitigating_the_human-robot_domain_discrepancy_in_visual_pre-training_for_robotic.md)
 
 <!-- RELATED:END -->

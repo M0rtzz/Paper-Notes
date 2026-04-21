@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UniComp: Rethinking Video Compression Through Informational Uniqueness
 description: >-

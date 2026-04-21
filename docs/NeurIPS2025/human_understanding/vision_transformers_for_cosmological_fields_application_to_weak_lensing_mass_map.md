@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Vision Transformers for Cosmological Fields: Application to Weak Lensing Mass Maps
 description: >-

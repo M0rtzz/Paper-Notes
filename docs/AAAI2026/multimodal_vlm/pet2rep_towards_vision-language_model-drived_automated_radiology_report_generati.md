@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PET2Rep: Towards Vision-Language Model-Driven Automated Radiology Report Generation for Positron Emission Tomography
 description: >-
@@ -145,8 +145,8 @@ Pipeline：PET/CT 图像预处理（CT 重采样到 PET 分辨率、z-score 标�
 
 - [ReCAD: Reinforcement Learning Enhanced Parametric CAD Model Generation with Vision-Language Models](recad_reinforcement_learning_enhanced_parametric_cad_model_generation_with_visio.md)
 - [AStar: Boosting Multimodal Reasoning with Automated Structured Thinking](astar_boosting_multimodal_reasoning_with_automated_structure.md)
+- [SketchAgent: Language-Driven Sequential Sketch Generation](../../CVPR2025/multimodal_vlm/sketchagent_language-driven_sequential_sketch_generation.md)
 - [MEIT: Multimodal Electrocardiogram Instruction Tuning on Large Language Models for Report Generation](../../ACL2025/multimodal_vlm/meit_multimodal_electrocardiogram_instruction_tuning_on_large_language_models_fo.md)
 - [Towards Long-window Anchoring in Vision-Language Model Distillation](towards_long-window_anchoring_in_vision-language_model_distillation.md)
-- [SketchAgent: Language-Driven Sequential Sketch Generation](../../CVPR2025/multimodal_vlm/sketchagent_language-driven_sequential_sketch_generation.md)
 
 <!-- RELATED:END -->

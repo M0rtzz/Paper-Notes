@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Quantized Prompt for Efficient Generalization of Vision-Language Models
 description: >-
@@ -135,10 +135,10 @@ QPrompt方法基于对prompt权重分布特征的深入分析，采用K-Means聚
 
 ## 相关论文
 
-- [Evolving Prompt Adaptation for Vision-Language Models](../../CVPR2026/multimodal_vlm/evolving_prompt_adaptation_for_visionlanguage_mode.md)
-- [Towards Calibrating Prompt Tuning of Vision-Language Models](../../CVPR2026/multimodal_vlm/towards_calibrating_prompt_tuning_of_vision-language_models.md)
-- [EvoPrompt: Evolving Prompt Adaptation for Vision-Language Models](../../CVPR2026/multimodal_vlm/evolving_prompt_adaptation_for_vision-language_models.md)
-- [DPC: Dual-Prompt Collaboration for Tuning Vision-Language Models](../../CVPR2025/multimodal_vlm/dpc_dual-prompt_collaboration_for_tuning_vision-language_models.md)
-- [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](../../CVPR2025/multimodal_vlm/nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+- [BRAVE: Broadening the Visual Encoding of Vision-Language Models](brave_broadening_the_visual_encoding_of_visionlanguage_model.md)
+- [Attention Prompting on Image for Large Vision-Language Models](attention_prompting_on_image_for_large_visionlanguage_models.md)
+- [FlexAttention for Efficient High-Resolution Vision-Language Models](flexattention_for_efficient_highresolution_visionlanguage_mo.md)
+- [SpLIP: Elevating All Zero-Shot Sketch-Based Image Retrieval Through Multimodal Prompt Learning](elevating_all_zeroshot_sketchbased_image_retrieval_through_m.md)
+- [Omniview-Tuning: Boosting Viewpoint Invariance of Vision-Language Pre-training Models](omniview-tuning_boosting_viewpoint_invariance_of_vision-language_pre-training_mo.md)
 
 <!-- RELATED:END -->

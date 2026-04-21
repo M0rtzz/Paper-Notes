@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Optimal Rates for Generalization of Gradient Descent for Deep ReLU Classification
 description: >-

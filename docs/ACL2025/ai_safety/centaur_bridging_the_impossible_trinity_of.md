@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CENTAUR: Bridging the Impossible Trinity of Privacy, Efficiency, and Performance in Privacy-Preserving Transformer Inference
 description: >-

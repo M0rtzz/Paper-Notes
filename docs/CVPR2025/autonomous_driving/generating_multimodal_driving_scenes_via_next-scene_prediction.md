@@ -1,7 +1,16 @@
-﻿---
-title: "Generating Multimodal Driving Scenes via Next-Scene Prediction"
-description: "统一多模态驾驶场景生成框架UMGen，通过自回归的下一场景预测生成自车动作、地图、交通参与者和图像四种模态"
-tags: ["场景生成", "自动驾驶", "自回归模型", "多模态", "仿真"]
+---
+title: >-
+  [论文解读] Generating Multimodal Driving Scenes via Next-Scene Prediction
+description: >-
+  [CVPR 2025][自动驾驶][多模态场景生成] 提出 UMGen，一个统一的多模态驾驶场景生成框架，将自车动作、地图、交通参与者和图像四种模态进行 token 化，通过帧间时序自回归（TAR）和帧内有序自回归（OAR）两阶段策略逐场景生成，同时引入动作感知地图对齐（AMA）模块保持自车运动与地图的一致性，可自主生成长达 60 秒的连贯驾驶序列。
+tags:
+  - CVPR 2025
+  - 自动驾驶
+  - 多模态场景生成
+  - 自回归模型
+  - 驾驶仿真
+  - 下一场景预测
+  - 时序一致性
 ---
 
 # Generating Multimodal Driving Scenes via Next-Scene Prediction
@@ -123,9 +132,9 @@ UMGen 在所有 MMD 指标上大幅超越对比方法，说明其生成的场景
 ## 相关论文
 
 - [Scenario Dreamer: Vectorized Latent Diffusion for Generating Driving Simulation Environments](scenario_dreamer_vectorized_latent_diffusion_for_generating_driving_simulation_e.md)
-- [Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots](panoramic_multimodal_semantic_occupancy_prediction_for_quadruped_robots.md)
 - [FreeSim: Toward Free-Viewpoint Camera Simulation in Driving Scenes](freesim_toward_free-viewpoint_camera_simulation_in_driving_scenes.md)
 - [ModeSeq: Taming Sparse Multimodal Motion Prediction with Sequential Mode Modeling](modeseq_taming_sparse_multimodal_motion_prediction_with_sequential_mode_modeling.md)
-- [UniScene: Unified Occupancy-centric Driving Scene Generation](uniscene_unified_occupancy-centric_driving_scene_generation.md)
+- [SDGOcc: Semantic and Depth-Guided BEV Transformation for 3D Multimodal Occupancy Prediction](sdgocc_semantic_and_depth-guided_birds-eye_view_transformation_for_3d_multimodal.md)
+- [Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots](panoramic_multimodal_semantic_occupancy_prediction_for_quadruped_robots.md)
 
 <!-- RELATED:END -->

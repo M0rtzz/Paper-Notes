@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FLoC: Facility Location-Based Efficient Visual Token Compression for Long Video Understanding
 description: >-

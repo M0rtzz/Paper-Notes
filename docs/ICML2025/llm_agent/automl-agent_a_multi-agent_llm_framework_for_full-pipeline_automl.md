@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML
 description: >-
@@ -142,8 +142,8 @@ AutoML-Agent 在绝大多数任务上取得了最高的自动化成功率，且�
 
 - [Select, Read, and Write: A Multi-Agent Framework of Full-Text-based Related Work Generation](../../ACL2025/llm_agent/select_read_and_write_a_multi-agent_framework_of_full-text-based_related_work_ge.md)
 - [TAMAS: Benchmarking Adversarial Risks in Multi-Agent LLM Systems](tamas_benchmarking_adversarial_risks_in_multi-agent_llm_systems.md)
+- [Theorem-of-Thought: A Multi-Agent Framework for Abductive, Deductive, and Inductive Reasoning in Language Models](theorem-of-thought_a_multi-agent_framework_for_abductive_deductive_and_inductive.md)
 - [R&D-Agent-Quant: A Multi-Agent Framework for Data-Centric Factors and Model Joint Optimization](../../NeurIPS2025/llm_agent/rd-agent-quant_a_multi-agent_framework_for_data-centric_factors_and_model_joint_.md)
 - [From Debate to Equilibrium: Belief-Driven Multi-Agent LLM Reasoning via Bayesian Nash Equilibrium](from_debate_to_equilibrium_belief-driven_multi-agent_llm_reasoning_via_bayesian_.md)
-- [METAL: A Multi-Agent Framework for Chart Generation with Test-Time Scaling](../../ACL2025/llm_agent/metal_a_multi-agent_framework_for_chart_generation_with_test-time_scaling.md)
 
 <!-- RELATED:END -->

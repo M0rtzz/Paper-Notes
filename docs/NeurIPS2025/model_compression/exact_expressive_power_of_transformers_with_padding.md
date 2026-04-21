@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exact Expressive Power of Transformers with Padding
 description: >-

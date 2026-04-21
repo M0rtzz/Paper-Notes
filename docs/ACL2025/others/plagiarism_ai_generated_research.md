@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] All That Glitters is Not Novel: Plagiarism in AI Generated Research
 description: >-

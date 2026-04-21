@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CrossGLG: LLM Guides One-Shot Skeleton-Based 3D Action Recognition in a Cross-Level Manner
 description: >-

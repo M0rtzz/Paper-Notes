@@ -1,16 +1,19 @@
-﻿---
+---
 title: >-
   [论文解读] LumiNet: Latent Intrinsics Meets Diffusion Models for Indoor Scene Relighting
 description: >-
-  [CVPR 2025][relighting][diffusion] 提出 LumiNet，结合潜在内在表征和条件扩散模型实现室内场景级光照迁移，通过 Variational-StyLitGAN 数据策略和潜在 ControlNet 架构，仅用图像输入即可迁移复杂光照效果。
+  [CVPR 2025][图像生成][relighting] 提出 LumiNet，将源图像的潜在内在特征（128 维 albedo-like 表征）和目标图像的潜在外在光照码（16 维）注入改造后的 ControlNet，实现仅用图像输入的室内场景级光照迁移，包含镜面高光、阴影和间接照明等复杂效果。
 tags:
   - CVPR 2025
+  - 图像生成
   - relighting
-  - diffusion model
-  - ControlNet
   - latent intrinsics
+  - 扩散模型
+  - ControlNet
+  - GAN
   - indoor scene
-  - StyleGAN
+  - light transfer
+  - 注意力机制
 ---
 
 # LumiNet: Latent Intrinsics Meets Diffusion Models for Indoor Scene Relighting
@@ -148,10 +151,10 @@ LumiNet 作为通用模型（训练在多样数据上），接近专用 MIIW 模
 
 ## 相关论文
 
-- [Comprehensive Relighting: Generalizable and Consistent Monocular Human Relighting and Harmonization](comprehensive_relighting_generalizable_and_consistent_monocular_human_relighting.md)
-- [EchoScene: Indoor Scene Generation via Information Echo over Scene Graph Diffusion](../../ECCV2024/image_generation/echoscene_indoor_scene_generation_via_information_echo_over_scene_graph_diffusio.md)
+- [ScribbleLight: Single Image Indoor Relighting with Scribbles](scribblelight_single_image_indoor_relighting_with_scribbles.md)
+- [RoomPainter: View-Integrated Diffusion for Consistent Indoor Scene Texturing](roompainter_view-integrated_diffusion_for_consistent_indoor_scene_texturing.md)
 - [Channel-wise Noise Scheduled Diffusion for Inverse Rendering in Indoor Scenes](channel-wise_noise_scheduled_diffusion_for_inverse_rendering_in_indoor_scenes.md)
-- [Diffusion-4K: Ultra-High-Resolution Image Synthesis with Latent Diffusion Models](diffusion-4k_ultra-high-resolution_image_synthesis_with_latent_diffusion_models.md)
-- [MixerMDM: Learnable Composition of Human Motion Diffusion Models](mixermdm_learnable_composition_of_human_motion_diffusion_models.md)
+- [Comprehensive Relighting: Generalizable and Consistent Monocular Human Relighting and Harmonization](comprehensive_relighting_generalizable_and_consistent_monocular_human_relighting.md)
+- [GLASS: Guided Latent Slot Diffusion for Object-Centric Learning](glass_guided_latent_slot_diffusion_for_object-centric_learning.md)
 
 <!-- RELATED:END -->

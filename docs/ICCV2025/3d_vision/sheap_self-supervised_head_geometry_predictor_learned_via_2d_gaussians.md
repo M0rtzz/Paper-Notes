@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SHeaP: Self-Supervised Head Geometry Predictor Learned via 2D Gaussians
 description: >-

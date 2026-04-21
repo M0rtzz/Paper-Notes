@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Explaining Similarity in Vision-Language Encoders with Weighted Banzhaf Interactions
 description: >-

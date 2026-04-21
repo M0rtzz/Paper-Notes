@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improved and Oracle-Efficient Online $\ell_1$-Multicalibration
 description: >-
@@ -142,7 +142,7 @@ $$\mathbb{E}[K(\pi_T, \mathcal{H})] \leq \widetilde{O}(T^{-1/4}\sqrt{\log T})$$
 - [Movie101v2: Improved Movie Narration Benchmark](../../ACL2025/llm_evaluation/movie101v2_improved_movie_narration_benchmark.md)
 - [Conformal Online Learning of Deep Koopman Linear Embeddings](../../NeurIPS2025/llm_evaluation/conformal_online_learning_of_deep_koopman_linear_embeddings.md)
 - [Tight Lower Bounds and Improved Convergence in Performative Prediction](../../NeurIPS2025/llm_evaluation/tight_lower_bounds_and_improved_convergence_in_performative_prediction.md)
+- [BATCLIP: Bimodal Online Test-Time Adaptation for CLIP](../../ICCV2025/llm_evaluation/batclip_bimodal_online_test-time_adaptation_for_clip.md)
 - [Imbalance in Balance: Online Concept Balancing in Generation Models](../../ICCV2025/llm_evaluation/imbalance_in_balance_online_concept_balancing_in_generation_models.md)
-- [HybridNorm: Towards Stable and Efficient Transformer Training via Hybrid Normalization](../../NeurIPS2025/llm_evaluation/hybridnorm_towards_stable_and_efficient_transformer_training_via_hybrid_normaliz.md)
 
 <!-- RELATED:END -->

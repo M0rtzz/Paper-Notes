@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SAM-R1: Leveraging SAM for Reward Feedback in Multimodal Segmentation via Reinforcement Learning
 description: >-

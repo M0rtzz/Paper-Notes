@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SlideTailor: Personalized Presentation Slide Generation for Scientific Papers
 description: >-

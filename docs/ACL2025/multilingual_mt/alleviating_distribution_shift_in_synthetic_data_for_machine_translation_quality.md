@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Alleviating Distribution Shift in Synthetic Data for Machine Translation Quality Estimation
 description: >-

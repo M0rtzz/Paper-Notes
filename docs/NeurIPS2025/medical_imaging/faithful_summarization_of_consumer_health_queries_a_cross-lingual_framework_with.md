@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Faithful Summarization of Consumer Health Queries: A Cross-Lingual Framework with LLMs
 description: >-

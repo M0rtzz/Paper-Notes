@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Modulated Diffusion: Accelerating Generative Modeling with Modulated Quantization
 description: >-

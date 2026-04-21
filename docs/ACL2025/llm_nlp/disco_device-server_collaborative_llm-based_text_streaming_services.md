@@ -2,9 +2,16 @@
 title: >-
   [论文解读] DiSCo: Device-Server Collaborative LLM-Based Text Streaming Services
 description: >-
-  [LLM/NLP] 提出 DiSCo，一个端-云协同的 LLM 推理调度器，通过成本感知的请求分发和 token 级迁移机制，在成本约束下优化用户的首 token 延迟 (TTFT) 和 token 间延迟 (TBT)。
+  [ACL 2025][LLM/NLP][Device-Server Collaboration] 提出 DiSCo，一个端-云协同的 LLM 推理调度器，通过成本感知的请求分发和 token 级迁移机制，在成本约束下优化用户的首 token 延迟 (TTFT) 和 token 间延迟 (TBT)。
 tags:
+  - ACL 2025
   - LLM/NLP
+  - Device-Server Collaboration
+  - QoE
+  - TTFT
+  - TBT
+  - Token Migration
+  - LLM Serving
 ---
 
 # DiSCo: Device-Server Collaborative LLM-Based Text Streaming Services
@@ -108,10 +115,10 @@ DiSCo 作为中间件，包含两个核心控制器：**分发控制器 (Dispatc
 
 ## 相关论文
 
+- [LLM as Effective Streaming Processor: Bridging Streaming-Batch Mismatches with Group Position Encoding](llm_as_effective_streaming_processor_bridging_streaming-batch_mismatches_with_gr.md)
 - [EdiText: Controllable Coarse-to-Fine Text Editing with Diffusion Language Models](editext_diffusion_text_editing.md)
-- [PlanGenLLMs: A Modern Survey of LLM Planning Capabilities](plangenllms_planning_survey.md)
-- [Boosting LLM's Molecular Structure Elucidation with Knowledge Enhanced Tree Search Reasoning](boosting_llms_molecular_structure_elucidation_with_knowledge_enhanced_tree_searc.md)
-- [Classifying Unreliable Narrators with Large Language Models](classifying_unreliable_narrators.md)
-- [Large Language Models for Predictive Analysis: How Far Are They?](large_language_models_for_predictive_analysis_how_far_are_they.md)
+- [Can LLMs Understand Unvoiced Speech? Exploring EMG-to-Text Conversion with LLMs](can_llms_understand_unvoiced_speech_exploring_emg-to-text_conversion_with_llms.md)
+- [Automated CAD Modeling Sequence Generation from Text Descriptions via Transformer-Based Large Language Models](cadllm_cad_modeling_from_text.md)
+- [On the Risk of Evidence Pollution for Malicious Social Text Detection in the Era of LLMs](on_the_risk_of_evidence_pollution_for_malicious_social_text_detection_in_the_era.md)
 
 <!-- RELATED:END -->

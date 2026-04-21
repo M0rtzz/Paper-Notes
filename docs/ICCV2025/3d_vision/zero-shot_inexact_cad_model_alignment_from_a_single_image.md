@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Zero-Shot Inexact CAD Model Alignment from a Single Image
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Average-Iterate to Last-Iterate Convergence in Games: A Reduction and Its Applications
 description: >-

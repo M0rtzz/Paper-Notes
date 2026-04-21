@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling and Transferability of Annealing Strategies in Large Language Model Training
 description: >-

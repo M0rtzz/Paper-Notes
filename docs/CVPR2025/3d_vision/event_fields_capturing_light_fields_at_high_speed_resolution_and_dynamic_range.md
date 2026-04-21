@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Event Fields: Capturing Light Fields at High Speed, Resolution, and Dynamic Range
 description: >-
@@ -124,8 +124,8 @@ Event Fields 的数学框架建立在全光函数 $L(\vec{x}, \vec{\omega}, \lam
 
 - [HDR-NSFF: High Dynamic Range Neural Scene Flow Fields](../../ICLR2026/3d_vision/hdr-nsff_high_dynamic_range_neural_scene_flow_fields.md)
 - [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
+- [RelationField: Relate Anything in Radiance Fields](relationfield_relate_anything_in_radiance_fields.md)
 - [Exploiting Deblurring Networks for Radiance Fields](exploiting_deblurring_networks_for_radiance_fields.md)
-- [Relative Illumination Fields: Learning Medium and Light Independent Underwater Scenes](../../ICCV2025/3d_vision/relative_illumination_fields_learning_medium_and_light_independent_underwater_sc.md)
-- [GaussHDR: High Dynamic Range Gaussian Splatting via Learning Unified 3D and 2D Local Tone Mapping](gausshdr_high_dynamic_range_gaussian_splatting_via_learning_unified_3d_and_2d_lo.md)
+- [Preconditioners for the Stochastic Training of Neural Fields](preconditioners_for_the_stochastic_training_of_neural_fields.md)
 
 <!-- RELATED:END -->

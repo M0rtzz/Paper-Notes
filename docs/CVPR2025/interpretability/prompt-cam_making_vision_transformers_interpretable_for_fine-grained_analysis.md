@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Prompt-CAM: Making Vision Transformers Interpretable for Fine-Grained Analysis
 description: >-
@@ -141,6 +141,6 @@ Prompt-CAM 基于 Visual Prompt Tuning (VPT) 的框架，核心修改是将预�
 - [How Intrinsic Motivation Shapes Learned Representations in Decision Transformers: A Cognitive Interpretability Analysis](../../NeurIPS2025/interpretability/toward_explainable_offline_rl_analyzing_representations_in_intrinsically_motivat.md)
 - [Text-guided Fine-Grained Video Anomaly Understanding](../../CVPR2026/interpretability/text-guided_fine-grained_video_anomaly_understanding.md)
 - [Inside-Out: Measuring Generalization in Vision Transformers Through Inner Workings](../../CVPR2026/interpretability/inside-out_measuring_generalization_in_vision_transformers_through_inner_working.md)
-- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
+- [FINER: MLLMs Hallucinate under Fine-grained Negative Queries](../../CVPR2026/interpretability/finer_mllms_hallucinate_under_fine-grained_negative_queries.md)
 
 <!-- RELATED:END -->

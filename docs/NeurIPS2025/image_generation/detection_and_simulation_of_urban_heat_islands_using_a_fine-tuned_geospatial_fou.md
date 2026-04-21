@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Detection and Simulation of Urban Heat Islands Using a Fine-Tuned Geospatial Foundation Model
 description: >-

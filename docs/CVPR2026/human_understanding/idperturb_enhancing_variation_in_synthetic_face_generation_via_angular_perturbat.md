@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] IDperturb: Enhancing Variation in Synthetic Face Generation via Angular Perturbations
 description: >-

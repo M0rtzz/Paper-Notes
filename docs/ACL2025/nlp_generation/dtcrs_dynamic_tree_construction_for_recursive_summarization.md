@@ -2,9 +2,15 @@
 title: >-
   [论文解读] DTCRS: Dynamic Tree Construction for Recursive Summarization
 description: >-
-  [文本生成] 提出 DTCRS 方法，根据文档结构和查询语义动态构建摘要树，通过问题分解和子问题引导聚类减少冗余摘要节点，在三个 QA 数据集上显著优于静态摘要树方法 RAPTOR。
+  [ACL 2025][文本生成][Recursive Summarization] 提出 DTCRS 方法，根据文档结构和查询语义动态构建摘要树，通过问题分解和子问题引导聚类减少冗余摘要节点，在三个 QA 数据集上显著优于静态摘要树方法 RAPTOR。
 tags:
+  - ACL 2025
   - 文本生成
+  - Recursive Summarization
+  - RAG
+  - Summary Tree
+  - Question Decomposition
+  - GMM Clustering
 ---
 
 # DTCRS: Dynamic Tree Construction for Recursive Summarization
@@ -177,10 +183,10 @@ DTCRS 的整体流程分为三步：
 
 ## 相关论文
 
-- [PerSphere: A Comprehensive Framework for Multi-Faceted Perspective Retrieval and Summarization](persphere_a_comprehensive_framework_for_multi-faceted_perspective_retrieval_and_.md)
-- [What Is That Talk About? A Video-to-Text Summarization Dataset for Scientific Presentations](video_text_summarization.md)
 - [Context-Aware Hierarchical Merging for Long Document Summarization](context-aware_hierarchical_merging_for_long_document_summarization.md)
 - [Theme-Explanation Structure for Table Summarization Using Large Language Models](theme-explanation_structure_for_table_summarization_using_large_language_models_.md)
 - [An Empirical Study of Many-to-Many Summarization with Large Language Models](an_empirical_study_of_manytomany_summarization.md)
+- [PerSphere: A Comprehensive Framework for Multi-Faceted Perspective Retrieval and Summarization](persphere_a_comprehensive_framework_for_multi-faceted_perspective_retrieval_and_.md)
+- [What Is That Talk About? A Video-to-Text Summarization Dataset for Scientific Presentations](video_text_summarization.md)
 
 <!-- RELATED:END -->

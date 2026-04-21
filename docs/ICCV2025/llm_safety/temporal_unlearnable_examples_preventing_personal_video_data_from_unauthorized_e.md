@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Temporal Unlearnable Examples: Preventing Personal Video Data from Unauthorized Exploitation
 description: >-

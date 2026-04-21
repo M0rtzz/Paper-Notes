@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LiDAR-GS++: Improving LiDAR Gaussian Reconstruction via Diffusion Priors
 description: >-

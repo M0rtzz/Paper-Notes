@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SERL: Self-Examining Reinforcement Learning on Open-Domain
 description: >-

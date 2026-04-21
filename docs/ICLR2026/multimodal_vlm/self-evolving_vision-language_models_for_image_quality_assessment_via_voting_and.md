@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-Evolving Vision-Language Models for Image Quality Assessment via Voting and Ranking
 description: >-

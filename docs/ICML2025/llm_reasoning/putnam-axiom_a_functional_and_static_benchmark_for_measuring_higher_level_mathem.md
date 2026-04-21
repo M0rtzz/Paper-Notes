@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Putnam-AXIOM: A Functional & Static Benchmark for Measuring Higher Level Mathematical Reasoning in LLMs
 description: >-

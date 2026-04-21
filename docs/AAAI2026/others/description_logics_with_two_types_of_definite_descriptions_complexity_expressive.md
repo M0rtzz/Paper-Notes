@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Description Logics with Two Types of Definite Descriptions: Complexity, Expressiveness, and Automated Deduction
 description: >-

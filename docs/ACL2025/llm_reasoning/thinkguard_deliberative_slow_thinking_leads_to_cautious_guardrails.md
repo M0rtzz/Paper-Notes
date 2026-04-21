@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ThinkGuard: Deliberative Slow Thinking Leads to Cautious Guardrails
 description: >-

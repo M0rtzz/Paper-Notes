@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BiPreManip: Learning Affordance-Based Bimanual Preparatory Manipulation through Anticipatory Collaboration
 description: >-

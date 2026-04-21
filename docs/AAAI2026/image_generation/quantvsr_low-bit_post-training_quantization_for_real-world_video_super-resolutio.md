@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] QuantVSR: Low-Bit Post-Training Quantization for Real-World Video Super-Resolution
 description: >-
@@ -209,6 +209,6 @@ $$\mathbb{E}(\hat{W}\hat{X}) - \mathbb{E}(WX) = \Delta W \mathbb{E}(\hat{X}) + W
 - [Continuous Degradation Modeling via Latent Flow Matching for Real-World Super-Resolution](continuous_degradation_modeling_via_latent_flow_matching_for_real-world_super-re.md)
 - [Mixture of Ranks with Degradation-Aware Routing for One-Step Real-World Image Super-Resolution](mixture_of_ranks_with_degradation-aware_routing_for_one-step_real-world_image_su.md)
 - [DOVE: Efficient One-Step Diffusion Model for Real-World Video Super-Resolution](../../NeurIPS2025/image_generation/dove_efficient_one-step_diffusion_model_for_real-world_video_super-resolution.md)
-- [OARS: Process-Aware Online Alignment for Generative Real-World Image Super-Resolution](../../CVPR2026/image_generation/oars_processaware_online_alignment_for_generative.md)
+- [Self-Supervised ControlNet with Spatio-Temporal Mamba for Real-World Video Super-Resolution](../../CVPR2025/image_generation/self-supervised_controlnet_with_spatio-temporal_mamba_for_real-world_video_super.md)
 
 <!-- RELATED:END -->

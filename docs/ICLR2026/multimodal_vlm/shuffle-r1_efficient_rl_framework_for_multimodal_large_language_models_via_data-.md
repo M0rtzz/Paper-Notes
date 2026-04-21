@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Shuffle-R1: Efficient RL Framework for Multimodal Large Language Models via Data-centric Dynamic Shuffle
 description: >-

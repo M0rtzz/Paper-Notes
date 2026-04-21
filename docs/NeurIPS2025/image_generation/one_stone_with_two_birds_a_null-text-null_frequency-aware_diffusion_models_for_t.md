@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] One Stone with Two Birds: A Null-Text-Null Frequency-Aware Diffusion Models for Text-Guided Image Inpainting
 description: >-
@@ -141,8 +141,8 @@ $$\tilde{z}_t^{in} = \text{IDCT}(\text{DCT}(z_t^{text}) \odot m_{mid} + \text{DC
 
 - [NPN: Non-Linear Projections of the Null-Space for Imaging Inverse Problems](npn_non-linear_projections_of_the_null-space_for_imaging_inverse_problems.md)
 - [Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models](training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)
+- [RAD: Region-Aware Diffusion Models for Image Inpainting](../../CVPR2025/image_generation/rad_region-aware_diffusion_models_for_image_inpainting.md)
 - [Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
 - [FairImagen: Post-Processing for Bias Mitigation in Text-to-Image Models](fairimagen_post-processing_for_bias_mitigation_in_text-to-image_models.md)
-- [DEFT: Decompositional Efficient Fine-Tuning for Text-to-Image Models](deft_decompositional_efficient_finetuning_for_texttoimage_mo.md)
 
 <!-- RELATED:END -->

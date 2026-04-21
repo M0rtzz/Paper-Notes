@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HotSpot: Signed Distance Function Optimization with an Asymptotically Sufficient Condition
 description: >-
@@ -101,6 +101,6 @@ PDE 残差损失 + 表面拟合损失（点云约束）。理论分析证明 $\k
 - [Distributionally Robust Online Markov Game with Linear Function Approximation](../../AAAI2026/human_understanding/distributionally_robust_online_markov_game_with_linear_function_approximation.md)
 - [Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](../../ICLR2026/human_understanding/function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)
 - [Enhancing Parallelism in Decentralized Stochastic Convex Optimization](../../ICML2025/human_understanding/enhancing_parallelism_in_decentralized_stochastic_convex_optimization.md)
-- [FW-Merging: Scaling Model Merging with Frank-Wolfe Optimization](../../ICCV2025/human_understanding/fw-merging_scaling_model_merging_with_frank-wolfe_optimization.md)
+- [PARCO: Parallel AutoRegressive Models for Multi-Agent Combinatorial Optimization](../../NeurIPS2025/human_understanding/parco_parallel_autoregressive_models_for_multi-agent_combinatorial_optimization.md)
 
 <!-- RELATED:END -->

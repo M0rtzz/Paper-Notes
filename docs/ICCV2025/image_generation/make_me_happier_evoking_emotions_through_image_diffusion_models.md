@@ -160,6 +160,6 @@ EmoEditor = EmoPair 数据集构建 + 双分支潜在扩散模型 + 迭代情感
 - [CoMPaSS: Enhancing Spatial Understanding in Text-to-Image Diffusion Models](compass_enhancing_spatial_understanding_in_text-to-image_diffusion_models.md)
 - [DIIP: Diffusion Image Prior](diffusion_image_prior.md)
 - [Golden Noise for Diffusion Models: A Learning Framework](golden_noise_for_diffusion_models_a_learning_framework.md)
-- [Mind the Gap: Aligning Vision Foundation Models to Image Feature Matching](mind_the_gap_aligning_vision_foundation_models_to_image_feature_matching.md)
+- [SMGDiff: Soccer Motion Generation using Diffusion Probabilistic Models](smgdiff_soccer_motion_generation_using_diffusion_probabilistic_models.md)
 
 <!-- RELATED:END -->

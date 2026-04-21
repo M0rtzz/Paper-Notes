@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MOSAIC: Multiple Observers Spotting AI Content
 description: >-

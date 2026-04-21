@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] URaG: Unified Retrieval and Generation in Multimodal LLMs for Efficient Long Document Understanding
 description: >-

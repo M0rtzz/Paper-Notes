@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tractable Weighted First-Order Model Counting with Bounded Treewidth Binary Evidence
 description: >-

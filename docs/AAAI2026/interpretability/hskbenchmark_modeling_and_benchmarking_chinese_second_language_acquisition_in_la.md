@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HSKBenchmark: Modeling and Benchmarking Chinese Second Language Acquisition in Large Language Models through Curriculum Tuning
 description: >-

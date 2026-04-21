@@ -1,15 +1,18 @@
-﻿---
+---
 title: >-
   [论文解读] lbGen: Low-Biased General Annotated Dataset Generation
 description: >-
-  [CVPR 2025][dataset generation][diffusion] 提出 lbGen 框架，利用双层语义对齐损失和质量保证模块微调预训练扩散模型，仅以类别名称为输入直接生成低偏差通用标注数据集，显著提升骨干网络的跨域泛化能力。
+  [CVPR 2025][图像生成][dataset bias] 提出 lbGen 框架，通过双层语义对齐（全局对抗+个体余弦相似度）和质量保证损失微调 Stable Diffusion，仅用类别名称即可生成低偏差的通用标注数据集，预训练骨干比 ImageNet 真实数据平均迁移精度高出 1.7%~2.1%。
 tags:
   - CVPR 2025
-  - dataset generation
-  - diffusion model
+  - 图像生成
   - dataset bias
-  - transfer learning
+  - synthetic dataset
+  - 扩散模型
   - CLIP
+  - bi-level semantic alignment
+  - quality assurance
+  - 迁移学习
 ---
 
 # lbGen: Low-Biased General Annotated Dataset Generation
@@ -136,10 +139,10 @@ $$\mathcal{L} = \mathcal{L}_{bi} + \lambda_1 \mathcal{L}_q$$
 
 ## 相关论文
 
-- [CaMiT: A Time-Aware Car Model Dataset for Classification and Generation](../../NeurIPS2025/image_generation/camit_a_time-aware_car_model_dataset_for_classification_and_generation.md)
+- [ORIDa: Object-Centric Real-World Image Composition Dataset](orida_object-centric_real-world_image_composition_dataset.md)
 - [VIGFace: Virtual Identity Generation for Privacy-Free Face Recognition Dataset](../../ICCV2025/image_generation/vigface_virtual_identity_generation_for_privacy-free_face_recognition_dataset.md)
-- [Towards General Modality Translation with Contrastive and Predictive Latent Diffusion Bridge](../../NeurIPS2025/image_generation/towards_general_modality_translation_with_contrastive_and_predictive_latent_diff.md)
 - [A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation](../../ICCV2025/image_generation/a0_an_affordance-aware_hierarchical_model_for_general_robotic_manipulation.md)
-- [CaO2: Rectifying Inconsistencies in Diffusion-Based Dataset Distillation](../../ICCV2025/image_generation/cao2_rectifying_inconsistencies_in_diffusion-based_dataset_distillation.md)
+- [PhD: A ChatGPT-Prompted Visual Hallucination Evaluation Dataset](phd_a_chatgpt-prompted_visual_hallucination_evaluation_dataset.md)
+- [CaMiT: A Time-Aware Car Model Dataset for Classification and Generation](../../NeurIPS2025/image_generation/camit_a_time-aware_car_model_dataset_for_classification_and_generation.md)
 
 <!-- RELATED:END -->

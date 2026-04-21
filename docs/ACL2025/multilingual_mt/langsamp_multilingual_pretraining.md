@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LangSAMP: Language-Script Aware Multilingual Pretraining
 description: >-
@@ -118,7 +118,7 @@ tags:
 - [Semantic Aware Linear Transfer by Recycling Pre-trained Language Models for Cross-Lingual Transfer](semantic_aware_linear_transfer_by_recycling_pre-trained_language_models_for_cros.md)
 - [Enhancing Multilingual LLM Pretraining with Model-Based Data Selection](../../NeurIPS2025/multilingual_mt/enhancing_multilingual_llm_pretraining_with_model-based_data_selection.md)
 - [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](disentangle_language_culture.md)
-- [Multilingual Encoder Knows More Than You Realize: Shared Weights Pretraining for Extremely Low-Resource Languages](multilingual_encoder_knows_more_than_you_realize_shared_weights_pretraining_for_.md)
+- [An Expanded Massive Multilingual Dataset for High-Performance Language Technologies (HPLT)](an_expanded_massive_multilingual_dataset_for_high-performance_language_technolog.md)
 - [Group then Scale: Dynamic Mixture-of-Experts Multilingual Language Model](group_then_scale_dynamic_mixture-of-experts_multilingual_language_model.md)
 
 <!-- RELATED:END -->

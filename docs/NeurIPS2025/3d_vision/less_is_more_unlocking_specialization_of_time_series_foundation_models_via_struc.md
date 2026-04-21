@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Less is More: Unlocking Specialization of Time Series Foundation Models via Structured Pruning
 description: >-

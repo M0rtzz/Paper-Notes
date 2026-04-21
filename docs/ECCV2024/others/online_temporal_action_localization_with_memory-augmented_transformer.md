@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Online Temporal Action Localization with Memory-Augmented Transformer
 description: >-

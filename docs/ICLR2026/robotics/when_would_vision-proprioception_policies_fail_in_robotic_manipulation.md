@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When would Vision-Proprioception Policies Fail in Robotic Manipulation?
 description: >-

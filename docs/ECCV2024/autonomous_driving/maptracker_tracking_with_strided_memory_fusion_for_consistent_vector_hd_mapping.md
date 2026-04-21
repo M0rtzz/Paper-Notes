@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MapTracker: Tracking with Strided Memory Fusion for Consistent Vector HD Mapping
 description: >-
@@ -189,6 +189,6 @@ MapTracker在两个数据集上均大幅领先：mAP提升**8%+**，C-mAP提升*
 - [Risk-Aware Self-Consistent Imitation Learning for Trajectory Planning in Autonomous Driving](risk-aware_self-consistent_imitation_learning_for_trajectory_planning_in_autonom.md)
 - [Accelerating Online Mapping and Behavior Prediction via Direct BEV Feature Attention](accelerating_online_mapping_and_behavior_prediction_via_dire.md)
 - [Stream Query Denoising for Vectorized HD-Map Construction](stream_query_denoising_for_vectorized_hd-map_construction.md)
-- [LiDAR-Event Stereo Fusion with Hallucinations](lidar-event_stereo_fusion_with_hallucinations.md)
+- [LiDAR-Event Stereo Fusion with Hallucinations](lidarevent_stereo_fusion_with_hallucinations.md)
 
 <!-- RELATED:END -->

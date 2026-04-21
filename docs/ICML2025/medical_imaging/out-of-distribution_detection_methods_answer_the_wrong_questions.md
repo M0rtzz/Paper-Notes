@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Out-of-Distribution Detection Methods Answer the Wrong Questions
 description: >-

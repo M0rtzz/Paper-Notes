@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bidirectional Uncertainty-Based Active Learning for Open-Set Annotation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Faster Rates for Private Adversarial Bandits
 description: >-
@@ -161,6 +161,6 @@ tags:
 - [Private Model Personalization Revisited](private_model_personalization_revisited.md)
 - [Improving the Variance of Differentially Private Randomized Experiments through Clustering](improving_the_variance_of_differentially_private_randomized_experiments_through_.md)
 - [Clients Collaborate: Flexible Differentially Private Federated Learning with Guaranteed Improvement of Utility-Privacy Trade-off](clients_collaborate_flexible_differentially_private_federated_learning_with_guar.md)
-- [Cascade: Token-Sharded Private LLM Inference](cascade_token-sharded_private_llm_inference.md)
+- [An Efficient Private GPT Never Autoregressively Decodes](an_efficient_private_gpt_never_autoregressively_decodes.md)
 
 <!-- RELATED:END -->

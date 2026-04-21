@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DEFAME: Dynamic Evidence-based FAct-checking with Multimodal Experts
 description: >-

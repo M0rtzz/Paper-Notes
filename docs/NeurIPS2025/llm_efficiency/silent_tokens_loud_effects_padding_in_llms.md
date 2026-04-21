@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Silent Tokens, Loud Effects: Padding in LLMs
 description: >-
@@ -123,8 +123,8 @@ tags:
 
 - [Long-Context Modeling with Dynamic Hierarchical Sparse Attention for On-Device LLMs](long-context_modeling_with_dynamic_hierarchical_sparse_attention_for_on-device_l.md)
 - [LooGLE v2: Are LLMs Ready for Real World Long Dependency Challenges?](loogle_v2_are_llms_ready_for_real_world_long_dependency_challenges.md)
-- [LADM: Long-context Training Data Selection with Attention-based Dependency Measurement for LLMs](../../ACL2025/llm_efficiency/ladm_long_context_data.md)
 - [Long-Short Alignment for Effective Long-Context Modeling in LLMs](../../ICML2025/llm_efficiency/long-short_alignment_for_effective_long-context_modeling_in_llms.md)
+- [LADM: Long-context Training Data Selection with Attention-based Dependency Measurement for LLMs](../../ACL2025/llm_efficiency/ladm_long_context_data.md)
 - [Mitigating Posterior Salience Attenuation in Long-Context LLMs with Positional Contrastive Decoding](../../ACL2025/llm_efficiency/mitigating_posterior_salience_attenuation_in_long-context_llms_with_positional_c.md)
 
 <!-- RELATED:END -->

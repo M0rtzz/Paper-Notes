@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving Long-Range Interactions in Graph Neural Simulators via Hamiltonian Dynamics
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Taxonomy-Aware Representation Alignment for Hierarchical Visual Recognition with Large Multimodal Models
 description: >-

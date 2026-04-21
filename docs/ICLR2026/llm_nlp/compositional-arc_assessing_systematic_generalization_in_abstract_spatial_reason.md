@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Compositional-ARC: Assessing Systematic Generalization in Abstract Spatial Reasoning
 description: >-
@@ -134,8 +134,8 @@ tags:
 
 - [A Systematic Study of Compositional Syntactic Transformer Language Models](../../ACL2025/llm_nlp/a_systematic_study_of_compositional_syntactic_transformer_language_models.md)
 - [Systematic Generalization in Language Models Scales with Information Entropy](../../ACL2025/llm_nlp/systematic_generalization_in_language_models_scales_with_information_entropy.md)
+- [Function Induction and Task Generalization: An Interpretability Study with Off-by-One Addition](function_induction_and_task_generalization_an_interpretability_study_with_off-by.md)
 - [Revisiting Compositional Generalization Capability of Large Language Models Considering Instruction Following Ability](../../ACL2025/llm_nlp/compositional_generalization_instruction.md)
 - [Emergent Symbolic Mechanisms Support Abstract Reasoning in Large Language Models](../../ICML2025/llm_nlp/emergent_symbolic_mechanisms_support_abstract_reasoning_in_large_language_models.md)
-- [From Assumptions to Actions: Turning LLM Reasoning into Uncertainty-Aware Planning](from_assumptions_to_actions_turning_llm_reasoning_into_uncertainty-aware_plannin.md)
 
 <!-- RELATED:END -->

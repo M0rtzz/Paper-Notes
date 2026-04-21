@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When Thinking Drifts: Evidential Grounding for Robust Video Reasoning
 description: >-

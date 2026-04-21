@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Continuous-Time Analysis of Heavy Ball Momentum in Min-Max Games
 description: >-

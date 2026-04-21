@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OmniLottie: Generating Vector Animations via Parameterized Lottie Tokens
 description: >-

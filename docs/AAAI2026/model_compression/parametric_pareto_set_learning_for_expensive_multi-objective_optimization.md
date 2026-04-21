@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Parametric Pareto Set Learning for Expensive Multi-Objective Optimization
 description: >-
@@ -183,9 +183,9 @@ $$\text{HVI}(\hat{\mathcal{Y}}_+, \mathcal{Y}) = \text{HV}(\hat{\mathcal{Y}}_+ \
 ## 相关论文
 
 - [SwiReasoning: Switch-Thinking in Latent and Explicit for Pareto-Superior Reasoning](../../ICLR2026/model_compression/swireasoning_switch-thinking_in_latent_and_explicit_for_pareto-superior_reasonin.md)
+- [Frequency Switching Mechanism for Parameter-Efficient Multi-Task Learning](../../CVPR2026/model_compression/frequency_switching_mechanism_for_parameter-ecient_multi-task_learning.md)
 - [PrefixGPT: Prefix Adder Optimization by a Generative Pre-trained Transformer](prefixgpt_prefix_adder_optimization_by_a_generative_pre-trained_transformer.md)
 - [GeoFusion-CAD: Structure-Aware Diffusion with Geometric State Space for Parametric 3D Design](../../CVPR2026/model_compression/geofusion-cad_structure-aware_diffusion_with_geometric_state_space_for_parametri.md)
 - [Find your Needle: Small Object Image Retrieval via Multi-Object Attention Optimization](../../NeurIPS2025/model_compression/find_your_needle_small_object_image_retrieval_via_multi-object_attention_optimiz.md)
-- [PrunNet: Learning Compatible Multi-Prize Subnetworks for Asymmetric Retrieval](../../CVPR2025/model_compression/learning_compatible_multi-prize_subnetworks_for_asymmetric_retrieval.md)
 
 <!-- RELATED:END -->

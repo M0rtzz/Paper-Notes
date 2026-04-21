@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] ComRoPE: Scalable and Robust Rotary Position Embedding Parameterized by Trainable Commuting Angle Matrices
 description: >-
-  [CVPR 2025][位置编码] ComRoPE将RoPE从2D旋转群推广到SO(n)子群，通过可训练的交换角矩阵实现更强的位置编码，在ImageNet/COCO/视频分类上均超越RoPE和LieRE
+  [CVPR 2025][LLM/NLP][旋转位置嵌入] ComRoPE将RoPE从固定的2D旋转矩阵推广到SO(n)群的更大子群，证明交换性是保持相对位置鲁棒性的充要条件，提出AP和LD两种可训练参数化方案，在ImageNet分类（+1.6%）、COCO检测（+0.2 AP）上均优于LieRE。
 tags:
   - CVPR 2025
-  - 位置编码
-  - RoPE
-  - ViT
+  - LLM/NLP
   - 旋转位置嵌入
+  - 交换矩阵
+  - 位置鲁棒性
+  - SO(n)群
+  - 可学习PE
 ---
 
 # ComRoPE: Scalable and Robust Rotary Position Embedding Parameterized by Trainable Commuting Angle Matrices
@@ -195,9 +197,9 @@ In this work, we propose ComRoPE, which generalizes RoPE by defining it in terms
 ## 相关论文
 
 - [Robust Message Embedding via Attention Flow-Based Steganography](robust_message_embedding_via_attention_flow-based_steganography.md)
-- [LLM as Effective Streaming Processor: Bridging Streaming-Batch Mismatches with Group Position Encoding](../../ACL2025/llm_nlp/llm_as_effective_streaming_processor_bridging_streaming-batch_mismatches_with_gr.md)
 - [Computation Mechanism Behind LLM Position Generalization](../../ACL2025/llm_nlp/computation_mechanism_behind_llm_position_generalization.md)
 - [Probabilistic Aggregation and Targeted Embedding Optimization for Collective Moral Reasoning](../../ACL2025/llm_nlp/probabilistic_aggregation_and_targeted_embedding_optimization_for_collective_mor.md)
 - [Safer or Luckier? LLMs as Safety Evaluators Are Not Robust to Artifacts](../../ACL2025/llm_nlp/safer_or_luckier_llms_as_safety_evaluators_are_not_robust_to_artifacts.md)
+- [ScaleQuest: Unleashing LLM Reasoning Capability via Scalable Question Synthesis from Scratch](../../ACL2025/llm_nlp/unleashing_llm_reasoning_capability_via_scalable.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning-Augmented Algorithms for MTS with Bandit Access to Multiple Predictors
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GLINT: Modeling Scene-Scale Transparency via Gaussian Radiance Transport
 description: >-
@@ -132,7 +132,7 @@ GLINT 的输入是多视角图像，输出是包含透明表面的完整 3D 场�
 - [RayNova: Scale-Temporal Autoregressive World Modeling in Ray Space](raynova_scale-temporal_autoregressive_world_modeling_in_ray_space.md)
 - [Sky2Ground: A Benchmark for Site Modeling under Varying Altitude](sky2ground_a_benchmark_for_site_modeling_under_varying_altitude.md)
 - [EMGauss: Continuous Slice-to-3D Reconstruction via Dynamic Gaussian Modeling in Volume Electron Microscopy](emgauss_continuous_slice-to-3d_reconstruction_via_dynamic_gaussian_modeling_in_v.md)
-- [SceneTransporter: Optimal Transport-Guided Compositional Latent Diffusion for Single-Image Structured 3D Scene Generation](../../ICLR2026/3d_vision/scenetransporter_optimal_transport-guided_compositional_latent_diffusion_for_sin.md)
 - [Extend3D: Town-Scale 3D Generation](extend3d_town-scale_3d_generation.md)
+- [Indoor Asset Detection in Large Scale 360° Drone-Captured Imagery via 3D Gaussian Splatting](indoor_asset_detection_in_large_scale_360_drone-captured_imagery_via_3d_gaussian.md)
 
 <!-- RELATED:END -->

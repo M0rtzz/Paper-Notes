@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Defect Spectrum: A Granular Look of Large-Scale Defect Datasets with Rich Semantics
 description: >-

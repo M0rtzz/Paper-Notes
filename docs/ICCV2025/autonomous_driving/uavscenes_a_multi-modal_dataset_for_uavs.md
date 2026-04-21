@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UAVScenes: A Multi-Modal Dataset for UAVs
 description: >-
@@ -165,8 +165,8 @@ LiDAR 分割整体 mIoU 远低于图像分割（~33% vs ~68%），说明航拍 L
 
 ## 相关论文
 
-- [ClimbingCap: Multi-Modal Dataset and Method for Rock Climbing in World Coordinate](../../CVPR2025/autonomous_driving/climbingcap_multi-modal_dataset_and_method_for_rock_climbing_in_world_coordinate.md)
 - [V2X-Radar: A Multi-Modal Dataset with 4D Radar for Cooperative Perception](../../NeurIPS2025/autonomous_driving/v2x-radar_a_multi-modal_dataset_with_4d_radar_for_cooperative_perception.md)
+- [ClimbingCap: Multi-Modal Dataset and Method for Rock Climbing in World Coordinate](../../CVPR2025/autonomous_driving/climbingcap_multi-modal_dataset_and_method_for_rock_climbing_in_world_coordinate.md)
 - [EVT: Efficient View Transformation for Multi-Modal 3D Object Detection](evt_efficient_view_transformation_for_multi-modal_3d_object_detection.md)
 - [Multi-modal Knowledge Distillation-based Human Trajectory Forecasting](../../CVPR2025/autonomous_driving/multi-modal_knowledge_distillation-based_human_trajectory_forecasting.md)
 - [LangTraj: Diffusion Model and Dataset for Language-Conditioned Trajectory Simulation](langtraj_diffusion_model_and_dataset_for_language-conditioned_trajectory_simulat.md)

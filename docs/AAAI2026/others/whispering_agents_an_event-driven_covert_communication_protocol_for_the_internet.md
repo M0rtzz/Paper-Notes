@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Whispering Agents: An Event-Driven Covert Communication Protocol for the Internet of Agents
 description: >-

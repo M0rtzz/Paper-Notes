@@ -167,6 +167,6 @@ PTSD 与 PT+DM 效率相当，但在 Fig. 6 的详细对比中，相同评估预
 - [Progressive Inference-Time Annealing of Diffusion Models for Sampling from Boltzmann Densities](../../NeurIPS2025/image_generation/progressive_inference-time_annealing_of_diffusion_models_for_sampling_from_boltz.md)
 - [Diffusion-Driven Progressive Target Manipulation for Source-Free Domain Adaptation](../../NeurIPS2025/image_generation/diffusion-driven_progressive_target_manipulation_for_source-free_domain_adaptati.md)
 - [AMO Sampler: Enhancing Text Rendering with Overshooting](../../CVPR2025/image_generation/amo_sampler_enhancing_text_rendering_with_overshooting.md)
-- [FreeDiff: Progressive Frequency Truncation for Image Editing with Diffusion Models](../../ECCV2024/image_generation/freediff_progressive_frequency_truncation_for_image_editing_with_diffusion_model.md)
+- [ProReflow: Progressive Reflow with Decomposed Velocity](../../CVPR2025/image_generation/proreflow_progressive_reflow_with_decomposed_velocity.md)
 
 <!-- RELATED:END -->

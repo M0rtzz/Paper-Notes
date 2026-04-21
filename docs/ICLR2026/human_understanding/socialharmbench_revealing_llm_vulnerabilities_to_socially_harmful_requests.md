@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SocialHarmBench: Revealing LLM Vulnerabilities to Socially Harmful Requests
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Physics-Informed Autonomous LLM Agents for Explainable Power Electronics Modulation Design
 description: >-
@@ -127,9 +127,9 @@ tags:
 ## 相关论文
 
 - [AgentSwift: Efficient LLM Agent Design via Value-guided Hierarchical Search](agentswift_efficient_llm_agent_design_via_value-guided_hierarchical_search.md)
+- [AutoGLM: Autonomous Foundation Agents for GUIs](autoglm_autonomous_foundation_agents_for_guis.md)
 - [PhyScensis: Physics-Augmented LLM Agents for Complex Physical Scene Arrangement](../../ICLR2026/llm_agent/physcensis_physics-augmented_llm_agents_for_complex_physical_scene_arrangement.md)
 - [Co-EPG: A Framework for Co-Evolution of Planning and Grounding in Autonomous GUI Agents](co-epg_a_framework_for_co-evolution_of_planning_and_groundin.md)
 - [xChemAgents: Agentic AI for Explainable Quantum Chemistry](../../ICML2025/llm_agent/xchemagents_agentic_ai_for_explainable_quantum_chemistry.md)
-- [Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies](../../ICLR2026/llm_agent/multi-agent_design_optimizing_agents_with_better_prompts_and_topologies.md)
 
 <!-- RELATED:END -->

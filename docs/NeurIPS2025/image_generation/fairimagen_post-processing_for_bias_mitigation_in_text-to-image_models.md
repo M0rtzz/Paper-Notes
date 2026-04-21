@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FairImagen: Post-Processing for Bias Mitigation in Text-to-Image Models
 description: >-

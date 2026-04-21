@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Scene Language: Representing Scenes with Programs, Words, and Embeddings
 description: >-

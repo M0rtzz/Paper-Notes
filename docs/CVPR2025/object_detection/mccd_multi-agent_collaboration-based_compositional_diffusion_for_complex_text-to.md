@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] MCCD: Multi-Agent Collaboration-based Compositional Diffusion for Complex Text-to-Image Generation
 description: >-
-  [CVPR 2025][文生图][组合式扩散][多智能体协作] 多智能体协作场景解析+层次化组合扩散，免训练提升复杂文本到图像生成质量
+  [CVPR 2025][目标检测][组合式扩散] 提出MCCD，通过MLLM驱动的多智能体协作场景解析模块和层次化组合扩散机制（高斯掩码+区域增强滤波），以免训练方式显著提升扩散模型在多物体、多属性、多关系复杂场景下的文生图生成质量。
 tags:
   - CVPR 2025
-  - 文本到图像生成
-  - 扩散模型
-  - 组合式生成
+  - 目标检测
+  - 组合式扩散
   - 多智能体协作
+  - 场景解析
+  - 高斯掩码
+  - 文本到图像
   - MLLM
   - Training-free
 ---
@@ -87,10 +89,10 @@ MCCD包含两个核心模块：(1) 多智能体协作场景解析模块，将复
 
 ## 相关论文
 
-- [Diverse Text-to-Image Generation via Contrastive Noise Optimization](../../ICLR2026/object_detection/diverse_text-to-image_generation_via_contrastive_noise_optimization.md)
+- [Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](../../ECCV2024/object_detection/be_yourself_bounded_attention_for_multisubject_texttoimage_g.md)
+- [VerbDiff: Text-Only Diffusion Models with Enhanced Interaction Awareness](verbdiff_text-only_diffusion_models_with_enhanced_interaction_awareness.md)
+- [DiffVsgg: Diffusion-Driven Online Video Scene Graph Generation](diffvsgg_diffusion-driven_online_video_scene_graph_generation.md)
 - [YOLO-Count: Differentiable Object Counting for Text-to-Image Generation](../../ICCV2025/object_detection/yolo-count_differentiable_object_counting_for_text-to-image_generation.md)
 - [Mitigating Memorization in Text-to-Image Diffusion via Region-Aware Prompt Augmentation and Multimodal Copy Detection](mitigating_memorization_in_text-to-image_diffusion_via_region-aware_prompt_augme.md)
-- [Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](../../ECCV2024/object_detection/be_yourself_bounded_attention_for_multi-subject_text-to-image_generation.md)
-- [DiffVsgg: Diffusion-Driven Online Video Scene Graph Generation](diffvsgg_diffusion-driven_online_video_scene_graph_generation.md)
 
 <!-- RELATED:END -->

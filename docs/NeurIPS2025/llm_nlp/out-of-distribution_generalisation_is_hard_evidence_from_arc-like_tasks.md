@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Out-of-distribution Generalisation is Hard: Evidence from ARC-like Tasks
 description: >-
@@ -145,7 +145,7 @@ tags:
 - [Adaptive Multi-prompt Contrastive Network for Few-shot Out-of-distribution Detection](../../ICML2025/llm_nlp/adaptive_multi-prompt_contrastive_network_for_few-shot_out-of-distribution_detec.md)
 - [Zero-Shot Belief: A Hard Problem for LLMs](../../ACL2025/llm_nlp/zero-shot_belief_a_hard_problem_for_llms.md)
 - [Product of Experts with LLMs: Boosting Performance on ARC Is a Matter of Perspective](../../ICML2025/llm_nlp/product_of_experts_with_llms_boosting_performance_on_arc_is_a_matter_of_perspect.md)
-- [SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence](../../ACL2025/llm_nlp/selfelicit_evidence_highlighting.md)
 - [HumT DumT: Measuring and Controlling Human-like Language in LLMs](../../ACL2025/llm_nlp/humt_dumt_measuring_and_controlling_human-like_language_in_llms.md)
+- [LLM Braces: Straightening Out LLM Predictions with Relevant Sub-Updates](../../ACL2025/llm_nlp/llm_braces_straightening.md)
 
 <!-- RELATED:END -->

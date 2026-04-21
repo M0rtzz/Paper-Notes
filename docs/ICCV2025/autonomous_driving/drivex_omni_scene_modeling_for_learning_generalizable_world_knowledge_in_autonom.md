@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DriveX: Omni Scene Modeling for Learning Generalizable World Knowledge in Autonomous Driving
 description: >-

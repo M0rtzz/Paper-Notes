@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MMPerspective: Do MLLMs Understand Perspective? A Comprehensive Benchmark for Perspective Perception, Reasoning, and Robustness
 description: >-

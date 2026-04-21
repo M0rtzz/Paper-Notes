@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GeometrySticker: Enabling Ownership Claim of Recolorized Neural Radiance Fields
 description: >-

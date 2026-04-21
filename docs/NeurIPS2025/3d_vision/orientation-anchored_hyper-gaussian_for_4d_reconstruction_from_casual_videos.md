@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Orientation-anchored Hyper-Gaussian for 4D Reconstruction from Casual Videos
 description: >-
@@ -148,9 +148,9 @@ OriGS 包含两个核心模块：
 
 ## 相关论文
 
+- [MoSca: Dynamic Gaussian Fusion from Casual Videos via 4D Motion Scaffolds](../../CVPR2025/3d_vision/mosca_dynamic_gaussian_fusion_from_casual_videos_via_4d_motion_scaffolds.md)
 - [Flux4D: Flow-based Unsupervised 4D Reconstruction](flux4d_flow-based_unsupervised_4d_reconstruction.md)
 - [Orientation Matters: Making 3D Generative Models Orientation-Aligned](orientation_matters_making_3d_generative_models_orientation-aligned.md)
-- [MoSca: Dynamic Gaussian Fusion from Casual Videos via 4D Motion Scaffolds](../../CVPR2025/3d_vision/mosca_dynamic_gaussian_fusion_from_casual_videos_via_4d_motion_scaffolds.md)
 - [LongSplat: Robust Unposed 3D Gaussian Splatting for Casual Long Videos](../../ICCV2025/3d_vision/longsplat_robust_unposed_3d_gaussian_splatting_for_casual_long_videos.md)
 - [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
 

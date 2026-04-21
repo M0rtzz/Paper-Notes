@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Guidelines for Fine-grained Sentence-level Arabic Readability Annotation
 description: >-

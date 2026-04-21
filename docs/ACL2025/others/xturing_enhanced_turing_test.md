@@ -158,7 +158,7 @@ $$\text{Pass Rate} = 1 - \frac{1}{N} \sum_{i=1}^{N} \left(\frac{C_i}{K}\right)$$
 - [SHARE: Shared Memory-Aware Open-Domain Long-Term Dialogue Dataset Constructed from Movie Script](share_shared_memory-aware_open-domain_long-term_dialogue_dataset_constructed_fro.md)
 - [Effortless Active Labeling for Long-Term Test-Time Adaptation](../../CVPR2025/others/effortless_active_labeling_for_long-term_test-time_adaptation.md)
 - [Substance over Style: Evaluating Proactive Conversational Coaching Agents](proactive_conversational_coaching.md)
-- [DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
 - [Follow-up Question Generation for Enhanced Patient-Provider Conversations](follow-up_question_generation_for_enhanced_patient-provider_conversations.md)
+- [DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
 
 <!-- RELATED:END -->

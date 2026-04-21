@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] I0T: Embedding Standardization Method Towards Zero Modality Gap
 description: >-

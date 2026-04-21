@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Interpreting Object-level Foundation Models via Visual Precision Search
 description: >-

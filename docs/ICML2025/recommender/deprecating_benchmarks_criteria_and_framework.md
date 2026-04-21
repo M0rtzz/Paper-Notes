@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Deprecating Benchmarks: Criteria and Framework
 description: >-
@@ -189,8 +189,8 @@ tags:
 
 - [Measuring What Matters: Construct Validity in Large Language Model Benchmarks](../../NeurIPS2025/recommender/measuring_what_matters_construct_validity_in_large_language_model_benchmarks.md)
 - [Evaluating LLMs for Police Decision-Making: A Framework Based on Police Action Scenarios](../../AAAI2026/recommender/evaluating_llms_for_police_decision-making_a_framework_based_on_police_action_sc.md)
+- [Recommendations and Reporting Checklist for Rigorous & Transparent Human Baselines in Model Evaluations](recommendations_and_reporting_checklist_for_rigorous_transparent_human_baselines.md)
+- [Position: The Right to AI](the_right_to_ai.md)
 - [MATCHA: Toward Safe and Human-Aligned Game Conversational Recommendation via Multi-Agent Decomposition](toward_safe_and_human-aligned_game_conversational_recommendation_via_multi-agent.md)
-- [ELMO: Efficiency via Low-precision and Peak Memory Optimization in Large Output Spaces](elmo_efficiency_via_low-precision_and_peak_memory_optimization_in_large_output_s.md)
-- [New Interaction Paradigm for Complex EDA Software Leveraging GPT](new_interaction_paradigm_for_complex_eda_software_leveraging_gpt.md)
 
 <!-- RELATED:END -->

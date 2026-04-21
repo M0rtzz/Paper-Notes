@@ -1,11 +1,10 @@
 ---
-title: "Multi-party Collaborative Attention Control for Image Customization"
-conference: "CVPR 2025"
-arxiv: "2505.01428"
-arxiv_url: "https://arxiv.org/abs/2505.01428"
-code: "https://github.com/yanghan-yh/MCA-Ctrl"
-domain: "image_generation"
-keywords: ["image customization", "attention control", "diffusion model", "subject-driven generation", "tuning-free"]
+title: >-
+  [论文解读] Multi-party Collaborative Attention Control for Image Customization
+description: >-
+  [图像生成] 提出 MCA-Ctrl，一种无需微调的图像定制方法，通过三路并行扩散过程中的自注意力协同控制（SAGI + SALQ），实现文本/图像条件下的高质量 subject 编辑与生成，并用 Subject Localization Module 解决复杂场景中的主体泄漏和混淆问题。
+tags:
+  - 图像生成
 ---
 
 # Multi-party Collaborative Attention Control for Image Customization
@@ -273,10 +272,10 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{t,\epsilon} \| \epsilon_t - \epsilon_\theta(
 
 ## 相关论文
 
-- [Generating Multi-Image Synthetic Data for Text-to-Image Customization](../../ICCV2025/image_generation/generating_multi-image_synthetic_data_for_text-to-image_customization.md)
-- [Collaborative Control for Geometry-Conditioned PBR Image Generation](../../ECCV2024/image_generation/collaborative_control_for_geometry-conditioned_pbr_image_generation.md)
-- [Multitwine: Multi-Object Compositing with Text and Layout Control](multitwine_multi-object_compositing_with_text_and_layout_control.md)
-- [OmniVCus: Feedforward Subject-driven Video Customization with Multimodal Control Conditions](../../NeurIPS2025/image_generation/omnivcus_feedforward_subject-driven_video_customization_with_multimodal_control_.md)
-- [M2SFormer: Multi-Spectral and Multi-Scale Attention with Edge-Aware Difficulty Guidance for Image Forgery Localization](../../ICCV2025/image_generation/m2sformer_multi-spectral_and_multi-scale_attention_with_edge-aware_difficulty_gu.md)
+- [EDiT: Efficient Diffusion Transformers with Linear Compressed Attention](../../ICCV2025/image_generation/edit_efficient_diffusion_transformers_with_linear_compressed_attention.md)
+- [OminiControl: Minimal and Universal Control for Diffusion Transformer](../../ICCV2025/image_generation/ominicontrol_minimal_and_universal_control_for_diffusion_transformer.md)
+- [DynamicID: Zero-Shot Multi-ID Image Personalization with Flexible Facial Editability](../../ICCV2025/image_generation/dynamicid_zero-shot_multi-id_image_personalization_with_flexible_facial_editabil.md)
+- [Dual Diffusion for Unified Image Generation and Understanding](dual_diffusion_for_unified_image_generation_and_understanding.md)
+- [Dual Prompting Image Restoration with Diffusion Transformers (DPIR)](dual_prompting_image_restoration_with_diffusion_transformers.md)
 
 <!-- RELATED:END -->

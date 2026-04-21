@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Intractable Multimodal Policies with Reparameterization and Diversity Regularization
 description: >-

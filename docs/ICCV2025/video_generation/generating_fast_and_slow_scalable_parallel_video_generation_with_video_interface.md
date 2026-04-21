@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] Generating, Fast and Slow: Scalable Parallel Video Generation with Video Interface Networks
 description: >-
-  [ICCV 2025][视频理解][视频生成] 提出 Video Interface Networks (VINs)，一种类似"快思考"的抽象模块，在每个扩散步中将长视频编码为固定大小的全局 token，引导 DiT 并行生成多个视频 chunk，实现高效且时序一致的长视频生成。
+  [ICCV 2025][视频生成] 提出 Video Interface Networks (VINs)，一种类似"快思考"的抽象模块，在每个扩散步中将长视频编码为固定大小的全局 token，引导 DiT 并行生成多个视频 chunk，实现高效且时序一致的长视频生成。
 tags:
   - ICCV 2025
-  - 视频理解
   - 视频生成
   - Transformer
   - 并行推理
@@ -139,7 +138,7 @@ tags:
 - [STiV: Scalable Text and Image Conditioned Video Generation](stiv_scalable_text_and_image_conditioned_video_generation.md)
 - [From Slow Bidirectional to Fast Autoregressive Video Diffusion Models](../../CVPR2025/video_generation/from_slow_bidirectional_to_fast_autoregressive_video_diffusion_models.md)
 - [VACE: All-in-One Video Creation and Editing](vace_all-in-one_video_creation_and_editing.md)
-- [WorldScore: A Unified Evaluation Benchmark for World Generation](worldscore_a_unified_evaluation_benchmark_for_world_generation.md)
-- [ReCamMaster: Camera-Controlled Generative Rendering from A Single Video](recammaster_camera-controlled_generative_rendering_from_a_single_video.md)
+- [One-Minute Video Generation with Test-Time Training](../../CVPR2025/video_generation/one-minute_video_generation_with_test-time_training.md)
+- [X-Dancer: Expressive Music to Human Dance Video Generation](x-dancer_expressive_music_to_human_dance_video_generation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bayesian Attention Mechanism: A Probabilistic Framework for Positional Encoding and Context Length Extrapolation
 description: >-

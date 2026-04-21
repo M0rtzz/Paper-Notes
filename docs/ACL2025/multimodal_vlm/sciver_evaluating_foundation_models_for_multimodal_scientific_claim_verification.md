@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SciVer: Evaluating Foundation Models for Multimodal Scientific Claim Verification
 description: >-

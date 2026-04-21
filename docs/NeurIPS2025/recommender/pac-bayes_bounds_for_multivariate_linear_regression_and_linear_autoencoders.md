@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PAC-Bayes Bounds for Multivariate Linear Regression and Linear Autoencoders
 description: >-
@@ -209,9 +209,9 @@ $$R^{true}(W) = \|W\Sigma_{xx}^{1/2} - \Sigma_{xy}^T\Sigma_{xx}^{-1/2}\|_F^2 - \
 ## 相关论文
 
 - [Generalization Bounds for Semi-supervised Matrix Completion with Distributional Side Information](../../AAAI2026/recommender/generalization_bounds_for_semi-supervised_matrix_completion_with_distributional_.md)
-- [Who You Are Matters: Bridging Topics and Social Roles via LLM-Enhanced Logical Recommendation](who_you_are_matters_bridging_topics_and_social_roles_via_llm-enhanced_logical_re.md)
 - [R²ec: Towards Large Recommender Models with Reasoning](r2ec_towards_large_recommender_models_with_reasoning.md)
-- [Wide-Horizon Thinking and Simulation-Based Evaluation for Real-World LLM Planning with Multifaceted Constraints](wide-horizon_thinking_and_simulation-based_evaluation_for_real-world_llm_plannin.md)
-- [Overcoming Sparsity Artifacts in Crosscoders to Interpret Chat-Tuning](overcoming_sparsity_artifacts_in_crosscoders_to_interpret_chat-tuning.md)
+- [Who You Are Matters: Bridging Topics and Social Roles via LLM-Enhanced Logical Recommendation](who_you_are_matters_bridging_topics_and_social_roles_via_llm-enhanced_logical_re.md)
+- [Inference-Time Reward Hacking in Large Language Models](inference-time_reward_hacking_in_large_language_models.md)
+- [Transformer Copilot: Learning from The Mistake Log in LLM Fine-tuning](transformer_copilot_learning_from_the_mistake_log_in_llm_fine-tuning.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TSPO: Temporal Sampling Policy Optimization for Long-form Video Language Understanding
 description: >-

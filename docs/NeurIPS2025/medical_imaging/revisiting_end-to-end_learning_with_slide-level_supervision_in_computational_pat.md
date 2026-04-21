@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Revisiting End-to-End Learning with Slide-level Supervision in Computational Pathology
 description: >-
@@ -155,8 +155,8 @@ $$\{\hat{\theta}, \hat{\phi}, \hat{\eta}\} \leftarrow \arg\min_{\theta, \phi, \e
 
 - [UniSite: The First Cross-Structure Dataset and Learning Framework for End-to-End Ligand Binding Site Detection](unisite_the_first_cross-structure_dataset_and_learning_framework_for_end-to-end_.md)
 - [Protriever: End-to-End Differentiable Protein Homology Search for Fitness Prediction](../../ICML2025/medical_imaging/protriever_end-to-end_differentiable_protein_homology_search_for_fitness_predict.md)
+- [Unsupervised Foundation Model-Agnostic Slide-Level Representation Learning](../../CVPR2025/medical_imaging/unsupervised_foundation_model-agnostic_slide-level_representation_learning.md)
 - [Momentum Memory for Knowledge Distillation in Computational Pathology](../../CVPR2026/medical_imaging/momentum_memory_for_knowledge_distillation_in_computational_pathology.md)
 - [Learning Relative Gene Expression Trends from Pathology Images in Spatial Transcriptomics](learning_relative_gene_expression_trends_from_pathology_images_in_spatial_transc.md)
-- [A protocol for evaluating robustness to H&E staining variation in computational pathology models](../../CVPR2026/medical_imaging/a_protocol_for_evaluating_robustness_to_he_stainin.md)
 
 <!-- RELATED:END -->

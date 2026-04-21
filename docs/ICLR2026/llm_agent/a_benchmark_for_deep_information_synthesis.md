@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Benchmark for Deep Information Synthesis (DeepSynth)
 description: >-

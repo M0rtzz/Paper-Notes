@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking
 description: >-
@@ -175,10 +175,10 @@ FC-Track 是纯推理时的后处理模块，无训练损失。核心度量是�
 
 ## 相关论文
 
+- [OmniTrack: Omnidirectional Multi-Object Tracking](omnidirectional_multi-object_tracking.md)
 - [MITracker: Multi-View Integration for Visual Object Tracking](mitracker_multi-view_integration_for_visual_object_tracking.md)
+- [Locality-Aware Zero-Shot Human-Object Interaction Detection](locality-aware_zero-shot_human-object_interaction_detection.md)
 - [MUST: The First Dataset and Unified Framework for Multispectral UAV Single Object Tracking](must_the_first_dataset_and_unified_framework_for_multispectral_uav_single_object.md)
 - [HierarQ: Task-Aware Hierarchical Q-Former for Enhanced Video Understanding](hierarq_task-aware_hierarchical_q-former_for_enhanced_video_understanding.md)
-- [Context-Enhanced Memory-Refined Transformer for Online Action Detection](context-enhanced_memory-refined_transformer_for_online_action_detection.md)
-- [EgoTextVQA: Towards Egocentric Scene-Text Aware Video Question Answering](egotextvqa_towards_egocentric_scene-text_aware_video_question_answering.md)
 
 <!-- RELATED:END -->

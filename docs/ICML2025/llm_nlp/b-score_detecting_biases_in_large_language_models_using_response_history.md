@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] B-score: Detecting biases in large language models using response history
 description: >-

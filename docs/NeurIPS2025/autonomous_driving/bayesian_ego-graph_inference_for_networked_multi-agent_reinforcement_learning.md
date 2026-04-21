@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BayesG: Bayesian Ego-Graph Inference for Networked Multi-Agent Reinforcement Learning
 description: >-
@@ -107,6 +107,6 @@ agent $i$ 的策略条件化于采样的子图：$\pi_i(u_i, G_{\mathcal{V}_i} |
 - [Causality Meets Locality: Provably Generalizable and Scalable Policy Learning for Networked Systems](causality_meets_locality_provably_generalizable_and_scalable_policy_learning_for.md)
 - [GoIRL: Graph-Oriented Inverse Reinforcement Learning for Multimodal Trajectory Prediction](../../ICML2025/autonomous_driving/goirl_graph-oriented_inverse_reinforcement_learning_for_multimodal_trajectory_pr.md)
 - [Self-Supervised Learning of Graph Representations for Network Intrusion Detection](self-supervised_learning_of_graph_representations_for_network_intrusion_detectio.md)
-- [Regret Lower Bounds for Decentralized Multi-Agent Stochastic Shortest Path Problems](regret_lower_bounds_for_decentralized_multi-agent_stochastic_shortest_path_probl.md)
+- [RAW2Drive: Reinforcement Learning with Aligned World Models for End-to-End Autonomous Driving](raw2drive_reinforcement_learning_with_aligned_world_models_for_end-to-end_autono.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Text-Only Training for Image Captioning with Retrieval Augmentation and Modality Gap Correction
 description: >-

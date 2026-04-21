@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Movement to Cognitive Maps: RNNs Reveal How Locomotor Development Shapes Hippocampal Spatial Coding
 description: >-

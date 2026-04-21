@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Flow4Agent: Long-form Video Understanding via Motion Prior from Optical Flow
 description: >-
@@ -149,7 +149,7 @@ Sea-RAFT (4 iter TGO / 12 iter MTP) 达到最优，比 NeuFlow 和 StreamFlow �
 
 ## 相关论文
 
-- [PriOr-Flow: Enhancing Primitive Panoramic Optical Flow with Orthogonal View](prior-flow_enhancing_primitive_panoramic_optical_flow_with_orthogonal_view.md)
+- [PriOr-Flow: Enhancing Primitive Panoramic Optical Flow with Orthogonal View](prior-flow_enhancing_primitive_panoramic_optical_flow_with_o.md)
 - [FlowSeek: Optical Flow Made Easier with Depth Foundation Models and Motion Bases](flowseek_optical_flow_made_easier_with_depth_foundation_models_and_motion_bases.md)
 - [HERMES: temporal-coHERent long-forM understanding with Episodes and Semantics](hermes_temporal-coherent_long-form_understanding_with_episodes_and_semantics.md)
 - [Unsupervised Joint Learning of Optical Flow and Intensity with Event Cameras](unsupervised_joint_learning_of_optical_flow_and_intensity_with_event_cameras.md)

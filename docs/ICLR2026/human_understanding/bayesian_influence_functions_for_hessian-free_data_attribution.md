@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bayesian Influence Functions for Hessian-Free Data Attribution
 description: >-

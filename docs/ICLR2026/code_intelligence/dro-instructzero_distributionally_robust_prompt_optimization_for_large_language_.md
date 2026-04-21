@@ -150,10 +150,10 @@ $$w_m^* = \arg\min_{w': \|w' - w_{\text{ref}}\|_\mathcal{M} \leq \epsilon(m)} \l
 
 ## 相关论文
 
-- [Training Large Language Models To Reason In Parallel With Global Forking Tokens](training_large_language_models_to_reason_in_parallel_with_global_forking_tokens.md)
-- [Personality-Guided Code Generation Using Large Language Models](../../ACL2025/code_intelligence/personality_guided_code_gen.md)
-- [SPAN: Benchmarking and Improving Cross-Calendar Temporal Reasoning of Large Language Models](../../AAAI2026/code_intelligence/span_benchmarking_and_improving_cross-calendar_temporal_reasoning_of_large_langu.md)
+- [Sharing State Between Prompts and Programs](sharing_state_between_prompts_and_programs.md)
 - [ShieldedCode: Learning Robust Representations for Virtual Machine Protected Code](shieldedcode_learning_robust_representations_for_virtual_machine_protected_code.md)
-- [CodeReviewQA: The Code Review Comprehension Assessment for Large Language Models](../../ACL2025/code_intelligence/codereviewqa_the_code_review_comprehension_assessment_for_large_language_models.md)
+- [Training Large Language Models To Reason In Parallel With Global Forking Tokens](training_large_language_models_to_reason_in_parallel_with_global_forking_tokens.md)
+- [InnoGym: Benchmarking the Innovation Potential of AI Agents](innogym_benchmarking_the_innovation_potential_of_ai_agents.md)
+- [Improving Code Localization with Repository Memory](improving_code_localization_with_repository_memory.md)
 
 <!-- RELATED:END -->

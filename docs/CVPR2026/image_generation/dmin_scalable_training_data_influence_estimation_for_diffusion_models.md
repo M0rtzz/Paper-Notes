@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DMin: Scalable Training Data Influence Estimation for Diffusion Models
 description: >-

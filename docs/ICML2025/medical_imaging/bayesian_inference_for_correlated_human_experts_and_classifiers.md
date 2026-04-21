@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bayesian Inference for Correlated Human Experts and Classifiers
 description: >-
@@ -153,7 +153,7 @@ tags:
 - [I2MoE: Interpretable Multimodal Interaction-aware Mixture-of-Experts](i2moe_interpretable_multimodal_interaction-aware_mixture-of-experts.md)
 - [Empower Structure-Based Molecule Optimization with Gradient Guided Bayesian Flow Networks](empower_structure-based_molecule_optimization_with_gradient_guided_bayesian_flow.md)
 - [Enhancing Statistical Validity and Power in Hybrid Controlled Trials: A Randomization Inference Approach with Conformal Selective Borrowing](enhancing_statistical_validity_and_power_in_hybrid_controlled_trials_a_randomiza.md)
-- [Is Sequence Information All You Need for Bayesian Optimization of Antibodies?](../../NeurIPS2025/medical_imaging/is_sequence_information_all_you_need_for_bayesian_optimization_of_antibodies.md)
 - [Multimodal Bayesian Network for Robust Assessment of Casualties in Autonomous Triage](../../NeurIPS2025/medical_imaging/multimodal_bayesian_network_for_robust_assessment_of_casualties_in_autonomous_tr.md)
+- [Is Sequence Information All You Need for Bayesian Optimization of Antibodies?](../../NeurIPS2025/medical_imaging/is_sequence_information_all_you_need_for_bayesian_optimization_of_antibodies.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LiveHPS++: Robust and Coherent Motion Capture in Dynamic Free Environment
 description: >-

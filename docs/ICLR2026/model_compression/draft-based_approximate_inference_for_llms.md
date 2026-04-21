@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Draft-based Approximate Inference for LLMs
 description: >-
@@ -124,6 +124,6 @@ Draft-based Approximate Inference 是一个统一框架：先用小型 draft 模
 - [IAM: Efficient Inference through Attention Mapping between Different-scale LLMs](../../ACL2025/model_compression/iam_efficient_inference_through_attention_mapping_between_different-scale_llms.md)
 - [Universal Cross-Tokenizer Distillation via Approximate Likelihood Matching](../../NeurIPS2025/model_compression/universal_cross-tokenizer_distillation_via_approximate_likelihood_matching.md)
 - [Steering MoE LLMs via Expert (De)Activation](steering_moe_llms_via_expert_deactivation.md)
-- [Highly Efficient and Effective LLMs with Multi-Boolean Architectures](highly_efficient_and_effective_llms_with_multi-boolean_architectures.md)
+- [ParoQuant: Pairwise Rotation Quantization for Efficient Reasoning LLM Inference](paroquant_pairwise_rotation_quantization_for_efficient_reasoning_llm_inference.md)
 
 <!-- RELATED:END -->

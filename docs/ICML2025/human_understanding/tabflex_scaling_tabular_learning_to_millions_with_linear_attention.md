@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TabFlex: Scaling Tabular Learning to Millions with Linear Attention
 description: >-
@@ -135,6 +135,6 @@ poker-hand (100 万+ 样本) 上，TabFlex 仅用 **4.88 秒**完成分类，第
 - [SpecAttn: Speculating Sparse Attention](../../NeurIPS2025/human_understanding/specattn_speculating_sparse_attention.md)
 - [FW-Merging: Scaling Model Merging with Frank-Wolfe Optimization](../../ICCV2025/human_understanding/fw-merging_scaling_model_merging_with_frank-wolfe_optimization.md)
 - [STRIDE: Subset-Free Functional Decomposition for XAI in Tabular Settings](../../ICLR2026/human_understanding/stride_subset-free_functional_decomposition_for_xai_in_tabular_settings.md)
-- [CarGait: Cross-Attention based Re-ranking for Gait Recognition](../../ICCV2025/human_understanding/cargait_cross-attention_based_re-ranking_for_gait_recognition.md)
+- [A Simple Linear Patch Revives Layer-Pruned Large Language Models](../../NeurIPS2025/human_understanding/a_simple_linear_patch_revives_layerpruned_large_language_mod.md)
 
 <!-- RELATED:END -->

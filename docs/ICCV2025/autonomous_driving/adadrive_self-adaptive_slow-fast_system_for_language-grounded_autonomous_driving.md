@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdaDrive: Self-Adaptive Slow-Fast System for Language-Grounded Autonomous Driving
 description: >-

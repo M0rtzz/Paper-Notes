@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 6DOPE-GS: Online 6D Object Pose Estimation using Gaussian Splatting
 description: >-

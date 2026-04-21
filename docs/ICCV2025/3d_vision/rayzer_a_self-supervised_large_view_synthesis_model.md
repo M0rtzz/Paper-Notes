@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RayZer: A Self-supervised Large View Synthesis Model
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Set of Generalized Components to Achieve Effective Poison-only Clean-label Backdoor Attacks with Collaborative Sample Selection and Triggers
 description: >-

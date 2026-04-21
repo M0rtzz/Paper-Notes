@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VTinker: Guided Flow Upsampling and Texture Mapping for High-Resolution Video Frame Interpolation
 description: >-
@@ -130,9 +130,9 @@ tags:
 ## 相关论文
 
 - [MEMFOF: High-Resolution Training for Memory-Efficient Multi-Frame Optical Flow Estimation](../../ICCV2025/video_understanding/memfof_high-resolution_training_for_memory-efficient_multi-frame_optical_flow_es.md)
+- [VISTA: Enhancing Long-Duration and High-Resolution Video Understanding by Video SpatioTemporal Augmentation](../../CVPR2025/video_understanding/vista_enhancing_long-duration_and_high-resolution_video_understanding_by_video_s.md)
 - [IAM-VFI: Interpolate Any Motion for Video Frame Interpolation with Motion Complexity Map](../../ECCV2024/video_understanding/iam-vfi_interpolate_any_motion_for_video_frame_interpolation_with_motion_complex.md)
 - [Q-Frame: Query-aware Frame Selection and Multi-Resolution Adaptation for Video-LLMs](../../ICCV2025/video_understanding/q-frame_query-aware_frame_selection_and_multi-resolution_adaptation_for_video-ll.md)
 - [AllTracker: Efficient Dense Point Tracking at High Resolution](../../ICCV2025/video_understanding/alltracker_efficient_dense_point_tracking_at_high_resolution.md)
-- [UniINR: Event-guided Unified Rolling Shutter Correction, Deblurring, and Interpolation](../../ECCV2024/video_understanding/uniinr_event-guided_unified_rolling_shutter_correction_deblurring_and_interpolat.md)
 
 <!-- RELATED:END -->

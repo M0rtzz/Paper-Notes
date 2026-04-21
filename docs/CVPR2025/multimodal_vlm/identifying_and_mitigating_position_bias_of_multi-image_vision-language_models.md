@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Identifying and Mitigating Position Bias of Multi-image Vision-Language Models
 description: >-
@@ -126,6 +126,6 @@ SoFA是**无训练方法**，不涉及任何参数更新。超参数 $\sigma$ �
 - [HoPE: Hybrid of Position Embedding for Long Context Vision-Language Models](../../NeurIPS2025/multimodal_vlm/hope_hybrid_of_position_embedding_for_long_context_visionlan.md)
 - [Data Distributional Properties as Inductive Bias for Systematic Generalization](data_distributional_properties_as_inductive_bias_for_systematic_generalization.md)
 - [MMRL: Multi-Modal Representation Learning for Vision-Language Models](mmrl_multi-modal_representation_learning_for_vision-language_models.md)
-- [PinPoint: Focus, Don't Prune — Identifying Instruction-Relevant Regions for Information-Rich Image Understanding](../../CVPR2026/multimodal_vlm/focus_dont_prune_identifying_instruction-relevant_regions_for_information-rich_i.md)
+- [SAGE: Spuriousness-Aware Guided Prompt Exploration for Mitigating Multimodal Bias](../../AAAI2026/multimodal_vlm/sage_spuriousness-aware_guided_prompt_exploration_for_mitigating_multimodal_bias.md)
 
 <!-- RELATED:END -->

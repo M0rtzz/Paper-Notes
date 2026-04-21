@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SERUM: Simple, Efficient, Robust, and Unifying Marking for Diffusion-based Image Generation
 description: >-
@@ -106,9 +106,9 @@ tags:
 ## 相关论文
 
 - [Diverse Text-to-Image Generation via Contrastive Noise Optimization](diverse_text-to-image_generation_via_contrastive_noise_optimization.md)
-- [Adaptive Auxiliary Prompt Blending for Target-Faithful Diffusion Generation](../../CVPR2026/object_detection/adaptive_auxiliary_prompt_blending_for_target-faithful_diffusion_generation.md)
-- [Toward Faithful Retrieval-Augmented Generation with Sparse Autoencoders](toward_faithful_retrieval-augmented_generation_with_sparse_autoencoders.md)
-- [Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](../../CVPR2025/object_detection/generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)
 - [MCCD: Multi-Agent Collaboration-based Compositional Diffusion for Complex Text-to-Image Generation](../../CVPR2025/object_detection/mccd_multi-agent_collaboration-based_compositional_diffusion_for_complex_text-to.md)
+- [Adaptive Auxiliary Prompt Blending for Target-Faithful Diffusion Generation](../../CVPR2026/object_detection/adaptive_auxiliary_prompt_blending_for_target-faithful_diffusion_generation.md)
+- [Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](../../CVPR2025/object_detection/generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)
+- [Toward Faithful Retrieval-Augmented Generation with Sparse Autoencoders](toward_faithful_retrieval-augmented_generation_with_sparse_autoencoders.md)
 
 <!-- RELATED:END -->

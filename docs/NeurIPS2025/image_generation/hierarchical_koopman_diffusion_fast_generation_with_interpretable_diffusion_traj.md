@@ -246,8 +246,8 @@ $$\hat{\boldsymbol{x}}_\epsilon = \mathcal{D}_\phi(\{e^{(\epsilon - T)\boldsymbo
 
 - [Emergence and Evolution of Interpretable Concepts in Diffusion Models](emergence_and_evolution_of_interpretable_concepts_in_diffusi.md)
 - [State-Covering Trajectory Stitching for Diffusion Planners](state-covering_trajectory_stitching_for_diffusion_planners.md)
-- [KLASS: KL-Guided Fast Inference in Masked Diffusion Models](klass_kl-guided_fast_inference_in_masked_diffusion_models.md)
 - [Next Semantic Scale Prediction via Hierarchical Diffusion Language Models](next_semantic_scale_prediction_via_hierarchical_diffusion_language_models.md)
+- [KLASS: KL-Guided Fast Inference in Masked Diffusion Models](klass_kl-guided_fast_inference_in_masked_diffusion_models.md)
 - [Fast Solvers for Discrete Diffusion Models: Theory and Applications of High-Order Algorithms](fast_solvers_for_discrete_diffusion_models_theory_and_applications_of_high-order.md)
 
 <!-- RELATED:END -->

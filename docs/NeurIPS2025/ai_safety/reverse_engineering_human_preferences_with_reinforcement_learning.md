@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reverse Engineering Human Preferences with Reinforcement Learning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Strategic Fusion Optimizes Transformer Compression
 description: >-
@@ -191,8 +191,8 @@ tags:
 
 - [Context Guided Transformer Entropy Modeling for Video Compression](../../ICCV2025/model_compression/context_guided_transformer_entropy_modeling_for_video_compression.md)
 - [DLF: Extreme Image Compression with Dual-generative Latent Fusion](../../ICCV2025/model_compression/dlf_extreme_image_compression_with_dual-generative_latent_fusion.md)
-- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
 - [Text-to-LoRA: Instant Transformer Adaption](text-to-lora_instant_transformer_adaption.md)
 - [BHViT: Binarized Hybrid Vision Transformer](../../CVPR2025/model_compression/bhvit_binarized_hybrid_vision_transformer.md)
+- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
 
 <!-- RELATED:END -->

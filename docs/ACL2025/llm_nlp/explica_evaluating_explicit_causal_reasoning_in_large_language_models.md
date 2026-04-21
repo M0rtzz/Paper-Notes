@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ExpliCa: Evaluating Explicit Causal Reasoning in Large Language Models
 description: >-
@@ -122,9 +122,9 @@ tags:
 ## 相关论文
 
 - [SocialEval: Evaluating Social Intelligence of Large Language Models](socialeval_evaluating_social_intelligence_of_large_language_models.md)
-- [STEM-PoM: Evaluating Language Models Math-Symbol Reasoning in Document Parsing](stem-pom_evaluating_language_models_math-symbol_reasoning_in_document_parsing.md)
 - [Evaluating Language Models as Synthetic Data Generators](evaluating_lms_synthetic_data_gen.md)
-- [Disentangling Memory and Reasoning Ability in Large Language Models](disentangle_memory_reasoning.md)
+- [STEM-PoM: Evaluating Language Models Math-Symbol Reasoning in Document Parsing](stem-pom_evaluating_language_models_math-symbol_reasoning_in_document_parsing.md)
 - [The Role of Deductive and Inductive Reasoning in Large Language Models](the_role_of_deductive_and_inductive_reasoning_in_large_language_models.md)
+- [Disentangling Memory and Reasoning Ability in Large Language Models](disentangle_memory_reasoning.md)
 
 <!-- RELATED:END -->

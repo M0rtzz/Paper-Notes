@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Addressing Data Scarcity in 3D Trauma Detection through Self-Supervised and Semi-Supervised Learning with Vertex Relative Position Encoding
 description: >-

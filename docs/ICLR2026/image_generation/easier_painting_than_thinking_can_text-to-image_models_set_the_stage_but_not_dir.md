@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Easier Painting Than Thinking: Can Text-to-Image Models Set the Stage, but Not Direct the Play?
 description: >-

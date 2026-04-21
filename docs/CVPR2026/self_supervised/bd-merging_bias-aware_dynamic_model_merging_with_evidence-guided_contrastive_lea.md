@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BD-Merging: Bias-Aware Dynamic Model Merging with Evidence-Guided Contrastive Learning
 description: >-
@@ -159,10 +159,10 @@ BD-Merging 同时提升已见和未见任务的准确率，泛化-专化平衡�
 
 ## 相关论文
 
-- [AcTTA: Rethinking Test-Time Adaptation via Dynamic Activation](actta_rethinking_test-time_adaptation_via_dynamic_activation.md)
 - [Uncertainty-Guided Model Selection for Tabular Foundation Models in Biomolecule Efficacy Prediction](../../NeurIPS2025/self_supervised/uncertainty-guided_model_selection_for_tabular_foundation_models_in_biomolecule_.md)
 - [What Has a Foundation Model Found? Using Inductive Bias to Probe for World Models](../../ICML2025/self_supervised/what_has_a_foundation_model_found_using_inductive_bias_to_probe_for_world_models.md)
 - [SEAL: Semantic-Aware Hierarchical Learning for Generalized Category Discovery](../../NeurIPS2025/self_supervised/seal_semantic-aware_hierarchical_learning_for_generalized_category_discovery.md)
 - [MOMO: Mars Orbital Model — Foundation Model for Mars Orbital Applications](momo_mars_orbital_model_foundation_model_for_mars_orbital_applications.md)
+- [Maximizing Incremental Information Entropy for Contrastive Learning](../../ICLR2026/self_supervised/maximizing_incremental_information_entropy_for_contrastive_learning.md)
 
 <!-- RELATED:END -->

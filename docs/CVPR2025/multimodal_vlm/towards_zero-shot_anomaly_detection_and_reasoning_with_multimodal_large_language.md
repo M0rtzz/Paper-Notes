@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Zero-Shot Anomaly Detection and Reasoning with Multimodal Large Language Models
 description: >-
@@ -116,8 +116,8 @@ Stage 1：异常专家用二分类 + 显著性图损失训练。Stage 2：冻结
 
 - [No Need For Real Anomaly: MLLM Empowered Zero-Shot Video Anomaly Detection](../../CVPR2026/multimodal_vlm/no_need_for_real_anomaly_mllm_empowered_zero-shot_video_anomaly_detection.md)
 - [AnomalyVFM -- Transforming Vision Foundation Models into Zero-Shot Anomaly Detectors](../../CVPR2026/multimodal_vlm/anomalyvfm_--_transforming_vision_foundation_models_into_zero-shot_anomaly_detec.md)
+- [Visual and Semantic Prompt Collaboration for Generalized Zero-Shot Learning](visual_and_semantic_prompt_collaboration_for_generalized_zero-shot_learning.md)
 - [Insight-V: Exploring Long-Chain Visual Reasoning with Multimodal Large Language Models](insight-v_exploring_long-chain_visual_reasoning_with_multimodal_large_language_m.md)
 - [MoniTor: Exploiting Large Language Models with Instruction for Online Video Anomaly Detection](../../NeurIPS2025/multimodal_vlm/monitor_exploiting_large_language_models_with_instruction_for_online_video_anoma.md)
-- [SeqAfford: Sequential 3D Affordance Reasoning via Multimodal Large Language Model](seqafford_sequential_3d_affordance_reasoning_via_multimodal_large_language_model.md)
 
 <!-- RELATED:END -->

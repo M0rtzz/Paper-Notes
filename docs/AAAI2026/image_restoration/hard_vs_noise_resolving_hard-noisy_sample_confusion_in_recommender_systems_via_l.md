@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hard vs. Noise: Resolving Hard-Noisy Sample Confusion in Recommender Systems via Large Language Models
 description: >-
@@ -132,8 +132,8 @@ LLMHNI 包含两个核心模块：
 
 - [Large Language Models Meet Extreme Multi-label Classification: Scaling and Multi-modal Framework](large_language_models_meet_extreme_multi-label_classification_scaling_and_multi-.md)
 - [Activation Steering for Masked Diffusion Language Models](../../ICLR2026/image_restoration/activation_steering_for_masked_diffusion_language_models.md)
-- [Toward Safer Diffusion Language Models: Discovery and Mitigation of Priming Vulnerabilities](../../ICLR2026/image_restoration/toward_safer_diffusion_language_models_discovery_and_mitigation_of_priming_vulne.md)
 - [wd1: Weighted Policy Optimization for Reasoning in Diffusion Language Models](../../ICLR2026/image_restoration/wd1_weighted_policy_optimization_for_reasoning_in_diffusion_language_models.md)
 - [Are Deep Speech Denoising Models Robust to Adversarial Noise?](../../ICLR2026/image_restoration/are_deep_speech_denoising_models_robust_to_adversarial_noise.md)
+- [Rethinking Circuit Completeness in Language Models: AND, OR, and ADDER Gates](../../NeurIPS2025/image_restoration/rethinking_circuit_completeness_in_language_models_and_or_and_adder_gates.md)
 
 <!-- RELATED:END -->

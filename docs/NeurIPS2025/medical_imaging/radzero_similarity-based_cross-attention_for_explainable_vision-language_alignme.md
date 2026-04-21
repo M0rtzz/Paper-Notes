@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RadZero: Similarity-Based Cross-Attention for Explainable Vision-Language Alignment in Chest X-ray
 description: >-
@@ -152,7 +152,7 @@ RadZero 包含三个创新组件：(1) VL-CABS 交叉注意力机制;(2) LLM驱�
 - [GEMeX: A Large-Scale, Groundable, and Explainable Medical VQA Benchmark for Chest X-ray Diagnosis](../../ICCV2025/medical_imaging/gemex_a_large-scale_groundable_and_explainable_medical_vqa_benchmark_for_chest_x.md)
 - [Few-Shot Learning from Gigapixel Images via Hierarchical Vision-Language Alignment and Modeling](few-shot_learning_from_gigapixel_images_via_hierarchical_vision-language_alignme.md)
 - [CXReasonBench: A Benchmark for Evaluating Structured Diagnostic Reasoning in Chest X-rays](cxreasonbench_a_benchmark_for_evaluating_structured_diagnostic_reasoning_in_ches.md)
-- [CheXalign: Preference Fine-tuning in Chest X-ray Interpretation Models without Human Feedback](../../ACL2025/medical_imaging/chexalign_preference_finetuning.md)
 - [Enhanced Contrastive Learning with Multi-view Longitudinal Data for Chest X-ray Report Generation](../../CVPR2025/medical_imaging/enhanced_contrastive_learning_with_multi-view_longitudinal_data_for_chest_x-ray_.md)
+- [CheXalign: Preference Fine-tuning in Chest X-ray Interpretation Models without Human Feedback](../../ACL2025/medical_imaging/chexalign_preference_finetuning.md)
 
 <!-- RELATED:END -->

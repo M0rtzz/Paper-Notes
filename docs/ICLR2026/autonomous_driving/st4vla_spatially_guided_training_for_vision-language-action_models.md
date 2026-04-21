@@ -174,7 +174,7 @@ ST4VLA 在所有 8 个泛化维度全面领先，平均成功率 65% vs GR00T 48
 - [NoRD: A Data-Efficient Vision-Language-Action Model that Drives without Reasoning](../../CVPR2026/autonomous_driving/nord_a_data-efficient_vision-language-action_model_that_drives_without_reasoning.md)
 - [Drive My Way: Preference Alignment of Vision-Language-Action Model for Personalized Driving](../../CVPR2026/autonomous_driving/drive_my_way_preference_alignment_of_vision-language-action_model_for_personaliz.md)
 - [AutoVLA: A Vision-Language-Action Model for End-to-End Autonomous Driving with Adaptive Reasoning and Reinforcement Fine-Tuning](../../NeurIPS2025/autonomous_driving/autovla_a_vision-language-action_model_for_end-to-end_autonomous_driving_with_ad.md)
-- [SEAL: Segment Any Events with Language](segment_any_events_with_language.md)
 - [TimeBill: Time-Budgeted Inference for Large Language Models](../../AAAI2026/autonomous_driving/timebill_time-budgeted_inference_for_large_language_models.md)
+- [SEAL: Segment Any Events with Language](segment_any_events_with_language.md)
 
 <!-- RELATED:END -->

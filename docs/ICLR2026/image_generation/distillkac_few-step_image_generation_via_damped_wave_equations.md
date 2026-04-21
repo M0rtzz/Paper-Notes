@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DistillKac: Few-Step Image Generation via Damped Wave Equations
 description: >-

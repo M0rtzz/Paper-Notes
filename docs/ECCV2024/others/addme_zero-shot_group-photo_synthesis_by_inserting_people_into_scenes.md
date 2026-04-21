@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AddMe: Zero-Shot Group-Photo Synthesis by Inserting People Into Scenes
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] R1-Onevision: Advancing Generalized Multimodal Reasoning through Cross-Modal Formalization
 description: >-

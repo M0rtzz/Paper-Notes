@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EddyFormer: Accelerated Neural Simulations of Three-Dimensional Turbulence at Scale
 description: >-

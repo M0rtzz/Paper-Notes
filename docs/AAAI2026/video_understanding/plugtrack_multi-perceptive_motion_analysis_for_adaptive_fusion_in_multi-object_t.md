@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PlugTrack: Multi-Perceptive Motion Analysis for Adaptive Fusion in Multi-Object Tracking
 description: >-
@@ -177,8 +177,8 @@ $$\mathcal{L} = \mathcal{L}_{SmoothL1} + \mathcal{L}_{GIoU} + \mathcal{L}_{MCAS}
 
 - [Occlusion-Aware SORT: Observing Occlusion for Robust Multi-Object Tracking](../../CVPR2026/video_understanding/occlusion-aware_sort_observing_occlusion_for_robust_multi-object_tracking.md)
 - [Learning Topology-Driven Multi-Subspace Fusion for Grassmannian Deep Networks](learning_topology-driven_multi-subspace_fusion_for_grassmannian_deep_network.md)
+- [OmniTrack: Omnidirectional Multi-Object Tracking](../../CVPR2025/video_understanding/omnidirectional_multi-object_tracking.md)
 - [FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking](../../CVPR2026/video_understanding/fc-track_overlap-aware_post-association_correction_for_online_multi-object_track.md)
 - [MITracker: Multi-View Integration for Visual Object Tracking](../../CVPR2025/video_understanding/mitracker_multi-view_integration_for_visual_object_tracking.md)
-- [Out of Sight, Out of Track: Adversarial Attacks on Propagation-based Multi-Object Trackers via Query State Manipulation](../../CVPR2026/video_understanding/out_of_sight_out_of_track_adversarial_attacks_on_propagation-based_multi-object_.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MUSE-VL: Modeling Unified VLM through Semantic Discrete Encoding
 description: >-
@@ -132,8 +132,8 @@ Tokenizer对比（同LLM Yi-1.5-9B，同数据）:
 
 - [MetaMorph: Multimodal Understanding and Generation via Instruction Tuning](metamorph_multimodal_understanding_and_generation_via_instru.md)
 - [Background Invariance Testing According to Semantic Proximity](background_invariance_testing_according_to_semantic_proximity.md)
-- [Unified Multimodal Understanding via Byte-Pair Visual Encoding](unified_multimodal_understanding_via_byte-pair_visual_encoding.md)
 - [Dynamic-VLM: Simple Dynamic Visual Token Compression for VideoLLM](dynamic-vlm_simple_dynamic_visual_token_compression_for_videollm.md)
+- [Unified Multimodal Understanding via Byte-Pair Visual Encoding](unified_multimodal_understanding_via_byte-pair_visual_encoding.md)
 - [Harmonizing Visual Representations for Unified Multimodal Understanding and Generation](harmonizing_visual_representations_for_unified_multimodal_un.md)
 
 <!-- RELATED:END -->

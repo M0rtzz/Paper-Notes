@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FlowCut: Rethinking Redundancy via Information Flow for Efficient Vision-Language Models
 description: >-

@@ -1,18 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 信息检索/RAG方向 32篇论文解读
+  NeurIPS2025 信息检索/RAG方向 31篇论文解读
 description: >-
-  32篇NeurIPS2025 信息检索/RAG方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  31篇NeurIPS2025 信息检索/RAG方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔍 信息检索/RAG
 
-**🧠 NeurIPS2025** · **32** 篇论文解读
-
-**[ARC-JSD: Attributing Response to Context via Jensen-Shannon Divergence Driven Mechanistic Study](attributing_response_to_context_a_jensen-shannon_divergence_driven_mechanistic_s.md)**
-
-:   ARC-JSD 提出基于 Jensen-Shannon 散度的 RAG 上下文归因方法——通过比较有/无特定上下文句子时模型输出分布的 JSD 差异，无需微调/梯度计算即可定位回答所依赖的上下文，计算效率比 baseline 快 3 倍，Top-1 归因准确率平均提升 10.7%，并通过 Logit Lens 揭示归因相关的注意力头集中在高层。
+**🧠 NeurIPS2025** · **31** 篇论文解读
 
 **[Benchmarking Retrieval-Augmented Multimodal Generation for Document Question Answering](benchmarking_retrievalaugmented_multimodal_generation_for_do.md)**
 
@@ -53,6 +49,10 @@ description: >-
 **[How Should We Evaluate Data Deletion in Graph-Based ANN Indexes?](how_should_we_evaluate_data_deletion_in_graph-based_ann_indexes.md)**
 
 :   针对图基ANN索引缺乏统一数据删除评估方法的问题，形式化定义了逻辑删除、物理删除和重建三种基准方法，提出面向实际部署的评估框架和指标体系，并基于实验分析提出Deletion Control算法在精度约束下动态切换删除策略。
+
+**[HyperGraphRAG: Retrieval-Augmented Generation via Hypergraph-Structured Knowledge Representation](hypergraphrag_retrieval-augmented_generation_via_hypergraph-structured_knowledge.md)**
+
+:   提出 HyperGraphRAG——首个基于超图结构知识表示的 RAG 方法，通过超边连接多个实体来表示 n 元关系事实（$n \geq 2$），克服了现有图 RAG 方法仅能表示二元关系的局限，在医学、农业、计算机科学、法律等多领域的回答准确性、检索效率和生成质量上均优于标准 RAG 和图 RAG 方法。
 
 **[Improving Consistency in Retrieval-Augmented Systems with Group Similarity Rewards](improving_consistency_in_retrieval-augmented_systems_with_group_similarity_rewar.md)**
 
@@ -129,10 +129,6 @@ description: >-
 **[Windsock is Dancing: Adaptive Multimodal Retrieval-Augmented Generation](windsock_is_dancing_adaptive_multimodal_retrieval-augmented_generation.md)**
 
 :   提出Windsock+DANCE双组件框架解决多模态RAG的三个核心问题：Windsock模块根据查询自适应决定**何时检索**和**检索什么模态**（文本/图像/不检索），DANCE指令微调策略通过动态选择模型薄弱模态进行噪声鲁棒训练来提升**如何利用**检索信息的能力，整体性能提升17.07%同时减少8.95%检索次数。
-
-**[STRUCTURE: With Limited Data for Multimodal Alignment, Let the Structure Guide You](with_limited_data_for_multimodal_alignment_let_the_structure_guide_you.md)**
-
-:   提出 STRUCTURE 正则化和基于表示相似度的层选择策略，仅用少量配对数据（数万对，不到常规方法的1%）即可实现冻结单模态基础模型的高质量跨模态对齐，在24个零样本分类和检索基准上平均提升51.6%和91.8%。
 
 **[Worse than Zero-shot? A Fact-Checking Dataset for Evaluating the Robustness of RAG Against Misleading Retrievals](worse_than_zero-shot_a_fact-checking_dataset_for_evaluating_the_robustness_of_ra.md)**
 

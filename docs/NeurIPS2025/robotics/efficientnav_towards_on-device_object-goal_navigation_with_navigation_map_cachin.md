@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EfficientNav: Towards On-Device Object-Goal Navigation with Navigation Map Caching and Retrieval
 description: >-

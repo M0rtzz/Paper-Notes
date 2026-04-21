@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Magnitude Matters: A Superior Class of Similarity Metrics for Holistic Semantic Understanding
 description: >-

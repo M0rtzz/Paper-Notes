@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Free-MoRef: Instantly Multiplexing Context Perception Capabilities of Video-MLLMs within Single Inference
 description: >-
@@ -164,9 +164,9 @@ N=2时效果最佳且计算量仅为原来的27.6%。
 ## 相关论文
 
 - [Neural Stochastic Flows: Solver-Free Modelling and Inference for SDE Solutions](../../NeurIPS2025/video_understanding/neural_stochastic_flows_solver-free_modelling_and_inference_for_sde_solutions.md)
+- [VecAttention: Vector-wise Sparse Attention for Accelerating Long Context Inference](../../CVPR2026/video_understanding/vecattention_vector-wise_sparse_attention_for_accelerating_long_context_inferenc.md)
 - [AIM: Adaptive Inference of Multi-Modal LLMs via Token Merging and Pruning](aim_adaptive_inference_of_multi-modal_llms_via_token_merging_and_pruning.md)
 - [EgoAdapt: Adaptive Multisensory Distillation and Policy Learning for Efficient Egocentric Perception](egoadapt_adaptive_multisensory_distillation_and_policy_learning_for_efficient_eg.md)
-- [Reasoning over Video: Evaluating How MLLMs Extract, Integrate, and Reconstruct Spatiotemporal Evidence](../../CVPR2025/video_understanding/reasoning_over_video_evaluating_how_mllms_extract_integrate_and_reconstruct_spat.md)
-- [Sparse-to-Dense: A Free Lunch for Lossless Acceleration of Video Understanding in LLMs](../../ACL2025/video_understanding/sparse-to-dense_a_free_lunch_for_lossless_acceleration_of_video_understanding_in.md)
+- [VideoGEM: Training-Free Action Grounding in Videos](../../CVPR2025/video_understanding/videogem_training-free_action_grounding_in_videos.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Synthia: Novel Concept Design with Affordance Composition
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] What Happens During the Loss Plateau? Understanding Abrupt Learning in Transformers
 description: >-

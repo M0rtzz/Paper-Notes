@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] QiMeng-SALV: Signal-Aware Learning for Verilog Code Generation
 description: >-

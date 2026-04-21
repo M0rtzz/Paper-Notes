@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GraphFaaS: Serverless GNN Inference for Burst-Resilient, Real-Time Intrusion Detection
 description: >-

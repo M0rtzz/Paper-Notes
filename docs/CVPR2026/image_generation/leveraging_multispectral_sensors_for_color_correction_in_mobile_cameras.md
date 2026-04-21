@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Leveraging Multispectral Sensors for Color Correction in Mobile Cameras
 description: >-

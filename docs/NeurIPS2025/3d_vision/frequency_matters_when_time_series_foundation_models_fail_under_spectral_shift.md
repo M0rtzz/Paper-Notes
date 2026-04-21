@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Frequency Matters: When Time Series Foundation Models Fail Under Spectral Shift
 description: >-

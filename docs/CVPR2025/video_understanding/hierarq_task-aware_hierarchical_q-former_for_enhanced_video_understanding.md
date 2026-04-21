@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HierarQ: Task-Aware Hierarchical Q-Former for Enhanced Video Understanding
 description: >-
@@ -154,9 +154,9 @@ HierarQ 的核心思路是：像人类认知一样，**在观看视频时同时�
 ## 相关论文
 
 - [MLVU: Benchmarking Multi-task Long Video Understanding](mlvu_benchmarking_multi-task_long_video_understanding.md)
+- [Object-Shot Enhanced Grounding Network for Egocentric Video](object-shot_enhanced_grounding_network_for_egocentric_video.md)
+- [Progress-Aware Video Frame Captioning](progress-aware_video_frame_captioning.md)
 - [Context-Enhanced Memory-Refined Transformer for Online Action Detection](context-enhanced_memory-refined_transformer_for_online_action_detection.md)
-- [EgoTextVQA: Towards Egocentric Scene-Text Aware Video Question Answering](egotextvqa_towards_egocentric_scene-text_aware_video_question_answering.md)
 - [FluxMem: Adaptive Hierarchical Memory for Streaming Video Understanding](../../CVPR2026/video_understanding/fluxmem_adaptive_hierarchical_memory_for_streaming_video_understanding.md)
-- [VideoARM: Agentic Reasoning over Hierarchical Memory for Long-Form Video Understanding](../../CVPR2026/video_understanding/videoarm_agentic_reasoning_over_hierarchical_memory_for_long-form_video_understa.md)
 
 <!-- RELATED:END -->

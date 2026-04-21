@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Are Bias Evaluation Methods Biased?
 description: >-
@@ -125,10 +125,10 @@ tags:
 
 ## 相关论文
 
-- [Evaluating the Evaluation of Diversity in Commonsense Generation](evaluating_the_evaluation_of_diversity_in_commonsense_generation.md)
 - [Causal Estimation of Tokenisation Bias](causal_tokenisation_bias.md)
-- [Towards Better Evaluation for Generated Patent Claims](patclaimeval_patent_evaluation.md)
+- [Evaluating the Evaluation of Diversity in Commonsense Generation](evaluating_the_evaluation_of_diversity_in_commonsense_generation.md)
 - [From Lists to Emojis: How Format Bias Affects Model Alignment](from_lists_to_emojis_how_format_bias_affects_model_alignment.md)
+- [Towards Better Evaluation for Generated Patent Claims](patclaimeval_patent_evaluation.md)
 - [Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
 
 <!-- RELATED:END -->

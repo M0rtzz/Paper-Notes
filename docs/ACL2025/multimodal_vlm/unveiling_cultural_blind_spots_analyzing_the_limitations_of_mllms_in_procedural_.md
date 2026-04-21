@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unveiling Cultural Blind Spots: Analyzing the Limitations of mLLMs in Procedural Text Comprehension
 description: >-

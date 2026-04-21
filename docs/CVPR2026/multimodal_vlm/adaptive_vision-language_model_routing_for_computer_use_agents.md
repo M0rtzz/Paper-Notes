@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AVR: Adaptive VLM Routing for Computer Use Agents
 description: >-

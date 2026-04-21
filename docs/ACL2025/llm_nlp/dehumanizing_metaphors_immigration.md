@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When People are Floods: Analyzing Dehumanizing Metaphors in Immigration Discourse with Large Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Two Causally Related Needles in a Video Haystack
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Team LEYA in 10th ABAW Competition: Multimodal Ambivalence/Hesitancy Recognition Approach
 description: >-
@@ -134,8 +134,8 @@ $\mathcal{L} = \mathcal{L}_{\text{cls}} + \lambda_{\text{proto}} \mathcal{L}_{\t
 ## 相关论文
 
 - [Solution for 10th Competition on Ambivalence/Hesitancy (AH) Video Recognition Challenge using Divergence-Based Multimodal Fusion](../../CVPR2026/audio_speech/solution_for_10th_competition_on_ambivalencehesitancy_ah_video_recognition_chall.md)
-- [VinTAGe: Joint Video and Text Conditioning for Holistic Audio Generation](vintage_joint_video_and_text_conditioning_for_holistic_audio_generation.md)
 - [Learning to Highlight Audio by Watching Movies](learning_to_highlight_audio_by_watching_movies.md)
+- [VinTAGe: Joint Video and Text Conditioning for Holistic Audio Generation](vintage_joint_video_and_text_conditioning_for_holistic_audio_generation.md)
 - [BROTHER: Behavioral Recognition Optimized Through Heterogeneous Ensemble Regularization for Ambivalence and Hesitancy](../../CVPR2026/audio_speech/brother_behavioral_recognition_optimized_through_heterogeneous_ensemble_regulari.md)
 - [Contextual AD Narration with Interleaved Multimodal Sequence](contextual_ad_narration_with_interleaved_multimodal_sequence.md)
 

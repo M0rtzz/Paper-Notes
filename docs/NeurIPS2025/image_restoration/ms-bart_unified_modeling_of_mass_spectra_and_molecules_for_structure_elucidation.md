@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MS-BART: Unified Modeling of Mass Spectra and Molecules for Structure Elucidation
 description: >-
@@ -161,6 +161,6 @@ MS-Bart 在 NPLIB1 上相似度指标全面领先：MCES 改善 19.16%，Tanimot
 - [UniPhys: Unified Planner and Controller with Diffusion for Flexible Physics-Based Character Control](../../ICCV2025/image_restoration/uniphys_unified_planner_and_controller_with_diffusion_for_flexible_physics-based.md)
 - [TTT-MIM: Test-Time Training with Masked Image Modeling for Denoising Distribution Shifts](../../ECCV2024/image_restoration/ttt-mim_test-time_training_with_masked_image_modeling_for_denoising_distribution.md)
 - [Skip to the Good Part: Representation Structure & Inference-Time Layer Skipping in Diffusion vs. Autoregressive LLMs](../../ICLR2026/image_restoration/skip_to_the_good_part_representation_structure_inference-time_layer_skipping_in_.md)
-- [Zero-Reference Joint Low-Light Enhancement and Deblurring via Visual Autoregressive Modeling with VLM-Derived Modulation](../../AAAI2026/image_restoration/zero-reference_joint_low-light_enhancement_and_deblurring_via_visual_autoregress.md)
+- [URWKV: Unified RWKV Model with Multi-State Perspective for Low-Light Image Restoration](../../CVPR2025/image_restoration/urwkv_unified_rwkv_model_with_multi-state_perspective_for_low-light_image_restor.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Integrating Task-Specific and Universal Adapters for Pre-Trained Model-based Class-Incremental Learning
 description: >-

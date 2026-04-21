@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improved Regret Bounds for GP-UCB in Bayesian Optimization
 description: >-
@@ -137,7 +137,7 @@ GP-UCB：$\mathbf{x}_t = \arg\max \mu(\mathbf{x}) + \beta_t^{1/2} \sigma(\mathbf
 - [Improved Regret and Contextual Linear Extension for Pandora's Box and Prophet Inequality](improved_regret_and_contextual_linear_extension_for_pandoras_box_and_prophet_ine.md)
 - [Establishing Linear Surrogate Regret Bounds for Convex Smooth Losses via Convolutional Fenchel–Young Losses](establishing_linear_surrogate_regret_bounds_for_convex_smooth_losses_via_convolu.md)
 - [Optimizing the Unknown: Black Box Bayesian Optimization with Energy-Based Model and Reinforcement Learning](optimizing_the_unknown_black_box_bayesian_optimization_with_energy-based_model_a.md)
-- [Gaussian Process Upper Confidence Bound Achieves Nearly-Optimal Regret in Noise-Free Gaussian Process Bandits](gaussian_process_upper_confidence_bound_achieves_nearly-optimal_regret_in_noise-.md)
+- [Dynamic Regret Reduces to Kernelized Static Regret](dynamic_regret_reduces_to_kernelized_static_regret.md)
 - [Meta-World+: An Improved, Standardized, RL Benchmark](meta-world_an_improved_standardized_rl_benchmark.md)
 
 <!-- RELATED:END -->

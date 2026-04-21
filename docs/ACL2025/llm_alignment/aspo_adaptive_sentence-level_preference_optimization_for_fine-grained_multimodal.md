@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ASPO: Adaptive Sentence-Level Preference Optimization for Fine-Grained Multimodal Reasoning
 description: >-

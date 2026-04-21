@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Pano3DComposer: Feed-Forward Compositional 3D Scene Generation from Single Panoramic Image
 description: >-

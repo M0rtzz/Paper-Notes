@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] New Synthetic Goldmine: Hand Joint Angle-Driven EMG Data Generation Framework for Micro-Gesture Recognition
 description: >-

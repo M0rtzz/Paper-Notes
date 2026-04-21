@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FreeMotion: A Unified Framework for Number-free Text-to-Motion Synthesis
 description: >-
@@ -154,7 +154,7 @@ FreeMotion在单人和双人生成上全面超越InterGen*，FID分别降低44.6
 - [Large Motion Model for Unified Multi-Modal Motion Generation](large_motion_model_for_unified_multi-modal_motion_generation.md)
 - [ParTY: Part-Guidance for Expressive Text-to-Motion Synthesis](../../CVPR2026/human_understanding/party_part-guidance_for_expressive_text-to-motion_synthesis.md)
 - [Human Motion Forecasting in Dynamic Domain Shifts: A Homeostatic Continual Test-Time Adaptation Framework](human_motion_forecasting_in_dynamic_domain_shifts_a_homeostatic_continual_test-t.md)
+- [SimMotionEdit: Text-Based Human Motion Editing with Motion Similarity Prediction](../../CVPR2025/human_understanding/simmotionedit_text-based_human_motion_editing_with_motion_similarity_prediction.md)
 - [MG-MotionLLM: A Unified Framework for Motion Comprehension and Generation across Multiple Granularities](../../CVPR2025/human_understanding/mg-motionllm_a_unified_framework_for_motion_comprehension_and_generation_across_.md)
-- [Motion Mamba: Efficient and Long Sequence Motion Generation](motion_mamba_efficient_and_long_sequence_motion_generation.md)
 
 <!-- RELATED:END -->

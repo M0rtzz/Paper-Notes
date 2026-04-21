@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning
 description: >-

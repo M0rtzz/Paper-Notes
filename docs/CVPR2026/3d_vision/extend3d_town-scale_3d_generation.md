@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Extend3D: Town-Scale 3D Generation
 description: >-
@@ -126,8 +126,8 @@ Extend3D 分为两阶段（与 Trellis 一致）：稀疏结构生成和结构�
 
 - [VGG-T3: Offline Feed-Forward 3D Reconstruction at Scale](vgg-t3_offline_feed-forward_3d_reconstruction_at_scale.md)
 - [Text–Image Conditioned 3D Generation](text-image_conditioned_3d_generation.md)
-- [S2AM3D: Scale-controllable Part Segmentation of 3D Point Clouds](s2am3d_scale-controllable_part_segmentation_of_3d_point_cloud.md)
-- [GLINT: Modeling Scene-Scale Transparency via Gaussian Radiance Transport](glint_modeling_scene-scale_transparency_via_gaussian_radiance_transport.md)
+- [SAR3D: Autoregressive 3D Object Generation and Understanding via Multi-scale 3D VQVAE](../../CVPR2025/3d_vision/sar3d_autoregressive_3d_object_generation_and_understanding_via_multi-scale_3d_v.md)
+- [Indoor Asset Detection in Large Scale 360° Drone-Captured Imagery via 3D Gaussian Splatting](indoor_asset_detection_in_large_scale_360_drone-captured_imagery_via_3d_gaussian.md)
 - [RayNova: Scale-Temporal Autoregressive World Modeling in Ray Space](raynova_scale-temporal_autoregressive_world_modeling_in_ray_space.md)
 
 <!-- RELATED:END -->

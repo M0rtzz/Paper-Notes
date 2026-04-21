@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TongUI: Internet-Scale Trajectories from Multimodal Web Tutorials for Generalized GUI Agents
 description: >-

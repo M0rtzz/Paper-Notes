@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] MagicArticulate: Make Your 3D Models Articulation-Ready
 description: >-
-  [CVPR 2025][3D articulation] 提出自动将静态3D模型转为可动画化资产的两阶段框架：自回归Transformer生成骨架 + 函数扩散预测蒙皮权重，并构建33K+大规模数据集Articulation-XL。
+  [CVPR 2025][人体理解][3D articulation] 提出 MagicArticulate 两阶段框架，第一阶段用自回归 Transformer 将骨架生成建模为序列预测任务，第二阶段用函数扩散过程结合体积测地距离先验预测蒙皮权重，搭配 33K+ 大规模 Articulation-XL 数据集，实现静态 3D 模型到可动画化资产的自动转换。
 tags:
   - CVPR 2025
+  - 人体理解
   - 3D articulation
   - skeleton generation
-  - skinning weight
-  - auto-regressive
-  - functional diffusion
+  - skinning weight prediction
+  - Transformer
+  - 扩散模型
+  - Articulation-XL
 ---
 
 # MagicArticulate: Make Your 3D Models Articulation-Ready
@@ -159,10 +161,10 @@ tags:
 
 ## 相关论文
 
+- [Towards High-fidelity 3D Talking Avatar with Personalized Dynamic Texture](towards_high-fidelity_3d_talking_avatar_with_personalized_dynamic_texture.md)
 - [AutoFigure: Generating and Refining Publication-Ready Scientific Illustrations](../../ICLR2026/human_understanding/autofigure_generating_and_refining_publication-ready_scientific_illustrations.md)
-- [3D Face Reconstruction From Radar Images](3d_face_reconstruction_from_radar_images.md)
 - [How Video Meetings Change Your Expression](../../ECCV2024/human_understanding/how_video_meetings_change_your_expression.md)
-- [VimoRAG: Video-based Retrieval-augmented 3D Motion Generation for Motion Language Models](../../NeurIPS2025/human_understanding/vimorag_video-based_retrieval-augmented_3d_motion_generation_for_motion_language.md)
-- [Conformal Prediction for Zero-Shot Models](conformal_prediction_for_zero-shot_models.md)
+- [Pose Priors from Language Models](pose_priors_from_language_models.md)
+- [3D Face Reconstruction From Radar Images](3d_face_reconstruction_from_radar_images.md)
 
 <!-- RELATED:END -->

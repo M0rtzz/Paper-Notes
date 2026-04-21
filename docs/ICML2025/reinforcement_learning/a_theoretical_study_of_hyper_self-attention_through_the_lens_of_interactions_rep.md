@@ -1,10 +1,14 @@
-﻿---
+---
 title: >-
   [论文解读] A Theoretical Study of (Hyper) Self-Attention through the Lens of Interactions: Representation, Training, Generalization
 description: >-
-   从"交互实体"统一视角出发，证明单层线性 self-attention 以 $\Theta(|\mathcal{S}|^2)$ 参数高效表示、学习并泛化成对交互函数（全连接网络需 $\Omega(L^2|\mathcal{S}|^2)$），并在此理论基础上提出 HyperFeatureAttention（特征级交互耦合）和 HyperAttention（高阶多实体交互）两个新模块，在语言建模中降低了 perplexity。
+  [ICML 2025][注意力机制] 从"交互实体"统一视角出发，证明单层线性 self-attention 以 $\Theta(|\mathcal{S}|^2)$ 参数高效表示、学习并泛化成对交互函数（全连接网络需 $\Omega(L^2|\mathcal{S}|^2)$），并在此理论基础上提出 HyperFeatureAttention（特征级交互耦合）和 HyperAttention（高阶多实体交互）两个新模块，在语言建模中降低了 perplexity。
 tags:
-
+  - ICML 2025
+  - 注意力机制
+  - mutual interaction
+  - representation theory
+  - length generalization
 ---
 
 # A Theoretical Study of (Hyper) Self-Attention through the Lens of Interactions: Representation, Training, Generalization
@@ -138,8 +142,8 @@ tags:
 
 - [Diving into Self-Evolving Training for Multimodal Reasoning](diving_into_self-evolving_training_for_multimodal_reasoning.md)
 - [Zero-Shot Context Generalization in Reinforcement Learning from Few Training Contexts](../../NeurIPS2025/reinforcement_learning/zero-shot_context_generalization_in_reinforcement_learning_from_few_training_con.md)
-- [Zero-Shot Generalization of Vision-Based RL Without Data Augmentation](zero-shot_generalization_of_vision-based_rl_without_data_augmentation.md)
 - [Sliding Puzzles Gym: A Scalable Benchmark for State Representation in Visual Reinforcement Learning](sliding_puzzles_gym_a_scalable_benchmark_for_state_representation_in_visual_rein.md)
-- [Extending NGU to Multi-Agent RL: A Preliminary Study](../../NeurIPS2025/reinforcement_learning/extending_ngu_to_multi-agent_rl_a_preliminary_study.md)
+- [T1: Advancing Language Model Reasoning through Reinforcement Learning and Inference Scaling](t1_advancing_language_model_reasoning_through_reinforcement_learning_and_inferen.md)
+- [Zero-Shot Generalization of Vision-Based RL Without Data Augmentation](zero-shot_generalization_of_vision-based_rl_without_data_augmentation.md)
 
 <!-- RELATED:END -->

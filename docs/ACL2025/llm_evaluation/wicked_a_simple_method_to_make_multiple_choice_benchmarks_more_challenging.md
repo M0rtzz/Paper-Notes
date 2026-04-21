@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WiCkeD: A Simple Method to Make Multiple Choice Benchmarks More Challenging
 description: >-

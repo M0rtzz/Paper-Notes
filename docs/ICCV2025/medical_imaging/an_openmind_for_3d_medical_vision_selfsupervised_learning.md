@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] An OpenMind for 3D Medical Vision Self-supervised Learning
 description: >-

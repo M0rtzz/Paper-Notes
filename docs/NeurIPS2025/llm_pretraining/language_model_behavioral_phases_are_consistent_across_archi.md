@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Language Model Behavioral Phases are Consistent Across Architecture, Training Data, and Scale
 description: >-

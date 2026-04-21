@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EvaGaussians: Event Stream Assisted Gaussian Splatting from Blurry Images
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MGSfM: Multi-Camera Geometry Driven Global Structure-from-Motion
 description: >-
@@ -170,9 +170,9 @@ MGSfM 在所有场景上均大幅优于 GLOMAP，精度提升 10-40 个百分点
 ## 相关论文
 
 - [Geometry-to-Image Synthesis-Driven Generative Point Cloud Registration](../../ICML2025/autonomous_driving/geometry-to-image_synthesis-driven_generative_point_cloud_registration.md)
-- [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multi-view_robust_physical_adversarial_camouflage_g.md)
+- [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multiview_robust_physical_adver.md)
 - [Language Driven Occupancy Prediction (LOcc)](language_driven_occupancy_prediction.md)
-- [DVLO: Deep Visual-LiDAR Odometry with Local-to-Global Feature Fusion and Bi-directional Structure Alignment](../../ECCV2024/autonomous_driving/dvlo_deep_visual-lidar_odometry_with_local-to-global_feature_fusion_and_bi-direc.md)
 - [Future-Aware Interaction Network For Motion Forecasting](future-aware_interaction_network_for_motion_forecasting.md)
+- [Foresight in Motion: Reinforcing Trajectory Prediction with Reward Heuristics](foresight_in_motion_reinforcing_trajectory_prediction_with_reward_heuristics.md)
 
 <!-- RELATED:END -->

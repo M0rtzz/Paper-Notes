@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] HyperGS: Hyperspectral 3D Gaussian Splatting
 description: >-
-  [CVPR 2025][hyperspectral][3DGS] 提出 HyperGS，首个将 3D Gaussian Splatting 扩展到高光谱新视角合成的框架，通过潜在空间建模、自适应密度控制和光谱感知剪枝，在高光谱场景重建中实现 14dB 的精度提升。
+  [CVPR 2025][3D视觉][hyperspectral imaging] 首次将 3DGS 成功扩展到高光谱新视角合成（HNVS），通过在学习的潜在空间中进行高光谱渲染，配合自适应密度控制与像素级光谱剪枝，实现高维光谱数据的高效准确重建。
 tags:
   - CVPR 2025
-  - 3D Gaussian Splatting
+  - 3D视觉
   - hyperspectral imaging
+  - 3D Gaussian Splatting
   - novel view synthesis
   - latent space
-  - autoencoder
+  - spectral reconstruction
 ---
 
 # HyperGS: Hyperspectral 3D Gaussian Splatting
@@ -142,9 +143,9 @@ $$L_d(p) = (1-\lambda)(\beta L_{CB}(p) + L_{CS}(p)) + \lambda L_{SSIM}(p)$$
 ## 相关论文
 
 - [3D-HGS: 3D Half-Gaussian Splatting](3d-hgs_3d_half-gaussian_splatting.md)
-- [GuardSplat: Efficient and Robust Watermarking for 3D Gaussian Splatting](guardsplat_efficient_and_robust_watermarking_for_3d_gaussian_splatting.md)
-- [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
 - [VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM](varsplat_uncertainty-aware_3d_gaussian_splatting_for_robust_rgb-d_slam.md)
+- [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
+- [DoF-Gaussian: Controllable Depth-of-Field for 3D Gaussian Splatting](dof-gaussian_controllable_depth-of-field_for_3d_gaussian_splatting.md)
 - [Mitigating Ambiguities in 3D Classification with Gaussian Splatting](mitigating_ambiguities_in_3d_classification_with_gaussian_splatting.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Linking Perception, Confidence and Accuracy in MLLMs
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MARC: Memory-Augmented RL Token Compression for Efficient Video Understanding
 description: >-

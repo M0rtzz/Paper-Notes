@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dual-Solver: A Generalized ODE Solver for Diffusion Models with Dual Prediction
 description: >-
@@ -103,7 +103,7 @@ Dual-Solver 保留标准的 predictor-corrector 结构，但在三个维度上�
 - [Image Diffusion Preview with Consistency Solver](../../CVPR2026/image_generation/image_diffusion_preview_with_consistency_solver.md)
 - [LVTINO: LAtent Video consisTency INverse sOlver for High Definition Video Restoration](lvtino_latent_video_consistency_inverse_solver_for_high_definition_video_restora.md)
 - [Generating Directed Graphs with Dual Attention and Asymmetric Encoding](generating_directed_graphs_with_dual_attention_and_asymmetric_encoding.md)
-- [Enhancing Image Aesthetics with Dual-Conditioned Diffusion Models Guided by Multimodal Perception](../../CVPR2026/image_generation/enhancing_image_aesthetics_with_dualconditioned_di.md)
-- [Morse: Dual-Sampling for Lossless Acceleration of Diffusion Models](../../ICML2025/image_generation/morse_dual-sampling_for_lossless_acceleration_of_diffusion_models.md)
+- [Dual Diffusion for Unified Image Generation and Understanding](../../CVPR2025/image_generation/dual_diffusion_for_unified_image_generation_and_understanding.md)
+- [Enhancing Image Aesthetics with Dual-Conditioned Diffusion Models Guided by Multimodal Perception](../../CVPR2026/image_generation/enhancing_image_aesthetics_with_dual-conditioned_diffusion_models_guided_by_mult.md)
 
 <!-- RELATED:END -->

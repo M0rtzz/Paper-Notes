@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] Sync from the Sea: Retrieving Alignable Videos from Large-Scale Datasets
 description: >-
-  [ECCV 2024][视频理解][视频对齐] 提出可对齐视频检索（Alignable Video Retrieval, AVR）任务，通过 DRAQ 对齐质量指标从大规模视频数据库中识别并检索出最适合与查询视频进行时序对齐的视频，同时提出特征上下文化方法提升对齐性能。
+  [ECCV 2024][视频对齐] 提出可对齐视频检索（Alignable Video Retrieval, AVR）任务，通过 DRAQ 对齐质量指标从大规模视频数据库中识别并检索出最适合与查询视频进行时序对齐的视频，同时提出特征上下文化方法提升对齐性能。
 tags:
   - ECCV 2024
-  - 视频理解
   - 视频对齐
   - 视频检索
   - 时序对齐
@@ -142,8 +141,8 @@ DRAQ 越低说明最优对齐相对随机对齐提升越大，即两个视频越
 
 - [LoTUS: Large-Scale Machine Unlearning with a Taste of Uncertainty](../../CVPR2025/llm_evaluation/lotus_large-scale_machine_unlearning_with_a_taste_of_uncertainty.md)
 - [PhantomWiki: On-Demand Datasets for Reasoning and Retrieval Evaluation](../../ICML2025/llm_evaluation/phantomwiki_on-demand_datasets_for_reasoning_and_retrieval_evaluation.md)
-- [CounselBench: A Large-Scale Expert Evaluation and Adversarial Benchmarking of LLMs in Mental Health QA](../../ICLR2026/llm_evaluation/counselbench_llm_mental_health_qa.md)
 - [HellaSwag-Pro: A Large-Scale Bilingual Benchmark for Evaluating the Robustness of LLMs in Commonsense Reasoning](../../ACL2025/llm_evaluation/hellaswag-pro_a_large-scale_bilingual_benchmark_for_evaluating_the_robustness_of.md)
+- [CounselBench: A Large-Scale Expert Evaluation and Adversarial Benchmarking of LLMs in Mental Health QA](../../ICLR2026/llm_evaluation/counselbench_llm_mental_health_qa.md)
 - [MOSIV: Multi-Object System Identification from Videos](../../ICLR2026/llm_evaluation/mosiv_multi-object_system_identification_from_videos.md)
 
 <!-- RELATED:END -->

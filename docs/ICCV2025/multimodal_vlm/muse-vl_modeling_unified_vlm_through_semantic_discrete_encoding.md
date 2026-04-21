@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MUSE-VL: Modeling Unified VLM through Semantic Discrete Encoding
 description: >-

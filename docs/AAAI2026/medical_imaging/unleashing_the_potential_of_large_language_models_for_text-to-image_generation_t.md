@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unleashing the Potential of Large Language Models for Text-to-Image Generation through Autoregressive Representation Alignment
 description: >-

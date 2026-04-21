@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EchoWorld: Learning Motion-Aware World Models for Echocardiography Probe Guidance
 description: >-
@@ -129,8 +129,8 @@ EchoWorld 在所有 10 个标准切面上的平均引导误差最低，相比最
 
 - [Uncertainty-Aware Concept and Motion Segmentation for Semi-Supervised Angiography Videos](uncertainty-aware_concept_and_motion_segmentation_for_semi-supervised_angiograph.md)
 - [EchoONE: Segmenting Multiple Echocardiography Planes in One Model](echoone_segmenting_multiple_echocardiography_planes_in_one_model.md)
+- [SeaLion: Semantic Part-Aware Latent Point Diffusion Models for 3D Generation](sealion_semantic_part-aware_latent_point_diffusion_models_for_3d_generation.md)
 - [Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting](prototype-based_knowledge_guidance_for_fine-grained_structured_radiology_reporti.md)
 - [EchoAgent: Towards Reliable Echocardiography Interpretation with "Eyes", "Hands" and "Minds"](../../CVPR2026/medical_imaging/echoagent_towards_reliable_echocardiography_interpretation_with_eyeshands_and_mi.md)
-- [Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design](../../NeurIPS2025/medical_imaging/uncertainty-aware_multi-objective_reinforcement_learning-guided_diffusion_models.md)
 
 <!-- RELATED:END -->

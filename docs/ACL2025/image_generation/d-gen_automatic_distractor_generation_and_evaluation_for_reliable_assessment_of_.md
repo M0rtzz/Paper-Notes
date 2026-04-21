@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] D-GEN: Automatic Distractor Generation and Evaluation for Reliable Assessment of Generative Models
 description: >-
@@ -132,6 +132,6 @@ tags:
 - [TRCE: Towards Reliable Malicious Concept Erasure in Text-to-Image Diffusion Models](../../ICCV2025/image_generation/trce_towards_reliable_malicious_concept_erasure_in_text-to-image_diffusion_model.md)
 - [ChatGen: Automatic Text-to-Image Generation From FreeStyle Chatting](../../CVPR2025/image_generation/chatgen_automatic_text-to-image_generation_from_freestyle_chatting.md)
 - [CAP: Evaluation of Persuasive and Creative Image Generation](../../ICCV2025/image_generation/cap_evaluation_of_persuasive_and_creative_image_generation.md)
-- [Towards Reliable Advertising Image Generation Using Human Feedback](../../ECCV2024/image_generation/towards_reliable_advertising_image_generation_using_human_feedback.md)
+- [Towards Reliable Advertising Image Generation Using Human Feedback](../../ECCV2024/image_generation/towards_reliable_advertising_image_generation_using_human_fe.md)
 
 <!-- RELATED:END -->

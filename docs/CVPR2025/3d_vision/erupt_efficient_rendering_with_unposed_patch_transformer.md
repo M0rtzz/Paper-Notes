@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ERUPT: Efficient Rendering with Unposed Patch Transformer
 description: >-
@@ -126,7 +126,7 @@ ERUPT 的输入是一组无序的（可能无位姿的）场景图像（通常5�
 - [ActiveGAMER: Active GAussian Mapping through Efficient Rendering](activegamer_active_gaussian_mapping_through_efficient_rendering.md)
 - [SpatialSplat: Efficient Semantic 3D from Sparse Unposed Images](../../ICCV2025/3d_vision/spatialsplat_efficient_semantic_3d_from_sparse_unposed_images.md)
 - [Generating 3D-Consistent Videos from Unposed Internet Photos](generating_3d-consistent_videos_from_unposed_internet_photos.md)
-- [Evolving High-Quality Rendering and Reconstruction in a Unified Framework with Contribution-Adaptive Regularization](evolving_high-quality_rendering_and_reconstruction_in_a_unified_framework_with_c.md)
-- [Locality-Sensitive Hashing-Based Efficient Point Transformer for Charged Particle Reconstruction](../../NeurIPS2025/3d_vision/locality-sensitive_hashing-based_efficient_point_transformer_for_charged_particl.md)
+- [Sparse Point Cloud Patches Rendering via Splitting 2D Gaussians](sparse_point_cloud_patches_rendering_via_splitting_2d_gaussians.md)
+- [VGGT: Visual Geometry Grounded Transformer](vggt_visual_geometry_grounded_transformer.md)
 
 <!-- RELATED:END -->

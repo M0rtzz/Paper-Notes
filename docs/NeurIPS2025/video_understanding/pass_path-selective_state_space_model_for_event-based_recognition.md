@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PASS: Path-Selective State Space Model for Event-Based Recognition
 description: >-

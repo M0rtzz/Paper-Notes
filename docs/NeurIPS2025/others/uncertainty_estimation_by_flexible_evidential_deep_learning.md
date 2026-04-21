@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Uncertainty Estimation by Flexible Evidential Deep Learning
 description: >-

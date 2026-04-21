@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VP-SAM: Taming Segment Anything Model for Video Polyp Segmentation via Disentanglement and Spatio-Temporal Side Network
 description: >-

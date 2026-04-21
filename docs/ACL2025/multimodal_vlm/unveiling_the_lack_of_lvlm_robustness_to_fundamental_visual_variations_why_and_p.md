@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unveiling the Lack of LVLM Robustness to Fundamental Visual Variations: Why and Path Forward
 description: >-

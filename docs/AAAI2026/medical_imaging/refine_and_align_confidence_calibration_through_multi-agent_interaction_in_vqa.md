@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Refine and Align: Confidence Calibration through Multi-Agent Interaction in VQA
 description: >-

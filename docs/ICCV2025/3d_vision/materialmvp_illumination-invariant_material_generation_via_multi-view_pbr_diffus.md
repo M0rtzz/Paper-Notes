@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MaterialMVP: Illumination-Invariant Material Generation via Multi-view PBR Diffusion
 description: >-

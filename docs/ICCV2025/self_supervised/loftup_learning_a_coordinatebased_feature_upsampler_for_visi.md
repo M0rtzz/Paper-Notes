@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LoftUp: Learning a Coordinate-Based Feature Upsampler for Vision Foundation Models
 description: >-

@@ -210,9 +210,9 @@ $$\%C = \frac{c}{C} \times 100\%$$
 ## 相关论文
 
 - [Come Together, But Not Right Now: A Progressive Strategy to Boost Low-Rank Adaptation](come_together_but_not_right_now_a_progressive_strategy_to_boost_low-rank_adaptat.md)
-- [Variance-Based Pruning for Accelerating and Compressing Trained Networks](../../ICCV2025/model_compression/variance-based_pruning_for_accelerating_and_compressing_trained_networks.md)
 - [Who Taught You That? Tracing Teachers in Model Distillation](../../ACL2025/model_compression/who_taught_you_that_tracing_teachers_in_model_distillation.md)
-- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
-- [Explaining Puzzle Solutions in Natural Language: An Exploratory Study on 6×6 Sudoku](../../ACL2025/model_compression/explaining_puzzle_solutions_in_natural_language_an_exploratory_study_on_6x6_sudo.md)
+- [Variance-Based Pruning for Accelerating and Compressing Trained Networks](../../ICCV2025/model_compression/variance-based_pruning_for_accelerating_and_compressing_trained_networks.md)
+- [Rethinking Continual Learning with Progressive Neural Collapse](../../ICLR2026/model_compression/rethinking_continual_learning_with_progressive_neural_collapse.md)
+- [Revisiting Weight Regularization for Low-Rank Continual Learning](../../ICLR2026/model_compression/revisiting_weight_regularization_for_low-rank_continual_learning.md)
 
 <!-- RELATED:END -->

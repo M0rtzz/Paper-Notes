@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MetaGS: A Meta-Learned Gaussian-Phong Model for Out-of-Distribution 3D Scene Relighting
 description: >-
@@ -146,6 +146,6 @@ MetaGS在合成数据上平均PSNR比NRHints高约3-9dB，比GS3高约2-8dB。
 - [A Unified Interpretation of Training-Time Out-of-Distribution Detection](../../ICCV2025/3d_vision/a_unified_interpretation_of_training-time_out-of-distribution_detection.md)
 - [ROGR: Relightable 3D Objects using Generative Relighting](rogr_relightable_3d_objects_using_generative_relighting.md)
 - [From Programs to Poses: Factored Real-World Scene Generation via Learned Program Libraries](from_programs_to_poses_factored_real-world_scene_generation_via_learned_program_.md)
-- [URDF-Anything: Constructing Articulated Objects with 3D Multimodal Language Model](urdf-anything_constructing_articulated_objects_with_3d_multimodal_language_model.md)
+- [ReCap: Better Gaussian Relighting with Cross-Environment Captures](../../CVPR2025/3d_vision/recap_better_gaussian_relighting_with_cross-environment_captures.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FlashVID: Efficient Video Large Language Models via Training-free Tree-Based Spatiotemporal Token Merging
 description: >-
@@ -129,8 +129,8 @@ FlashVID 包含两个协同模块：(1) ADTS（Attention and Diversity-based Tok
 
 - [Unified Spatiotemporal Token Compression for Video-LLMs at Ultra-Low Retention](../../CVPR2026/video_understanding/unified_spatiotemporal_token_compression_for_video-llms_at_ultra-low_retention.md)
 - [FLoC: Facility Location-Based Efficient Visual Token Compression for Long Video Understanding](floc_facility_location-based_efficient_visual_token_compression_for_long_video_u.md)
+- [Video-Panda: Parameter-efficient Alignment for Encoder-free Video-Language Models](../../CVPR2025/video_understanding/video-panda_parameter-efficient_alignment_for_encoder-free_video-language_models.md)
 - [Video-KTR: 通过关键 Token 归因增强视频推理](video-ktr_reinforcing_video_reasoning_via_key_token_attribution.md)
-- [Listening Between the Frames: Bridging Temporal Gaps in Large Audio-Language Models](../../AAAI2026/video_understanding/listening_between_the_frames_bridging_temporal_gaps_in_large_audio-language_mode.md)
-- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+- [On the Consistency of Video Large Language Models in Temporal Comprehension](../../CVPR2025/video_understanding/on_the_consistency_of_video_large_language_models_in_temporal_comprehension.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3D-GSW: 3D Gaussian Splatting for Robust Watermarking
 description: >-
@@ -126,6 +126,6 @@ $\lambda_{rec}=1, \lambda_{lpips}=0.2, \lambda_w=0.3, \lambda_m=0.4$。Adam优�
 - [DroneSplat: 3D Gaussian Splatting for Robust 3D Reconstruction from In-the-Wild Drone Imagery](dronesplat_3d_gaussian_splatting_for_robust_3d_reconstruction_from_in-the-wild_d.md)
 - [VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM](varsplat_uncertainty-aware_3d_gaussian_splatting_for_robust_rgb-d_slam.md)
 - [3D-HGS: 3D Half-Gaussian Splatting](3d-hgs_3d_half-gaussian_splatting.md)
-- [Mitigating Ambiguities in 3D Classification with Gaussian Splatting](mitigating_ambiguities_in_3d_classification_with_gaussian_splatting.md)
+- [HyperGS: Hyperspectral 3D Gaussian Splatting](hypergs_hyperspectral_3d_gaussian_splatting.md)
 
 <!-- RELATED:END -->

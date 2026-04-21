@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Map the Flow: Revealing Hidden Pathways of Information in VideoLLMs
 description: >-

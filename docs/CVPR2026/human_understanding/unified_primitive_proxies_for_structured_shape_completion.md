@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unified Primitive Proxies for Structured Shape Completion
 description: >-
@@ -134,8 +134,8 @@ tags:
 
 - [TeamHOI: Learning a Unified Policy for Cooperative Human-Object Interactions with Any Team Size](teamhoi_learning_a_unified_policy_for_cooperative_human-object_interactions_with.md)
 - [UniLS: End-to-End Audio-Driven Avatars for Unified Listening and Speaking](unils_end-to-end_audio-driven_avatars_for_unified_listening_and_speaking.md)
+- [Shape My Moves: Text-Driven Shape-Aware Synthesis of Human Motions](../../CVPR2025/human_understanding/shape_my_moves_text-driven_shape-aware_synthesis_of_human_motions.md)
 - [Self-Correction Distillation for Structured Data Question Answering](../../AAAI2026/human_understanding/self-correction_distillation_for_structured_data_question_answering.md)
 - [UniFlow: A Unified Pixel Flow Tokenizer for Visual Understanding and Generation](../../ICLR2026/human_understanding/uniflow_a_unified_pixel_flow_tokenizer_for_visual_understanding_and_generation.md)
-- [Combinative Matching for Geometric Shape Assembly](../../ICCV2025/human_understanding/combinative_matching_for_geometric_shape_assembly.md)
 
 <!-- RELATED:END -->

@@ -1,14 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Continuous Space-Time Video Resampling with Invertible Motion Steganography
 description: >-
-  [CVPR 2025][视频处理][可逆隐写] 提出可逆运动隐写术实现连续时空视频重采样，在下采样中隐藏运动信息用于高质量上采样
+  [CVPR 2025][时空重采样] 提出基于可逆运动隐写术的连续时空视频重采样方法，在时空下采样过程中将运动信息隐藏在低分辨率帧中，上采样时恢复隐藏的运动细节，实现灵活的时空重采样。
 tags:
   - CVPR 2025
-  - 视频重采样
-  - 可逆网络
-  - 运动隐写
-  - 时空超分辨率
+  - 时空重采样
+  - 可逆隐写
+  - 运动保持
+  - 视频超分辨率
+  - 灵活采样率
 ---
 
 # Continuous Space-Time Video Resampling with Invertible Motion Steganography
@@ -61,6 +62,6 @@ tags:
 - [Angular Steering: Behavior Control via Rotation in Activation Space](../../NeurIPS2025/signal_comm/angular_steering_behavior_control_via_rotation_in_activation_space.md)
 - [AcTTA: Rethinking Test-Time Adaptation via Dynamic Activation](../../CVPR2026/signal_comm/actta_rethinking_test-time_adaptation_via_dynamic_activation.md)
 - [ABC-Former: Auxiliary Bimodal Cross-domain Transformer with Interactive Channel Attention](abc-former_auxiliary_bimodal_cross-domain_transformer_with_interactive_channel_a.md)
-- [Radio Frequency Ray Tracing with Neural Object Representation for Enhanced RF Modeling](radio_frequency_ray_tracing_with_neural_object_representation_for_enhanced_rf_mo.md)
+- [Tuning the Frequencies: Robust Training for Sinusoidal Neural Networks](tuning_the_frequencies_robust_training_for_sinusoidal_neural_networks.md)
 
 <!-- RELATED:END -->

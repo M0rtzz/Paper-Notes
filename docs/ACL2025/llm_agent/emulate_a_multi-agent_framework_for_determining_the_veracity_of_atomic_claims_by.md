@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EMULATE: A Multi-Agent Framework for Determining the Veracity of Atomic Claims by Emulating Human Actions
 description: >-

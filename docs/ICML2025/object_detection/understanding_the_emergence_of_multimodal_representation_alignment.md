@@ -145,10 +145,10 @@ $$\text{ALIGN}_{\text{MKNN}}(Z_1, Z_2) = \sum_i \sum_j \mathbf{1}[Z_{1,j} \in kn
 
 ## 相关论文
 
-- [Self-Organizing Visual Prototypes for Non-Parametric Representation Learning](self-organizing_visual_prototypes_for_non-parametric_representation_learning.md)
 - [CLCR: Cross-Level Semantic Collaborative Representation for Multimodal Learning](../../CVPR2026/object_detection/clcr_cross-level_semantic_collaborative_representation_for_multimodal_learning.md)
+- [Self-Organizing Visual Prototypes for Non-Parametric Representation Learning](self-organizing_visual_prototypes_for_non-parametric_representation_learning.md)
 - [FG-CLIP: Fine-Grained Visual and Textual Alignment](fg-clip_fine-grained_visual_and_textual_alignment.md)
 - [Global Context-aware Representation Learning for Spatially Resolved Transcriptomics](global_context-aware_representation_learning_for_spatially_resolved_transcriptom.md)
-- [DetectiumFire: A Comprehensive Multi-modal Dataset Bridging Vision and Language for Fire Understanding](../../NeurIPS2025/object_detection/detectiumfire_a_comprehensive_multi-modal_dataset_bridging_vision_and_language_f.md)
+- [Generative Modeling of Class Probability for Multi-Modal Representation Learning](../../CVPR2025/object_detection/generative_modeling_of_class_probability_for_multi_modal_representation_learning.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Language Models Can Subtly Deceive Without Lying: A Case Study on Strategic Phrasing
 description: >-

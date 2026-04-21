@@ -2,9 +2,15 @@
 title: >-
   [论文解读] Radar: Enhancing Radiology Report Generation with Supplementary Knowledge Injection
 description: >-
-  [医学图像] 提出 Radar 框架，通过区分 LLM 已掌握的可信内部知识和需要外部补充的知识，系统性地融合两种知识源以生成更准确的放射学报告。
+  [ACL 2025][医学图像][radiology report generation] 提出 Radar 框架，通过区分 LLM 已掌握的可信内部知识和需要外部补充的知识，系统性地融合两种知识源以生成更准确的放射学报告。
 tags:
+  - ACL 2025
   - 医学图像
+  - radiology report generation
+  - knowledge injection
+  - supplementary knowledge
+  - LLM
+  - chest X-ray
 ---
 
 # Radar: Enhancing Radiology Report Generation with Supplementary Knowledge Injection
@@ -113,10 +119,10 @@ Radar 在 B-4、ROUGE-L、14-class Macro-F1 和 5-class Micro-F1 上均取得最
 
 ## 相关论文
 
-- [Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](../../ICML2025/medical_imaging/scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
-- [Tracing Pharmacological Knowledge in Large Language Models](../../ICLR2026/medical_imaging/tracing_pharmacological_knowledge_in_large_language_models.md)
-- [GuideGen: A Text-Guided Framework for Paired Full-Torso Anatomy and CT Volume Generation](../../AAAI2026/medical_imaging/guidegen_a_text-guided_framework_for_paired_full-torso_anatomy_and_ct_volume_gen.md)
-- [RAxSS: Retrieval-Augmented Sparse Sampling for Explainable Variable-Length Medical Time Series Classification](../../NeurIPS2025/medical_imaging/raxss_retrieval-augmented_sparse_sampling_for_explainable_variable-length_medica.md)
-- [The Four Color Theorem for Cell Instance Segmentation](../../ICML2025/medical_imaging/the_four_color_theorem_for_cell_instance_segmentation.md)
+- [Automated Structured Radiology Report Generation](automated_structured_radiology_report_generation.md)
+- [Online Iterative Self-Alignment for Radiology Report Generation](oisa_radiology_report_gen.md)
+- [Enhancing Medical Dialogue Generation through Knowledge Refinement and Dynamic Prompt Adjustment](enhancing_medical_dialogue_generation_through_knowledge_refinement_and_dynamic_p.md)
+- [CSTRL: Context-Driven Sequential Transfer Learning for Abstractive Radiology Report Summarization](cstrl_context-driven_sequential_transfer_learning_for_abstractive_radiology_repo.md)
+- [OraPO: Oracle-educated Reinforcement Learning for Data-efficient and Factual Radiology Report Generation](../../CVPR2026/medical_imaging/orapo_oracle_rl_radiology_report_generation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Rotation-Invariant Texture ViT for Fine-Grained Recognition of Esophageal Cancer Endoscopic Ultrasound Images
 description: >-
@@ -126,7 +126,7 @@ SRRM-ViT 的整体流程如下：输入 EUS 图像首先经过关键区域自适
 ## 相关论文
 
 - [DeNAS-ViT: Data Efficient NAS-Optimized Vision Transformer for Ultrasound Image Segmentation](../../AAAI2026/medical_imaging/denas-vit_data_efficient_nas-optimized_vision_transformer_for_ultrasound_image_s.md)
-- [Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting](../../CVPR2026/medical_imaging/prototype-based_knowledge_guidance_for_fine-grained_structured_radiology_reporti.md)
+- [Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting](../../CVPR2026/medical_imaging/prototypebased_knowledge_guidance_for_finegrained.md)
 - [Topology-Preserving Downsampling of Binary Images](topology-preserving_downsampling_of_binary_images.md)
 - [Shape-Guided Configuration-Aware Learning for Endoscopic-Image-Based Pose Estimation of Flexible Robotic Instruments](shape-guided_configuration-aware_learning_for_endoscopic-image-based_pose_estima.md)
 - [Unleashing Video Language Models for Fine-grained HRCT Report Generation](../../CVPR2026/medical_imaging/unleashing_video_language_models_for_fine-grained_hrct_report_generation.md)

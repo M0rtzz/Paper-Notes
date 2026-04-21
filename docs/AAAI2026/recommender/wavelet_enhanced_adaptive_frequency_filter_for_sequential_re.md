@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Wavelet Enhanced Adaptive Frequency Filter for Sequential Recommendation
 description: >-

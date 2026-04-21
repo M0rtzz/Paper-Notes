@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VCWorld: A Biological World Model for Virtual Cell Simulation
 description: >-

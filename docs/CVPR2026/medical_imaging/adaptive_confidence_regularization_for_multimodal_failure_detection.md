@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adaptive Confidence Regularization for Multimodal Failure Detection
 description: >-

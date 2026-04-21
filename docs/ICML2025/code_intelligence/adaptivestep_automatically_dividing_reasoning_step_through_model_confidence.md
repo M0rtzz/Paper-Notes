@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdaptiveStep: Automatically Dividing Reasoning Step through Model Confidence
 description: >-

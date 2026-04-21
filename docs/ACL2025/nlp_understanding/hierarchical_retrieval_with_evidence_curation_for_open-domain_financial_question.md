@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hierarchical Retrieval with Evidence Curation for Open-Domain Financial QA
 description: >-
@@ -172,7 +172,7 @@ HiREC + DeepSeek-14B (38.76) 超越 Dense + GPT-4o (29.22) 达 9%+，说明高�
 - [Beyond Prompting: An Efficient Embedding Framework for Open-Domain Question Answering](embqa_embedding_odqa.md)
 - [NeuSym-RAG: Hybrid Neural Symbolic Retrieval with Multiview Structuring for PDF Question Answering](neusym_rag_pdf_qa.md)
 - [Towards a More Generalized Approach in Open Relation Extraction](generalized_open_relation_extract.md)
-- [Automatic Generation of Inference Making Questions for Reading Comprehension Assessments](automatic_generation_of_inference_making_questions_for_reading_comprehension_ass.md)
-- [BookCoref: Coreference Resolution at Book Scale](bookcoref_book_scale.md)
+- [A Variational Approach for Mitigating Entity Bias in Relation Extraction](a_variational_approach_for_mitigating_entity_bias_in_relation_extraction.md)
+- [Disambiguate First, Parse Later: Generating Interpretations for Ambiguity Resolution in Semantic Parsing](disambiguate_first_parse_later_generating_interpretations_for_ambiguity_resoluti.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GenIR: Generative Visual Feedback for Mental Image Retrieval
 description: >-

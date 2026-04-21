@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploring Multimodal Challenges in Toxic Chinese Detection: Taxonomy, Benchmark, and Findings
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] What's the Plan? Metrics for Implicit Planning in LLMs and Their Application to Rhyme Generation and Question Answering
 description: >-

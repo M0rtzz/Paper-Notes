@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NGD: Neural Gradient Based Deformation for Monocular Garment Reconstruction
 description: >-

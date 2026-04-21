@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CLR-GAN: Improving GANs Stability and Quality via Consistent Latent Representation and Reconstruction
 description: >-

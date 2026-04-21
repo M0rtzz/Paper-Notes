@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 医学图像方向 60篇论文解读
+  CVPR2025 医学图像方向 77篇论文解读
 description: >-
-  60篇CVPR2025 医学图像方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  77篇CVPR2025 医学图像方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**📷 CVPR2025** · **60** 篇论文解读
+**📷 CVPR2025** · **77** 篇论文解读
 
 **[A Semi-Supervised Framework for Breast Ultrasound Segmentation with Training-Free Pseudo-Label Generation and Label Refinement](a_semi-supervised_framework_for_breast_ultrasound_segmentation_with_training-fre.md)**
 
@@ -188,6 +188,10 @@ description: >-
 
 :   NOIR 将医学图像计算任务重新建模为连续函数空间之间的算子学习问题，通过隐式神经表示(INR)将离散医学信号嵌入连续函数空间，再用神经算子(NO)学习函数间的映射，实现分辨率无关的分割、形状补全、图像翻译和合成。
 
+**[Noise-Consistent Siamese-Diffusion for Medical Image Synthesis and Segmentation](noise-consistent_siamese-diffusion_for_medical_image_synthesis_and_segmentation.md)**
+
+:   Siamese-Diffusion 提出双组件扩散模型（Image-Diffusion + Mask-Diffusion）生成合成医学图像-掩码对用于数据增强，训练时通过噪声一致性损失（参数空间约束）让 Mask-Diffusion 学习图像扩散的形态先验，推理时仅用 Mask-Diffusion 保持多样性，在 Polyps 数据集上 mDice 提升 3.6%。
+
 **[Novel Architecture of RPA In Oral Cancer Lesion Detection](novel_architecture_of_rpa_in_oral_cancer_lesion_detection.md)**
 
 :   本文将 Singleton 和 Batch Processing 设计模式集成到基于 Python 的 RPA 自动化管道中，结合 EfficientNetV2B1 模型实现口腔癌病灶检测，相比 UiPath/Automation Anywhere 等传统 RPA 平台实现 60-100× 的推理加速。
@@ -204,6 +208,10 @@ description: >-
 
 :   ProtoSR 提出从大规模自由文本放射学报告中挖掘模板对齐的原型知识库，并通过原型条件化的后期融合残差模块注入结构化报告预测，在 Rad-ReStruct 基准上实现 SOTA，尤其在细粒度属性问题 (L3) 上获得 72.1% 的相对提升。
 
+**[Reanimating Images using Neural Representations of Dynamic Stimuli](reanimating_images_using_neural_representations_of_dynamic_stimuli.md)**
+
+:   提出 BrainNRDS 框架，将静态图像表征与运动生成解耦，利用 fMRI 脑活动解码光流信息，结合运动条件扩散模型从初始帧生成视频，同时发现视频编码器（VideoMAE）在预测脑活动方面优于图像编码器。
+
 **[Reinforcing the Weakest Links: Modernizing SIENA with Targeted Deep Learning Integration](reinforcing_the_weakest_links_modernizing_siena_with_targeted_deep_learning_inte.md)**
 
 :   将深度学习模块（SynthStrip/SynthSeg）模块化替换 SIENA 管线中的经典颅骨剥离和组织分割步骤，在保留管线可解释性的前提下显著提升纵向脑萎缩（PBVC）估计的临床敏感性和鲁棒性。在 ADNI 和 PPMI 两个纵向队列上验证。
@@ -212,9 +220,25 @@ description: >-
 
 :   针对无任务 ID 和无数据回放的领域增量学习（DIL），提出 Residual SODAP 框架，通过 α-entmax 稀疏 prompt 选择与残差聚合、基于特征统计的伪回放蓏馏、prompt 使用模式漂移检测和不确定性加权，同时解决表示适配和分类器遗忘问题。在 DR、皮肤癌和 CORe50 上均达 SOTA。
 
+**[Revisiting MAE Pre-Training for 3D Medical Image Segmentation](revisiting_mae_pre-training_for_3d_medical_image_segmentation.md)**
+
+:   本文系统性地解决了 3D 医学影像 SSL 研究的三大陷阱（小数据、非 SOTA 架构、评估不足），在 39K 脑部 MRI 上用优化后的 MAE 预训练 ResEnc U-Net CNN，在 11 个下游分割数据集上平均超越 nnU-Net 基线约 3 个 Dice 点。
+
+**[SACB-Net: Spatial-Awareness Convolutions for Medical Image Registration](sacb-net_spatial-awareness_convolutions_for_medical_image_registration.md)**
+
+:   提出3D空间感知卷积块（SACB），通过对特征图进行无监督聚类并为不同空间区域生成自适应卷积核，结合金字塔流估计器实现多尺度形变场组合，在脑部和腹部CT配准任务上超越现有SOTA方法。
+
 **[SALIENT: Frequency-Aware Paired Diffusion for Controllable Long-Tail CT Detection](salient_frequency-aware_paired_diffusion_for_controllable_long-tail_ct_detection.md)**
 
 :   提出 SALIENT，一个基于小波域扩散的掩码条件生成框架，通过频率感知的可解释优化目标和配对的病灶-掩码体积生成，实现长尾 CT 检测中可控、高效的合成数据增强与精度拯救。首次系统表征增强剂量-反应曲线。
+
+**[SapiensID: Foundation for Human Recognition](sapiensid_foundation_for_human_recognition.md)**
+
+:   本文提出 SapiensID，一个统一的人体识别模型，通过 Retina Patch（动态 patch 分配）、Masked Recognition Model（可变 token 长度训练）和 Semantic Attention Head（基于关键点的姿态不变特征池化）三大设计，首次在一个模型中同时处理人脸和全身识别任务，在多个 ReID 基准上达到 SOTA。
+
+**[SeaLion: Semantic Part-Aware Latent Point Diffusion Models for 3D Generation](sealion_semantic_part-aware_latent_point_diffusion_models_for_3d_generation.md)**
+
+:   提出 SeaLion，通过语义部件感知的潜点扩散技术，在去噪过程中联合预测噪声和逐点分割标签，并以分割标签为条件解码点云，生成具有高质量部件间一致性和精确分割标签的 3D 点云；同时提出 part-aware Chamfer distance (p-CD) 评价指标，在 ShapeNet 和 IntrA 数据集上大幅超越 DiffFacto。
 
 **[Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)**
 
@@ -223,6 +247,22 @@ description: >-
 **[SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](semitooth_a_generalizable_semi-supervised_framework_for_multi-source_tooth_segme.md)**
 
 :   提出 SemiTooth 多教师多学生半监督框架，通过 Stricter Weighted-Confidence Constraint 实现多源 CBCT 牙齿分割的跨域泛化。
+
+**[Show and Segment: Universal Medical Image Segmentation via In-Context Learning](show_and_segment_universal_medical_image_segmentation_via_in-context_learning.md)**
+
+:   提出Iris框架，通过轻量级任务编码模块从参考图像-标签对中提取任务嵌入来指导目标图像分割，无需微调即可适应新任务，在12个数据集上达到或超越任务特定模型性能，在7个未见数据集上展示出优秀的泛化能力。
+
+**[T-FAKE: Synthesizing Thermal Images for Facial Landmarking](t-fake_synthesizing_thermal_images_for_facial_landmarking.md)**
+
+:   提出 T-FAKE 数据集和 RGB2Thermal 损失函数，通过半监督热红外图像合成生成首个大规模合成热红外面部关键点数据集（20万张图像），在热红外域实现 SOTA 的稀疏/稠密面部关键点检测。
+
+**[TopoCellGen: Generating Histopathology Cell Topology with a Diffusion Model](topocellgen_generating_histopathology_cell_topology_with_a_diffusion_model.md)**
+
+:   本文提出 TopoCellGen，首个在数字病理学中生成多类细胞拓扑布局的扩散模型，通过持久同调（persistent homology）引入类内空间一致性和类间结构正则化约束，并提出拓扑 Fréchet 距离（TopoFD）评估指标。
+
+**[Towards All-in-One Medical Image Re-Identification](towards_all-in-one_medical_image_re-identification.md)**
+
+:   提出 MaMI，首个全模态统一的医学图像重识别模型，通过连续模态参数适配器 (ComPA) 动态生成模态特定参数，并利用医学基础模型的差异特征对齐传递医学先验，在 11 个数据集上超越 25 个基础模型和 8 个大语言模型。
 
 **[Transformer-Based Multi-Region Segmentation and Radiomic Analysis of HR-pQCT Imaging for Osteoporosis Classification](transformer-based_multi-region_segmentation_and_radiomic_analysis_of_hr-pqct_ima.md)**
 
@@ -240,6 +280,10 @@ description: >-
 
 :   提出 UNIStainNet，首次将冻结病理基础模型 UNI 的稠密空间 token 作为生成器的直接条件信号，实现 H&E 到 IHC 的虚拟染色，单一统一模型同时服务四种 IHC 标记物并达到 SOTA。
 
+**[UniVAD: A Training-free Unified Model for Few-shot Visual Anomaly Detection](univad_a_training-free_unified_model_for_few-shot_visual_anomaly_detection.md)**
+
+:   本文提出 UniVAD，一个免训练的统一少样本视觉异常检测方法，通过上下文组件聚类（C3）模块实现精准组件分割，结合组件感知的 patch 匹配和图增强组件建模，仅需少量正常样本即可在工业、逻辑和医学三个领域实现 SOTA 异常检测。
+
 **[Unleashing Video Language Models for Fine-grained HRCT Report Generation](unleashing_video_language_models_for_fine-grained_hrct_report_generation.md)**
 
 :   提出 AbSteering 框架，通过异常中心化 CoT 训练和基于临床混淆异常硬负例的 DPO 优化，将通用视频语言模型（VideoLMs）高效迁移到 HRCT 报告生成任务，性能超越专用 CT 基础模型。
@@ -247,3 +291,27 @@ description: >-
 **[Unmasking Biases and Reliability Concerns in Convolutional Neural Networks Analysis of Cancer Pathology Images](unmasking_biases_and_reliability_concerns_in_convolutional_neural_networks_analy.md)**
 
 :   通过从 13 个癌症病理基准数据集中裁剪 20×20 像素的背景区域（不含任何临床诊断信息）训练 ResNet50/DenseNet121/InceptionV3/VGG16 四种 CNN，发现分类准确率远高于随机猜测（最高达 93%），系统性揭示了 CNN 在癌症病理分析中可能依赖数据集采集偏差（如染色协议、扫描仪差异）而非真正的病理特征进行判断。
+
+**[Unraveling Normal Anatomy via Fluid-Driven Anomaly Randomization](unraveling_normal_anatomy_via_fluid-driven_anomaly_randomization.md)**
+
+:   UNA 提出基于流体驱动的异常随机化方法，通过对流-扩散 PDE 在线生成无限多样的病理模式，实现首个模态无关的脑部正常解剖重建模型，可同时处理健康和病变的 CT/MRI 扫描。
+
+**[Unsupervised Foundation Model-Agnostic Slide-Level Representation Learning](unsupervised_foundation_model-agnostic_slide-level_representation_learning.md)**
+
+:   提出 Cobra，一种无监督的基础模型无关 (FM-agnostic) 全切片图像 (WSI) 级别表征学习框架：将来自多个预训练 patch 级基础模型的嵌入作为特征空间增广，通过 Mamba-2 编码器和对比学习训练 slide 编码器，仅用 3048 张 WSI 预训练即在 15 个下游任务上平均 AUC 超过现有 slide 编码器至少 +4.4%。
+
+**[vesselFM: A Foundation Model for Universal 3D Blood Vessel Segmentation](vesselfm_a_foundation_model_for_universal_3d_blood_vessel_segmentation.md)**
+
+:   vesselFM 是首个专为 3D 血管分割设计的基础模型，通过整合三种异构数据源——精心策划的大规模真实标注数据集、域随机化合成数据和基于 flow matching 的生成数据——实现了跨四种临床成像模态的零样本、单样本和少样本分割 SOTA。
+
+**[VISTA3D: A Unified Segmentation Foundation Model For 3D Medical Imaging](vista3d_a_unified_segmentation_foundation_model_for_3d_medical_imaging.md)**
+
+:   提出VISTA3D，首个统一的3D医学影像分割基础模型，同时支持127类的自动分割、3D交互式编辑和零样本分割，通过从SAM蒸馏的3D超体素技术实现SOTA零样本性能，在14个数据集上达到或超过专门训练的专家模型。
+
+**[WISE: A Framework for Gigapixel Whole-Slide-Image Lossless Compression](wise_a_framework_for_gigapixel_whole-slide-image_lossless_compression.md)**
+
+:   针对 WSI 图像的"信息不规则性"（高频信号广泛分布+高波动性）导致现有无损压缩方法失效的问题，提出 WISE 三步压缩框架（层次投影编码→位图编码→字典编码），实现平均 36 倍、最高 136 倍的无损压缩。
+
+**[ZoomLDM: Latent Diffusion Model for Multi-Scale Image Generation](zoomldm_latent_diffusion_model_for_multi-scale_image_generation.md)**
+
+:   ZoomLDM 提出了一个尺度条件的潜在扩散模型，通过可训练的 Summarizer 模块构建跨倍率潜在空间，实现了病理图像在多个尺度下的高质量生成，并首次支持最大 $4096 \times 4096$ 像素的全局一致大图像合成和无训练超分辨率。

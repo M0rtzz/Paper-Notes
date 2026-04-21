@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Accelerating Parallel Diffusion Model Serving with Residual Compression
 description: >-
@@ -141,9 +141,9 @@ Compact-2bit 的 FID (3.26) 和 LPIPS (0.114) 远优于 DistriFusion (9.91/0.310
 ## 相关论文
 
 - [Tortoise and Hare Guidance: Accelerating Diffusion Model Inference with Multirate Integration](tortoise_and_hare_guidance_accelerating_diffusion_model_inference_with_multirate.md)
+- [Random Conditioning for Diffusion Model Compression with Distillation](../../CVPR2025/image_generation/random_conditioning_for_diffusion_model_compression_with_distillation.md)
 - [BlurDM: A Blur Diffusion Model for Image Deblurring](blurdm_a_blur_diffusion_model_for_image_deblurring.md)
+- [PCM: Picard Consistency Model for Fast Parallel Sampling of Diffusion Models](../../CVPR2025/image_generation/pcm_picard_consistency_model_for_fast_parallel_sampling_of_diffusion_models.md)
 - [BADiff: Bandwidth Adaptive Diffusion Model](badiff_bandwidth_adaptive_diffusion_model.md)
-- [GSPN-2: Efficient Parallel Sequence Modeling](gspn-2_efficient_parallel_sequence_modeling.md)
-- [Accelerating Diffusion Model Training under Minimal Budgets: A Condensation-Based Perspective](../../CVPR2026/image_generation/accelerating_diffusion_model_training_under_minimal_budgets_a_condensation-based.md)
 
 <!-- RELATED:END -->

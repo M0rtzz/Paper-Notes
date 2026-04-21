@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] It's Not a Walk in the Park! Challenges of Idiom Translation in Speech-to-text Systems
 description: >-

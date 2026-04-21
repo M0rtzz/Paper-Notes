@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dense Policy: Bidirectional Autoregressive Learning of Actions
 description: >-

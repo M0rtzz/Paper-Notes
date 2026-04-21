@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Evaluating the Evaluators: Metrics for Compositional Text-to-Image Generation
 description: >-

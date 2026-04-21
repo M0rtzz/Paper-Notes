@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FireGNN: Neuro-Symbolic Graph Neural Networks with Trainable Fuzzy Rules for Interpretable Medical Image Classification
 description: >-

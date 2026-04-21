@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling Video-Language Models to 10K Frames via Hierarchical Differential Distillation
 description: >-
@@ -129,9 +129,9 @@ $$\mathcal{L} = -\log P(A | \{\boldsymbol{h}_k^m | f_k \in \mathcal{K}\} \cup \{
 ## 相关论文
 
 - [Unifying Specialized Visual Encoders for Video Language Models](unifying_specialized_visual_encoders_for_video_language_models.md)
+- [Video Summarization with Large Language Models](../../CVPR2025/video_understanding/video_summarization_with_large_language_models.md)
 - [Listening Between the Frames: Bridging Temporal Gaps in Large Audio-Language Models](../../AAAI2026/video_understanding/listening_between_the_frames_bridging_temporal_gaps_in_large_audio-language_mode.md)
+- [VoCo-LLaMA: Towards Vision Compression with Large Language Models](../../CVPR2025/video_understanding/voco-llama_towards_vision_compression_with_large_language_models.md)
 - [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
-- [Factorized Learning for Temporally Grounded Video-Language Models](../../ICCV2025/video_understanding/factorized_learning_for_temporally_grounded_video-language_models.md)
-- [Efficient Transfer Learning for Video-language Foundation Models](../../CVPR2025/video_understanding/efficient_transfer_learning_for_video-language_foundation_models.md)
 
 <!-- RELATED:END -->

@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 图像恢复方向 24篇论文解读
+  CVPR2025 图像恢复方向 38篇论文解读
 description: >-
-  24篇CVPR2025 图像恢复方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  38篇CVPR2025 图像恢复方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🖼️ 图像恢复
 
-**📷 CVPR2025** · **24** 篇论文解读
+**📷 CVPR2025** · **38** 篇论文解读
 
 **[A Flag Decomposition for Hierarchical Datasets](a_flag_decomposition_for_hierarchical_datasets.md)**
 
@@ -38,7 +38,7 @@ description: >-
 
 **[DarkIR: Robust Low-Light Image Restoration](darkir_robust_low-light_image_restoration.md)**
 
-:   提出 DarkIR，一种面向低光照多任务修复（去噪+去模糊+增强）的 CNN 端到端框架，编码器用频域注意力 FreMLP 纠正光照、解码器用膨胀空间注意力 Di-SpAM 去模糊，以 Restormer 1/5 参数和 1/5 计算量超越其 PSNR。
+:   DarkIR 提出一种高效 CNN 多任务低光照图像恢复方法，编码器用 SpAM+FreMLP（频域幅值增强）处理光照，解码器用 Di-SpAM（空洞空间注意力）处理模糊，不对称设计仅 3.31M 参数在 LOLBlur 上达 27.30dB PSNR。
 
 **[Degradation-Aware Feature Perturbation for All-in-One Image Restoration](degradation-aware_feature_perturbation_for_all-in-one_image_restoration.md)**
 
@@ -51,6 +51,10 @@ description: >-
 **[DiffFNO: Diffusion Fourier Neural Operator](difffno_diffusion_fourier_neural_operator.md)**
 
 :   提出 DiffFNO，将加权傅里叶神经算子（WFNO，通过模式重平衡保留高频傅里叶模式）与扩散框架结合，配合门控融合机制和自适应时间步 ODE 求解器，实现任意尺度图像超分辨率，在 DIV2K 多尺度上比 SRNO/LMI 提升 0.3-1.0 dB PSNR。
+
+**[DnLUT: Ultra-Efficient Color Image Denoising via Channel-Aware Lookup Tables](dnlut_ultra-efficient_color_image_denoising_via_channel-aware_lookup_tables.md)**
+
+:   提出基于查找表(LUT)的超高效彩色图像去噪框架 DnLUT，通过 Pairwise Channel Mixer (PCM) 捕获通道间相关性和 L 形卷积核扩展感受野，仅需 500KB 存储和 DnCNN 0.1% 的能耗即可实现 SOTA 的 LUT 去噪性能。
 
 **[EchoMimicV2: Towards Striking, Simplified, and Semi-Body Human Animation](echomimicv2_towards_striking_simplified_and_semi-body_human_animation.md)**
 
@@ -92,14 +96,66 @@ description: >-
 
 :   提出 MambaIRv2，通过 Attentive State-space Equation（ASE）在 Mamba 的输出矩阵 $\mathbf{C}$ 中注入可学习 prompt 实现类似注意力的非因果全局查询，并用 Semantic Guided Neighboring（SGN）按语义标签重排序列缓解长距离衰减，仅需单方向扫描即超越多方向方法，轻量 SR 上以 9.3% 更少参数超 SRFormer 0.35dB。
 
+**[One-Step Event-Driven High-Speed Autofocus](one-step_event-driven_high-speed_autofocus.md)**
+
+:   提出Event Laplacian Product (ELP)对焦检测函数，结合事件数据与灰度拉普拉斯信息，将对焦搜索重新定义为检测任务，首次实现事件驱动的一步自动对焦，对焦时间减少2/3，对焦误差降低22-24倍。
+
+**[PIDSR: Complementary Polarized Image Demosaicing and Super-Resolution](pidsr_complementary_polarized_image_demosaicing_and_super-resolution.md)**
+
+:   PIDSR 提出了一个将偏振图像去马赛克（PID）和超分辨率（PISR）联合互补优化的框架，通过两阶段循环管线（空间-物理相干重建 + 偏振感知分辨率增强）和 Stokes 辅助网络，从 CPFA 原始图像直接获得高质量高分辨率偏振图像，显著减少了 DoP 和 AoP 的误差。
+
+**[Pixel-level and Semantic-level Adjustable Super-resolution: A Dual-LoRA Approach](pixel-level_and_semantic-level_adjustable_super-resolution_a_dual-lora_approach.md)**
+
+:   提出PiSA-SR，通过双LoRA模块将像素级回归和语义级增强解耦到两个独立权重空间，实现单步扩散高质量超分辨率，并支持推理时通过两个引导尺度灵活调节保真度和感知质量。
+
 **[POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction with Application to Strong Lens Discovery](polishing_the_sky_wide-field_and_high-dynamic_range_interferometric_image_recons.md)**
 
 :   在 POLISH 框架基础上提出 POLISH+/++，通过**分块训练+拼接推理**和**arcsinh 非线性变换**两项改进，使深度学习方法首次能处理宽视场（12,960×12,960 像素）、高动态范围（~10⁶）的射电干涉成像，并展示了超分辨率对强引力透镜发现的 10× 提升潜力。
+
+**[Prior Does Matter: Visual Navigation via Denoising Diffusion Bridge Models](prior_does_matter_visual_navigation_via_denoising_diffusion_bridge_models.md)**
+
+:   NaviBridger 将去噪扩散桥模型（DDBM）引入视觉导航任务，用信息丰富的先验动作替代高斯噪声作为去噪起点，理论证明源分布越接近目标分布误差上界越低，并设计了高斯/规则/学习三种先验策略，在室内外仿真和真实场景中均加速推理并超越基线。
+
+**[Progressive Focused Transformer for Single Image Super-Resolution](progressive_focused_transformer_for_single_image_super-resolution.md)**
+
+:   PFT 提出渐进聚焦注意力（PFA）机制，通过在相邻 Transformer 层之间传递注意力图的 Hadamard 乘积，实现逐层筛选不相关 token 并增强关键 token 的权重，在超分辨率任务上达到 SOTA 性能的同时显著降低计算开销。
+
+**[Proximal Algorithm Unrolling: Flexible and Efficient Reconstruction Networks for Single-Pixel Imaging](proximal_algorithm_unrolling_flexible_and_efficient_reconstruction_networks_for_.md)**
+
+:   提出 ProxUnroll 方法，通过设计近端轨迹（PT）损失函数训练 HQS/ADMM 展开网络，使其中的深度图像修复器（DIR）逼近理想正则化的近端算子，从而让展开网络同时具备 PnP 算法的灵活性（一个模型处理任意压缩比）和展开网络的高精度高速度。
+
+**[QMambaBSR: Burst Image Super-Resolution with Query State Space Model](qmambabsr_burst_image_super-resolution_with_query_state_space_model.md)**
+
+:   提出 QMambaBSR，通过 Query State Space Model（QSSM）实现帧间查询和帧内扫描的联合子像素提取与噪声抑制，结合自适应上采样模块，在合成和真实连拍超分辨率任务上达到 SOTA。
+
+**[Rotation-Equivariant Self-Supervised Method in Image Denoising](rotation-equivariant_self-supervised_method_in_image_denoising.md)**
+
+:   首次将旋转等变卷积引入自监督图像去噪，严格分析了上/下采样算子对等变性的影响并给出 U-Net 完整网络的等变误差界，进一步提出自适应旋转等变网络 AdaReNet，通过 Mask 融合模块自动决定图像哪些区域更适合使用旋转等变网络，在 N2N、N2V、R2R 三种典型自监督方法上均取得一致性能提升。
+
+**[Tokenize Image Patches: Global Context Fusion for Effective Haze Removal in Large Images](tokenize_image_patches_global_context_fusion_for_effective_haze_removal_in_large.md)**
+
+:   DehazeXL 提出了一种端到端的大图像去雾方法，将输入图像分割为固定大小的 patch 并编码为 token，通过高效全局注意力模块融合上下文信息，使得在仅 21GB 显存下即可推理 10240×10240 图像，并在自建的 8K 去雾数据集上达到 SOTA。
 
 **[OptiFusion: Towards Universal Computational Aberration Correction in Photographic Cameras](towards_universal_computational_aberration_correction_in_photographic_cameras_a_.md)**
 
 :   扩展 OptiFusion 自动设计 120 种多样化镜头，提出 ODE 综合评估指标和大规模 benchmark，系统对比 24 种算法，发现 CNN 模型在像差校正中提供最佳速度-精度权衡，反直觉地超越 Transformer。
 
+**[URWKV: Unified RWKV Model with Multi-State Perspective for Low-Light Image Restoration](urwkv_unified_rwkv_model_with_multi-state_perspective_for_low-light_image_restor.md)**
+
+:   提出 URWKV 模型，在 RWKV 架构中引入多状态（intra-stage 和 inter-stage）视角，通过亮度自适应归一化（LAN）、多状态聚合的 token shift（SQ-Shift）和状态感知选择性融合（SSF）模块，用一个统一模型处理低光图像的动态耦合退化（噪声、亮度失真、运动模糊），参数量仅 2.25M 即在 8 个基准数据集上全面超越现有方法。
+
 **[Variational Garrote for Sparse Inverse Problems](variational_garrote_for_sparse_inverse_problems.md)**
 
 :   系统比较 $\ell_1$ 正则化 (LASSO) 与 Variational Garrote (VG, 概率 $\ell_0$ 近似) 在信号重采样、去噪和稀疏视角 CT 重建三种逆问题上的表现，发现 VG 在强欠定情况下（采样率低/角度稀疏）通常获得更低的泛化误差，因为 spike-and-slab 先验与真实稀疏分布更匹配。
+
+**[DiTFlow: Video Motion Transfer with Diffusion Transformers](video_motion_transfer_with_diffusion_transformers.md)**
+
+:   DiTFlow提出了首个专为扩散Transformer(DiT)设计的运动迁移方法，通过分析跨帧注意力图提取Attention Motion Flow(AMF)作为逐patch的运动信号，以无训练的优化方式引导新视频生成复现参考视频的运动模式。
+
+**[Vision-Language Gradient Descent-driven All-in-One Deep Unfolding Networks](vision-language_gradient_descent-driven_all-in-one_deep_unfolding_networks.md)**
+
+:   提出 VLU-Net，首个全合一(All-in-One)深度展开网络(DUN)框架，利用微调 CLIP 模型自动检测退化类型并引导梯度下降模块，结合层次化特征展开结构，在去雾上超越最佳端到端方法 3.74dB。
+
+**[Visual-Instructed Degradation Diffusion for All-in-One Image Restoration](visual-instructed_degradation_diffusion_for_all-in-one_image_restoration.md)**
+
+:   Defusion 提出用"视觉指令"替代文本指令来引导 all-in-one 图像复原，通过将退化效果施加到标准化视觉元素上构建可视化的退化描述，并在退化空间（而非图像空间）进行扩散去噪，在 8 个复原任务上超越 task-specific 和 all-in-one 方法。

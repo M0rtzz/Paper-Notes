@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LVFace: Progressive Cluster Optimization for Large Vision Models in Face Recognition
 description: >-
@@ -178,8 +178,8 @@ LVFace 采用标准 ViT 作为骨干网络，配合 MLP 头（两层 512-d FC + 
 
 - [Bi-Level Optimization for Self-Supervised AI-Generated Face Detection](bi-level_optimization_for_self-supervised_ai-generated_face_detection.md)
 - [On Large Multimodal Models as Open-World Image Classifiers](on_large_multimodal_models_as_open-world_image_classifiers.md)
+- [CryptoFace: End-to-End Encrypted Face Recognition](../../CVPR2025/human_understanding/cryptoface_end-to-end_encrypted_face_recognition.md)
 - [Learning to Watermark: A Selective Watermarking Framework for Large Language Models via Multi-Objective Optimization](../../NeurIPS2025/human_understanding/learning_to_watermark_a_selective_watermarking_framework_for_large_language_mode.md)
 - [From Easy to Hard: The MIR Benchmark for Progressive Interleaved Multi-Image Reasoning](from_easy_to_hard_the_mir_benchmark_for_progressive_interleaved_multi-image_reas.md)
-- [AdaDistill: Adaptive Knowledge Distillation for Deep Face Recognition](../../ECCV2024/human_understanding/adadistill_adaptive_knowledge_distillation_for_deep_face_rec.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Event-based Mosaicing Bundle Adjustment
 description: >-

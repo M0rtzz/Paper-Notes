@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unveiling the Power of Source: Source-based Minimum Bayes Risk Decoding for Neural Machine Translation
 description: >-

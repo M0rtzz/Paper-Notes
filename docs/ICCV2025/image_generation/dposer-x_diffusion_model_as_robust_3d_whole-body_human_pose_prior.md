@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DPoser-X: Diffusion Model as Robust 3D Whole-Body Human Pose Prior
 description: >-
@@ -161,9 +161,9 @@ Mixed 策略在零样本泛化（Fit3D 运动场景）上显著优于 fused，�
 ## 相关论文
 
 - [InterMimic: Towards Universal Whole-Body Control for Physics-Based Human-Object Interactions](../../CVPR2025/image_generation/intermimic_towards_universal_whole-body_control_for_physics-based_human-object_i.md)
+- [DeClotH: Decomposable 3D Cloth and Human Body Reconstruction from a Single Image](../../CVPR2025/image_generation/decloth_decomposable_3d_cloth_and_human_body_reconstruction_from_a_single_image.md)
 - [DIIP: Diffusion Image Prior](diffusion_image_prior.md)
+- [Visual Persona: Foundation Model for Full-Body Human Customization](../../CVPR2025/image_generation/visual_persona_foundation_model_for_full-body_human_customization.md)
 - [Dual Recursive Feedback on Generation and Appearance Latents for Pose-Robust Text-to-Image Diffusion](dual_recursive_feedback_on_generation_and_appearance_latents_for_pose-robust_tex.md)
-- [Diffusion-based 3D Hand Motion Recovery with Intuitive Physics](diffusion-based_3d_hand_motion_recovery_with_intuitive_physics.md)
-- [Towards Robust Defense against Customization via Protective Perturbation Resistant to Diffusion-based Purification](towards_robust_defense_against_customization_via_protective_perturbation_resista.md)
 
 <!-- RELATED:END -->

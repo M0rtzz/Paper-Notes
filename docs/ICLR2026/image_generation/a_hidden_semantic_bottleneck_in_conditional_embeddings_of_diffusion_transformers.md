@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Hidden Semantic Bottleneck in Conditional Embeddings of Diffusion Transformers
 description: >-

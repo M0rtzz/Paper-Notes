@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stop Summation: Min-Form Credit Assignment Is All Process Reward Model Needs for Reasoning
 description: >-

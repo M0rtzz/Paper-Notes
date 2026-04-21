@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Diffusion-4K: Ultra-High-Resolution Image Synthesis with Latent Diffusion Models
 description: >-
@@ -68,9 +68,9 @@ tags:
 ## 相关论文
 
 - [Multi-focal Conditioned Latent Diffusion for Person Image Synthesis](multi-focal_conditioned_latent_diffusion_for_person_image_synthesis.md)
+- [UltraFusion: Ultra High Dynamic Imaging using Exposure Fusion](ultrafusion_ultra_high_dynamic_imaging_using_exposure_fusion.md)
 - [RepLDM: Reprogramming Pretrained Latent Diffusion Models for High-Quality, High-Efficiency, High-Resolution Image Generation](../../NeurIPS2025/image_generation/repldm_reprogramming_pretrained_latent_diffusion_models_for_high-quality_high-ef.md)
 - [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](../../CVPR2026/image_generation/pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
-- [Arbitrary-Steps Image Super-Resolution via Diffusion Inversion](arbitrary-steps_image_super-resolution_via_diffusion_inversion.md)
-- [GenDeg: Diffusion-based Degradation Synthesis for Generalizable All-In-One Image Restoration](gendeg_diffusion-based_degradation_synthesis_for_generalizable_all-in-one_image_.md)
+- [Nested Diffusion Models Using Hierarchical Latent Priors](nested_diffusion_models_using_hierarchical_latent_priors.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Presto: Long Video Diffusion Generation with Segmented Cross-Attention and Content-Rich Video Data Curation
 description: >-
@@ -136,8 +136,8 @@ Presto 基于 Allegro（2.8B 参数的 DiT 模型）构建。输入端将每个�
 
 - [Radial Attention: O(n log n) Sparse Attention with Energy Decay for Long Video Generation](../../NeurIPS2025/video_generation/radial_attention_onlog_n_sparse_attention_with_energy_decay_for_long_video_gener.md)
 - [LongDiff: Training-Free Long Video Generation in One Go](longdiff_training-free_long_video_generation_in_one_go.md)
-- [When to Lock Attention: Training-Free KV Control in Video Diffusion](when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
-- [Data-Juicer Sandbox: A Feedback-Driven Suite for Multimodal Data-Model Co-development](../../ICML2025/video_generation/data-juicer_sandbox_a_feedback-driven_suite_for_multimodal_data-model_co-develop.md)
-- [Long Context Tuning for Video Generation](../../ICCV2025/video_generation/long_context_tuning_for_video_generation.md)
+- [StreamingT2V: Consistent, Dynamic, and Extendable Long Video Generation from Text](streamingt2v_consistent_dynamic_and_extendable_long_video_generation_from_text.md)
+- [VideoGigaGAN: Towards Detail-rich Video Super-Resolution](videogigagan_towards_detail-rich_video_super-resolution.md)
+- [Protecting Your Video Content: Disrupting Automated Video-Based LLM Annotations](protecting_your_video_content_disrupting_automated_video-based_llm_annotations.md)
 
 <!-- RELATED:END -->

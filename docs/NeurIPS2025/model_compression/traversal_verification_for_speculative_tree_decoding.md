@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Traversal Verification for Speculative Tree Decoding
 description: >-

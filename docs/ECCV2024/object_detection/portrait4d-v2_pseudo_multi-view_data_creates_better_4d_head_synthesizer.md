@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Portrait4D-v2: Pseudo Multi-View Data Creates Better 4D Head Synthesizer
 description: >-
@@ -151,9 +151,9 @@ tags:
 ## 相关论文
 
 - [Deep Incomplete Multi-View Clustering via Hierarchical Imputation and Alignment](../../AAAI2026/object_detection/deep_incomplete_multi-view_clustering_via_hierarchical_imputation_and_alignment.md)
+- [Pippo: High-Resolution Multi-View Humans from a Single Image](../../CVPR2025/object_detection/pippo_high-resolution_multi-view_humans_from_a_single_image.md)
 - [ViewSRD: 3D Visual Grounding via Structured Multi-View Decomposition](../../ICCV2025/object_detection/viewsrd_3d_visual_grounding_via_structured_multi-view_decomposition.md)
 - [SketchSplat: 3D Edge Reconstruction via Differentiable Multi-view Sketch Splatting](../../ICCV2025/object_detection/sketchsplat_3d_edge_reconstruction_via_differentiable_multi-view_sketch_splattin.md)
-- [REXO: Indoor Multi-View Radar Object Detection via 3D Bounding Box Diffusion](../../AAAI2026/object_detection/rexo_indoor_multi-view_radar_object_detection_via_3d_bounding_box_diffusion.md)
 - [ConFu: Contemplate the Future for Better Speculative Sampling](../../ICLR2026/object_detection/confu_contemplate_the_future_for_better_speculative_sampling.md)
 
 <!-- RELATED:END -->

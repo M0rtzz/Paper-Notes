@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How Many Tokens Do 3D Point Cloud Transformer Architectures Really Need?
 description: >-

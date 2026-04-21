@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DISCOVER: Automated Curricula for Sparse-Reward Reinforcement Learning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] IDEATOR: Jailbreaking and Benchmarking Large Vision-Language Models Using Themselves
 description: >-

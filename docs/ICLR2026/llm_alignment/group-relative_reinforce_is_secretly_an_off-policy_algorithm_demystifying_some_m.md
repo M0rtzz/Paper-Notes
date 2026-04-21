@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Group-Relative REINFORCE Is Secretly an Off-Policy Algorithm: Demystifying Some Myths About GRPO and Its Friends
 description: >-

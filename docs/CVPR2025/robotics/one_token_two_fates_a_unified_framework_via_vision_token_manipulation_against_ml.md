@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] One Token, Two Fates: A Unified Framework via Vision Token Manipulation Against MLLMs Hallucination
 description: >-

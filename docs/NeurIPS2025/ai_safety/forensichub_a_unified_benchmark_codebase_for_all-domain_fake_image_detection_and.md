@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ForensicHub: A Unified Benchmark & Codebase for All-Domain Fake Image Detection and Localization
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MacPrompt: Maraconic-guided Jailbreak against Text-to-Image Models
 description: >-

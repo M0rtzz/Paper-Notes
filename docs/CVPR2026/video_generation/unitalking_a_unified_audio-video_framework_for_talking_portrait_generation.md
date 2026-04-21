@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] UniTalking: A Unified Audio-Video Framework for Talking Portrait Generation
 description: >-
-  [CVPR 2026][视频理解][说话人生成] 提出 UniTalking，一个基于 MM-DiT 的端到端说话人肖像生成框架，通过双流对称架构中的联合注意力机制显式建模音视频 token 的细粒度时序对应关系，实现 SOTA 的唇音同步精度，同时支持个性化语音克隆。
+  [CVPR 2026][说话人生成] 提出 UniTalking，一个基于 MM-DiT 的端到端说话人肖像生成框架，通过双流对称架构中的联合注意力机制显式建模音视频 token 的细粒度时序对应关系，实现 SOTA 的唇音同步精度，同时支持个性化语音克隆。
 tags:
   - CVPR 2026
-  - 视频理解
   - 说话人生成
   - 音视频联合生成
   - Transformer

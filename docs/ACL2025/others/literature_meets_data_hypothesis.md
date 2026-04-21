@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Literature Meets Data: A Synergistic Approach to Hypothesis Generation
 description: >-

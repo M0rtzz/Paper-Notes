@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] REALM: An MLLM-Agent Framework for Open World 3D Reasoning Segmentation and Editing on Gaussian Splatting
 description: >-

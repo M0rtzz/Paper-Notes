@@ -1,16 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Hierarchical Compact Clustering Attention (COCA) for Unsupervised Object-Centric Learning
 description: >-
-  [CVPR 2025][图像分割][无监督目标发现] COCA-Net 提出基于紧凑性（compactness）评分的层级聚类注意力模块，构建自底向上的层级聚合网络，在无监督目标中心学习任务中实现动态 slot 分配、鲁棒初始化和高质量背景分割，在六个基准上达到 SOTA 性能。
+  [CVPR 2025][图像分割][无监督目标发现] COCA-Net 提出基于物理紧凑性（compactness）的层级聚类注意力层，通过自底向上的层级合并策略发现物体中心，解决了 Slot Attention 在初始化敏感性、slot 数量预设和背景分割等方面的固有缺陷，在六个无监督物体发现数据集上达到 SOTA。
 tags:
   - CVPR 2025
   - 图像分割
-  - 无监督学习
+  - 无监督目标发现
   - 目标中心学习
   - 层级聚类
-  - Slot Attention
-  - 物体发现
+  - 紧凑性
+  - 注意力机制
 ---
 
 # Hierarchical Compact Clustering Attention (COCA) for Unsupervised Object-Centric Learning
@@ -135,10 +135,10 @@ COCA-Net 编码器端分割同样远超竞争方法，如 ShapeStacks 上 ENC-FG
 
 ## 相关论文
 
+- [Scene-Centric Unsupervised Panoptic Segmentation](scene-centric_unsupervised_panoptic_segmentation.md)
+- [Style-Editor: Text-driven Object-Centric Style Editing](style-editor_text-driven_object-centric_style_editing.md)
 - [G2HFNet: GeoGran-Aware Hierarchical Feature Fusion Network for Salient Object Detection in Optical Remote Sensing Images](binwang2hfnet_geogran-aware_hierarchical_feature_fusion_network_for_salient_obje.md)
-- [unMORE: Unsupervised Multi-Object Segmentation via Center-Boundary Reasoning](../../ICML2025/segmentation/unmore_unsupervised_multi-object_segmentation_via_center-boundary_reasoning.md)
-- [Hierarchical Visual Prompt Learning for Continual Video Instance Segmentation](../../ICCV2025/segmentation/hierarchical_visual_prompt_learning_for_continual_video_instance_segmentation.md)
-- [Unsupervised Moving Object Segmentation with Atmospheric Turbulence](../../ECCV2024/segmentation/unsupervised_moving_object_segmentation_with_atmospheric_turbulence.md)
-- [Beyond Single Images: Retrieval Self-Augmented Unsupervised Camouflaged Object Detection](../../ICCV2025/segmentation/beyond_single_images_retrieval_self-augmented_unsupervised_camouflaged_object_de.md)
+- [LiVOS: Light Video Object Segmentation with Gated Linear Matching](livos_light_video_object_segmentation_with_gated_linear_matching.md)
+- [Revisiting Audio-Visual Segmentation with Vision-Centric Transformer](revisiting_audio-visual_segmentation_with_vision-centric_transformer.md)
 
 <!-- RELATED:END -->

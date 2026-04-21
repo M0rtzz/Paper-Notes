@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spatial-SSRL: Enhancing Spatial Understanding via Self-Supervised Reinforcement Learning
 description: >-

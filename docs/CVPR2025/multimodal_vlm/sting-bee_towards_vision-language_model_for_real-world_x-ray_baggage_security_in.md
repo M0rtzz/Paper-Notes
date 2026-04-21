@@ -1,7 +1,16 @@
 ---
-title: "STING-BEE: Towards Vision-Language Model for Real-World X-ray Baggage Security Inspection"
-description: "构建首个多模态X射线行李安全数据集STCray（46K图像-描述对，21类威胁），并提出领域感知VLM STING-BEE，支持场景理解、威胁定位、视觉定地和VQA"
-tags: ["X射线安检", "VLM", "多模态数据集", "威胁检测", "视觉定地"]
+title: >-
+  [论文解读] STING-BEE: Towards Vision-Language Model for Real-World X-ray Baggage Security Inspection
+description: >-
+  [CVPR 2025][多模态][X射线安检] 构建了首个多模态X射线行李安全数据集**STCray**（46,642张图像-描述对，21类威胁含IED和3D打印枪），设计**STING协议**系统生成领域感知的高质量描述，并训练领域特化VLM **STING-BEE**，在场景理解、威胁定位、视觉定地和VQA四项任务上建立新基线，并展现SOTA跨域泛化能力。
+tags:
+  - CVPR 2025
+  - 多模态
+  - X射线安检
+  - 领域特化VLM
+  - 多模态数据集
+  - 威胁检测
+  - 视觉定地
 ---
 
 # STING-BEE: Towards Vision-Language Model for Real-World X-ray Baggage Security Inspection
@@ -136,7 +145,7 @@ STCray是唯一同时满足以下条件的数据集：
 - [REAL-MM-RAG: A Real-World Multi-Modal Retrieval Benchmark](../../ACL2025/multimodal_vlm/real-mm-rag_a_real-world_multi-modal_retrieval_benchmark.md)
 - [AdvDreamer Unveils: Are Vision-Language Models Truly Ready for Real-World 3D Variations?](../../ICCV2025/multimodal_vlm/advdreamer_unveils_are_visionlanguage_models_truly_ready_for.md)
 - [Can Vision-Language Models Answer Face to Face Questions in the Real-World?](../../ICLR2026/multimodal_vlm/can_vision-language_models_answer_face_to_face_questions_in_the_real-world.md)
+- [Vision-Language Model IP Protection via Prompt-based Learning](vision-language_model_ip_protection_via_prompt-based_learning.md)
 - [WearVQA: A Visual Question Answering Benchmark for Wearables in Egocentric Authentic Real-world scenarios](../../NeurIPS2025/multimodal_vlm/wearvqa_a_visual_question_answering_benchmark_for_wearables_in_egocentric_authen.md)
-- [Towards Real-World Adverse Weather Image Restoration: Enhancing Clearness and Semantics with Vision-Language Models](../../ECCV2024/multimodal_vlm/towards_real-world_adverse_weather_image_restoration_enhancing_clearness_and_sem.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpatiaLab: Can Vision-Language Models Perform Spatial Reasoning in the Wild?
 description: >-

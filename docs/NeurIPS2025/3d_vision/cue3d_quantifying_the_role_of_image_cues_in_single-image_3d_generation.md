@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cue3D: Quantifying the Role of Image Cues in Single-Image 3D Generation
 description: >-
@@ -142,10 +142,10 @@ Zeroverse无意义形状上的退化对比:
 
 ## 相关论文
 
+- [Symmetry Strikes Back: From Single-Image Symmetry Detection to 3D Generation](../../CVPR2025/3d_vision/symmetry_strikes_back_from_single-image_symmetry_detection_to_3d_generation.md)
+- [WonderWorld: Interactive 3D Scene Generation from a Single Image](../../CVPR2025/3d_vision/wonderworld_interactive_3d_scene_generation_from_a_single_image.md)
 - [AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction](../../ICCV2025/3d_vision/ar1to3_single_image_to_consistent_3d_object_via_nextview_pre.md)
 - [WonderPlay: Dynamic 3D Scene Generation from a Single Image and Actions](../../ICCV2025/3d_vision/wonderplay_dynamic_3d_scene_generation_from_a_single_image_and_actions.md)
 - [More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
-- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](../../CVPR2025/3d_vision/midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
-- [Disco4D: Disentangled 4D Human Generation and Animation from a Single Image](../../CVPR2025/3d_vision/disco4d_disentangled_4d_human_generation_and_animation_from_a_single_image.md)
 
 <!-- RELATED:END -->

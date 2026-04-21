@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Balanced Image Stylization with Style Matching Score
 description: >-

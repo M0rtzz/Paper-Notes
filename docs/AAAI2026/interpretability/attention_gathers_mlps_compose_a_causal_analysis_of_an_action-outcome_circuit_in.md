@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Attention Gathers, MLPs Compose: A Causal Analysis of an Action-Outcome Circuit in VideoViT
 description: >-
@@ -144,8 +144,8 @@ $$\text{Recovery}(\%) = \frac{\|\Delta_{patch}\|}{\|\Delta_{strike}\|} \cdot \te
 
 - [Causal Head Gating: A Framework for Interpreting Roles of Attention Heads in Transformers](../../NeurIPS2025/interpretability/causal_head_gating_a_framework_for_interpreting_roles_of_attention_heads_in_tran.md)
 - [Learning to Focus: Causal Attention Distillation via Gradient-Guided Token Pruning](../../NeurIPS2025/interpretability/learning_to_focus_causal_attention_distillation_via_gradient-guided_token_prunin.md)
+- [LLM Circuit Analyses Are Consistent Across Training and Scale](llm_circuit_analyses_consistent_across_training_and_scale.md)
 - [Enhancing Binary Encoded Crime Linkage Analysis Using Siamese Network](enhancing_binary_encoded_crime_linkage_analysis_using_siamese_network.md)
 - [Why Is Attention Sparse in Particle Transformer?](../../NeurIPS2025/interpretability/why_is_attention_sparse_in_particle_transformer.md)
-- [Formal Mechanistic Interpretability: Automated Circuit Discovery with Provable Guarantees](../../ICLR2026/interpretability/formal_mechanistic_interpretability_automated_circuit_discovery_with_provable_gu.md)
 
 <!-- RELATED:END -->

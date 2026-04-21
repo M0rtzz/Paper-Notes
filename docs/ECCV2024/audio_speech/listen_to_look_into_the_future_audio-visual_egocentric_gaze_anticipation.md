@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Listen to Look into the Future: Audio-Visual Egocentric Gaze Anticipation
 description: >-

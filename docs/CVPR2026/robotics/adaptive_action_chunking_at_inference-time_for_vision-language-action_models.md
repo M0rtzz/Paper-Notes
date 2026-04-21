@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adaptive Action Chunking at Inference-time for Vision-Language-Action Models
 description: >-

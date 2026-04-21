@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Einstein Fields: A Neural Perspective To Computational General Relativity
 description: >-
@@ -153,7 +153,7 @@ tags:
 - [BaSIC: BayesNet Structure Learning for Computational Scalable Neural Image Compression](../../ECCV2024/model_compression/basic_bayesnet_structure_learning_for_computational_scalable_neural_image_compre.md)
 - [Dataset Distillation with Neural Characteristic Function: A Minmax Perspective](../../CVPR2025/model_compression/dataset_distillation_with_neural_characteristic_function_a_minmax_perspective.md)
 - [Why Attention Patterns Exist: A Unifying Temporal Perspective Analysis](why_attention_patterns_exist_a_unifying_temporal_perspective_analysis.md)
-- [FlyPrompt: Brain-Inspired Random-Expanded Routing with Temporal-Ensemble Experts for General Continual Learning](flyprompt_brain-inspired_random-expanded_routing_with_temporal-ensemble_experts_.md)
 - [Adaptive Width Neural Networks](adaptive_width_neural_networks.md)
+- [FlyPrompt: Brain-Inspired Random-Expanded Routing with Temporal-Ensemble Experts for General Continual Learning](flyprompt_brain-inspired_random-expanded_routing.md)
 
 <!-- RELATED:END -->

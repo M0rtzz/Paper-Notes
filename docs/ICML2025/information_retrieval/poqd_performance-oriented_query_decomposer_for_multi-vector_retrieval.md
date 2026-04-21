@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] POQD: Performance-Oriented Query Decomposer for Multi-Vector Retrieval
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Think, Then Verify: A Hypothesis-Verification Multi-Agent Framework for Long Video Understanding
 description: >-
@@ -129,6 +129,6 @@ VideoHV-Agent 包含三个阶段：(1) 上下文摘要，(2) 两步推理（假�
 - [CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare](carepilot_a_multi-agent_framework_for_long-horizon_computer_task_automation_in_h.md)
 - [VideoAgent: A Memory-augmented Multimodal Agent for Video Understanding](../../ECCV2024/llm_agent/videoagent_a_memory-augmented_multimodal_agent_for_video_understanding.md)
 - [Deep Video Discovery: Agentic Search with Tool Use for Long-form Video Understanding](../../NeurIPS2025/llm_agent/deep_video_discovery_agentic_search_with_tool_use_for_longfo.md)
-- [Nerfify: A Multi-Agent Framework for Turning NeRF Papers into Code](nerfify_a_multi-agent_framework_for_turning_nerf_papers_into_code.md)
+- [VideoMind: A Chain-of-LoRA Agent for Temporal-Grounded Video Understanding](../../ICLR2026/llm_agent/videomind_a_chain-of-lora_agent_for_temporal-grounded_video_understanding.md)
 
 <!-- RELATED:END -->

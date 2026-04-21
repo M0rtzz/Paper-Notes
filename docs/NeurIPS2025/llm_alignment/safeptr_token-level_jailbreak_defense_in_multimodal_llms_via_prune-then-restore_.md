@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SafePTR: Token-Level Jailbreak Defense in Multimodal LLMs via Prune-then-Restore Mechanism
 description: >-

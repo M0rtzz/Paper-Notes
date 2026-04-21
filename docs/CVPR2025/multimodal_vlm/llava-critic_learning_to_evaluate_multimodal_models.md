@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLaVA-Critic: Learning to Evaluate Multimodal Models
 description: >-

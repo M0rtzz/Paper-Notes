@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mitigating Hallucination Through Theory-Consistent Symmetric Multimodal Preference Optimization
 description: >-

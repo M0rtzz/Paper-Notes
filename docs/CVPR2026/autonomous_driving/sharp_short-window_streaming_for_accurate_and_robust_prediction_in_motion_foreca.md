@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SHARP: Short-Window Streaming for Accurate and Robust Prediction in Motion Forecasting
 description: >-

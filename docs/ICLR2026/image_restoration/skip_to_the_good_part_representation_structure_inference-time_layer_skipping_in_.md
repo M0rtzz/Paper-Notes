@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Skip to the Good Part: Representation Structure & Inference-Time Layer Skipping in Diffusion vs. Autoregressive LLMs
 description: >-

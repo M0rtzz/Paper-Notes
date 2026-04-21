@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Ground-Truth: Leveraging Image Quality Priors for Real-World Image Restoration
 description: >-

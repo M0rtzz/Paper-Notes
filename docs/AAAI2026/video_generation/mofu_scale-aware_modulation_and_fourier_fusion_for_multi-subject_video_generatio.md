@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] MoFu: Scale-Aware Modulation and Fourier Fusion for Multi-Subject Video Generation
 description: >-
-  [AAAI 2026][视频理解][多主体视频生成] 提出 MoFu，通过 Scale-Aware Modulation（LLM 引导的尺度感知调制）和 Fourier Fusion（基于 FFT 的排列不变特征融合）两个核心模块，同时解决多主体视频生成中的**尺度不一致**和**排列敏感性**两大挑战，并构建了 MoFu-1M 训练数据集和 MoFu-Bench 评测基准。
+  [AAAI 2026][多主体视频生成] 提出 MoFu，通过 Scale-Aware Modulation（LLM 引导的尺度感知调制）和 Fourier Fusion（基于 FFT 的排列不变特征融合）两个核心模块，同时解决多主体视频生成中的**尺度不一致**和**排列敏感性**两大挑战，并构建了 MoFu-1M 训练数据集和 MoFu-Bench 评测基准。
 tags:
   - AAAI 2026
-  - 视频理解
   - 多主体视频生成
   - 尺度一致性
   - 排列不变性
@@ -229,6 +228,6 @@ $$\mathcal{L}_{\text{perm}} = \frac{1}{P} \sum_{p=1}^{P} \|F(\mathcal{R}_p) - F(
 - [BindWeave: Subject-Consistent Video Generation via Cross-Modal Integration](../../ICLR2026/video_generation/bindweave_subject-consistent_video_generation_via_cross-modal_integration.md)
 - [FilmWeaver: Weaving Consistent Multi-Shot Videos with Cache-Guided Autoregressive Diffusion](filmweaver_weaving_consistent_multi-shot_videos_with_cache-guided_autoregressive.md)
 - [Rethinking Position Embedding as a Context Controller for Multi-Reference and Multi-Shot Video Generation](../../CVPR2026/video_generation/rethinking_position_embedding_as_a_context_controller_for_multi-reference_and_mu.md)
-- [Mask2IV: Interaction-Centric Video Generation via Mask Trajectories](mask2iv_interaction-centric_video_generation_via_mask_trajectories.md)
+- [Geometry-aware 4D Video Generation for Robot Manipulation](../../ICLR2026/video_generation/geometry-aware_4d_video_generation_for_robot_manipulation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Actor-Critic for Continuous Action Chunks: A Reinforcement Learning Framework for Long-Horizon Robotic Manipulation with Sparse Reward
 description: >-

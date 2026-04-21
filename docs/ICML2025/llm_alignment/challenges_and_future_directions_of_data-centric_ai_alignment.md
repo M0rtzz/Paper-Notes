@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Challenges and Future Directions of Data-Centric AI Alignment
 description: >-

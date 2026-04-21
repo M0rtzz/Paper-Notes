@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neural Force Field: Few-shot Learning of Generalized Physical Reasoning
 description: >-

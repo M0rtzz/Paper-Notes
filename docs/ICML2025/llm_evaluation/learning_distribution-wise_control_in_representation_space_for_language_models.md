@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Distribution-Wise Control in Representation Space for Language Models
 description: >-
@@ -193,9 +193,9 @@ $$\mathcal{L} = -\mathbb{E}_{(X,Y)}[\log P_{\mathcal{M} \circ \mathcal{I}}(Y | f
 ## 相关论文
 
 - [Correlated Errors in Large Language Models](correlated_errors_in_large_language_models.md)
+- [Sufficient Invariant Learning for Distribution Shift](../../CVPR2025/llm_evaluation/sufficient_invariant_learning_for_distribution_shift.md)
 - [Generalization Error Analysis for Selective State-Space Models Through the Lens of Attention](../../NeurIPS2025/llm_evaluation/generalization_error_analysis_for_selective_state-space_models_through_the_lens_.md)
 - [Sampling Control for Imbalanced Calibration in Semi-Supervised Learning](../../AAAI2026/llm_evaluation/sampling_control_for_imbalanced_calibration_in_semi-supervised_learning.md)
 - [G-Sim: Generative Simulations with Large Language Models and Gradient-Free Calibration](g-sim_generative_simulations_with_large_language_models_and_gradient-free_calibr.md)
-- [Streaming Generated Gaussian Process Experts for Online Learning and Control: Extended Version](../../AAAI2026/llm_evaluation/streaming_generated_gaussian_process_experts_for_online_learning_and_control_ext.md)
 
 <!-- RELATED:END -->

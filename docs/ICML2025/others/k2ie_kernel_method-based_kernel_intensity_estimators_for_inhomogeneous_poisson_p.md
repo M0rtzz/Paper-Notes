@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] K²IE: Kernel Method-based Kernel Intensity Estimators for Inhomogeneous Poisson Processes
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DeepSeq: High-Throughput Single-Cell RNA Sequencing Data Labeling via Web Search-Augmented Agentic Generative AI Foundation Models
 description: >-
@@ -196,9 +196,9 @@ $$\text{原始数据} \xrightarrow{\text{过滤}} \text{清洗后数据} \xright
 ## 相关论文
 
 - [scSSL-Bench: Benchmarking Self-Supervised Learning for Single-Cell Data](scssl-bench_benchmarking_self-supervised_learning_for_single-cell_data.md)
-- [MedBioRAG: Semantic Search and Retrieval-Augmented Generation with Large Language Models for Medical and Biological QA](../../ACL2025/medical_imaging/medbiorag_semantic_search_and_retrieval-augmented_generation_with_large_language.md)
-- [Foundation Models for Clinical Records at Health System Scale](foundation_models_for_clinical_records_at_health_system_scale.md)
+- [MedBioRAG: Semantic Search and Retrieval-Augmented Generation with Large Language Models for Medical and Biological QA](../../ACL2025/medical_imaging/medbiorag_semantic_search_and_retrieval-augmented_generation_for_biomedical_lite.md)
 - [PolyConf: Unlocking Polymer Conformation Generation through Hierarchical Generative Models](polyconf_unlocking_polymer_conformation_generation_through_hierarchical_generati.md)
+- [Foundation Models for Clinical Records at Health System Scale](foundation_models_for_clinical_records_at_health_system_scale.md)
 - [Steering Generative Models with Experimental Data for Protein Fitness Optimization](../../NeurIPS2025/medical_imaging/steering_generative_models_with_experimental_data_for_protein_fitness_optimizati.md)
 
 <!-- RELATED:END -->

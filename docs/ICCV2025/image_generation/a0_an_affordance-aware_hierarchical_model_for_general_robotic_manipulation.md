@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation
 description: >-
@@ -191,7 +191,7 @@ SIAL 的影响最为显著：移除后 HOI4D 上 MAE 增加 13.6 像素，说明
 - [EC-Flow: Enabling Versatile Robotic Manipulation from Action-Unlabeled Videos via Equivariant Flow Matching](ec-flow_enabling_versatile_robotic_manipulation_from_action-unlabeled_videos_via.md)
 - [Two-Steps Diffusion Policy for Robotic Manipulation via Genetic Denoising](../../NeurIPS2025/image_generation/two-steps_diffusion_policy_for_robotic_manipulation_via_genetic_denoising.md)
 - [Image Generation as a Visual Planner for Robotic Manipulation](../../CVPR2026/image_generation/image_generation_as_a_visual_planner_for_robotic_manipulation.md)
+- [CHORDS: Diffusion Sampling Accelerator with Multi-Core Hierarchical ODE Solvers](chords_diffusion_sampling_accelerator_with_multi_core_hierarchical_ode_solvers.md)
 - [Text2Place: Affordance-aware Text Guided Human Placement](../../ECCV2024/image_generation/text2place_affordance-aware_text_guided_human_placement.md)
-- [Timestep-Aware Diffusion Model for Extreme Image Rescaling](timestep-aware_diffusion_model_for_extreme_image_rescaling.md)
 
 <!-- RELATED:END -->

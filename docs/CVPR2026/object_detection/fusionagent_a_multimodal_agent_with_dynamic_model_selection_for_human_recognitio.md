@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FusionAgent: A Multimodal Agent with Dynamic Model Selection for Human Recognition
 description: >-
@@ -141,8 +141,8 @@ FNIR 从 64.3% 降至 50.0%（-14.3%），开放集搜索性能大幅提升。
 
 - [Evaluating Few-Shot Pill Recognition Under Visual Domain Shift](evaluating_few-shot_pill_recognition_under_visual_domain_shift.md)
 - [PHAC: Promptable Human Amodal Completion](phac_promptable_human_amodal_completion.md)
-- [A Multimodal Benchmark Dataset and Model for Crop Disease Diagnosis](../../ECCV2024/object_detection/a_multimodal_benchmark_dataset_and_model_for_crop_disease_di.md)
 - [CLCR: Cross-Level Semantic Collaborative Representation for Multimodal Learning](clcr_cross-level_semantic_collaborative_representation_for_multimodal_learning.md)
+- [Fixed Anchors Are Not Enough: Dynamic Retrieval and Persistent Homology for Dataset Distillation](fixed_anchors_are_not_enough_dynamic_retrieval_and_persistent_homology_for_datas.md)
 - [Show, Don't Tell: Detecting Novel Objects by Watching Human Videos](show_dont_tell_detecting_novel_objects_by_watching.md)
 
 <!-- RELATED:END -->

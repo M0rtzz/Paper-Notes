@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Disentangling and Integrating Relational and Sensory Information in Transformer Architectures
 description: >-

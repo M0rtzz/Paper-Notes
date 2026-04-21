@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FlowMotion: Training-Free Flow Guidance for Video Motion Transfer
 description: >-
@@ -151,8 +151,8 @@ Latent prediction 引导仅比纯推理多 1.6 GB，而直接用 velocity 做引
 
 - [Make Your Training Flexible: Towards Deployment-Efficient Video Models](../../ICCV2025/llm_pretraining/make_your_training_flexible_towards_deployment-efficient_video_models.md)
 - [Through the River: Understanding the Benefit of Schedule-Free Methods for Language Model Training](../../NeurIPS2025/llm_pretraining/through_the_river_understanding_the_benefit_of_schedule-free_methods_for_languag.md)
-- [Plan, Posture and Go: Towards Open-Vocabulary Text-to-Motion Generation](../../ECCV2024/llm_pretraining/plan_posture_and_go_towards_open-vocabulary_text-to-motion_generation.md)
 - [DragAPart: Learning a Part-Level Motion Prior for Articulated Objects](../../ECCV2024/llm_pretraining/dragapart_learning_a_part-level_motion_prior_for_articulated_objects.md)
 - [Cross-Domain Learning for Video Anomaly Detection with Limited Supervision](../../ECCV2024/llm_pretraining/cross-domain_learning_for_video_anomaly_detection_with_limited_supervision.md)
+- [Plan, Posture and Go: Towards Open-Vocabulary Text-to-Motion Generation](../../ECCV2024/llm_pretraining/plan_posture_and_go_towards_open-vocabulary_text-to-motion_generation.md)
 
 <!-- RELATED:END -->

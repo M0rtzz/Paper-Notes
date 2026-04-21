@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Natural Gradient Descent for Improving Variational Inference Based Classification of Radio Galaxies
 description: >-

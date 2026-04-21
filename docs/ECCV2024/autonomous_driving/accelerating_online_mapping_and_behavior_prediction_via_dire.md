@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Accelerating Online Mapping and Behavior Prediction via Direct BEV Feature Attention
 description: >-
@@ -127,6 +127,6 @@ tags:
 - [H-V2X: A Large Scale Highway Dataset for BEV Perception](h-v2x_a_large_scale_highway_dataset_for_bev_perception.md)
 - [Failure Modes for Deep Learning-Based Online Mapping: How to Measure and Address Them](../../CVPR2026/autonomous_driving/failure_modes_for_deep_learning-based_online_mapping_how_to_measure_and_address_.md)
 - [MapTracker: Tracking with Strided Memory Fusion for Consistent Vector HD Mapping](maptracker_tracking_with_strided_memory_fusion_for_consistent_vector_hd_mapping.md)
-- [Navigation Instruction Generation with BEV Perception and Large Language Models](navigation_instruction_generation_with_bev_perception_and_large_language_models.md)
+- [DriveGPT: Scaling Autoregressive Behavior Models for Driving](../../ICML2025/autonomous_driving/drivegpt_scaling_autoregressive_behavior_models_for_driving.md)
 
 <!-- RELATED:END -->

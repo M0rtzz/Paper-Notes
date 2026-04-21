@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Isotropic Noise in Stochastic and Quantum Convex Optimization
 description: >-

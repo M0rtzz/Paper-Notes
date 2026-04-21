@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Isolated Words: Diffusion Brush for Handwritten Text-Line Generation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WildSAT: Learning Satellite Image Representations from Wildlife Observations
 description: >-

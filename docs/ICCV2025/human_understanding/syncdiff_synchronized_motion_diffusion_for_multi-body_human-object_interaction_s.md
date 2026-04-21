@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SyncDiff: Synchronized Motion Diffusion for Multi-Body Human-Object Interaction Synthesis
 description: >-

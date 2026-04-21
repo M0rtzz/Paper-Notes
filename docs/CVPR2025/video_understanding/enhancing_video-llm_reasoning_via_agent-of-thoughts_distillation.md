@@ -1,16 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Video-LLM Reasoning via Agent-of-Thoughts Distillation
 description: >-
-  [CVPR 2025][Video Understanding][Agent Distillation] 提出 AoTD 方法，用 agent 系统（LLM 分解问题 + 专家视觉模型执行子任务）自动生成视频推理链，再经 LLM 验证后蒸馏到 Video-LLM，使端到端模型获得多步推理和时空定位能力，在 MC-VQA 和 OE-VQA 上显著提升。
+  [CVPR 2025][视频理解][Agent蒸馏] AoTD 用 LLM agent 将复杂视频问题分解为子任务、调用专家视觉模型执行并收集中间结果作为推理链（CoT），经 LLM 质量过滤后蒸馏到 Video-LLM 中，让端到端模型同时获得准确答案和可解释的多步推理能力。
 tags:
   - CVPR 2025
-  - Video Understanding
-  - Agent Distillation
-  - Chain-of-Thought
-  - VideoQA
+  - 视频理解
+  - Agent蒸馏
+  - 视频问答
+  - 推理链
+  - 时空定位
   - 多步推理
-  - 知识蒸馏
 ---
 
 # Enhancing Video-LLM Reasoning via Agent-of-Thoughts Distillation
@@ -123,10 +123,10 @@ AoTD 分四步：(1) 评估并选择各子任务最佳视觉模型；(2) 用 LLM
 
 ## 相关论文
 
-- [Beyond Single-Sample: Reliable Multi-Sample Distillation for Video Understanding](beyond_single-sample_reliable_multi-sample_distillation_for_video_understanding.md)
+- [ViTED: Video Temporal Evidence Distillation](vited_video_temporal_evidence_distillation.md)
 - [M-LLM Based Video Frame Selection for Efficient Video Understanding](m-llm_based_video_frame_selection_for_efficient_video_understanding.md)
 - [A Multi-Agent Perception-Action Alliance for Efficient Long Video Reasoning](../../CVPR2026/video_understanding/a_multi-agent_perception-action_alliance_for_efficient_long_video_reasoning.md)
-- [A4VL: A Multi-Agent Perception-Action Alliance for Efficient Long Video Reasoning](../../CVPR2026/video_understanding/a4vl_multiagent_long_video_reasoning.md)
-- [Distillation Dynamics: Towards Understanding Feature-Based Distillation in Vision Transformers](../../AAAI2026/video_understanding/distillation_dynamics_towards_understanding_feature-based_di.md)
+- [VISTA: Enhancing Long-Duration and High-Resolution Video Understanding by Video SpatioTemporal Augmentation](vista_enhancing_long-duration_and_high-resolution_video_understanding_by_video_s.md)
+- [Seq2Time: Sequential Knowledge Transfer for Video LLM Temporal Grounding](seq2time_sequential_knowledge_transfer_for_video_llm_temporal_grounding.md)
 
 <!-- RELATED:END -->

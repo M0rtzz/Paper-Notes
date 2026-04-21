@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generative Social Choice: The Next Generation
 description: >-
@@ -147,9 +147,9 @@ $$\frac{\mathrm{sup}(\alpha^*, S, \ell - \delta)}{\max_{\alpha \in \mathcal{U}: 
 ## 相关论文
 
 - [GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation](../../ICCV2025/human_understanding/genm3_generative_pretrained_multi-path_motion_model_for_text_conditional_human_m.md)
-- [Combining Generative and Geometry Priors for Wide-Angle Portrait Correction](../../ECCV2024/human_understanding/combining_generative_and_geometry_priors_for_wide-angle_portrait_correction.md)
+- [SOLAMI: Social Vision-Language-Action Modeling for Immersive Interaction with 3D Autonomous Characters](../../CVPR2025/human_understanding/solami_social_vision-language-action_modeling_for_immersive_interaction_with_3d_.md)
+- [Omni-ID: Holistic Identity Representation Designed for Generative Tasks](../../CVPR2025/human_understanding/omni-id_holistic_identity_representation_designed_for_generative_tasks.md)
 - [FedRAG: A Framework for Fine-Tuning Retrieval-Augmented Generation Systems](fedrag_a_framework_for_fine-tuning_retrieval-augmented_generation_systems.md)
-- [Yes FLoReNce, I Will Do Better Next Time! Agentic Feedback Reasoning for Humorous Meme Detection](../../AAAI2026/human_understanding/yes_florence_i_will_do_better_next_time_agentic_feedback_reasoning_for_humorous_.md)
-- [P-GenRM: Personalized Generative Reward Model with Test-time User-based Scaling](../../ICLR2026/human_understanding/p-genrm_personalized_generative_reward_model_with_test-time_user-based_scaling.md)
+- [Combining Generative and Geometry Priors for Wide-Angle Portrait Correction](../../ECCV2024/human_understanding/combining_generative_and_geometry_priors_for_wide-angle_portrait_correction.md)
 
 <!-- RELATED:END -->

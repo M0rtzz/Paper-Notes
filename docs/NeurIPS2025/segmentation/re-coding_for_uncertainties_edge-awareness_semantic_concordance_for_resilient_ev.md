@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Re-coding for Uncertainties: Edge-awareness Semantic Concordance for Resilient Event-RGB Segmentation
 description: >-

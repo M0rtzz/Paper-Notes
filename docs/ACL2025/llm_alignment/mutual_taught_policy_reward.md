@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mutual-Taught for Co-adapting Policy and Reward Models
 description: >-

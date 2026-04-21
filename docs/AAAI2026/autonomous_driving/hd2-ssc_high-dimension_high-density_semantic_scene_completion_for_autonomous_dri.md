@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HD2-SSC: High-Dimension High-Density Semantic Scene Completion for Autonomous Driving
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SynFER: Towards Boosting Facial Expression Recognition with Synthetic Data
 description: >-

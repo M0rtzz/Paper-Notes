@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Deep Modularity Networks with Diversity-Preserving Regularization
 description: >-

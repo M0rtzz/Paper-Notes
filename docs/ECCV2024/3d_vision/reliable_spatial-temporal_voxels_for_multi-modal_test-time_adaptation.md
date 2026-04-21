@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reliable Spatial-Temporal Voxels For Multi-Modal Test-Time Adaptation
 description: >-
@@ -132,9 +132,9 @@ Latte 的 pipeline：(1) 对每个模态（2D/3D），使用 student-teacher 架
 ## 相关论文
 
 - [CloudFixer: Test-Time Adaptation for 3D Point Clouds via Diffusion-Guided Geometric Transformation](cloudfixer_test-time_adaptation_for_3d_point_clouds_via_diffusion-guided_geometr.md)
-- [3D Test-time Adaptation via Graph Spectral Driven Point Shift](../../ICCV2025/3d_vision/3d_test-time_adaptation_via_graph_spectral_driven_point_shift.md)
+- [3D Test-time Adaptation via Graph Spectral Driven Point Shift](../../ICCV2025/3d_vision/3d_testtime_adaptation_via_graph_spectral_driven_point_shift.md)
 - [PointMAC: Meta-Learned Adaptation for Robust Test-Time Point Cloud Completion](../../NeurIPS2025/3d_vision/pointmac_meta-learned_adaptation_for_robust_test-time_point_cloud_completion.md)
 - [Zero-Shot Multi-Object Scene Completion](zero-shot_multi-object_scene_completion.md)
-- [Multi-Modal Assistance for Unsupervised Domain Adaptation on Point Cloud 3D Object Detection](../../AAAI2026/3d_vision/multi-modal_assistance_for_unsupervised_domain_adaptation_on_point_cloud_3d_obje.md)
+- [StreamSTGS: Streaming Spatial and Temporal Gaussian Grids for Real-Time Free-Viewpoint Video](../../AAAI2026/3d_vision/streamstgs_streaming_spatial_and_temporal_gaussian_grids_for_real-time_free-view.md)
 
 <!-- RELATED:END -->

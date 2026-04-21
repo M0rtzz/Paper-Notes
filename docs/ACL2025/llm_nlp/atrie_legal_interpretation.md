@@ -2,9 +2,15 @@
 title: >-
   [论文解读] ATRIE: Automating Legal Interpretation with LLMs: Retrieval, Generation, and Evaluation
 description: >-
-  [LLM/NLP] 提出 ATRIE 框架，模拟法学专家的教义法学研究流程，利用 LLM 自动从案例库中检索相关信息、生成法律概念解释并评估解释质量，消除对人类法律专家的依赖。
+  [ACL 2025][LLM/NLP][Legal Interpretation] 提出 ATRIE 框架，模拟法学专家的教义法学研究流程，利用 LLM 自动从案例库中检索相关信息、生成法律概念解释并评估解释质量，消除对人类法律专家的依赖。
 tags:
+  - ACL 2025
   - LLM/NLP
+  - Legal Interpretation
+  - RAG
+  - Legal Concept Entailment
+  - Doctrinal Legal Research
+  - LLM
 ---
 
 # ATRIE: Automating Legal Interpretation with LLMs: Retrieval, Generation, and Evaluation
@@ -114,10 +120,10 @@ ATRIE 包含两个核心模块：**法律概念解释器 (Legal Concept Interpre
 
 ## 相关论文
 
-- [STEM: Efficient Relative Capability Evaluation of LLMs through Structured Transitive Evaluation Model](../../AAAI2026/llm_nlp/stem_efficient_relative_capability_evaluation_of_llms_through_structured_transit.md)
-- [DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models](difflm_controllable_synthetic_data_generation_via_diffusion_language_models.md)
-- [SongComposer: A Large Language Model for Lyric and Melody Generation in Song Composition](songcomposer_llm_lyric_melody_generation.md)
-- [Soft Filtering: Guiding Zero-Shot Composed Image Retrieval with Prescriptive and Proscriptive Prompts](../../AAAI2026/llm_nlp/soft_filtering_guiding_zero-shot_composed_image_retrieval_with_prescriptive_and_.md)
-- [Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning](problem-solving_logic_guided_curriculum_in-context_learning_for_llms_complex_rea.md)
+- [SkillVerse: Assessing and Enhancing LLMs with Tree Evaluation](skillverse_tree_eval.md)
+- [Which of These Best Describes Multiple Choice Evaluation with LLMs?](multiple_choice_eval.md)
+- [How LLMs Comprehend Temporal Meaning in Narratives: A Case Study in Cognitive Evaluation of LLMs](how_llms_comprehend_temporal_meaning_in_narratives_a_case_study_in_cognitive_eva.md)
+- [Psycholinguistic Word Features: A New Approach for the Evaluation of LLMs Alignment with Humans](psycholinguistic_word_features_a_new_approach_for_the_evaluation_of_llms_alignme.md)
+- [Length Controlled Generation for Black-box LLMs](length_controlled_generation_for_black-box_llms.md)
 
 <!-- RELATED:END -->

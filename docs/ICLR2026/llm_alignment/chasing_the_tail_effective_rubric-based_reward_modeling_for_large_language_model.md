@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Chasing the Tail: Effective Rubric-based Reward Modeling for Large Language Model Post-Training
 description: >-

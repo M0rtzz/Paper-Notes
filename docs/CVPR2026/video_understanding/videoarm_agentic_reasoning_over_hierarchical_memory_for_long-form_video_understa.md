@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VideoARM: Agentic Reasoning over Hierarchical Memory for Long-Form Video Understanding
 description: >-

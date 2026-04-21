@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fixed Anchors Are Not Enough: Dynamic Retrieval and Persistent Homology for Dataset Distillation
 description: >-

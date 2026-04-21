@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MGE-LDM: Joint Latent Diffusion for Simultaneous Music Generation and Source Extraction
 description: >-

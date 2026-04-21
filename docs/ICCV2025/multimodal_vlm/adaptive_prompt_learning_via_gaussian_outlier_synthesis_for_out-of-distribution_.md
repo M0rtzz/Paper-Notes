@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adaptive Prompt Learning via Gaussian Outlier Synthesis for Out-of-Distribution Detection
 description: >-

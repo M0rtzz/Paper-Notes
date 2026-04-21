@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Deep Learning is Not So Mysterious or Different
 description: >-
@@ -135,7 +135,7 @@ tags:
 - [To Label or Not to Label: PALM – A Predictive Model for Evaluating Sample Efficiency in Active Learning Models](../../ICCV2025/self_supervised/to_label_or_not_to_label_palm_-_a_predictive_model_for_evaluating_sample_efficie.md)
 - [BoSS: A Best-of-Strategies Selector as an Oracle for Deep Active Learning](../../CVPR2025/self_supervised/boss_a_best-of-strategies_selector_as_an_oracle_for_deep_active_learning.md)
 - [Weak-SIGReg: Covariance Regularization for Stable Deep Learning](../../ICLR2026/self_supervised/weak-sigreg_covariance_regularization_for_stable_deep_learning.md)
+- [ScaleLSD: Scalable Deep Line Segment Detection Streamlined](../../CVPR2025/self_supervised/scalelsd_scalable_deep_line_segment_detection_streamlined.md)
 - [SpHOR: A Representation Learning Perspective on Open-set Recognition for Identifying Unknown Classes in Deep Neural Networks](../../CVPR2026/self_supervised/sphor_a_representation_learning_perspective_on_open-set_recognition_for_identify.md)
-- [MTL-UE: Learning to Learn Nothing for Multi-Task Learning](mtl-ue_learning_to_learn_nothing_for_multi-task_learning.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] JailNewsBench: Multi-Lingual and Regional Benchmark for Fake News Generation under Jailbreak Attacks
 description: >-

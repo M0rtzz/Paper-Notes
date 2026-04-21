@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BTZSC: A Benchmark for Zero-Shot Text Classification Across Cross-Encoders, Embedding Models, Rerankers and LLMs
 description: >-

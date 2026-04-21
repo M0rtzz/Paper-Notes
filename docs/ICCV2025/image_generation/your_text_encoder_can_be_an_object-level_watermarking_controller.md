@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Your Text Encoder Can Be An Object-Level Watermarking Controller
 description: >-

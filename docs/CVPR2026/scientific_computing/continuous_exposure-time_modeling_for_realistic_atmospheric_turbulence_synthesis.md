@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Continuous Exposure-Time Modeling for Realistic Atmospheric Turbulence Synthesis
 description: >-

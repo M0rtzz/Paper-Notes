@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mitigating Confounding in Speech-Based Dementia Detection through Weight Masking
 description: >-

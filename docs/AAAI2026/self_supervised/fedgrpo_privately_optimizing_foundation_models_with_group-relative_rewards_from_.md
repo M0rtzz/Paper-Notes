@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FedGRPO: Privately Optimizing Foundation Models with Group-Relative Rewards from Domain Clients
 description: >-

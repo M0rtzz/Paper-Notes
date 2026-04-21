@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Ad-Hoc Human-AI Coordination Challenge (AH2AC2)
 description: >-

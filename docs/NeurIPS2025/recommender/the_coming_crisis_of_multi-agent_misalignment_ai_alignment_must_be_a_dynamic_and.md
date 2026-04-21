@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Coming Crisis of Multi-Agent Misalignment: AI Alignment Must Be a Dynamic and Social Process
 description: >-

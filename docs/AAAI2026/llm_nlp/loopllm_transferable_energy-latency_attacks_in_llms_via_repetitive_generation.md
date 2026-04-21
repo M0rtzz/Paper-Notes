@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LoopLLM: Transferable Energy-Latency Attacks in LLMs via Repetitive Generation
 description: >-
@@ -144,7 +144,7 @@ LoopLLM由两个核心组件构成：(1) 重复诱导提示优化——构造包
 - [Nemotron-Flash: Towards Latency-Optimal Hybrid Small Language Models](../../NeurIPS2025/llm_nlp/nemotron-flash_towards_latency-optimal_hybrid_small_language_models.md)
 - [Red-Teaming LLM Multi-Agent Systems via Communication Attacks](../../ACL2025/llm_nlp/red-teaming_llm_multi-agent_systems_via_communication_attacks.md)
 - [VSPO: Validating Semantic Pitfalls in Ontology via LLM-Based CQ Generation](vspo_validating_semantic_pitfalls_in_ontology_via_llm-based_cq_generation.md)
-- [ATRIE: Automating Legal Interpretation with LLMs: Retrieval, Generation, and Evaluation](../../ACL2025/llm_nlp/atrie_legal_interpretation.md)
 - [Length Controlled Generation for Black-box LLMs](../../ACL2025/llm_nlp/length_controlled_generation_for_black-box_llms.md)
+- [ATRIE: Automating Legal Interpretation with LLMs: Retrieval, Generation, and Evaluation](../../ACL2025/llm_nlp/atrie_legal_interpretation.md)
 
 <!-- RELATED:END -->

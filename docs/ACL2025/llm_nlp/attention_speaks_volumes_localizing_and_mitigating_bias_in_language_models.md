@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Attention Speaks Volumes: Localizing and Mitigating Bias in Language Models
 description: >-
@@ -181,6 +181,6 @@ Atlas平均比PASTA高0.10个EBS点。
 - [Deontological Keyword Bias: The Impact of Modal Expressions on Normative Judgments of Language Models](deontological_keyword_bias.md)
 - [Bias in Language Models: Beyond Trick Tests and Towards RUTEd Evaluation](bias_in_language_models_beyond_trick_tests_ruted_evaluation.md)
 - [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
-- [Mitigate Position Bias in LLMs via Scaling a Single Hidden States Channel](mitigate_position_bias_in_large_language_models_via_scaling_a_single_dimension.md)
+- [Classifier-to-Bias: Toward Unsupervised Automatic Bias Detection for Visual Classifiers](../../CVPR2025/llm_nlp/classifier-to-bias_toward_unsupervised_automatic_bias_detection_for_visual_class.md)
 
 <!-- RELATED:END -->

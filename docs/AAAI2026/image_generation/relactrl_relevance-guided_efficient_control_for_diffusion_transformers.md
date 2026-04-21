@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RelaCtrl: Relevance-Guided Efficient Control for Diffusion Transformers
 description: >-

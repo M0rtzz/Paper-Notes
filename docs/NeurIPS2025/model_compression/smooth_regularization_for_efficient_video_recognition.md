@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Smooth Regularization for Efficient Video Recognition
 description: >-
@@ -128,8 +128,8 @@ MoViNet-A3-GRW以56.4 GFLOPs达到85.6%准确率，与MViTv2-B-32×3相当但后
 ## 相关论文
 
 - [4DGCPro: Efficient Hierarchical 4D Gaussian Compression for Progressive Volumetric Video Streaming](4dgcpro_efficient_hierarchical_4d_gaussian_compression_for_p.md)
-- [Towards Implicit Aggregation: Robust Image Representation for Place Recognition in the Transformer Era](towards_implicit_aggregation_robust_image_representation_for_place_recognition_i.md)
 - [Hankel Singular Value Regularization for Highly Compressible State Space Models](hankel_singular_value_regularization_for_highly_compressible_state_space_models.md)
+- [Towards Implicit Aggregation: Robust Image Representation for Place Recognition in the Transformer Era](towards_implicit_aggregation_robust_image_representation_for_place_recognition_i.md)
 - [Eyes Wide Open: Ego Proactive Video-LLM for Streaming Video](eyes_wide_open_ego_proactive_videollm_for_streaming_video.md)
 - [AI-Generated Video Detection via Perceptual Straightening](ai-generated_video_detection_via_perceptual_straightening.md)
 

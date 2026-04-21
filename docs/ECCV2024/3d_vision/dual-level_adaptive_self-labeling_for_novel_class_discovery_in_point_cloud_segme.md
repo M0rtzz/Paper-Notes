@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dual-level Adaptive Self-Labeling for Novel Class Discovery in Point Cloud Segmentation
 description: >-

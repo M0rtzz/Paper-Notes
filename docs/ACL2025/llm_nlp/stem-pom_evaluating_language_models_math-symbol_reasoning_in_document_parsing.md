@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] STEM-PoM: Evaluating Language Models Math-Symbol Reasoning in Document Parsing
 description: >-

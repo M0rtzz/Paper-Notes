@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Drama: Diverse Augmentation from Large Language Models to Smaller Dense Retrievers
 description: >-
@@ -148,6 +148,6 @@ Drama 即使未用长上下文数据训练，零样本长上下文性能也显�
 - [Enhancing Lexicon-Based Text Embeddings with Large Language Models](enhancing_lexicon-based_text_embeddings_with_large_language_models.md)
 - [RARE: Retrieval-Augmented Reasoning Enhancement for Large Language Models](rare_retrieval_augmented_reasoning.md)
 - [Evaluation of Attribution Bias in Generator-Aware Retrieval-Augmented Large Language Models](evaluation_of_attribution_bias_in_generator-aware_retrieval-augmented_large_lang.md)
-- [REFIND at SemEval-2025 Task 3: Retrieval-Augmented Factuality Hallucination Detection in Large Language Models](refind_at_semeval-2025_task_3_retrieval-augmented_factuality_hallucination_detec.md)
+- [Re-ranking Using Large Language Models for Mitigating Exposure to Harmful Content on Social Media Platforms](llm_reranking_harmful_content.md)
 
 <!-- RELATED:END -->

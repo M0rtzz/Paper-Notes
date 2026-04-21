@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Characterizing Human Semantic Navigation in Concept Production as Trajectories in Embedding Space
 description: >-

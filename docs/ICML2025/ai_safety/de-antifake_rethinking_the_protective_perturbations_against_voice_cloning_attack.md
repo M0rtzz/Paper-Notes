@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] De-AntiFake: Rethinking the Protective Perturbations Against Voice Cloning Attacks
 description: >-
@@ -185,8 +185,8 @@ $$\mathbf{x}_{\text{ref}} = R_\phi(P_\theta(\mathbf{x}_{\text{adv}}), \mathbf{\L
 ## 相关论文
 
 - [Adversarial Inception Backdoor Attacks against Reinforcement Learning](adversarial_inception_backdoor_attacks_against_reinforcement_learning.md)
-- [Theoretically Unmasking Inference Attacks Against LDP-Protected Clients in Federated Vision Models](theoretically_unmasking_inference_attacks_against_ldp-protected_clients_in_feder.md)
 - [De-mark: Watermark Removal in Large Language Models](de-mark_watermark_removal_in_large_language_models.md)
+- [Theoretically Unmasking Inference Attacks Against LDP-Protected Clients in Federated Vision Models](theoretically_unmasking_inference_attacks_against_ldp-protected_clients_in_feder.md)
 - [Do Not Mimic My Voice: Speaker Identity Unlearning for Zero-Shot Text-to-Speech](do_not_mimic_my_voice_speaker_identity_unlearning_for_zero-shot_text-to-speech.md)
 - [Rethinking the Bias of Foundation Model under Long-tailed Distribution](rethinking_the_bias_of_foundation_model_under_long-tailed_distribution.md)
 

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SurfSplat: Conquering Feedforward 2D Gaussian Splatting with Surface Continuity Priors
 description: >-
@@ -138,8 +138,8 @@ $\lambda = 0.05$，在256×256分辨率下训练。Depth Anything V2骨干学习
 ## 相关论文
 
 - [3D Gaussian Splatting with Self-Constrained Priors for High Fidelity Surface Reconstruction](../../CVPR2026/3d_vision/3d_gaussian_splatting_with_self-constrained_priors_for_high_fidelity_surface_rec.md)
-- [SparseSurf: Sparse-View 3D Gaussian Splatting for Surface Reconstruction](../../AAAI2026/3d_vision/sparsesurf_sparse-view_3d_gaussian_splatting_for_surface_reconstruction.md)
 - [MeshSplat: Generalizable Sparse-View Surface Reconstruction via Gaussian Splatting](../../AAAI2026/3d_vision/meshsplat_generalizable_sparse-view_surface_reconstruction_via_gaussian_splattin.md)
+- [SparseSurf: Sparse-View 3D Gaussian Splatting for Surface Reconstruction](../../AAAI2026/3d_vision/sparsesurf_sparse-view_3d_gaussian_splatting_for_surface_reconstruction.md)
 - [UFO-4D: Unposed Feedforward 4D Reconstruction from Two Images](ufo-4d_unposed_feedforward_4d_reconstruction_from_two_images.md)
 - [LiTo: Surface Light Field Tokenization](lito_surface_light_field_tokenization.md)
 

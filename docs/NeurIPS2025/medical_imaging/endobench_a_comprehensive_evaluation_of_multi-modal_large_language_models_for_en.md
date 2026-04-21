@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis
 description: >-

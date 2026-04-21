@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] You need to MIMIC to get FAME: Solving Meeting Transcript Scarcity with Multi-Agent Conversations
 description: >-
@@ -150,6 +150,6 @@ MIMIC 本身不涉及训练，使用 GPT-4o 作为骨干 LLM，利用其 128k to
 - [CortexDebate: Debating Sparsely and Equally for Multi-Agent Debate](cortexdebate_debating_sparsely_and_equally_for_multi-agent_debate.md)
 - [Preventing Rogue Agents Improves Multi-Agent Collaboration](preventing_rogue_agents_improves_multi-agent_collaboration.md)
 - [AIDE: Attribute-Guided Multi-Hop Data Expansion for Data Scarcity in Task-Specific Fine-tuning](aide_attribute-guided_multi-hop_data_expansion_for_data_scarcity_in_task-specifi.md)
-- [Beyond Frameworks: Unpacking Collaboration Strategies in Multi-Agent Systems](beyond_frameworks_multi_agent_collaboration.md)
+- [DocAgent: A Multi-Agent System for Automated Code Documentation Generation](docagent_a_multi-agent_system_for_automated_code_documentation_generation.md)
 
 <!-- RELATED:END -->

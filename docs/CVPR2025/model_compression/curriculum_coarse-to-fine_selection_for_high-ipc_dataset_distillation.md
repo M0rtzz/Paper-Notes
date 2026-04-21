@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Curriculum Coarse-to-Fine Selection for High-IPC Dataset Distillation
 description: >-
@@ -125,9 +125,9 @@ CCFS分为两个阶段：首先用现有DD方法（如CDA）蒸馏得到$\mathca
 ## 相关论文
 
 - [HierAmp: Coarse-to-Fine Autoregressive Amplification for Generative Dataset Distillation](../../CVPR2026/model_compression/hieramp_coarse-to-fine_autoregressive_amplification_for_generative_dataset_disti.md)
-- [Emphasizing Discriminative Features for Dataset Distillation in Complex Scenarios](emphasizing_discriminative_features_for_dataset_distillation_in_complex_scenario.md)
 - [Enhancing Dataset Distillation via Non-Critical Region Refinement](enhancing_dataset_distillation_via_non-critical_region_refinement.md)
 - [Dataset Distillation with Neural Characteristic Function: A Minmax Perspective](dataset_distillation_with_neural_characteristic_function_a_minmax_perspective.md)
+- [Emphasizing Discriminative Features for Dataset Distillation in Complex Scenarios](emphasizing_discriminative_features_for_dataset_distillation_in_complex_scenario.md)
 - [DELT: A Simple Diversity-driven EarlyLate Training for Dataset Distillation](delt_a_simple_diversity-driven_earlylate_training_for_dataset_distillation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adaptive Dual Reasoner: Large Reasoning Models Can Think Efficiently by Hybrid Reasoning
 description: >-

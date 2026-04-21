@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Direct Approach to Viewing Graph Solvability
 description: >-
@@ -133,6 +133,6 @@ tags:
 - [On Topological Descriptors for Graph Products](../../NeurIPS2025/others/on_topological_descriptors_for_graph_products.md)
 - [Structural Approach to Guiding a Present-Biased Agent](../../AAAI2026/others/structural_approach_to_guiding_a_present-biased_agent.md)
 - [Graph-Structured Trajectory Extraction from Travelogues](../../ACL2025/others/graph-structured_trajectory_extraction_from_travelogues.md)
-- [Literature Meets Data: A Synergistic Approach to Hypothesis Generation](../../ACL2025/others/literature_meets_data_hypothesis.md)
+- [Unveiling Dual Quality in Product Reviews: An NLP-Based Approach](../../ACL2025/others/unveiling_dual_quality_in_product_reviews_an_nlp-based_approach.md)
 
 <!-- RELATED:END -->

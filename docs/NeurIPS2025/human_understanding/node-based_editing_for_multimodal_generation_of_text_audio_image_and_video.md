@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Node-Based Editing for Multimodal Generation of Text, Audio, Image, and Video
 description: >-
@@ -125,8 +125,8 @@ tags:
 
 - [MOSPA: Human Motion Generation Driven by Spatial Audio](mospa_human_motion_generation_driven_by_spatial_audio.md)
 - [VASA-3D: Lifelike Audio-Driven Gaussian Head Avatars from a Single Image](vasa-3d_lifelike_audio-driven_gaussian_head_avatars_from_a_single_image.md)
+- [UniPose: A Unified Multimodal Framework for Human Pose Comprehension, Generation and Editing](../../CVPR2025/human_understanding/unipose_a_unified_multimodal_framework_for_human_pose_comprehension_generation_a.md)
 - [What's Making That Sound Right Now? Video-centric Audio-Visual Localization](../../ICCV2025/human_understanding/whats_making_that_sound_right_now_video-centric_audio-visual_localization.md)
-- [SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](../../CVPR2026/human_understanding/save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
 - [VimoRAG: Video-based Retrieval-augmented 3D Motion Generation for Motion Language Models](vimorag_video-based_retrieval-augmented_3d_motion_generation_for_motion_language.md)
 
 <!-- RELATED:END -->

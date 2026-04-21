@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Inference-Time Reward Hacking in Large Language Models
 description: >-

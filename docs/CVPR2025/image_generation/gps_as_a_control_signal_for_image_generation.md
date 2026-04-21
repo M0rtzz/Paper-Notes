@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] GPS as a Control Signal for Image Generation
 description: >-
-  [CVPR 2025][image generation] 将照片 EXIF 中的 GPS 标签作为扩散模型的控制信号，实现基于地理位置的可控图像生成，并通过 GPS-to-3D 的 SDS 管线从 2D 模型提取 3D 地标重建。
+  [CVPR 2025][图像生成][GPS conditioning] 将照片 EXIF 元数据中的 GPS 坐标作为扩散模型的新型控制信号，训练 GPS+文本联合条件的图像生成模型，能捕捉城市内不同街区/地标的细粒度外观差异，并通过角度条件 SDS 从 2D 模型提取 3D 地标重建。
 tags:
   - CVPR 2025
+  - 图像生成
   - GPS conditioning
-  - diffusion model
-  - 3D reconstruction
+  - 扩散模型
+  - geotagged photos
+  - NeRF
   - score distillation sampling
-  - 地理位置控制
+  - compositional generation
 ---
 
 # GPS as a Control Signal for Image Generation
@@ -154,10 +156,10 @@ $$\tilde{\boldsymbol{\epsilon}}_\phi = \boldsymbol{\epsilon}_\phi(\varnothing, \
 
 ## 相关论文
 
-- [Multi-party Collaborative Attention Control for Image Customization](multi-party_collaborative_attention_control_for_image_customization.md)
 - [LaRender: Training-Free Occlusion Control in Image Generation via Latent Rendering](../../ICCV2025/image_generation/larender_training-free_occlusion_control_in_image_generation_via_latent_renderin.md)
-- [Learning Flow Fields in Attention for Controllable Person Image Generation](learning_flow_fields_in_attention_for_controllable_person_image_generation.md)
 - [DreamDiffusion: High-Quality EEG-to-Image Generation with Temporal Masked Signal Modeling and CLIP Alignment](../../ECCV2024/image_generation/dreamdiffusion_high-quality_eeg-to-image_generation_with_temporal_masked_signal_.md)
-- [Collaborative Control for Geometry-Conditioned PBR Image Generation](../../ECCV2024/image_generation/collaborative_control_for_geometry-conditioned_pbr_image_generation.md)
+- [Multitwine: Multi-Object Compositing with Text and Layout Control](multitwine_multi-object_compositing_with_text_and_layout_control.md)
+- [Multi-party Collaborative Attention Control for Image Customization](multi-party_collaborative_attention_control_for_image_customization.md)
+- [OmniGen: Unified Image Generation](omnigen_unified_image_generation.md)
 
 <!-- RELATED:END -->

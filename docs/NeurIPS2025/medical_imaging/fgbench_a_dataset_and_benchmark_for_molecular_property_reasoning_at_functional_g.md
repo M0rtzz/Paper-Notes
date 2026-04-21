@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FGBench: A Dataset and Benchmark for Molecular Property Reasoning at Functional Group-Level in Large Language Models
 description: >-

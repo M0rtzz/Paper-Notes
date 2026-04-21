@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rejecting Hallucinated State Targets during Planning
 description: >-
@@ -142,9 +142,9 @@ tags:
 ## 相关论文
 
 - [RefreshKV: Updating Small KV Cache During Long-form Generation](../../ACL2025/llm_efficiency/refreshkv_updating_small_kv_cache_during_long-form_generation.md)
-- [Position: Theory of Mind Benchmarks are Broken for Large Language Models](position_theory_of_mind_benchmarks_are_broken_for_large_language_models.md)
 - [Addressing Imbalanced Domain-Incremental Learning through Dual-Balance Collaborative Experts (DCE)](addressing_imbalanced_domain-incremental_learning_through_dual-balance_collabora.md)
 - [EasyInv: Toward Fast and Better DDIM Inversion](easyinv_toward_fast_and_better_ddim_inversion.md)
-- [MoH: Multi-Head Attention as Mixture-of-Head Attention](moh_multi-head_attention_as_mixture-of-head_attention.md)
+- [Retraining-Free Merging of Sparse MoE via Hierarchical Clustering](retraining-free_merging_of_sparse_moe_via_hierarchical_clustering.md)
+- [Ranked Entropy Minimization for Continual Test-Time Adaptation](ranked_entropy_minimization_for_continual_test-time_adaptation.md)
 
 <!-- RELATED:END -->

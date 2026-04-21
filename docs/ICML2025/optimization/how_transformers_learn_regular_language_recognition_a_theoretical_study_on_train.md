@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How Transformers Learn Regular Language Recognition: A Theoretical Study on Training Dynamics and Implicit Bias
 description: >-

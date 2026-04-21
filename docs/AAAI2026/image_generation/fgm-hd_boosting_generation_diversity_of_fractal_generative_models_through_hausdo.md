@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FGM-HD: Boosting Generation Diversity of Fractal Generative Models through Hausdorff Dimension Induction
 description: >-

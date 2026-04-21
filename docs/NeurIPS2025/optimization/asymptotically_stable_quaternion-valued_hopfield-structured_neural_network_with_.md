@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Asymptotically Stable Quaternionic Hopfield Structured Neural Network with Supervised Projection-based Manifold Learning
 description: >-

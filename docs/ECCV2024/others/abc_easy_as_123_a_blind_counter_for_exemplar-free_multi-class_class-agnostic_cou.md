@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ABC Easy as 123: A Blind Counter for Exemplar-Free Multi-Class Class-Agnostic Counting
 description: >-
@@ -107,6 +107,6 @@ ABC123的核心思路是"先盲数，再解释"——先不依赖任何样例，
 - [AnalyticKWS: Towards Exemplar-Free Analytic Class Incremental Learning for Small-footprint Keyword Spotting](../../ACL2025/others/analytickws_towards_exemplar-free_analytic_class_incremental_learning_for_small-.md)
 - [STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning](stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning.md)
 - [Rethinking Data Bias: Dataset Copyright Protection via Embedding Class-Wise Hidden Bias](rethinking_data_bias_dataset_copyright_protection_via_embedding_class-wise_hidde.md)
-- [Shifted Autoencoders for Point Annotation Restoration in Object Counting](shifted_autoencoders_for_point_annotation_restoration_in_object_counting.md)
+- [Task-Agnostic Guided Feature Expansion for Class-Incremental Learning](../../CVPR2025/others/task-agnostic_guided_feature_expansion_for_class-incremental_learning.md)
 
 <!-- RELATED:END -->

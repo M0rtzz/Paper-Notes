@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EchoAgent: Towards Reliable Echocardiography Interpretation with "Eyes", "Hands" and "Minds"
 description: >-
@@ -154,7 +154,7 @@ EchoAgent 在所有 7 大类解剖结构上 Acc 均超过 70%，比最优 MLLM �
 
 ## 相关论文
 
-- [Bridging the Skill Gap in Clinical CBCT Interpretation with CBCTRepD](bridging_the_skill_gap_in_clinical_cbct_interpretation_with_cbctrepd.md)
+- [Bridging the Skill Gap in Clinical CBCT Interpretation with CBCTRepD](bridging_the_skill_gap_in_clinical_cbct_interpreta.md)
 - [CURE: Curriculum-guided Multi-task Training for Reliable Anatomy Grounded Report Generation](cure_curriculum-guided_multi-task_training_for_reliable_anatomy_grounded_report_.md)
 - [Causal Interpretation of Neural Network Computations with Contribution Decomposition](../../ICLR2026/medical_imaging/causal_interpretation_of_neural_network_computations_with_contribution_decomposi.md)
 - [Reliable Algorithm Selection for Machine Learning-Guided Design](../../ICML2025/medical_imaging/reliable_algorithm_selection_for_machine_learning-guided_design.md)

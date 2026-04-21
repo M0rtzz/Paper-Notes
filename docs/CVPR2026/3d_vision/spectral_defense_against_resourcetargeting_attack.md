@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spectral Defense Against Resource-Targeting Attack in 3D Gaussian Splatting
 description: >-

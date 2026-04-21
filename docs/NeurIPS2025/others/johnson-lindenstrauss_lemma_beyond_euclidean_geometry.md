@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Johnson-Lindenstrauss Lemma Beyond Euclidean Geometry
 description: >-
@@ -133,6 +133,6 @@ tags:
 - [On a Geometry of Interbrain Networks](on_a_geometry_of_interbrain_networks.md)
 - [Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry](reliable_active_learning_from_unreliable_labels_via_neural_collapse_geometry.md)
 - [Efficient Kernelized Learning in Polyhedral Games Beyond Full-Information: From Colonel Blotto to Congestion Games](efficient_kernelized_learning_in_polyhedral_games_beyond_full-information_from_c.md)
-- [Distributed Algorithms for Euclidean Clustering](../../ICLR2026/others/distributed_algorithms_for_euclidean_clustering.md)
+- [Randomized Dimensionality Reduction for Euclidean Maximization and Diversity Measures](../../ICML2025/others/randomized_dimensionality_reduction_for_euclidean_maximization_and_diversity_mea.md)
 
 <!-- RELATED:END -->

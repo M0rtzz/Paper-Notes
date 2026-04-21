@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PixFoundation 2.0: Do Video Multi-Modal LLMs Use Motion in Visual Grounding?
 description: >-

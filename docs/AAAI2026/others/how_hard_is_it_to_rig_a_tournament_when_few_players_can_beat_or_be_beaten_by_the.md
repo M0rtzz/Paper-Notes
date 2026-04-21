@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How Hard Is It to Rig a Tournament When Few Players Can Beat or Be Beaten by the Favorite?
 description: >-

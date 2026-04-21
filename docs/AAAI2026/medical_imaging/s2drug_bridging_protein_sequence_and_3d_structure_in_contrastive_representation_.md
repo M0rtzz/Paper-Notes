@@ -177,7 +177,7 @@ S2Drug 在 AUROC 上超过 DrugHash 8.73 个点、超过 DrugCLIP 13.01 个点�
 - [SEMC: Structure-Enhanced Mixture-of-Experts Contrastive Learning for Ultrasound Standard Plane Recognition](semc_structure-enhanced_mixture-of-experts_contrastive_learning_for_ultrasound_s.md)
 - [AANet: Virtual Screening under Structural Uncertainty via Alignment and Aggregation](../../NeurIPS2025/medical_imaging/aanet_virtual_screening_under_structural_uncertainty_via_alignment_and_aggregati.md)
 - [Multivariate Gaussian Representation Learning for Medical Action Evaluation](multivariate_gaussian_representation_learning_for_medical_action_evaluation.md)
-- [MAISI-v2: Accelerated 3D High-Resolution Medical Image Synthesis with Rectified Flow and Region-specific Contrastive Loss](maisi-v2_accelerated_3d_high-resolution_medical_image_synthesis_with_rectified_f.md)
 - [Protein Structure Tokenization via Geometric Byte Pair Encoding](../../ICLR2026/medical_imaging/protein_structure_tokenization_via_geometric_byte_pair_encoding.md)
+- [MAISI-v2: Accelerated 3D High-Resolution Medical Image Synthesis with Rectified Flow and Region-specific Contrastive Loss](maisi-v2_accelerated_3d_high-resolution_medical_image_synthesis_with_rectified_f.md)
 
 <!-- RELATED:END -->

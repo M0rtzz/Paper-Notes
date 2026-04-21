@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EditAR: Unified Conditional Generation with Autoregressive Models
 description: >-
@@ -128,7 +128,7 @@ EditAR 在前馈方法中取得最佳综合表现，背景保留和编辑质量�
 - [ARGenSeg: Image Segmentation with Autoregressive Image Generation Model](../../NeurIPS2025/segmentation/argenseg_image_segmentation_with_autoregressive_image_generation_model.md)
 - [Symmetrical Flow Matching: Unified Image Generation, Segmentation, and Classification with Score-Based Generative Models](../../AAAI2026/segmentation/symmetrical_flow_matching_unified_image_generation_segmentation_and_classificati.md)
 - [Continuous Locomotive Crowd Behavior Generation](continuous_locomotive_crowd_behavior_generation.md)
+- [POSTA: A Go-to Framework for Customized Artistic Poster Generation](posta_a_go-to_framework_for_customized_artistic_poster_generation.md)
 - [GLUS: Global-Local Reasoning Unified into A Single Large Language Model for Video Segmentation](glus_global-local_reasoning_unified_into_a_single_large_language_model_for_video.md)
-- [DINOv2 Meets Text: A Unified Framework for Image- and Pixel-Level Vision-Language Alignment](dinov2_meets_text_a_unified_framework_for_image-_and_pixel-level_vision-language.md)
 
 <!-- RELATED:END -->

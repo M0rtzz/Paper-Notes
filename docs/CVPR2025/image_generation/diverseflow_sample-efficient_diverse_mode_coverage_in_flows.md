@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiverseFlow: Sample-Efficient Diverse Mode Coverage in Flows
 description: >-
@@ -75,8 +75,8 @@ ImageNet-256 (LFM, CFG=2): Recall 0.41→**0.46**，Precision 基本保持（0.7
 
 - [Learning to Sample Effective and Diverse Prompts for Text-to-Image Generation](learning_to_sample_effective_and_diverse_prompts_for_text-to-image_generation.md)
 - [HollowFlow: Efficient Sample Likelihood Evaluation using Hollow Message Passing](../../NeurIPS2025/image_generation/hollowflow_efficient_sample_likelihood_evaluation_using_hollow_message_passing.md)
+- [Taste More, Taste Better: Diverse Data and Strong Model Boost Semi-Supervised Crowd Counting](taste_more_taste_better_diverse_data_and_strong_model_boost_semi-supervised_crow.md)
 - [Sample-Efficient Evidence Estimation of Score-Based Priors for Model Selection](../../ICLR2026/image_generation/sample-efficient_evidence_estimation_of_score_based_priors_for_model_selection.md)
-- [LoRAverse: A Submodular Framework to Retrieve Diverse Adapters for Diffusion Models](../../ICCV2025/image_generation/loraverse_a_submodular_framework_to_retrieve_diverse_adapters_for_diffusion_mode.md)
-- [Hierarchical Flow Diffusion for Efficient Frame Interpolation](hierarchical_flow_diffusion_for_efficient_frame_interpolation.md)
+- [SoftVQ-VAE: Efficient 1-Dimensional Continuous Tokenizer](softvq-vae_efficient_1-dimensional_continuous_tokenizer.md)
 
 <!-- RELATED:END -->

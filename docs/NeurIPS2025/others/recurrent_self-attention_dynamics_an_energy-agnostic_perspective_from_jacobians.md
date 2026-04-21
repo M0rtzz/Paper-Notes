@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Recurrent Self-Attention Dynamics: An Energy-Agnostic Perspective from Jacobians
 description: >-
@@ -130,7 +130,7 @@ $$\left\| \frac{\partial \text{RMSNorm}(X + \eta \Delta X)}{\partial X} \right\|
 - [Normalization in Attention Dynamics](normalization_in_attention_dynamics.md)
 - [Revisiting Agnostic Boosting](revisiting_agnostic_boosting.md)
 - [On Agnostic PAC Learning in the Small Error Regime](on_agnostic_pac_learning_in_the_small_error_regime.md)
-- [A Generalized Label Shift Perspective for Cross-Domain Gaze Estimation](a_generalized_label_shift_perspective_for_crossdomain_gaze_e.md)
 - [Learning Dynamics of RNNs in Closed-Loop Environments](learning_dynamics_of_rnns_in_closed-loop_environments.md)
+- [A Generalized Label Shift Perspective for Cross-Domain Gaze Estimation](a_generalized_label_shift_perspective_for_crossdomain_gaze_e.md)
 
 <!-- RELATED:END -->

@@ -1,12 +1,14 @@
-﻿---
+---
 title: >-
-  [论文解读] RoadSocial: A Diverse VideoQA Dataset and Benchmark for Road Event Understanding
+  [论文解读] RoadSocial: A Diverse VideoQA Dataset and Benchmark for Road Event Understanding from Social Video Narratives
 description: >-
-  [CVPR 2025][视频问答/交通] 提出RoadSocial大规模多样化视频问答数据集，覆盖全球道路事件、多视角和社交媒体叙事，评测18种Video LLM在12类QA任务上的表现
+  [CVPR 2025][LLM/NLP][VideoQA] 本文提出RoadSocial，一个来源于社交媒体的大规模多样化VideoQA数据集（13.2K视频、260K问答对），覆盖全球多地域多视角的道路事件场景，通过半自动标注框架和12类QA任务系统性评测了18种Video LLM的道路事件理解能力。
 tags:
   - CVPR 2025
-  - 视频问答
-  - 道路事件理解
+  - LLM/NLP
+  - VideoQA
+  - 道路事件
+  - 社交媒体
   - 数据集
   - Video LLM
 ---
@@ -91,7 +93,7 @@ RoadSocial的构建流程：(1) 数据收集——从社交媒体平台按关键
 - [Palm: A Culturally Inclusive and Linguistically Diverse Dataset for Arabic LLMs](../../ACL2025/llm_nlp/palm_a_culturally_inclusive_and_linguistically_diverse_dataset_for_arabic_llms.md)
 - [TEMPLE: Incentivizing Temporal Understanding of Video LLMs via Progressive Pre-SFT Alignment](../../AAAI2026/llm_nlp/temple_incentivizing_temporal_understanding_of_video_large_language_models_via_p.md)
 - [Evaluating Text Creativity across Diverse Domains: A Dataset and Large Language Model Evaluator](../../ICLR2026/llm_nlp/evaluating_text_creativity_across_diverse_domains_a_dataset_and_large_language_m.md)
-- [Opinion Maximization in Social Networks by Modifying Internal Opinions](../../NeurIPS2025/llm_nlp/opinion_maximization_in_social_networks_by_modifying_internal_opinions.md)
-- [SocialEval: Evaluating Social Intelligence of Large Language Models](../../ACL2025/llm_nlp/socialeval_evaluating_social_intelligence_of_large_language_models.md)
+- [PapersPlease: A Benchmark for Evaluating Motivational Values of Large Language Models Based on ERG Theory](../../ACL2025/llm_nlp/papersplease_a_benchmark_for_evaluating_motivational_values_of_large_language_mo.md)
+- [A Modular Dataset to Demonstrate LLM Abstraction Capability](../../ACL2025/llm_nlp/a_modular_dataset_to_demonstrate_llm_abstraction_capability.md)
 
 <!-- RELATED:END -->

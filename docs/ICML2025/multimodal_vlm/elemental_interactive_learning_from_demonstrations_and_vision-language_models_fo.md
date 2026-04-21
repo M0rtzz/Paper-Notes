@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ELEMENTAL: Interactive Learning from Demonstrations and Vision-Language Models for Reward Design in Robotics
 description: >-
@@ -126,7 +126,7 @@ ELEMENTAL 将视觉语言模型 (VLM) 与逆强化学习 (IRL) 融合，通过 V
 - [RoboRefer: Towards Spatial Referring with Reasoning in Vision-Language Models for Robotics](../../NeurIPS2025/multimodal_vlm/roborefer_towards_spatial_referring_with_reasoning_in_vision-language_models_for.md)
 - [RoboSpatial: Teaching Spatial Understanding to 2D and 3D Vision-Language Models for Robotics](../../CVPR2025/multimodal_vlm/robospatial_teaching_spatial_understanding_to_2d_and_3d_vision-language_models_f.md)
 - [The Devil Is in the Details: Tackling Unimodal Spurious Correlations for Generalizable Multimodal Reward Models](the_devil_is_in_the_details_tackling_unimodal_spurious_correlations_for_generali.md)
-- [Learning Invariant Causal Mechanism from Vision-Language Models](learning_invariant_causal_mechanism_from_vision-language_models.md)
 - [Scene-Aware Urban Design: A Human-AI Recommendation Framework Using Co-Occurrence Embeddings and Vision-Language Models](../../NeurIPS2025/multimodal_vlm/scene-aware_urban_design_a_human-ai_recommendation_framework_using_co-occurrence.md)
+- [Learning Invariant Causal Mechanism from Vision-Language Models](learning_invariant_causal_mechanism_from_vision-language_models.md)
 
 <!-- RELATED:END -->

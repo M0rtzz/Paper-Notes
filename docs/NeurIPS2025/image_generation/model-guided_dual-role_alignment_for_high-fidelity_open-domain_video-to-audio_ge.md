@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MGAudio: Model-Guided Dual-Role Alignment for High-Fidelity Open-Domain Video-to-Audio Generation
 description: >-
@@ -168,6 +168,6 @@ FAD降至0.40，相比次优MMAudio(0.71)提升43%。
 - [AvatarArtist: Open-Domain 4D Avatarization](../../CVPR2025/image_generation/avatarartist_open-domain_4d_avatarization.md)
 - [Vicinity-Guided Discriminative Latent Diffusion for Privacy-Preserving Domain Adaptation](vicinity-guided_discriminative_latent_diffusion_for_privacy-preserving_domain_ad.md)
 - [From Cradle to Cane: A Two-Pass Framework for High-Fidelity Lifespan Face Aging](from_cradle_to_cane_a_two-pass_framework_for_high-fidelity_lifespan_face_aging.md)
-- [Knowledge Distillation Detection for Open-weights Models](knowledge_distillation_detection_for_open-weights_models.md)
+- [Structure-Guided Diffusion Models for High-Fidelity Portrait Shadow Removal](../../ICCV2025/image_generation/structure-guided_diffusion_models_for_high-fidelity_portrait_shadow_removal.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Controllable Navigation Instruction Generation with Chain of Thought Prompting
 description: >-
@@ -141,10 +141,10 @@ tags:
 
 ## 相关论文
 
+- [RoadPainter: Points Are Ideal Navigators for Topology Transformer](roadpainter_points_are_ideal_navigators_for_topology_transformer.md)
 - [Intention Chain-of-Thought Prompting with Dynamic Routing for Code Generation](../../AAAI2026/llm_reasoning/intention_chain-of-thought_prompting_with_dynamic_routing_for_code_generation.md)
 - [ThinkSound: Chain-of-Thought Reasoning in Multimodal Large Language Models for Audio Generation and Editing](../../NeurIPS2025/llm_reasoning/thinksound_chain-of-thought_reasoning_in_multimodal_large_language_models_for_au.md)
-- [RoadPainter: Points Are Ideal Navigators for Topology Transformer](roadpainter_points_are_ideal_navigators_for_topology_transformer.md)
+- [MM-Verify: Enhancing Multimodal Reasoning with Chain-of-Thought Verification](../../ACL2025/llm_reasoning/mm-verify_enhancing_multimodal_reasoning_with_chain-of-thought_verification.md)
 - [PrismAudio: Decomposed Chain-of-Thoughts and Multi-dimensional Rewards for Video-to-Audio Generation](../../ICLR2026/llm_reasoning/prismaudio_decomposed_chain-of-thoughts_and_multi-dimensional_rewards_for_video-.md)
-- [Video-T1: Test-Time Scaling for Video Generation](../../ICCV2025/llm_reasoning/video-t1_test-time_scaling_for_video_generation.md)
 
 <!-- RELATED:END -->

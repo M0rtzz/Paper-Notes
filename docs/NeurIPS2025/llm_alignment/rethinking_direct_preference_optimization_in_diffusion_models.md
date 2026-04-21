@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking Direct Preference Optimization in Diffusion Models
 description: >-

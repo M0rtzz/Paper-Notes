@@ -2,14 +2,15 @@
 title: >-
   [论文解读] MoEE: Mixture of Emotion Experts for Audio-Driven Portrait Animation
 description: >-
-  [CVPR 2025][talking head] 提出 Mixture of Emotion Experts (MoEE)，将六种基础情绪解耦为独立专家模块，通过 Soft MoE 门控实现单一和复合情绪的精确合成，配合 150 小时高分辨率情绪数据集 DH-FaceEmoVid-150 达到 SOTA。
+  [CVPR 2025][人体理解][mixture of emotion experts] 提出情绪混合专家（MoEE）模型，为 6 种基础情绪各训练一个专家网络并通过 Soft MoE 门控组合，配合 150 小时专业情绪数据集和多模态情绪条件模块，实现对单一及复合情绪的精确、自然控制。
 tags:
   - CVPR 2025
-  - talking head
-  - emotion control
-  - mixture of experts
-  - audio-driven
-  - portrait animation
+  - 人体理解
+  - mixture of emotion experts
+  - audio-driven portrait animation
+  - compound emotion
+  - Action Units
+  - DH-FaceEmoVid-150
 ---
 
 # MoEE: Mixture of Emotion Experts for Audio-Driven Portrait Animation
@@ -144,10 +145,10 @@ $$L = L_{latent} + \lambda L_{spatial}$$
 
 ## 相关论文
 
-- [A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](../../ICCV2025/human_understanding/a_quality-guided_mixture_of_score-fusion_experts_framework_for_human_recognition.md)
+- [Sonic: Shifting Focus to Global Audio Perception in Portrait Animation](sonic_shifting_focus_to_global_audio_perception_in_portrait_animation.md)
+- [X-Dyna: Expressive Dynamic Human Image Animation](x-dyna_expressive_dynamic_human_image_animation.md)
+- [A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](../../ICCV2025/human_understanding/a_qualityguided_mixture_of_scorefusion_experts_framework_for.md)
 - [MOSPA: Human Motion Generation Driven by Spatial Audio](../../NeurIPS2025/human_understanding/mospa_human_motion_generation_driven_by_spatial_audio.md)
-- [Spatiotemporal-Untrammelled Mixture of Experts for Multi-Person Motion Prediction](../../AAAI2026/human_understanding/spatiotemporal-untrammelled_mixture_of_experts_for_multi-person_motion_predictio.md)
-- [VASA-3D: Lifelike Audio-Driven Gaussian Head Avatars from a Single Image](../../NeurIPS2025/human_understanding/vasa-3d_lifelike_audio-driven_gaussian_head_avatars_from_a_single_image.md)
-- [Mingle: Mixture of Null-Space Gated Low-Rank Experts for Test-Time Continual Model Merging](../../NeurIPS2025/human_understanding/mingle_mixture_of_null-space_gated_low-rank_experts_for_test-time_continual_mode.md)
+- [Shape My Moves: Text-Driven Shape-Aware Synthesis of Human Motions](shape_my_moves_text-driven_shape-aware_synthesis_of_human_motions.md)
 
 <!-- RELATED:END -->

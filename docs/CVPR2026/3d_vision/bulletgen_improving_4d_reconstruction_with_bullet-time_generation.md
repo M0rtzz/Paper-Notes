@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BulletGen: Improving 4D Reconstruction with Bullet-Time Generation
 description: >-

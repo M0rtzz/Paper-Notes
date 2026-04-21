@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] JailbreakRadar: Comprehensive Assessment of Jailbreak Attacks Against LLMs
 description: >-

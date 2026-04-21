@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Visual Surface Wave Elastography: Revealing Subsurface Physical Properties via Visible Surface Waves
 description: >-
@@ -140,6 +140,6 @@ tags:
 - [Aligning Protein Conformation Ensemble Generation with Physical Feedback](../../ICML2025/medical_imaging/aligning_protein_conformation_ensemble_generation_with_physical_feedback.md)
 - [Beyond Brain Decoding: Visual-Semantic Reconstructions to Mental Creation Extension Based on fMRI](beyond_brain_decoding_visualsemantic_reconstructions_to_ment.md)
 - [NEURONS: Emulating the Human Visual Cortex Improves Fidelity and Interpretability in fMRI-to-Video Reconstruction](neurons_emulating_the_human_visual_cortex_improves_fidelity_and_interpretability.md)
-- [SynBrain: Enhancing Visual-to-fMRI Synthesis via Probabilistic Representation Learning](../../NeurIPS2025/medical_imaging/synbrain_enhancing_visual-to-fmri_synthesis_via_probabilistic_representation_lea.md)
+- [Multi-Resolution Pathology-Language Pre-training Model with Text-Guided Visual Representation](../../CVPR2025/medical_imaging/multi-resolution_pathology-language_pre-training_model_with_text-guided_visual_r.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mitigating Intra- and Inter-modal Forgetting in Continual Learning of Unified Multimodal Models
 description: >-

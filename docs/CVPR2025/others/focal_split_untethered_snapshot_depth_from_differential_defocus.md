@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Focal Split: Untethered Snapshot Depth from Differential Defocus
 description: >-
@@ -100,10 +100,10 @@ tags:
 
 ## 相关论文
 
+- [Three-View Focal Length Recovery From Homographies](three-view_focal_length_recovery_from_homographies.md)
 - [Omni-DC: Highly Robust Depth Completion with Multiresolution Depth Integration](../../ICCV2025/others/omni-dc_highly_robust_depth_completion_with_multiresolution_depth_integration.md)
 - [Depth-Bounds for Neural Networks via the Braid Arrangement](../../NeurIPS2025/others/depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
 - [Depth-Supervised Fusion Network for Seamless-Free Image Stitching](../../NeurIPS2025/others/depth-supervised_fusion_network_for_seamless-free_image_stitching.md)
 - [Inner Thinking Transformer: Leveraging Dynamic Depth Scaling to Foster Adaptive Internal Thinking](../../ACL2025/others/inner_thinking_transformer_leveraging_dynamic_depth_scaling_to_foster_adaptive_i.md)
-- [Teaching Tailored to Talent: Adverse Weather Restoration via Prompt Pool and Depth-Anything Constraint](../../ECCV2024/others/teaching_tailored_to_talent_adverse_weather_restoration_via_prompt_pool_and_dept.md)
 
 <!-- RELATED:END -->

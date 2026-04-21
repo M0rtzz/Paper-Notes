@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hearing Hands: Generating Sounds from Physical Interactions in 3D Scenes
 description: >-
@@ -128,7 +128,7 @@ tags:
 - [HOI3DGen: Generating High-Quality Human-Object-Interactions in 3D](hoi3dgen_generating_high-quality_human-object-interactions_in_3d.md)
 - [Bolt3D: Generating 3D Scenes in Seconds](../../ICCV2025/3d_vision/bolt3d_generating_3d_scenes_in_seconds.md)
 - [Generating 3D-Consistent Videos from Unposed Internet Photos](generating_3d-consistent_videos_from_unposed_internet_photos.md)
+- [Grounding 3D Object Affordance with Language Instructions, Visual Observations and Interactions](grounding_3d_object_affordance_with_language_instructions_visual_observations_an.md)
 - [Functionality Understanding and Segmentation in 3D Scenes](functionality_understanding_and_segmentation_in_3d_scenes.md)
-- [Material Anything: Generating Materials for Any 3D Object via Diffusion](material_anything_generating_materials_for_any_3d_object_via_diffusion.md)
 
 <!-- RELATED:END -->

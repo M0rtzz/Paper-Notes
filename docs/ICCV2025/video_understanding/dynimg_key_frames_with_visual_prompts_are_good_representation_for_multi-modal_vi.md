@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DynImg: Key Frames with Visual Prompts are Good Representation for Multi-Modal Video Understanding
 description: >-

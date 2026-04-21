@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CompSlider: Compositional Slider for Disentangled Multiple-Attribute Image Generation
 description: >-
@@ -125,7 +125,7 @@ $$\bm{c}^{\mathcal{I}} = \text{CompSlider}(\bm{c}^{\mathcal{S}}, \bm{c}^{\mathca
 
 ## 相关论文
 
-- [All-in-One Slider for Attribute Manipulation in Diffusion Models](../../CVPR2026/image_generation/all-in-one_slider_for_attribute_manipulation_in_diffusion_models.md)
+- [All-in-One Slider for Attribute Manipulation in Diffusion Models](../../CVPR2026/image_generation/all_in_one_slider_attribute_manipulation.md)
 - [Fair Generation without Unfair Distortions: Debiasing Text-to-Image Generation with Entanglement-Free Attention](fair_generation_without_unfair_distortions_debiasing_text-to-image_generation_wi.md)
 - [Evaluating the Evaluators: Metrics for Compositional Text-to-Image Generation](../../NeurIPS2025/image_generation/evaluating_the_evaluators_metrics_for_compositional_text-to-image_generation.md)
 - [Adaptive Routing of Text-to-Image Generation Requests Between Large Cloud Models and Small Edge Models](adaptive_routing_of_text-to-image_generation_requests_between_large_cloud_model_.md)

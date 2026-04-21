@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Phase Transition for Opinion Dynamics with Competing Biases
 description: >-

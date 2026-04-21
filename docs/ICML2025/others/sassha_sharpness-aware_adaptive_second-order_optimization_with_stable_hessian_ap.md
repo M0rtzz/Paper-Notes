@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sassha: Sharpness-aware Adaptive Second-order Optimization with Stable Hessian Approximation
 description: >-

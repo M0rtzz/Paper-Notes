@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning from Videos for 3D World: Enhancing MLLMs with 3D Vision Geometry Priors
 description: >-

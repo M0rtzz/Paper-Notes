@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BTL-UI: Blink-Think-Link Reasoning Model for GUI Agent
 description: >-

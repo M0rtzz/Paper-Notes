@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VipAct: Visual-Perception Enhancement via Specialized VLM Agent Collaboration and Tool-use
 description: >-

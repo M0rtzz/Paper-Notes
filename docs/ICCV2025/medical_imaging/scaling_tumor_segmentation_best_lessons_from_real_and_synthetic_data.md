@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling Tumor Segmentation: Best Lessons from Real and Synthetic Data
 description: >-

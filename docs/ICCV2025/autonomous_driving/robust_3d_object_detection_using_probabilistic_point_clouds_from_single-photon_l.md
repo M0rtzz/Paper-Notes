@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Robust 3D Object Detection using Probabilistic Point Clouds from Single-Photon LiDARs
 description: >-
@@ -152,8 +152,8 @@ $$NPD(p_i) = \frac{\sum_{p_j \in \mathcal{BQ}_{L,r}(p_i)} Pr(p_j)}{L}$$
 
 - [GraphBEV: Towards Robust BEV Feature Alignment for Multi-Modal 3D Object Detection](../../ECCV2024/autonomous_driving/graphbev_towards_robust_bev_feature_alignment_for_multi-modal_3d_object_detectio.md)
 - [DriveFlow: Rectified Flow Adaptation for Robust 3D Object Detection in Autonomous Driving](../../AAAI2026/autonomous_driving/driveflow_rectified_flow_adaptation_for_robust_3d_object_detection_in_autonomous.md)
-- [SimPB: A Single Model for 2D and 3D Object Detection from Multiple Cameras](../../ECCV2024/autonomous_driving/simpb_a_single_model_for_2d_and_3d_object_detection_from_multiple_cameras.md)
 - [CVFusion: Cross-View Fusion of 4D Radar and Camera for 3D Object Detection](cvfusion_cross-view_fusion_of_4d_radar_and_camera_for_3d_object_detection.md)
-- [PAP: A Prediction-as-Perception Framework for 3D Object Detection](../../CVPR2025/autonomous_driving/a_prediction-as-perception_framework_for_3d_object_detection.md)
+- [SimPB: A Single Model for 2D and 3D Object Detection from Multiple Cameras](../../ECCV2024/autonomous_driving/simpb_a_single_model_for_2d_and_3d_object_detection_from_multiple_cameras.md)
+- [RENO: Real-Time Neural Compression for 3D LiDAR Point Clouds](../../CVPR2025/autonomous_driving/reno_real-time_neural_compression_for_3d_lidar_point_clouds.md)
 
 <!-- RELATED:END -->

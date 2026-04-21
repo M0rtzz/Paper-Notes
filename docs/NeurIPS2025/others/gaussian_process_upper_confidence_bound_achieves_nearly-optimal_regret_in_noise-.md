@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gaussian Process Upper Confidence Bound Achieves Nearly-Optimal Regret in Noise-Free Gaussian Process Bandits
 description: >-

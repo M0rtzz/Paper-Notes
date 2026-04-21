@@ -183,7 +183,7 @@ $$\mathbb{E}[c_{\text{comb}}(x_{\text{val}}) - c_{\text{comb}}(x_{\text{sus}})] 
 - [Improving Generalization with Flat Hilbert Bayesian Inference](improving_generalization_with_flat_hilbert_bayesian_inference.md)
 - [Unlocking Transfer Learning for Open-World Few-Shot Recognition](../../NeurIPS2025/llm_evaluation/unlocking_transfer_learning_for_open-world_few-shot_recognition.md)
 - [MDBench: A Synthetic Multi-Document Reasoning Benchmark Generated with Knowledge Guidance](../../ACL2025/llm_evaluation/mdbench_a_synthetic_multi-document_reasoning_benchmark_generated_with_knowledge_.md)
-- [Merlin L48 Spectrogram Dataset](../../NeurIPS2025/llm_evaluation/merlin_l48_spectrogram_dataset.md)
 - [Ad-hoc Concept Forming in the Game Codenames as a Means for Evaluating Large Language Models](../../ACL2025/llm_evaluation/ad-hoc_concept_forming_in_the_game_codenames_as_a_means_for_evaluating_large_lan.md)
+- [Merlin L48 Spectrogram Dataset](../../NeurIPS2025/llm_evaluation/merlin_l48_spectrogram_dataset.md)
 
 <!-- RELATED:END -->

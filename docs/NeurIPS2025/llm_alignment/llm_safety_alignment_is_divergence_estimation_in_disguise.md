@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLM Safety Alignment is Divergence Estimation in Disguise
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition
 description: >-
@@ -188,6 +188,6 @@ L_score = ReLU(S'_nm) + ReLU(m - S'_mat)
 - [DynFaceRestore: Balancing Fidelity and Quality in Diffusion-Guided Blind Face Restoration](dynfacerestore_balancing_fidelity_and_quality_in_diffusion-guided_blind_face_res.md)
 - [DADM: Dual Alignment of Domain and Modality for Face Anti-Spoofing](dadm_dual_alignment_of_domain_and_modality_for_face_anti-spoofing.md)
 - [CarGait: Cross-Attention based Re-ranking for Gait Recognition](cargait_cross-attention_based_re-ranking_for_gait_recognition.md)
-- [Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery](intra-view_and_inter-view_correlation_guided_multi-view_novel_class_discovery.md)
+- [LVFace: Progressive Cluster Optimization for Large Vision Models in Face Recognition](lvface_progressive_cluster_optimization_for_large_vision_models_in_face_recognit.md)
 
 <!-- RELATED:END -->

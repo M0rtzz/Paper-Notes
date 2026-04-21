@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Small Drafts, Big Verdict: Information-Intensive Visual Reasoning via Speculation
 description: >-

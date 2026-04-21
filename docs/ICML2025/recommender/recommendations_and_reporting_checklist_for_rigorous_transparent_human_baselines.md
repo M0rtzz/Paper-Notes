@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Recommendations and Reporting Checklist for Rigorous & Transparent Human Baselines in Model Evaluations
 description: >-

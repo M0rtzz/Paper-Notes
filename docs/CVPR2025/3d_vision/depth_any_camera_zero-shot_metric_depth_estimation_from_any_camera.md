@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Depth Any Camera: Zero-Shot Metric Depth Estimation from Any Camera
 description: >-
@@ -130,9 +130,9 @@ DAC 以等距矩形投影 (ERP) 作为统一图像表示，训练时将各种相
 ## 相关论文
 
 - [Efficient Depth Estimation for Unstable Stereo Camera Systems on AR Glasses](efficient_depth_estimation_for_unstable_stereo_camera_systems_on_ar_glasses.md)
-- [Camera Height Doesn't Change: Unsupervised Training for Metric Monocular Road-Scene Depth Estimation](../../ECCV2024/3d_vision/camera_height_doesnapost_change_unsupervised_training_for_metric_monocular_road-.md)
-- [DEFOM-Stereo: Depth Foundation Model Based Stereo Matching](defom-stereo_depth_foundation_model_based_stereo_matching.md)
-- [MVSAnywhere: Zero-Shot Multi-View Stereo](mvsanywhere_zero-shot_multi-view_stereo.md)
-- [Lite Any Stereo: Efficient Zero-Shot Stereo Matching](../../CVPR2026/3d_vision/lite_any_stereo_efficient_zero-shot_stereo_matching.md)
+- [SharpDepth: Sharpening Metric Depth Predictions Using Diffusion Distillation](sharpdepth_sharpening_metric_depth_predictions_using_diffusion_distillation.md)
+- [UniK3D: Universal Camera Monocular 3D Estimation](unik3d_universal_camera_monocular_3d_estimation.md)
+- [Zero-Shot Monocular Scene Flow Estimation in the Wild](zero-shot_monocular_scene_flow_estimation_in_the_wild.md)
+- [Video Depth Anything: Consistent Depth Estimation for Super-Long Videos](video_depth_anything_consistent_depth_estimation_for_super-long_videos.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Task-Optimized Convolutional Recurrent Networks Align with Tactile Processing in the Rodent Brain
 description: >-

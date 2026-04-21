@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Detecting Misbehaviors of Large Vision-Language Models by Evidential Uncertainty Quantification
 description: >-

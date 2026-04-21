@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3D-HGS: 3D Half-Gaussian Splatting
 description: >-
@@ -135,7 +135,7 @@ Half-Gaussian是唯一在所有11个场景上都优于标准高斯的核函数�
 - [HyperGS: Hyperspectral 3D Gaussian Splatting](hypergs_hyperspectral_3d_gaussian_splatting.md)
 - [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
 - [Mitigating Ambiguities in 3D Classification with Gaussian Splatting](mitigating_ambiguities_in_3d_classification_with_gaussian_splatting.md)
-- [DashGaussian: Optimizing 3D Gaussian Splatting in 200 Seconds](dashgaussian_optimizing_3d_gaussian_splatting_in_200_seconds.md)
-- [DroneSplat: 3D Gaussian Splatting for Robust 3D Reconstruction from In-the-Wild Drone Imagery](dronesplat_3d_gaussian_splatting_for_robust_3d_reconstruction_from_in-the-wild_d.md)
+- [DoF-Gaussian: Controllable Depth-of-Field for 3D Gaussian Splatting](dof-gaussian_controllable_depth-of-field_for_3d_gaussian_splatting.md)
+- [PUP 3D-GS: Principled Uncertainty Pruning for 3D Gaussian Splatting](pup_3d-gs_principled_uncertainty_pruning_for_3d_gaussian_splatting.md)
 
 <!-- RELATED:END -->

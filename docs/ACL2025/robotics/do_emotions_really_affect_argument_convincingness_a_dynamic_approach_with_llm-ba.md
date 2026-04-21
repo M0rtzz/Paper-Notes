@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Do Emotions Really Affect Argument Convincingness? A Dynamic Approach with LLM-based Manipulation Checks
 description: >-

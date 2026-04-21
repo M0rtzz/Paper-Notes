@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Weight Decay may matter more than μP for Learning Rate Transfer in Practice
 description: >-
@@ -113,7 +113,7 @@ $$\frac{\|\Delta \mathbf{Y}\|}{\|\mathbf{Y}\|} = \frac{\alpha_{\Delta W}}{\alpha
 - [Learning Spatial Decay for Vision Transformers](../../AAAI2026/llm_nlp/learning_spatial_decay_for_vision_transformers.md)
 - [Fine-Grained Activation Steering: Steering Less, Achieving More](fine-grained_activation_steering_steering_less_achieving_more.md)
 - [First is Not Really Better Than Last: Evaluating Layer Choice and Aggregation Strategies in Language Model Data Influence Estimation](first_is_not_really_better_than_last_evaluating_layer_choice_and_aggregation_str.md)
+- [Multilingual Encoder Knows more than You Realize: Shared Weights Pretraining for Extremely Low-Resource Languages](../../ACL2025/llm_nlp/multilingual_encoder_knows_more_than_you_realize_shared_weights_pretraining_for_.md)
 - [Language Models, Graph Searching, and Supervision Adulteration: When More Supervision is Less and How to Make More More](../../ACL2025/llm_nlp/lm_graph_search_supervision.md)
-- [Hyperparameter Transfer Enables Consistent Gains of Matrix-Preconditioned Optimizers Across Scales](../../NeurIPS2025/llm_nlp/hyperparameter_transfer_enables_consistent_gains_of_matrix-preconditioned_optimi.md)
 
 <!-- RELATED:END -->

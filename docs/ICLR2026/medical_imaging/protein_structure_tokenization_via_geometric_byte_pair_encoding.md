@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Protein Structure Tokenization via Geometric Byte Pair Encoding
 description: >-

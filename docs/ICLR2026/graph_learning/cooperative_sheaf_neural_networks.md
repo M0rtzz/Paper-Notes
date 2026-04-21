@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cooperative Sheaf Neural Networks
 description: >-

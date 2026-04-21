@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ScoreHOI: Physically Plausible Reconstruction of Human-Object Interaction via Score-Guided Diffusion
 description: >-

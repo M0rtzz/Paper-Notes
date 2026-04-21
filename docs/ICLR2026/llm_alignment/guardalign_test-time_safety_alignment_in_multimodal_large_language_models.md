@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GuardAlign: Test-time Safety Alignment in Multimodal Large Language Models
 description: >-

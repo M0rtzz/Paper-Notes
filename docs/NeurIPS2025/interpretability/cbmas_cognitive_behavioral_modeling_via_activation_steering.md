@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CBMAS: Cognitive Behavioral Modeling via Activation Steering
 description: >-

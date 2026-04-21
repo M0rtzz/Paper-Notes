@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TempSamp-R1: Effective Temporal Sampling with Reinforcement Fine-Tuning for Video LLMs
 description: >-

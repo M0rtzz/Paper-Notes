@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HateDay: Insights from a Global Hate Speech Dataset Representative of a Day on Twitter
 description: >-

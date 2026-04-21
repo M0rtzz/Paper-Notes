@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpatiaLQA: A Benchmark for Evaluating Spatial Logical Reasoning in Vision-Language Models
 description: >-

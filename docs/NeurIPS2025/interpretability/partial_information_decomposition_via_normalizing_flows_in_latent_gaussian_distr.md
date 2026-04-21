@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Partial Information Decomposition via Normalizing Flows in Latent Gaussian Distributions
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] P-DRUM: Post-hoc Descriptor-based Residual Uncertainty Modeling for Machine Learning Potentials
 description: >-

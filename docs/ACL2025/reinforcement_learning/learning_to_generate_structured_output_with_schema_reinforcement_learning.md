@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning to Generate Structured Output with Schema Reinforcement Learning
 description: >-

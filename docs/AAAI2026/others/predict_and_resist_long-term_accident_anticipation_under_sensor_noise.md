@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Predict and Resist: Long-Term Accident Anticipation under Sensor Noise
 description: >-
@@ -214,6 +214,6 @@ $$\mathcal{L}_{total} = \mathcal{L}_{an} + \alpha(\mathcal{L}_{actor} + \beta \m
 - [Coresets for Clustering Under Stochastic Noise](../../NeurIPS2025/others/coresets_for_clustering_under_stochastic_noise.md)
 - [Effortless Active Labeling for Long-Term Test-Time Adaptation](../../CVPR2025/others/effortless_active_labeling_for_long-term_test-time_adaptation.md)
 - [ShortageSim: Simulating Drug Shortages under Information Asymmetry](shortagesim_simulating_drug_shortages_under_information_asymmetry.md)
-- [X-Turing: Towards an Enhanced and Efficient Turing Test for Long-Term Dialogue Agents](../../ACL2025/others/xturing_enhanced_turing_test.md)
+- [Optimal Welfare in Noncooperative Network Formation under Attack](optimal_welfare_in_noncooperative_network_formation_under_attack.md)
 
 <!-- RELATED:END -->

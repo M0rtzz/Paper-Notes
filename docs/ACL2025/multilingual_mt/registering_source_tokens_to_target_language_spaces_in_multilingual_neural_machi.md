@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Registering Source Tokens to Target Language Spaces in Multilingual Neural Machine Translation
 description: >-

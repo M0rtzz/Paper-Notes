@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Simple Linear Patch Revives Layer-Pruned Large Language Models
 description: >-

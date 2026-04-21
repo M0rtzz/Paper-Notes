@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] REINA: Regularized Entropy Information-Based Loss for Efficient Simultaneous Speech Translation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoMPaSS: Enhancing Spatial Understanding in Text-to-Image Diffusion Models
 description: >-

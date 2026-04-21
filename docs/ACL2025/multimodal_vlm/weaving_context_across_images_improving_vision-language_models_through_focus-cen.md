@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Weaving Context Across Images: Improving Vision-Language Models through Focus-Centric Visual Chains
 description: >-

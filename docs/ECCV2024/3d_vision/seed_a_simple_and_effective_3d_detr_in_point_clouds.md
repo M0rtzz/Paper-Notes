@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SEED: A Simple and Effective 3D DETR in Point Clouds
 description: >-

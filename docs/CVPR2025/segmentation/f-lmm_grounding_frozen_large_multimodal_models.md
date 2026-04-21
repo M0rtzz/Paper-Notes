@@ -1,7 +1,16 @@
-﻿---
-title: "F-LMM: Grounding Frozen Large Multimodal Models"
-description: "F-LMM通过冻结LMM参数并利用其注意力机制中固有的词-像素对应关系实现视觉定位，仅训练轻量CNN解码器即可在保持完整对话能力的同时获得competitive分割性能"
-tags: ["视觉定位", "LMM", "分割", "冻结模型", "注意力机制"]
+---
+title: >-
+  [论文解读] F-LMM: Grounding Frozen Large Multimodal Models
+description: >-
+  [CVPR 2025][图像分割][视觉定位] F-LMM 冻结现成 LMM 的所有参数，仅训练轻量 CNN mask decoder 将 LMM 注意力图中固有的词-像素对应关系翻译为分割 mask，在完全保持对话能力的同时获得 competitive 的视觉定位性能。
+tags:
+  - CVPR 2025
+  - 图像分割
+  - 视觉定位
+  - 大型多模态模型
+  - 冻结参数
+  - 注意力图
+  - 参考表达分割
 ---
 
 # F-LMM: Grounding Frozen Large Multimodal Models
@@ -122,8 +131,8 @@ F-LMM 在对话 benchmark 上完全保持原始 LMM 的性能（MME 1500+ vs 微
 
 - [PARTONOMY: Large Multimodal Models with Part-Level Visual Understanding](../../NeurIPS2025/segmentation/partonomy_large_multimodal_models_with_part-level_visual_understanding.md)
 - [HiMTok: Learning Hierarchical Mask Tokens for Image Segmentation with Large Multimodal Model](../../ICCV2025/segmentation/himtok_learning_hierarchical_mask_tokens_for_image_segmentation_with_large_multi.md)
-- [OpenPSG: Open-set Panoptic Scene Graph Generation via Large Multimodal Models](../../ECCV2024/segmentation/openpsg_open-set_panoptic_scene_graph_generation_via_large_multimodal_models.md)
-- [Latent Expression Generation for Referring Image Segmentation and Grounding](../../ICCV2025/segmentation/latent_expression_generation_for_referring_image_segmentation_and_grounding.md)
-- [ReferDINO: Referring Video Object Segmentation with Visual Grounding Foundations](../../ICCV2025/segmentation/referdino_referring_video_object_segmentation_with_visual_grounding_foundations.md)
+- [StoryGPT-V: Large Language Models as Consistent Story Visualizers](storygpt-v_large_language_models_as_consistent_story_visualizers.md)
+- [OpenPSG: Open-set Panoptic Scene Graph Generation via Large Multimodal Models](../../ECCV2024/segmentation/openpsg_openset_panoptic_scene_graph_generation_via_large_mu.md)
+- [Scale Efficient Training for Large Datasets](scale_efficient_training_for_large_datasets.md)
 
 <!-- RELATED:END -->

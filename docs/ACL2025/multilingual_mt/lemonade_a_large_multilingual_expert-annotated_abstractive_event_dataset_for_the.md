@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LEMONADE: A Large Multilingual Expert-Annotated Abstractive Event Dataset for the Real World
 description: >-

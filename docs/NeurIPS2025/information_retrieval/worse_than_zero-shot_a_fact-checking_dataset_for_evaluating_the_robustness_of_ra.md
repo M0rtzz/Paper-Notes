@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Worse than Zero-shot? A Fact-Checking Dataset for Evaluating the Robustness of RAG Against Misleading Retrievals
 description: >-

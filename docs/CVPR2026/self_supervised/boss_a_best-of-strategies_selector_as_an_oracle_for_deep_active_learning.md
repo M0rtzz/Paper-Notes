@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BoSS: A Best-of-Strategies Selector as an Oracle for Deep Active Learning
 description: >-
@@ -188,7 +188,7 @@ $$\mathcal{B}^* = \arg\max_{\mathcal{B}_m, m \in \{1,...,M\}} \text{Acc}(\theta_
 
 - [SpHOR: A Representation Learning Perspective on Open-set Recognition for Identifying Unknown Classes in Deep Neural Networks](sphor_a_representation_learning_perspective_on_open-set_recognition_for_identify.md)
 - [TrackMAE: Video Representation Learning via Track, Mask, and Predict](trackmae_video_representation_learning_via_track_mask_and_predict.md)
-- [Representation Learning for Spatiotemporal Physical Systems](representation_learning_for_spatiotemporal_physica.md)
+- [Representation Learning for Spatiotemporal Physical Systems](representation_learning_for_spatiotemporal_physical_systems.md)
 - [DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers](diversedit_towards_diverse_representation_learning_in_diffusion_transformers.md)
 - [D2Dewarp: Dual Dimensions Geometric Representation Learning Based Document Image Dewarping](d2dewarp_dual_dimensions_geometric_representation_learning_based_document_image_.md)
 

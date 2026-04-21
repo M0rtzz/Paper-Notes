@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ∞-Brush: Controllable Large Image Synthesis with Diffusion Models in Infinite Dimensions
 description: >-
@@ -151,7 +151,7 @@ $$\theta^* = \arg\min_\theta \mathbb{E}_{\mathbf{u}_0 \sim \mathbb{Q}_{\text{dat
 - [Editable Image Elements for Controllable Synthesis](editable_image_elements_for_controllable_synthesis.md)
 - [DreamMover: Leveraging the Prior of Diffusion Models for Image Interpolation with Large Motion](dreammover_leveraging_the_prior_of_diffusion_models_for_image_interpolation_with.md)
 - [Rejection Sampling IMLE: Designing Priors for Better Few-Shot Image Synthesis](rejection_sampling_imle_designing_priors_for_better_few-shot_image_synthesis.md)
-- [MotionLCM: Real-time Controllable Motion Generation via Latent Consistency Model](motionlcm_real-time_controllable_motion_generation_via_latent_consistency_model.md)
 - [Learning Semantic Latent Directions for Accurate and Controllable Human Motion Prediction](learning_semantic_latent_directions_for_accurate_and_controllable_human_motion_p.md)
+- [MotionLCM: Real-time Controllable Motion Generation via Latent Consistency Model](motionlcm_real-time_controllable_motion_generation_via_latent_consistency_model.md)
 
 <!-- RELATED:END -->

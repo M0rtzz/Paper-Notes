@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] S2M-Former: Spiking Symmetric Mixing Branchformer for Brain Auditory Attention Detection
 description: >-
@@ -137,8 +137,8 @@ $$H[t,c,n] = V[t-1,c,n] + \frac{1}{\tau_l[c]}(X[t,c,n] - (V[t-1,c,n] - V_{reset}
 
 - [Spiking Brain Compression: Post-Training Second-Order Compression for Spiking Neural Networks](spiking_brain_compression_post-training_second-order_compression_for_spiking_neu.md)
 - [Synergy between the Strong and the Weak: Spiking Neural Networks Are Inherently Superior in Temporal Processing](synergy_between_the_strong_and_the_weak_spiking_neural_networks_are_inherently_s.md)
-- [BaRISTA: Brain-Scale Informed Spatiotemporal Representation of Human Intracranial EEG](barista_brain_scale_informed_spatiotemporal_representation_of_human_intracranial.md)
 - [AI-Generated Video Detection via Perceptual Straightening](ai-generated_video_detection_via_perceptual_straightening.md)
+- [BaRISTA: Brain-Scale Informed Spatiotemporal Representation of Human Intracranial EEG](barista_brain_scale_informed_spatiotemporal_representation_of_human_intracranial.md)
 - [DRAGON: Guard LLM Unlearning in Context via Negative Detection and Reasoning](dragon_guard_llm_unlearning_in_context_via_negative_detection_and_reasoning.md)
 
 <!-- RELATED:END -->

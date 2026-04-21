@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When Agents Persuade: Propaganda Generation and Mitigation in LLMs
 description: >-

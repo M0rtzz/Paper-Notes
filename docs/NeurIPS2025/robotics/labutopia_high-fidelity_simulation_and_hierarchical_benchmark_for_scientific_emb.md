@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LabUtopia: High-Fidelity Simulation and Hierarchical Benchmark for Scientific Embodied Agents
 description: >-

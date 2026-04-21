@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MoManipVLA: Transferring Vision-Language-Action Models for General Mobile Manipulation
 description: >-

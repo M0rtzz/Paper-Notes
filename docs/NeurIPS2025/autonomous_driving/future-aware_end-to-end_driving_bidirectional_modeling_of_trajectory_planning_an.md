@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Future-Aware End-to-End Driving: Bidirectional Modeling of Trajectory Planning and Scene Evolution
 description: >-

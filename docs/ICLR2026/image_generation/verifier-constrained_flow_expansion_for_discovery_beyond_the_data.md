@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Verifier-Constrained Flow Expansion for Discovery Beyond the Data
 description: >-
@@ -126,7 +126,7 @@ tags:
 - [Pseudo-Nonlinear Data Augmentation: A Constrained Energy Minimization Viewpoint](pseudo-nonlinear_data_augmentation_a_constrained_energy_minimization_viewpoint.md)
 - [VFScale: Intrinsic Reasoning through Verifier-Free Test-time Scalable Diffusion Model](vfscale_intrinsic_reasoning_through_verifier-free_test-time_scalable_diffusion_m.md)
 - [Beyond Confidence: The Rhythms of Reasoning in Generative Models](beyond_confidence_the_rhythms_of_reasoning_in_generative_models.md)
-- [Beyond the Golden Data: Resolving the Motion-Vision Quality Dilemma via Timestep Selective Training](../../CVPR2026/image_generation/beyond_the_golden_data_resolving_the_motion-vision_quality_dilemma_via_timestep_.md)
 - [Infinity and Beyond: Compositional Alignment in VAR and Diffusion T2I Models](infinity_and_beyond_compositional_alignment_in_var_and_diffusion_t2i_models.md)
+- [Beyond the Golden Data: Resolving the Motion-Vision Quality Dilemma via Timestep Selective Training](../../CVPR2026/image_generation/beyond_the_golden_data_resolving_the_motion-vision_quality_dilemma_via_timestep_.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neural Collapse in Cumulative Link Models for Ordinal Regression: An Analysis with Unconstrained Feature Model
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TeethGenerator: A Two-Stage Framework for Paired Pre- and Post-Orthodontic 3D Dental Data Generation
 description: >-

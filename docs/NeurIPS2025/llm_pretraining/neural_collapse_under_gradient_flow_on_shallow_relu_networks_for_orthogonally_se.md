@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neural Collapse under Gradient Flow on Shallow ReLU Networks for Orthogonally Separable Data
 description: >-

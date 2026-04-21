@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reason2Drive: Towards Interpretable and Chain-based Reasoning for Autonomous Driving
 description: >-
@@ -141,10 +141,10 @@ Reason2Drive 构建了一个包含 60 万+视频-文本对的大规模自动驾�
 
 ## 相关论文
 
-- [MindDriver: Introducing Progressive Multimodal Reasoning for Autonomous Driving](../../CVPR2026/autonomous_driving/minddriver_introducing_progressive_multimodal_reasoning_for_autonomous_driving.md)
 - [Neural Volumetric World Models for Autonomous Driving](neural_volumetric_world_models_for_autonomous_driving.md)
-- [SeFlow: A Self-Supervised Scene Flow Method in Autonomous Driving](seflow_a_self-supervised_scene_flow_method_in_autonomous_driving.md)
 - [OccWorld: Learning a 3D Occupancy World Model for Autonomous Driving](occworld_learning_a_3d_occupancy_world_model_for_autonomous_driving.md)
-- [Improving Agent Behaviors with RL Fine-tuning for Autonomous Driving](improving_agent_behaviors_with_rl_fine-tuning_for_autonomous_driving.md)
+- [SeFlow: A Self-Supervised Scene Flow Method in Autonomous Driving](seflow_a_self-supervised_scene_flow_method_in_autonomous_driving.md)
+- [PanoVOS: Bridging Non-panoramic and Panoramic Views with Transformer for Video Segmentation](panovos_bridging_non-panoramic_and_panoramic_views_with_transformer_for_video_se.md)
+- [OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving](occgen_generative_multimodal_3d_occupancy_prediction_for_aut.md)
 
 <!-- RELATED:END -->

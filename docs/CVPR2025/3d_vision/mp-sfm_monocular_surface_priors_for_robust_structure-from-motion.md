@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] MP-SfM: Monocular Surface Priors for Robust Structure-from-Motion
 description: >-
-  [CVPR 2025][SfM] 将单目深度和法线先验紧密集成到经典增量 SfM 流程中，突破三视图重叠的根本限制，首次实现仅凭两视图轨迹的鲁棒 3D 重建，在极端低重叠场景下位姿精度比 COLMAP 提升数倍。
+  [CVPR 2025][3D视觉][structure-from-motion] 将单目深度和法线先验紧密集成到经典增量 SfM 中，通过不确定性传播和交替优化突破三视图轨迹的根本限制，首次实现仅凭两视图轨迹的可靠 3D 重建，在极端低重叠和低视差场景下显著超越所有现有方法。
 tags:
   - CVPR 2025
+  - 3D视觉
   - structure-from-motion
   - monocular depth
   - surface normals
-  - 3D reconstruction
   - COLMAP
+  - low overlap
+  - symmetry rejection
 ---
 
 # MP-SfM: Monocular Surface Priors for Robust Structure-from-Motion
@@ -157,7 +159,7 @@ $$C_{int} = \sum_{i,u,v} [\rho_{prior}(\|D_i^* - D_i\|^2_{\Sigma_{D_i}}) + \rho_
 - [Light3R-SfM: Towards Feed-forward Structure-from-Motion](light3r-sfm_towards_feed-forward_structure-from-motion.md)
 - [Dense-SfM: Structure from Motion with Dense Consistent Matching](dense-sfm_structure_from_motion_with_dense_consistent_matching.md)
 - [MegaSaM: Accurate, Fast and Robust Structure and Motion from Casual Dynamic Videos](megasam_accurate_fast_and_robust_structure_and_motion_from_casual_dynamic_videos.md)
+- [SplineGS: Robust Motion-Adaptive Spline for Real-Time Dynamic 3D Gaussians from Monocular Video](splinegs_robust_motion-adaptive_spline_for_real-time_dynamic_3d_gaussians_from_m.md)
 - [ColabSfM: Collaborative Structure-from-Motion by Point Cloud Registration](colabsfm_collaborative_structure-from-motion_by_point_cloud_registration.md)
-- [Multi-view Reconstruction via SfM-guided Monocular Depth Estimation](multi-view_reconstruction_via_sfm-guided_monocular_depth_estimation.md)
 
 <!-- RELATED:END -->

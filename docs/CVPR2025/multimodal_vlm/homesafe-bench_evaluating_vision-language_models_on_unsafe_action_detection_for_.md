@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] HomeSafe-Bench: Evaluating Vision-Language Models on Unsafe Action Detection for Embodied Agents in Household Scenarios
 description: >-
-  [CVPR 2025][LLM Agent][安全][基准测试] HomeSafe-Bench：评估VLM在家庭场景不安全动作检测中的能力，提出HD-Guard双脑分层流式安全监控架构
+  [CVPR 2025][多模态][VLM safety] 提出HomeSafe-Bench——一个包含438个案例覆盖六大家庭功能区域的不安全动作检测基准，并设计HD-Guard双脑分层流式架构，以轻量FastBrain做高频筛查、大模型SlowBrain做深度推理，平衡家庭机器人安全监控的实时性与准确性。
 tags:
   - CVPR 2025
-  - LLM Agent
-  - 安全
-  - 视觉语言模型
-  - 基准测试
-  - 具身智能
+  - 多模态
+  - VLM safety
+  - unsafe action detection
+  - household robots
+  - benchmark
+  - hierarchical monitoring
+  - dual-brain architecture
 ---
 
 # HomeSafe-Bench: Evaluating Vision-Language Models on Unsafe Action Detection for Embodied Agents in Household Scenarios
@@ -85,9 +87,9 @@ tags:
 ## 相关论文
 
 - [From Multimodal LLMs to Generalist Embodied Agents: Methods and Lessons](from_multimodal_llms_to_generalist_embodied_agents_methods_and_lessons.md)
-- [ESPIRE: A Diagnostic Benchmark for Embodied Spatial Reasoning of Vision-Language Models](espire_a_diagnostic_benchmark_for_embodied_spatial_reasoning_of_vision-language_.md)
 - [Embodied Scene Understanding for Vision Language Models via MetaVQA](embodied_scene_understanding_for_vision_language_models_via_metavqa.md)
-- [GTR-Bench: Evaluating Geo-Temporal Reasoning in Vision-Language Models](../../ICLR2026/multimodal_vlm/gtr-bench_evaluating_geo-temporal_reasoning_in_vision-language_mod.md)
 - [EffiVLM-Bench: A Comprehensive Benchmark for Evaluating Training-Free Acceleration in Large Vision-Language Models](../../ACL2025/multimodal_vlm/effivlm_bench_acceleration.md)
+- [ESPIRE: A Diagnostic Benchmark for Embodied Spatial Reasoning of Vision-Language Models](espire_a_diagnostic_benchmark_for_embodied_spatial_reasoning_of_vision-language_.md)
+- [GTR-Bench: Evaluating Geo-Temporal Reasoning in Vision-Language Models](../../ICLR2026/multimodal_vlm/gtr-bench_evaluating_geo-temporal_reasoning_in_vision-language_mod.md)
 
 <!-- RELATED:END -->

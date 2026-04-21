@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PanoFree: Tuning-Free Holistic Multi-view Image Generation with Cross-view Self-Guidance
 description: >-

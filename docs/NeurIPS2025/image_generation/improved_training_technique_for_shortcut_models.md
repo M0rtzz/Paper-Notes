@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improved Training Technique for Shortcut Models (iSM)
 description: >-
@@ -221,7 +221,7 @@ Recall 的巨大提升（0.11 → 0.55, 0.19 → 0.62）说明 iSM 极大改善�
 - [Scaling Offline RL via Efficient and Expressive Shortcut Models](scaling_offline_rl_via_efficient_and_expressive_shortcut_models.md)
 - [Show-o2: Improved Native Unified Multimodal Models](show-o2_improved_native_unified_multimodal_models.md)
 - [Improved Noise Schedule for Diffusion Training](../../ICCV2025/image_generation/improved_noise_schedule_for_diffusion_training.md)
-- [RLVR-World: Training World Models with Reinforcement Learning](rlvr-world_training_world_models_with_reinforcement_learning.md)
 - [Training-Free Constrained Generation with Stable Diffusion Models](training-free_constrained_generation_with_stable_diffusion_models.md)
+- [RLVR-World: Training World Models with Reinforcement Learning](rlvr-world_training_world_models_with_reinforcement_learning.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Diffusion Transformer with Step-wise Dynamic Attention Mediators
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Color When It Counts: Grayscale-Guided Online Triggering for Always-On Streaming Video Sensing
 description: >-

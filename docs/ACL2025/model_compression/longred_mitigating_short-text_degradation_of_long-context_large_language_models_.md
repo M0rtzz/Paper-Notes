@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LongReD: Mitigating Short-Text Degradation of Long-Context Large Language Models via Restoration Distillation
 description: >-

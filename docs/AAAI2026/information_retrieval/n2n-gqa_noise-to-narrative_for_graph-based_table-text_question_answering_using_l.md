@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] N2N-GQA: Noise-to-Narrative for Graph-Based Table-Text Question Answering Using LLMs
 description: >-

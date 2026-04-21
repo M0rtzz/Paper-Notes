@@ -2,14 +2,16 @@
 title: >-
   [论文解读] MobileMamba: Lightweight Multi-Receptive Visual Mamba Network
 description: >-
-  [CVPR 2025][模型压缩] 提出 MobileMamba 轻量级视觉网络，设计三阶段架构和 MRFFI 多感受野特征交互模块（WTE-Mamba + MK-DeConv + Identity），在 ImageNet 上达到最高 83.6% Top-1，比 LocalVim 快 21 倍。
+  [CVPR 2025][模型压缩][lightweight network] 提出 MobileMamba 轻量级视觉网络，通过三阶段粗粒度架构设计和 MRFFI 细粒度模块（融合 Mamba 全局建模、多核卷积多尺度感知和 Identity 冗余消除），在分类和下游高分辨率任务上实现速度与精度的最优平衡。
 tags:
   - CVPR 2025
-  - lightweight model
-  - state space model
+  - 模型压缩
+  - lightweight network
   - Mamba
+  - SSM
   - multi-receptive field
-  - mobile deployment
+  - wavelet transform
+  - efficient inference
 ---
 
 # MobileMamba: Lightweight Multi-Receptive Visual Mamba Network
@@ -165,7 +167,7 @@ MobileMamba-S6†（带训练策略）在 652M FLOPs 下达到 80.7%，超越所
 - [JamMa: Ultra-lightweight Local Feature Matching with Joint Mamba](jamma_ultra-lightweight_local_feature_matching_with_joint_mamba.md)
 - [Mamba-Adaptor: State Space Model Adaptor for Visual Recognition](mamba-adaptor_state_space_model_adaptor_for_visual_recognition.md)
 - [EfficientViM: Efficient Vision Mamba with Hidden State Mixer based State Space Duality](efficientvim_efficient_vision_mamba_with_hidden_state_mixer_based_state_space_du.md)
-- [Embracing Collaboration Over Competition: Condensing Multiple Prompts for Visual In-Context Learning](embracing_collaboration_over_competition_condensing_multiple_prompts_for_visual_.md)
-- [Understanding Multi-Layered Transmission Matrices](understanding_multi-layered_transmission_matrices.md)
+- [Reversible Decoupling Network for Single Image Reflection Removal](reversible_decoupling_network_for_single_image_reflection_removal.md)
+- [Parameter Efficient Mamba Tuning via Projector-targeted Diagonal-centric Linear Transformation](parameter_efficient_mamba_tuning_via_projector-targeted_diagonal-centric_linear_.md)
 
 <!-- RELATED:END -->

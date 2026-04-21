@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Think before Recommendation: Autonomous Reasoning-enhanced Recommender
 description: >-

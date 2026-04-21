@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spatio-Semantic Expert Routing Architecture with Mixture-of-Experts for Referring Image Segmentation
 description: >-

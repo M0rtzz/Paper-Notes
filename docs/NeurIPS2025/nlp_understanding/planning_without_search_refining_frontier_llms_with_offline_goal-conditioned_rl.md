@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Planning without Search: Refining Frontier LLMs with Offline Goal-Conditioned RL
 description: >-

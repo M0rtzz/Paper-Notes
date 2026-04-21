@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Pixels to Views: Learning Angular-Aware and Physics-Consistent Representations for Light Field Microscopy
 description: >-
@@ -283,9 +283,9 @@ PSNR提升7.7%（54.04 vs 50.16），在所有6个测试样本上全面超越。
 ## 相关论文
 
 - [PhysicsNeRF: Physics-Guided 3D Reconstruction from Sparse Views](../../ICML2025/3d_vision/physicsnerf_physics-guided_3d_reconstruction_from_sparse_views.md)
+- [ProbeSDF: Light Field Probes for Neural Surface Reconstruction](../../CVPR2025/3d_vision/probesdf_light_field_probes_for_neural_surface_reconstruction.md)
 - [LiTo: Surface Light Field Tokenization](../../ICLR2026/3d_vision/lito_surface_light_field_tokenization.md)
-- [Self-supervised Learning of Hybrid Part-aware 3D Representations of 2D Gaussians and Superquadrics](../../ICCV2025/3d_vision/self-supervised_learning_of_hybrid_part-aware_3d_representations_of_2d_gaussians.md)
 - [Flying with Photons: Rendering Novel Views of Propagating Light](../../ECCV2024/3d_vision/flying_with_photons_rendering_novel_views_of_propagating_light.md)
-- [Neural Field-Based 3D Surface Reconstruction of Microstructures from Multi-Detector Signals in Scanning Electron Microscopy](../../CVPR2026/3d_vision/neural_field-based_3d_surface_reconstruction_of_microstructures_from_multi-detec.md)
+- [Self-supervised Learning of Hybrid Part-aware 3D Representations of 2D Gaussians and Superquadrics](../../ICCV2025/3d_vision/self-supervised_learning_of_hybrid_part-aware_3d_representations_of_2d_gaussians.md)
 
 <!-- RELATED:END -->

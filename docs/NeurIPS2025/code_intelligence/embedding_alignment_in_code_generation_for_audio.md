@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Embedding Alignment in Code Generation for Audio
 description: >-
@@ -136,6 +136,6 @@ $$\mathcal{L}_i = -\log \frac{\exp(\text{sim}(c_i, a_i) / \tau)}{\sum_{j=1}^N \e
 - [QiMeng-SALV: Signal-Aware Learning for Verilog Code Generation](qimeng-salv_signal-aware_learning_for_verilog_code_generation.md)
 - [Text-to-Code Generation for Modular Building Layouts in Building Information Modeling](text-to-code_generation_for_modular_building_layouts_in_building_information_mod.md)
 - [Personality-Guided Code Generation Using Large Language Models](../../ACL2025/code_intelligence/personality_guided_code_gen.md)
-- [GiFT: Gibbs Fine-Tuning for Code Generation](../../ACL2025/code_intelligence/gift_gibbs_fine_tuning_code_gen.md)
+- [Revisit Self-Debugging with Self-Generated Tests for Code Generation](../../ACL2025/code_intelligence/revisit_self-debugging_with_self-generated_tests_for_code_generation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AskQE: Question Answering as Automatic Evaluation for Machine Translation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Trade-offs in Image Generation: How Do Different Dimensions Interact?
 description: >-

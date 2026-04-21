@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Lego: Learning to Disentangle and Invert Personalized Concepts Beyond Object Appearance in Text-to-Image Diffusion Models
 description: >-

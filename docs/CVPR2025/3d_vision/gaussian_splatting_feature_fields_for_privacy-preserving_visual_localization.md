@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gaussian Splatting Feature Fields for Privacy-Preserving Visual Localization
 description: >-
@@ -135,8 +135,8 @@ tags:
 
 - [Feature-Preserving Mesh Decimation for Normal Integration](feature-preserving_mesh_decimation_for_normal_integration.md)
 - [3D Dental Model Segmentation with Geometrical Boundary Preserving](3d_dental_model_segmentation_with_geometrical_boundary_preserving.md)
-- [CF³: Compact and Fast 3D Feature Fields](../../ICCV2025/3d_vision/cf3_compact_and_fast_3d_feature_fields.md)
-- [Adversarial Exploitation of Data Diversity Improves Visual Localization](../../ICCV2025/3d_vision/adversarial_exploitation_of_data_diversity_improves_visual_localization.md)
 - [GIFStream: 4D Gaussian-based Immersive Video with Feature Stream](gifstream_4d_gaussian-based_immersive_video_with_feature_stream.md)
+- [CF³: Compact and Fast 3D Feature Fields](../../ICCV2025/3d_vision/cf3_compact_and_fast_3d_feature_fields.md)
+- [Identity-preserving Distillation Sampling by Fixed-Point Iterator](identity-preserving_distillation_sampling_by_fixed-point_iterator.md)
 
 <!-- RELATED:END -->

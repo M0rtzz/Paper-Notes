@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Context Matters: Query-aware Dynamic Long Sequence Modeling of Gigapixel Images
 description: >-

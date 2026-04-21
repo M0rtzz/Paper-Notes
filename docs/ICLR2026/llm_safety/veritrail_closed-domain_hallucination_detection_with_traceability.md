@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VeriTrail: Closed-Domain Hallucination Detection with Traceability
 description: >-
@@ -138,9 +138,9 @@ VeriTrail 对最终输出提取的每个 claim 独立执行以下迭代过程，
 ## 相关论文
 
 - [Enhancing Hallucination Detection through Noise Injection](enhancing_hallucination_detection_through_noise_injection.md)
-- [Learning Auxiliary Tasks Improves Reference-Free Hallucination Detection in Open-Domain Long-Form Generation](../../ACL2025/llm_safety/learning_auxiliary_tasks_improves_reference-free_hallucination_detection_in_open.md)
-- [HD-NDEs: Neural Differential Equations for Hallucination Detection in LLMs](../../ACL2025/llm_safety/hd-ndes_neural_differential_equations_for_hallucination_detection_in_llms.md)
-- [Hallucination Stations: On Some Basic Limitations of Transformer-Based Language Models](../../AAAI2026/llm_safety/hallucination_stations_on_some_basic_limitations_of_transformer-based_language_m.md)
 - [Understanding Sensitivity of Differential Attention through the Lens of Adversarial Robustness](understanding_sensitivity_of_differential_attention_through_the_lens_of_adversar.md)
+- [Perturbation-Induced Linearization: Constructing Unlearnable Data with Solely Linear Classifiers](perturbation-induced_linearization_constructing_unlearnable_data_with_solely_lin.md)
+- [Self-Destructive Language Model](self-destructive_language_model.md)
+- [Lifelong Learning with Behavior Consolidation for Vehicle Routing](lifelong_learning_with_behavior_consolidation_for_vehicle_routing.md)
 
 <!-- RELATED:END -->

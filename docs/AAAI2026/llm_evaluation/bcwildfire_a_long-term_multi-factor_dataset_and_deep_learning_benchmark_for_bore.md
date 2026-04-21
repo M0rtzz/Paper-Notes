@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BCWildfire: A Long-term Multi-factor Dataset and Deep Learning Benchmark for Boreal Wildfire Risk Prediction
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Text to Robotic Assembly of Multi Component Objects using 3D Generative AI and Vision Language Models
 description: >-

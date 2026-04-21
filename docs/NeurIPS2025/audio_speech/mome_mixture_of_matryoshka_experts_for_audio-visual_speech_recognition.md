@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MoME: Mixture of Matryoshka Experts for Audio-Visual Speech Recognition
 description: >-
@@ -127,6 +127,6 @@ MoME在所有压缩率下全面超越基线，同时活跃参数少2-4倍。
 - [AVRobustBench: Benchmarking the Robustness of Audio-Visual Recognition Models at Test-Time](textttavrobustbench_benchmarking_the_robustness_of_audio-visual_recognition_mode.md)
 - [MMS-LLaMA: Efficient LLM-based Audio-Visual Speech Recognition with Minimal Multimodal Speech Tokens](../../ACL2025/audio_speech/mms-llama_efficient_llm-based_audio-visual_speech_recognition_with_minimal_multi.md)
 - [Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](../../ICCV2025/audio_speech/zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
-- [Dialectal Coverage and Generalization in Arabic Speech Recognition](../../ACL2025/audio_speech/dialectal_coverage_and_generalization_in_arabic_speech_recognition.md)
+- [MUG: Pseudo Labeling Augmented Audio-Visual Mamba Network for Audio-Visual Video Parsing](../../ICCV2025/audio_speech/mug_pseudo_labeling_augmented_audio-visual_mamba_network_for_audio-visual_video_.md)
 
 <!-- RELATED:END -->

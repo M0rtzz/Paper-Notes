@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Articulation in Motion: Prior-Free Part Mobility Analysis for Articulated Objects
 description: >-

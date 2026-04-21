@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 10 Open Challenges Steering the Future of Vision-Language-Action Models
 description: >-
@@ -132,7 +132,7 @@ tags:
 - [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](../../CVPR2026/human_understanding/quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
 - [When Robots Obey the Patch: Universal Transferable Patch Attacks on Vision-Language-Action Models](../../CVPR2026/human_understanding/when_robots_obey_the_patch_universal_transferable_patch_attacks_on_vision-langua.md)
 - [COLD-Steer: Steering Large Language Models via In-Context One-step Learning Dynamics](../../ICLR2026/human_understanding/cold-steer_steering_large_language_models_via_in-context_one-step_learning_dynam.md)
-- [QUAR-VLA: Vision-Language-Action Model for Quadruped Robots](../../ECCV2024/human_understanding/quar-vla_vision-language-action_model_for_quadruped_robots.md)
-- [Failures to Surface Harmful Contents in Video Large Language Models](failures_to_surface_harmful_contents_in_video_large_language_models.md)
+- [QUAR-VLA: Vision-Language-Action Model for Quadruped Robots](../../ECCV2024/human_understanding/quarvla_visionlanguageaction_model_for_quadruped_robots.md)
+- [Anti-adversarial Learning: Desensitizing Prompts for Large Language Models](anti-adversarial_learning_desensitizing_prompts_for_large_la.md)
 
 <!-- RELATED:END -->

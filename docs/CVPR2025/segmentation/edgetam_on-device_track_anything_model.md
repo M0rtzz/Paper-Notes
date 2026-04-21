@@ -1,15 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] EdgeTAM: On-Device Track Anything Model
 description: >-
-  [CVPR 2025][图像分割][视频分割] EdgeTAM 通过提出 2D Spatial Perceiver 压缩 SAM 2 的帧级记忆特征，解决了记忆注意力的延迟瓶颈，结合知识蒸馏流水线，在 iPhone 上实现 16 FPS 的实时视频分割，同时维持与 SAM 2 可比的精度。
+  [CVPR 2025][图像分割][SAM 2] EdgeTAM 通过详细的延迟分析发现 SAM 2 的瓶颈在记忆注意力而非图像编码器，提出 2D Spatial Perceiver 将帧级记忆从 64×64 维压缩到 ~500 个 token（保留空间结构），配合两阶段知识蒸馏，在 iPhone 15 Pro Max 上实现 16 FPS 的实时 Track Anything。
 tags:
   - CVPR 2025
   - 图像分割
-  - 视频目标分割
   - SAM 2
-  - 模型压缩
-  - 边缘部署
+  - 端侧部署
+  - 记忆压缩
+  - 2D Spatial Perceiver
   - 知识蒸馏
 ---
 
@@ -164,10 +164,10 @@ Segment Anything (SA-23 基准, 1-click mIoU)：
 
 ## 相关论文
 
+- [SAM2-LOVE: Segment Anything Model 2 in Language-Aided Audio-Visual Scenes](sam2-love_segment_anything_model_2_in_language-aided_audio-visual_scenes.md)
 - [InfoSAM: Fine-Tuning the Segment Anything Model from An Information-Theoretic Perspective](../../ICML2025/segmentation/infosam_fine-tuning_the_segment_anything_model_from_an_information-theoretic_per.md)
-- [SAQ-SAM: Semantically-Aligned Quantization for Segment Anything Model](../../AAAI2026/segmentation/saq-sam_semantically-aligned_quantization_for_segment_anything_model.md)
 - [OmniSAM: Omnidirectional Segment Anything Model for UDA in Panoramic Semantic Segmentation](../../ICCV2025/segmentation/omnisam_omnidirectional_segment_anything_model_for_uda_in_panoramic_semantic_seg.md)
 - [Segment and Matte Anything in a Unified Model (SAMA)](../../AAAI2026/segmentation/segment_and_matte_anything_in_a_unified_model.md)
-- [GLUS: Global-Local Reasoning Unified into A Single Large Language Model for Video Segmentation](glus_global-local_reasoning_unified_into_a_single_large_language_model_for_video.md)
+- [SmartEraser: Remove Anything from Images using Masked-Region Guidance](smarteraser_remove_anything_from_images_using_masked-region_guidance.md)
 
 <!-- RELATED:END -->

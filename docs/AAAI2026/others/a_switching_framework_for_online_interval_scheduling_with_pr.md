@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Switching Framework for Online Interval Scheduling with Predictions
 description: >-

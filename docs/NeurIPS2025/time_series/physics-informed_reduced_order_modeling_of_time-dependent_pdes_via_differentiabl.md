@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Physics-informed Reduced Order Modeling of Time-dependent PDEs via Differentiable Solvers
 description: >-

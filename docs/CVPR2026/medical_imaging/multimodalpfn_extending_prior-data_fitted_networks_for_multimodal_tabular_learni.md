@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MultiModalPFN: Extending Prior-Data Fitted Networks for Multimodal Tabular Learning
 description: >-

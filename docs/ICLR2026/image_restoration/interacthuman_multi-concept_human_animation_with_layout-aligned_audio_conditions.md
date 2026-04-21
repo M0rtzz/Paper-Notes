@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] InterActHuman: Multi-Concept Human Animation with Layout-Aligned Audio Conditions
 description: >-

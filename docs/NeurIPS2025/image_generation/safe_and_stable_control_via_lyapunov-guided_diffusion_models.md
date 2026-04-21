@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Safe and Stable Control via Lyapunov-Guided Diffusion Models
 description: >-

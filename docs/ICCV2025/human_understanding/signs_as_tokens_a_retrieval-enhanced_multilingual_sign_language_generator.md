@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Signs as Tokens: A Retrieval-Enhanced Multilingual Sign Language Generator
 description: >-

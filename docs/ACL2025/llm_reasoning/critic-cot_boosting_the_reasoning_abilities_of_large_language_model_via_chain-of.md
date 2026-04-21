@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Critic-CoT: Boosting the Reasoning Abilities of Large Language Model via Chain-of-Thoughts Critic
 description: >-

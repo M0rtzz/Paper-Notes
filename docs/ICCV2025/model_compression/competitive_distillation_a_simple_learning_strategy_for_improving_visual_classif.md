@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Competitive Distillation: A Simple Learning Strategy for Improving Visual Classification
 description: >-

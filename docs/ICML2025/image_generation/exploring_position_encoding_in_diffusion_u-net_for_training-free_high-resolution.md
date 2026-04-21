@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploring Position Encoding in Diffusion U-Net for Training-free High-resolution Image Generation
 description: >-

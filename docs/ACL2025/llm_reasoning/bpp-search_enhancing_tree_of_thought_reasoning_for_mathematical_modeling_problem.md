@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BPP-Search: Enhancing Tree of Thought Reasoning for Mathematical Modeling Problem Solving
 description: >-

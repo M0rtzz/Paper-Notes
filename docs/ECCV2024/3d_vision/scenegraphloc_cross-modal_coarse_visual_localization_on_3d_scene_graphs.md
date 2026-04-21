@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SceneGraphLoc: Cross-Modal Coarse Visual Localization on 3D Scene Graphs
 description: >-
@@ -139,10 +139,10 @@ $$\mathcal{L} = \alpha \cdot \mathcal{L}_{\text{static}} + (1 - \alpha) \cdot \m
 
 ## 相关论文
 
-- [CrossOver: 3D Scene Cross-Modal Alignment](../../CVPR2025/3d_vision/crossover_3d_scene_cross-modal_alignment.md)
-- [The NeRFect Match: Exploring NeRF Features for Visual Localization](the_nerfect_match_exploring_nerf_features_for_visual_localization.md)
-- [Explicitly Guided Information Interaction Network for Cross-modal Point Cloud Completion](explicitly_guided_information_interaction_network_for_cross-modal_point_cloud_co.md)
 - [WaSt-3D: Wasserstein-2 Distance for Scene-to-Scene Stylization on 3D Gaussians](wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)
+- [Zero-Shot Multi-Object Scene Completion](zero-shot_multi-object_scene_completion.md)
 - [SceneVerse: Scaling 3D Vision-Language Learning for Grounded Scene Understanding](sceneverse_scaling_3d_vision-language_learning_for_grounded_scene_understanding.md)
+- [The NeRFect Match: Exploring NeRF Features for Visual Localization](the_nerfect_match_exploring_nerf_features_for_visual_localization.md)
+- [Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
 
 <!-- RELATED:END -->

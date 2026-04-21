@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generalizable Object Re-Identification via Visual In-Context Prompting
 description: >-

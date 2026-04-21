@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OmniSegmentor: A Flexible Multi-Modal Learning Framework for Semantic Segmentation
 description: >-
@@ -133,6 +133,6 @@ OmniSegmentor 包含两大创新：(1) ImageNeXt 数据集——基于 ImageNet-
 - [Towards Robust Pseudo-Label Learning in Semantic Segmentation: An Encoding Perspective](towards_robust_pseudo-label_learning_in_semantic_segmentation_an_encoding_perspe.md)
 - [Diffusion-Driven Two-Stage Active Learning for Low-Budget Semantic Segmentation](diffusion-driven_two-stage_active_learning_for_low-budget_semantic_segmentation.md)
 - [Robust Egocentric Referring Video Object Segmentation via Dual-Modal Causal Intervention](robust_egocentric_referring_video_object_segmentation_via_dual-modal_causal_inte.md)
-- [A Two-Stage Progressive Pre-training using Multi-Modal Contrastive Masked Autoencoders](../../CVPR2025/segmentation/multi-modal_contrastive_masked_autoencoders_a_two-stage_progressive_pre-training.md)
+- [SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](../../CVPR2026/segmentation/semitooth_a_generalizable_semisupervised_framework.md)
 
 <!-- RELATED:END -->

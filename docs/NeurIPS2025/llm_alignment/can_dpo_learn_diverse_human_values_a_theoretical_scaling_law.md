@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Can DPO Learn Diverse Human Values? A Theoretical Scaling Law
 description: >-

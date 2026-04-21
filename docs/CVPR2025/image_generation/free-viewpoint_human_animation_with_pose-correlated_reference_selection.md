@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Free-viewpoint Human Animation with Pose-correlated Reference Selection
 description: >-
@@ -120,10 +120,10 @@ tags:
 
 ## 相关论文
 
+- [StableAnimator: High-Quality Identity-Preserving Human Image Animation](stableanimator_high-quality_identity-preserving_human_image_animation.md)
 - [CompleteMe: Reference-based Human Image Completion](../../ICCV2025/image_generation/completeme_reference-based_human_image_completion.md)
 - [MangaNinja: Line Art Colorization with Precise Reference Following](manganinja_line_art_colorization_with_precise_reference_following.md)
 - [Image Referenced Sketch Colorization Based on Animation Creation Workflow](image_referenced_sketch_colorization_based_on_animation_creation_workflow.md)
-- [FlexiClip: Locality-Preserving Free-Form Character Animation](../../ICML2025/image_generation/flexiclip_locality-preserving_free-form_character_animation.md)
-- [DPoser-X: Diffusion Model as Robust 3D Whole-Body Human Pose Prior](../../ICCV2025/image_generation/dposer-x_diffusion_model_as_robust_3d_whole-body_human_pose_prior.md)
+- [Pursuing Temporal-Consistent Video Virtual Try-On via Dynamic Pose Interaction](pursuing_temporal-consistent_video_virtual_try-on_via_dynamic_pose_interaction.md)
 
 <!-- RELATED:END -->

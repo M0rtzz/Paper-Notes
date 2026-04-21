@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GreenHyperSpectra: A Multi-Source Hyperspectral Dataset for Global Vegetation Trait Prediction
 description: >-

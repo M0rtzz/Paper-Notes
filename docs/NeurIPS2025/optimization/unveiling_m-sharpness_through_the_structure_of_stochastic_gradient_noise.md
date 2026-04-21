@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unveiling m-Sharpness Through the Structure of Stochastic Gradient Noise
 description: >-

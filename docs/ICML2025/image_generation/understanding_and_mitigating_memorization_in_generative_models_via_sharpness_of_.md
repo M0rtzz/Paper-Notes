@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Understanding and Mitigating Memorization in Generative Models via Sharpness of Probability Landscapes
 description: >-
@@ -164,6 +164,6 @@ $$\|H_\theta(\mathbf{x}_t, c) \cdot s_\theta(\mathbf{x}_t, c)\|^2 \quad \text{�
 - [Localizing and Mitigating Memorization in Image Autoregressive Models](localizing_and_mitigating_memorization_in_image_autoregressive_models.md)
 - [Detecting and Mitigating Memorization in Diffusion Models through Anisotropy of the Log-Probability](../../ICLR2026/image_generation/detecting_and_mitigating_memorization_in_diffusion_models_through_anisotropy_of_.md)
 - [Compositional Scene Understanding through Inverse Generative Modeling](compositional_scene_understanding_through_inverse_generative_modeling.md)
-- [Understanding and Mitigating Miscalibration in Prompt Tuning for Vision-Language Models](understanding_and_mitigating_miscalibration_in_prompt_tuning_for_vision-language.md)
+- [When Diffusion Models Memorize: Inductive Biases in Probability Flow of Minimum-Norm Shallow Neural Nets](when_diffusion_models_memorize_inductive_biases_in_probability_flow_of_minimum-n.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A universal compression theory for lottery ticket hypothesis and neural scaling laws
 description: >-
@@ -125,6 +125,6 @@ tags:
 - [ParetoQ: Improving Scaling Laws in Extremely Low-bit LLM Quantization](../../NeurIPS2025/model_compression/paretoq_improving_scaling_laws_in_extremely_low-bit_llm_quantization.md)
 - [IterResearch: Rethinking Long-Horizon Agents with Interaction Scaling](iterresearch_rethinking_long-horizon_agents_with_interaction_scaling.md)
 - [Adaptive Width Neural Networks](adaptive_width_neural_networks.md)
-- [A Recovery Guarantee for Sparse Neural Networks](a_recovery_guarantee_for_sparse_neural_networks.md)
+- [Scaling Reasoning Hop Exposes Weaknesses: Demystifying and Improving Hop Generalization in Large Language Models](scaling_reasoning_hop_exposes_weaknesses_demystifying_and_improving_hop_generali.md)
 
 <!-- RELATED:END -->

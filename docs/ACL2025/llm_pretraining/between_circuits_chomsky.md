@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Between Circuits and Chomsky: Pre-pretraining on Formal Languages Imparts Linguistic Biases
 description: >-

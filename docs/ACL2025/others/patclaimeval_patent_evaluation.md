@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Better Evaluation for Generated Patent Claims
 description: >-
@@ -135,6 +135,6 @@ tags:
 - [Better Embeddings with Coupled Adam](better_embeddings_with_coupled_adam.md)
 - [Hierarchical Attention Generates Better Proofs](hierarchical_attention_generates_better_proofs.md)
 - [Are Bias Evaluation Methods Biased?](are_bias_evaluation_methods_biased.md)
-- [Evaluating the Evaluation of Diversity in Commonsense Generation](evaluating_the_evaluation_of_diversity_in_commonsense_generation.md)
+- [Byte Latent Transformer: Patches Scale Better Than Tokens](byte_latent_transformer.md)
 
 <!-- RELATED:END -->

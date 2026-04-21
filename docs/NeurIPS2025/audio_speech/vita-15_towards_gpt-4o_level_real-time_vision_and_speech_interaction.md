@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VITA-1.5: Towards GPT-4o Level Real-Time Vision and Speech Interaction
 description: >-

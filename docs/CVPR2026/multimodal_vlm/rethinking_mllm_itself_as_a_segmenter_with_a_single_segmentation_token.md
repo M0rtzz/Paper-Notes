@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking MLLM Itself as a Segmenter with a Single Segmentation Token
 description: >-

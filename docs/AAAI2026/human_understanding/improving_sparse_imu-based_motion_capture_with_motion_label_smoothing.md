@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving Sparse IMU-based Motion Capture with Motion Label Smoothing
 description: >-

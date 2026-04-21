@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FedVG: Gradient-Guided Aggregation for Enhanced Federated Learning
 description: >-

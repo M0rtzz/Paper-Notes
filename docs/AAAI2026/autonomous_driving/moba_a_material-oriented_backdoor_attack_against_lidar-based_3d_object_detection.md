@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MOBA: A Material-Oriented Backdoor Attack against LiDAR-based 3D Object Detection
 description: >-
@@ -226,10 +226,10 @@ MOBA平均ASR 92.7%，超过baseline 41%以上，同时clean mAP保持~90%。
 
 ## 相关论文
 
-- [Cheating Stereo Matching in Full-Scale: Physical Adversarial Attack against Binocular Depth Estimation](cheating_stereo_matching_in_full-scale_physical_adversarial_attack_against_binoc.md)
-- [Backdoor Attacks on Open Vocabulary Object Detectors via Multi-Modal Prompt Tuning](backdoor_attacks_on_open_vocabulary_object_detectors_via_multi-modal_prompt_tuni.md)
 - [Invisible Triggers, Visible Threats! Road-Style Adversarial Creation Attack for Visual 3D Detection in Autonomous Driving](invisible_triggers_visible_threats_road-style_adversarial_creation_attack_for_vi.md)
+- [Backdoor Attacks on Open Vocabulary Object Detectors via Multi-Modal Prompt Tuning](backdoor_attacks_on_open_vocabulary_object_detectors_via_multi-modal_prompt_tuni.md)
 - [PBCAT: Patch-Based Composite Adversarial Training against Physically Realizable Attacks on Object Detection](../../ICCV2025/autonomous_driving/pbcat_patch-based_composite_adversarial_training_against_physically_realizable_a.md)
 - [DriveFlow: Rectified Flow Adaptation for Robust 3D Object Detection in Autonomous Driving](driveflow_rectified_flow_adaptation_for_robust_3d_object_detection_in_autonomous.md)
+- [FQ-PETR: Fully Quantized Position Embedding Transformation for Multi-View 3D Object Detection](fq-petr_fully_quantized_position_embedding_transformation_fo.md)
 
 <!-- RELATED:END -->

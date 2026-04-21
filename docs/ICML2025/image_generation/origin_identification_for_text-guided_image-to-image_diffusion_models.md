@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Origin Identification for Text-Guided Image-to-Image Diffusion Models
 description: >-
@@ -139,9 +139,9 @@ tags:
 ## 相关论文
 
 - [Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](../../NeurIPS2025/image_generation/diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
+- [Nonparametric Identification of Latent Concepts](nonparametric_identification_of_latent_concepts.md)
 - [One Stone with Two Birds: A Null-Text-Null Frequency-Aware Diffusion Models for Text-Guided Image Inpainting](../../NeurIPS2025/image_generation/one_stone_with_two_birds_a_null-text-null_frequency-aware_diffusion_models_for_t.md)
 - [Text Embedding Knows How to Quantize Text-Guided Diffusion Models](../../ICCV2025/image_generation/text_embedding_knows_how_to_quantize_text-guided_diffusion_models.md)
-- [Nonparametric Identification of Latent Concepts](nonparametric_identification_of_latent_concepts.md)
-- [Preference Adaptive and Sequential Text-to-Image Generation](preference_adaptive_and_sequential_text-to-image_generation.md)
+- [Six-CD: Benchmarking Concept Removals for Text-to-Image Diffusion Models](../../CVPR2025/image_generation/six-cd_benchmarking_concept_removals_for_text-to-image_diffusion_models.md)
 
 <!-- RELATED:END -->

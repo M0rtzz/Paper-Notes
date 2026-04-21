@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Uncertainty-Driven Spectral Compressive Imaging with Spatial-Frequency Transformer
 description: >-
@@ -122,8 +122,8 @@ Specformer 采用多尺度 U-shape 网络架构。输入为 CASSI 系统的 2D �
 
 - [A Simple Low-bit Quantization Framework for Video Snapshot Compressive Imaging](a_simple_lowbit_quantization_framework_for_video_snapshot_co.md)
 - [Token Compensator: Altering Inference Cost of Vision Transformer without Re-Tuning](token_compensator_altering_inference_cost_of_vision_transformer_without_re-tunin.md)
-- [PaPr: Training-Free One-Step Patch Pruning with Lightweight ConvNets for Faster Inference](papr_training-free_one-step_patch_pruning_with_lightweight_convnets_for_faster_i.md)
-- [Isomorphic Pruning for Vision Models](isomorphic_pruning_for_vision_models.md)
 - [Credal Ensemble Distillation for Uncertainty Quantification](../../AAAI2026/model_compression/credal_ensemble_distillation_for_uncertainty_quantification.md)
+- [Sampling Innovation-Based Adaptive Compressive Sensing](../../CVPR2025/model_compression/sampling_innovation-based_adaptive_compressive_sensing.md)
+- [PaPr: Training-Free One-Step Patch Pruning with Lightweight ConvNets for Faster Inference](papr_training-free_one-step_patch_pruning_with_lightweight_convnets_for_faster_i.md)
 
 <!-- RELATED:END -->

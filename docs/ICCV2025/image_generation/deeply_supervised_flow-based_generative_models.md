@@ -125,10 +125,10 @@ DeepFlow 基于 SiT/DiT 架构，引入三个核心设计：
 
 ## 相关论文
 
+- [Goku: Flow Based Video Generative Foundation Models](../../CVPR2025/image_generation/goku_flow_based_video_generative_foundation_models.md)
 - [Contrastive Flow Matching (ΔFM)](contrastive_flow_matching.md)
 - [FLOAT: Generative Motion Latent Flow Matching for Audio-driven Talking Portrait](float_generative_motion_latent_flow_matching_for_audio-driven_talking_portrait.md)
 - [SoFlow: Solution Flow Models for One-Step Generative Modeling](../../ICLR2026/image_generation/soflow_solution_flow_models_for_one-step_generative_modeling.md)
 - [GenFlowRL: Shaping Rewards with Generative Object-Centric Flow in Visual Reinforcement Learning](genflowrl_shaping_rewards_with_generative_object-centric_flow_in_visual_reinforc.md)
-- [Gradient Variance Reveals Failure Modes in Flow-Based Generative Models](../../NeurIPS2025/image_generation/gradient_variance_reveals_failure_modes_in_flow-based_generative_models.md)
 
 <!-- RELATED:END -->

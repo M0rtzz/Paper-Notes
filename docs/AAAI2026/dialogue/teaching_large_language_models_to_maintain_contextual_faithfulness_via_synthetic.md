@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Canoe: Teaching LLMs to Maintain Contextual Faithfulness via Synthetic Tasks and RL
 description: >-

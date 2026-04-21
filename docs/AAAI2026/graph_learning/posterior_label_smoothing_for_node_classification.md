@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Posterior Label Smoothing for Node Classification
 description: >-

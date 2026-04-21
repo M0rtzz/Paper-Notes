@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ADMN: A Layer-Wise Adaptive Multimodal Network for Dynamic Input Noise and Compute Resources
 description: >-
@@ -125,6 +125,6 @@ GDTM(Blur, 8层)：ADMN定位误差~11cm，接近上界(9.4cm)，而减少75% FL
 - [Learning to Steer: Input-dependent Steering for Multimodal LLMs](learning_to_steer_input-dependent_steering_for_multimodal_llms.md)
 - [MacVQA: Adaptive Memory Allocation and Global Noise Filtering for Continual Visual Question Answering](../../AAAI2026/multimodal_vlm/macvqa_adaptive_memory_allocation_and_global_noise_filtering_for_continual_visua.md)
 - [TableDART: Dynamic Adaptive Multi-Modal Routing for Table Understanding](../../ICLR2026/multimodal_vlm/tabledart_dynamic_adaptive_multi-modal_routing_for_table_understanding.md)
-- [Inference Compute-Optimal Video Vision Language Models](../../ACL2025/multimodal_vlm/inference_compute_optimal_video_vlm.md)
+- [DynamicVL: Benchmarking MLLMs for Dynamic City Understanding](dynamicvl_benchmarking_multimodal_large_language_models_for_dynamic_city_underst.md)
 
 <!-- RELATED:END -->

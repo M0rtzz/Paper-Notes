@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards More Diverse and Challenging Pre-training for Point Cloud Learning: Self-Supervised Cross Reconstruction with Decoupled Views
 description: >-
@@ -176,6 +176,6 @@ Point-PQAE在不使用跨模态教师的情况下，与使用强预训练教师�
 - [4D Visual Pre-training for Robot Learning](4d_visual_pre-training_for_robot_learning.md)
 - [DAP-MAE: Domain-Adaptive Point Cloud Masked Autoencoder for Effective Cross-Domain Learning](dapmae_domainadaptive_point_cloud_masked_autoencoder_for_eff.md)
 - [BUFFER-X: Towards Zero-Shot Point Cloud Registration in Diverse Scenes](buffer-x_towards_zero-shot_point_cloud_registration_in_diverse_scenes.md)
-- [E-RayZer: Self-supervised 3D Reconstruction as Spatial Visual Pre-training](../../CVPR2026/3d_vision/e-rayzer_self-supervised_3d_reconstruction_as_spatial_visual_pre-training.md)
+- [Sonata: Self-Supervised Learning of Reliable Point Representations](../../CVPR2025/3d_vision/sonata_self-supervised_learning_of_reliable_point_representations.md)
 
 <!-- RELATED:END -->

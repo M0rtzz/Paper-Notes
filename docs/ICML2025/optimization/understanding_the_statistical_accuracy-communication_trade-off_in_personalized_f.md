@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Understanding the Statistical Accuracy-Communication Trade-off in Personalized Federated Learning with Minimax Guarantees
 description: >-

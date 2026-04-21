@@ -1,14 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] VisionArena: 230k Real World User-VLM Conversations with Preference Labels
 description: >-
-  [CVPR 2025][VLM评估][数据集] 发布VisionArena大规模真实用户-VLM对话数据集（230K条），包含偏好标签用于VLM基准评估
+  [CVPR 2025][VLM基准] 发布 VisionArena，当前最大规模的众包真实用户-VLM 对话数据集（230K 条对话+偏好标签），为 VLM 评估提供反映真实使用场景的基准。
 tags:
   - CVPR 2025
-  - VLM评估
-  - 偏好数据集
-  - 众包标注
+  - VLM基准
+  - 偏好数据
+  - 众包评估
   - 真实对话
+  - 大规模数据集
 ---
 
 # VisionArena: 230k Real World User-VLM Conversations with Preference Labels
@@ -61,6 +62,6 @@ tags:
 - [FineVQ: Fine-Grained User Generated Content Video Quality Assessment](finevq_fine-grained_user_generated_content_video_quality_assessment.md)
 - [Beyond Single Labels: Improving Conversational Recommendation through LLM-Powered Data Augmentation](../../ACL2025/recommender/beyond_single_labels_improving_conversational_recommendation_through_llm-powered.md)
 - [Aligning LLMs by Predicting Preferences from User Writing Samples](../../ICML2025/recommender/aligning_llms_by_predicting_preferences_from_user_writing_samples.md)
-- [PARM: Multi-Objective Test-Time Alignment via Preference-Aware Autoregressive Reward Model](../../ICML2025/recommender/parm_multi-objective_test-time_alignment_via_preference-aware_autoregressive_rew.md)
+- [SIMPLEMIX: Frustratingly Simple Mixing of Off- and On-policy Data in Language Model Preference Learning](../../ICML2025/recommender/simplemix_frustratingly_simple_mixing_of_off-_and_on-policy_data_in_language_mod.md)
 
 <!-- RELATED:END -->

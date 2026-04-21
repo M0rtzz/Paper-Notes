@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamics-Predictive Sampling for Active RL Finetuning of Large Reasoning Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RAE: A Neural Network Dimensionality Reduction Method for Nearest Neighbors Preservation in Vector Search
 description: >-

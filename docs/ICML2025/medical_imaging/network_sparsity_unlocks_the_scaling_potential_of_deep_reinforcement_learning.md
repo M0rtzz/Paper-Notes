@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Network Sparsity Unlocks the Scaling Potential of Deep Reinforcement Learning
 description: >-
@@ -118,6 +118,6 @@ tags:
 - [The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning](the_brains_bitter_lesson_scaling_speech_decoding_with_self-supervised_learning.md)
 - [Improved Off-policy Reinforcement Learning in Biological Sequence Design](improved_off-policy_reinforcement_learning_in_biological_sequence_design.md)
 - [The Disparate Benefits of Deep Ensembles](the_disparate_benefits_of_deep_ensembles.md)
-- [Efficient Noise Calculation in Deep Learning-based MRI Reconstructions](efficient_noise_calculation_in_deep_learning-based_mri_reconstructions.md)
+- [FairGRPO: Fair Reinforcement Learning for Equitable Clinical Reasoning](../../NeurIPS2025/medical_imaging/fairgrpo_fair_reinforcement_learning_for_equitable_clinical_reasoning.md)
 
 <!-- RELATED:END -->

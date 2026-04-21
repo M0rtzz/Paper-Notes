@@ -1,10 +1,10 @@
 ---
-title: "Fine-Grained Erasure in Text-to-Image Diffusion-based Foundation Models"
-conference: "CVPR 2025"
-arxiv: "2503.19783"
-code: "https://iab-rubric.github.io/unlearning/FG-Un"
-domain: "机器遗忘 / 生成模型安全"
-tags: ["machine unlearning", "diffusion model", "concept erasure", "fine-grained", "adjacency-aware"]
+title: >-
+  [论文解读] Fine-Grained Erasure in Text-to-Image Diffusion-based Foundation Models
+description: >-
+  [3D视觉] FADE 提出邻接感知（adjacency-aware）的细粒度概念擦除框架，通过 Concept Neighborhood 识别语义邻近类别并设计 Mesh Modules（Erasing + Adjacency + Guidance 三重损失），在精确删除目标概念的同时保留语义相关概念的生成能力，相比 SOTA 方法在邻接保留性能上提升至少 12%。
+tags:
+  - 3D视觉
 ---
 
 # Fine-Grained Erasure in Text-to-Image Diffusion-based Foundation Models
@@ -131,10 +131,10 @@ FADE 在完全擦除目标的同时，对其他类的保留准确率显著优于
 
 ## 相关论文
 
-- [Mesh-RFT: Enhancing Mesh Generation via Fine-Grained Reinforcement Fine-Tuning](../../NeurIPS2025/3d_vision/mesh-rft_enhancing_mesh_generation_via_fine-grained_reinforcement_fine-tuning.md)
-- [Kiss3DGen: Repurposing Image Diffusion Models for 3D Asset Generation](kiss3dgen_repurposing_image_diffusion_models_for_3d_asset_generation.md)
-- [More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](../../NeurIPS2025/3d_vision/more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
-- [Parameter-Free Fine-tuning via Redundancy Elimination for Vision Foundation Models](../../AAAI2026/3d_vision/parameter-free_fine-tuning_via_redundancy_elimination_for_vision_foundation_mode.md)
-- [Open-Vocabulary 3D Semantic Segmentation with Text-to-Image Diffusion Models](../../ECCV2024/3d_vision/open-vocabulary_3d_semantic_segmentation_with_text-to-image_diffusion_models.md)
+- [Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation](../../ICCV2025/3d_vision/repurposing_2d_diffusion_models_with_gaussian_atlas_for_3d_generation.md)
+- [StrandHead: Text to Hair-Disentangled 3D Head Avatars Using Human-Centric Priors](../../ICCV2025/3d_vision/strandhead_text_to_hair-disentangled_3d_head_avatars_using_human-centric_priors.md)
+- [NeuraLeaf: Neural Parametric Leaf Models with Shape and Deformation Disentanglement](../../ICCV2025/3d_vision/neuraleaf_neural_parametric_leaf_models_with_shape_and_deformation_disentangleme.md)
+- [Unleashing Vecset Diffusion Model for Fast Shape Generation (FlashVDM)](../../ICCV2025/3d_vision/unleashing_vecset_diffusion_model_for_fast_shape_generation.md)
+- [JointDiT: Enhancing RGB-Depth Joint Modeling with Diffusion Transformers](../../ICCV2025/3d_vision/jointdit_enhancing_rgb-depth_joint_modeling_with_diffusion_transformers.md)
 
 <!-- RELATED:END -->

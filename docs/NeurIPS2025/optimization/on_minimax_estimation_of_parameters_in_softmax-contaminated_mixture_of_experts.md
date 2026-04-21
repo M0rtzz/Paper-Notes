@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On Minimax Estimation of Parameters in Softmax-Contaminated Mixture of Experts
 description: >-
@@ -233,10 +233,10 @@ $$p_{G_*}(y|x) = \frac{1}{1+\exp(\beta^{*\top}x + \tau^*)} f_0(y|h_0(x,\eta_0), 
 
 ## 相关论文
 
-- [Estimation of Stochastic Optimal Transport Maps](estimation_of_stochastic_optimal_transport_maps.md)
-- [Learning Mixtures of Experts with EM: A Mirror Descent Perspective](../../ICML2025/optimization/learning_mixtures_of_experts_with_em_a_mirror_descent_perspective.md)
 - [Robust Estimation Under Heterogeneous Corruption Rates](robust_estimation_under_heterogeneous_corruption_rates.md)
+- [Learning Mixtures of Experts with EM: A Mirror Descent Perspective](../../ICML2025/optimization/learning_mixtures_of_experts_with_em_a_mirror_descent_perspective.md)
 - [Near-Exponential Savings for Mean Estimation with Active Learning](near-exponential_savings_for_mean_estimation_with_active_learning.md)
 - [Understanding the Statistical Accuracy-Communication Trade-off in Personalized Federated Learning with Minimax Guarantees](../../ICML2025/optimization/understanding_the_statistical_accuracy-communication_trade-off_in_personalized_f.md)
+- [A Unified View on Learning Unnormalized Distributions via Noise-Contrastive Estimation](../../ICML2025/optimization/a_unified_view_on_learning_unnormalized_distributions_via_noise-contrastive_esti.md)
 
 <!-- RELATED:END -->

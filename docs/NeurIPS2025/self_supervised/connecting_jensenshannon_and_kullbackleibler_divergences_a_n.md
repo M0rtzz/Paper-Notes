@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Connecting Jensen-Shannon and Kullback-Leibler Divergences: A New Bound for Representation Learning
 description: >-

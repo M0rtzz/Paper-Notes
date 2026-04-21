@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Exposure-slot: Exposure-centric Representations Learning with Slot-in-Slot Attention
 description: >-
-  [CVPR 2025][图像曝光矫正] 提出Exposure-slot框架，通过层次化slot-in-slot注意力机制聚类曝光区域特征，实现精准的区域感知曝光矫正
+  [CVPR 2025][LLM/NLP][曝光矫正] 本文提出Exposure-slot框架，将Slot Attention算法扩展为层次化的slot-in-slot结构，通过可学习的曝光prompt引导特征聚类，实现以曝光为中心的区域感知表征学习，在欠曝/过曝图像矫正任务上取得SOTA性能。
 tags:
   - CVPR 2025
+  - LLM/NLP
   - 曝光矫正
   - 注意力机制
-  - Slot Attention
-  - 图像增强
+  - 层次化聚类
+  - 区域感知
+  - 提示学习
 ---
 
 # Exposure-slot: Exposure-centric Representations Learning with Slot-in-Slot Attention
@@ -88,9 +90,9 @@ Exposure-slot采用编码器-解码器架构，在编码器和解码器之间引
 ## 相关论文
 
 - [TestCase-Eval: A Systematic Evaluation of Fault Coverage and Exposure](../../ACL2025/llm_nlp/testcase_eval_llm_test_gen.md)
-- [Rethinking Spiking Self-Attention Mechanism: Implementing a-XNOR Similarity Calculation in Spiking Transformers](rethinking_spiking_self-attention_mechanism_implementing_a-xnor_similarity_calcu.md)
-- [Uncertainty Unveiled: Can Exposure to More In-context Examples Mitigate Uncertainty for Large Language Models?](../../ACL2025/llm_nlp/uncertainty_unveiled_can_exposure_to_more_in-context_examples_mitigate_uncertain.md)
-- [Learning Textual Prompts for Open-World Semi-Supervised Learning](learning_textual_prompts_for_open-world_semi-supervised_learning.md)
 - [Robust Message Embedding via Attention Flow-Based Steganography](robust_message_embedding_via_attention_flow-based_steganography.md)
+- [Uncertainty Unveiled: Can Exposure to More In-context Examples Mitigate Uncertainty for Large Language Models?](../../ACL2025/llm_nlp/uncertainty_unveiled_can_exposure_to_more_in-context_examples_mitigate_uncertain.md)
+- [Spiking Transformer with Spatial-Temporal Attention](spiking_transformer_with_spatial-temporal_attention.md)
+- [Learning Textual Prompts for Open-World Semi-Supervised Learning](learning_textual_prompts_for_open-world_semi-supervised_learning.md)
 
 <!-- RELATED:END -->

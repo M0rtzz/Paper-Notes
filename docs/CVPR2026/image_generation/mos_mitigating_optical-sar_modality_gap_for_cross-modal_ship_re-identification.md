@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MOS: Mitigating Optical-SAR Modality Gap for Cross-Modal Ship Re-Identification
 description: >-

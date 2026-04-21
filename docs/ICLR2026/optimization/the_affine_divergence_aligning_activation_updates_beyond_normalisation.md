@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Affine Divergence: Aligning Activation Updates Beyond Normalisation
 description: >-

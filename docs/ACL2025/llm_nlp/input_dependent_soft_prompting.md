@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Leveraging Self-Attention for Input-Dependent Soft Prompting in LLMs
 description: >-
@@ -150,6 +150,6 @@ $$\mathbf{S}_T = \text{resize}\left(\sigma(W_{up} \cdot \sigma(W_{down} \cdot A)
 - [Contrastive Prompting Enhances Sentence Embeddings in LLMs through Inference-Time Steering](contrastive_prompting_embeddings.md)
 - [SkillAggregation: Reference-free LLM-Dependent Aggregation](skillaggregation_reference-free_llm-dependent_aggregation.md)
 - [Self-Tuning: Instructing LLMs to Effectively Acquire New Knowledge through Self-Teaching](self-tuning_instructing_llms_to_effectively_acquire_new_knowledge_through_self-t.md)
-- [Understanding the Dark Side of LLMs' Intrinsic Self-Correction](understanding_the_dark_side_of_llms_intrinsic_self-correction.md)
+- [Explain-then-Process: Using Grammar Prompting to Enhance Grammatical Acceptability Judgments](explain-then-process_using_grammar_prompting_to_enhance_grammatical_acceptabilit.md)
 
 <!-- RELATED:END -->

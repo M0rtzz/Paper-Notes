@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PatientSim: A Persona-Driven Simulator for Realistic Doctor-Patient Interactions
 description: >-
@@ -155,6 +155,6 @@ Llama系列在情感表达（性格、混乱）方面表现突出；通用基准
 - [UniSim: A Unified Simulator for Time-Coarsened Dynamics of Biomolecules](../../ICML2025/medical_imaging/unisim_a_unified_simulator_for_time-coarsened_dynamics_of_biomolecules.md)
 - [SMMILE: An Expert-Driven Benchmark for Multimodal Medical In-Context Learning](smmile_an_expert-driven_benchmark_for_multimodal_medical_in-context_learning.md)
 - [DeltaSHAP: Explaining Prediction Evolutions in Online Patient Monitoring with Shapley Values](../../ICML2025/medical_imaging/deltashap_explaining_prediction_evolutions_in_online_patient_monitoring_with_sha.md)
-- [Demo: Guide-RAG: Evidence-Driven Corpus Curation for Retrieval-Augmented Generation in Long COVID](demo_guide-rag_evidence-driven_corpus_curation_for_retrieval-augmented_generatio.md)
+- [Unraveling Normal Anatomy via Fluid-Driven Anomaly Randomization](../../CVPR2025/medical_imaging/unraveling_normal_anatomy_via_fluid-driven_anomaly_randomization.md)
 
 <!-- RELATED:END -->

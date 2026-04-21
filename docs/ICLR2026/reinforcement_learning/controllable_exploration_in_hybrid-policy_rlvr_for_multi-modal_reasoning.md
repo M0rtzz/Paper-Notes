@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Controllable Exploration in Hybrid-Policy RLVR for Multi-Modal Reasoning
 description: >-

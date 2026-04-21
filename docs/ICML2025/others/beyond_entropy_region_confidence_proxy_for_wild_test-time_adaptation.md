@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Entropy: Region Confidence Proxy for Wild Test-Time Adaptation
 description: >-

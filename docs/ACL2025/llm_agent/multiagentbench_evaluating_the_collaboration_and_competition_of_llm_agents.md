@@ -2,9 +2,16 @@
 title: >-
   [论文解读] MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents
 description: >-
-  [LLM Agent] 提出 MultiAgentBench 基准测试和 MARBLE 框架，系统评估 LLM 多智能体系统在协作与竞争场景中的表现，包含 6 种交互场景（研究、Minecraft、数据库、编程、讨价还价、狼人杀），引入基于里程碑的 KPI 指标和协调评分，发现 gpt-4o-mini 整体任务分最高、图结构协调协议在研究场景中表现最佳、认知规划可提升里程碑达成率 3%。
+  [ACL 2025][LLM Agent][multi-agent] 提出 MultiAgentBench 基准测试和 MARBLE 框架，系统评估 LLM 多智能体系统在协作与竞争场景中的表现，包含 6 种交互场景（研究、Minecraft、数据库、编程、讨价还价、狼人杀），引入基于里程碑的 KPI 指标和协调评分，发现 gpt-4o-mini 整体任务分最高、图结构协调协议在研究场景中表现最佳、认知规划可提升里程碑达成率 3%。
 tags:
+  - ACL 2025
   - LLM Agent
+  - multi-agent
+  - benchmark
+  - collaboration
+  - competition
+  - coordination protocol
+  - emergent behavior
 ---
 
 # MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents
@@ -190,10 +197,10 @@ MARBLE 由四个核心模块组成：
 
 ## 相关论文
 
-- [OS Agents: A Survey on MLLM-based Agents for General Computing Devices Use](os_agents_survey_mllm.md)
-- [AndroidGen: Building an Android Language Agent under Data Scarcity](androidgen_agent_data_scarcity.md)
-- [OS-Genesis: Automating GUI Agent Trajectory Construction via Reverse Task Synthesis](os_genesis_gui_agent_trajectory.md)
-- [METAL: A Multi-Agent Framework for Chart Generation with Test-Time Scaling](metal_a_multi-agent_framework_for_chart_generation_with_test-time_scaling.md)
 - [LegalAgentBench: Evaluating LLM Agents in Legal Domain](legalagentbench_evaluating_llm_agents_in_legal_domain.md)
+- [The Behavior Gap: Evaluating Zero-shot LLM Agents in Complex Task-Oriented Dialogs](the_behavior_gap_evaluating_zero-shot_llm_agents_in_complex_task-oriented_dialog.md)
+- [V-Stylist: Video Stylization via Collaboration and Reflection of MLLM Agents](../../CVPR2025/llm_agent/v-stylist_video_stylization_via_collaboration_and_reflection_of_mllm_agents.md)
+- [TrajAgent: An LLM-Agent Framework for Trajectory Modeling via Large-and-Small Model Collaboration](../../NeurIPS2025/llm_agent/trajagent_an_llm-agent_framework_for_trajectory_modeling_via_large-and-small_mod.md)
+- [Leveraging Dual Process Theory in Language Agent Framework for Real-time Simultaneous Human-AI Collaboration](dpt_agent_dual_process.md)
 
 <!-- RELATED:END -->

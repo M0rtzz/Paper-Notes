@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Chain of Event-Centric Causal Thought for Physically Plausible Video Generation
 description: >-

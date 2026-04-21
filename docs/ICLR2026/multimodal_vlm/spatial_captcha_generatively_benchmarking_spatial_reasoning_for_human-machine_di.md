@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spatial CAPTCHA: Generatively Benchmarking Spatial Reasoning for Human-Machine Differentiation
 description: >-

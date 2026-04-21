@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FedQS: Optimizing Gradient and Model Aggregation for Semi-Asynchronous Federated Learning
 description: >-
@@ -175,9 +175,9 @@ $$w_{i,e}^t = w_{i,e-1}^t - \eta_i^t \left[\sum_{r=1}^{e}(m_i^t)^r \nabla F_{i,e
 ## 相关论文
 
 - [Layer-wise Update Aggregation with Recycling for Communication-Efficient Federated Learning](layer-wise_update_aggregation_with_recycling_for_communication-efficient_federat.md)
+- [Model Poisoning Attacks to Federated Learning via Multi-Round Consistency](../../CVPR2025/optimization/model_poisoning_attacks_to_federated_learning_via_multi-round_consistency.md)
 - [Streaming Federated Learning with Markovian Data](streaming_federated_learning_with_markovian_data.md)
 - [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
 - [Oracle-Efficient Combinatorial Semi-Bandits](oracle-efficient_combinatorial_semi-bandits.md)
-- [Multiplayer Federated Learning: Reaching Equilibrium with Less Communication](multiplayer_federated_learning_reaching_equilibrium_with_less_communication.md)
 
 <!-- RELATED:END -->

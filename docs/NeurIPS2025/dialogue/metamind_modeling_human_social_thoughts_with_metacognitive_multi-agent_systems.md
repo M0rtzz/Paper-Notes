@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MetaMind: Modeling Human Social Thoughts with Metacognitive Multi-Agent Systems
 description: >-

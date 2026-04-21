@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Magnitude-Modulated Equivariant Adapter for Parameter-Efficient Fine-Tuning of Equivariant Graph Neural Networks
 description: >-

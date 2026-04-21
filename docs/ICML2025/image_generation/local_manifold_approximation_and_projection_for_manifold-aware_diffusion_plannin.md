@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Local Manifold Approximation and Projection for Manifold-Aware Diffusion Planning
 description: >-

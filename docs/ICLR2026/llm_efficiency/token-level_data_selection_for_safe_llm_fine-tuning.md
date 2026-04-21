@@ -173,9 +173,9 @@ TOSS 的核心启发：**数据清洗的粒度决定了安全-效用权衡的上
 
 ## 相关论文
 
+- [TokenSeek: Memory Efficient Fine Tuning via Instance-Aware Token Selection](tokenseek_memory_efficient_fine_tuning_via_instance-aware_token_selection.md)
 - [Safe Delta: Consistently Preserving Safety when Fine-Tuning LLMs on Diverse Datasets](../../ICML2025/llm_efficiency/safe_delta_consistently_preserving_safety_when_fine-tuning_llms_on_diverse_datas.md)
 - [Hierarchical Balance Packing: Towards Efficient Supervised Fine-tuning for Long-Context LLM](../../NeurIPS2025/llm_efficiency/hierarchical_balance_packing_towards_efficient_supervised_fine-tuning_for_long-c.md)
-- [Collaborative LLM Numerical Reasoning with Local Data Protection](../../AAAI2026/llm_efficiency/collaborative_llm_numerical_reasoning_with_local_data_protection.md)
 - [Semantic Parallelism: Redefining Efficient MoE Inference via Model-Data Co-Scheduling](semantic_parallelism_redefining_efficient_moe_inference_via_model-data_co-schedu.md)
 - [LycheeDecode: Accelerating Long-Context LLM Inference via Hybrid-Head Sparse Decoding](lycheedecode_accelerating_long-context_llm_inference_via_hybrid-head_sparse_deco.md)
 

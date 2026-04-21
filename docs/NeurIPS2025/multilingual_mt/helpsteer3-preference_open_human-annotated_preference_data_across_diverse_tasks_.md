@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HelpSteer3-Preference: Open Human-Annotated Preference Data across Diverse Tasks and Languages
 description: >-
@@ -114,7 +114,7 @@ NVIDIA 发布的 40K+ 开源人工标注偏好数据集，覆盖通用/STEM/代�
 - [DCAD-2000: A Multilingual Dataset across 2000+ Languages with Data Cleaning as Anomaly Detection](dcad-2000_a_multilingual_dataset_across_2000_languages_with_data_cleaning_as_ano.md)
 - [The Hidden Space of Safety: Understanding Preference-Tuned LLMs in Multilingual Contexts](../../ACL2025/multilingual_mt/the_hidden_space_of_safety_understanding_preference-tuned_llms_in_multilingual_c.md)
 - [Semantic and Expressive Variation in Image Captions Across Languages](../../CVPR2025/multilingual_mt/semantic_and_expressive_variations_in_image_captions_across_languages.md)
-- [Enhancing Multilingual LLM Pretraining with Model-Based Data Selection](enhancing_multilingual_llm_pretraining_with_model-based_data_selection.md)
 - [LEMONADE: A Large Multilingual Expert-Annotated Abstractive Event Dataset for the Real World](../../ACL2025/multilingual_mt/lemonade_a_large_multilingual_expert-annotated_abstractive_event_dataset_for_the.md)
+- [Enhancing Multilingual LLM Pretraining with Model-Based Data Selection](enhancing_multilingual_llm_pretraining_with_model-based_data_selection.md)
 
 <!-- RELATED:END -->

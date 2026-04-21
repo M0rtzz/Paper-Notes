@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RAPiD-Seg: Range-Aware Pointwise Distance Distribution Networks for 3D LiDAR Segmentation
 description: >-

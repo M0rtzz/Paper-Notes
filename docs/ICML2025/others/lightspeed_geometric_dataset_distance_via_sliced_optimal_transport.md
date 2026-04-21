@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Lightspeed Geometric Dataset Distance via Sliced Optimal Transport
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLM2Fx-Tools: Tool Calling for Music Post-Production
 description: >-
@@ -124,6 +124,6 @@ $$\mathcal{L}_{\text{NTL-WAS}} = \frac{1}{|\mathcal{I}_{\text{num}}|} \sum_{i \i
 - [QuantVSR: Low-Bit Post-Training Quantization for Real-World Video Super-Resolution](../../AAAI2026/image_generation/quantvsr_low-bit_post-training_quantization_for_real-world_video_super-resolutio.md)
 - [Melodia: Training-Free Music Editing Guided by Attention Probing in Diffusion Models](../../AAAI2026/image_generation/melodia_training-free_music_editing_guided_by_attention_probing_in_diffusion_mod.md)
 - [Diff-V2M: A Hierarchical Conditional Diffusion Model with Explicit Rhythmic Modeling for Video-to-Music Generation](../../AAAI2026/image_generation/diff-v2m_a_hierarchical_conditional_diffusion_model_with_explicit_rhythmic_model.md)
-- [MuseControlLite: Multifunctional Music Generation with Lightweight Conditioners](../../ICML2025/image_generation/musecontrollite_multifunctional_music_generation_with_lightweight_conditioners.md)
+- [Q-DiT: Accurate Post-Training Quantization for Diffusion Transformers](../../CVPR2025/image_generation/q-dit_accurate_post-training_quantization_for_diffusion_transformers.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Controllable and Expressive One-Shot Video Head Swapping
 description: >-
@@ -137,8 +137,8 @@ tags:
 
 ## 相关论文
 
+- [Zero-Shot Head Swapping in Real-World Scenarios](../../CVPR2025/human_understanding/zero-shot_head_swapping_in_real-world_scenarios.md)
 - [One-Shot Knowledge Transfer for Scalable Person Re-Identification](one-shot_knowledge_transfer_for_scalable_person_re-identification.md)
-- [FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video](../../CVPR2025/human_understanding/fate_full-head_gaussian_avatar_with_textural_editing_from_monocular_video.md)
 - [DreamActor-M1: Holistic, Expressive and Robust Human Image Animation with Hybrid Guidance](dreamactor-m1_holistic_expressive_and_robust_human_image_animation_with_hybrid_g.md)
 - [Learning Visual Proxy for Compositional Zero-Shot Learning](learning_visual_proxy_for_compositional_zero-shot_learning.md)
 - [NegRefine: Refining Negative Label-Based Zero-Shot OOD Detection](negrefine_refining_negative_label-based_zero-shot_ood_detection.md)

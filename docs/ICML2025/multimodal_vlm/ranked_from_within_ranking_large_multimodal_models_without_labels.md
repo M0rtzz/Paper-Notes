@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Ranked from Within: Ranking Large Multimodal Models Without Labels
 description: >-

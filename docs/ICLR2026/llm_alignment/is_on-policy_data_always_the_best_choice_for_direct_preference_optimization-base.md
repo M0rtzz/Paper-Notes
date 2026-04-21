@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Is On-Policy Data always the Best Choice for Direct Preference Optimization-based LM Alignment?
 description: >-

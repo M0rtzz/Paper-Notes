@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CausalTrace: A Neurosymbolic Causal Analysis Agent for Smart Manufacturing
 description: >-

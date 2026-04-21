@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BEDLAM2.0: Synthetic Humans and Cameras in Motion
 description: >-

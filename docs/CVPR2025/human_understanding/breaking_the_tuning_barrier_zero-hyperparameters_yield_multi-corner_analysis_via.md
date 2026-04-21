@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Breaking the Tuning Barrier: Zero-Hyperparameters Yield Multi-Corner Analysis Via Learned Priors
 description: >-
@@ -130,10 +130,10 @@ tags:
 
 ## 相关论文
 
+- [Pose Priors from Language Models](pose_priors_from_language_models.md)
 - [Conformal Prediction for Zero-Shot Models](conformal_prediction_for_zero-shot_models.md)
-- [PoseBH: Prototypical Multi-Dataset Training Beyond Human Pose Estimation](posebh_prototypical_multi-dataset_training_beyond_human_pose_estimation.md)
-- [Removing Reflections from RAW Photos](removing_reflections_from_raw_photos.md)
-- [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
-- [ShowMak3r: Compositional TV Show Reconstruction](showmak3r_compositional_tv_show_reconstruction.md)
+- [Zero-Shot Head Swapping in Real-World Scenarios](zero-shot_head_swapping_in_real-world_scenarios.md)
+- [Project-Probe-Aggregate: Efficient Fine-Tuning for Group Robustness](project-probe-aggregate_efficient_fine-tuning_for_group_robustness.md)
+- [SocialGesture: Delving into Multi-Person Gesture Understanding](socialgesture_delving_into_multi-person_gesture_understanding.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] An Improved Privacy and Utility Analysis of Differentially Private SGD with Bounded Domain and Smooth Losses
 description: >-

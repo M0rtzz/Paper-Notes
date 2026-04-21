@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Less-to-More Generalization: Unlocking More Controllability by In-Context Generation
 description: >-
@@ -155,7 +155,7 @@ UNO 基于 FLUX.1 dev（MM-DiT 架构），包含两大核心系统：(1) 合成
 - [Less is More: Improving Motion Diffusion Models with Sparse Keyframes](less_is_more_improving_motion_diffusion_models_with_sparse_keyframes.md)
 - [Erasing More Than Intended? How Concept Erasure Degrades the Generation of Non-Target Concepts](erasing_more_than_intended_how_concept_erasure_degrades_the_generation_of_non-ta.md)
 - [VisualCloze: A Universal Image Generation Framework via Visual In-Context Learning](visualcloze_a_universal_image_generation_framework_via_visua.md)
-- [Unlocking the Potential of Diffusion Priors in Blind Face Restoration](unlocking_the_potential_of_diffusion_priors_in_blind_face_restoration.md)
-- [BVINet: Unlocking Blind Video Inpainting with Zero Annotations](bvinet_unlocking_blind_video_inpainting_with_zero_annotations.md)
+- [One-for-More: Continual Diffusion Model for Anomaly Detection](../../CVPR2025/image_generation/one-for-more_continual_diffusion_model_for_anomaly_detection.md)
+- [ViUniT: Visual Unit Tests for More Robust Visual Programming](../../CVPR2025/image_generation/viunit_visual_unit_tests_for_more_robust_visual_programming.md)
 
 <!-- RELATED:END -->

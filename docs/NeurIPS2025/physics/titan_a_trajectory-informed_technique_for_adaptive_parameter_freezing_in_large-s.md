@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TITAN: A Trajectory-Informed Technique for Adaptive Parameter Freezing in Large-Scale VQE
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamic Diffusion Schrödinger Bridge in Astrophysical Observational Inversions
 description: >-
@@ -172,6 +172,6 @@ M2（Observable Enhancement）对 OOD 泛化至关重要——没有它 σ 从 2
 - [Grasp2Grasp: Vision-Based Dexterous Grasp Translation via Schrödinger Bridges](grasp2grasp_vision-based_dexterous_grasp_translation_via_schrödinger_bridges.md)
 - [Branched Schrödinger Bridge Matching](../../ICLR2026/image_generation/branched_schrödinger_bridge_matching.md)
 - [System-Embedded Diffusion Bridge Models](system-embedded_diffusion_bridge_models.md)
-- [Counterfactual Identifiability via Dynamic Optimal Transport](counterfactual_identifiability_via_dynamic_optimal_transport.md)
+- [Contact Wasserstein Geodesics for Non-Conservative Schrödinger Bridges](../../ICLR2026/image_generation/contact_wasserstein_geodesics_for_non-conservative_schrödinger_bridges.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cross-fluctuation Phase Transitions Reveal Sampling Dynamics in Diffusion Models
 description: >-

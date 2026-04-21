@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Effective Federated Graph Foundation Model via Mitigating Knowledge Entanglement
 description: >-

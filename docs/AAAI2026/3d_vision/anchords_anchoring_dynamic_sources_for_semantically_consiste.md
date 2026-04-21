@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AnchorDS: Anchoring Dynamic Sources for Semantically Consistent Text-to-3D Generation
 description: >-

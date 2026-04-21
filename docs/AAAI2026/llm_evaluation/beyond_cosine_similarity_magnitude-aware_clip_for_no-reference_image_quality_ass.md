@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Cosine Similarity: Magnitude-Aware CLIP for No-Reference Image Quality Assessment
 description: >-

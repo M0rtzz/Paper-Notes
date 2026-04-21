@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Best Subset Selection: Optimal Pursuit for Feature Selection and Elimination
 description: >-
@@ -152,6 +152,6 @@ tags:
 - [Predictive Data Selection: The Data That Predicts Is the Data That Teaches](predictive_data_selection_the_data_that_predicts_is_the_data_that_teaches.md)
 - [OrthoRank: Token Selection via Sink Token Orthogonality for Efficient LLM Inference](orthorank_token_selection_via_sink_token_orthogonality_for_efficient_llm_inferen.md)
 - [Mitigating Selection Bias with Node Pruning and Auxiliary Options](../../ACL2025/model_compression/selection_bias_node_pruning.md)
-- [DataDecide: How to Predict Best Pretraining Data with Small Experiments](datadecide_how_to_predict_best_pretraining_data_with_small_experiments.md)
+- [Curriculum Coarse-to-Fine Selection for High-IPC Dataset Distillation](../../CVPR2025/model_compression/curriculum_coarse-to-fine_selection_for_high-ipc_dataset_distillation.md)
 
 <!-- RELATED:END -->

@@ -1,14 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Locally Orderless Images for Optimization in Differentiable Rendering
 description: >-
-  [CVPR 2025][differentiable rendering] 提出基于局部无序图像（LOI）的逆渲染优化方法，通过三维尺度空间中的直方图匹配扩展梯度支持范围，解决稀疏梯度导致的局部最优问题。
+  [CVPR 2025][differentiable rendering] 提出利用局部无序图像（LOI）的三维尺度空间（内尺度 σ、色调尺度 β、范围尺度 α）进行直方图匹配的逆渲染优化方法，无需修改可微渲染器即可扩展稀疏梯度的支持范围，有效避免局部最优。
 tags:
   - CVPR 2025
   - differentiable rendering
   - inverse rendering
   - locally orderless images
   - histogram matching
+  - Wasserstein distance
   - scale space
 ---
 
@@ -130,9 +131,9 @@ tags:
 ## 相关论文
 
 - [DiffBMP: Differentiable Rendering with Bitmap Primitives](../../CVPR2026/others/diffbmp_differentiable_rendering_with_bitmap_primitives.md)
+- [NeISF++: Neural Incident Stokes Field for Polarized Inverse Rendering of Conductors and Dielectrics](neisf_neural_incident_stokes_field_for_polarized_inverse_rendering_of_conductors.md)
 - [Scalable GPU-Accelerated Euler Characteristic Curves: Optimization and Differentiable Learning for PyTorch](../../NeurIPS2025/others/scalable_gpu-accelerated_euler_characteristic_curves_optimization_and_differenti.md)
 - [Instance-wise Supervision-level Optimization in Active Learning](instance-wise_supervision-level_optimization_in_active_learning.md)
 - [CADCrafter: Generating Computer-Aided Design Models from Unconstrained Images](cadcrafter_generating_computer-aided_design_models_from_unconstrained_images.md)
-- [A Differentiable Model of Supply-Chain Shocks](../../NeurIPS2025/others/a_differentiable_model_of_supply-chain_shocks.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] KVComm: Enabling Efficient LLM Communication through Selective KV Sharing
 description: >-
@@ -130,10 +130,10 @@ KVComm 可以看作一种“在 KV 空间做 prompt compression”——不是�
 
 ## 相关论文
 
+- [The Path of Least Resistance: Guiding LLM Reasoning Trajectories for Efficient Consistency](the_path_of_least_resistance_guiding_llm_reasoning_trajectories_for_efficient_co.md)
 - [STEM: Efficient Relative Capability Evaluation of LLMs through Structured Transitive Evaluation Model](../../AAAI2026/llm_nlp/stem_efficient_relative_capability_evaluation_of_llms_through_structured_transit.md)
 - [Enabling LLM Knowledge Analysis via Extensive Materialization](../../ACL2025/llm_nlp/enabling_llm_knowledge_analysis_via_extensive_materialization.md)
 - [Red-Teaming LLM Multi-Agent Systems via Communication Attacks](../../ACL2025/llm_nlp/red-teaming_llm_multi-agent_systems_via_communication_attacks.md)
-- [SConU: Selective Conformal Uncertainty in Large Language Models](../../ACL2025/llm_nlp/sconu_selective_conformal_uncertainty_in_large_language_models.md)
 - [Pre³: Enabling Deterministic Pushdown Automata for Faster Structured LLM Generation](../../ACL2025/llm_nlp/pre3_deterministic_pda_structured_gen.md)
 
 <!-- RELATED:END -->

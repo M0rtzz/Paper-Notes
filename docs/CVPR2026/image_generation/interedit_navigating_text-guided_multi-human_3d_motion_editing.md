@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing
 description: >-

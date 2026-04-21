@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Anti-Tamper Protection for Unauthorized Individual Image Generation
 description: >-

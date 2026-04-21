@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SPDMark: Selective Parameter Displacement for Robust Video Watermarking
 description: >-

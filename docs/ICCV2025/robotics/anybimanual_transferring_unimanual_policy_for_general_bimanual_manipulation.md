@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AnyBimanual: Transferring Unimanual Policy for General Bimanual Manipulation
 description: >-

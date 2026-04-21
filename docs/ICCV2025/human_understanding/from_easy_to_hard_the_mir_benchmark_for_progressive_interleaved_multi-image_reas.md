@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Easy to Hard: The MIR Benchmark for Progressive Interleaved Multi-Image Reasoning
 description: >-

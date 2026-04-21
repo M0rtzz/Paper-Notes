@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Zebra: Towards Zero-Shot Cross-Subject Generalization for Universal Brain Visual Decoding
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoVE: Compressed Vocabulary Expansion Makes Better LLM-based Recommender Systems
 description: >-

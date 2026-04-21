@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpinMeRound: Consistent Multi-View Identity Generation Using Diffusion Models
 description: >-

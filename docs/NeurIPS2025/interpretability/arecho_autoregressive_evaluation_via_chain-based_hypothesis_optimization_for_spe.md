@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ARECHO: Autoregressive Evaluation via Chain-Based Hypothesis Optimization for Speech Multi-Metric Estimation
 description: >-

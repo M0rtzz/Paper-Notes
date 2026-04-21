@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LingOly-TOO: Disentangling Reasoning from Knowledge with Templatised Orthographic Obfuscation
 description: >-

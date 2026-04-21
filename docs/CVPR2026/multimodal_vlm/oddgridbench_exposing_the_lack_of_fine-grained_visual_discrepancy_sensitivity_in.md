@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OddGridBench: Exposing the Lack of Fine-Grained Visual Discrepancy Sensitivity in Multimodal Large Language Models
 description: >-

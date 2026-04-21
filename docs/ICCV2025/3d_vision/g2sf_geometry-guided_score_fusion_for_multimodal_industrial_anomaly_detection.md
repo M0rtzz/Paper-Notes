@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] G2SF: Geometry-Guided Score Fusion for Multimodal Industrial Anomaly Detection
 description: >-
@@ -134,7 +134,7 @@ G2SF 采用冻结的 DINO（图像）和 Point-MAE（点云）提取特征，构
 - [SiM3D: Single-Instance Multiview Multimodal and Multisetup 3D Anomaly Detection Benchmark](sim3d_single-instance_multiview_multimodal_and_multisetup_3d_anomaly_detection_b.md)
 - [GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering](geosplatting_towards_geometry_guided_gaussian_splatting_for_physically-based_inv.md)
 - [Stable Score Distillation](stable_score_distillation.md)
-- [Advancing Text-to-3D Generation with Linearized Lookahead Variational Score Distillation](advancing_text-to-3d_generation_with_linearized_lookahead_variational_score_dist.md)
+- [Odd-One-Out: Anomaly Detection by Comparing with Neighbors](../../CVPR2025/3d_vision/odd-one-out_anomaly_detection_by_comparing_with_neighbors.md)
 - [Geometry Distributions](geometry_distributions.md)
 
 <!-- RELATED:END -->

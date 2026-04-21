@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Local Dense Logit Relations for Enhanced Knowledge Distillation
 description: >-

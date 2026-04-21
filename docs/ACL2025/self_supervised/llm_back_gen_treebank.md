@@ -2,9 +2,15 @@
 title: >-
   [论文解读] Contrastive Learning on LLM Back Generation Treebank for Cross-domain Constituency Parsing
 description: >-
-  [自监督学习] 提出 LLM 反向生成 (LLM Back Generation) 方法，将不完整的跨领域句法树作为输入让 LLM 补全缺失词生成 treebank，并设计 span 级别对比学习预训练策略，实现跨领域成分句法分析的 SOTA 性能。
+  [ACL 2025][自监督学习][Constituency Parsing] 提出 LLM 反向生成 (LLM Back Generation) 方法，将不完整的跨领域句法树作为输入让 LLM 补全缺失词生成 treebank，并设计 span 级别对比学习预训练策略，实现跨领域成分句法分析的 SOTA 性能。
 tags:
+  - ACL 2025
   - 自监督学习
+  - Constituency Parsing
+  - Cross-domain
+  - LLM Back Generation
+  - 对比学习
+  - Treebank Generation
 ---
 
 # Contrastive Learning on LLM Back Generation Treebank for Cross-domain Constituency Parsing
@@ -119,9 +125,9 @@ $$\mathcal{L} = -\sum_{m \in (i,j)^+} \log \frac{e^{f(\boldsymbol{r}, \boldsymbo
 ## 相关论文
 
 - [Text-Phase Synergy Network with Dual Priors for Unsupervised Cross-Domain Image Retrieval](../../CVPR2025/self_supervised/text-phase_synergy_network_with_dual_priors_for_unsupervised_cross-domain_image_.md)
+- [WhiSPA: Semantically and Psychologically Aligned Whisper with Self-Supervised Contrastive and Student-Teacher Learning](whispa_semantically_and_psychologically_aligned_whisper_with_self-supervised_con.md)
 - [Towards LLM-Empowered Knowledge Tracing via LLM-Student Hierarchical Behavior Alignment in Hyperbolic Space](../../AAAI2026/self_supervised/towards_llm-empowered_knowledge_tracing_via_llm-student_hierarchical_behavior_al.md)
 - [Few-Shot Implicit Function Generation via Equivariance](../../CVPR2025/self_supervised/few-shot_implicit_function_generation_via_equivariance.md)
-- [Minimal Semantic Sufficiency Meets Unsupervised Domain Generalization](../../NeurIPS2025/self_supervised/minimal_semantic_sufficiency_meets_unsupervised_domain_generalization.md)
-- [WhiSPA: Semantically and Psychologically Aligned Whisper with Self-Supervised Contrastive and Student-Teacher Learning](whispa_semantically_and_psychologically_aligned_whisper_with_self-supervised_con.md)
+- [CLARIFY: Contrastive Preference Reinforcement Learning for Untangling Ambiguous Queries](../../ICML2025/self_supervised/clarify_contrastive_preference_reinforcement_learning_for_untangling_ambiguous_q.md)
 
 <!-- RELATED:END -->

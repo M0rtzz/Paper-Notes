@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Denoising as Path Planning: Training-Free Acceleration of Diffusion Models with DPCache
 description: >-

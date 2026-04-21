@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Automated CAD Modeling Sequence Generation from Text Descriptions via Transformer-Based Large Language Models
 description: >-

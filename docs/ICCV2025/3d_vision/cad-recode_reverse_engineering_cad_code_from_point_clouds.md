@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CAD-Recode: Reverse Engineering CAD Code from Point Clouds
 description: >-

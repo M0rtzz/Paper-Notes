@@ -1,16 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] ReCALL: Recalibrating Capability Degradation for MLLM-based Composed Image Retrieval
 description: >-
-  [CVPR 2026][多模态检索][组合图像检索] 揭示MLLM适配检索时的"能力退化"现象——生成式推理压缩为单嵌入判别式检索导致细粒度推理能力丧失。提出ReCALL框架通过诊断-生成-精炼管线，利用基座MLLM的原生推理能力为检索器生成针对性纠正监督信号，在CIRR和FashionIQ上达到SOTA。
+  [CVPR 2026][医学图像][组合图像检索] 揭示了将生成式MLLM适配为判别式检索器时的"能力退化"现象（Capability Degradation），提出ReCALL框架通过诊断检索器盲点→利用基座MLLM的CoT推理生成纠正性三元组→分组对比精炼三阶段管线，有效恢复退化的细粒度组合推理能力，在CIRR上R@1达55.52%、FashionIQ上R@10达57.04%。
 tags:
   - CVPR 2026
-  - 多模态检索
+  - 医学图像
   - 组合图像检索
   - 能力退化
-  - MLLM
+  - MLLM自改进
   - 对比学习
-  - 自改进
+  - 诊断-生成-精炼
 ---
 
 # ReCALL: Recalibrating Capability Degradation for MLLM-based Composed Image Retrieval

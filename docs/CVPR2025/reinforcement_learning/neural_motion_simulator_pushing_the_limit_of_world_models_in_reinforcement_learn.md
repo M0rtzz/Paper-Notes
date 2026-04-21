@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neural Motion Simulator: Pushing the Limit of World Models in Reinforcement Learning
 description: >-

@@ -1,7 +1,16 @@
 ---
-title: "SVLTA: Benchmarking Vision-Language Temporal Alignment via Synthetic Video Situation"
-description: "提出SVLTA合成视频基准测试集，通过常识活动图、可控时序分布和约束过滤生成25.3K合成视频和77.1K高质量时序标注，揭示当前模型严重缺乏时序对齐能力"
-tags: ["时序对齐", "视频理解", "合成数据", "基准测试", "视频大模型"]
+title: >-
+  [论文解读] SVLTA: Benchmarking Vision-Language Temporal Alignment via Synthetic Video Situation
+description: >-
+  [CVPR 2025][多模态][视觉-语言时序对齐] 提出**SVLTA**，一个通过合成模拟环境生成的视觉-语言时序对齐基准，包含25.3K动态场景、96种组合动作和77.1K高质量时序标注，具备**可控、组合、无偏**的时序分布，从时序问答、分布偏移敏感性和时序适应三个维度揭示当前VidLLM严重缺乏时序对齐能力（最强GPT-4o在IoU=0.5时R@1仅11.69%）。
+tags:
+  - CVPR 2025
+  - 多模态
+  - 视觉-语言时序对齐
+  - 合成视频
+  - 时序偏差
+  - 基准测试
+  - 视频大模型
 ---
 
 # SVLTA: Benchmarking Vision-Language Temporal Alignment via Synthetic Video Situation
@@ -130,10 +139,10 @@ SVLTA的构建流程包含五个阶段：(1) 情境组件初始化——定义96
 
 ## 相关论文
 
-- [Synthetic Visual Genome](synthetic_visual_genome.md)
 - [Synthetic Data is an Elegant GIFT for Continual Vision-Language Models](synthetic_data_is_an_elegant_gift_for_continual_vision-language_models.md)
+- [Synthetic Visual Genome](synthetic_visual_genome.md)
 - [Enrich and Detect: Video Temporal Grounding with Multimodal LLMs](../../ICCV2025/multimodal_vlm/enrich_and_detect_video_temporal_grounding_with_multimodal_llms.md)
+- [Video-XL: Extra-Long Vision Language Model for Hour-Scale Video Understanding](video-xl_extra-long_vision_language_model_for_hour-scale_video_understanding.md)
 - [ReVisionLLM: Recursive Vision-Language Model for Temporal Grounding in Hour-Long Videos](revisionllm_recursive_vision-language_model_for_temporal_grounding_in_hour-long_.md)
-- [SpaRE: Enhancing Spatial Reasoning in Vision-Language Models with Synthetic Data](../../ACL2025/multimodal_vlm/spare_enhancing_spatial_reasoning_in_vision-language_models_with_synthetic_data.md)
 
 <!-- RELATED:END -->

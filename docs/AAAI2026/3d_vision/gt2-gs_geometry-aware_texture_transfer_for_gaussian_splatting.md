@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GT2-GS: Geometry-aware Texture Transfer for Gaussian Splatting
 description: >-

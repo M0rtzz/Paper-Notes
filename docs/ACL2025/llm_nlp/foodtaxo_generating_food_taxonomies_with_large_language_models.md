@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FoodTaxo: Generating Food Taxonomies with Large Language Models
 description: >-
@@ -228,8 +228,8 @@ tags:
 
 - [Algorithmic Fidelity of Large Language Models in Generating Synthetic German Public Opinions: A Case Study](algorithmic_fidelity_german_opinion.md)
 - [Large Language Models in Bioinformatics: A Survey](large_language_models_in_bioinformatics_a_survey.md)
-- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
 - [TigerLLM - A Family of Bangla Large Language Models](tigerllm_-_a_family_of_bangla_large_language_models.md)
 - [Large Language Models are Good Relational Learners](large_language_models_are_good_relational_learners.md)
+- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
 
 <!-- RELATED:END -->

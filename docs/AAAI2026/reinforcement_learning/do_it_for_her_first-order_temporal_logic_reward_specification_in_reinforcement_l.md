@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Do It for HER: First-Order Temporal Logic Reward Specification in Reinforcement Learning
 description: >-

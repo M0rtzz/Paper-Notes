@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs
 description: >-

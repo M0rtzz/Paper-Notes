@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ELSPR: Evaluator LLM Training Data Self-Purification on Non-Transitive Preferences
 description: >-
@@ -113,6 +113,6 @@ ELSPR 将 LLM 评估器的成对偏好建模为锦标赛图，通过强连通分
 - [Stochastic Self-Organization in Multi-Agent Systems](../../ICLR2026/llm_pretraining/stochastic_self-organization_in_multi-agent_systems.md)
 - [LLM Data Selection and Utilization via Dynamic Bi-level Optimization](../../ICML2025/llm_pretraining/llm_data_selection_and_utilization_via_dynamic_bi-level_optimization.md)
 - [Pre-training LLM without Learning Rate Decay Enhances Supervised Fine-Tuning](../../ICLR2026/llm_pretraining/pre-training_llm_without_learning_rate_decay_enhances_supervised_fine-tuning.md)
-- [Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning](../../ACL2025/llm_pretraining/data_whisperer_data_selection.md)
+- [Data-Constrained Synthesis of Training Data for De-Identification](../../ACL2025/llm_pretraining/data-constrained_synthesis_of_training_data_for_de-identification.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Prompting: An Efficient Embedding Framework for Open-Domain Question Answering
 description: >-

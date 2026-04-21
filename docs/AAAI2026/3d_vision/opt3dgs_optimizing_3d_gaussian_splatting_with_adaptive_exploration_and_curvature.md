@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Opt3DGS: Optimizing 3D Gaussian Splatting with Adaptive Exploration and Curvature-Aware Exploitation
 description: >-

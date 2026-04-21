@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FA: Forced Prompt Learning of Vision-Language Models for Out-of-Distribution Detection
 description: >-

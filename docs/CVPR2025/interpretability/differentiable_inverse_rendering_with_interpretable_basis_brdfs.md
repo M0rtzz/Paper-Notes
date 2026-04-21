@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Differentiable Inverse Rendering with Interpretable Basis BRDFs
 description: >-
@@ -116,10 +116,10 @@ tags:
 
 ## 相关论文
 
-- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
 - [Interpretable Image Classification via Non-parametric Part Prototype Learning](interpretable_image_classification_via_non-parametric_part_prototype_learning.md)
 - [Prompt-CAM: Making Vision Transformers Interpretable for Fine-Grained Analysis](prompt-cam_making_vision_transformers_interpretable_for_fine-grained_analysis.md)
 - [What Makes an Ensemble (Un)interpretable?](../../ICML2025/interpretability/what_makes_an_ensemble_un_interpretable.md)
 - [CHiQPM: Calibrated Hierarchical Interpretable Image Classification](../../NeurIPS2025/interpretability/chiqpm_calibrated_hierarchical_interpretable_image_classification.md)
+- [NIMO: a Nonlinear Interpretable MOdel](../../ICLR2026/interpretability/nimo_a_nonlinear_interpretable_model.md)
 
 <!-- RELATED:END -->

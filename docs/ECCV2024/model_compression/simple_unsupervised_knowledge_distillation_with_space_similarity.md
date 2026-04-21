@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Simple Unsupervised Knowledge Distillation With Space Similarity
 description: >-

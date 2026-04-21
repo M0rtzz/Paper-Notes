@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling Diffusion Transformers Efficiently via μP
 description: >-

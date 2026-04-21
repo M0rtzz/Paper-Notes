@@ -1,7 +1,10 @@
-﻿---
-title: "CryptoFace: End-to-End Encrypted Face Recognition"
-description: "首个端到端全同态加密人脸识别系统，通过混合浅层patch CNN架构实现7倍加速"
-tags: ["face recognition", "homomorphic encryption", "privacy-preserving", "FHE", "patch CNN"]
+---
+title: >-
+  [论文解读] CryptoFace: End-to-End Encrypted Face Recognition
+description: >-
+  [人体理解] 提出 CryptoFace，首个端到端全同态加密（FHE）人脸识别系统，通过混合浅层 patch CNN 架构（CryptoFaceNet）大幅降低乘法深度，实现比 SOTA FHE 网络快 7 倍的加密推理，同时提升验证精度。
+tags:
+  - 人体理解
 ---
 
 # CryptoFace: End-to-End Encrypted Face Recognition
@@ -129,10 +132,10 @@ Bootstrapping 在 MPCNN 中占 ~70% 时间，在 CryptoFace 中仅占 ~10%。卷
 
 ## 相关论文
 
+- [ControlFace: Harnessing Facial Parametric Control for Face Rigging](controlface_harnessing_facial_parametric_control_for_face_rigging.md)
+- [Multi-Sensor Object Anomaly Detection: Unifying Appearance, Geometry, and Internal Properties](multi-sensor_object_anomaly_detection_unifying_appearance_geometry_and_internal_.md)
+- [DualTalk: Dual-Speaker Interaction for 3D Talking Head Conversations](dualtalk_dual-speaker_interaction_for_3d_talking_head_conversations.md)
+- [CRISP: Object Pose and Shape Estimation with Test-Time Adaptation](crisp_object_pose_and_shape_estimation_with_test-time_adaptation.md)
 - [Sum-of-Parts: Self-Attributing Neural Networks with End-to-End Learning of Feature Groups](../../ICML2025/human_understanding/sum-of-parts_self-attributing_neural_networks_with_end-to-end_learning_of_featur.md)
-- [Generalizable End-to-End Tool-Use RL with Synthetic CodeGym](../../ICLR2026/human_understanding/generalizable_end-to-end_tool-use_rl_with_synthetic_codegym.md)
-- [MatchED: Crisp Edge Detection Using End-to-End, Matching-based Supervision](../../CVPR2026/human_understanding/matched_crisp_edge_detection_using_end-to-end_matching-based_supervision.md)
-- [UniLS: End-to-End Audio-Driven Avatars for Unified Listening and Speaking](../../CVPR2026/human_understanding/unils_end-to-end_audio-driven_avatars_for_unified_listening_and_speaking.md)
-- [LVFace: Progressive Cluster Optimization for Large Vision Models in Face Recognition](../../ICCV2025/human_understanding/lvface_progressive_cluster_optimization_for_large_vision_models_in_face_recognit.md)
 
 <!-- RELATED:END -->

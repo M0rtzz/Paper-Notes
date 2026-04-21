@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VISAGE: Video Instance Segmentation with Appearance-Guided Enhancement
 description: >-
@@ -152,7 +152,7 @@ VISAGE基于Mask2Former检测器构建，分为三个核心组件：
 - [Dataset Enhancement with Instance-Level Augmentations](dataset_enhancement_with_instance-level_augmentations.md)
 - [CAVIS: Context-Aware Video Instance Segmentation](../../ICCV2025/segmentation/cavis_context-aware_video_instance_segmentation.md)
 - [General and Task-Oriented Video Segmentation](general_and_task-oriented_video_segmentation.md)
-- [Segmentation-Guided Layer-Wise Image Vectorization with Gradient Fills](segmentation-guided_layer-wise_image_vectorization_with_gradient_fills.md)
 - [ProMerge: Prompt and Merge for Unsupervised Instance Segmentation](promerge_prompt_and_merge_for_unsupervised_instance_segmentation.md)
+- [Segmentation-Guided Layer-Wise Image Vectorization with Gradient Fills](segmentation-guided_layer-wise_image_vectorization_with_gradient_fills.md)
 
 <!-- RELATED:END -->

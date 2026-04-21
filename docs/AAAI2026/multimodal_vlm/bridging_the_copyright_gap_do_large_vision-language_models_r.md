@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bridging the Copyright Gap: Do Large Vision-Language Models Recognize and Respect Copyrighted Content?
 description: >-

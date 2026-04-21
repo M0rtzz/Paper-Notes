@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Understanding Ice Crystal Habit Diversity with Self-Supervised Learning
 description: >-

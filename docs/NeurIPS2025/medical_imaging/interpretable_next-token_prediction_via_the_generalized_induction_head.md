@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Interpretable Next-token Prediction via the Generalized Induction Head
 description: >-

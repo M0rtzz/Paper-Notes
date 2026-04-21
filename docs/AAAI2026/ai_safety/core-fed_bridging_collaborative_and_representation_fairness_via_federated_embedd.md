@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoRe-Fed: Bridging Collaborative and Representation Fairness via Federated Embedding Distillation
 description: >-

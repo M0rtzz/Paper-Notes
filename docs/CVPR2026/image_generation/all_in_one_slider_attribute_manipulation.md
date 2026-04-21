@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] All-in-One Slider for Attribute Manipulation in Diffusion Models
 description: >-

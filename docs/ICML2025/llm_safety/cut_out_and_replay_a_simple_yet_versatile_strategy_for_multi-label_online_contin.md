@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cut out and Replay: A Simple yet Versatile Strategy for Multi-Label Online Continual Learning
 description: >-
@@ -154,9 +154,9 @@ $$L_{asl} = \frac{1}{|C_k|}\sum_{c=1}^{|C_k|} \begin{cases} (1-p_c)^{\gamma^+}\l
 
 ## 相关论文
 
-- [Improving Continual Learning Performance and Efficiency with Auxiliary Classifiers](improving_continual_learning_performance_and_efficiency_with_auxiliary_classifie.md)
-- [BECAME: BayEsian Continual Learning with Adaptive Model MErging](became_bayesian_continual_learning_with_adaptive_model_merging.md)
 - [Unlocking the Power of Rehearsal in Continual Learning: A Theoretical Perspective](unlocking_the_power_of_rehearsal_in_continual_learning_a_theoretical_perspective.md)
+- [BECAME: BayEsian Continual Learning with Adaptive Model MErging](became_bayesian_continual_learning_with_adaptive_model_merging.md)
+- [Improving Continual Learning Performance and Efficiency with Auxiliary Classifiers](improving_continual_learning_performance_and_efficiency_with_auxiliary_classifie.md)
 - [Finding Structure in Continual Learning](../../NeurIPS2025/llm_safety/finding_structure_in_continual_learning.md)
 - [Elastic Weight Consolidation Done Right for Continual Learning](../../CVPR2026/llm_safety/elastic_weight_consolidation_done_right_for_continual_learning.md)
 

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Interpretable Visual Decoding with Attention to Brain Representations
 description: >-

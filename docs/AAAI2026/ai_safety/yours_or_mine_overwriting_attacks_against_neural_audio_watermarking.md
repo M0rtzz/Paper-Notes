@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Yours or Mine? Overwriting Attacks Against Neural Audio Watermarking
 description: >-

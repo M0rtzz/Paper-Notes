@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tortoise and Hare Guidance: Accelerating Diffusion Model Inference with Multirate Integration
 description: >-
@@ -172,7 +172,7 @@ THG 是**完全免训练**的方法：
 - [SpecDiff: Accelerating Diffusion Model Inference with Self-Speculation](../../AAAI2026/image_generation/specdiff_accelerating_diffusion_model_inference_with_self-speculation.md)
 - [Accelerating Parallel Diffusion Model Serving with Residual Compression](accelerating_parallel_diffusion_model_serving_with_residual_compression.md)
 - [Entropy Rectifying Guidance for Diffusion and Flow Models](entropy_rectifying_guidance_for_diffusion_and_flow_models.md)
-- [Enhancing Diffusion Model Guidance through Calibration and Regularization](enhancing_diffusion_model_guidance_through_calibration_and_regularization.md)
+- [Towards a Golden Classifier-Free Guidance Path via Foresight Fixed Point Iterations](towards_a_golden_classifier-free_guidance_path_via_foresight_fixed_point_iterati.md)
 - [Token Perturbation Guidance for Diffusion Models](token_perturbation_guidance_for_diffusion_models.md)
 
 <!-- RELATED:END -->

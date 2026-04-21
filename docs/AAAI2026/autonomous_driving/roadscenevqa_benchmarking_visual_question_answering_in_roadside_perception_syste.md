@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RoadSceneVQA: Benchmarking Visual Question Answering in Roadside Perception Systems for Intelligent Transportation System
 description: >-

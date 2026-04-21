@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FLOAT: Generative Motion Latent Flow Matching for Audio-driven Talking Portrait
 description: >-

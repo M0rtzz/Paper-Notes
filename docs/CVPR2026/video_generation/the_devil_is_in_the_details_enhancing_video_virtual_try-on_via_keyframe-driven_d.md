@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] The Devil is in the Details: Enhancing Video Virtual Try-On via Keyframe-Driven Details Injection
 description: >-
-  [CVPR2026][视频理解][video virtual try-on] 提出 KeyTailor 框架，通过关键帧驱动的细节注入策略（服装动态增强 + 协同背景优化）在不修改 DiT 架构的前提下，大幅提升视频虚拟试穿的服装保真度与背景一致性，同时发布 15K 高清数据集 ViT-HD。
+  [CVPR2026][video virtual try-on] 提出 KeyTailor 框架，通过关键帧驱动的细节注入策略（服装动态增强 + 协同背景优化）在不修改 DiT 架构的前提下，大幅提升视频虚拟试穿的服装保真度与背景一致性，同时发布 15K 高清数据集 ViT-HD。
 tags:
   - CVPR2026
-  - 视频理解
   - video virtual try-on
   - Transformer
   - keyframe injection
@@ -158,10 +157,10 @@ tags:
 
 ## 相关论文
 
+- [Vanast: Virtual Try-On with Human Image Animation via Synthetic Triplet Supervision](vanast_virtual_try-on_with_human_image_animation_via_synthetic_triplet_supervisi.md)
 - [NeoVerse: Enhancing 4D World Model with in-the-wild Monocular Videos](neoverse_enhancing_4d_world_model_with_in-the-wild_monocular_videos.md)
 - [Goal-Driven Reward by Video Diffusion Models for Reinforcement Learning](goal-driven_reward_by_video_diffusion_models_for_reinforcement_learning.md)
+- [The Devil is in the Prompts: Retrieval-Augmented Prompt Optimization for Text-to-Video Generation](../../CVPR2025/video_generation/the_devil_is_in_the_prompts_retrieval-augmented_prompt_optimization_for_text-to-.md)
 - [DIVE: Taming DINO for Subject-Driven Video Editing](../../ICCV2025/video_generation/dive_taming_dino_for_subject-driven_video_editing.md)
-- [Data-Juicer Sandbox: A Feedback-Driven Suite for Multimodal Data-Model Co-development](../../ICML2025/video_generation/data-juicer_sandbox_a_feedback-driven_suite_for_multimodal_data-model_co-develop.md)
-- [Generative Inbetweening through Frame-wise Conditions-Driven Video Generation](../../CVPR2025/video_generation/generative_inbetweening_through_frame-wise_conditions-driven_video_generation.md)
 
 <!-- RELATED:END -->

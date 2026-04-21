@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Equivariant Flow Matching for Symmetry-Breaking Bifurcation Problems
 description: >-

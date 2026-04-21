@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] InstructPart: Task-Oriented Part Segmentation with Instruction Reasoning
 description: >-

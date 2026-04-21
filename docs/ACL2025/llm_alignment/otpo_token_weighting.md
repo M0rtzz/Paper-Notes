@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Optimal Transport-Based Token Weighting for Enhanced Preference Optimization
 description: >-

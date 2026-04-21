@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
-  [论文解读] Mr. DETR++: Instructive Multi-Route Training for Detection Transformers with Mixture-of-Experts
+  [论文解读] Mr. DETR++: Instructive Multi-Route Training for Detection Transformers with MoE
 description: >-
-  [CVPR 2025][object detection] 系统研究 DETR 解码器中各组件在 one-to-one 和 one-to-many 多任务框架下的角色，提出多路由训练机制（Instructive Self-Attention + Route-Aware MoE），在 DINO 基线上 +3.2 mAP，Swin-L 上达到 58.7 AP。
+  [CVPR 2025][目标检测][DETR] 系统研究 DETR 解码器各组件在 one-to-one/one-to-many 多任务框架下的角色，发现任何单独组件都能有效协调两个目标；基于此提出多路由训练（Instructive Self-Attention + Independent FFN + Route-Aware MoE），推理时丢弃辅助路由不增加任何开销。
 tags:
   - CVPR 2025
-  - object detection
+  - 目标检测
   - DETR
   - multi-route training
+  - 注意力机制
   - mixture-of-experts
-  - instructive self-attention
+  - one-to-many assignment
+  - Transformer
 ---
 
 # Mr. DETR++: Instructive Multi-Route Training for Detection Transformers with MoE
@@ -162,9 +164,9 @@ tags:
 ## 相关论文
 
 - [MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism](mi-detr_an_object_detection_model_with_multi-time_inquiries_mechanism.md)
-- [Just-in-Time: Training-Free Spatial Acceleration for Diffusion Transformers](../../CVPR2026/object_detection/just-in-time_training-free_spatial_acceleration_for_diffusion_transformers.md)
-- [Sim-DETR: Unlock DETR for Temporal Sentence Grounding](../../ICCV2025/object_detection/sim-detr_unlock_detr_for_temporal_sentence_grounding.md)
-- [DEIM: DETR with Improved Matching for Fast Convergence](deim_detr_with_improved_matching_for_fast_convergence.md)
+- [Object Detection using Event Camera: A MoE Heat Conduction based Detector and A New Benchmark Dataset](object_detection_using_event_camera_a_moe_heat_conduction_based_detector_and_a_n.md)
 - [TAPTR: Tracking Any Point with Transformers as Detection](../../ECCV2024/object_detection/taptr_tracking_any_point_with_transformers_as_detection.md)
+- [Just-in-Time: Training-Free Spatial Acceleration for Diffusion Transformers](../../CVPR2026/object_detection/just-in-time_training-free_spatial_acceleration_for_diffusion_transformers.md)
+- [Adversarial Attention Perturbations for Large Object Detection Transformers](../../ICCV2025/object_detection/adversarial_attention_perturbations_for_large_object_detection_transformers.md)
 
 <!-- RELATED:END -->

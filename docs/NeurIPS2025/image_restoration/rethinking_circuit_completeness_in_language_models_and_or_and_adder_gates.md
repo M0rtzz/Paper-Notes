@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking Circuit Completeness in Language Models: AND, OR, and ADDER Gates
 description: >-
@@ -125,6 +125,6 @@ tags:
 - [Activation Steering for Masked Diffusion Language Models](../../ICLR2026/image_restoration/activation_steering_for_masked_diffusion_language_models.md)
 - [Adaptive Discretization for Consistency Models](adaptive_discretization_for_consistency_models.md)
 - [Rethinking Nighttime Image Deraining via Learnable Color Space Transformation](rethinking_nighttime_image_deraining_via_learnable_color_space_transformation.md)
-- [Toward Safer Diffusion Language Models: Discovery and Mitigation of Priming Vulnerabilities](../../ICLR2026/image_restoration/toward_safer_diffusion_language_models_discovery_and_mitigation_of_priming_vulne.md)
+- [wd1: Weighted Policy Optimization for Reasoning in Diffusion Language Models](../../ICLR2026/image_restoration/wd1_weighted_policy_optimization_for_reasoning_in_diffusion_language_models.md)
 
 <!-- RELATED:END -->

@@ -2,9 +2,16 @@
 title: >-
   [论文解读] A Survey on Efficient Large Language Model Training: From Data-centric Perspectives
 description: >-
-  [LLM/NLP] 本文提出首个系统性的"数据高效 LLM 后训练"综述框架，将方法分为数据选择、数据质量增强、合成数据生成、数据蒸馏与压缩、自演化数据生态五大类，构建了完整的"数据价值飞轮"体系。
+  [ACL 2025][LLM/NLP][数据高效训练] 本文提出首个系统性的"数据高效 LLM 后训练"综述框架，将方法分为数据选择、数据质量增强、合成数据生成、数据蒸馏与压缩、自演化数据生态五大类，构建了完整的"数据价值飞轮"体系。
 tags:
+  - ACL 2025
   - LLM/NLP
+  - 数据高效训练
+  - 后训练
+  - 数据选择
+  - 合成数据
+  - 知识蒸馏
+  - 自演化数据
 ---
 
 # A Survey on Efficient Large Language Model Training: From Data-centric Perspectives
@@ -131,10 +138,10 @@ tags:
 
 ## 相关论文
 
-- [RoCoFT: Efficient Finetuning of Large Language Models with Row-Column Updates](rocoft_efficient_finetuning_of_large_language_models_with_row-column_updates.md)
-- [InfiniSST: Simultaneous Translation of Unbounded Speech with Large Language Model](infinisst_simultaneous_translation_of_unbounded_speech_with_large_language_model.md)
-- [SongComposer: A Large Language Model for Lyric and Melody Generation in Song Composition](songcomposer_llm_lyric_melody_generation.md)
-- [DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models](difflm_controllable_synthetic_data_generation_via_diffusion_language_models.md)
-- [PlanGenLLMs: A Modern Survey of LLM Planning Capabilities](plangenllms_planning_survey.md)
+- [Language Model Fine-Tuning on Scaled Survey Data for Predicting Distributions of Public Opinions](language_model_fine-tuning_on_scaled_survey_data_for_predicting_distributions_of.md)
+- [Understanding Silent Data Corruption in LLM Training](understanding_silent_data_corruption_in_llm_training.md)
+- [Training Language Model to Critique for Better Refinement](training_language_model_to_critique_for_better_refinement.md)
+- [Large Language Models in Bioinformatics: A Survey](large_language_models_in_bioinformatics_a_survey.md)
+- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
 
 <!-- RELATED:END -->

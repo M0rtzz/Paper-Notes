@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Integration of deep generative Anomaly Detection algorithm in high-speed industrial line
 description: >-

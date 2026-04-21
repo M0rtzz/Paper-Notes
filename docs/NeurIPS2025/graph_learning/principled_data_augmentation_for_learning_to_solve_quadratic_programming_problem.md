@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Principled Data Augmentation for Learning to Solve Quadratic Programming Problems
 description: >-

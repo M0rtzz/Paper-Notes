@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ReconDreamer++: Harmonizing Generative and Reconstructive Models for Driving Scene Representation
 description: >-
@@ -145,10 +145,10 @@ $\mathcal{L} = \lambda_1 \mathcal{L}_{RGB} + \lambda_2 \mathcal{L}_{SSIM} + \lam
 
 ## 相关论文
 
+- [ReconDreamer: Crafting World Models for Driving Scene Reconstruction via Online Restoration](../../CVPR2025/autonomous_driving/recondreamer_crafting_world_models_for_driving_scene_reconstruction_via_online_r.md)
 - [DiST-4D: Disentangled Spatiotemporal Diffusion with Metric Depth for 4D Driving Scene Generation](dist-4d_disentangled_spatiotemporal_diffusion_with_metric_depth_for_4d_driving_s.md)
-- [SLEDGE: Synthesizing Driving Environments with Generative Models and Rule-Based Traffic](../../ECCV2024/autonomous_driving/sledge_synthesizing_driving_environments_with_generative_models_and_rule-based_t.md)
-- [DrivingGen: A Comprehensive Benchmark for Generative Video World Models in Autonomous Driving](../../ICLR2026/autonomous_driving/drivinggen_a_comprehensive_benchmark_for_generative_video_world_models_in_autono.md)
-- [ETA: Efficiency through Thinking Ahead, A Dual Approach to Self-Driving with Large Models](eta_efficiency_through_thinking_ahead_a_dual_approach_to_self-driving_with_large.md)
 - [Leveraging 2D Priors and SDF Guidance for Dynamic Urban Scene Rendering](leveraging_2d_priors_and_sdf_guidance_for_urban_scene_rendering.md)
+- [GS-LIVM: Real-Time Photo-Realistic LiDAR-Inertial-Visual Mapping with Gaussian Splatting](gs-livm_real-time_photo-realistic_lidar-inertial-visual_mapping_with_gaussian_sp.md)
+- [ETA: Efficiency through Thinking Ahead, A Dual Approach to Self-Driving with Large Models](eta_efficiency_through_thinking_ahead_a_dual_approach_to_self-driving_with_large.md)
 
 <!-- RELATED:END -->

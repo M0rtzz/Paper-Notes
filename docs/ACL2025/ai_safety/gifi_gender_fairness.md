@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gender Inclusivity Fairness Index (GIFI): A Multilevel Framework
 description: >-
@@ -145,8 +145,8 @@ GIFI 框架由四个递进评估阶段、七个维度组成，评估对象覆盖
 ## 相关论文
 
 - [FedFACT: A Provable Framework for Controllable Group-Fairness Calibration in Federated Learning](../../NeurIPS2025/ai_safety/fedfact_a_provable_framework_for_controllable_group-fairness_calibration_in_fede.md)
-- [Towards Fairness Assessment of Dutch Hate Speech Detection](towards_fairness_assessment_of_dutch_hate_speech_detection.md)
 - [From Trade-off to Synergy: A Versatile Symbiotic Watermarking Framework for Large Language Models](from_tradeoff_to_synergy_a_versatile.md)
+- [Towards Fairness Assessment of Dutch Hate Speech Detection](towards_fairness_assessment_of_dutch_hate_speech_detection.md)
 - [Improving Fairness of Large Language Models in Multi-document Summarization](improving_fairness_of_large_language_models_in_multi-document_summarization.md)
 - [Gender Bias in Emotion Recognition by Large Language Models](../../AAAI2026/ai_safety/gender_bias_in_emotion_recognition_by_large_language_models.md)
 

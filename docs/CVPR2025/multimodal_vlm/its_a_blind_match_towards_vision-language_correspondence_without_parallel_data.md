@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] It's a (Blind) Match! Towards Vision-Language Correspondence without Parallel Data
 description: >-
@@ -132,7 +132,7 @@ Platonic表示假说指出：随着模型和数据规模的增长，不同模态
 - [Quantization without Tears](quantization_without_tears.md)
 - [Words or Vision: Do Vision-Language Models Have Blind Faith in Text?](words_or_vision_do_vision-language_models_have_blind_faith_in_text.md)
 - [Self-Supervised Spatial Correspondence Across Modalities](self-supervised_spatial_correspondence_across_modalities.md)
+- [Stop Learning It All to Mitigate Visual Hallucination, Focus on the Hallucination Target](stop_learning_it_all_to_mitigate_visual_hallucination_focus_on_the_hallucination.md)
 - [Synthetic Data is an Elegant GIFT for Continual Vision-Language Models](synthetic_data_is_an_elegant_gift_for_continual_vision-language_models.md)
-- [Molmo and PixMo: Open Weights and Open Data for State-of-the-Art Vision-Language Models](molmo_and_pixmo_open_weights_and_open_data_for_state-of-the-art_vision-language_.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FineVAU: A Novel Human-Aligned Benchmark for Fine-Grained Video Anomaly Understanding
 description: >-

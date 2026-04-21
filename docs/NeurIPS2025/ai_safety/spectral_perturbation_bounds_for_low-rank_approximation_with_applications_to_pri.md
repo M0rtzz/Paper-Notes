@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spectral Perturbation Bounds for Low-Rank Approximation with Applications to Privacy
 description: >-
@@ -121,10 +121,10 @@ tags:
 
 ## 相关论文
 
-- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
 - [Differentially Private Federated Low Rank Adaptation Beyond Fixed-Matrix](differentially_private_federated_low_rank_adaptation_beyond_fixed-matrix.md)
 - [InvisibleInk: High-Utility and Low-Cost Text Generation with Differential Privacy](invisibleink_high-utility_and_low-cost_text_generation_with_differential_privacy.md)
 - [Nearly-Linear Time Private Hypothesis Selection with the Optimal Approximation Factor](nearly-linear_time_private_hypothesis_selection_with_the_optimal_approximation_f.md)
-- [Bits Leaked per Query: Information-Theoretic Bounds on Adversarial Attacks Against LLMs](bits_leaked_per_query_information-theoretic_bounds_on_adversarial_attacks_agains.md)
+- [Differential Privacy for Euclidean Jordan Algebra with Applications to Private Symmetric Cone Programming](differential_privacy_for_euclidean_jordan_algebra_with_applications_to_private_s.md)
+- [Cape: Context-Aware Prompt Perturbation Mechanism with Differential Privacy](../../ICML2025/ai_safety/cape_context-aware_prompt_perturbation_mechanism_with_differential_privacy.md)
 
 <!-- RELATED:END -->

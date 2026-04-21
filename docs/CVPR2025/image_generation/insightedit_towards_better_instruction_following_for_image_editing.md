@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] InsightEdit: Towards Better Instruction Following for Image Editing
 description: >-
-  [CVPR 2025][image editing] 提出 InsightEdit，通过高质量 AdvancedEdit 数据集和双流桥接机制（文本+图像分支），将 MLLM 的文本推理与视觉语义同时注入扩散模型去噪过程，实现复杂指令跟随与高背景一致性的端到端图像编辑。
+  [CVPR 2025][图像生成][image editing] 提出 InsightEdit，构建 250 万级高质量编辑数据集 AdvancedEdit，并设计双流桥接机制将 MLLM 的文本推理特征和图像语义特征同时注入扩散模型，在复杂指令跟随和背景一致性上达到 SOTA。
 tags:
   - CVPR 2025
+  - 图像生成
   - image editing
   - instruction following
   - MLLM
-  - diffusion model
-  - 数据集构建
+  - 扩散模型
+  - two-stream bridging
+  - AdvancedEdit dataset
 ---
 
 # InsightEdit: Towards Better Instruction Following for Image Editing
@@ -134,9 +136,9 @@ InsightEdit 由三个模块组成：
 ## 相关论文
 
 - [MagicQuill: An Intelligent Interactive Image Editing System](magicquill_an_intelligent_interactive_image_editing_system.md)
-- [SuperEdit: Rectifying and Facilitating Supervision for Instruction-Based Image Editing](../../ICCV2025/image_generation/superedit_rectifying_and_facilitating_supervision_for_instruction-based_image_ed.md)
 - [MangaNinja: Line Art Colorization with Precise Reference Following](manganinja_line_art_colorization_with_precise_reference_following.md)
-- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](../../ICLR2026/image_generation/visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
-- [ADIEE: Automatic Dataset Creation and Scorer for Instruction-Guided Image Editing Evaluation](../../ICCV2025/image_generation/adiee_automatic_dataset_creation_and_scorer_for_instruction-guided_image_editing.md)
+- [SuperEdit: Rectifying and Facilitating Supervision for Instruction-Based Image Editing](../../ICCV2025/image_generation/superedit_rectifying_and_facilitating_supervision_for_instruction-based_image_ed.md)
+- [Early Timestep Zero-Shot Candidate Selection for Instruction-Guided Image Editing](../../ICCV2025/image_generation/early_timestep_zero-shot_candidate_selection_for_instruction-guided_image_editin.md)
+- [Robust-Wide: Robust Watermarking against Instruction-driven Image Editing](../../ECCV2024/image_generation/robust-wide_robust_watermarking_against_instruction-driven_image_editing.md)
 
 <!-- RELATED:END -->

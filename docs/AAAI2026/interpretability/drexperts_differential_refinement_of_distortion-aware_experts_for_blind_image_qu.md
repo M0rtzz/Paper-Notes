@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DR.Experts: Differential Refinement of Distortion-Aware Experts for Blind Image Quality Assessment
 description: >-

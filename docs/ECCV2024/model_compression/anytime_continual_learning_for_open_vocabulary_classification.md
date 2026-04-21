@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Anytime Continual Learning for Open Vocabulary Classification
 description: >-
@@ -159,8 +159,8 @@ $$\alpha_t(y) = \frac{c_t(y)}{c_t(y) + c_o(y) + \epsilon}$$
 
 - [Category Adaptation Meets Projected Distillation in Generalized Continual Category Discovery](category_adaptation_meets_projected_distillation_in_generalized_continual_catego.md)
 - [Rethinking Continual Learning with Progressive Neural Collapse](../../ICLR2026/model_compression/rethinking_continual_learning_with_progressive_neural_collapse.md)
-- [Competitive Distillation: A Simple Learning Strategy for Improving Visual Classification](../../ICCV2025/model_compression/competitive_distillation_a_simple_learning_strategy_for_improving_visual_classif.md)
 - [UNIC: Universal Classification Models via Multi-teacher Distillation](unic_universal_classification_models_via_multi-teacher_distillation.md)
+- [Competitive Distillation: A Simple Learning Strategy for Improving Visual Classification](../../ICCV2025/model_compression/competitive_distillation_a_simple_learning_strategy_for_improving_visual_classif.md)
 - [Revisiting Weight Regularization for Low-Rank Continual Learning](../../ICLR2026/model_compression/revisiting_weight_regularization_for_low-rank_continual_learning.md)
 
 <!-- RELATED:END -->

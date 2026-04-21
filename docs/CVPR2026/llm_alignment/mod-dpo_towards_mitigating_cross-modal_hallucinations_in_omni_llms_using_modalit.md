@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MoD-DPO: Towards Mitigating Cross-modal Hallucinations in Omni LLMs using Modality Decoupled Preference Optimization
 description: >-

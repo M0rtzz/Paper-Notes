@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] MAR-3D: Progressive Masked Auto-regressor for High-Resolution 3D Generation
 description: >-
-  [CVPR 2025][3D generation] 提出 MAR-3D 框架，通过金字塔 VAE 和级联 Masked Auto-Regressive 模型实现渐进式高分辨率 3D 生成，结合条件增强策略有效缓解分辨率扩展时的累计误差。
+  [CVPR 2025][3D视觉][3D generation] 提出金字塔 VAE + 级联 MAR（MAR-LR → MAR-HR）的渐进式 3D 生成框架，通过随机遮罩适配 3D token 的无序特性，并用条件增强策略缓解分辨率上扩展时的累计误差，在开源方法中达到 SOTA。
 tags:
   - CVPR 2025
+  - 3D视觉
   - 3D generation
-  - auto-regressive model
-  - VAE
-  - mesh generation
-  - 渐进式生成
+  - masked auto-regressive
+  - pyramid VAE
+  - cascaded generation
+  - condition augmentation
 ---
 
 # MAR-3D: Progressive Masked Auto-regressor for High-Resolution 3D Generation
@@ -136,9 +137,9 @@ CD 较 InstantMesh 降低 15.4%。
 ## 相关论文
 
 - [Event Fields: Capturing Light Fields at High Speed, Resolution, and Dynamic Range](event_fields_capturing_light_fields_at_high_speed_resolution_and_dynamic_range.md)
-- [Repaint123: Fast and High-Quality One Image to 3D Generation with Progressive Controllable Repainting](../../ECCV2024/3d_vision/repaint123_fast_and_high-quality_one_image_to_3d_generation_with_progressive_con.md)
 - [SemanticHuman-HD: High-Resolution Semantic Disentangled 3D Human Generation](../../ECCV2024/3d_vision/semantichuman-hd_high-resolution_semantic_disentangled_3d_human_generation.md)
+- [Repaint123: Fast and High-Quality One Image to 3D Generation with Progressive Controllable Repainting](../../ECCV2024/3d_vision/repaint123_fast_and_high-quality_one_image_to_3d_generation_with_progressive_con.md)
 - [Masked Point-Entity Contrast for Open-Vocabulary 3D Scene Understanding](masked_point-entity_contrast_for_open-vocabulary_3d_scene_understanding.md)
-- [High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)
+- [S2Gaussian: Sparse-View Super-Resolution 3D Gaussian Splatting](s2gaussian_sparse-view_super-resolution_3d_gaussian_splatting.md)
 
 <!-- RELATED:END -->

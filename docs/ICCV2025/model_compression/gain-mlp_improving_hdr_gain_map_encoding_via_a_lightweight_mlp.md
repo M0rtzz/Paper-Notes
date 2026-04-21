@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gain-MLP: Improving HDR Gain Map Encoding via a Lightweight MLP
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MIB: A Mechanistic Interpretability Benchmark
 description: >-

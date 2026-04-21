@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MMTok: Multimodal Coverage Maximization for Efficient Inference of VLMs
 description: >-

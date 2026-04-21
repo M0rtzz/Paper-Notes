@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] "My life is miserable, have to sign 500 autographs everyday": Exposing Humblebragging, the Brags in Disguise
 description: >-
@@ -152,7 +152,7 @@ Humblebragging 是一种通过伪装成抱怨或谦虚来进行自我推销的�
 - [Sign-In to the Lottery: Reparameterized Sparse Training from Scratch](../../NeurIPS2025/others/sign-in_to_the_lottery_reparameterizing_sparse_training_from_scratch.md)
 - [A Scalable Inter-edge Correlation Modeling in CopulaGNN for Link Sign Prediction](../../ICLR2026/others/a_scalable_inter-edge_correlation_modeling_in_copulagnn_for_link_sign_prediction.md)
 - [Enhancing Optimization Robustness in 1-bit Neural Networks through Stochastic Sign Descent](../../ECCV2024/others/enhancing_optimization_robustness_in_1-bit_neural_networks_through_stochastic_si.md)
-- [Theorem Prover as a Judge for Synthetic Data Generation](theorem_prover_as_a_judge_for_synthetic_data_generation.md)
-- [Literature Meets Data: A Synergistic Approach to Hypothesis Generation](literature_meets_data_hypothesis.md)
+- [DeepRTL2: A Versatile Model for RTL-Related Tasks](deeprtl2_a_versatile_model_for_rtl-related_tasks.md)
+- [PersonaBench: Evaluating AI Models on Understanding Personal Information through Accessing (Synthetic) Private User Data](personabench_evaluating_ai_models_on_understanding_personal_information_through_.md)
 
 <!-- RELATED:END -->

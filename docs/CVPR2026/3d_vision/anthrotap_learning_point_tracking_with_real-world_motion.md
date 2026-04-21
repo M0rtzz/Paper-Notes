@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AnthroTAP: Learning Point Tracking with Real-World Motion
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SJD-PAC: Accelerating Speculative Jacobi Decoding via Proactive Drafting and Adaptive Continuation
 description: >-

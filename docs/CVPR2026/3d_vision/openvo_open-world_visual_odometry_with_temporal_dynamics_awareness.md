@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OpenVO: Open-World Visual Odometry with Temporal Dynamics Awareness
 description: >-
@@ -142,6 +142,6 @@ OpenVO 是唯一同时具备时间动态感知和几何先验、且不依赖额�
 - [Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)
 - [Wanderland: Geometrically Grounded Simulation for Open-World Embodied AI](wanderland_geometrically_grounded_simulation_for_open-world_embodied_ai.md)
 - [Ross3D: Reconstructive Visual Instruction Tuning with 3D-Awareness](../../ICCV2025/3d_vision/ross3d_reconstructive_visual_instruction_tuning_with_3d-awareness.md)
-- [CloDS: Visual-Only Unsupervised Cloth Dynamics Learning in Unknown Conditions](../../ICLR2026/3d_vision/clods_visual-only_unsupervised_cloth_dynamics_learning_in_unknown_conditions.md)
+- [Towards 3D Objectness Learning in an Open World](../../NeurIPS2025/3d_vision/towards_3d_objectness_learning_in_an_open_world.md)
 
 <!-- RELATED:END -->

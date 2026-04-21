@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving Multimodal Sentiment Analysis via Modality Optimization and Dynamic Primary Modality Selection
 description: >-

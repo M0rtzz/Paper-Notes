@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PIMRL: Physics-Informed Multi-Scale Recurrent Learning for Burst-Sampled Spatiotemporal Dynamics
 description: >-

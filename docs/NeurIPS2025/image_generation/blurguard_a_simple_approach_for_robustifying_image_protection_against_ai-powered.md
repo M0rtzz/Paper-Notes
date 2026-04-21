@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BlurGuard: A Simple Approach for Robustifying Image Protection Against AI-Powered Edit
 description: >-

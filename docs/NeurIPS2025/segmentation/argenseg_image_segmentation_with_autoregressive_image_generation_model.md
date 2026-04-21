@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ARGenSeg: Image Segmentation with Autoregressive Image Generation Model
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RAGFort: Dual-Path Defense Against Proprietary Knowledge Base Extraction in Retrieval-Augmented Generation
 description: >-

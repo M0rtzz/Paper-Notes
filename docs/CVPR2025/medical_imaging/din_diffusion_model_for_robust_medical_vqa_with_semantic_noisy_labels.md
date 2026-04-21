@@ -1,16 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] DiN: Diffusion Model for Robust Medical VQA with Semantic Noisy Labels
 description: >-
-  [CVPR 2025][医学影像][VQA] 本文提出DiN框架，首次将扩散模型引入医学VQA任务处理语义噪声标签问题，通过Answer Diffuser、Answer Condition Generator和Noisy Label Refinement三个模块协同工作，在VQA-RAD和PathVQA数据集上显著超越现有方法。
+  [CVPR 2025][医学图像][医学VQA] 本文提出DiN框架，首次将扩散模型应用于医学VQA的噪声标签场景（NM-VQA），通过扩散式答案分类器从生成视角进行粗到细的答案筛选，配合噪声标签精炼模块动态修正标签，在10%语义噪声下VQA-RAD准确率达74.24%，超越SNLC的69.65%。
 tags:
   - CVPR 2025
-  - 医学影像
-  - 视觉问答
+  - 医学图像
+  - 医学VQA
   - 扩散模型
-  - 噪声标签
-  - 多模态学习
+  - 语义噪声标签
   - 标签去噪
+  - 多模态融合
 ---
 
 # DiN: Diffusion Model for Robust Medical VQA with Semantic Noisy Labels
@@ -148,10 +148,10 @@ $$\mathcal{L}_{total} = \mathcal{L}_{dif} + \alpha \mathcal{L}_{RFL}$$
 
 ## 相关论文
 
+- [TopoCellGen: Generating Histopathology Cell Topology with a Diffusion Model](topocellgen_generating_histopathology_cell_topology_with_a_diffusion_model.md)
+- [SeaLion: Semantic Part-Aware Latent Point Diffusion Models for 3D Generation](sealion_semantic_part-aware_latent_point_diffusion_models_for_3d_generation.md)
 - [Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling](../../AAAI2026/medical_imaging/hierarchical_schedule_optimization_for_fast_and_robust_diffusion_model_sampling.md)
-- [Diffusion-Based Feature Denoising and Using NNMF for Robust Brain Tumor Classification](diffusion-based_feature_denoising_and_using_nnmf_for_robust_brain_tumor_classifi.md)
+- [ZoomLDM: Latent Diffusion Model for Multi-Scale Image Generation](zoomldm_latent_diffusion_model_for_multi-scale_image_generation.md)
 - [BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical.md)
-- [Semantic and Visual Crop-Guided Diffusion Models for Heterogeneous Tissue Synthesis in Histopathology](../../NeurIPS2025/medical_imaging/semantic_and_visual_crop-guided_diffusion_models_for_heterogeneous_tissue_synthe.md)
-- [Latent Drifting in Diffusion Models for Counterfactual Medical Image Synthesis](latent_drifting_in_diffusion_models_for_counterfactual_medical_image_synthesis.md)
 
 <!-- RELATED:END -->

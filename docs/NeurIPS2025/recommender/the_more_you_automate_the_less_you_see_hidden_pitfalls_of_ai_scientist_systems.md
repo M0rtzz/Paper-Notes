@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The More You Automate, the Less You See: Hidden Pitfalls of AI Scientist Systems
 description: >-

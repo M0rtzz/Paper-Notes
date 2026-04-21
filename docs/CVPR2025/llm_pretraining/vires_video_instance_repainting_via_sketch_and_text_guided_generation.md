@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VIRES: Video Instance Repainting via Sketch and Text Guided Generation
 description: >-

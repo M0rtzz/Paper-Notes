@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Error Notebook-Guided, Training-Free Part Retrieval in 3D CAD Assemblies via Vision-Language Models
 description: >-

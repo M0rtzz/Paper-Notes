@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Token Probes: Hallucination Detection via Activation Tensors with ACT-ViT
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reinforcing the Diffusion Chain of Lateral Thought with Diffusion Language Models
 description: >-

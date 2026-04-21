@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fast Catch-Up, Late Switching: Optimal Batch Size Scheduling via Functional Scaling Laws
 description: >-

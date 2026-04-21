@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AgentMath: Empowering Mathematical Reasoning for Large Language Models via Tool-Augmented Agent
 description: >-
@@ -119,6 +119,6 @@ AgentMath-30B-A3B（仅3B激活参数）在AIME24/25上超越OpenAI-o3-mini (87.
 - [Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models](../../ACL2025/llm_reasoning/chain-of-reasoning_towards_unified_mathematical_reasoning_in_large_language_mode.md)
 - [Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models via a Multi-Paradigm Perspective](../../ACL2025/llm_reasoning/chain_of_reasoning_unified_math.md)
 - [Safe: Enhancing Mathematical Reasoning in Large Language Models via Retrospective Step-aware Formal Verification](../../ACL2025/llm_reasoning/safe_math_reasoning.md)
-- [Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention](towards_safe_reasoning_in_large_reasoning_models_via_corrective_intervention.md)
+- [Conflict-Aware Fusion: Resolving Logic Inertia in Large Language Models via Structured Cognitive Priors](conflict-aware_fusion_resolving_logic_inertia_in_large_language_models_via_struc.md)
 
 <!-- RELATED:END -->

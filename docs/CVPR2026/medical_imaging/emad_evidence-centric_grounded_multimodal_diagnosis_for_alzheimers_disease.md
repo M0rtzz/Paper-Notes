@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EMAD: Evidence-Centric Grounded Multimodal Diagnosis for Alzheimer's Disease
 description: >-

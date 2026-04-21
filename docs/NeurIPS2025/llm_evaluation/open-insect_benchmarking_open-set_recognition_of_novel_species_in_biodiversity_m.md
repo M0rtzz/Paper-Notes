@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Open-Insect: Benchmarking Open-Set Recognition of Novel Species in Biodiversity Monitoring
 description: >-

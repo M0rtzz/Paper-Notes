@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Synonymous Variational Inference for Perceptual Image Compression
 description: >-
@@ -162,8 +162,8 @@ $$\mathcal{L}_{\mathcal{X}}^{(l)} = \mathbb{E}\left[-\lambda_r^{(l)} \log p_{\ha
 ## 相关论文
 
 - [Revisiting Unbiased Implicit Variational Inference](revisiting_unbiased_implicit_variational_inference.md)
-- [Least Squares Variational Inference](../../NeurIPS2025/optimization/least_squares_variational_inference.md)
 - [Brain-like Variational Inference](../../NeurIPS2025/optimization/brain-like_variational_inference.md)
+- [Least Squares Variational Inference](../../NeurIPS2025/optimization/least_squares_variational_inference.md)
 - [VIKING: Deep Variational Inference with Stochastic Projections](../../NeurIPS2025/optimization/viking_deep_variational_inference_with_stochastic_projections.md)
 - [NeuSymEA: Neuro-symbolic Entity Alignment via Variational Inference](../../NeurIPS2025/optimization/neuro-symbolic_entity_alignment_via_variational_inference.md)
 

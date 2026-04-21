@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Tracking and Understanding Object Transformations
 description: >-
@@ -116,9 +116,9 @@ TubeletGraph 是完全零样本的系统，无需训练。所有组件（SAM2.1-
 ## 相关论文
 
 - [General Compression Framework for Efficient Transformer Object Tracking](../../ICCV2025/video_understanding/general_compression_framework_for_efficient_transformer_object_tracking.md)
+- [OmniTrack: Omnidirectional Multi-Object Tracking](../../CVPR2025/video_understanding/omnidirectional_multi-object_tracking.md)
 - [MITracker: Multi-View Integration for Visual Object Tracking](../../CVPR2025/video_understanding/mitracker_multi-view_integration_for_visual_object_tracking.md)
 - [MUST: The First Dataset and Unified Framework for Multispectral UAV Single Object Tracking](../../CVPR2025/video_understanding/must_the_first_dataset_and_unified_framework_for_multispectral_uav_single_object.md)
-- [FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking](../../CVPR2025/video_understanding/fc-track_overlap-aware_post-association_correction_for_online_multi-object_track.md)
-- [4D-Bench: Benchmarking Multi-Modal Large Language Models for 4D Object Understanding](../../ICCV2025/video_understanding/4d-bench_benchmarking_multi-modal_large_language_models_for_4d_object_understand.md)
+- [VideoRefer Suite: Advancing Spatial-Temporal Object Understanding with Video LLM](../../CVPR2025/video_understanding/videorefer_suite_advancing_spatial-temporal_object_understanding_with_video_llm.md)
 
 <!-- RELATED:END -->

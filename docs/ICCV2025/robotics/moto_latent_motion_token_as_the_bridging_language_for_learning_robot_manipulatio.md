@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Moto: Latent Motion Token as the Bridging Language for Learning Robot Manipulation from Videos
 description: >-

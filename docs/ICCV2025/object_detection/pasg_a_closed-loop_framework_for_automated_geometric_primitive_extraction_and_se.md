@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PASG: A Closed-Loop Framework for Automated Geometric Primitive Extraction and Semantic Anchoring in Robotic Manipulation
 description: >-

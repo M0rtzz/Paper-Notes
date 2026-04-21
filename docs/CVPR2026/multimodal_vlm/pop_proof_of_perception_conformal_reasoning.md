@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Proof-of-Perception: Certified Tool-Using Multimodal Reasoning with Compositional Conformal Guarantees
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TextShield-R1: Reinforced Reasoning for Tampered Text Detection
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Understanding Sharpness Dynamics in NN Training with a Minimalist Example: The Effects of Dataset Difficulty, Depth, Stochasticity, and More
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GuessArena: Guess Who I Am? A Self-Adaptive Framework for Evaluating LLMs in Domain-Specific Knowledge and Reasoning
 description: >-

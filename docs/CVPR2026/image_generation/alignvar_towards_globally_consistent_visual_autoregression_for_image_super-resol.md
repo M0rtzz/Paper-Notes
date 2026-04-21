@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AlignVAR: Towards Globally Consistent Visual Autoregression for Image Super-Resolution
 description: >-

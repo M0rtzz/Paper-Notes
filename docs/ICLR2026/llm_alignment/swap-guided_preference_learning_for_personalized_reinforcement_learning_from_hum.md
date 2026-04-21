@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Swap-guided Preference Learning for Personalized RLHF (SPL)
 description: >-

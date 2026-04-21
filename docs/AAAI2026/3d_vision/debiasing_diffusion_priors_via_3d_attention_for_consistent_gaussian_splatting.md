@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Debiasing Diffusion Priors via 3D Attention for Consistent Gaussian Splatting
 description: >-
@@ -173,6 +173,6 @@ HAM 针对 UNet 不同层对视角偏好的异质性进行精细调制：
 - [3D-Free Meets 3D Priors: Novel View Synthesis from a Single Image with Pretrained Diffusion Guidance](3d-free_meets_3d_priors_novel_view_synthesis_from_a_single_image_with_pretrained.md)
 - [Gaussian Blending: Rethinking Alpha Blending in 3D Gaussian Splatting](gaussian_blending_rethinking_alpha_blending_in_3d_gaussian_splatting.md)
 - [RI3D: Few-Shot Gaussian Splatting With Repair and Inpainting Diffusion Priors](../../ICCV2025/3d_vision/ri3d_few-shot_gaussian_splatting_with_repair_and_inpainting_diffusion_priors.md)
-- [3D Gaussian Splatting with Self-Constrained Priors for High Fidelity Surface Reconstruction](../../CVPR2026/3d_vision/3d_gaussian_splatting_with_self-constrained_priors_for_high_fidelity_surface_rec.md)
+- [FantasyStyle: Controllable Stylized Distillation for 3D Gaussian Splatting](fantasystyle_controllable_stylized_distillation_for_3d_gaussian_splatting.md)
 
 <!-- RELATED:END -->

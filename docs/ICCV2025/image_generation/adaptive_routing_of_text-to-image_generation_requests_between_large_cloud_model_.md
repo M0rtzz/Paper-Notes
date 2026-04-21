@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adaptive Routing of Text-to-Image Generation Requests Between Large Cloud Models and Small Edge Models
 description: >-

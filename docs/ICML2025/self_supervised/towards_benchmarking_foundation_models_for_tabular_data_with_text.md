@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Benchmarking Foundation Models for Tabular Data With Text
 description: >-

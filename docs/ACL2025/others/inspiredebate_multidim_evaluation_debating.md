@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] InspireDebate: Multi-Dimensional Evaluation-Guided Reasoning for Debating
 description: >-

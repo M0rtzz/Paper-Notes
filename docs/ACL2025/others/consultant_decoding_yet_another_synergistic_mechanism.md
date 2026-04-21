@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Consultant Decoding: Yet Another Synergistic Mechanism
 description: >-

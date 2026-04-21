@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gradient Variance Reveals Failure Modes in Flow-Based Generative Models
 description: >-

@@ -2,14 +2,15 @@
 title: >-
   [论文解读] MoEdit: On Learning Quantity Perception for Multi-Object Image Editing
 description: >-
-  [CVPR 2025][image editing] 提出 MoEdit 框架，通过 Feature Compensation (FeCom) 模块补偿 CLIP 编码的属性混淆和 Quantity Attention (QTTN) 模块实现无辅助工具的数量感知多物体图像编辑，在数量一致性和视觉质量上达到 SOTA。
+  [CVPR 2025][医学图像][multi-object editing] 提出无辅助工具的多物体图像编辑框架 MoEdit，通过 FeCom 模块补偿 CLIP 编码中物体属性的交叉混淆、QTTN 模块注入数量感知到 U-Net，实现编辑前后物体数量一致且属性互不干扰。
 tags:
   - CVPR 2025
-  - image editing
-  - multi-object
+  - 医学图像
+  - multi-object editing
   - quantity perception
-  - Stable Diffusion
-  - attention mechanism
+  - feature compensation
+  - 扩散模型
+  - SDXL
 ---
 
 # MoEdit: On Learning Quantity Perception for Multi-Object Image Editing
@@ -137,9 +138,9 @@ $$V_{new} = \text{Softmax}(\frac{Q_z K_g^T}{\sqrt{d_k}}) V_g$$
 ## 相关论文
 
 - [FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields](ffacenerf_few-shot_face_editing_in_neural_radiance_fields.md)
-- [GIIM: Graph-based Learning of Inter- and Intra-view Dependencies for Multi-view Medical Image Diagnosis](giim_graph-based_learning_of_inter-_and_intra-view_dependencies_for_multi-view_m.md)
-- [Multi-modal Vision Pre-training for Medical Image Analysis (BrainMVP)](multi-modal_vision_pre-training_for_medical_image_analysis.md)
 - [RadEdit: Stress-Testing Biomedical Vision Models via Diffusion Image Editing](../../ECCV2024/medical_imaging/radedit_stress-testing_biomedical_vision_models_via_diffusion_image_editing.md)
-- [Exploring and Leveraging Class Vectors for Classifier Editing](../../NeurIPS2025/medical_imaging/exploring_and_leveraging_class_vectors_for_classifier_editing.md)
+- [ZoomLDM: Latent Diffusion Model for Multi-Scale Image Generation](zoomldm_latent_diffusion_model_for_multi-scale_image_generation.md)
+- [Multi-modal Vision Pre-training for Medical Image Analysis (BrainMVP)](multi-modal_vision_pre-training_for_medical_image_analysis.md)
+- [GIIM: Graph-based Learning of Inter- and Intra-view Dependencies for Multi-view Medical Image Diagnosis](giim_graph-based_learning_of_inter-_and_intra-view_dependencies_for_multi-view_m.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Supernova Event Dataset: Interpreting Large Language Models' Personality through Critical Event Analysis
 description: >-

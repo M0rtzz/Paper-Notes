@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Internal Value Alignment in Large Language Models through Controlled Value Vector Activation
 description: >-

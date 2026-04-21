@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Cross-Hand Policies of High-DOF Reaching and Grasping
 description: >-

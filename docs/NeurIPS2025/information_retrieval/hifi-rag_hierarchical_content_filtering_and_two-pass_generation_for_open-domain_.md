@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HiFi-RAG: Hierarchical Content Filtering and Two-Pass Generation for Open-Domain RAG
 description: >-

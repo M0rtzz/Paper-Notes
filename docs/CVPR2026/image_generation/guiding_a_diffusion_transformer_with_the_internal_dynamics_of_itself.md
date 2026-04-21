@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Guiding a Diffusion Transformer with the Internal Dynamics of Itself
 description: >-

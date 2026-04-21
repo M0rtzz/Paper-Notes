@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ScaleDreamer: Scalable Text-to-3D Synthesis with Asynchronous Score Distillation
 description: >-
@@ -143,10 +143,10 @@ VSD在10万提示下完全崩溃（R@1=0.000），ASD保持有效。SDS在3DConv
 
 ## 相关论文
 
-- [Editable Image Elements for Controllable Synthesis](editable_image_elements_for_controllable_synthesis.md)
 - [Learning Differentially Private Diffusion Models via Stochastic Adversarial Distillation](learning_differentially_private_diffusion_models_via_stochastic_adversarial_dist.md)
 - [ShapeFusion: A 3D Diffusion Model for Localized Shape Editing](shapefusion_a_3d_diffusion_model_for_localized_shape_editing.md)
-- [InfGen: A Resolution-Agnostic Paradigm for Scalable Image Synthesis](../../ICCV2025/image_generation/infgen_a_resolution-agnostic_paradigm_for_scalable_image_synthesis.md)
-- [Scalable Group Choreography via Variational Phase Manifold Learning](scalable_group_choreography_via_variational_phase_manifold_learning.md)
+- [Editable Image Elements for Controllable Synthesis](editable_image_elements_for_controllable_synthesis.md)
+- [Ponymation: Learning Articulated 3D Animal Motions from Unlabeled Online Videos](ponymation_learning_articulated_3d_animal_motions_from_unlabeled_online_videos.md)
+- [Rejection Sampling IMLE: Designing Priors for Better Few-Shot Image Synthesis](rejection_sampling_imle_designing_priors_for_better_few-shot_image_synthesis.md)
 
 <!-- RELATED:END -->

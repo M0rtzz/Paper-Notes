@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Pixel2Phys: Distilling Governing Laws from Visual Dynamics
 description: >-
@@ -136,6 +136,6 @@ Variable Agent 中的 Representation-level Tool 通过物理信息自编码器�
 - [Draft and Refine with Visual Experts](draft_and_refine_with_visual_experts.md)
 - [Language Models Can Explain Visual Features via Steering](language_models_can_explain_visual_features_via_steering.md)
 - [On the Effect of Uncertainty on Layer-wise Inference Dynamics](../../ICML2025/interpretability/on_the_effect_of_uncertainty_on_layer-wise_inference_dynamics.md)
-- [EmoVerse: A MLLMs-Driven Emotion Representation Dataset for Interpretable Visual Emotion Analysis](emoverse_mllm_emotion_representation_dataset.md)
+- [DINO-QPM: Adapting Visual Foundation Models for Globally Interpretable Image Classification](dino-qpm_adapting_visual_foundation_models_for_globally_interpretable_image_clas.md)
 
 <!-- RELATED:END -->

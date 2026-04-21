@@ -124,6 +124,6 @@ UniRain 在所有四种退化类型和所有真实世界基准上均以显著优
 - [Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
 - [UCAN: Unified Convolutional Attention Network for Expansive Receptive Fields in Lightweight Super-Resolution](ucan_unified_convolutional_attention_network_for_expansive_receptive_fields_in_l.md)
 - [MRO: Enhancing Reasoning in Diffusion Language Models via Multi-Reward Optimization](../../NeurIPS2025/image_restoration/mro_enhancing_reasoning_in_diffusion_language_models_via_multi-reward_optimizati.md)
-- [SD-PSFNet: Sequential and Dynamic Point Spread Function Network for Image Deraining](../../AAAI2026/image_restoration/sd-psfnet_sequential_and_dynamic_point_spread_function_netwo.md)
+- [URWKV: Unified RWKV Model with Multi-State Perspective for Low-Light Image Restoration](../../CVPR2025/image_restoration/urwkv_unified_rwkv_model_with_multi-state_perspective_for_low-light_image_restor.md)
 
 <!-- RELATED:END -->

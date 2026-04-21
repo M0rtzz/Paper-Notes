@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SoPE: Spherical Coordinate-Based Positional Embedding for Enhancing Spatial Perception of 3D LVLMs
 description: >-
@@ -173,10 +173,10 @@ SoPE 作为连接器级别的位置编码模块，以即插即用的方式替换
 
 ## 相关论文
 
+- [SphereUFormer: A U-Shaped Transformer for Spherical 360 Perception](../../CVPR2025/3d_vision/sphereuformer_a_u-shaped_transformer_for_spherical_360_perception.md)
 - [PE3R: Perception-Efficient 3D Reconstruction](pe3r_perception-efficient_3d_reconstruction.md)
-- [RoCo-Sim: Enhancing Roadside Collaborative Perception through Foreground Simulation](../../ICCV2025/3d_vision/roco-sim_enhancing_roadside_collaborative_perception_through_foreground_simulati.md)
 - [SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection](span_spatial-projection_alignment_for_monocular_3d_object_detection.md)
 - [DMAligner: Enhancing Image Alignment via Diffusion Model Based View Synthesis](dmaligner_enhancing_image_alignment_via_diffusion_model_based_view_synthesis.md)
-- [Efficient Hybrid SE(3)-Equivariant Visuomotor Flow Policy via Spherical Harmonics](efficient_hybrid_se3-equivariant_visuomotor_flow_policy_via_spherical_harmonics_.md)
+- [RoCo-Sim: Enhancing Roadside Collaborative Perception through Foreground Simulation](../../ICCV2025/3d_vision/roco-sim_enhancing_roadside_collaborative_perception_through_foreground_simulati.md)
 
 <!-- RELATED:END -->

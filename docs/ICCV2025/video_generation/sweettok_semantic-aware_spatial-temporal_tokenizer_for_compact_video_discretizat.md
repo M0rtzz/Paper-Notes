@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] SweetTok: Semantic-Aware Spatial-Temporal Tokenizer for Compact Video Discretization
 description: >-
-  [ICCV 2025][视频理解][视频离散化] 提出 SweetTok 视频 tokenizer，通过解耦查询自编码器（DQAE）分离空间和时间信息压缩、运动增强语言码本（MLC）按词性分配码字，在仅使用 25% token 数量的情况下，rFVD 改善 42.8%，gFVD 改善 15.1%，实现压缩率与重建保真度的最佳平衡。
+  [ICCV 2025][视频离散化] 提出 SweetTok 视频 tokenizer，通过解耦查询自编码器（DQAE）分离空间和时间信息压缩、运动增强语言码本（MLC）按词性分配码字，在仅使用 25% token 数量的情况下，rFVD 改善 42.8%，gFVD 改善 15.1%，实现压缩率与重建保真度的最佳平衡。
 tags:
   - ICCV 2025
-  - 视频理解
   - 视频离散化
   - 空间-时间解耦
   - 向量量化
@@ -187,6 +186,6 @@ SweetTok 包含两个核心组件：
 - [TEAR: Temporal-aware Automated Red-teaming for Text-to-Video Models](../../CVPR2026/video_generation/tear_temporal-aware_automated_red-teaming_for_text-to-video_models.md)
 - [Disentangled World Models: Learning to Transfer Semantic Knowledge from Distracting Videos for Reinforcement Learning](disentangled_world_models_learning_to_transfer_semantic_knowledge_from_distracti.md)
 - [MIMO: Controllable Character Video Synthesis with Spatial Decomposed Modeling](../../CVPR2025/video_generation/mimo_controllable_character_video_synthesis_with_spatial_decomposed_modeling.md)
-- [AutoCut: End-to-end Advertisement Video Editing Based on Multimodal Discretization and Controllable Generation](../../CVPR2026/video_generation/autocut_end-to-end_advertisement_video_editing_based_on_multimodal_discretizatio.md)
+- [Semantic Satellite Communications for Synchronized Audiovisual Reconstruction](../../CVPR2025/video_generation/semantic_satellite_communications_for_synchronized_audiovisual_reconstruction.md)
 
 <!-- RELATED:END -->

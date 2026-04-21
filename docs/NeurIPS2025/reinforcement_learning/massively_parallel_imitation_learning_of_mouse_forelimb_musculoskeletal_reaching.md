@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Massively Parallel Imitation Learning of Mouse Forelimb Musculoskeletal Reaching Dynamics
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework
 description: >-
@@ -130,10 +130,10 @@ tags:
 
 ## 相关论文
 
-- [LycheeDecode: Accelerating Long-Context LLM Inference via Hybrid-Head Sparse Decoding](lycheedecode_accelerating_long-context_llm_inference_via_hybrid-head_sparse_deco.md)
+- [LycheeDecode: Accelerating Long-Context LLM Inference via Hybrid-Head Sparse Decoding](lycheedecode_accelerating_long-context_llm_inference_via_hybrid_speculative_deco.md)
 - [DISC: Dynamic Decomposition Improves LLM Inference Scaling](../../NeurIPS2025/llm_efficiency/disc_dynamic_decomposition_improves_llm_inference_scaling.md)
-- [Q-RAG: Long Context Multi-Step Retrieval via Value-Based Embedder Training](q_rag_long_context_multi_step_retrieval.md)
 - [SwingArena: Adversarial Programming Arena for Long-context GitHub Issue Solving](swingarena_competitive_programming_arena_for_long-context_github_issue_solving.md)
+- [Q-RAG: Long Context Multi-Step Retrieval via Value-Based Embedder Training](q_rag_long_context_multi_step_retrieval.md)
 - [Token-level Data Selection for Safe LLM Fine-tuning](token-level_data_selection_for_safe_llm_fine-tuning.md)
 
 <!-- RELATED:END -->

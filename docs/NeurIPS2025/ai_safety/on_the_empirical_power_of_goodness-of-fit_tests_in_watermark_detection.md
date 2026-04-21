@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On the Empirical Power of Goodness-of-Fit Tests in Watermark Detection
 description: >-

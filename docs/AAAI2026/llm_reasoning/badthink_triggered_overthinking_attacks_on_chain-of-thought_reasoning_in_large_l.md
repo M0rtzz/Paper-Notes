@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BadThink: Triggered Overthinking Attacks on Chain-of-Thought Reasoning in Large Language Models
 description: >-
@@ -130,6 +130,6 @@ BadThink 分三步：(1) 构建冗长推理模板 $R^*$（通过 LLM 迭代优�
 - [The Curious Case of Analogies: Investigating Analogical Reasoning in Large Language Models](the_curious_case_of_analogies_investigating_analogical_reasoning_in_large_langua.md)
 - [Harnessing Chain-of-Thought Reasoning in Multimodal Large Language Models for Face Anti-Spoofing](../../CVPR2026/llm_reasoning/harnessing_chain-of-thought_reasoning_in_multimodal_large_language_models_for_fa.md)
 - [ThinkSound: Chain-of-Thought Reasoning in Multimodal Large Language Models for Audio Generation and Editing](../../NeurIPS2025/llm_reasoning/thinksound_chain-of-thought_reasoning_in_multimodal_large_language_models_for_au.md)
-- [Text-to-Scene with Large Reasoning Models](text-to-scene_with_large_reasoning_models.md)
+- [Corvid: Improving Multimodal Large Language Models Towards Chain-of-Thought Reasoning](../../ICCV2025/llm_reasoning/corvid_improving_multimodal_large_language_models_towards_ch.md)
 
 <!-- RELATED:END -->

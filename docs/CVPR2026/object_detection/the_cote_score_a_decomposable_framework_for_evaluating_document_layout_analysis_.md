@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The COTe Score: A Decomposable Framework for Evaluating Document Layout Analysis Models
 description: >-
@@ -140,8 +140,8 @@ $$\text{COTe} = \mathcal{C} - \mathcal{O} - \mathcal{T}$$
 ## 相关论文
 
 - [XIFBench: Evaluating Large Language Models on Multilingual Instruction Following](../../NeurIPS2025/object_detection/xifbench_evaluating_large_language_models_on_multilingual_instruction_following.md)
-- [Outlier Gradient Analysis: Efficiently Identifying Detrimental Training Samples for Deep Learning Models](../../ICML2025/object_detection/outlier_gradient_analysis_efficiently_identifying_detrimental_training_samples_f.md)
 - [Evaluating Few-Shot Pill Recognition Under Visual Domain Shift](evaluating_few-shot_pill_recognition_under_visual_domain_shift.md)
+- [Outlier Gradient Analysis: Efficiently Identifying Detrimental Training Samples for Deep Learning Models](../../ICML2025/object_detection/outlier_gradient_analysis_efficiently_identifying_detrimental_training_samples_f.md)
 - [CompAgent: An Agentic Framework for Visual Compliance Verification](compagent_an_agentic_framework_for_visual_compliance_verification.md)
 - [A Theoretical Analysis of Detecting Large Model-Generated Time Series](../../AAAI2026/object_detection/a_theoretical_analysis_of_detecting_large_model-generated_time_series.md)
 

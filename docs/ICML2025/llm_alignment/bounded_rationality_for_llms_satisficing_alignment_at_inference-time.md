@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bounded Rationality for LLMs: Satisficing Alignment at Inference-Time
 description: >-

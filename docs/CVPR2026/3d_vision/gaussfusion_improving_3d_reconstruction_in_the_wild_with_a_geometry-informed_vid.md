@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GaussFusion: Improving 3D Reconstruction in the Wild with A Geometry-Informed Video Generator
 description: >-

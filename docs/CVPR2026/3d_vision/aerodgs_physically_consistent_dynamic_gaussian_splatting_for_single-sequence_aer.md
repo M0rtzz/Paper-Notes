@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AeroDGS: Physically Consistent Dynamic Gaussian Splatting for Single-Sequence Aerial 4D Reconstruction
 description: >-

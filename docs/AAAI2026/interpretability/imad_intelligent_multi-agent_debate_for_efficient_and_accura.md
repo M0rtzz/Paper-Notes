@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] iMAD: Intelligent Multi-Agent Debate for Efficient and Accurate LLM Inference
 description: >-

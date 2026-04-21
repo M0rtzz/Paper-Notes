@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LongVideo-R1: Smart Navigation for Low-cost Long Video Understanding
 description: >-

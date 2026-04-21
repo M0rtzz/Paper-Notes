@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RFEval: Benchmarking Reasoning Faithfulness under Counterfactual Reasoning Intervention in Large Reasoning Models
 description: >-

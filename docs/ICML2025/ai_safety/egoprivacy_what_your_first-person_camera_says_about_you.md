@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EgoPrivacy: What Your First-Person Camera Says About You?
 description: >-

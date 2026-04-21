@@ -1,7 +1,16 @@
-﻿---
-title: "Iterative Predictor-Critic Code Decoding for Real-World Image Dehazing"
-description: "IPC-Dehaze提出迭代式Predictor-Critic码本解码框架用于真实世界图像去雾，通过Code-Critic评估码本序列间关联性实现由易到难的渐进去雾"
-tags: ["图像去雾", "VQGAN", "码本先验", "迭代解码", "图像复原"]
+---
+title: >-
+  [论文解读] Iterative Predictor-Critic Code Decoding for Real-World Image Dehazing
+description: >-
+  [CVPR 2025][图像恢复][真实世界去雾] IPC-Dehaze 提出了一种基于 VQGAN 码本先验的迭代式 Predictor-Critic 解码框架，通过 Code-Critic 评估码本序列间的相互关联来决定哪些码应保留或重采样，实现了从清晰区域到密集雾区的由易到难渐进去雾，在真实场景中显著超越 SOTA。
+tags:
+  - CVPR 2025
+  - 图像恢复
+  - 真实世界去雾
+  - 码本先验
+  - 迭代解码
+  - GAN
+  - Predictor-Critic
 ---
 
 # Iterative Predictor-Critic Code Decoding for Real-World Image Dehazing

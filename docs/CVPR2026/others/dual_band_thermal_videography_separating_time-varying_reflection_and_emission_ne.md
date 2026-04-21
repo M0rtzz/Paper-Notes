@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dual-Band Thermal Videography: Separating Time-Varying Reflection and Emission Near Ambient Conditions
 description: >-
@@ -183,6 +183,6 @@ $$\arg\min \; \gamma_1 \mathcal{L}_{smooth} + \gamma_2 \mathcal{L}_{Huber} + \ga
 - [Neural Collapse in Test-Time Adaptation](neural_collapse_in_test-time_adaptation.md)
 - [Thermal Polarimetric Multi-view Stereo](../../ICCV2025/others/thermal_polarimetric_multi-view_stereo.md)
 - [Depth-Synergized Mamba Meets Memory Experts for All-Day Image Reflection Separation](../../AAAI2026/others/depth-synergized_mamba_meets_memory_experts_for_all-day_image_reflection_separat.md)
-- [Action2Sound: Ambient-Aware Generation of Action Sounds from Egocentric Videos](../../ECCV2024/others/action2sound_ambientaware_generation_of_action_sounds_from_e.md)
+- [Neural Network for Simulating Radio Emission from Extensive Air Showers](../../NeurIPS2025/others/neural_network_for_simulating_radio_emission_from_extensive_air_showers.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Aristotle: Mastering Logical Reasoning with A Logic-Complete Decompose-Search-Resolve Framework
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Strassen Attention, Split VC Dimension and Compositionality in Transformers
 description: >-

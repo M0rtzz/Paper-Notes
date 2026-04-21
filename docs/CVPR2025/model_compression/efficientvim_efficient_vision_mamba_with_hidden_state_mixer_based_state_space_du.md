@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EfficientViM: Efficient Vision Mamba with Hidden State Mixer based State Space Duality
 description: >-
@@ -121,8 +121,8 @@ vs Vision Mamba对比：EfficientViM-M3比ViM-Ti (77.2%) 高0.7%且快2.7倍，�
 
 - [Mamba-Adaptor: State Space Model Adaptor for Visual Recognition](mamba-adaptor_state_space_model_adaptor_for_visual_recognition.md)
 - [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](../../ACL2025/model_compression/state_offset_tuning_ssm_peft.md)
+- [MambaIC: State Space Models for High-Performance Learned Image Compression](mambaic_state_space_models_for_high-performance_learned_image_compression.md)
 - [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/model_compression/parameter-efficient_fine-tuning_of_state_space_models.md)
 - [OuroMamba: A Data-Free Quantization Framework for Vision Mamba](../../ICCV2025/model_compression/ouromamba_a_data-free_quantization_framework_for_vision_mamba.md)
-- [MambaIC: State Space Models for High-Performance Learned Image Compression](mambaic_state_space_models_for_high-performance_learned_image_compression.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TestCase-Eval: A Systematic Evaluation of Fault Coverage and Exposure
 description: >-
@@ -136,9 +136,9 @@ TestCase-Eval包含两个核心评测任务：(1) **Fault Coverage**: 给定题�
 ## 相关论文
 
 - [Can LLMs Identify Critical Limitations within Scientific Research? A Systematic Evaluation on AI Research Papers](can_llms_identify_critical_limitations_within_scientific_research_a_systematic_e.md)
-- [Systematic Generalization in Language Models Scales with Information Entropy](systematic_generalization_in_language_models_scales_with_information_entropy.md)
-- [A Systematic Study of Compositional Syntactic Transformer Language Models](a_systematic_study_of_compositional_syntactic_transformer_language_models.md)
 - [Exposure-slot: Exposure-centric Representations Learning with Slot-in-Slot Attention](../../CVPR2025/llm_nlp/exposure-slot_exposure-centric_representations_learning_with_slot-in-slot_attent.md)
+- [A Systematic Study of Compositional Syntactic Transformer Language Models](a_systematic_study_of_compositional_syntactic_transformer_language_models.md)
+- [Systematic Generalization in Language Models Scales with Information Entropy](systematic_generalization_in_language_models_scales_with_information_entropy.md)
 - [SkillVerse: Assessing and Enhancing LLMs with Tree Evaluation](skillverse_tree_eval.md)
 
 <!-- RELATED:END -->

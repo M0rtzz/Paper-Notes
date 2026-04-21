@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Online Mixture of Experts: No-Regret Learning for Optimal Collective Decision-Making
 description: >-

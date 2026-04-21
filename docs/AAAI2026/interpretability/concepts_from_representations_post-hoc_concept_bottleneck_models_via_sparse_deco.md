@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Concepts from Representations: Post-hoc Concept Bottleneck Models via Sparse Decomposition of Visual Representations
 description: >-
@@ -198,7 +198,7 @@ $$\mathbf{I}_i = \hat{\mathbf{I}}_i + \epsilon_i = \sum_{j=1}^m w_j^i \mathbf{c}
 - [Flexible Concept Bottleneck Model](flexible_concept_bottleneck_model.md)
 - [Concepts' Information Bottleneck Models](../../ICLR2026/interpretability/concepts_information_bottleneck_models.md)
 - [Towards Faithful Multimodal Concept Bottleneck Models](../../CVPR2026/interpretability/towards_faithful_multimodal_concept_bottleneck_models.md)
-- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](../../CVPR2025/interpretability/language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
 - [There Was Never a Bottleneck in Concept Bottleneck Models](../../ICLR2026/interpretability/there_was_never_a_bottleneck_in_concept_bottleneck_models.md)
+- [Probing Preference Representations: A Multi-Dimensional Evaluation and Analysis Method for Reward Models](probing_preference_representations_a_multi-dimensional_evaluation_and_analysis_m.md)
 
 <!-- RELATED:END -->

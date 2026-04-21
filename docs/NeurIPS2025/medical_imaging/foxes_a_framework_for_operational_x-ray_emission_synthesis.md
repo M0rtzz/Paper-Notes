@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FOXES: A Framework For Operational X-ray Emission Synthesis
 description: >-

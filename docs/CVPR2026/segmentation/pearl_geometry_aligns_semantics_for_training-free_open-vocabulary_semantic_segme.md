@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PEARL: Geometry Aligns Semantics for Training-Free Open-Vocabulary Semantic Segmentation
 description: >-

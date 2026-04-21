@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Combining the Best of Both Worlds: A Method for Hybrid NMT and LLM Translation
 description: >-
@@ -140,6 +140,6 @@ MBR集成方法需要从多个模型采样多条候选翻译再选最优，推�
 - [Lost in Translation, Found in Context: Sign Language Translation with Contextual Cues](../../CVPR2025/llm_nlp/lost_in_translation_found_in_context_sign_language_translation_with_contextual_c.md)
 - [HyGenar: An LLM-Driven Hybrid Genetic Algorithm for Few-Shot Grammar Generation](hygenar_an_llm-driven_hybrid_genetic_algorithm_for_few-shot_grammar_generation.md)
 - [BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute](../../ICML2025/llm_nlp/best-route_adaptive_llm_routing_with_test-time_optimal_compute.md)
-- [InfiniSST: Simultaneous Translation of Unbounded Speech with Large Language Model](infinisst_simultaneous_translation_of_unbounded_speech_with_large_language_model.md)
+- [Which of These Best Describes Multiple Choice Evaluation with LLMs?](multiple_choice_eval.md)
 
 <!-- RELATED:END -->

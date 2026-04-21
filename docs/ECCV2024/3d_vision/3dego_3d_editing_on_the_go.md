@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3DEgo: 3D Editing on the Go!
 description: >-
@@ -114,6 +114,6 @@ $$\mathcal{L}_T = \lambda_{rgb}\mathcal{L}_{rgb} + \lambda_{KEA}\mathcal{L}_{KEA
 - [DATENeRF: Depth-Aware Text-based Editing of NeRFs](datenerf_depth-aware_text-based_editing_of_nerfs.md)
 - [Texture-GS: Disentangling the Geometry and Texture for 3D Gaussian Splatting Editing](texture-gs_disentangling_the_geometry_and_texture_for_3d_gaussian_splatting_edit.md)
 - [GO-N3RDet: Geometry Optimized NeRF-enhanced 3D Object Detector](../../CVPR2025/3d_vision/go-n3rdet_geometry_optimized_nerf-enhanced_3d_object_detector.md)
-- [3D Mesh Editing using Masked LRMs](../../ICCV2025/3d_vision/3d_mesh_editing_using_masked_lrms.md)
+- [PrEditor3D: Fast and Precise 3D Shape Editing](../../CVPR2025/3d_vision/preditor3d_fast_and_precise_3d_shape_editing.md)
 
 <!-- RELATED:END -->

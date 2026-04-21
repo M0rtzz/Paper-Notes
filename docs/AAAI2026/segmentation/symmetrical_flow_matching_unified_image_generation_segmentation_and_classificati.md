@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Symmetrical Flow Matching: Unified Image Generation, Segmentation, and Classification with Score-Based Generative Models
 description: >-

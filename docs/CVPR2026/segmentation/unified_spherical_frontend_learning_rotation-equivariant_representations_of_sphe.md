@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unified Spherical Frontend: Learning Rotation-Equivariant Representations of Spherical Images from Any Camera
 description: >-
@@ -142,7 +142,7 @@ USF pipeline 包含六个阶段：(i) 将平面图像与镜头法线图（lens n
 - [REL-SF4PASS: Panoramic Semantic Segmentation with REL Depth Representation and Spherical Fusion](rel-sf4pass_panoramic_semantic_segmentation_with_rel_depth_representation_and_sp.md)
 - [FoV-Net: Rotation-Invariant CAD B-rep Learning via Field-of-View Ray Casting](fov-net_rotation-invariant_cad_b-rep_learning_via_field-of-view_ray_casting.md)
 - [SAP: Segment Any 4K Panorama](sap_segment_any_4k_panorama.md)
-- [SPAR: Single-Pass Any-Resolution ViT for Open-Vocabulary Segmentation](spar_single-pass_any-resolution_vit_for_open-vocabulary_segmentation.md)
 - [3M-TI: High-Quality Mobile Thermal Imaging via Calibration-free Multi-Camera Cross-Modal Diffusion](3m-ti_high-quality_mobile_thermal_imaging_via_calibration-free_multi-camera_cros.md)
+- [SPAR: Single-Pass Any-Resolution ViT for Open-Vocabulary Segmentation](spar_single-pass_any-resolution_vit_for_open-vocabulary_segmentation.md)
 
 <!-- RELATED:END -->

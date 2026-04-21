@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NeurIPT: Foundation Model for Neural Interfaces
 description: >-

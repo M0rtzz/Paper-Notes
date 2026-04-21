@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TTS-VAR: A Test-Time Scaling Framework for Visual Auto-Regressive Generation
 description: >-

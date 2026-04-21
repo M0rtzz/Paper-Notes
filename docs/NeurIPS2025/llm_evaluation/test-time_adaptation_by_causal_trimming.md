@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Test-Time Adaptation by Causal Trimming
 description: >-
@@ -127,7 +127,7 @@ TACT 在所有 BP-free 方法中全面领先，TACT-adapt 在所有方法中取�
 - [BATCLIP: Bimodal Online Test-Time Adaptation for CLIP](../../ICCV2025/llm_evaluation/batclip_bimodal_online_test-time_adaptation_for_clip.md)
 - [Distribution Alignment for Fully Test-Time Adaptation with Dynamic Online Data Streams](../../ECCV2024/llm_evaluation/distribution_alignment_for_fully_test-time_adaptation_with_dynamic_online_data_s.md)
 - [When and Where to Reset Matters for Long-Term Test-Time Adaptation](../../ICLR2026/llm_evaluation/when_and_where_to_reset_matters_for_long-term_test-time_adaptation.md)
+- [OODD: Test-time Out-of-Distribution Detection with Dynamic Dictionary](../../CVPR2025/llm_evaluation/oodd_test-time_out-of-distribution_detection_with_dynamic_dictionary.md)
 - [MoETTA: Test-Time Adaptation Under Mixed Distribution Shifts with MoE-LayerNorm](../../AAAI2026/llm_evaluation/moetta_test-time_adaptation_under_mixed_distribution_shifts_with_moe-layernorm.md)
-- [Time Travel is Cheating: Going Live with DeepFund for Real-Time Fund Investment Benchmarking](time_travel_is_cheating_going_live_with_deepfund_for_real-time_fund_investment_b.md)
 
 <!-- RELATED:END -->

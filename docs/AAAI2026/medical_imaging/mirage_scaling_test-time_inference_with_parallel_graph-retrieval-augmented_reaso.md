@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MIRAGE: Scaling Test-Time Inference with Parallel Graph-Retrieval-Augmented Reasoning Chains
 description: >-

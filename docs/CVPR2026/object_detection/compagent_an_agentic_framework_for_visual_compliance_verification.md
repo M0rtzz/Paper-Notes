@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CompAgent: An Agentic Framework for Visual Compliance Verification
 description: >-

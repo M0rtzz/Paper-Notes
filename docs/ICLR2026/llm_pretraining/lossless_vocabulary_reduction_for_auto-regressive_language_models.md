@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Lossless Vocabulary Reduction for Auto-Regressive Language Models
 description: >-

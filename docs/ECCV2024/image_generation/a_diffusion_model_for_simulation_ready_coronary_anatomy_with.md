@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Diffusion Model for Simulation Ready Coronary Anatomy with Morpho-skeletal Control
 description: >-

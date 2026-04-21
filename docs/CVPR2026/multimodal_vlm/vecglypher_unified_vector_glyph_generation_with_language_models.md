@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VecGlypher: Unified Vector Glyph Generation with Language Models
 description: >-

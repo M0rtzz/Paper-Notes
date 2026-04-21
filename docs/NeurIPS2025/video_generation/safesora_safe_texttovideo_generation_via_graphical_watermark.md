@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] Safe-Sora: Safe Text-to-Video Generation via Graphical Watermarking
 description: >-
-  [NeurIPS 2025][图像生成][图形水印] Safe-Sora 首次将**图形水印**（如logo图像）直接嵌入到视频生成管线中，通过分层粗到细自适应匹配将水印patch分配到视觉最相似的帧和区域，并设计3D小波变换增强Mamba架构实现时空融合，在视频质量（FVD 3.77 vs 次优154.35）和水印保真度上大幅超越所有基线。
+  [NeurIPS 2025][图形水印] Safe-Sora 首次将**图形水印**（如logo图像）直接嵌入到视频生成管线中，通过分层粗到细自适应匹配将水印patch分配到视觉最相似的帧和区域，并设计3D小波变换增强Mamba架构实现时空融合，在视频质量（FVD 3.77 vs 次优154.35）和水印保真度上大幅超越所有基线。
 tags:
   - NeurIPS 2025
-  - 图像生成
   - 图形水印
   - 视频生成
   - Mamba
@@ -150,7 +149,7 @@ FVD从次优的154.35降到3.77（**降低97.6%**），水印PSNR提升4.5dB+，
 - [Foresight: Adaptive Layer Reuse for Accelerated and High-Quality Text-to-Video Generation](foresight_adaptive_layer_reuse_for_accelerated_and_highquali.md)
 - [STiV: Scalable Text and Image Conditioned Video Generation](../../ICCV2025/video_generation/stiv_scalable_text_and_image_conditioned_video_generation.md)
 - [Evaluating Text-to-Visual Generation with Image-to-Text Generation](../../ECCV2024/video_generation/evaluating_text-to-visual_generation_with_image-to-text_generation.md)
-- [BadVideo: Stealthy Backdoor Attack against Text-to-Video Generation](../../ICCV2025/video_generation/badvideo_stealthy_backdoor_attack_against_text-to-video_generation.md)
+- [TransPixeler: Advancing Text-to-Video Generation with Transparency](../../CVPR2025/video_generation/transpixeler_advancing_text-to-video_generation_with_transparency.md)
 - [Identity-Preserving Text-to-Video Generation by Frequency Decomposition](../../CVPR2025/video_generation/identity-preserving_text-to-video_generation_by_frequency_decomposition.md)
 
 <!-- RELATED:END -->

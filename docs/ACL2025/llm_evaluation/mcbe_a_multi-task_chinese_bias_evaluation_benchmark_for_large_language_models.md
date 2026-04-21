@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] McBE: A Multi-task Chinese Bias Evaluation Benchmark for Large Language Models
 description: >-

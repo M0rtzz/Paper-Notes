@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AFUNet: Cross-Iterative Alignment-Fusion Synergy for HDR Reconstruction via Deep Unfolding Paradigm
 description: >-

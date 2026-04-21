@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Eyes Wide Open: Ego Proactive Video-LLM for Streaming Video
 description: >-

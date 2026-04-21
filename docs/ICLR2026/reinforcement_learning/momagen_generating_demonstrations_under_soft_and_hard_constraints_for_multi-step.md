@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MoMaGen: Generating Demonstrations under Soft and Hard Constraints for Multi-Step Bimanual Mobile Manipulation
 description: >-
@@ -168,8 +168,8 @@ D1 随机化下数据量增加带来显著性能提升（覆盖更大的状态-�
 ## 相关论文
 
 - [Learning Dynamics under Environmental Constraints via Measurement-Induced Bundle Structures](../../ICML2025/reinforcement_learning/learning_dynamics_under_environmental_constraints_via_measurement-induced_bundle.md)
-- [ReFORM: Reflected Flows for On-support Offline RL via Noise Manipulation](reform_reflected_flows_for_on-support_offline_rl_via_noise_manipulation.md)
 - [Robust Deep Reinforcement Learning against Adversarial Behavior Manipulation](robust_deep_reinforcement_learning_against_adversarial_behavior_manipulation.md)
+- [ReFORM: Reflected Flows for On-support Offline RL via Noise Manipulation](reform_reflected_flows_for_on-support_offline_rl_via_noise_manipulation.md)
 - [AutoTool: Automatic Scaling of Tool-Use Capabilities in RL via Decoupled Entropy Constraints](autotool_automatic_scaling_of_tool-use_capabilities_in_rl_via_decoupled_entropy_.md)
 - [When Sensors Fail: Temporal Sequence Models for Robust PPO under Sensor Drift](when_sensors_fail_temporal_sequence_models_for_robust_ppo_under_sensor_drift.md)
 

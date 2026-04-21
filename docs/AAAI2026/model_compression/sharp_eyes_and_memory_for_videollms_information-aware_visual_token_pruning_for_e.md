@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sharp Eyes and Memory for VideoLLMs: Information-Aware Visual Token Pruning for Efficient and Reliable VideoLLM Reasoning
 description: >-

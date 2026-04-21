@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Distributional Equivalence in Linear Non-Gaussian Latent-Variable Cyclic Causal Models
 description: >-

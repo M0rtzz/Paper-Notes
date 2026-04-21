@@ -1,15 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Physical Simulator In-the-Loop Video Generation
 description: >-
-  [CVPR 2026][视频生成][物理一致性] 提出PSIVG，首个无需训练的推理时框架，将物理模拟器集成到视频扩散生成管线中，通过感知流水线重建4D场景初始化MPM模拟器，并提出TTCO测试时优化增强纹理一致性，用户偏好率82.3%。
+  [CVPR 2026][物理模拟器在环] 提出PSIVG——首个将物理模拟器嵌入视频扩散生成循环的训练-free推理时框架：从模板视频中重建4D场景和物体网格，在MPM模拟器中生成物理一致轨迹，用光流引导视频生成，并通过TTCO测试时优化保证运动物体纹理一致性，用户偏好率达82.3%。
 tags:
   - CVPR 2026
-  - 视频生成
-  - 物理模拟
-  - 推理时优化
-  - MPM
-  - 纹理一致性
+  - 物理模拟器在环
+  - 视频扩散模型
+  - MPM模拟
+  - 测试时优化
+  - 物理一致生成
 ---
 
 # Physical Simulator In-the-Loop Video Generation
@@ -143,8 +143,8 @@ PSIVG不需要额外训练数据。TTCO在测试时使用AdamW优化器，LR=2e-
 
 - [Phantom: Physics-Infused Video Generation via Joint Modeling of Visual and Latent Physical Dynamics](phantom_physics-infused_video_generation_via_joint_modeling_of_visual_and_latent.md)
 - [How Far is Video Generation from World Model: A Physical Law Perspective](../../ICML2025/video_generation/how_far_is_video_generation_from_world_model_a_physical_law_perspective.md)
-- [Training-free Motion Factorization for Compositional Video Generation](training-free_motion_factorization_for_compositional_video_generation.md)
-- [LAMP: Language-Assisted Motion Planning for Controllable Video Generation](lamp_language-assisted_motion_planning_for_controllable_video_generation.md)
-- [Lighting-grounded Video Generation with Renderer-based Agent Reasoning](lighting-grounded_video_generation_with_renderer-based_agent_reasoning.md)
+- [Diff4Splat: Repurposing Video Diffusion Models for Dynamic Scene Generation](diff4splat_controllable_4d_scene_generation_with_latent_dynamic_reconstruction_m.md)
+- [LinVideo: A Post-Training Framework towards O(n) Attention in Efficient Video Generation](linvideo_linear_attention_video_generation.md)
+- [Anti-I2V: Safeguarding your photos from malicious image-to-video generation](anti-i2v_safeguarding_your_photos_from_malicious_image-to-video_generation.md)
 
 <!-- RELATED:END -->

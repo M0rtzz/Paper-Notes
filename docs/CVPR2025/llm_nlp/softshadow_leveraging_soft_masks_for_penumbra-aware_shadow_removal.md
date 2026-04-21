@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SoftShadow: Leveraging Soft Masks for Penumbra-Aware Shadow Removal
 description: >-
@@ -154,8 +154,8 @@ SoftShadow是一个端到端的统一阴影移除框架，不需要任何外部�
 
 - [Leveraging Self-Attention for Input-Dependent Soft Prompting in LLMs](../../ACL2025/llm_nlp/input_dependent_soft_prompting.md)
 - [Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior](bridging_the_vision-brain_gap_with_an_uncertainty-aware_blur_prior.md)
-- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](../../ACL2025/llm_nlp/leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
 - [PosterO: Structuring Layout Trees to Enable Language Models in Generalized Content-Aware Layout Generation](postero_structuring_layout_trees_to_enable_language_models_in_generalized_conten.md)
 - [Making Old Film Great Again: Degradation-aware State Space Model for Old Film Restoration](making_old_film_great_again_degradation-aware_state_space_model_for_old_film_res.md)
+- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](../../ACL2025/llm_nlp/leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
 
 <!-- RELATED:END -->

@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] BindWeave: Subject-Consistent Video Generation via Cross-Modal Integration
 description: >-
-  [ICLR 2026][视频理解][Subject-to-Video] BindWeave 用多模态大语言模型（MLLM）替代传统的浅层融合机制来解析多主体复杂文本指令，生成主体感知的隐状态作为 DiT 的条件信号，结合 CLIP 语义特征和 VAE 细粒度外观特征，实现高保真、主体一致的视频生成。
+  [ICLR 2026][Subject-to-Video] BindWeave 用多模态大语言模型（MLLM）替代传统的浅层融合机制来解析多主体复杂文本指令，生成主体感知的隐状态作为 DiT 的条件信号，结合 CLIP 语义特征和 VAE 细粒度外观特征，实现高保真、主体一致的视频生成。
 tags:
   - ICLR 2026
-  - 视频理解
   - Subject-to-Video
   - MLLM条件注入
   - DiT
@@ -132,8 +131,8 @@ BindWeave 用多模态大语言模型（MLLM）替代传统的浅层融合机制
 
 - [UniAVGen: Unified Audio and Video Generation with Asymmetric Cross-Modal Interactions](../../CVPR2026/video_generation/uniavgen_unified_audio_and_video_generation_with_asymmetric_cross-modal_interact.md)
 - [MoFu: Scale-Aware Modulation and Fourier Fusion for Multi-Subject Video Generation](../../AAAI2026/video_generation/mofu_scale-aware_modulation_and_fourier_fusion_for_multi-subject_video_generatio.md)
+- [JavisDiT++: Unified Modeling and Optimization for Joint Audio-Video Generation](javisdit_unified_modeling_and_optimization_for_joint_audio-video_generation.md)
 - [MoSA: Motion-Coherent Human Video Generation via Structure-Appearance Decoupling](mosa_motion-coherent_human_video_generation_via_structure-appearance_decoupling.md)
-- [JavisDiT: Joint Audio-Video Diffusion Transformer with Hierarchical Spatio-Temporal Prior Synchronization](javisdit_joint_audio-video_diffusion_transformer_with_hierarchical_spatio-tempor.md)
-- [AnimateAnything: Consistent and Controllable Animation for Video Generation](../../CVPR2025/video_generation/animateanything_consistent_and_controllable_animation_for_video_generation.md)
+- [Presto: Long Video Diffusion Generation with Segmented Cross-Attention and Content-Rich Video Data Curation](../../CVPR2025/video_generation/long_video_diffusion_generation_with_segmented_cross-attention_and_content-rich_.md)
 
 <!-- RELATED:END -->

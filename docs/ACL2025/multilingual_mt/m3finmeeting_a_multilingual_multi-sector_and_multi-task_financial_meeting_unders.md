@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] M3FinMeeting: A Multilingual, Multi-Sector, and Multi-Task Financial Meeting Understanding Evaluation Dataset
 description: >-

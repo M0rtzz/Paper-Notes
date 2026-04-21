@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NavMorph: A Self-Evolving World Model for Vision-and-Language Navigation in Continuous Environments
 description: >-

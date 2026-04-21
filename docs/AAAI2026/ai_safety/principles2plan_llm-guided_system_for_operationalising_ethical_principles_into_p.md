@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Principles2Plan: LLM-Guided System for Operationalising Ethical Principles into Plans
 description: >-

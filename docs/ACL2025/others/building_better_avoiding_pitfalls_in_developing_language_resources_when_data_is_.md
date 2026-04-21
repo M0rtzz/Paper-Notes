@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Building Better: Avoiding Pitfalls in Developing Language Resources when Data is Scarce
 description: >-
@@ -135,8 +135,8 @@ tags:
 
 - [When to Speak, When to Abstain: Contrastive Decoding with Abstention](when_to_speak_when_to_abstain.md)
 - [Better Embeddings with Coupled Adam](better_embeddings_with_coupled_adam.md)
-- [Hierarchical Attention Generates Better Proofs](hierarchical_attention_generates_better_proofs.md)
 - [Towards Better Evaluation for Generated Patent Claims](patclaimeval_patent_evaluation.md)
+- [Hierarchical Attention Generates Better Proofs](hierarchical_attention_generates_better_proofs.md)
 - [A Practical Approach for Building Production-Grade Conversational Agents with Workflow Graphs](a_practical_approach_for_building_production-grade_conversational_agents_with_wo.md)
 
 <!-- RELATED:END -->

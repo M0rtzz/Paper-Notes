@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SPACE: Noise Contrastive Estimation Stabilizes Self-Play Fine-Tuning for Large Language Models
 description: >-

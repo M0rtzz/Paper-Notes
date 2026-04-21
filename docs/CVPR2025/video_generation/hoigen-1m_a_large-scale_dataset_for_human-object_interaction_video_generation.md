@@ -1,7 +1,15 @@
-﻿---
-title: "HOIGen-1M: A Large-Scale Dataset for Human-Object Interaction Video Generation"
-description: "提出HOIGen-1M大规模人物交互视频生成数据集，包含100万+高质量视频，采用MoME策略消除描述幻觉，并提出CoarseHOIScore和FineHOIScore两个评估指标"
-tags: ["视频生成", "人物交互", "数据集", "文本到视频", "CVPR2025"]
+---
+title: >-
+  [论文解读] HOIGen-1M: A Large-Scale Dataset for Human-Object Interaction Video Generation
+description: >-
+  [CVPR 2025][人物交互] HOIGen-1M 是首个面向人物交互 (HOI) 视频生成的百万级高质量数据集，通过高效数据筛选管线和 Mixture-of-Multimodal-Experts (MoME) 字幕策略解决了 HOI 视频数据稀缺和描述幻觉问题，并提出 CoarseHOIScore/FineHOIScore 两个评估指标来量化生成视频中交互的质量。
+tags:
+  - CVPR 2025
+  - 人物交互
+  - 文本到视频生成
+  - 大规模数据集
+  - 视频描述
+  - 多模态大模型
 ---
 
 # HOIGen-1M: A Large-Scale Dataset for Human-Object Interaction Video Generation
@@ -104,9 +112,9 @@ HOIGen-1M 的构建包含三个核心部分：(1) 视频筛选管线——从 80
 ## 相关论文
 
 - [DH-FaceVid-1K: A Large-Scale High-Quality Dataset for Face Video Generation](../../ICCV2025/video_generation/dh-facevid-1k_a_large-scale_high-quality_dataset_for_face_video_generation.md)
-- [TIP-I2V: A Million-Scale Real Text and Image Prompt Dataset for Image-to-Video Generation](../../ICCV2025/video_generation/tip-i2v_a_million-scale_real_text_and_image_prompt_dataset_for_image-to-video_ge.md)
-- [Multi-identity Human Image Animation with Structural Video Diffusion](../../ICCV2025/video_generation/multi-identity_human_image_animation_with_structural_video_diffusion.md)
-- [Mask2IV: Interaction-Centric Video Generation via Mask Trajectories](../../AAAI2026/video_generation/mask2iv_interaction-centric_video_generation_via_mask_trajectories.md)
 - [IDOL: Instant Photorealistic 3D Human Creation from a Single Image](idol_instant_photorealistic_3d_human_creation_from_a_single_image.md)
+- [Video-Bench: Human-Aligned Video Generation Benchmark](video-bench_human-aligned_video_generation_benchmark.md)
+- [TIP-I2V: A Million-Scale Real Text and Image Prompt Dataset for Image-to-Video Generation](../../ICCV2025/video_generation/tip-i2v_a_million-scale_real_text_and_image_prompt_dataset_for_image-to-video_ge.md)
+- [Video-ColBERT: Contextualized Late Interaction for Text-to-Video Retrieval](video-colbert_contextualized_late_interaction_for_text-to-video_retrieval.md)
 
 <!-- RELATED:END -->

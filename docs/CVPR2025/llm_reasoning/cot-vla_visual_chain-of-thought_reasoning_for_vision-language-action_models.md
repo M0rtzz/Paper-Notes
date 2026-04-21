@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models
 description: >-

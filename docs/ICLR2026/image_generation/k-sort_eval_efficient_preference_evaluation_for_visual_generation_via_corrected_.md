@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] K-Sort Eval: Efficient Preference Evaluation for Visual Generation via Corrected VLM-as-a-Judge
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLMs for Game Theory: Entropy-Guided In-Context Learning and Adaptive CoT Reasoning
 description: >-

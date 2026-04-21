@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ReFlex: Text-Guided Editing of Real Images in Rectified Flow via Mid-Step Feature Extraction and Attention Adaptation
 description: >-
@@ -148,6 +148,6 @@ ReFlex 的流程分为三步：
 - [Taming Rectified Flow for Inversion and Editing](../../ICML2025/image_generation/taming_rectified_flow_for_inversion_and_editing.md)
 - [Straighten Viscous Rectified Flow via Noise Optimization](straighten_viscous_rectified_flow_via_noise_optimization.md)
 - [GuideFlow3D: Optimization-Guided Rectified Flow For Appearance Transfer](../../NeurIPS2025/image_generation/guideflow3d_optimization-guided_rectified_flow_for_appearance_transfer.md)
-- [Balanced Conic Rectified Flow](../../NeurIPS2025/image_generation/balanced_conic_rectified_flow.md)
+- [SwiftEdit: Lightning Fast Text-Guided Image Editing via One-Step Diffusion](../../CVPR2025/image_generation/swiftedit_lightning_fast_text-guided_image_editing_via_one-step_diffusion.md)
 
 <!-- RELATED:END -->

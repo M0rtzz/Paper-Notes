@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Revisiting Model Stitching In the Foundation Model Era
 description: >-

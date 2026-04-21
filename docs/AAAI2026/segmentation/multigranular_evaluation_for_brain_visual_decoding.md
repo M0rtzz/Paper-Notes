@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multigranular Evaluation for Brain Visual Decoding
 description: >-

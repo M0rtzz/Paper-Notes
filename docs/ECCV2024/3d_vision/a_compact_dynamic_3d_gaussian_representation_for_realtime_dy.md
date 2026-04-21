@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Compact Dynamic 3D Gaussian Representation for Real-Time Dynamic View Synthesis
 description: >-

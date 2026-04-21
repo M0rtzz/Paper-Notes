@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Leveraging Variation Theory in Counterfactual Data Augmentation for Optimized Active Learning
 description: >-

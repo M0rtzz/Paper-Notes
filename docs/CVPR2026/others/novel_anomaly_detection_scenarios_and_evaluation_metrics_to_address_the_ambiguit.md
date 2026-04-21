@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Novel Anomaly Detection Scenarios and Evaluation Metrics to Address the Ambiguity in the Definition of Normal Samples
 description: >-

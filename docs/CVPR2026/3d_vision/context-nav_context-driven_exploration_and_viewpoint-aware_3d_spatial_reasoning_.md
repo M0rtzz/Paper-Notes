@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Context-Nav: Context-Driven Exploration and Viewpoint-Aware 3D Spatial Reasoning for Instance Navigation
 description: >-

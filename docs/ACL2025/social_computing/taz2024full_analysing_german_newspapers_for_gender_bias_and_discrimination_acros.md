@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] taz2024full: Analysing German Newspapers for Gender Bias and Discrimination across Decades
 description: >-

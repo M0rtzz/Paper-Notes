@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NeuroPath: Neurobiology-Inspired Path Tracking and Reflection for Semantically Coherent Retrieval
 description: >-

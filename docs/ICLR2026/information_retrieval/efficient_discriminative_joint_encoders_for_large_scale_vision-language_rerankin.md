@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Discriminative Joint Encoders for Large Scale Vision-Language Re-ranking
 description: >-

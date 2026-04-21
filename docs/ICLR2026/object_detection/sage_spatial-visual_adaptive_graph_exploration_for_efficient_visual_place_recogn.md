@@ -170,7 +170,7 @@ SAGE 骨干可训练参数与 EMVP 相同（1.96M），仅额外增加 7.88M 的
 
 ## 相关论文
 
-- [Evaluating Few-Shot Pill Recognition Under Visual Domain Shift](../../CVPR2026/object_detection/evaluating_few-shot_pill_recognition_under_visual_domain_shift.md)
+- [Evaluating Few-Shot Pill Recognition Under Visual Domain Shift](../../CVPR2026/object_detection/evaluating_fewshot_pill_recognition_under_visual_d.md)
 - [Traceable Evidence Enhanced Visual Grounded Reasoning: Evaluation and Method](traceable_evidence_enhanced_visual_grounded_reasoning_evaluation_and_methodology.md)
 - [Visual-RFT: Visual Reinforcement Fine-Tuning](../../ICCV2025/object_detection/visual-rft_visual_reinforcement_fine-tuning.md)
 - [CineSRD: Leveraging Visual, Acoustic, and Linguistic Cues for Open-World Visual Media Speaker Diarization](../../CVPR2026/object_detection/cinesrd_leveraging_visual_acoustic_and_linguistic_cues_for_open-world_visual_med.md)

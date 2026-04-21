@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MMG: Mutual Information Estimation via the MMSE Gap in Diffusion
 description: >-
@@ -165,8 +165,8 @@ MINDE 在高 MI 场景下低估严重，原因是 score matching 需要逼近尖
 ## 相关论文
 
 - [Information-Theoretic Discrete Diffusion](information-theoretic_discrete_diffusion.md)
-- [ItDPDM: Information-Theoretic Discrete Poisson Diffusion Model](itdpdm_information-theoretic_discrete_poisson_diffusion_model.md)
 - [Information Theoretic Learning for Diffusion Models with Warm Start](information_theoretic_learning_for_diffusion_models_with_warm_start.md)
+- [ItDPDM: Information-Theoretic Discrete Poisson Diffusion Model](itdpdm_information-theoretic_discrete_poisson_diffusion_model.md)
 - [Learning a Distance Measure from the Information-Estimation Geometry of Data](../../ICLR2026/image_generation/learning_a_distance_measure_from_the_information-estimation_geometry_of_data.md)
 - [A Connection Between Score Matching and Local Intrinsic Dimension](a_connection_between_score_matching_and_local_intrinsic_dimension.md)
 

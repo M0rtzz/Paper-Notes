@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Optimizing Factorized Encoder Models: Time and Memory Reduction for Scalable and Efficient Action Recognition
 description: >-

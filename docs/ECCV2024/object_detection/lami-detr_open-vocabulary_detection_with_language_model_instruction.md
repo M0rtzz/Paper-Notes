@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LaMI-DETR: Open-Vocabulary Detection with Language Model Instruction
 description: >-

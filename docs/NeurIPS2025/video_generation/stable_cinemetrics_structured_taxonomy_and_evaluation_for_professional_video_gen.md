@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] Stable Cinemetrics: Structured Taxonomy and Evaluation for Professional Video Generation
 description: >-
-  [NeurIPS 2025][视频理解][视频生成评估] 提出 SCINE（Stable Cinemetrics），首个面向专业视频制作的结构化评估框架，定义了 76 个细粒度电影控制节点的分层分类体系，配合大规模专业人员评估（80+ 影视从业者、20K+ 视频、248K 标注），揭示当前最强 T2V 模型在专业控制上的显著不足。
+  [NeurIPS 2025][视频生成评估] 提出 SCINE（Stable Cinemetrics），首个面向专业视频制作的结构化评估框架，定义了 76 个细粒度电影控制节点的分层分类体系，配合大规模专业人员评估（80+ 影视从业者、20K+ 视频、248K 标注），揭示当前最强 T2V 模型在专业控制上的显著不足。
 tags:
   - NeurIPS 2025
-  - 视频理解
   - 视频生成评估
   - 电影制作分类体系
   - 专业视频控制
@@ -156,6 +155,6 @@ SCINE 由三部分组成：
 - [ETVA: Evaluation of Text-to-Video Alignment via Fine-Grained Question Generation and Answering](../../ICCV2025/video_generation/etva_evaluation_of_text-to-video_alignment_via_fine-grained_question_generation_.md)
 - [NeuS-V: Neuro-Symbolic Evaluation of Text-to-Video Models using Formal Verification](../../CVPR2025/video_generation/neuro-symbolic_evaluation_of_text-to-video_models_using_formal_verification.md)
 - [SLVMEval: Synthetic Meta Evaluation Benchmark for Text-to-Long Video Generation](../../CVPR2026/video_generation/slvmeval_synthetic_meta_evaluation_benchmark_for_text-to-long_video_generation.md)
-- [LeMiCa: Lexicographic Minimax Path Caching for Efficient Diffusion-Based Video Generation](lemica_lexicographic_minimax_path_caching_for_efficient_diffusion-based_video_ge.md)
+- [MagCache: Fast Video Generation with Magnitude-Aware Cache](magcache_fast_video_generation_with_magnitudeaware_cache.md)
 
 <!-- RELATED:END -->

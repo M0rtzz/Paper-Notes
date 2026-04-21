@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Vary: Scaling up the Vision Vocabulary for Large Vision-Language Models
 description: >-
@@ -150,8 +150,8 @@ Vary 的流程分为两个阶段：**视觉词汇表的生成**和**视觉词汇
 
 - [Attention Prompting on Image for Large Vision-Language Models](attention_prompting_on_image_for_large_vision-language_models.md)
 - [IVTP: Instruction-Guided Visual Token Pruning for Large Vision-Language Models](ivtp_instruction-guided_visual_token_pruning_for_large_vision-language_models.md)
+- [MarvelOVD: Marrying Object Recognition and Vision-Language Models for Robust Open-Vocabulary Object Detection](marvelovd_marrying_object_recognition_and_visionlanguage_mod.md)
 - [NavGPT-2: Unleashing Navigational Reasoning Capability for Large Vision-Language Models](navgpt-2_unleashing_navigational_reasoning_capability_for_large_vision-language_.md)
 - [Robust Calibration of Large Vision-Language Adapters](robust_calibration_of_large_vision-language_adapters.md)
-- [SQ-LLaVA: Self-Questioning for Large Vision-Language Assistant](sq-llava_self-questioning_for_large_vision-language_assistant.md)
 
 <!-- RELATED:END -->

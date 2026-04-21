@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Precise Object and Effect Removal with Adaptive Target-Aware Attention
 description: >-
@@ -133,6 +133,6 @@ ObjectClear 基于 SDXL-Inpainting 构建。输入为 $\langle z_t, I_{in}, M_o,
 - [EffectErase: Joint Video Object Removal and Insertion for High-Quality Effect Erasing](effecterase_joint_video_object_removal_and_insertion_for_high-quality_effect_era.md)
 - [Towards Robust Content Watermarking Against Removal and Forgery Attacks](towards_robust_content_watermarking_against_removal_and_forgery_attacks.md)
 - [Learning Latent Transmission and Glare Maps for Lens Veiling Glare Removal](learning_latent_transmission_and_glare_maps_for_lens_veiling_glare_removal.md)
-- [ViHOI: Human-Object Interaction Synthesis with Visual Priors](vihoi_human-object_interaction_synthesis_with_visual_priors.md)
+- [ADAPT: Attention Driven Adaptive Prompt Scheduling and InTerpolating Orthogonal Complements for Rare Concepts Generation](adapt_attention_driven_adaptive_prompt_scheduling_and_interpolating_orthogonal_c.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MCTSr-Zero: Self-Reflective Psychological Counseling Dialogues Generation via Principles and Adaptive Exploration
 description: >-

@@ -129,10 +129,10 @@ CoPart在部件感知指标上大幅领先，整体质量与SOTA可比。
 
 ## 相关论文
 
+- [Structured 3D Latents for Scalable and Versatile 3D Generation](../../CVPR2025/3d_vision/structured_3d_latents_for_scalable_and_versatile_3d_generation.md)
 - [Find Any Part in 3D](find_any_part_in_3d.md)
 - [Learning 3D Scene Analogies with Neural Contextual Scene Maps](learning_3d_scene_analogies_with_neural_contextual_scene_maps.md)
 - [BokehDiff: Neural Lens Blur with One-Step Diffusion](bokehdiff_neural_lens_blur_with_one-step_diffusion.md)
-- [More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](../../NeurIPS2025/3d_vision/more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
 - [Self-supervised Learning of Hybrid Part-aware 3D Representations of 2D Gaussians and Superquadrics](self-supervised_learning_of_hybrid_part-aware_3d_representations_of_2d_gaussians.md)
 
 <!-- RELATED:END -->

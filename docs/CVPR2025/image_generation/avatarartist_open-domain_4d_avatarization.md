@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AvatarArtist: Open-Domain 4D Avatarization
 description: >-
@@ -118,10 +118,10 @@ VAE 训练使用三平面重建的 $\mathcal{L}_1$ loss + 渲染图像的 $\math
 
 ## 相关论文
 
+- [DNF: Unconditional 4D Generation with Dictionary-Based Neural Fields](dnf_unconditional_4d_generation_with_dictionary-based_neural_fields.md)
+- [OpenSDI: Spotting Diffusion-Generated Images in the Open World](opensdi_spotting_diffusion-generated_images_in_the_open_world.md)
 - [MGAudio: Model-Guided Dual-Role Alignment for High-Fidelity Open-Domain Video-to-Audio Generation](../../NeurIPS2025/image_generation/model-guided_dual-role_alignment_for_high-fidelity_open-domain_video-to-audio_ge.md)
 - [DoraCycle: Domain-Oriented Adaptation of Unified Generative Model in Multimodal Cycles](doracycle_domain-oriented_adaptation_of_unified_generative_model_in_multimodal_c.md)
 - [Everything to the Synthetic: Diffusion-driven Test-time Adaptation via Synthetic-Domain Alignment](everything_to_the_synthetic_diffusion-driven_test-time_adaptation_via_synthetic-.md)
-- [Knowledge Distillation Detection for Open-weights Models](../../NeurIPS2025/image_generation/knowledge_distillation_detection_for_open-weights_models.md)
-- [LlavaGuard: An Open VLM-based Framework for Safeguarding Vision Datasets and Models](../../ICML2025/image_generation/llavaguard_an_open_vlm-based_framework_for_safeguarding_vision_datasets_and_mode.md)
 
 <!-- RELATED:END -->

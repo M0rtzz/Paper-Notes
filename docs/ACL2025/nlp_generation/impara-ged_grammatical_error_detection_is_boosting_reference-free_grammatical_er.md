@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] IMPARA-GED: Grammatical Error Detection is Boosting Reference-free Grammatical Error Quality Estimator
 description: >-
@@ -155,6 +155,6 @@ IMPARA-GED (ModernBERT-Large + 2-class GED) 在句子级 SEEDA-S 上超越所有
 - [Rethinking Evaluation Metrics for Grammatical Error Correction: Why Use a Different Evaluation Process than Human?](rethinking_evaluation_metrics_for_grammatical_error_correction_why_use_a_differe.md)
 - [Enhancing Text Editing for Grammatical Error Correction: Arabic as a Case Study](enhancing_text_editing_for_grammatical_error_correction_arabic_as_a_case_study.md)
 - [A Representation Level Analysis of NMT Model Robustness to Grammatical Errors](a_representation_level_analysis_of_nmt_model_robustness_to_grammatical_errors.md)
-- [Context-Aware Hierarchical Merging for Long Document Summarization](context-aware_hierarchical_merging_for_long_document_summarization.md)
+- [What Is That Talk About? A Video-to-Text Summarization Dataset for Scientific Presentations](video_text_summarization.md)
 
 <!-- RELATED:END -->

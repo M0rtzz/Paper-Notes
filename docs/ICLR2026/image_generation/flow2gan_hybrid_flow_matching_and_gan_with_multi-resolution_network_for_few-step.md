@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Flow2GAN: Hybrid Flow Matching and GAN with Multi-Resolution Network for Few-step High-Fidelity Audio Generation
 description: >-

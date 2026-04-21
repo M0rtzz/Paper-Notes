@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MoToRec: Sparse-Regularized Multimodal Tokenization for Cold-Start Recommendation
 description: >-
@@ -192,6 +192,6 @@ $$\mathcal{L} = \mathcal{L}_{\text{BPR}} + \lambda_{cl} \mathcal{L}_{\text{CL}} 
 - [GT-SNT: A Linear-Time Transformer for Large-Scale Graphs via Spiking Node Tokenization](gt-snt_a_linear-time_transformer_for_large-scale_graphs_via_spiking_node_tokeniz.md)
 - [RFKG-CoT: Relation-Driven Adaptive Hop-count Selection and Few-Shot Path Guidance for Knowledge-Aware QA](rfkg-cot_relation-driven_adaptive_hop-count_selection_and_few-shot_path_guidance.md)
 - [Graph Tokenization for Bridging Graphs and Transformers](../../ICLR2026/graph_learning/graph_tokenization_for_bridging_graphs_and_transformers.md)
-- [Connectivity-Guided Sparsification of 2-FWL GNNs Preserving Full Expressivity](connectivity-guided_sparsification_of_2-fwl_gnns_preserving_full_expressivity_wi.md)
+- [Enhancing Logical Expressiveness in GNNs via Path-Neighbor Aggregation](enhancing_logical_expressiveness_in_graph_neural_networks_via_path-neighbor_aggr.md)
 
 <!-- RELATED:END -->

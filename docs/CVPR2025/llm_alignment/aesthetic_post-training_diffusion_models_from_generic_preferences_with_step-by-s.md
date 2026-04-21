@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization
 description: >-
-  [CVPR 2025][对齐RLHF] 提出SPO逐步偏好优化方法，通过步级偏好评估和step-aware偏好模型，从通用偏好数据中蒸馏美学信息，显著提升扩散模型的图像美学质量
+  [CVPR 2025][LLM对齐][逐步偏好优化] 本文提出 Step-by-step Preference Optimization（SPO），在每个去噪步中从同一噪声潜变量采样多个候选，用 step-aware 偏好模型选择 win/lose 对来指导扩散模型微调，从通用偏好数据中隐式蒸馏美学信息，在 SD-1.5 和 SDXL 上显著提升美学质量且收敛速度远快于 DPO。
 tags:
   - CVPR 2025
-  - 扩散模型
-  - 偏好优化
-  - 图像美学
-  - DPO
+  - LLM对齐
+  - 逐步偏好优化
+  - 美学对齐
+  - 扩散模型后训练
+  - step-aware偏好模型
+  - 在线学习
 ---
 
 # Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization
@@ -142,10 +144,10 @@ $\mathcal{L}(\theta) = -\mathbb{E}_{t, c, x_{t-1}^w, x_{t-1}^l} \left[ \log\sigm
 
 ## 相关论文
 
-- [Curriculum Direct Preference Optimization for Diffusion and Consistency Models](curriculum_direct_preference_optimization_for_diffusion_and_consistency_models.md)
-- [Calibrated Multi-Preference Optimization for Aligning Diffusion Models](calibrated_multi-preference_optimization_for_aligning_diffusion_models.md)
+- [Chain-of-Jailbreak Attack for Image Generation Models via Editing Step by Step](../../ACL2025/llm_alignment/chain-of-jailbreak_attack_for_image_generation_models_via_editing_step_by_step.md)
 - [Diffusion Model as a Noise-Aware Latent Reward Model for Step-Level Preference Optimization](../../NeurIPS2025/llm_alignment/diffusion_model_as_a_noiseaware_latent_reward_model_for_step.md)
-- [Rethinking Direct Preference Optimization in Diffusion Models](../../NeurIPS2025/llm_alignment/rethinking_direct_preference_optimization_in_diffusion_models.md)
-- [InPO: Inversion Preference Optimization with Reparametrized DDIM for Efficient Diffusion Model Alignment](inpo_inversion_preference_optimization_with_reparametrized_ddim_for_efficient_di.md)
+- [Calibrated Multi-Preference Optimization for Aligning Diffusion Models](calibrated_multi-preference_optimization_for_aligning_diffusion_models.md)
+- [Curriculum Direct Preference Optimization for Diffusion and Consistency Models](curriculum_direct_preference_optimization_for_diffusion_and_consistency_models.md)
+- [Jailbreaking? One Step Is Enough!](../../ACL2025/llm_alignment/jailbreaking_one_step_is_enough.md)
 
 <!-- RELATED:END -->

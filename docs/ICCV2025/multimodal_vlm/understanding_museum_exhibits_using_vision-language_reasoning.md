@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Understanding Museum Exhibits using Vision-Language Reasoning
 description: >-

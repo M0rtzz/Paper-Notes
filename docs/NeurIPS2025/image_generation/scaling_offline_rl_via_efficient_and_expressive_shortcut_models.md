@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling Offline RL via Efficient and Expressive Shortcut Models
 description: >-

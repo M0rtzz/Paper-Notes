@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Atyaephyra at SemEval-2025 Task 4: Low-Rank Negative Preference Optimization
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Optimizing Distributional Geometry Alignment with Optimal Transport for Generative Dataset Distillation
 description: >-
@@ -125,7 +125,7 @@ $$W(\mu_{\text{true}}, \nu_{\text{new}}) \leq \underbrace{E_y[W(\mu_{\text{true}
 - [Dataset Distillation as Pushforward Optimal Quantization](../../ICLR2026/model_compression/dataset_distillation_as_pushforward_optimal_quantization.md)
 - [Hyperbolic Dataset Distillation](hyperbolic_dataset_distillation.md)
 - [Dataset Distillation via the Wasserstein Metric](../../ICCV2025/model_compression/dataset_distillation_via_the_wasserstein_metric.md)
-- [Lightweight Optimal-Transport Harmonization on Edge Devices](../../AAAI2026/model_compression/lightweight_optimal-transport_harmonization_on_edge_devices.md)
 - [Rectifying Soft-Label Entangled Bias in Long-Tailed Dataset Distillation](rectifying_soft-label_entangled_bias_in_long-tailed_dataset_distillation.md)
+- [Lightweight Optimal-Transport Harmonization on Edge Devices](../../AAAI2026/model_compression/lightweight_optimal-transport_harmonization_on_edge_devices.md)
 
 <!-- RELATED:END -->

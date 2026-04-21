@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Controllable Latent Space Augmentation for Digital Pathology
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Recursive Visual Imagination and Adaptive Linguistic Grounding for Vision Language Navigation
 description: >-

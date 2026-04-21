@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How Many Domains Suffice for Domain Generalization? A Tight Characterization via the Domain Shattering Dimension
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Metis-SPECS: Decoupling Multimodal Learning via Self-distilled Preference-based Cold Start
 description: >-

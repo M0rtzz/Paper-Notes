@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Re-ranking Using Large Language Models for Mitigating Exposure to Harmful Content on Social Media Platforms
 description: >-

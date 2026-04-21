@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training
 description: >-

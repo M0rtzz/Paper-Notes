@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Disco4D: Disentangled 4D Human Generation and Animation from a Single Image
 description: >-
@@ -124,10 +124,10 @@ Disco4D 采用自底向上的构建方式：(1) 使用 SMPL-X 参数化模型表
 
 ## 相关论文
 
-- [High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)
+- [WonderWorld: Interactive 3D Scene Generation from a Single Image](wonderworld_interactive_3d_scene_generation_from_a_single_image.md)
+- [Wonderland: Navigating 3D Scenes from a Single Image](wonderland_navigating_3d_scenes_from_a_single_image.md)
 - [DAGSM: Disentangled Avatar Generation with GS-enhanced Mesh](dagsm_disentangled_avatar_generation_with_gs-enhanced_mesh.md)
+- [Symmetry Strikes Back: From Single-Image Symmetry Detection to 3D Generation](symmetry_strikes_back_from_single-image_symmetry_detection_to_3d_generation.md)
 - [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
-- [AniGS: Animatable Gaussian Avatar from a Single Image with Inconsistent Gaussian Reconstruction](anigs_animatable_gaussian_avatar_from_a_single_image_with_inconsistent_gaussian_.md)
-- [GenVDM: Generating Vector Displacement Maps From a Single Image](genvdm_generating_vector_displacement_maps_from_a_single_image.md)
 
 <!-- RELATED:END -->

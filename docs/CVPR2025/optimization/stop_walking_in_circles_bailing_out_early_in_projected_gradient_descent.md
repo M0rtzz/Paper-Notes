@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stop Walking in Circles! Bailing Out Early in Projected Gradient Descent
 description: >-

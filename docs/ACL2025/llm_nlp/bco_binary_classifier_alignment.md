@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Binary Classifier Optimization for Large Language Model Alignment
 description: >-
@@ -122,6 +122,6 @@ tags:
 - [Gradient-Adaptive Policy Optimization: Towards Multi-Objective Alignment of Large Language Models](gapo_multi_objective_alignment.md)
 - [Improve Language Model and Brain Alignment via Associative Memory](improve_language_model_and_brain_alignment_via_associative_memory.md)
 - [Direct Confidence Alignment: Aligning Verbalized Confidence with Internal Confidence In Large Language Models](direct_confidence_alignment_aligning_verbalized_confidence_with_internal_confide.md)
-- [From Neurons to Semantics: Evaluating Cross-Linguistic Alignment Capabilities of Large Language Models via Neurons Alignment](from_neurons_to_semantics_evaluating_cross-linguistic_alignment_capabilities_of_.md)
+- [DeAL: Decoding-time Alignment for Large Language Models](deal_decoding_time_alignment.md)
 
 <!-- RELATED:END -->

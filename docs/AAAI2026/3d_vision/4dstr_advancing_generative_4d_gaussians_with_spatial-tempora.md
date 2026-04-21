@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 4DSTR: Advancing Generative 4D Gaussians with Spatial-Temporal Rectification for High-Quality and Consistent 4D Generation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Developing Foundation Models for Universal Segmentation from 3D Whole-Body Positron Emission Tomography
 description: >-

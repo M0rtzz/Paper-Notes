@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video
 description: >-
@@ -106,10 +106,10 @@ $\mathcal{L} = \mathcal{L}_{L1} + 0.1\mathcal{L}_{VGG} + 100\mathcal{L}_{lap} + 
 
 ## 相关论文
 
+- [RGBAvatar: Reduced Gaussian Blendshapes for Online Modeling of Head Avatars](rgbavatar_reduced_gaussian_blendshapes_for_online_modeling_of_head_avatars.md)
 - [GGTalker: Talking Head Synthesis with Generalizable Gaussian Priors and Identity-Specific Adaptation](../../ICCV2025/human_understanding/ggtalker_talking_head_systhesis_with_generalizable_gaussian_priors_and_identity-.md)
 - [Condition Matters in Full-head 3D GANs](../../ICLR2026/human_understanding/condition_matters_in_full-head_3d_gans.md)
 - [VASA-3D: Lifelike Audio-Driven Gaussian Head Avatars from a Single Image](../../NeurIPS2025/human_understanding/vasa-3d_lifelike_audio-driven_gaussian_head_avatars_from_a_single_image.md)
-- [Avatar Fingerprinting for Authorized Use of Synthetic Talking-Head Videos](../../ECCV2024/human_understanding/avatar_fingerprinting_for_authorized_use_of_synthetic_talking-head_videos.md)
 - [Node-Based Editing for Multimodal Generation of Text, Audio, Image, and Video](../../NeurIPS2025/human_understanding/node-based_editing_for_multimodal_generation_of_text_audio_image_and_video.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Transitive RL: Value Learning via Divide and Conquer
 description: >-

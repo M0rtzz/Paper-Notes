@@ -1,11 +1,10 @@
 ---
-title: "Multi-Sensor Object Anomaly Detection: Unifying Appearance, Geometry, and Internal Properties"
-conference: "CVPR 2025"
-arxiv: "2412.14592"
-arxiv_url: "https://arxiv.org/abs/2412.14592"
-code: "https://github.com/ZZZBBBZZZ/MulSen-AD"
-domain: "human_understanding"
-keywords: ["anomaly detection", "multi-sensor fusion", "industrial inspection", "dataset", "RGB", "infrared", "point cloud"]
+title: >-
+  [论文解读] Multi-Sensor Object Anomaly Detection: Unifying Appearance, Geometry, and Internal Properties
+description: >-
+  [人体理解] 提出 MulSen-AD，首个融合 RGB 相机、激光扫描仪和红外热成像三种传感器的工业物体异常检测数据集（15 类产品、14 种异常），并设计 MulSen-TripleAD 决策级融合基线方法，实现 96.1% AUROC，证明多传感器融合显著优于单传感器方法。
+tags:
+  - 人体理解
 ---
 
 # Multi-Sensor Object Anomaly Detection: Unifying Appearance, Geometry, and Internal Properties
@@ -142,10 +141,10 @@ MulSen-TripleAD 基于 PatchCore 的距离度量评分，使用 OCSVM 进行决�
 
 ## 相关论文
 
-- [Anomize: Better Open Vocabulary Video Anomaly Detection](anomize_better_open_vocabulary_video_anomaly_detection.md)
 - [Sequential Keypoint Density Estimator: An Overlooked Baseline of Skeleton-Based Video Anomaly Detection](../../ICCV2025/human_understanding/sequential_keypoint_density_estimator_an_overlooked_baseline_of_skeleton-based_v.md)
-- [Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection](../../ECCV2024/human_understanding/self-supervised_feature_adaptation_for_3d_industrial_anomaly_detection.md)
-- [Monocular Facial Appearance Capture in the Wild](../../ICCV2025/human_understanding/monocular_facial_appearance_capture_in_the_wild.md)
-- [All in One: Unifying Deepfake Detection, Tampering Localization, and Source Tracing with a Robust Landmark-Identity Watermark](../../CVPR2026/human_understanding/all_in_one_unifying_deepfake_detection_tampering_localization_and_source_tracing.md)
+- [WIR3D: Visually-Informed and Geometry-Aware 3D Shape Abstraction](../../ICCV2025/human_understanding/wir3d_visually-informed_and_geometry-aware_3d_shape_abstraction.md)
+- [CRISP: Object Pose and Shape Estimation with Test-Time Adaptation](crisp_object_pose_and_shape_estimation_with_test-time_adaptation.md)
+- [RayPose: Ray Bundling Diffusion for Template Views in Unseen 6D Object Pose Estimation](../../ICCV2025/human_understanding/raypose_ray_bundling_diffusion_for_template_views_in_unseen_6d_object_pose_estim.md)
+- [Supervised Metric Regularization Through Alternating Optimization for Multi-Regime PINNs](../../ICLR2026/human_understanding/supervised_metric_regularization_through_alternating_optimization_for_multi-regi.md)
 
 <!-- RELATED:END -->

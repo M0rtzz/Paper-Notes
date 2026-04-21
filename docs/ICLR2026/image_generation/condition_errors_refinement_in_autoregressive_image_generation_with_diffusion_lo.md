@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Condition Errors Refinement in Autoregressive Image Generation with Diffusion Loss
 description: >-

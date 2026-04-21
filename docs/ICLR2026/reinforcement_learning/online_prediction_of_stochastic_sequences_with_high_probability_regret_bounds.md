@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Online Prediction of Stochastic Sequences with High Probability Regret Bounds
 description: >-

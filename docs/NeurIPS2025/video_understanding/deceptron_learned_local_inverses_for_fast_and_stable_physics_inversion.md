@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Deceptron: Learned Local Inverses for Fast and Stable Physics Inversion
 description: >-
@@ -136,6 +136,6 @@ DNet v0 在相同公平协议下仅用固定 6 步即达到最低误差。
 - [Less is More: Local Intrinsic Dimensions of Contextual Language Models](less_is_more_local_intrinsic_dimensions_of_contextual_language_models.md)
 - [KungfuBot: Physics-Based Humanoid Whole-Body Control for Learning Highly-Dynamic Skills](kungfubot_physics-based_humanoid_whole-body_control_for_learning_highly-dynamic_.md)
 - [Local All-Pair Correspondence for Point Tracking](../../ECCV2024/video_understanding/local_all-pair_correspondence_for_point_tracking.md)
-- [GoalForce: Teaching Video Models to Accomplish Physics-Conditioned Goals](../../CVPR2026/video_understanding/goal_force_teaching_video_models_to_accomplish_physics-conditioned_goals.md)
+- [LION-FS: Fast & Slow Video-Language Thinker as Online Video Assistant](../../CVPR2025/video_understanding/lion-fs_fast_slow_video-language_thinker_as_online_video_assistant.md)
 
 <!-- RELATED:END -->

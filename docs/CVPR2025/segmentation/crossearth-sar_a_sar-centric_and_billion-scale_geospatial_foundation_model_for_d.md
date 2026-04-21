@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation
 description: >-
@@ -163,10 +163,10 @@ tags:
 
 ## 相关论文
 
-- [Dual-Agent Optimization framework for Cross-Domain Few-Shot Segmentation](dual-agent_optimization_framework_for_cross-domain_few-shot_segmentation.md)
+- [Universal Domain Adaptation for Semantic Segmentation](universal_domain_adaptation_for_semantic_segmentation.md)
+- [Scene-Centric Unsupervised Panoptic Segmentation](scene-centric_unsupervised_panoptic_segmentation.md)
+- [Revisiting Audio-Visual Segmentation with Vision-Centric Transformer](revisiting_audio-visual_segmentation_with_vision-centric_transformer.md)
 - [Prompt-Driven Lightweight Foundation Model for Instance Segmentation-Based Fault Detection in Freight Trains](prompt-driven_lightweight_foundation_model_for_instance_segmentation-based_fault.md)
-- [Hierarchical Compact Clustering Attention (COCA) for Unsupervised Object-Centric Learning](hierarchical_compact_clustering_attention_coca_for_unsupervised_object-centric_l.md)
-- [EdgeTAM: On-Device Track Anything Model](edgetam_on-device_track_anything_model.md)
-- [SToFM: a Multi-scale Foundation Model for Spatial Transcriptomics](../../ICML2025/segmentation/stofm_a_multi-scale_foundation_model_for_spatial_transcriptomics.md)
+- [Towards Generalizable Scene Change Detection](towards_generalizable_scene_change_detection.md)
 
 <!-- RELATED:END -->

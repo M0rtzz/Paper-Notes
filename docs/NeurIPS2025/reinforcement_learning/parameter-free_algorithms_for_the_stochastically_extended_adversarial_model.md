@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Parameter-Free Algorithms for the Stochastically Extended Adversarial Model
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Make Your Training Flexible: Towards Deployment-Efficient Video Models
 description: >-

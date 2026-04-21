@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MockConf: A Student Interpretation Dataset: Analysis, Word- and Span-level Alignment and Baselines
 description: >-

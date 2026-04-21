@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RefTool: Reference-Guided Tool Creation for Knowledge-Intensive Reasoning
 description: >-

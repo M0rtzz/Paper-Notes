@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MDBench: A Synthetic Multi-Document Reasoning Benchmark Generated with Knowledge Guidance
 description: >-

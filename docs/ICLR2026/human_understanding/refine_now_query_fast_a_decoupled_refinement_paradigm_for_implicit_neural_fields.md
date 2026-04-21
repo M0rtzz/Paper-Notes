@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Refine Now, Query Fast: A Decoupled Refinement Paradigm for Implicit Neural Fields
 description: >-

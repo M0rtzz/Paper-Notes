@@ -2,9 +2,15 @@
 title: >-
   [论文解读] Beyond Induction Heads: In-Context Meta Learning Induces Multi-Phase Circuit Emergence
 description: >-
-  [LLM/NLP] 本文通过设计 In-Context Meta-Learning (ICML) 实验环境，揭示了 Transformer 在获得上下文元学习能力的训练过程中，内部电路经历了三个截然不同的阶段性涌现（Bigram → Label Attention → Chunk Example），而非 induction head 研究中观察到的单阶段跃变，从而为理解 ICL 的深层机制提供了新视角。
+  [ICML 2025][LLM/NLP][In-Context Learning] 本文通过设计 In-Context Meta-Learning (ICML) 实验环境，揭示了 Transformer 在获得上下文元学习能力的训练过程中，内部电路经历了三个截然不同的阶段性涌现（Bigram → Label Attention → Chunk Example），而非 induction head 研究中观察到的单阶段跃变，从而为理解 ICL 的深层机制提供了新视角。
 tags:
+  - ICML 2025
   - LLM/NLP
+  - In-Context Learning
+  - Induction Head
+  - Multi-Phase Circuit
+  - Meta-Learning
+  - Mechanistic Interpretability
 ---
 
 # Beyond Induction Heads: In-Context Meta Learning Induces Multi-Phase Circuit Emergence
@@ -200,10 +206,10 @@ $$\mathcal{L} = -\sum_{i=1}^{L} y_i \log \hat{y}_i$$
 
 ## 相关论文
 
-- [Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning](../../ACL2025/llm_nlp/problem-solving_logic_guided_curriculum_in-context_learning_for_llms_complex_rea.md)
-- [Math Neurosurgery: Isolating Language Models' Math Reasoning Abilities Using Only Forward Passes](../../ACL2025/llm_nlp/mathneuro_math_reasoning_isolation.md)
-- [Boosting LLM's Molecular Structure Elucidation with Knowledge Enhanced Tree Search Reasoning](../../ACL2025/llm_nlp/boosting_llms_molecular_structure_elucidation_with_knowledge_enhanced_tree_searc.md)
-- [Classifying Unreliable Narrators with Large Language Models](../../ACL2025/llm_nlp/classifying_unreliable_narrators.md)
-- [DiSCo: Device-Server Collaborative LLM-Based Text Streaming Services](../../ACL2025/llm_nlp/disco_device-server_collaborative_llm-based_text_streaming_services.md)
+- [Unifying Attention Heads and Task Vectors via Hidden State Geometry in In-Context Learning](../../NeurIPS2025/llm_nlp/unifying_attention_heads_and_task_vectors_via_hidden_state_geometry_in_in-contex.md)
+- [Meta-RL Induces Exploration in Language Agents](../../ICLR2026/llm_nlp/meta-rl_induces_exploration_in_language_agents.md)
+- [Beyond Output Matching: Bidirectional Alignment for Enhanced In-Context Learning](../../ACL2025/llm_nlp/beyond_output_matching_bidirectional_alignment_for_enhanced_in-context_learning.md)
+- [Beyond In-Context Learning: Aligning Long-form Generation of LLMs via Task-Inherent Attribute Guidelines](../../ACL2025/llm_nlp/beyond_in-context_learning_aligning_long-form_generation_of_large_language_model.md)
+- [System Prompt Optimization with Meta-Learning](../../NeurIPS2025/llm_nlp/system_prompt_optimization_with_meta-learning.md)
 
 <!-- RELATED:END -->

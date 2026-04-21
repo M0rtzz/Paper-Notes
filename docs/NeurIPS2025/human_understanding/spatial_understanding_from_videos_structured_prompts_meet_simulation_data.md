@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spatial Understanding from Videos: Structured Prompts Meet Simulation Data
 description: >-

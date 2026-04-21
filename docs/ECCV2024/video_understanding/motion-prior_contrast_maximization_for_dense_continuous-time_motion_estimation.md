@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Motion-prior Contrast Maximization for Dense Continuous-Time Motion Estimation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Practical Guide for Incorporating Symmetry in Diffusion Policy
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ∇-Reasoner: LLM Reasoning via Test-Time Gradient Descent in Latent Space
 description: >-

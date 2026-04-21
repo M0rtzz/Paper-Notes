@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AttentionPredictor: Temporal Patterns Matter for KV Cache Compression
 description: >-

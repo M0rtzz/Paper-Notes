@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fully Dynamic Euclidean Bi-Chromatic Matching in Sublinear Update Time
 description: >-

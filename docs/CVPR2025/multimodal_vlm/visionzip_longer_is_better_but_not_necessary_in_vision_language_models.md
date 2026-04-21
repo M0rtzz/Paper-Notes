@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VisionZip: Longer is Better but Not Necessary in Vision Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cross-Platform Video Person ReID: A New Benchmark Dataset and Adaptation Approach
 description: >-

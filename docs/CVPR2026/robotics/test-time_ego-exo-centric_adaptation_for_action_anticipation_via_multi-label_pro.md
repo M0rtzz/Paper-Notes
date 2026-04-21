@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Test-time Ego-Exo-centric Adaptation for Action Anticipation via Multi-Label Prototype Growing and Dual-Clue Consistency
 description: >-

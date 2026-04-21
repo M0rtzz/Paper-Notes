@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mask-Adapter: The Devil is in the Masks for Open-Vocabulary Segmentation
 description: >-
@@ -137,7 +137,7 @@ Mask-Adapter 作为即插即用模块插入任何基于 mask pooling 的 OVS 方
 - [Effective SAM Combination for Open-Vocabulary Semantic Segmentation](effective_sam_combination_for_open-vocabulary_semantic_segmentation.md)
 - [DeCLIP: Decoupled Learning for Open-Vocabulary Dense Perception](declip_decoupled_learning_for_open-vocabulary_dense_perception.md)
 - [DPSeg: Dual-Prompt Cost Volume Learning for Open-Vocabulary Semantic Segmentation](dpseg_dual-prompt_cost_volume_learning_for_open-vocabulary_semantic_segmentation.md)
-- [CorrCLIP: Reconstructing Patch Correlations in CLIP for Open-Vocabulary Semantic Segmentation](../../ICCV2025/segmentation/corrclip_reconstructing_patch_correlations_in_clip_for_openv.md)
-- [SCORE: Scene Context Matters in Open-Vocabulary Remote Sensing Instance Segmentation](../../ICCV2025/segmentation/score_scene_context_matters_in_open-vocabulary_remote_sensing_instance_segmentat.md)
+- [Semantic Library Adaptation: LoRA Retrieval and Fusion for Open-Vocabulary Semantic Segmentation](semantic_library_adaptation_lora_retrieval_and_fusion_for_open-vocabulary_semant.md)
+- [Fine-Grained Image-Text Correspondence with Cost Aggregation for Open-Vocabulary Part Segmentation](fine-grained_image-text_correspondence_with_cost_aggregation_for_open-vocabulary.md)
 
 <!-- RELATED:END -->

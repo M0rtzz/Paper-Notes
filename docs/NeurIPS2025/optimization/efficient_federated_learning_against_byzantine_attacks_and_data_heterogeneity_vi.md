@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Federated Learning against Byzantine Attacks and Data Heterogeneity via Aggregating Normalized Gradients
 description: >-
@@ -142,8 +142,8 @@ Fed-NGA 是唯一同时满足非凸损失支持、non-IID 鲁棒性、线性聚�
 
 - [Streaming Federated Learning with Markovian Data](streaming_federated_learning_with_markovian_data.md)
 - [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
+- [Model Poisoning Attacks to Federated Learning via Multi-Round Consistency](../../CVPR2025/optimization/model_poisoning_attacks_to_federated_learning_via_multi-round_consistency.md)
 - [Efficient Adaptive Federated Optimization](efficient_adaptive_federated_optimization.md)
 - [Data Heterogeneity and Forgotten Labels in Split Federated Learning](../../AAAI2026/optimization/data_heterogeneity_and_forgotten_labels_in_split_federated_learning.md)
-- [MAR-FL: A Communication Efficient Peer-to-Peer Federated Learning System](mar-fl_a_communication_efficient_peer-to-peer_federated_learning_system.md)
 
 <!-- RELATED:END -->

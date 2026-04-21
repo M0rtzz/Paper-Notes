@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GateRA: Token-Aware Modulation for Parameter-Efficient Fine-Tuning
 description: >-
@@ -126,7 +126,7 @@ $\mathcal{L} = \mathcal{L}_{\text{task}} + \lambda \mathcal{L}_{\text{ent}}$，�
 - [TokenSeek: Memory Efficient Fine Tuning via Instance-Aware Token Ditching](../../ICLR2026/interpretability/tokenseek_memory_efficient_fine_tuning_via_instance-aware_token_ditching.md)
 - [iMAD: Intelligent Multi-Agent Debate for Efficient and Accurate LLM Inference](imad_intelligent_multi-agent_debate_for_efficient_and_accura.md)
 - [ShapBPT: Image Feature Attributions Using Data-Aware Binary Partition Trees](shapbpt_image_feature_attributions_using_data-aware_binary_partition_trees.md)
-- [Curvature Tuning: Provable Training-free Model Steering From a Single Parameter](../../NeurIPS2025/interpretability/curvature_tuning_provable_training-free_model_steering_from_a_single_parameter.md)
+- [FineVAU: A Novel Human-Aligned Benchmark for Fine-Grained Video Anomaly Understanding](finevau_a_novel_human-aligned_benchmark_for_fine-grained_video_anomaly_understan.md)
 - [SparK: Query-Aware Unstructured Sparsity with Recoverable KV Cache Channel Pruning](spark_query-aware_unstructured_sparsity_with_recoverable_kv_cache_channel_prunin.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SPIN: Hierarchical Segmentation with Subpart Granularity in Natural Images
 description: >-

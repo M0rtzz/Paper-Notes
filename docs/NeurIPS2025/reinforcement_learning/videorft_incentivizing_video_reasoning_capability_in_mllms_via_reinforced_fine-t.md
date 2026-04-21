@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VideoRFT: Incentivizing Video Reasoning Capability in MLLMs via Reinforced Fine-Tuning
 description: >-

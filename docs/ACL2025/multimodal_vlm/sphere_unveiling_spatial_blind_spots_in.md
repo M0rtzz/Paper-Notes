@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SPHERE: Unveiling Spatial Blind Spots in Vision-Language Models Through Hierarchical Evaluation
 description: >-

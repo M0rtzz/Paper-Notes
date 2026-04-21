@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Skill-Attributes for Transferable Assessment in Video
 description: >-

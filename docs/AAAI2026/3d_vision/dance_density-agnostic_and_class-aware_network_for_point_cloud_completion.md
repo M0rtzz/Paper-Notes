@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DANCE: Density-Agnostic and Class-Aware Network for Point Cloud Completion
 description: >-
@@ -158,8 +158,8 @@ $$\mathcal{L}_{total} = \lambda \cdot \text{CD}(P^{pred}, P^{GT}) + (1-\lambda) 
 ## 相关论文
 
 - [Class-Partitioned VQ-VAE and Latent Flow Matching for Point Cloud Scene Generation](class-partitioned_vq-vae_and_latent_flow_matching_for_point_cloud_scene_generati.md)
-- [Rethinking Multimodal Point Cloud Completion: A Completion-by-Correction Perspective](rethinking_multimodal_point_cloud_completion_a_completion-by-correction_perspect.md)
 - [ASSIST-3D: Adapted Scene Synthesis for Class-Agnostic 3D Instance Segmentation](assist-3d_adapted_scene_synthesis_for_class-agnostic_3d_instance_segmentation.md)
+- [Rethinking Multimodal Point Cloud Completion: A Completion-by-Correction Perspective](rethinking_multimodal_point_cloud_completion_a_completion-by-correction_perspect.md)
 - [DAPointMamba: Domain Adaptive Point Mamba for Point Cloud Completion](dapointmamba_domain_adaptive_point_mamba_for_point_cloud_completion.md)
 - [Explicitly Guided Information Interaction Network for Cross-modal Point Cloud Completion](../../ECCV2024/3d_vision/explicitly_guided_information_interaction_network_for_cross-modal_point_cloud_co.md)
 

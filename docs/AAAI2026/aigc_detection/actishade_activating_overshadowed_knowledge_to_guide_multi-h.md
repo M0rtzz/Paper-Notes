@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ActiShade: Activating Overshadowed Knowledge to Guide Multi-Hop Reasoning in Large Language Models
 description: >-
@@ -125,6 +125,6 @@ ActiShade是一个迭代式多轮检索框架，每轮包含三个模块：
 - [ASCIIBench: Evaluating Language-Model-Based Understanding of Visually-Oriented Text](../../NeurIPS2025/aigc_detection/asciibench_evaluating_language-model-based_understanding_of_visually-oriented_te.md)
 - [Optimized Algorithms for Text Clustering with LLM-Generated Constraints](optimized_algorithms_for_text_clustering_with_llm-generated_constraints.md)
 - [BAID: A Benchmark for Bias Assessment of AI Detectors](baid_a_benchmark_for_bias_assessment_of_ai_detectors.md)
-- [DMAP: A Distribution Map for Text](../../ICLR2026/aigc_detection/dmap_a_distribution_map_for_text.md)
+- [Fine-grained Image Aesthetic Assessment: Learning Discriminative Scores from Relative Ranks](../../CVPR2026/aigc_detection/fine-grained_image_aesthetic_assessment_learning_discriminative_scores_from_rela.md)
 
 <!-- RELATED:END -->

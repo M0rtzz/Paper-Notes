@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GUIDE: A Benchmark for Understanding and Assisting Users in Open-Ended GUI Tasks
 description: >-

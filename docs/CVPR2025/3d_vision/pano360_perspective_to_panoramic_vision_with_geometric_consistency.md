@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Pano360: Perspective to Panoramic Vision with Geometric Consistency
 description: >-
@@ -131,10 +131,10 @@ tags:
 
 ## 相关论文
 
+- [Doppelgangers++: Improved Visual Disambiguation with Geometric 3D Features](doppelgangers_improved_visual_disambiguation_with_geometric_3d_features.md)
+- [3D-LLaVA: Towards Generalist 3D LMMs with Omni Superpoint Transformer](3d-llava_towards_generalist_3d_lmms_with_omni_superpoint_transformer.md)
+- [HeatFormer: A Neural Optimizer for Multiview Human Mesh Recovery](heatformer_a_neural_optimizer_for_multiview_human_mesh_recovery.md)
+- [RDD: Robust Feature Detector and Descriptor Using Deformable Transformer](rdd_robust_feature_detector_and_descriptor_using_deformable_transformer.md)
 - [End-to-End Implicit Neural Representations for Classification](end-to-end_implicit_neural_representations_for_classification.md)
-- [GA3CE: Unconstrained 3D Gaze Estimation with Gaze-Aware 3D Context Encoding](ga3ce_unconstrained_3d_gaze_estimation_with_gaze-aware_3d_context_encoding.md)
-- [MVGenMaster: Scaling Multi-View Generation from Any Image via 3D Priors Enhanced Diffusion Model](mvgenmaster_scaling_multi-view_generation_from_any_image_via_3d_priors_enhanced_.md)
-- [MeshArt: Generating Articulated Meshes with Structure-Guided Transformers](meshart_generating_articulated_meshes_with_structure-guided_transformers.md)
-- [End-to-End HOI Reconstruction Transformer with Graph-based Encoding](end-to-end_hoi_reconstruction_transformer_with_graph-based_encoding.md)
 
 <!-- RELATED:END -->

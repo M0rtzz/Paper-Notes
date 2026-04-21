@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Soft Reasoning: Navigating Solution Spaces in Large Language Models through Controlled Embedding Exploration
 description: >-

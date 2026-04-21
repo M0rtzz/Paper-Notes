@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] Joint Optimization of Neural Radiance Fields and Continuous Camera Motion from a Monocular Video
 description: >-
-  [CVPR 2025][NeRF + pose estimation] 提出 CoPE-NeRF，将相机运动建模为连续角速度和速度，结合时间依赖 NeRF 和多种一致性约束，无需深度先验即可从单目视频联合优化相机位姿和场景几何。
+  [CVPR 2025][3D视觉][NeRF] 将相机运动建模为时间连续的角速度和线速度，通过速度积分避免直接优化大范围 camera-to-world 变换，结合时间依赖 NeRF 和 SDF flow 约束，无需深度先验即可从单目视频联合优化位姿和场景几何。
 tags:
   - CVPR 2025
+  - 3D视觉
   - NeRF
-  - camera pose estimation
+  - 位姿估计
   - continuous motion
   - SDF
-  - 单目视频
+  - velocity integration
+  - prior-free
 ---
 
 # Joint Optimization of Neural Radiance Fields and Continuous Camera Motion from a Monocular Video
@@ -150,9 +152,9 @@ $$\mathcal{L} = \mathcal{L}_{rgb} + \lambda_1 \mathcal{L}_{eik} + \lambda_2 \mat
 ## 相关论文
 
 - [Exploiting Deblurring Networks for Radiance Fields](exploiting_deblurring_networks_for_radiance_fields.md)
+- [RelationField: Relate Anything in Radiance Fields](relationfield_relate_anything_in_radiance_fields.md)
+- [PBR-NeRF: Inverse Rendering with Physics-Based Neural Fields](pbr-nerf_inverse_rendering_with_physics-based_neural_fields.md)
 - [4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video](4dequine_disentangling_motion_and_appearance_for_4d_equine_reconstruction_from_m.md)
 - [Dynamic Neural Radiance Field from Defocused Monocular Video](../../ECCV2024/3d_vision/dynamic_neural_radiance_field_from_defocused_monocular_video.md)
-- [MP-SfM: Monocular Surface Priors for Robust Structure-from-Motion](mp-sfm_monocular_surface_priors_for_robust_structure-from-motion.md)
-- [BeNeRF: Neural Radiance Fields from a Single Blurry Image and Event Stream](../../ECCV2024/3d_vision/benerf_neural_radiance_fields_from_a_single_blurry_image_and_event_stream.md)
 
 <!-- RELATED:END -->

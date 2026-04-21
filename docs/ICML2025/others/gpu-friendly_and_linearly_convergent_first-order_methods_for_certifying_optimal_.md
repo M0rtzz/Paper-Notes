@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GPU-friendly and Linearly Convergent First-order Methods for Certifying Optimal $k$-sparse GLMs
 description: >-

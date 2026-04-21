@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scalable Vision-Guided Crop Yield Estimation
 description: >-
@@ -136,8 +136,8 @@ CV 模型使用 ResNet-50 在 ImageNet 预训练权重上微调，最小化 MSE 
 
 - [LLM-as-a-Judge for Scalable Test Coverage Evaluation](llm-as-a-judge_for_scalable_test_coverage_evaluation_accuracy_operational_reliab.md)
 - [VisFocus: Prompt-Guided Vision Encoders for OCR-Free Dense Document Understanding](../../ECCV2024/llm_evaluation/visfocus_prompt-guided_vision_encoders_for_ocr-free_dense_document_understanding.md)
-- [RefineVAD: Semantic-Guided Feature Recalibration for Weakly Supervised Video Anomaly Detection](refinevad_semantic-guided_feature_recalibration_for_weakly_supervised_video_anom.md)
 - [GDBA Revisited: Unleashing the Power of Guided Local Search for Distributed Constraint Optimization](gdba_revisited_unleashing_the_power_of_guided_local_search_for_distributed_const.md)
+- [RefineVAD: Semantic-Guided Feature Recalibration for Weakly Supervised Video Anomaly Detection](refinevad_semantic-guided_feature_recalibration_for_weakly_supervised_video_anom.md)
 - [Flow3r: Factored Flow Prediction for Scalable Visual Geometry Learning](../../CVPR2026/llm_evaluation/flow3r_factored_flow_prediction_for_scalable_visual_geometry_learning.md)
 
 <!-- RELATED:END -->

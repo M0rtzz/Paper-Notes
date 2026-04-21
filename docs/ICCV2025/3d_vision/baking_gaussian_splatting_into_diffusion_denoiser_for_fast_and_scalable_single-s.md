@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Baking Gaussian Splatting into Diffusion Denoiser for Fast and Scalable Single-stage Image-to-3D Generation and Reconstruction
 description: >-

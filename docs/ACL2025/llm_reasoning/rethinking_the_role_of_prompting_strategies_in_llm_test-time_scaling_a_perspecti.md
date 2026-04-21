@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking the Role of Prompting Strategies in LLM Test-Time Scaling: A Perspective of Probability Theory
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving Region Representation Learning from Urban Imagery with Noisy Long-Caption Supervision
 description: >-

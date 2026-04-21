@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ReScene4D: Temporally Consistent Semantic Instance Segmentation of Evolving Indoor 3D Scenes
 description: >-

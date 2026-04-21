@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Show-o2: Improved Native Unified Multimodal Models
 description: >-

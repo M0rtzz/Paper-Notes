@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Seeing is Believing? Mitigating OCR Hallucinations in Multimodal Large Language Models
 description: >-

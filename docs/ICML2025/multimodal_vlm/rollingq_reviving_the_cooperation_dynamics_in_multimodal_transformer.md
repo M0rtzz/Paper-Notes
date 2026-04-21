@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RollingQ: Reviving the Cooperation Dynamics in Multimodal Transformer
 description: >-

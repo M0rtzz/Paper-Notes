@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] KokoroChat: A Japanese Psychological Counseling Dialogue Dataset Collected via Role-Playing by Trained Counselors
 description: >-

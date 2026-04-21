@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DenseGRPO: From Sparse to Dense Reward for Flow Matching Model Alignment
 description: >-

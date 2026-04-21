@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning
 description: >-
@@ -90,9 +90,9 @@ tags:
 ## 相关论文
 
 - [Dexterous Manipulation Transfer via Progressive Kinematic-Dynamic Alignment](../../AAAI2026/human_understanding/dexterous_manipulation_transfer_via_progressive_kinematic-dynamic_alignment.md)
+- [Two by Two: Learning Multi-Task Pairwise Objects Assembly for Generalizable Robot Manipulation](two_by_two_learning_multi-task_pairwise_objects_assembly_for_generalizable_robot.md)
+- [GigaHands: A Massive Annotated Dataset of Bimanual Hand Activities](gigahands_a_massive_annotated_dataset_of_bimanual_hand_activities.md)
 - [BiPreManip: Learning Affordance-Based Bimanual Preparatory Manipulation through Anticipatory Collaboration](../../CVPR2026/human_understanding/bipremanip_learning_affordance-based_bimanual_preparatory_manipulation_through_a.md)
 - [Less is More: Efficient Model Merging with Binary Task Switch](less_is_more_efficient_model_merging_with_binary_task_switch.md)
-- [Two is Better than One: Efficient Ensemble Defense for Robust and Compact Models](two_is_better_than_one_efficient_ensemble_defense_for_robust_and_compact_models.md)
-- [Learning Physics-Based Full-Body Human Reaching and Grasping from Brief Walking References](learning_physics-based_full-body_human_reaching_and_grasping_from_brief_walking_.md)
 
 <!-- RELATED:END -->

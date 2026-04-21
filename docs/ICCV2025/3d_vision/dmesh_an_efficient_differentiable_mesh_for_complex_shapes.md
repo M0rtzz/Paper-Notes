@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DMesh++: An Efficient Differentiable Mesh for Complex Shapes
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LongDocURL: a Comprehensive Multimodal Long Document Benchmark Integrating Understanding, Reasoning, and Locating
 description: >-
@@ -146,6 +146,6 @@ LongDocURL 的构建包含四模块半自动流水线：(1) **Extract & Filter**
 - [Towards Comprehensive Scene Understanding: Integrating First and Third-Person Views for LVLMs](../../NeurIPS2025/multimodal_vlm/towards_comprehensive_scene_understanding_integrating_first_and_third-person_vie.md)
 - [URaG: Unified Retrieval and Generation in Multimodal LLMs for Efficient Long Document Understanding](../../AAAI2026/multimodal_vlm/urag_unified_retrieval_and_generation_in_multimodal_llms_for.md)
 - [ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)
-- [CrafText Benchmark: Advancing Instruction Following in Complex Multimodal Open-Ended World](craftext_benchmark_advancing_instruction_following_in_complex_multimodal_open-en.md)
+- [EffiVLM-Bench: A Comprehensive Benchmark for Evaluating Training-Free Acceleration in Large Vision-Language Models](effivlm_bench_vlm_acceleration.md)
 
 <!-- RELATED:END -->

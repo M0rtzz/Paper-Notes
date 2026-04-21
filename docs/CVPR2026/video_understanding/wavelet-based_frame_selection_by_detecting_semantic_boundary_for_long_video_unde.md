@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Wavelet-based Frame Selection by Detecting Semantic Boundary for Long Video Understanding
 description: >-

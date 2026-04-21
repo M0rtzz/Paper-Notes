@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning in Stackelberg Mean Field Games: A Non-Asymptotic Analysis
 description: >-

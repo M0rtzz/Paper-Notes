@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AMLRIS: Alignment-aware Masked Learning for Referring Image Segmentation
 description: >-

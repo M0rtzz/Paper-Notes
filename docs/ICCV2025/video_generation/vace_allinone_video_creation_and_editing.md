@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] VACE: All-in-One Video Creation and Editing
 description: >-
-  [ICCV 2025][视频理解][统一框架] 提出VACE统一视频创建和编辑框架，通过Video Condition Unit(VCU)将文本/图像/视频/掩码统一为条件输入，结合Context Adapter注入任务概念到DiT模型，首次在单一视频DiT中同时支持参考生成、视频编辑、掩码编辑及其自由组合。
+  [ICCV 2025][统一框架] 提出VACE统一视频创建和编辑框架，通过Video Condition Unit(VCU)将文本/图像/视频/掩码统一为条件输入，结合Context Adapter注入任务概念到DiT模型，首次在单一视频DiT中同时支持参考生成、视频编辑、掩码编辑及其自由组合。
 tags:
   - ICCV 2025
-  - 视频理解
   - 统一框架
   - DiT
   - Video Condition Unit
@@ -120,8 +119,8 @@ tags:
 
 - [MagicDrive-V2: High-Resolution Long Video Generation for Autonomous Driving with Adaptive Control](magicdrive-v2_high-resolution_long_video_generation_for_autonomous_driving_with_.md)
 - [OmniHuman-1: Rethinking the Scaling-Up of One-Stage Conditioned Human Animation Models](omnihuman-1_rethinking_the_scaling-up_of_one-stage_conditioned_human_animation_m.md)
-- [Generating, Fast and Slow: Scalable Parallel Video Generation with Video Interface Networks](generating_fast_and_slow_scalable_parallel_video_generation_with_video_interface.md)
-- [DreamRelation: Relation-Centric Video Customization](dreamrelation_relation-centric_video_customization.md)
-- [STiV: Scalable Text and Image Conditioned Video Generation](stiv_scalable_text_and_image_conditioned_video_generation.md)
+- [Visual Prompting for One-Shot Controllable Video Editing Without Inversion](../../CVPR2025/video_generation/visual_prompting_for_one-shot_controllable_video_editing_without_inversion.md)
+- [AID: Adapting Image2Video Diffusion Models for Instruction-guided Video Prediction](aid_adapting_image2video_diffusion_models_for_instruction-guided_video_predictio.md)
+- [SketchVideo: Sketch-Based Video Generation and Editing](../../CVPR2025/video_generation/sketchvideo_sketch-based_video_generation_and_editing.md)
 
 <!-- RELATED:END -->

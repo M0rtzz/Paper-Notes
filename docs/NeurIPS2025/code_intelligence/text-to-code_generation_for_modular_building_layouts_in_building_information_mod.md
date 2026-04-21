@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Text-to-Code Generation for Modular Building Layouts in Building Information Modeling
 description: >-
@@ -132,6 +132,6 @@ tags:
 - [Embedding Alignment in Code Generation for Audio](embedding_alignment_in_code_generation_for_audio.md)
 - [MaintainCoder: Maintainable Code Generation Under Dynamic Requirements](maintaincoder_maintainable_code_generation_under_dynamic_requirements.md)
 - [QiMeng-SALV: Signal-Aware Learning for Verilog Code Generation](qimeng-salv_signal-aware_learning_for_verilog_code_generation.md)
-- [GiFT: Gibbs Fine-Tuning for Code Generation](../../ACL2025/code_intelligence/gift_gibbs_fine_tuning_code_gen.md)
+- [EpiCoder: Encompassing Diversity and Complexity in Code Generation](../../ICML2025/code_intelligence/epicoder_encompassing_diversity_and_complexity_in_code_generation.md)
 
 <!-- RELATED:END -->

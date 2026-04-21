@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AID-AppEAL: Automatic Image Dataset and Algorithm for Content Appeal Enhancement and Assessment Labeling
 description: >-

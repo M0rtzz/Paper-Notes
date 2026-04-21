@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Critic-V: VLM Critics Help Catch VLM Errors in Multimodal Reasoning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OmniPT: Unleashing the Potential of Large Vision Language Models for Pedestrian Tracking and Understanding
 description: >-
@@ -149,8 +149,8 @@ OmniPT基于预训练的LVLM（Qwen2.5-VL），采用**RL → Mid Training → S
 
 - [NavGPT-2: Unleashing Navigational Reasoning Capability for Large Vision-Language Models](../../ECCV2024/multimodal_vlm/navgpt-2_unleashing_navigational_reasoning_capability_for_large_vision-language_.md)
 - [Devil is in Narrow Policy: Unleashing Exploration in Driving VLA Models](../../CVPR2026/multimodal_vlm/devil_is_in_narrow_policy_unleashing_exploration_in_driving_vla_models.md)
-- [Bridging the Copyright Gap: Do Large Vision-Language Models Recognize and Respect Copyrighted Content?](bridging_the_copyright_gap_do_large_vision-language_models_r.md)
 - [Understanding Task Transfer in Vision-Language Models](../../CVPR2026/multimodal_vlm/understanding_task_transfer_in_vision-language_models.md)
+- [Bridging the Copyright Gap: Do Large Vision-Language Models Recognize and Respect Copyrighted Content?](bridging_the_copyright_gap_do_large_vision-language_models_r.md)
 - [Global Compression Commander: Plug-and-Play Inference Acceleration for High-Resolution Large Vision-Language Models](global_compression_commander_plug-and-play_inference_acceler.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bits Leaked per Query: Information-Theoretic Bounds on Adversarial Attacks Against LLMs
 description: >-
@@ -128,7 +128,7 @@ $\log N$ vs $\log I(Z;T)$ 的散点图拟合（7 个 LLM，3 个攻击场景）�
 - [On the Robustness of Verbal Confidence of LLMs in Adversarial Attacks](on_the_robustness_of_verbal_confidence_of_llms_in_adversarial_attacks.md)
 - [MixAT: Combining Continuous and Discrete Adversarial Training for LLMs](mixat_combining_continuous_and_discrete_adversarial_training_for_llms.md)
 - [TIP of the Iceberg: Task-in-Prompt Adversarial Attacks on LLMs](../../ACL2025/ai_safety/tip_iceberg_adversarial_attacks.md)
-- [An Information Theoretic Evaluation Metric for Strong Unlearning](../../AAAI2026/ai_safety/an_information_theoretic_evaluation_metric_for_strong_unlear.md)
+- [An Information Theoretic Evaluation Metric for Strong Unlearning](../../AAAI2026/ai_safety/an_information_theoretic_evaluation_metric_for_strong_unlearning.md)
 - [Trans-EnV: A Framework for Evaluating the Linguistic Robustness of LLMs Against English Varieties](trans-env_a_framework_for_evaluating_the_linguistic_robustness_of_llms_against_e.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gaming the Answer Matcher: Examining the Impact of Text Manipulation on Automated Judgment
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RADIO: Rate-Distortion Optimization for Large Language Model Compression
 description: >-
@@ -144,6 +144,6 @@ RADIO 是后训练方法，不涉及梯度训练。其优化过程是：
 - [Reinforced Rate Control for Neural Video Compression via Inter-Frame Rate-Distortion Awareness](../../AAAI2026/model_compression/reinforced_rate_control_for_neural_video_compression_via_inter-frame_rate-distor.md)
 - [Vision-centric Token Compression in Large Language Model](../../NeurIPS2025/model_compression/vision-centric_token_compression_in_large_language_model.md)
 - [DRPruning: Efficient Large Language Model Pruning through Distributionally Robust Optimization](../../ACL2025/model_compression/drpruning_robust_pruning.md)
-- [Persistent Topological Features in Large Language Models](persistent_topological_features_in_large_language_models.md)
+- [Weak-to-Strong Jailbreaking on Large Language Models](weak-to-strong_jailbreaking_on_large_language_models.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] F-Adapter: Frequency-Adaptive Parameter-Efficient Fine-Tuning in Scientific Machine Learning
 description: >-

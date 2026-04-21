@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Brewing Stronger Features: Dual-Teacher Distillation for Multispectral Earth Observation
 description: >-

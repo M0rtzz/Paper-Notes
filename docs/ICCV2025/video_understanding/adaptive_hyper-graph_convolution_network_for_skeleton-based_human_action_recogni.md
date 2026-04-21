@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adaptive Hyper-Graph Convolution Network for Skeleton-Based Human Action Recognition
 description: >-

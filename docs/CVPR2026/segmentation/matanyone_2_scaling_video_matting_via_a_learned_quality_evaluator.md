@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MatAnyone 2: Scaling Video Matting via a Learned Quality Evaluator
 description: >-

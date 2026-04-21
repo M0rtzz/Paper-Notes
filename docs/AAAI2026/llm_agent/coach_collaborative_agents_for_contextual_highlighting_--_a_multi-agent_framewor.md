@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] COACH: Collaborative Agents for Contextual Highlighting -- A Multi-Agent Framework for Sports Video Analysis
 description: >-

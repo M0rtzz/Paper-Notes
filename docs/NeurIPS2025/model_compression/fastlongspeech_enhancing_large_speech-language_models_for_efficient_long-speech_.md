@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FastLongSpeech: Enhancing Large Speech-Language Models for Efficient Long-Speech Processing
 description: >-
@@ -190,8 +190,8 @@ $$L_{dct} = -\sum_{L \sim \mathcal{U}(\mathbf{L})} \log p(\mathbf{y} \mid \mathb
 
 ## 相关论文
 
-- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
 - [Hyperbolic Fine-Tuning for Large Language Models](hyperbolic_fine-tuning_for_large_language_models.md)
+- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
 - [LaCache: Ladder-Shaped KV Caching for Efficient Long-Context Modeling of Large Language Models](../../ICML2025/model_compression/lacache_ladder-shaped_kv_caching_for_efficient_long-context_modeling_of_large_la.md)
 - [Correlation Dimension of Auto-Regressive Large Language Models](correlation_dimension_of_auto-regressive_large_language_models.md)
 - [Restoring Pruned Large Language Models via Lost Component Compensation](restoring_pruned_large_language_models_via_lost_component_compensation.md)

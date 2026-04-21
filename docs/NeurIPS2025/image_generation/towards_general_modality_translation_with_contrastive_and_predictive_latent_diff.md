@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards General Modality Translation with Contrastive and Predictive Latent Diffusion Bridge
 description: >-
@@ -148,7 +148,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{bridge}} + \mathcal{L}_{\text{pred}} + \mathc
 - [System-Embedded Diffusion Bridge Models](system-embedded_diffusion_bridge_models.md)
 - [CORAL: Disentangling Latent Representations in Long-Tailed Diffusion](coral_disentangling_latent_representations_in_longtailed_dif.md)
 - [EBDM: Exemplar-guided Image Translation with Brownian-bridge Diffusion Models](../../ECCV2024/image_generation/ebdm_exemplar-guided_image_translation_with_brownian-bridge_diffusion_models.md)
-- [LoRACLR: Contrastive Adaptation for Customization of Diffusion Models](../../CVPR2025/image_generation/loraclr_contrastive_adaptation_for_customization_of_diffusion_models.md)
 - [Contrastive Flow Matching (ΔFM)](../../ICCV2025/image_generation/contrastive_flow_matching.md)
+- [LoRACLR: Contrastive Adaptation for Customization of Diffusion Models](../../CVPR2025/image_generation/loraclr_contrastive_adaptation_for_customization_of_diffusion_models.md)
 
 <!-- RELATED:END -->

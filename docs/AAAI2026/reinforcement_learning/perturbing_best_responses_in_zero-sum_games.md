@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Perturbing Best Responses in Zero-Sum Games
 description: >-

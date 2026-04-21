@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Atom of Thoughts for Markov LLM Test-Time Scaling
 description: >-

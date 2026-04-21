@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] High Dynamic Range Novel View Synthesis with Single Exposure
 description: >-
@@ -205,7 +205,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{ldr}} + \alpha \mathcal{L}_{\text{hdr}} + \be
 - [SeHDR: Single-Exposure HDR Novel View Synthesis via 3D Gaussian Bracketing](../../ICCV2025/3d_vision/sehdr_single-exposure_hdr_novel_view_synthesis_via_3d_gaussian_bracketing.md)
 - [Dynamic Novel View Synthesis in High Dynamic Range](../../ICLR2026/3d_vision/dynamic_novel_view_synthesis_in_high_dynamic_range.md)
 - [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](../../CVPR2026/3d_vision/instanthdr_singleforward_gaussian_splatting_for_hi.md)
+- [Dual Exposure Stereo for Extended Dynamic Range 3D Imaging](../../CVPR2025/3d_vision/dual_exposure_stereo_for_extended_dynamic_range_3d_imaging.md)
 - [NerfBaselines: Consistent and Reproducible Evaluation of Novel View Synthesis Methods](../../NeurIPS2025/3d_vision/nerfbaselines_consistent_and_reproducible_evaluation_of_novel_view_synthesis_met.md)
-- [Learning Neural Exposure Fields for View Synthesis](../../NeurIPS2025/3d_vision/learning_neural_exposure_fields_for_view_synthesis.md)
 
 <!-- RELATED:END -->

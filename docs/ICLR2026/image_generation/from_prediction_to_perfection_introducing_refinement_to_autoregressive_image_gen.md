@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Prediction to Perfection: Introducing Refinement to Autoregressive Image Generation
 description: >-
@@ -166,6 +166,6 @@ TensorAR 将 token 序列 $[x_1, x_2, ..., x_T]$ 重组为重叠 tensor 序列�
 - [Autoregressive Image Generation with Randomized Parallel Decoding](autoregressive_image_generation_with_randomized_parallel_decoding.md)
 - [Locality-aware Parallel Decoding for Efficient Autoregressive Image Generation](locality-aware_parallel_decoding_for_efficient_autoregressive_image_generation.md)
 - [Visual Autoregressive Modeling for Instruction-Guided Image Editing](visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
-- [Watermarking Autoregressive Image Generation](../../NeurIPS2025/image_generation/watermarking_autoregressive_image_generation.md)
+- [SSG: Scaled Spatial Guidance for Multi-Scale Visual Autoregressive Generation](ssg_scaled_spatial_guidance_for_multi-scale_visual_autoregressive_generation.md)
 
 <!-- RELATED:END -->

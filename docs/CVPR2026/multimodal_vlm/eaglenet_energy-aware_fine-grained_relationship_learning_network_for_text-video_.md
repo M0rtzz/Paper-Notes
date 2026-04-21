@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EagleNet: Energy-Aware Fine-Grained Relationship Learning Network for Text-Video Retrieval
 description: >-
@@ -137,6 +137,6 @@ EagleNet 以 CLIP 为骨干网络，包含两个核心模块：(1) **Fine-Graine
 - [Heterogeneous Uncertainty-Guided Composed Image Retrieval with Fine-Grained Probabilistic Learning](../../AAAI2026/multimodal_vlm/heterogeneous_uncertainty-guided_composed_image_retrieval_with_fine-grained_prob.md)
 - [Fine-Grained Post-Training Quantization for Large Vision Language Models with Quantization-Aware Integrated Gradients](fine-grained_post-training_quantization_for_large_vision_language_models_with_qu.md)
 - [VideoFusion: A Spatio-Temporal Collaborative Network for Multi-modal Video Fusion](videofusion_a_spatiotemporal_collaborative_network.md)
-- [MA-Bench: Towards Fine-grained Micro-Action Understanding](ma-bench_towards_fine-grained_micro-action_understanding.md)
+- [Zina: Multimodal Fine-grained Hallucination Detection and Editing](zina_multimodal_fine-grained_hallucination_detection_and_editing.md)
 
 <!-- RELATED:END -->

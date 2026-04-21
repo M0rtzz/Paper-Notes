@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multi-head Transformers Provably Learn Symbolic Multi-step Reasoning via Gradient Descent
 description: >-

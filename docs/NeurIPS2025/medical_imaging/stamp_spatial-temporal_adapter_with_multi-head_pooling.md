@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] STAMP: Spatial-Temporal Adapter with Multi-Head Pooling
 description: >-
@@ -131,6 +131,6 @@ EEG 数据（$S$ 通道 × $T$ 时间步）→ TSFM（冻结，如 MOMENT-L 385M
 - [Interpretable Next-token Prediction via the Generalized Induction Head](interpretable_next-token_prediction_via_the_generalized_induction_head.md)
 - [3D-RAD: A Comprehensive 3D Radiology Med-VQA Dataset with Multi-Temporal Analysis and Diverse Diagnostic Tasks](3drad_a_comprehensive_3d_radiology_medvqa_dataset_with_multi.md)
 - [Learning Relative Gene Expression Trends from Pathology Images in Spatial Transcriptomics](learning_relative_gene_expression_trends_from_pathology_images_in_spatial_transc.md)
-- [RAD: Towards Trustworthy Retrieval-Augmented Multi-modal Clinical Diagnosis](rad_towards_trustworthy_retrieval-augmented_multi-modal_clinical_diagnosis.md)
+- [A Unified Solution to Video Fusion: From Multi-Frame Learning to Benchmarking](a_unified_solution_to_video_fusion_from_multi-frame_learning_to_benchmarking.md)
 
 <!-- RELATED:END -->

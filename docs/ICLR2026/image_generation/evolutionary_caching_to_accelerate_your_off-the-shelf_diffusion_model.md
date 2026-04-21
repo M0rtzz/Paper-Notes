@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Evolutionary Caching to Accelerate Your Off-the-Shelf Diffusion Model
 description: >-
@@ -206,8 +206,8 @@ ECAD 的 "fastest" 在 2.58x 加速下 COCO FID 仅 19.54，比 ToCa 的 2.35x �
 
 - [Image Can Bring Your Memory Back: A Novel Multi-Modal Guided Attack against Image Generation Model Unlearning](image_can_bring_your_memory_back_a_novel_multi-modal_guided_attack_against_image.md)
 - [Compose Your Policies! Improving Diffusion-based or Flow-based Robot Policies via Test-time Distribution-level Composition](compose_your_policies_improving_diffusion-based_or_flow-based_robot_policies_via.md)
-- [Follow-Your-Shape: Shape-Aware Image Editing via Trajectory-Guided Region Control](follow-your-shape_shape-aware_image_editing_via_trajectory-guided_region_control.md)
 - [ByteEdit: Boost, Comply and Accelerate Generative Image Editing](../../ECCV2024/image_generation/byteedit_boost_comply_and_accelerate_generative_image_editing.md)
 - [ProCache: Constraint-Aware Feature Caching with Selective Computation for Diffusion Transformer Acceleration](../../AAAI2026/image_generation/procache_constraint-aware_feature_caching_with_selective_computation_for_diffusi.md)
+- [Follow-Your-Shape: Shape-Aware Image Editing via Trajectory-Guided Region Control](follow-your-shape_shape-aware_image_editing_via_trajectory-guided_region_control.md)
 
 <!-- RELATED:END -->

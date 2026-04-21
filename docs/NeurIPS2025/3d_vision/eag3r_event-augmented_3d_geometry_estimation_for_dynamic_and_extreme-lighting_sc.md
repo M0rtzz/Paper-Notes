@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EAG3R: Event-Augmented 3D Geometry Estimation for Dynamic and Extreme-Lighting Scenes
 description: >-

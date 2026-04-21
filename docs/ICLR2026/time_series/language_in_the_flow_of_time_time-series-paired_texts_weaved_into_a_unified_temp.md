@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Language in the Flow of Time: Time-Series-Paired Texts Weaved into a Unified Temporal Narrative
 description: >-

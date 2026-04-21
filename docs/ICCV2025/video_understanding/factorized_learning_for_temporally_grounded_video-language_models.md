@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Factorized Learning for Temporally Grounded Video-Language Models
 description: >-

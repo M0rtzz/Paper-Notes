@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HPSU: A Benchmark for Human-Level Perception in Real-World Spoken Speech Understanding
 description: >-

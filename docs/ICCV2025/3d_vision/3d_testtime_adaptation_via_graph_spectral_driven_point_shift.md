@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3D Test-time Adaptation via Graph Spectral Driven Point Shift
 description: >-

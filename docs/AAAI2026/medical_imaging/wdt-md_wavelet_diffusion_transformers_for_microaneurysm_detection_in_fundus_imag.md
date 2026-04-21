@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WDT-MD: Wavelet Diffusion Transformers for Microaneurysm Detection in Fundus Images
 description: >-

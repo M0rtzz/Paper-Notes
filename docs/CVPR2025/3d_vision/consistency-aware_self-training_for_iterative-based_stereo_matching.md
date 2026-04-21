@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Consistency-aware Self-Training for Iterative-based Stereo Matching
 description: >-
@@ -126,6 +126,6 @@ CST-Stereo采用教师-学生自训练框架：教师模型在无标签数据上
 - [PIP-Stereo: Progressive Iterations Pruner for Iterative Optimization based Stereo Matching](../../CVPR2026/3d_vision/pip-stereo_progressive_iterations_pruner_for_iterative_optimization_based_stereo.md)
 - [FoundationStereo: Zero-Shot Stereo Matching](foundationstereo_zero-shot_stereo_matching.md)
 - [U-CAN: Unsupervised Point Cloud Denoising with Consistency-Aware Noise2Noise Matching](../../NeurIPS2025/3d_vision/u-can_unsupervised_point_cloud_denoising_with_consistency-aware_noise2noise_matc.md)
-- [What Makes Good Synthetic Training Data for Zero-Shot Stereo Matching?](../../CVPR2026/3d_vision/what_makes_good_synthetic_training_data_for_zero-shot_stereo_matching.md)
+- [TC-Stereo: Temporally Consistent Stereo Matching](../../ECCV2024/3d_vision/temporally_consistent_stereo_matching.md)
 
 <!-- RELATED:END -->

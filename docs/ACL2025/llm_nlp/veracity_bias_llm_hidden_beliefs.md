@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Veracity Bias and Beyond: Uncovering LLMs' Hidden Beliefs in Problem-Solving Reasoning
 description: >-

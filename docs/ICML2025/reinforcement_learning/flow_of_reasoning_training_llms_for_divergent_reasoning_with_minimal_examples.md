@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Flow of Reasoning: Training LLMs for Divergent Reasoning with Minimal Examples
 description: >-

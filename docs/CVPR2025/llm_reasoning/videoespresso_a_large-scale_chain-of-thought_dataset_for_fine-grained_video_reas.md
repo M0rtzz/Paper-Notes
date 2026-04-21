@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] VideoEspresso: A Large-Scale Chain-of-Thought Dataset for Fine-Grained Video Reasoning via Core Frame Selection
 description: >-
-  [CVPR 2025][LLM推理] VideoEspresso构建了20万+视频CoT推理QA对，提出轻量级核心帧选择器+两阶段证据-推理LVLM框架，仅用2.36帧就超越了GPT-4o和全部开源模型
+  [CVPR 2025][LLM推理][视频链式思维] VideoEspresso 构建了一个20万+的大规模视频CoT推理数据集（包含空间bounding box和时间grounding标注），并提出VideoQA-SC混合框架——用1.5B轻量级模型选择平均2.36个核心帧，再用8B推理模型进行两阶段证据提取+答案生成，以仅1.8%的帧数和14.7%的计算量超越了GPT-4o和所有开源LVLM。
 tags:
   - CVPR 2025
   - LLM推理
-  - 视频推理
-  - 链式思维
-  - 数据集构建
+  - 视频链式思维
+  - 核心帧选择
+  - 视频QA
+  - 多模态推理
+  - 数据集
 ---
 
 # VideoEspresso: A Large-Scale Chain-of-Thought Dataset for Fine-Grained Video Reasoning via Core Frame Selection
@@ -142,9 +144,9 @@ VideoEspresso 构建了一个20万+的大规模视频CoT推理数据集（包含
 ## 相关论文
 
 - [E-comIQ-ZH: A Human-Aligned Dataset and Benchmark for Fine-Grained Evaluation of E-commerce Posters with Chain-of-Thought](../../CVPR2026/llm_reasoning/e-comiq-zh_a_human-aligned_dataset_and_benchmark_for_fine-grained_evaluation_of_.md)
-- [Reason-before-Retrieve: One-Stage Reflective Chain-of-Thoughts for Training-Free Zero-Shot Composed Image Retrieval](reason-before-retrieve_one-stage_reflective_chain-of-thoughts_for_training-free_.md)
-- [Fine-R1: Make Multi-modal LLMs Excel in Fine-Grained Visual Recognition by Chain-of-Thought Reasoning](../../ICLR2026/llm_reasoning/fine-r1_make_multi-modal_llms_excel_in_fine-grained_visual_recognition_by_chain-.md)
 - [Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought](argus_vision-centric_reasoning_with_grounded_chain-of-thought.md)
-- [TRACT: Regression-Aware Fine-tuning Meets Chain-of-Thought Reasoning](../../ACL2025/llm_reasoning/tract_regression_cot.md)
+- [Fine-R1: Make Multi-modal LLMs Excel in Fine-Grained Visual Recognition by Chain-of-Thought Reasoning](../../ICLR2026/llm_reasoning/fine-r1_make_multi-modal_llms_excel_in_fine-grained_visual_recognition_by_chain-.md)
+- [Interleaved-Modal Chain-of-Thought](interleaved-modal_chain-of-thought.md)
+- [Reinforcing Structured Chain-of-Thought for Video Understanding](../../CVPR2026/llm_reasoning/reinforcing_structured_chain-of-thought_for_video_understanding.md)
 
 <!-- RELATED:END -->

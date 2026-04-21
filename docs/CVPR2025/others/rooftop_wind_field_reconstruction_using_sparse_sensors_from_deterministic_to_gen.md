@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods
 description: >-
@@ -152,10 +152,10 @@ tags:
 
 ## 相关论文
 
+- [NeISF++: Neural Incident Stokes Field for Polarized Inverse Rendering of Conductors and Dielectrics](neisf_neural_incident_stokes_field_for_polarized_inverse_rendering_of_conductors.md)
 - [Integration of deep generative Anomaly Detection algorithm in high-speed industrial line](integration_of_deep_generative_anomaly_detection_algorithm_in_high-speed_industr.md)
 - [Instance-wise Supervision-level Optimization in Active Learning](instance-wise_supervision-level_optimization_in_active_learning.md)
+- [Task-Agnostic Guided Feature Expansion for Class-Incremental Learning](task-agnostic_guided_feature_expansion_for_class-incremental_learning.md)
 - [UniPhy: Learning a Unified Constitutive Model for Inverse Physics Simulation](uniphy_learning_a_unified_constitutive_model_for_inverse_physics_simulation.md)
-- [Joint Out-of-Distribution Filtering and Data Discovery Active Learning](joint_out-of-distribution_filtering_and_data_discovery_active_learning.md)
-- [LATTE-MV: Learning to Anticipate Table Tennis Hits from Monocular Videos](latte-mv_learning_to_anticipate_table_tennis_hits_from_monocular_videos.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DEFOM-Stereo: Depth Foundation Model Based Stereo Matching
 description: >-
@@ -132,6 +132,6 @@ DEFOM-Stereo 基于 RAFT-Stereo 框架，整合 Depth Anything V2 (DEFOM)，包�
 - [FoundationStereo: Zero-Shot Stereo Matching](foundationstereo_zero-shot_stereo_matching.md)
 - [Lite Any Stereo: Efficient Zero-Shot Stereo Matching](../../CVPR2026/3d_vision/lite_any_stereo_efficient_zero-shot_stereo_matching.md)
 - [TC-Stereo: Temporally Consistent Stereo Matching](../../ECCV2024/3d_vision/temporally_consistent_stereo_matching.md)
-- [Efficient Depth Estimation for Unstable Stereo Camera Systems on AR Glasses](efficient_depth_estimation_for_unstable_stereo_camera_systems_on_ar_glasses.md)
+- [Stereo Any Video: Temporally Consistent Stereo Matching](../../ICCV2025/3d_vision/stereo_any_video_temporally_consistent_stereo_matching.md)
 
 <!-- RELATED:END -->

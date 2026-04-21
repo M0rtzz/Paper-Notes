@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Kernelized Learning in Polyhedral Games Beyond Full-Information: From Colonel Blotto to Congestion Games
 description: >-

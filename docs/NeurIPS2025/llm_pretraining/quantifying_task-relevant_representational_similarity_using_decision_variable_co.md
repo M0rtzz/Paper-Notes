@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Quantifying Task-Relevant Representational Similarity Using Decision Variable Correlation
 description: >-

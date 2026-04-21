@@ -1,7 +1,18 @@
-﻿---
-title: "Dr. Splat: Directly Referring 3D Gaussian Splatting via Direct Language Embedding Registration"
-description: "绕过渲染直接将CLIP嵌入注册到3D高斯上，结合乘积量化实现无需逐场景优化的高效开放词汇3D场景理解"
-tags: ["3D场景理解", "开放词汇", "3D高斯", "CLIP", "乘积量化", "语义分割", "3D定位"]
+---
+title: >-
+  [论文解读] Dr. Splat: Directly Referring 3D Gaussian Splatting via Direct Language Embedding Registration
+description: >-
+  [CVPR 2025][3D视觉][开放词汇3D理解] 提出 Dr. Splat，绕过渲染过程直接将语言对齐的 CLIP 嵌入注册到 3D 高斯上，结合在大规模图像数据上预训练的乘积量化（PQ）实现 6.25% 的嵌入压缩，在完全不需要逐场景优化的前提下（~10 分钟 vs 现有方法 1-24 小时），在开放词汇 3D 语义分割、3D 物体定位和 3D 物体选择任务上显著超越现有方法。
+tags:
+  - CVPR 2025
+  - 3D视觉
+  - 开放词汇3D理解
+  - 3D高斯
+  - CLIP嵌入
+  - 乘积量化
+  - 特征注册
+  - 语义分割
+  - 3D定位
 ---
 
 # Dr. Splat: Directly Referring 3D Gaussian Splatting via Direct Language Embedding Registration
@@ -120,9 +131,9 @@ Dr. Splat 在不需逐场景优化的前提下超越 OpenGaussian。
 ## 相关论文
 
 - [ReferSplat: Referring Segmentation in 3D Gaussian Splatting](../../ICML2025/3d_vision/refersplat_referring_segmentation_in_3d_gaussian_splatting.md)
-- [Online Language Splatting](../../ICCV2025/3d_vision/online_language_splatting.md)
-- [Per-Gaussian Embedding-Based Deformation for Deformable 3D Gaussian Splatting](../../ECCV2024/3d_vision/per-gaussian_embedding-based_deformation_for_deformable_3d_gaussian_splatting.md)
-- [CLIP-GS: Unifying Vision-Language Representation with 3D Gaussian Splatting](../../ICCV2025/3d_vision/clip-gs_unifying_vision-language_representation_with_3d_gaussian_splatting.md)
-- [LaGa: Tackling View-Dependent Semantics in 3D Language Gaussian Splatting](../../ICML2025/3d_vision/tackling_view-dependent_semantics_in_3d_language_gaussian_splatting.md)
+- [Speedy-Splat: Fast 3D Gaussian Splatting with Sparse Pixels and Sparse Primitives](speedy-splat_fast_3d_gaussian_splatting_with_sparse_pixels_and_sparse_primitives.md)
+- [Morpheus: Text-Driven 3D Gaussian Splat Shape and Color Stylization](morpheus_text-driven_3d_gaussian_splat_shape_and_color_stylization.md)
+- [Segment then Splat: Unified 3D Open-Vocabulary Segmentation via Gaussian Splatting](../../NeurIPS2025/3d_vision/segment_then_splat_unified_3d_open-vocabulary_segmentation_via_gaussian_splattin.md)
+- [DoF-Gaussian: Controllable Depth-of-Field for 3D Gaussian Splatting](dof-gaussian_controllable_depth-of-field_for_3d_gaussian_splatting.md)
 
 <!-- RELATED:END -->

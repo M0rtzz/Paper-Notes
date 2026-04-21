@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLaVA-3D: A Simple yet Effective Pathway to Empowering LMMs with 3D Capabilities
 description: >-

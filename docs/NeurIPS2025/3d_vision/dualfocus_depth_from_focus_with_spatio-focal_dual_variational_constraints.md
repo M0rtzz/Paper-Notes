@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DualFocus: Depth from Focus with Spatio-Focal Dual Variational Constraints
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Latent Swap Joint Diffusion for 2D Long-Form Latent Generation
 description: >-

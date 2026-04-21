@@ -183,10 +183,10 @@ $$\ddot{\epsilon}_\theta(x_t, Q_\emptyset, KV_{\text{visual}}^{\text{content}}) 
 
 ## 相关论文
 
-- [CSD-VAR: Content-Style Decomposition in Visual Autoregressive Models](csd-var_content-style_decomposition_in_visual_autoregressive_models.md)
+- [ReNeg: Learning Negative Embedding with Reward Guidance](../../CVPR2025/image_generation/reneg_learning_negative_embedding_with_reward_guidance.md)
 - [Addressing Text Embedding Leakage in Diffusion-Based Image Editing](addressing_text_embedding_leakage_in_diffusion-based_image_editing.md)
+- [CSD-VAR: Content-Style Decomposition in Visual Autoregressive Models](csd-var_content-style_decomposition_in_visual_autoregressive_models.md)
 - [Visual Generation Without Guidance](../../ICML2025/image_generation/visual_generation_without_guidance.md)
 - [Bitrate-Controlled Diffusion for Disentangling Motion and Content in Video](bitrate-controlled_diffusion_for_disentangling_motion_and_content_in_video.md)
-- [StyleMotif: Multi-Modal Motion Stylization using Style-Content Cross Fusion](stylemotif_multi-modal_motion_stylization_using_style-content_cross_fusion.md)
 
 <!-- RELATED:END -->

@@ -115,10 +115,10 @@ $$\mathbf{h}_{RS}(oldsymbol{x}, t) = \pi(oldsymbol{T}(t) \cdot oldsymbol{x})$
 
 ## 相关论文
 
+- [Reconstructing People, Places, and Cameras](reconstructing_people_places_and_cameras.md)
 - [3DGEER: 3D Gaussian Rendering Made Exact and Efficient for Generic Cameras](../../ICLR2026/3d_vision/3dgeer_3d_gaussian_rendering_made_exact_and_efficient_for_generic_cameras.md)
 - [DirectFisheye-GS: Enabling Native Fisheye Input in Gaussian Splatting with Cross-View Joint Optimization](../../CVPR2026/3d_vision/directfisheye-gs_enabling_native_fisheye_input_in_gaussian_splatting_with_cross-.md)
 - [HyperGS: Hyperspectral 3D Gaussian Splatting](hypergs_hyperspectral_3d_gaussian_splatting.md)
-- [GuardSplat: Efficient and Robust Watermarking for 3D Gaussian Splatting](guardsplat_efficient_and_robust_watermarking_for_3d_gaussian_splatting.md)
-- [IM360: Large-scale Indoor Mapping with 360 Cameras](../../ICCV2025/3d_vision/im360_large-scale_indoor_mapping_with_360_cameras.md)
+- [Mani-GS: Gaussian Splatting Manipulation with Triangular Mesh](mani-gs_gaussian_splatting_manipulation_with_triangular_mesh.md)
 
 <!-- RELATED:END -->

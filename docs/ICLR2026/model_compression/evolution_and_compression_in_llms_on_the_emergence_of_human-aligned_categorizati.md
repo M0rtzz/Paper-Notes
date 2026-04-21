@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Evolution and compression in LLMs: On the emergence of human-aligned categorization
 description: >-

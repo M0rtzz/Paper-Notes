@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MapGCLR: Geospatial Contrastive Learning of Representations for Online Vectorized HD Map Construction
 description: >-

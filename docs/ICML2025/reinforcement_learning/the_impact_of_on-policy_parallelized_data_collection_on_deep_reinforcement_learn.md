@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Impact of On-Policy Parallelized Data Collection on Deep Reinforcement Learning Networks
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DeepVideo-R1: Video Reinforcement Fine-Tuning via Difficulty-aware Regressive GRPO
 description: >-

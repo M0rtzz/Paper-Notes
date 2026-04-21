@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hierarchy-of-Groups Policy Optimization for Long-Horizon Agentic Tasks
 description: >-

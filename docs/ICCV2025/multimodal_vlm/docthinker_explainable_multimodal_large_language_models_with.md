@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DocThinker: Explainable Multimodal Large Language Models with Rule-based Reinforcement Learning for Document Understanding
 description: >-

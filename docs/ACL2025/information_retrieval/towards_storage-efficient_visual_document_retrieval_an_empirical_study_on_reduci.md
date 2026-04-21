@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Storage-Efficient Visual Document Retrieval: An Empirical Study on Reducing Patch-Level Embeddings
 description: >-

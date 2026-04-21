@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Realistic Curriculum Reinforcement Learning for Autonomous and Sustainable Marine Vessel Navigation
 description: >-

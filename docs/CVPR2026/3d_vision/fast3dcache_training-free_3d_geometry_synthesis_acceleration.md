@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fast3Dcache: Training-free 3D Geometry Synthesis Acceleration
 description: >-

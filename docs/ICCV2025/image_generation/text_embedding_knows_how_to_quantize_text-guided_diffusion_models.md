@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Text Embedding Knows How to Quantize Text-Guided Diffusion Models
 description: >-

@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] BlazeBVD: Make Scale-Time Equalization Great Again for Blind Video Deflickering
 description: >-
-  [ECCV2024][视频理解][blind video deflickering] 提出 BlazeBVD，利用经典 Scale-Time Equalization (STE) 在光照直方图空间提取 deflickering 先验（滤波光照图、曝光图、闪烁帧索引），将复杂的视频时空学习简化为 2D 空间网络逐帧处理 + 轻量 3D 时序一致性网络，在盲视频去闪烁任务上实现 SOTA 质量且推理速度比基线快 10 倍以上。
+  [ECCV2024][blind video deflickering] 提出 BlazeBVD，利用经典 Scale-Time Equalization (STE) 在光照直方图空间提取 deflickering 先验（滤波光照图、曝光图、闪烁帧索引），将复杂的视频时空学习简化为 2D 空间网络逐帧处理 + 轻量 3D 时序一致性网络，在盲视频去闪烁任务上实现 SOTA 质量且推理速度比基线快 10 倍以上。
 tags:
   - ECCV2024
-  - 视频理解
   - blind video deflickering
   - histogram
   - scale-time equalization
@@ -135,8 +134,8 @@ BlazeBVD 分为三个阶段，核心思想是利用 STE 在光照直方图空间
 
 - [SIGMark: Scalable In-Generation Watermark with Blind Extraction for Video Diffusion](../../ICLR2026/video_generation/sigmark_scalable_in-generation_watermark_with_blind_extraction_for_video_diffusi.md)
 - [DreamMotion: Space-Time Self-Similar Score Distillation for Zero-Shot Video Editing](dreammotion_space-time_self-similar_score_distillation_for_zero-shot_video_editi.md)
-- [MoFu: Scale-Aware Modulation and Fourier Fusion for Multi-Subject Video Generation](../../AAAI2026/video_generation/mofu_scale-aware_modulation_and_fourier_fusion_for_multi-subject_video_generatio.md)
 - [Aligning Moments in Time using Video Queries](../../ICCV2025/video_generation/aligning_moments_in_time_using_video_queries.md)
-- [TTOM: Test-Time Optimization and Memorization for Compositional Video Generation](../../ICLR2026/video_generation/ttom_test-time_optimization_and_memorization_for_compositional_video_generation.md)
+- [MoFu: Scale-Aware Modulation and Fourier Fusion for Multi-Subject Video Generation](../../AAAI2026/video_generation/mofu_scale-aware_modulation_and_fourier_fusion_for_multi-subject_video_generatio.md)
+- [HOIGen-1M: A Large-Scale Dataset for Human-Object Interaction Video Generation](../../CVPR2025/video_generation/hoigen-1m_a_large-scale_dataset_for_human-object_interaction_video_generation.md)
 
 <!-- RELATED:END -->

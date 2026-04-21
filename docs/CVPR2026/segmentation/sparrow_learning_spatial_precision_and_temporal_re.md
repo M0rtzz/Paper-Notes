@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SPARROW: Learning Spatial Precision and Temporal Referential Consistency in Pixel-Grounded Video MLLMs
 description: >-

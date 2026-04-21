@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] SIGMark: Scalable In-Generation Watermark with Blind Extraction for Video Diffusion
 description: >-
-  [ICLR 2026][图像生成][视频扩散模型] SIGMark提出首个针对现代视频扩散模型的盲提取生成内水印框架，通过全局帧级伪随机编码(GF-PRC)实现常数级提取开销的盲水印，并设计分段分组排序(SGO)模块增强因果3D VAE下的时序鲁棒性，在HunyuanVideo和Wan-2.2上以512×16位容量达到90%+比特精度。
+  [ICLR 2026][视频扩散模型] SIGMark提出首个针对现代视频扩散模型的盲提取生成内水印框架，通过全局帧级伪随机编码(GF-PRC)实现常数级提取开销的盲水印，并设计分段分组排序(SGO)模块增强因果3D VAE下的时序鲁棒性，在HunyuanVideo和Wan-2.2上以512×16位容量达到90%+比特精度。
 tags:
   - ICLR 2026
-  - 图像生成
   - 视频扩散模型
   - 水印
   - 盲提取
@@ -243,10 +242,10 @@ SIGMark是training-free方法，无需训练。嵌入阶段通过数学变换保
 
 ## 相关论文
 
-- [VFusion3D: Learning Scalable 3D Generative Models from Video Diffusion Models](../../ECCV2024/video_generation/vfusion3d_learning_scalable_3d_generative_models_from_video_diffusion_models.md)
 - [DynamicScaler: Seamless and Scalable Video Generation for Panoramic Scenes](../../CVPR2025/video_generation/dynamicscaler_seamless_and_scalable_video_generation_for_panoramic_scenes.md)
 - [STiV: Scalable Text and Image Conditioned Video Generation](../../ICCV2025/video_generation/stiv_scalable_text_and_image_conditioned_video_generation.md)
-- [Frame Guidance: Training-Free Guidance for Frame-Level Control in Video Diffusion Models](frame_guidance_training-free_guidance_for_frame-level_control_in_video_diffusion.md)
-- [Target-Aware Video Diffusion Models](target-aware_video_diffusion_models.md)
+- [VFusion3D: Learning Scalable 3D Generative Models from Video Diffusion Models](../../ECCV2024/video_generation/vfusion3d_learning_scalable_3d_generative_models_from_video_diffusion_models.md)
+- [SAW: Toward a Surgical Action World Model via Controllable and Scalable Video Generation](../../CVPR2025/video_generation/saw_toward_a_surgical_action_world_model_via_controllable_and_scalable_video_gen.md)
+- [BlazeBVD: Make Scale-Time Equalization Great Again for Blind Video Deflickering](../../ECCV2024/video_generation/blazebvd_make_scale-time_equalization_great_again_for_blind_video_deflickering.md)
 
 <!-- RELATED:END -->

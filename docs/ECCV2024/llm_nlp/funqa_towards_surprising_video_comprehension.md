@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FunQA: Towards Surprising Video Comprehension
 description: >-

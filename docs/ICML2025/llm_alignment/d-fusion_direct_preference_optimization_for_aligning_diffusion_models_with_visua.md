@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] D-Fusion: Direct Preference Optimization for Aligning Diffusion Models with Visually Consistent Samples
 description: >-

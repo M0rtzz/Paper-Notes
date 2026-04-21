@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Imaging Interiors: An Implicit Solution to Electromagnetic Inverse Scattering Problems
 description: >-
@@ -145,10 +145,10 @@ $$\mathcal{L} = \lambda_{\text{data}} \mathcal{L}_{\text{data}} + \lambda_{\text
 
 ## 相关论文
 
+- [PolarFree: Polarization-based Reflection-Free Imaging](../../CVPR2025/llm_evaluation/polarfree_polarization-based_reflection-free_imaging.md)
+- [A Real-world Display Inverse Rendering Dataset](../../ICCV2025/llm_evaluation/a_realworld_display_inverse_rendering_dataset.md)
 - [Event Ellipsometer: Event-based Mueller-Matrix Video Imaging](../../CVPR2025/llm_evaluation/event_ellipsometer_event-based_mueller-matrix_video_imaging.md)
-- [A Real-world Display Inverse Rendering Dataset](../../ICCV2025/llm_evaluation/a_real-world_display_inverse_rendering_dataset.md)
 - [DiLQR: Differentiable Iterative Linear Quadratic Regulator via Implicit Differentiation](../../ICML2025/llm_evaluation/dilqr_differentiable_iterative_linear_quadratic_regulator_via_implicit_different.md)
 - [Leveraging Online Olympiad-Level Math Problems for LLMs Training and Contamination-Resistant Evaluation](../../ICML2025/llm_evaluation/leveraging_online_olympiad-level_math_problems_for_llms_training_and_contaminati.md)
-- [SimpleToM: Exposing the Gap between Explicit ToM Inference and Implicit ToM Application in LLMs](../../ICLR2026/llm_evaluation/simpletom_exposing_the_gap_between_explicit_tom_inference_and_implicit_tom_appli.md)
 
 <!-- RELATED:END -->

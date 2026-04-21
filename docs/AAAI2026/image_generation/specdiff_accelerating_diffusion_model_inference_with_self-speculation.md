@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpecDiff: Accelerating Diffusion Model Inference with Self-Speculation
 description: >-

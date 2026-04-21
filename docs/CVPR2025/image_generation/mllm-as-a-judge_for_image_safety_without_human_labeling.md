@@ -2,14 +2,16 @@
 title: >-
   [论文解读] MLLM-as-a-Judge for Image Safety without Human Labeling
 description: >-
-  [CVPR 2025][图像安全] 提出 CLUE 方法，通过规则客观化、相关性扫描、前置条件分解和去偏 token 概率分析，实现基于安全准则的零样本图像安全判定，在 InternVL2-76B 上达到 94.8% 准确率。
+  [CVPR 2025][图像生成][image safety] 提出 CLUE 框架，通过规则客观化、CLIP 相关性扫描、前置条件链分解和去偏 token 概率分析，实现无需人工标注的零样本图像安全判定，在多个 MLLM 上大幅超越基线。
 tags:
   - CVPR 2025
+  - 图像生成
   - image safety
   - MLLM
-  - zero-shot
+  - zero-shot judgment
+  - safety constitution
+  - debiased token probability
   - content moderation
-  - debiasing
 ---
 
 # MLLM-as-a-Judge for Image Safety without Human Labeling
@@ -159,6 +161,6 @@ CLUE 在零样本设置下大幅超越所有微调基线，验证了微调方法
 - [CleanDIFT: Diffusion Features without Noise](cleandift_diffusion_features_without_noise.md)
 - [Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
 - [Controllable Human Image Generation with Personalized Multi-Garments](controllable_human_image_generation_with_personalized_multi-garments.md)
-- [Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences](../../ICCV2025/image_generation/cycle_consistency_as_reward_learning_imagetext_alignment_wit.md)
+- [Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences](../../ICCV2025/image_generation/cycle_consistency_as_reward_learning_image-text_alignment_without_human_preferen.md)
 
 <!-- RELATED:END -->

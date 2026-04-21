@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spatio-Temporal Graphs Beyond Grids: Benchmark for Maritime Anomaly Detection
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] X-MuTest: A Multilingual Benchmark for Explainable Hate Speech Detection
 description: >-

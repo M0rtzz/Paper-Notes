@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Profile: From Surface-Level Facts to Deep Persona Simulation in LLMs
 description: >-
@@ -104,10 +104,10 @@ tags:
 
 ## 相关论文
 
-- [LLMs + Persona-Plug = Personalized LLMs](llms_persona-plug_personalized_llms.md)
 - [Beyond Dialogue: A Profile-Dialogue Alignment Framework Towards General Role-Playing Language Model](beyond_dialogue_a_profile-dialogue_alignment_framework_towards_general_role-play.md)
+- [LLMs + Persona-Plug = Personalized LLMs](llms_persona-plug_personalized_llms.md)
 - [Enhancing Character-Level Understanding in LLMs through Token Internal Structure Learning](character_level_understanding.md)
 - [From Data to Knowledge: Evaluating How Efficiently Language Models Learn Facts](from_data_to_knowledge_evaluating_how_efficiently_language_models_learn_facts.md)
-- [Veracity Bias and Beyond: Uncovering LLMs' Hidden Beliefs in Problem-Solving Reasoning](veracity_bias_llm_hidden_beliefs.md)
+- [Beyond Prompt Engineering: Robust Behavior Control in LLMs via Steering Target Atoms](beyond_prompt_engineering_robust_behavior_control_in_llms_via_steering_target_at.md)
 
 <!-- RELATED:END -->

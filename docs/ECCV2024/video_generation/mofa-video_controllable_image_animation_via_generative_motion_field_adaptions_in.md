@@ -2,10 +2,9 @@
 title: >-
   [论文解读] MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model
 description: >-
-  [ECCV 2024][图像生成] 提出 MOFA-Video，通过设计多个领域感知运动场适配器（MOFA-Adapter）为冻结的视频扩散模型（SVD）添加可控运动能力，支持手绘轨迹、人脸关键点等多种控制信号及其组合，实现开放域可控图像动画。
+  [ECCV 2024] 提出 MOFA-Video，通过设计多个领域感知运动场适配器（MOFA-Adapter）为冻结的视频扩散模型（SVD）添加可控运动能力，支持手绘轨迹、人脸关键点等多种控制信号及其组合，实现开放域可控图像动画。
 tags:
   - ECCV 2024
-  - 图像生成
 ---
 
 # MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model
@@ -219,7 +218,7 @@ $$\mathcal{L} = \| \mathcal{S}(\mathcal{V}_t, t, \mathcal{M}(\mathcal{V}_t, t, I
 - [VFusion3D: Learning Scalable 3D Generative Models from Video Diffusion Models](vfusion3d_learning_scalable_3d_generative_models_from_video_diffusion_models.md)
 - [Videoshop: Localized Semantic Video Editing with Noise-Extrapolated Diffusion Inversion](videoshop_localized_semantic_video_editing_with_noise-extrapolated_diffusion_inv.md)
 - [MagDiff: Multi-Alignment Diffusion for High-Fidelity Video Generation and Editing](magdiff_multi-alignment_diffusion_for_high-fidelity_video_generation_and_editing.md)
-- [Prompt-A-Video: Prompt Your Video Diffusion Model via Preference-Aligned LLM](../../ICCV2025/video_generation/prompt-a-video_prompt_your_video_diffusion_model_via_preference-aligned_llm.md)
-- [EfficientMT: Efficient Temporal Adaptation for Motion Transfer in Text-to-Video Diffusion Models](../../ICCV2025/video_generation/efficientmt_efficient_temporal_adaptation_for_motion_transfer_in_text-to-video_d.md)
+- [SV3D: Novel Multi-view Synthesis and 3D Generation from a Single Image using Latent Video Diffusion](sv3d_novel_multi-view_synthesis_and_3d_generation_from_a_single_image_using_late.md)
+- [Evaluating Text-to-Visual Generation with Image-to-Text Generation](evaluating_text-to-visual_generation_with_image-to-text_generation.md)
 
 <!-- RELATED:END -->

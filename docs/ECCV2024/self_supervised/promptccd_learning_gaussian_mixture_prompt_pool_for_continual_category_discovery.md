@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PromptCCD: Learning Gaussian Mixture Prompt Pool for Continual Category Discovery
 description: >-

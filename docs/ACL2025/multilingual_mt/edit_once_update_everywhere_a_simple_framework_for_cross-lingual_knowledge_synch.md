@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Edit Once, Update Everywhere: A Simple Framework for Cross-Lingual Knowledge Synchronization in LLMs
 description: >-

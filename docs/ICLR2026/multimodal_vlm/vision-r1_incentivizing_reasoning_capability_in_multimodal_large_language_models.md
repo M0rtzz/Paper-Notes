@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models
 description: >-

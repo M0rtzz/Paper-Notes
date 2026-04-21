@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neuro-Symbolic Decoding of Neural Activity
 description: >-

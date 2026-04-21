@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TSGDiff: Rethinking Synthetic Time Series Generation from a Pure Graph Perspective
 description: >-

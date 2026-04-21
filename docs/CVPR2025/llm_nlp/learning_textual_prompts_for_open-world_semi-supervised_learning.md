@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Textual Prompts for Open-World Semi-Supervised Learning
 description: >-
-  [CVPR 2025][半监督学习] 提出全局-局部文本提示学习和前向-反向策略，增强开放世界半监督学习中图文对齐和噪声抑制能力
+  [CVPR 2025][LLM/NLP][开放世界半监督学习] 本文提出了一种针对开放世界半监督学习（OWSSL）的新方法，通过全局-局部文本提示学习策略增强图文对齐效果，并设计前向-反向策略降低无标签样本中图文匹配的噪声，在多个细粒度数据集上显著超越SOTA。
 tags:
   - CVPR 2025
-  - 半监督学习
-  - 开放世界
-  - prompt学习
-  - 视觉语言模型
+  - LLM/NLP
+  - 开放世界半监督学习
+  - 文本提示学习
+  - 图文对齐
+  - 细粒度识别
+  - 噪声抑制
 ---
 
 # Learning Textual Prompts for Open-World Semi-Supervised Learning
@@ -126,10 +128,10 @@ tags:
 
 ## 相关论文
 
-- [SEC-Prompt: SEmantic Complementary Prompting for Few-Shot Class-Incremental Learning](sec-promptsemantic_complementary_prompting_for_few-shot_class-incremental_learni.md)
 - [Exposure-slot: Exposure-centric Representations Learning with Slot-in-Slot Attention](exposure-slot_exposure-centric_representations_learning_with_slot-in-slot_attent.md)
+- [SEC-Prompt: SEmantic Complementary Prompting for Few-Shot Class-Incremental Learning](sec-promptsemantic_complementary_prompting_for_few-shot_class-incremental_learni.md)
 - [Conversational Learning Diagnosis via Reasoning Multi-Turn Interactive Learning](../../AAAI2026/llm_nlp/conversational_learning_diagnosis_via_reasoning_multi-turn_interactive_learning.md)
 - [System Prompt Optimization with Meta-Learning](../../NeurIPS2025/llm_nlp/system_prompt_optimization_with_meta-learning.md)
-- [From Selection to Generation: A Survey of LLM-based Active Learning](../../ACL2025/llm_nlp/from_selection_to_generation_a_survey_of_llm-based_active_learning.md)
+- [Exploring Explanations Improves the Robustness of In-Context Learning](../../ACL2025/llm_nlp/exploring_explanations_improves_the_robustness_of_in-context_learning.md)
 
 <!-- RELATED:END -->

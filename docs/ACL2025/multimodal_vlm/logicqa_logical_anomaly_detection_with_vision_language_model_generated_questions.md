@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LogicQA: Logical Anomaly Detection with Vision Language Model Generated Questions
 description: >-

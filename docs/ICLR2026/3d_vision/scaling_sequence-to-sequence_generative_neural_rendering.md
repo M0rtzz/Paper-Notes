@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling Sequence-to-Sequence Generative Neural Rendering
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhance Multimodal Consistency and Coherence for Text-Image Plan Generation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Cost of Robustness: Tighter Bounds on Parameter Complexity for Robust Memorization in ReLU Nets
 description: >-
@@ -168,8 +168,8 @@ $$W(N, d, \rho) = \Omega\left(N \cdot d \cdot \rho^2\right) \quad \text{当} \qu
 
 - [The Computational Complexity of Counting Linear Regions in ReLU Neural Networks](the_computational_complexity_of_counting_linear_regions_in_relu_neural_networks.md)
 - [Impact of Layer Norm on Memorization and Generalization in Transformers](impact_of_layer_norm_on_memorization_and_generalization_in_transformers.md)
-- [The Parameterized Complexity of Computing the VC-Dimension](the_parameterized_complexity_of_computing_the_vc-dimension.md)
 - [The Structural Complexity of Matrix-Vector Multiplication](the_structural_complexity_of_matrix-vector_multiplication.md)
+- [The Parameterized Complexity of Computing the VC-Dimension](the_parameterized_complexity_of_computing_the_vc-dimension.md)
 - [Kernel Conditional Tests from Learning-Theoretic Bounds](kernel_conditional_tests_from_learning-theoretic_bounds.md)
 
 <!-- RELATED:END -->

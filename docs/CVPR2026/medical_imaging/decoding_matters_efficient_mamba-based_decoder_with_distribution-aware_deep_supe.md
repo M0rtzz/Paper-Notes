@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation
 description: >-

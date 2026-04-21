@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Base Models Know How to Reason, Thinking Models Learn When
 description: >-

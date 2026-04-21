@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DEIG: Detail-Enhanced Instance Generation with Fine-Grained Semantic Control
 description: >-

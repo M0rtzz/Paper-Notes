@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Brain Decoding: Visual-Semantic Reconstructions to Mental Creation Extension Based on fMRI
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AgentSynth: Scalable Task Generation for Generalist Computer-Use Agents
 description: >-

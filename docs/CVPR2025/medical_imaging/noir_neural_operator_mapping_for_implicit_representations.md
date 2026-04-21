@@ -121,10 +121,10 @@ NOIR 包含两个核心模块：
 
 ## 相关论文
 
+- [Reanimating Images using Neural Representations of Dynamic Stimuli](reanimating_images_using_neural_representations_of_dynamic_stimuli.md)
 - [Self-Supervised Learning via Flow-Guided Neural Operator on Time-Series Data](../../NeurIPS2025/medical_imaging/self-supervised_learning_via_flow-guided_neural_operator_on_time-series_data.md)
 - [I-MedSAM: Implicit Medical Image Segmentation with Segment Anything](../../ECCV2024/medical_imaging/i-medsam_implicit_medical_image_segmentation_with_segment_anything.md)
 - [Convolutional Monge Mapping between EEG Datasets to Support Independent Component Labeling](../../NeurIPS2025/medical_imaging/convolutional_monge_mapping_between_eeg_datasets_to_support_independent_componen.md)
-- [GFlowNets for Learning Better Drug-Drug Interaction Representations](../../NeurIPS2025/medical_imaging/gflownets_for_learning_better_drug-drug_interaction_representations.md)
-- [Unmasking Biases and Reliability Concerns in Convolutional Neural Networks Analysis of Cancer Pathology Images](unmasking_biases_and_reliability_concerns_in_convolutional_neural_networks_analy.md)
+- [FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields](ffacenerf_few-shot_face_editing_in_neural_radiance_fields.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-Supervised Discovery of Neural Circuits in Spatially Patterned Neural Responses with Graph Neural Networks
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OmniSpatial: Towards Comprehensive Spatial Reasoning Benchmark for Vision Language Models
 description: >-

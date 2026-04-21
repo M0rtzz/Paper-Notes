@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TIDMAD: Time Series Dataset for Discovering Dark Matter with AI Denoising
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] mOSCAR: A Large-scale Multilingual and Multimodal Document-level Corpus
 description: >-

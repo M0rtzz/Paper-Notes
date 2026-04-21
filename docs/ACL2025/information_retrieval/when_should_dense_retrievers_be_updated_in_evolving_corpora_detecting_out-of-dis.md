@@ -2,9 +2,13 @@
 title: >-
   [论文解读] When Should Dense Retrievers Be Updated in Evolving Corpora? Detecting Out-of-Distribution Corpora Using GradNormIR
 description: >-
-   提出GradNormIR方法，利用梯度范数在无需查询的情况下无监督检测语料库是否对dense retriever构成分布外(OOD)，从而判断何时需要更新检索器，保障动态语料库场景下的检索鲁棒性。
+  [dense retriever] 提出GradNormIR方法，利用梯度范数在无需查询的情况下无监督检测语料库是否对dense retriever构成分布外(OOD)，从而判断何时需要更新检索器，保障动态语料库场景下的检索鲁棒性。
 tags:
-
+  - dense retriever
+  - out-of-distribution
+  - gradient norm
+  - corpus evolution
+  - retrieval robustness
 ---
 
 # When Should Dense Retrievers Be Updated in Evolving Corpora? Detecting Out-of-Distribution Corpora Using GradNormIR

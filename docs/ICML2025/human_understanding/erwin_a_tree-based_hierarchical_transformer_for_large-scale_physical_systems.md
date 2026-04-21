@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Erwin: A Tree-based Hierarchical Transformer for Large-scale Physical Systems
 description: >-
@@ -198,8 +198,8 @@ Erwin 在四个大规模物理领域进行了验证：
 
 ## 相关论文
 
-- [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](../../CVPR2025/human_understanding/hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
 - [FedRAG: A Framework for Fine-Tuning Retrieval-Augmented Generation Systems](fedrag_a_framework_for_fine-tuning_retrieval-augmented_generation_systems.md)
+- [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](../../CVPR2025/human_understanding/hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
 - [GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](../../NeurIPS2025/human_understanding/graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
 - [From Logits to Hierarchies: Hierarchical Clustering made Simple](from_logits_to_hierarchies_hierarchical_clustering_made_simple.md)
 - [Scaling Large Motion Models with Million-Level Human Motions](scaling_large_motion_models_with_million-level_human_motions.md)

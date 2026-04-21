@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LoTUS: Large-Scale Machine Unlearning with a Taste of Uncertainty
 description: >-
@@ -89,10 +89,10 @@ ViT 仅需 3 epoch，ResNet18 10 epoch。$\alpha=2$。
 
 ## 相关论文
 
+- [Uncertainty Weighted Gradients for Model Calibration](uncertainty_weighted_gradients_for_model_calibration.md)
 - [Sync from the Sea: Retrieving Alignable Videos from Large-Scale Datasets](../../ECCV2024/llm_evaluation/sync_from_the_sea_retrieving_alignable_videos_from_large-scale_datasets.md)
 - [HellaSwag-Pro: A Large-Scale Bilingual Benchmark for Evaluating the Robustness of LLMs in Commonsense Reasoning](../../ACL2025/llm_evaluation/hellaswag-pro_a_large-scale_bilingual_benchmark_for_evaluating_the_robustness_of.md)
 - [Revisiting the Past: Data Unlearning with Model State History](../../ICLR2026/llm_evaluation/revisiting_the_past_data_unlearning_with_model_state_history.md)
-- [Asymmetric Duos: Sidekicks Improve Uncertainty](../../NeurIPS2025/llm_evaluation/asymmetric_duos_sidekicks_improve_uncertainty.md)
 - [Put CASH on Bandits: A Max K-Armed Problem for Automated Machine Learning](../../NeurIPS2025/llm_evaluation/put_cash_on_bandits_a_max_k-armed_problem_for_automated_machine_learning.md)
 
 <!-- RELATED:END -->

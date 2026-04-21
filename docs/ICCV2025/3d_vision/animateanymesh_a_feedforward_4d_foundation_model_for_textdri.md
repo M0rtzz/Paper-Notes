@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AnimateAnyMesh: A Feed-Forward 4D Foundation Model for Text-Driven Universal Mesh Animation
 description: >-

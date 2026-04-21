@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SuperCLIP: CLIP with Simple Classification Supervision
 description: >-
@@ -159,8 +159,8 @@ CLIP用100%长caption训练性能大幅下降（45.7→30.0），但SuperCLIP的
 ## 相关论文
 
 - [Multimodal Dataset Distillation Made Simple by Prototype-Guided Data Synthesis](../../ICLR2026/information_retrieval/multimodal_dataset_distillation_made_simple_by_prototype-guided_data_synthesis.md)
-- [Joint Vision-Language Social Bias Removal for CLIP](../../CVPR2025/information_retrieval/joint_vision-language_social_bias_removal_for_clip.md)
 - [Explaining CLIP Zero-shot Predictions Through Concepts](../../CVPR2026/information_retrieval/explaining_clip_zero-shot_predictions_through_concepts.md)
+- [Joint Vision-Language Social Bias Removal for CLIP](../../CVPR2025/information_retrieval/joint_vision-language_social_bias_removal_for_clip.md)
 - [HiMo-CLIP: Modeling Semantic Hierarchy and Monotonicity in Vision-Language Alignment](../../AAAI2026/information_retrieval/himo-clip_modeling_semantic_hierarchy_and_monotonicity_in_vi.md)
 - [BTZSC: A Benchmark for Zero-Shot Text Classification Across Cross-Encoders, Embedding Models, Rerankers and LLMs](../../ICLR2026/information_retrieval/btzsc_a_benchmark_for_zero-shot_text_classification_across_cross-encoders_embedd.md)
 

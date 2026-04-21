@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CTFS: Collaborative Teacher Framework for Forward-Looking Sonar Image Semantic Segmentation with Extremely Limited Labels
 description: >-

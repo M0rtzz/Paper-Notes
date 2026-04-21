@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Optimal Welfare in Noncooperative Network Formation under Attack
 description: >-

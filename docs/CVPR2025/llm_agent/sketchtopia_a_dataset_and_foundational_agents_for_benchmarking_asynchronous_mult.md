@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sketchtopia: A Dataset and Foundational Agents for Benchmarking Asynchronous Multimodal Communication with Iconic Feedback
 description: >-
@@ -124,6 +124,6 @@ Sketchtopia 系统包含两部分：(1) **数据集**：来自 916 名真实玩�
 - [SceneAssistant: A Visual Feedback Agent for Open-Vocabulary 3D Scene Generation](sceneassistant_a_visual_feedback_agent_for_open-vocabulary_3d_scene_generation.md)
 - [Are Large Language Models Sensitive to the Motives Behind Communication?](../../NeurIPS2025/llm_agent/are_large_language_models_sensitive_to_the_motives_behind_communication.md)
 - [Caution for the Environment: Multimodal LLM Agents are Susceptible to Environmental Distractions](../../ACL2025/llm_agent/caution_environment_gui_agent_distractions.md)
-- [T1: A Tool-Oriented Conversational Dataset for Multi-Turn Agentic Planning](../../NeurIPS2025/llm_agent/t1_a_tool-oriented_conversational_dataset_for_multi-turn_agentic_planning.md)
+- [Benchmarking Agentic Systems in Automated Scientific Information Extraction with ChemX](../../NeurIPS2025/llm_agent/benchmarking_agentic_systems_in_automated_scientific_information_extraction_with.md)
 
 <!-- RELATED:END -->

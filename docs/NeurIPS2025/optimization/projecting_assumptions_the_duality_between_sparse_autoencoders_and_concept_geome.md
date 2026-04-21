@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Projecting Assumptions: The Duality Between Sparse Autoencoders and Concept Geometry
 description: >-

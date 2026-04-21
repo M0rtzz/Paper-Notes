@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OSMGen: Highly Controllable Satellite Image Synthesis using OpenStreetMap Data
 description: >-
@@ -169,6 +169,6 @@ $$\mathcal{L}_{\text{diff}} = \mathbb{E}_{x_0, t, \epsilon} \left\| \epsilon - \
 - [SceneDesigner: Controllable Multi-Object Image Generation with 9-DoF Pose Manipulation](scenedesigner_controllable_multi-object_image_generation_with_9-dof_pose_manipul.md)
 - [DynaVid: Learning to Generate Highly Dynamic Videos using Synthetic Motion Data](../../CVPR2026/image_generation/dynavid_learning_to_generate_highly_dynamic_videos_using_synthetic_motion_data.md)
 - [∞-Brush: Controllable Large Image Synthesis with Diffusion Models in Infinite Dimensions](../../ECCV2024/image_generation/inftybrush_controllable_large_image_synthesis_with_diffusion.md)
-- [Boosting Generative Image Modeling via Joint Image-Feature Synthesis](boosting_generative_image_modeling_via_joint_imagefeature_sy.md)
+- [Fast Data Attribution for Text-to-Image Models](fast_data_attribution_for_text-to-image_models.md)
 
 <!-- RELATED:END -->

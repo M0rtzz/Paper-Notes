@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Evaluating LLMs for Combinatorial Optimization: One-Phase and Two-Phase Heuristics for 2D Bin-Packing
 description: >-

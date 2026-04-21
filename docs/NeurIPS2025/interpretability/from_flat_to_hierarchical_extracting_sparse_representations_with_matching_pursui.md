@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Flat to Hierarchical: Extracting Sparse Representations with Matching Pursuit
 description: >-
@@ -139,6 +139,6 @@ MP-SAE 在所有测试骨干（SigLIP, DINOv2, CLIP, ViT）上，在可比稀疏
 - [Concepts from Representations: Post-hoc Concept Bottleneck Models via Sparse Decomposition of Visual Representations](../../AAAI2026/interpretability/concepts_from_representations_post-hoc_concept_bottleneck_models_via_sparse_deco.md)
 - [CHiQPM: Calibrated Hierarchical Interpretable Image Classification](chiqpm_calibrated_hierarchical_interpretable_image_classification.md)
 - [How Intrinsic Motivation Shapes Learned Representations in Decision Transformers: A Cognitive Interpretability Analysis](toward_explainable_offline_rl_analyzing_representations_in_intrinsically_motivat.md)
-- [SHAP Values via Sparse Fourier Representation](shap_values_via_sparse_fourier_representation.md)
+- [Why Is Attention Sparse in Particle Transformer?](why_is_attention_sparse_in_particle_transformer.md)
 
 <!-- RELATED:END -->

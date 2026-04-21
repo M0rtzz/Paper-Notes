@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving Low-Resource Morphological Inflection via Self-Supervised Objectives
 description: >-

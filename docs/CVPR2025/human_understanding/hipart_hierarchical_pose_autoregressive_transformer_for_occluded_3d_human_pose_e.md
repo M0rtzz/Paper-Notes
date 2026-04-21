@@ -1,16 +1,18 @@
-﻿---
+---
 title: >-
   [论文解读] HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation
 description: >-
-  [CVPR 2025][人体理解][3D 姿态估计] HiPART 提出基于自回归 Transformer 的层次化 2D 姿态稠密化方法，通过 VQ-VAE 将稠密 2D 姿态量化为多尺度离散 token，再用分层自回归方案（中心到边缘+稀疏到稠密）从稀疏 2D 姿态生成层次化稠密 2D 姿态，为后续 2D-to-3D lifting 提供丰富骨架上下文，在遮挡场景下实现单帧 SOTA 并超越众多多帧方法。
+  [CVPR 2025][人体理解][3D 姿态估计] HiPART 提出从稀疏 2D 姿态（17 关节）生成层次化稠密 2D 姿态（48→96 关节）的自回归生成方案，用丰富的骨架上下文替代复杂的时序/视觉编码器来解决遮挡问题，在单帧 3D HPE 上达到 SOTA 且超越多数多帧方法，同时参数量和计算量更小。
 tags:
   - CVPR 2025
   - 人体理解
-  - 3D姿态估计
-  - 自回归
-  - VQ-VAE
+  - 3D 姿态估计
   - 遮挡处理
-  - Transformer
+  - 层次化稠密化
+  - VQ-VAE
+  - 自回归生成
+  - 中心到边缘
+  - 稀疏到稠密
 ---
 
 # HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation
@@ -156,7 +158,7 @@ Human3.6M（MPJPE↓，单帧方法）：
 - [RAPTR: Radar-Based 3D Pose Estimation Using Transformer](../../NeurIPS2025/human_understanding/raptr_radar-based_3d_pose_estimation_using_transformer.md)
 - [Analyzing the Synthetic-to-Real Domain Gap in 3D Hand Pose Estimation](analyzing_the_synthetic-to-real_domain_gap_in_3d_hand_pose_estimation.md)
 - [PoseBH: Prototypical Multi-Dataset Training Beyond Human Pose Estimation](posebh_prototypical_multi-dataset_training_beyond_human_pose_estimation.md)
-- [CoordAR: One-Reference 6D Pose Estimation of Novel Objects via Autoregressive Coordinate Map Generation](../../AAAI2026/human_understanding/coordar_one-reference_6d_pose_estimation_of_novel_objects_via_autoregressive_coo.md)
-- [One2Any: One-Reference 6D Pose Estimation for Any Object](one2any_one-reference_6d_pose_estimation_for_any_object.md)
+- [GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation](gce-pose_global_context_enhancement_for_category-level_object_pose_estimation.md)
+- [Structure-Aware Correspondence Learning for Relative Pose Estimation](structure-aware_correspondence_learning_for_relative_pose_estimation.md)
 
 <!-- RELATED:END -->

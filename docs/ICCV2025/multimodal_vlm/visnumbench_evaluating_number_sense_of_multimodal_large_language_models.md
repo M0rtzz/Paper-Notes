@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VisNumBench: Evaluating Number Sense of Multimodal Large Language Models
 description: >-

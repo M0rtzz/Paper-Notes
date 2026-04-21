@@ -1,14 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Accurate Differential Operators for Hybrid Neural Fields
 description: >-
-  [CVPR 2025][科学计算][神经场] 解决混合神经场（如Instant NGP）中微分算子不精确的问题，提出适用于离散-连续混合表示的精确微分方法
+  [CVPR 2025][科学计算][混合神经场] 解决混合神经场（如 Instant NGP）中因离散特征网格与连续 MLP 耦合导致的微分算子不精确问题，提出适用于离散-连续混合表示的精确微分方法。
 tags:
   - CVPR 2025
-  - 神经场
+  - 科学计算
+  - 混合神经场
   - 微分算子
   - Instant NGP
-  - PDE求解
+  - 哈希编码
+  - 偏微分方程
 ---
 
 # Accurate Differential Operators for Hybrid Neural Fields

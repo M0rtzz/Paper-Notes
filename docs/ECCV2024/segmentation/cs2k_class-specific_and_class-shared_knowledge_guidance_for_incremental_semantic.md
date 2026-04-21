@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cs2K: Class-Specific and Class-Shared Knowledge Guidance for Incremental Semantic Segmentation
 description: >-

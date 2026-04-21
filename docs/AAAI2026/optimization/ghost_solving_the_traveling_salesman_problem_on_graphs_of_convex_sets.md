@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GHOST: Solving the Traveling Salesman Problem on Graphs of Convex Sets
 description: >-

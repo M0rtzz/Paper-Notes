@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Human-Centric Open-Future Task Discovery: Formulation, Benchmark, and Scalable Tree-Based Search
 description: >-

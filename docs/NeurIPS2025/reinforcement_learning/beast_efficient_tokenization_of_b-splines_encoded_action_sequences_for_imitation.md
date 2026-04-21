@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BEAST: Efficient Tokenization of B-Splines Encoded Action Sequences for Imitation Learning
 description: >-

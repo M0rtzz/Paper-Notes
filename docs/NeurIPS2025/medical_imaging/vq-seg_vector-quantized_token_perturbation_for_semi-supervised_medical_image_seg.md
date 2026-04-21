@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VQ-Seg: Vector-Quantized Token Perturbation for Semi-Supervised Medical Image Segmentation
 description: >-

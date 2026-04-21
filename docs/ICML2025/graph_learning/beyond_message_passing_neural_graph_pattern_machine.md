@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Message Passing: Neural Graph Pattern Machine
 description: >-

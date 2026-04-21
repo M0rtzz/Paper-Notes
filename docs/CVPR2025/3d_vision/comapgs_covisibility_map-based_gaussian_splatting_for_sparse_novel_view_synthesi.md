@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoMapGS: Covisibility Map-based Gaussian Splatting for Sparse Novel View Synthesis
 description: >-
@@ -126,10 +126,10 @@ $$\mathcal{L} = (1-\lambda)\mathcal{L}_1(I, I^*) + \lambda\mathcal{L}_{D\text{-}
 
 ## 相关论文
 
+- [S2Gaussian: Sparse-View Super-Resolution 3D Gaussian Splatting](s2gaussian_sparse-view_super-resolution_3d_gaussian_splatting.md)
+- [SplatFlow: Multi-View Rectified Flow Model for 3D Gaussian Splatting Synthesis](splatflow_multi-view_rectified_flow_model_for_3d_gaussian_splatting_synthesis.md)
 - [DropGaussian: Structural Regularization for Sparse-view Gaussian Splatting](dropgaussian_structural_regularization_for_sparse-view_gaussian_splatting.md)
 - [Self-Ensembling Gaussian Splatting for Few-Shot Novel View Synthesis](../../ICCV2025/3d_vision/self-ensembling_gaussian_splatting_for_few-shot_novel_view_synthesis.md)
-- [High Dynamic Range Novel View Synthesis with Single Exposure](../../ICML2025/3d_vision/high_dynamic_range_novel_view_synthesis_with_single_exposure.md)
-- [CoherentGS: Sparse Novel View Synthesis with Coherent 3D Gaussians](../../ECCV2024/3d_vision/coherentgs_sparse_novel_view_synthesis_with_coherent_3d_gaussians.md)
-- [Physically Inspired Gaussian Splatting for HDR Novel View Synthesis](../../CVPR2026/3d_vision/physically_inspired_gaussian_splatting_for_hdr_novel_view_synthesis.md)
+- [Novel View Synthesis with Pixel-Space Diffusion Models](novel_view_synthesis_with_pixel-space_diffusion_models.md)
 
 <!-- RELATED:END -->

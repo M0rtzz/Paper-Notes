@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] Seeing the Unseen: Zooming in the Dark with Event Cameras
 description: >-
-  [AAAI 2026][图像恢复][低光视频超分] 提出首个事件驱动低光视频超分（LVSR）框架 RetinexEVSR，通过 Retinex 启发的双向融合策略（RBF）——先用光照图引导事件特征去噪（IEE），再用增强后的事件特征恢复反射率细节（ERE），在 SDSD 基准上实现 2.95dB 增益且运行时间减少 65%。
+  [AAAI 2026][低光视频超分] 提出首个事件驱动低光视频超分（LVSR）框架 RetinexEVSR，通过 Retinex 启发的双向融合策略（RBF）——先用光照图引导事件特征去噪（IEE），再用增强后的事件特征恢复反射率细节（ERE），在 SDSD 基准上实现 2.95dB 增益且运行时间减少 65%。
 tags:
   - AAAI 2026
-  - 图像恢复
   - 低光视频超分
   - 事件相机
   - Retinex分解

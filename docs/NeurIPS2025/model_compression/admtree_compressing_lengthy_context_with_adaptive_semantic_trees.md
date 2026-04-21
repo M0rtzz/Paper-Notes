@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdmTree: Compressing Lengthy Context with Adaptive Semantic Trees
 description: >-
@@ -129,6 +129,6 @@ tags:
 - [Semantic Exploration with Adaptive Gating for Efficient Problem Solving with Language Models](../../ACL2025/model_compression/semantic_exploration_adaptive_gating.md)
 - [One-Step Diffusion-Based Image Compression with Semantic Distillation](one-step_diffusion-based_image_compression_with_semantic_distillation.md)
 - [Mitigating Semantic Collapse in Partially Relevant Video Retrieval](mitigating_semantic_collapse_in_partially_relevant_video_retrieval.md)
-- [Prototype-Based Semantic Consistency Alignment for Domain Adaptive Retrieval](../../AAAI2026/model_compression/prototype-based_semantic_consistency_alignment_for_domain_adaptive_retrieval.md)
+- [Variance-Based Pruning for Accelerating and Compressing Trained Networks](../../ICCV2025/model_compression/variance-based_pruning_for_accelerating_and_compressing_trained_networks.md)
 
 <!-- RELATED:END -->

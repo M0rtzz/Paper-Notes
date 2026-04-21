@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] MARTEN: Visual Question Answering with Mask Generation for Multi-Modal Document Understanding
 description: >-
-  [CVPR 2025][多模态VLM] 提出VQAMask预训练范式，通过辅助Mask生成任务显式增强文档理解的空间感知能力，构建600万数据集MTMask6M
+  [CVPR 2025][多模态][文档理解] 提出VQAMask预训练范式，在VQA文本解析基础上引入辅助的Mask生成任务（推理时丢弃），通过显式的空间对齐监督增强视觉编码器对文档图像中文字区域的感知能力，建立Marten模型在多项文档理解任务上达到8B级MLLM的SOTA。
 tags:
   - CVPR 2025
+  - 多模态
   - 文档理解
-  - 视觉语言模型
-  - 预训练
+  - VQAMask
+  - 空间感知对齐
   - Mask生成
-  - OCR-free
+  - OCR
+  - 视觉文本识别
 ---
 
 # MARTEN: Visual Question Answering with Mask Generation for Multi-Modal Document Understanding
@@ -160,10 +162,10 @@ $$\mathcal{L}_{mask} = l_{\text{DICE}}(\tilde{\mathbf{M}}, \mathbf{M}) + l_{\tex
 
 ## 相关论文
 
-- [WikiMixQA: A Multimodal Benchmark for Question Answering over Tables and Charts](../../ACL2025/multimodal_vlm/wikimixqa_a_multimodal_benchmark_for_question_answering_over_tables_and_charts.md)
 - [Relation-Rich Visual Document Generator for Visual Information Extraction](relation-rich_visual_document_generator_for_visual_information_extraction.md)
 - [ReasonVQA: A Multi-hop Reasoning Benchmark with Structural Knowledge for Visual Question Answering](../../ICCV2025/multimodal_vlm/reasonvqa_a_multi-hop_reasoning_benchmark_with_structural_knowledge_for_visual_q.md)
-- [Are Vision Language Models Ready for Clinical Diagnosis? A 3D Medical Benchmark for Tumor-centric Visual Question Answering](../../NeurIPS2025/multimodal_vlm/are_vision_language_models_ready_for_clinical_diagnosis_a_3d_medical_benchmark_f.md)
+- [WikiMixQA: A Multimodal Benchmark for Question Answering over Tables and Charts](../../ACL2025/multimodal_vlm/wikimixqa_a_multimodal_benchmark_for_question_answering_over_tables_and_charts.md)
+- [DOGR: Towards Versatile Visual Document Grounding and Referring](../../ICCV2025/multimodal_vlm/dogr_towards_versatile_visual_document_grounding_and_referring.md)
 - [FOCUS: Internal MLLM Representations for Efficient Fine-Grained Visual Question Answering](../../NeurIPS2025/multimodal_vlm/focus_internal_mllm_representations_for_efficient_fine-grained_visual_question_a.md)
 
 <!-- RELATED:END -->

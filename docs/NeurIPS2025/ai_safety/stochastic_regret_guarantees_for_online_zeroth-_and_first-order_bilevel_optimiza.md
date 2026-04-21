@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stochastic Regret Guarantees for Online Zeroth- and First-Order Bilevel Optimization
 description: >-
@@ -155,8 +155,8 @@ $$\text{Regret}_T = \sum_{t=1}^{T} \mathbb{E}[f_t(x_t, y^*(x_t))] - \min_{x \in 
 
 - [Private Zeroth-Order Optimization with Public Data](private_zeroth-order_optimization_with_public_data.md)
 - [Differentially Private Bilevel Optimization: Efficient Algorithms with Near-Optimal Rates](differentially_private_bilevel_optimization_efficient_algorithms_with_near-optim.md)
+- [Fairness-Regularized Online Optimization with Switching Costs](fairness-regularized_online_optimization_with_switching_costs.md)
 - [Fair Representation Learning with Controllable High Confidence Guarantees via Adversarial Inference](fair_representation_learning_with_controllable_high_confidence_guarantees_via_ad.md)
 - [On the Sample Complexity of Differentially Private Policy Optimization](on_the_sample_complexity_of_differentially_private_policy_optimization.md)
-- [Dual-Flow: Transferable Multi-Target, Instance-Agnostic Attacks via In-the-wild Cascading Flow Optimization](dual-flow_transferable_multi-target_instance-agnostic_attacks_via_in-the-wild_ca.md)
 
 <!-- RELATED:END -->

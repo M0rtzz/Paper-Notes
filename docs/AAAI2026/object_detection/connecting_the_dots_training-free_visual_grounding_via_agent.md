@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Connecting the Dots: Training-Free Visual Grounding via Agentic Reasoning
 description: >-

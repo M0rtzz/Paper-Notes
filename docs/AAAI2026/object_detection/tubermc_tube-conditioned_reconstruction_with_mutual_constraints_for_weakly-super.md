@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TubeRMC: Tube-conditioned Reconstruction with Mutual Constraints for Weakly-supervised Spatio-Temporal Video Grounding
 description: >-
@@ -179,6 +179,6 @@ TubeRMC 框架包含三个层面：
 - [Temporal Object-Aware Vision Transformer for Few-Shot Video Object Detection](temporal_object-aware_vision_transformer_for_few-shot_video_object_detection.md)
 - [Sparse-Dense Side-Tuner for Efficient Video Temporal Grounding](../../ICCV2025/object_detection/sparse-dense_side-tuner_for_efficient_video_temporal_grounding.md)
 - [SPWOOD: Sparse Partial Weakly-Supervised Oriented Object Detection](../../ICLR2026/object_detection/spwood_sparse_partial_weakly-supervised_oriented_object_detection.md)
-- [APL: Anchor-based Prompt Learning for One-stage Weakly Supervised Referring Expression Comprehension](../../ECCV2024/object_detection/apl_anchor-based_prompt_learning_for_one-stage_weakly_supervised_referring_expre.md)
+- [Mitigating Error Accumulation in Co-Speech Motion Generation via Global Rotation Diffusion and Multi-Level Constraints](mitigating_error_accumulation_in_co-speech_motion_generation_via_global_rotation.md)
 
 <!-- RELATED:END -->

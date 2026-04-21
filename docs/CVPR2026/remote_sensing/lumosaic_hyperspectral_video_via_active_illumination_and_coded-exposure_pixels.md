@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Lumosaic: Hyperspectral Video via Active Illumination and Coded-Exposure Pixels
 description: >-

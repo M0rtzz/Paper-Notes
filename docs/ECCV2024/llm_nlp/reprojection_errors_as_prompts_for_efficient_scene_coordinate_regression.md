@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reprojection Errors as Prompts for Efficient Scene Coordinate Regression
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Distillation Dynamics: Towards Understanding Feature-Based Distillation in Vision Transformers
 description: >-
@@ -136,9 +136,9 @@ ProjectorKD：$\mathcal{L}_{\text{Proj}} = \text{MSE}(\text{Projector}(\mathbf{A
 ## 相关论文
 
 - [Beyond Single-Sample: Reliable Multi-Sample Distillation for Video Understanding](../../CVPR2026/video_understanding/beyond_single-sample_reliable_multi-sample_distillation_for_video_understanding.md)
+- [Learning Occlusion-Robust Vision Transformers for Real-Time UAV Tracking](../../CVPR2025/video_understanding/learning_occlusion-robust_vision_transformers_for_real-time_uav_tracking.md)
+- [ViTED: Video Temporal Evidence Distillation](../../CVPR2025/video_understanding/vited_video_temporal_evidence_distillation.md)
 - [From Teacher to Student: Tracking Memorization Through Model Distillation](../../ACL2025/video_understanding/from_teacher_to_student_tracking_memorization_through_model_distillation.md)
 - [Enhancing Video-LLM Reasoning via Agent-of-Thoughts Distillation](../../CVPR2025/video_understanding/enhancing_video-llm_reasoning_via_agent-of-thoughts_distillation.md)
-- [Boosting 3D Single Object Tracking with 2D Matching Distillation and 3D Pre-training](../../ECCV2024/video_understanding/boosting_3d_single_object_tracking_with_2d_matching_distillation_and_3d_pre-trai.md)
-- [Predicting Video Slot Attention Queries from Random Slot-Feature Pairs](predicting_video_slot_attention_queries_from_random_slot-feature_pairs.md)
 
 <!-- RELATED:END -->

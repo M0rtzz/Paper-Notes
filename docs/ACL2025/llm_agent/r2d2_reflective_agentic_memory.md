@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] R2D2: Remembering, Replaying and Dynamic Decision Making with a Reflective Agentic Memory
 description: >-

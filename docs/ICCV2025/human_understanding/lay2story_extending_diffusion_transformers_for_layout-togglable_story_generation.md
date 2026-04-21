@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Lay2Story: Extending Diffusion Transformers for Layout-Togglable Story Generation
 description: >-

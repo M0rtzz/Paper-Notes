@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Interleaving One-Class and Weakly-Supervised Models with Adaptive Thresholding for Unsupervised Video Anomaly Detection
 description: >-
@@ -153,7 +153,7 @@ tags:
 
 ## 相关论文
 
-- [Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection](self-supervised_feature_adaptation_for_3d_industrial_anomaly_detection.md)
+- [Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection](selfsupervised_feature_adaptation_for_3d_industrial_ano.md)
 - [VideoClusterNet: Self-Supervised and Adaptive Face Clustering for Videos](videoclusternet_self-supervised_and_adaptive_face_clustering_for_videos.md)
 - [Anomize: Better Open Vocabulary Video Anomaly Detection](../../CVPR2025/human_understanding/anomize_better_open_vocabulary_video_anomaly_detection.md)
 - [Sequential Keypoint Density Estimator: An Overlooked Baseline of Skeleton-Based Video Anomaly Detection](../../ICCV2025/human_understanding/sequential_keypoint_density_estimator_an_overlooked_baseline_of_skeleton-based_v.md)

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Woofs to Words: Towards Intelligent Robotic Guide Dogs with Verbal Communication
 description: >-

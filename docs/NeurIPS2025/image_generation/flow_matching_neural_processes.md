@@ -193,7 +193,7 @@ TNP 的生成时间与目标点数 $N$ 成正比（自回归），FlowNP 与 ODE
 - [ContinualFlow: Learning and Unlearning with Neural Flow Matching](../../ICML2025/image_generation/continualflow_learning_and_unlearning_with_neural_flow_matching.md)
 - [Equivariant Flow Matching for Symmetry-Breaking Bifurcation Problems](equivariant_flow_matching_for_symmetry-breaking_bifurcation_problems.md)
 - [Curly Flow Matching for Learning Non-gradient Field Dynamics](curly_flow_matching_for_learning_non-gradient_field_dynamics.md)
-- [Shortcutting Pre-trained Flow Matching Diffusion Models is Almost Free Lunch](shortcutting_pre-trained_flow_matching_diffusion_models_is_almost_free_lunch.md)
 - [Scalable, Explainable and Provably Robust Anomaly Detection with One-Step Flow Matching](scalable_explainable_and_provably_robust_anomaly_detection_with_one-step_flow_ma.md)
+- [Shortcutting Pre-trained Flow Matching Diffusion Models is Almost Free Lunch](shortcutting_pre-trained_flow_matching_diffusion_models_is_almost_free_lunch.md)
 
 <!-- RELATED:END -->

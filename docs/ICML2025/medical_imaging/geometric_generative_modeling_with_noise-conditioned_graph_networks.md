@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Geometric Generative Modeling with Noise-Conditioned Graph Networks
 description: >-

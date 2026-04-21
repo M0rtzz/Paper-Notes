@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hanging in the Balance: Pivotal Moments in Crisis Counseling Conversations
 description: >-

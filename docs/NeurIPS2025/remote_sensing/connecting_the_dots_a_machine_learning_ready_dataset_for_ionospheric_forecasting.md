@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Connecting the Dots: A Machine Learning Ready Dataset for Ionospheric Forecasting Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 6DGS: 6D Pose Estimation from a Single Image and a 3D Gaussian Splatting Model
 description: >-
@@ -115,8 +115,8 @@ tags:
 
 - [Omni6D: Large-Vocabulary 3D Object Dataset for Category-Level 6D Object Pose Estimation](omni6d_large-vocabulary_3d_object_dataset_for_category-level_6d_object_pose_esti.md)
 - [Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
+- [GeoWizard: Unleashing the Diffusion Priors for 3D Geometry Estimation from a Single Image](geowizard_unleashing_the_diffusion_priors_for_3d_geometry_estimation_from_a_sing.md)
 - [CRM: Single Image to 3D Textured Mesh with Convolutional Reconstruction Model](crm_single_image_to_3d_textured_mesh_with_convolutional_reconstruction_model.md)
 - [ZeST: Zero-Shot Material Transfer from a Single Image](zest_zero-shot_material_transfer_from_a_single_image.md)
-- [GeoWizard: Unleashing the Diffusion Priors for 3D Geometry Estimation from a Single Image](geowizard_unleashing_the_diffusion_priors_for_3d_geometry_estimation_from_a_sing.md)
 
 <!-- RELATED:END -->

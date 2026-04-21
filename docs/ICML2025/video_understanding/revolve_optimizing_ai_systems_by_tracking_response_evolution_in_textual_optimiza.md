@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] REVOLVE: Optimizing AI Systems by Tracking Response Evolution in Textual Optimization
 description: >-
@@ -118,8 +118,8 @@ REVOLVE 通过跟踪 LLM 系统中响应在迭代过程中的"演化"趋势来�
 
 - [Paper Copilot: Tracking the Evolution of Peer Review in AI Conferences](../../ICLR2026/video_understanding/paper_copilot_tracking_the_evolution_of_peer_review_in_ai_conferences.md)
 - [egoPPG: Heart Rate Estimation from Eye-Tracking Cameras in Egocentric Systems to Benefit Downstream Vision Tasks](../../ICCV2025/video_understanding/egoppg_heart_rate_estimation_from_eye-tracking_cameras_in_egocentric_systems_to_.md)
+- [Unbiasing through Textual Descriptions: Mitigating Representation Bias in Video Benchmarks](../../CVPR2025/video_understanding/unbiasing_through_textual_descriptions_mitigating_representation_bias_in_video_b.md)
 - [DSAS: A Universal Plug-and-Play Framework for Attention Optimization in Multi-Document Question Answering](../../NeurIPS2025/video_understanding/dsas_a_universal_plug-and-play_framework_for_attention_optimization_in_multi-doc.md)
 - [Unifying Specialized Visual Encoders for Video Language Models](unifying_specialized_visual_encoders_for_video_language_models.md)
-- [VideoMiner: Iteratively Grounding Key Frames of Hour-Long Videos via Tree-based Group Relative Policy Optimization](../../ICCV2025/video_understanding/videominer_iteratively_grounding_key_frames_of_hour-long_videos_via_tree-based_g.md)
 
 <!-- RELATED:END -->

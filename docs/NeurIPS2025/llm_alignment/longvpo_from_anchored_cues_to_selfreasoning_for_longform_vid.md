@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LongVPO: From Anchored Cues to Self-Reasoning for Long-Form Video Preference Optimization
 description: >-

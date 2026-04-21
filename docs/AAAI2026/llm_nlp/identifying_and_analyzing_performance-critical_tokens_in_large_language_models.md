@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Identifying and Analyzing Performance-Critical Tokens in Large Language Models
 description: >-
@@ -133,8 +133,8 @@ tags:
 
 - [ProFuser: Progressive Fusion of Large Language Models](profuser_progressive_fusion_of_large_language_models.md)
 - [When People are Floods: Analyzing Dehumanizing Metaphors in Immigration Discourse with Large Language Models](../../ACL2025/llm_nlp/dehumanizing_metaphors_immigration.md)
-- [LoKI: Low-damage Knowledge Implanting of Large Language Models](loki_low-damage_knowledge_implanting_of_large_language_models.md)
 - [Control Illusion: The Failure of Instruction Hierarchies in Large Language Models](control_illusion_the_failure_of_instruction_hierarchies_in_large_language_models.md)
-- [Regress, Don't Guess — A Regression-like Loss on Number Tokens for Language Models](../../ICML2025/llm_nlp/regress_dont_guess_--_a_regression-like_loss_on_number_tokens_for_language_model.md)
+- [LoKI: Low-damage Knowledge Implanting of Large Language Models](loki_low-damage_knowledge_implanting_of_large_language_models.md)
+- [Scaling Equitable Reflection Assessment in Education via Large Language Models and Role-Based Feedback Agents](scaling_equitable_reflection_assessment_in_education_via_large_language_models_a.md)
 
 <!-- RELATED:END -->

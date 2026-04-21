@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Composition and Alignment of Diffusion Models using Constrained Learning
 description: >-
@@ -133,7 +133,7 @@ tags:
 - [Constrained Discrete Diffusion](constrained_discrete_diffusion.md)
 - [Training-Free Constrained Generation with Stable Diffusion Models](training-free_constrained_generation_with_stable_diffusion_models.md)
 - [Information Theoretic Learning for Diffusion Models with Warm Start](information_theoretic_learning_for_diffusion_models_with_warm_start.md)
+- [MixerMDM: Learnable Composition of Human Motion Diffusion Models](../../CVPR2025/image_generation/mixermdm_learnable_composition_of_human_motion_diffusion_models.md)
 - [Exploring Semantic-constrained Adversarial Example with Instruction Uncertainty Reduction](exploring_semantic-constrained_adversarial_example_with_instruction_uncertainty_.md)
-- [Physics-Constrained Flow Matching: Sampling Generative Models with Hard Constraints](physics-constrained_flow_matching_sampling_generative_models_with_hard_constrain.md)
 
 <!-- RELATED:END -->

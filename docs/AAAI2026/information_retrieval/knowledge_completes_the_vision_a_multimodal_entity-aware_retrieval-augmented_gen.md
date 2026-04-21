@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Knowledge Completes the Vision: A Multimodal Entity-aware Retrieval-Augmented Generation Framework for News Image Captioning
 description: >-

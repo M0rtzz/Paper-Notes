@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Alias-Free ViT: Fractional Shift Invariance via Linear Attention
 description: >-

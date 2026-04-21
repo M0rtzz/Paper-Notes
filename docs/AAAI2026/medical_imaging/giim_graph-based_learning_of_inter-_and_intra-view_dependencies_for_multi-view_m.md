@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GIIM: Graph-based Learning of Inter- and Intra-view Dependencies for Multi-view Medical Image Diagnosis
 description: >-

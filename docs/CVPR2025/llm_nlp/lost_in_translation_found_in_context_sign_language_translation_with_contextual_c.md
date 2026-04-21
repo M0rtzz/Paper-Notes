@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Lost in Translation, Found in Context: Sign Language Translation with Contextual Cues
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Filter-And-Refine: A MLLM Based Cascade System for Industrial-Scale Video Content Moderation
 description: >-

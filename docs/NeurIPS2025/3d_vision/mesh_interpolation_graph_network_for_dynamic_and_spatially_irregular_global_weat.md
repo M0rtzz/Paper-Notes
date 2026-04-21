@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mesh Interpolation Graph Network for Dynamic and Spatially Irregular Global Weather Forecasting
 description: >-

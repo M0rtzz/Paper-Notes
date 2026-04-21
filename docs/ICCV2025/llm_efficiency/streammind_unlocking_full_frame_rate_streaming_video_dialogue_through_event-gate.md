@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] StreamMind: Unlocking Full Frame Rate Streaming Video Dialogue through Event-Gated Cognition
 description: >-
@@ -173,9 +173,9 @@ StreamMind 解耦了感知和认知两个阶段：
 ## 相关论文
 
 - [Asynchronous Event Error-Minimizing Noise for Safeguarding Event Dataset](asynchronous_event_error-minimizing_noise_for_safeguarding_event_dataset.md)
-- [Sliding Windows Are Not the End: Exploring Full Ranking with Long-Context Large Language Models](../../ACL2025/llm_efficiency/sliding_windows_full_ranking.md)
 - [Spatial-TTT: Streaming Visual-based Spatial Intelligence with Test-Time Training](../../CVPR2025/llm_efficiency/spatial-ttt_streaming_visual-based_spatial_intelligence_with_test-time_training.md)
 - [SPARTA Alignment: Collectively Aligning Multiple Language Models through Combat](../../NeurIPS2025/llm_efficiency/sparta_alignment_collectively_aligning_multiple_language_models_through_combat.md)
 - [CostFilter-AD: Enhancing Anomaly Detection through Matching Cost Filtering](../../ICML2025/llm_efficiency/costfilter-ad_enhancing_anomaly_detection_through_matching_cost_filtering.md)
+- [Sliding Windows Are Not the End: Exploring Full Ranking with Long-Context Large Language Models](../../ACL2025/llm_efficiency/sliding_windows_full_ranking.md)
 
 <!-- RELATED:END -->

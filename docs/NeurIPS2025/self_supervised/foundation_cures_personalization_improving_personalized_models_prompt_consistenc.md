@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Foundation Cures Personalization: Improving Personalized Models' Prompt Consistency via Hidden Foundation Knowledge
 description: >-

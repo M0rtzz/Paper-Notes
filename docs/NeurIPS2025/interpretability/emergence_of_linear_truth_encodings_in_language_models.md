@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Emergence of Linear Truth Encodings in Language Models
 description: >-

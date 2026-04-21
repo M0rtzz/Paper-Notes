@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AffordGrasp: Cross-Modal Diffusion for Affordance-Aware Grasp Synthesis
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unique Hard Attention: A Tale of Two Sides
 description: >-
@@ -119,8 +119,8 @@ tags:
 
 - [BIG-Bench Extra Hard](big-bench_extra_hard.md)
 - [If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?](if_attention_serves_as_a_cognitive_model_of_human_memory_retrieval_what_is_the_p.md)
+- [EpMAN: Episodic Memory AttentioN for Generalizing to Longer Contexts](epman_episodic_memory_attention_for_generalizing_to_longer_contexts.md)
 - [Hard Negative Mining for Domain-Specific Retrieval in Enterprise Systems](hard_negative_mining_for_domain-specific_retrieval_in_enterprise_systems.md)
-- [Segment-Based Attention Masking for GPTs](segment-based_attention_masking_for_gpts.md)
-- [The Hidden Attention of Mamba Models](the_hidden_attention_of_mamba_models.md)
+- [Efficient OpAmp Adaptation for Zoom Attention to Golden Contexts](efficient_opamp_adaptation_for_zoom_attention_to_golden_contexts.md)
 
 <!-- RELATED:END -->

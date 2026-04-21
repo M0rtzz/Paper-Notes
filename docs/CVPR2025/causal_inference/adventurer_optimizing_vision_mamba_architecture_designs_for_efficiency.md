@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adventurer: Optimizing Vision Mamba Architecture Designs for Efficiency
 description: >-
@@ -131,8 +131,8 @@ Channel mixer 消融：纯 Mamba 层 81.6%，+标准 MLP 81.7%，+SwiGLU 81.8%�
 
 - [Learning Chain of Counterfactual Thought for Bias-Robust Vision-Language Reasoning](../../ECCV2024/causal_inference/learning_chain_of_counterfactual_thought_for_bias-robust_vision-language_reasoni.md)
 - [Towards Fine-Grained Interpretability: Counterfactual Explanations for Misclassification](towards_fine-grained_interpretability_counterfactual_explanations_for_misclassif.md)
-- [Image Quality Assessment: Investigating Causal Perceptual Effects with Abductive Counterfactual](image_quality_assessment_investigating_causal_perceptual_effects_with_abductive_.md)
-- [Joint Scheduling of Causal Prompts and Tasks for Multi-Task Learning](joint_scheduling_of_causal_prompts_and_tasks_for_multi-task_learning.md)
 - [Antidote: A Unified Framework for Mitigating LVLM Hallucinations in Counterfactual Presupposition](antidote_a_unified_framework_for_mitigating_lvlm_hallucinations_in_counterfactua.md)
+- [Image Quality Assessment: Investigating Causal Perceptual Effects with Abductive Counterfactual](image_quality_assessment_investigating_causal_perceptual_effects_with_abductive_.md)
+- [Seeing Far and Clearly: Mitigating Hallucinations in MLLMs with Attention Causal Decoding](seeing_far_and_clearly_mitigating_hallucinations_in_mllms_with_attention_causal_.md)
 
 <!-- RELATED:END -->

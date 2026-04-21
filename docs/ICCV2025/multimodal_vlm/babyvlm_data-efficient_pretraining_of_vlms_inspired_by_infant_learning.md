@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BabyVLM: Data-Efficient Pretraining of VLMs Inspired by Infant Learning
 description: >-

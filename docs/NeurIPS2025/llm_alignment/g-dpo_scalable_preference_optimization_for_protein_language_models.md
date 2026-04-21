@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] g-DPO: Scalable Preference Optimization for Protein Language Models
 description: >-
@@ -129,7 +129,7 @@ g-DPO 训练分三个阶段：(1) **Evo-tuning**——在野生型蛋白的进�
 - [Enhancing Safe and Controllable Protein Generation via Knowledge Preference Optimization](../../ACL2025/llm_alignment/kpo_protein_safety.md)
 - [Rethinking Direct Preference Optimization in Diffusion Models](rethinking_direct_preference_optimization_in_diffusion_models.md)
 - [Self-alignment of Large Video Language Models with Refined Regularized Preference Optimization](self-alignment_of_large_video_language_models_with_refined_regularized_preferenc.md)
-- [Debiasing Multimodal Large Language Models via Noise-Aware Preference Optimization](../../CVPR2025/llm_alignment/debiasing_multimodal_large_language_models_via_noise-aware_preference_optimizati.md)
 - [Mitigating Hallucination Through Theory-Consistent Symmetric Multimodal Preference Optimization](mitigating_hallucination_through_theory-consistent_symmetric_multimodal_preferen.md)
+- [LongVPO: From Anchored Cues to Self-Reasoning for Long-Form Video Preference Optimization](longvpo_from_anchored_cues_to_selfreasoning_for_longform_vid.md)
 
 <!-- RELATED:END -->

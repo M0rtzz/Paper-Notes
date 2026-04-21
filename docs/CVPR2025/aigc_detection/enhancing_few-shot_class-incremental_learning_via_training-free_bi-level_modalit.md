@@ -1,14 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Few-Shot Class-Incremental Learning via Training-Free Bi-Level Modality Calibration
 description: >-
-  [CVPR 2025][小样本增量学习] 提出无需训练的双层模态校准框架，利用CLIP等预训练VLM实现小样本类增量学习
+  [CVPR 2025][FSCIL] 提出无需额外训练的双层模态校准框架，利用 CLIP 等预训练视觉语言模型的跨模态对齐能力实现小样本类增量学习，在避免灾难性遗忘的同时学习新类。
 tags:
   - CVPR 2025
-  - 小样本增量学习
+  - FSCIL
   - 模态校准
   - CLIP
-  - 无训练框架
+  - 无训练
+  - 视觉语言模型
 ---
 
 # Enhancing Few-Shot Class-Incremental Learning via Training-Free Bi-Level Modality Calibration

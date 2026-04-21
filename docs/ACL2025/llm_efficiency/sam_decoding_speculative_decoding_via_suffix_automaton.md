@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SAM Decoding: Speculative Decoding via Suffix Automaton
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Empower Structure-Based Molecule Optimization with Gradient Guided Bayesian Flow Networks
 description: >-

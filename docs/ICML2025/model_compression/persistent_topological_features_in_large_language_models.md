@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Persistent Topological Features in Large Language Models
 description: >-

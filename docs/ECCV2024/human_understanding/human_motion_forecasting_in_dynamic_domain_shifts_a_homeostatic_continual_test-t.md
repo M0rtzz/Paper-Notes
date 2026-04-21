@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Human Motion Forecasting in Dynamic Domain Shifts: A Homeostatic Continual Test-Time Adaptation Framework
 description: >-
@@ -118,10 +118,10 @@ HoCoTTA的整体pipeline遵循知识蒸馏和参数隔离范式。输入是来�
 
 ## 相关论文
 
-- [FreeMotion: A Unified Framework for Number-free Text-to-Motion Synthesis](freemotion_a_unified_framework_for_number-free_text-to-motion_synthesis.md)
-- [FOZO: Forward-Only Zeroth-Order Prompt Optimization for Test-Time Adaptation](../../CVPR2026/human_understanding/fozo_forward-only_zeroth-order_prompt_optimization_for_test-time_adaptation.md)
-- [Bi-TTA: Bidirectional Test-Time Adapter for Remote Physiological Measurement](bi-tta_bidirectional_test-time_adapter_for_remote_physiological_measurement.md)
-- [One-stage Prompt-based Continual Learning](one-stage_prompt-based_continual_learning.md)
 - [CRISP: Object Pose and Shape Estimation with Test-Time Adaptation](../../CVPR2025/human_understanding/crisp_object_pose_and_shape_estimation_with_test-time_adaptation.md)
+- [FreeMotion: A Unified Framework for Number-free Text-to-Motion Synthesis](freemotion_a_unified_framework_for_number-free_text-to-motion_synthesis.md)
+- [Bi-TTA: Bidirectional Test-Time Adapter for Remote Physiological Measurement](bi-tta_bidirectional_test-time_adapter_for_remote_physiological_measurement.md)
+- [FOZO: Forward-Only Zeroth-Order Prompt Optimization for Test-Time Adaptation](../../CVPR2026/human_understanding/fozo_forward-only_zeroth-order_prompt_optimization_for_test-time_adaptation.md)
+- [One-stage Prompt-based Continual Learning](one-stage_prompt-based_continual_learning.md)
 
 <!-- RELATED:END -->

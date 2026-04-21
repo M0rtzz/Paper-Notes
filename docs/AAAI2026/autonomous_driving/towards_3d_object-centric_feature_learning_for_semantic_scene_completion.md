@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards 3D Object-Centric Feature Learning for Semantic Scene Completion
 description: >-
@@ -215,9 +215,9 @@ $$\mathcal{L} = \lambda_d \mathcal{L}_d + \lambda_r \mathcal{L}_{recon} + \mathc
 ## 相关论文
 
 - [Unleashing Semantic and Geometric Priors for 3D Scene Completion](unleashing_semantic_and_geometric_priors_for_3d_scene_completion.md)
-- [Sparsity-Aware Voxel Attention and Foreground Modulation for 3D Semantic Scene Completion](../../CVPR2026/autonomous_driving/sparsity-aware_voxel_attention_and_foreground_modulation_for_3d_semantic_scene_c.md)
+- [OccuFly: A 3D Vision Benchmark for Semantic Scene Completion from the Aerial Perspective](../../CVPR2026/autonomous_driving/occufly_a_3d_vision_benchmark_for_semantic_scene_completion_from_the_aerial_pers.md)
 - [Hierarchical Temporal Context Learning for Camera-based Semantic Scene Completion](../../ECCV2024/autonomous_driving/hierarchical_temporal_context_learning_for_camera-based_semantic_scene_completio.md)
+- [Sparsity-Aware Voxel Attention and Foreground Modulation for 3D Semantic Scene Completion](../../CVPR2026/autonomous_driving/sparsity-aware_voxel_attention_and_foreground_modulation_for_3d_semantic_scene_c.md)
 - [HD2-SSC: High-Dimension High-Density Semantic Scene Completion for Autonomous Driving](hd2-ssc_high-dimension_high-density_semantic_scene_completion_for_autonomous_dri.md)
-- [FlowScene: Learning Temporal 3D Semantic Scene Completion via Optical Flow Guidance](../../NeurIPS2025/autonomous_driving/learning_temporal_3d_semantic_scene_completion_via_optical_flow_guidance.md)
 
 <!-- RELATED:END -->

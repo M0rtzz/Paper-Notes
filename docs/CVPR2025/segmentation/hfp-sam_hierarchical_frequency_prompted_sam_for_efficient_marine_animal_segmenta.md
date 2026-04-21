@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HFP-SAM: Hierarchical Frequency Prompted SAM for Efficient Marine Animal Segmentation
 description: >-
@@ -135,7 +135,7 @@ HFP-SAM 提出分层频率提示的 SAM 框架，通过频率引导适配器（F
 
 - [Effective SAM Combination for Open-Vocabulary Semantic Segmentation](effective_sam_combination_for_open-vocabulary_semantic_segmentation.md)
 - [SAM-R1: Leveraging SAM for Reward Feedback in Multimodal Segmentation via Reinforcement Learning](../../NeurIPS2025/segmentation/sam-r1_leveraging_sam_for_reward_feedback_in_multimodal_segmentation_via_reinfor.md)
-- [E-SAM: Training-Free Segment Every Entity Model](../../ICCV2025/segmentation/e-sam_training-free_segment_every_entity_model.md)
+- [ROS-SAM: High-Quality Interactive Segmentation for Remote Sensing Moving Object](ros-sam_high-quality_interactive_segmentation_for_remote_sensing_moving_object.md)
 - [LEMMA: Laplacian Pyramids for Efficient Marine Semantic Segmentation](../../CVPR2026/segmentation/lemma_laplacian_pyramids_for_efficient_marine_semantic_segmentation.md)
 - [Frequency Dynamic Convolution for Dense Image Prediction](frequency_dynamic_convolution_for_dense_image_prediction.md)
 

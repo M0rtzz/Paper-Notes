@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Failures to Surface Harmful Contents in Video Large Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ICLShield: Exploring and Mitigating In-Context Learning Backdoor Attacks
 description: >-
@@ -193,6 +193,6 @@ ICLShield 是一个**推理阶段的防御方法**，无需额外训练或微调
 - [Federated In-Context Learning: Iterative Refinement for Improved Answer Quality](federated_in-context_learning_iterative_refinement_for_improved_answer_quality.md)
 - [The Ripple Effect: On Unforeseen Complications of Backdoor Attacks](the_ripple_effect_on_unforeseen_complications_of_backdoor_attacks.md)
 - [Detecting Backdoor Attacks in Federated Learning via Direction Alignment Inspection](../../CVPR2025/ai_safety/detecting_backdoor_attacks_in_federated_learning_via_direction_alignment_inspect.md)
-- [Exploring the Limits of Strong Membership Inference Attacks on Large Language Models](../../NeurIPS2025/ai_safety/exploring_the_limits_of_strong_membership_inference_attacks_on_large_language_mo.md)
+- [ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](../../ACL2025/ai_safety/elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)
 
 <!-- RELATED:END -->

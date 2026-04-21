@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reconstruction and Secrecy under Approximate Distance Queries
 description: >-

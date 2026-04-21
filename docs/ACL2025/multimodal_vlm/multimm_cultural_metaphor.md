@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MultiMM: Cultural Bias Matters — Cross-Cultural Benchmark for Multimodal Metaphors
 description: >-

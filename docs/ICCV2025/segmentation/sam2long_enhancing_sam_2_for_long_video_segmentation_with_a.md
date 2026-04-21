@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SAM2Long: Enhancing SAM 2 for Long Video Segmentation with a Training-Free Memory Tree
 description: >-

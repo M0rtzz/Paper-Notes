@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Geometry of Cortical Computation: Manifold Disentanglement and Predictive Dynamics in VCNet
 description: >-
@@ -146,7 +146,7 @@ Spots-10（动物纹理分类，10类，50K灰度32×32图像）：
 - [Reframing Long-Tailed Learning via Loss Landscape Geometry](../../CVPR2026/llm_evaluation/reframing_long-tailed_learning_via_loss_landscape_geometry.md)
 - [Flow3r: Factored Flow Prediction for Scalable Visual Geometry Learning](../../CVPR2026/llm_evaluation/flow3r_factored_flow_prediction_for_scalable_visual_geometry_learning.md)
 - [Disentangling Shared and Private Neural Dynamics with SPIRE: A Latent Modeling Framework for Deep Brain Stimulation](../../ICLR2026/llm_evaluation/disentangling_shared_and_private_neural_dynamics_with_spire_a_latent_modeling_fr.md)
-- [CodeAssistBench (CAB): Dataset & Benchmarking for Multi-turn Chat-Based Code Assistance](codeassistbench_cab_dataset_benchmarking_for_multi-turn_chat-based_code_assistan.md)
-- [Beyond the Singular: Revealing the Value of Multiple Generations in Benchmark Evaluation](beyond_the_singular_revealing_the_value_of_multiple_generations_in_benchmark_eva.md)
+- [Keep It on a Leash: Controllable Pseudo-label Generation Towards Realistic Long-Tailed Semi-Supervised Learning](keep_it_on_a_leash_controllable_pseudo-label_generation_towards_realistic_long-t.md)
+- [PaTH Attention: Position Encoding via Accumulating Householder Transformations](path_attention_position_encoding_via_accumulating_householder_transformations.md)
 
 <!-- RELATED:END -->

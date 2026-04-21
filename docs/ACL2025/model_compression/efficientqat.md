@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EfficientQAT: Efficient Quantization-Aware Training for Large Language Models
 description: >-

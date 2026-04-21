@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Revisiting the Data Sampling in Multimodal Post-training from a Difficulty-Distinguish View
 description: >-

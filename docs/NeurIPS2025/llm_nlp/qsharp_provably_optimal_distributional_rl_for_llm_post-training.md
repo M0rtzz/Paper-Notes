@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Q♯: Provably Optimal Distributional RL for LLM Post-Training
 description: >-

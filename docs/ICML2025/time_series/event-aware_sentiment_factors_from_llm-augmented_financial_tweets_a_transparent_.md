@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Event-Aware Sentiment Factors from LLM-Augmented Financial Tweets: A Transparent Framework for Interpretable Quant Trading
 description: >-

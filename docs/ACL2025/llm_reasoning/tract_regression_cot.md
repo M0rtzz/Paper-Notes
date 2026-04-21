@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TRACT: Regression-Aware Fine-tuning Meets Chain-of-Thought Reasoning
 description: >-
@@ -152,6 +152,6 @@ TRACT（Two-stage Regression-Aware fine-tuning with CoT）包含两个阶段：
 - [CoT-Valve: Length-Compressible Chain-of-Thought Tuning](cot-valve_length-compressible_chain-of-thought_tuning.md)
 - [Mind the Gap: Bridging Thought Leap for Improved Chain-of-Thought Tuning](../../NeurIPS2025/llm_reasoning/mind_the_gap_bridging_thought_leap_for_improved_chain-of-thought_tuning.md)
 - [Improving Chain-of-Thought Reasoning via Quasi-Symbolic Abstractions](improving_chain-of-thought_reasoning_via_quasi-symbolic_abstractions.md)
-- [Unveiling the Key Factors for Distilling Chain-of-Thought Reasoning](unveiling_the_key_factors_for_distilling_chain-of-thought_reasoning.md)
+- [DRT: Deep Reasoning Translation via Long Chain-of-Thought](drt_deep_reasoning_translation_via_long_chain-of-thought.md)
 
 <!-- RELATED:END -->

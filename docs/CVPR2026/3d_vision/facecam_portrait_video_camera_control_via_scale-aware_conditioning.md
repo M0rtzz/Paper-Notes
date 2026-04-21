@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FaceCam: Portrait Video Camera Control via Scale-Aware Conditioning
 description: >-
@@ -169,8 +169,8 @@ $$\mathbf{u}_k' = \mathcal{N}(\mathbf{K}(\mathbf{R}\mathbf{x}_k' + \mathbf{t}'))
 
 - [VerseCrafter: Dynamic Realistic Video World Model with 4D Geometric Control](versecrafter_dynamic_realistic_video_world_model_with_4d_geometric_control.md)
 - [Ego-1K: A Large-Scale Multiview Video Dataset for Egocentric Vision](ego-1k_--_a_large-scale_multiview_video_dataset_for_egocentric_vision.md)
+- [PreciseCam: Precise Camera Control for Text-to-Image Generation](../../CVPR2025/3d_vision/precisecam_precise_camera_control_for_text-to-image_generation.md)
 - [SceneScribe-1M: A Large-Scale Video Dataset with Comprehensive Geometric and Semantic Annotations](scenescribe-1m_a_large-scale_video_dataset_with_comprehensive_geometric_and_sema.md)
 - [SeeThrough3D: Occlusion Aware 3D Control in Text-to-Image Generation](seethrough3d_occlusion_aware_3d_control_in_text-to-image_generation.md)
-- [Coherent 3D Portrait Video Reconstruction via Triplane Fusion](../../CVPR2025/3d_vision/coherent_3d_portrait_video_reconstruction_via_triplane_fusion.md)
 
 <!-- RELATED:END -->

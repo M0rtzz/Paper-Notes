@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MSJoE: Jointly Evolving MLLM and Sampler for Efficient Long-Form Video Understanding
 description: >-

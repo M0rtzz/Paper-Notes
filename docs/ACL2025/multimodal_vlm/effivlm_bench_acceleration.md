@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EffiVLM-Bench: A Comprehensive Benchmark for Evaluating Training-Free Acceleration in Large Vision-Language Models
 description: >-

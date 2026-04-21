@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Who Can Withstand Chat-Audio Attacks? An Evaluation Benchmark for Large Audio-Language Models
 description: >-

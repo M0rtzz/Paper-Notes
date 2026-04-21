@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MMVU: Measuring Expert-Level Multi-Discipline Video Understanding
 description: >-
@@ -114,10 +114,10 @@ MMVU 构建分三阶段：(1) 前期准备——通过 133 名学生的用户研
 
 ## 相关论文
 
+- [Omni-RGPT: Unifying Image and Video Region-level Understanding via Token Marks](omni-rgpt_unifying_image_and_video_region-level_understanding_via_token_marks.md)
 - [MLVU: Benchmarking Multi-task Long Video Understanding](mlvu_benchmarking_multi-task_long_video_understanding.md)
 - [MUVR: A Multi-Modal Untrimmed Video Retrieval Benchmark with Multi-Level Visual Correspondence](../../NeurIPS2025/video_understanding/muvr_a_multi-modal_untrimmed_video_retrieval_benchmark_with_multi-level_visual_c.md)
 - [Beyond Single-Sample: Reliable Multi-Sample Distillation for Video Understanding](beyond_single-sample_reliable_multi-sample_distillation_for_video_understanding.md)
 - [TimeExpert: An Expert-Guided Video LLM for Video Temporal Grounding](../../ICCV2025/video_understanding/timeexpert_an_expert-guided_video_llm_for_video_temporal_grounding.md)
-- [Ego4o: Egocentric Human Motion Capture and Understanding from Multi-Modal Input](ego4o_egocentric_human_motion_capture_and_understanding_from_multi-modal_input.md)
 
 <!-- RELATED:END -->

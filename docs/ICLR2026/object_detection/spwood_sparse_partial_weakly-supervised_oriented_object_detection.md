@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SPWOOD: Sparse Partial Weakly-Supervised Oriented Object Detection
 description: >-
@@ -122,6 +122,6 @@ SPWOOD 在 teacher-student 自训练框架基础上，引入三个关键组件�
 - [Long-Context Generalization with Sparse Attention](long-context_generalization_with_sparse_attention.md)
 - [Projecting Points to Axes: Oriented Object Detection via Point-Axis Representation](../../ECCV2024/object_detection/projecting_points_to_axes_oriented_object_detection_via_point-axis_representatio.md)
 - [WeCromCL: Weakly Supervised Cross-Modality Contrastive Learning for Transcription-only Supervised Text Spotting](../../ECCV2024/object_detection/wecromcl_weakly_supervised_cross-modality_contrastive_learning_for_transcription.md)
-- [A Problem-Oriented Perspective and Anchor Verification for Code Optimization](a_problem-oriented_perspective_and_anchor_verification_for_code_optimization.md)
+- [Toward Faithful Retrieval-Augmented Generation with Sparse Autoencoders](toward_faithful_retrieval-augmented_generation_with_sparse_autoencoders.md)
 
 <!-- RELATED:END -->

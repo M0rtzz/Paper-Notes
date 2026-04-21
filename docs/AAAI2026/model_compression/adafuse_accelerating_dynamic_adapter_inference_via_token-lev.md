@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AdaFuse: Accelerating Dynamic Adapter Inference via Token-Level Pre-Gating and Fused Kernel Optimization
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Atlas of In-Context Learning: How Attention Heads Shape In-Context Retrieval Augmentation
 description: >-
@@ -138,6 +138,6 @@ Function Vector 零样本注入（Biography 数据集）：
 - [SEAL: Scaling to Emphasize Attention for Long-Context Retrieval](../../ACL2025/information_retrieval/seal_scaling_to_emphasize_attention_for_long-context_retrieval.md)
 - [RAEmoLLM: Retrieval Augmented LLMs for Cross-Domain Misinformation Detection Using In-Context Learning Based on Emotional Information](../../ACL2025/information_retrieval/raemollm_retrieval_augmented_llms_for_cross-domain_misinformation_detection_usin.md)
 - [Scale-invariant Attention](scale-invariant_attention.md)
-- [ARC-JSD: Attributing Response to Context via Jensen-Shannon Divergence Driven Mechanistic Study](attributing_response_to_context_a_jensen-shannon_divergence_driven_mechanistic_s.md)
+- [MIR-Bench: Can Your LLM Recognize Complicated Patterns via Many-Shot In-Context Reasoning?](mir-bench_can_your_llm_recognize_complicated_patterns_via_many-shot_in-context_r.md)
 
 <!-- RELATED:END -->

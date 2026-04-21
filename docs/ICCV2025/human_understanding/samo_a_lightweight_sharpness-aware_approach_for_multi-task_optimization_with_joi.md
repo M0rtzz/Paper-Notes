@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SAMO: A Lightweight Sharpness-Aware Approach for Multi-Task Optimization with Joint Global-Local Perturbation
 description: >-
@@ -146,6 +146,6 @@ SAMO 不引入额外的损失函数，而是作为一个**即插即用模块**�
 - [Transferable Backdoor Attacks for Code Models via Sharpness-Aware Adversarial Perturbation](../../AAAI2026/human_understanding/transferable_backdoor_attacks_for_code_models_via_sharpness-aware_adversarial_pe.md)
 - [High-Resolution Spatiotemporal Modeling with Global-Local State Space Models for Video-Based Human Pose Estimation](high-resolution_spatiotemporal_modeling_with_global-local_state_space_models_for.md)
 - [L2GTX: From Local to Global Time Series Explanations](../../CVPR2025/human_understanding/l2gtx_from_local_to_global_time_series_explanations.md)
-- [Sharpness-Aware Minimization with Z-Score Gradient Filtering](../../NeurIPS2025/human_understanding/sharpness-aware_minimization_with_z-score_gradient_filtering.md)
+- [FW-Merging: Scaling Model Merging with Frank-Wolfe Optimization](fw-merging_scaling_model_merging_with_frank-wolfe_optimization.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MUVR: A Multi-Modal Untrimmed Video Retrieval Benchmark with Multi-Level Visual Correspondence
 description: >-

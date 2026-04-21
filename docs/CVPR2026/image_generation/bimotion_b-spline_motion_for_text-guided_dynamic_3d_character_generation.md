@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BiMotion: B-spline Motion for Text-guided Dynamic 3D Character Generation
 description: >-

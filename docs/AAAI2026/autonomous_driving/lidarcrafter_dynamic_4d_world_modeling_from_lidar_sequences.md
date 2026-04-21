@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LiDARCrafter: Dynamic 4D World Modeling from LiDAR Sequences
 description: >-

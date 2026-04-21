@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MotionAnyMesh: Physics-Grounded Articulation for Simulation-Ready Digital Twins
 description: >-
@@ -157,10 +157,10 @@ tags:
 
 ## 相关论文
 
+- [Twinner: Shining Light on Digital Twins in a Few Snaps](twinner_shining_light_on_digital_twins_in_a_few_snaps.md)
 - [Digital Twin Catalog: A Large-Scale Photorealistic 3D Object Digital Twin Dataset](digital_twin_catalog_a_large-scale_photorealistic_3d_object_digital_twin_dataset.md)
+- [SimAvatar: Simulation-Ready Avatars with Layered Hair and Clothing](simavatar_simulation-ready_avatars_with_layered_hair_and_clothing.md)
 - [HD-EPIC: A Highly-Detailed Egocentric Video Dataset](hd-epic_a_highly-detailed_egocentric_video_dataset.md)
-- [FreeGave: 3D Physics Learning from Dynamic Videos by Gaussian Velocity](freegave_3d_physics_learning_from_dynamic_videos_by_gaussian_velocity.md)
-- [HaWoR: World-Space Hand Motion Reconstruction from Egocentric Videos](hawor_world-space_hand_motion_reconstruction_from_egocentric_videos.md)
-- [ARM: Appearance Reconstruction Model for Relightable 3D Generation](arm_appearance_reconstruction_model_for_relightable_3d_generation.md)
+- [VGGT: Visual Geometry Grounded Transformer](vggt_visual_geometry_grounded_transformer.md)
 
 <!-- RELATED:END -->

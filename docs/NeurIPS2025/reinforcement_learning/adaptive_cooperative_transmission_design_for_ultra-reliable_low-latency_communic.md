@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adaptive Cooperative Transmission Design for URLLC via Deep RL
 description: >-
@@ -136,6 +136,6 @@ tags:
 - [Scalable Neural Incentive Design with Parameterized Mean-Field Approximation](scalable_neural_incentive_design_with_parameterized_mean-field_approximation.md)
 - [DeepDiver: Adaptive Search Intensity Scaling via Open-Web Reinforcement Learning](deepdiver_adaptive_search_intensity_scaling_via_open-web_reinforcement_learning.md)
 - [Mean-Field Sampling for Cooperative Multi-Agent Reinforcement Learning](mean-field_sampling_for_cooperative_multi-agent_reinforcement_learning.md)
-- [RL Tango: Reinforcing Generator and Verifier Together for Language Reasoning](rl_tango_reinforcing_generator_and_verifier_together_for_lan.md)
+- [LEAST: The Courage to Stop — Overcoming Sunk Cost Fallacy in Deep RL](../../ICML2025/reinforcement_learning/the_courage_to_stop_overcoming_sunk_cost_fallacy_in_deep_reinforcement_learning.md)
 
 <!-- RELATED:END -->

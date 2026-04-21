@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Synthetic Perception: Can Generated Images Unlock Latent Visual Prior for Text-Centric Reasoning?
 description: >-

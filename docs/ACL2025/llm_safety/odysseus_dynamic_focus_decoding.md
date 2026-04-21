@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Odysseus Navigates the Sirens' Song: Dynamic Focus Decoding for Factual and Diverse Open-Ended Text Generation
 description: >-

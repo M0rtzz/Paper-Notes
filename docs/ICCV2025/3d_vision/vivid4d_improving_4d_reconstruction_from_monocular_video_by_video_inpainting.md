@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Vivid4D: Improving 4D Reconstruction from Monocular Video by Video Inpainting
 description: >-

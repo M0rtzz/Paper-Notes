@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CXReasonBench: A Benchmark for Evaluating Structured Diagnostic Reasoning in Chest X-rays
 description: >-

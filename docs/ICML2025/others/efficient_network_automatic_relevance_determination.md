@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Network Automatic Relevance Determination
 description: >-
@@ -134,9 +134,9 @@ $$\alpha_i = \begin{cases} \frac{m s_i^2}{\eta_i}, & \eta_i > 0 \\ \infty, & \et
 ## 相关论文
 
 - [Autonomous Concept Drift Threshold Determination](../../AAAI2026/others/autonomous_concept_drift_threshold_determination.md)
-- [Improve Rule Retrieval and Reasoning with Self-Induction and Relevance ReEstimate](../../ACL2025/others/improve_rule_retrieval_and_reasoning_with_self-induction_and_relevance_reestimat.md)
 - [Exploiting Similarity for Computation and Communication-Efficient Decentralized Optimization](exploiting_similarity_for_computation_and_communication-efficient_decentralized_.md)
+- [Improve Rule Retrieval and Reasoning with Self-Induction and Relevance ReEstimate](../../ACL2025/others/improve_rule_retrieval_and_reasoning_with_self-induction_and_relevance_reestimat.md)
 - [Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method](efficient_optimization_with_orthogonality_constraint_a_randomized_riemannian_sub.md)
-- [FSNet: Feasibility-Seeking Neural Network for Constrained Optimization with Guarantees](../../NeurIPS2025/others/fsnet_feasibility-seeking_neural_network_for_constrained_optimization_with_guara.md)
+- [Active Measurement: Efficient Estimation at Scale](../../NeurIPS2025/others/active_measurement_efficient_estimation_at_scale.md)
 
 <!-- RELATED:END -->

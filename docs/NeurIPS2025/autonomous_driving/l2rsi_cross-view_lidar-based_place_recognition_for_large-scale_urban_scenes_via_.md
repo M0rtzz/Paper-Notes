@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] L2RSI: Cross-View LiDAR-Based Place Recognition for Large-Scale Urban Scenes via Remote Sensing Imagery
 description: >-

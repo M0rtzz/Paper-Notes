@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Do You See What I Am Pointing At? Gesture-Based Egocentric Video Question Answering
 description: >-

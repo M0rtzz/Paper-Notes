@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Resource-Adaptive Federated Text Generation with Differential Privacy
 description: >-
@@ -157,8 +157,8 @@ Control code（如标签、主题、元数据）是本框架的关键设计：
 ## 相关论文
 
 - [InvisibleInk: High-Utility and Low-Cost Text Generation with Differential Privacy](../../NeurIPS2025/ai_safety/invisibleink_high-utility_and_low-cost_text_generation_with_differential_privacy.md)
-- [Sequentially Auditing Differential Privacy](../../NeurIPS2025/ai_safety/sequentially_auditing_differential_privacy.md)
 - [Adaptive Methods Are Preferable in High Privacy Settings: An SDE Perspective](adaptive_methods_are_preferable_in_high_privacy_settings_an_sde_perspective.md)
+- [Sequentially Auditing Differential Privacy](../../NeurIPS2025/ai_safety/sequentially_auditing_differential_privacy.md)
 - [Efficient Resource-Constrained Training of Transformers via Subspace Optimization](efficient_resource-constrained_training_of_transformers_via_subspace_optimizatio.md)
 - [FedALT: Federated Fine-Tuning through Adaptive Local Training with Rest-of-World LoRA](../../AAAI2026/ai_safety/fedalt_federated_fine-tuning_through_adaptive_local_training_with_rest-of-world_.md)
 

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LayerTracer: Cognitive-Aligned Layered SVG Synthesis via Diffusion Transformer
 description: >-
@@ -162,8 +162,8 @@ LayerTracer 包含四个组件：
 
 - [Associative Transformer](../../CVPR2025/llm_efficiency/associative_transformer.md)
 - [Approximately Aligned Decoding](../../NeurIPS2025/llm_efficiency/approximately_aligned_decoding.md)
-- [Deep Compositional Phase Diffusion for Long Motion Sequence Generation](../../NeurIPS2025/llm_efficiency/deep_compositional_phase_diffusion_for_long_motion_sequence_generation.md)
 - [Spiking Transformer: Introducing Accurate Addition-Only Spiking Self-Attention for Transformer](../../CVPR2025/llm_efficiency/spiking_transformer_introducing_accurate_addition-only_spiking_self-attention_fo.md)
-- [Frequency-Aware Token Reduction for Efficient Vision Transformer](../../NeurIPS2025/llm_efficiency/frequency-aware_token_reduction_for_efficient_vision_transformer.md)
+- [Deep Compositional Phase Diffusion for Long Motion Sequence Generation](../../NeurIPS2025/llm_efficiency/deep_compositional_phase_diffusion_for_long_motion_sequence_generation.md)
+- [CARE Transformer: Mobile-Friendly Linear Visual Transformer via Decoupled Dual Interaction](../../CVPR2025/llm_efficiency/care_transformer_mobile-friendly_linear_visual_transformer_via_decoupled_dual_in.md)
 
 <!-- RELATED:END -->

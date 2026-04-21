@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving 2D Feature Representations by 3D-Aware Fine-Tuning
 description: >-

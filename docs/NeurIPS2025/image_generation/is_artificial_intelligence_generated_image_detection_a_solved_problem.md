@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Is Artificial Intelligence Generated Image Detection a Solved Problem?
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Seeing without Pixels: Perception from Camera Trajectories
 description: >-
@@ -129,9 +129,9 @@ tags:
 ## 相关论文
 
 - [Face Time Traveller: Travel Through Ages Without Losing Identity](face_time_traveller_travel_through_ages_without_losing_identity.md)
-- [AnyTouch 2: General Optical Tactile Representation Learning For Dynamic Tactile Perception](../../ICLR2026/human_understanding/anytouch_2_general_optical_tactile_representation_learning_for_dynamic_tactile_p.md)
 - [ADen: Adaptive Density Representations for Sparse-view Camera Pose Estimation](../../ECCV2024/human_understanding/aden_adaptive_density_representations_for_sparseview_camera.md)
+- [AnyTouch 2: General Optical Tactile Representation Learning For Dynamic Tactile Perception](../../ICLR2026/human_understanding/anytouch_2_general_optical_tactile_representation_learning_for_dynamic_tactile_p.md)
 - [Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](../../ICLR2026/human_understanding/function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)
-- [Perceive What Matters: Relevance-Driven Scheduling for Multimodal Streaming Perception](../../CVPR2025/human_understanding/perceive_what_matters_relevance-driven_scheduling_for_multimodal_streaming_perce.md)
+- [Sonic: Shifting Focus to Global Audio Perception in Portrait Animation](../../CVPR2025/human_understanding/sonic_shifting_focus_to_global_audio_perception_in_portrait_animation.md)
 
 <!-- RELATED:END -->

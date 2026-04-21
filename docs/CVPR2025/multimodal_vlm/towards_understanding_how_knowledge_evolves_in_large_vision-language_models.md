@@ -1,7 +1,17 @@
 ---
-title: "Towards Understanding How Knowledge Evolves in Large Vision-Language Models"
-description: "首次系统揭示LVLM中多模态知识的演化轨迹，发现关键层和突变层将知识演化分为快速演化、稳定和突变三个阶段，并与幻觉现象关联"
-tags: ["CVPR2025", "LVLM可解释性", "知识演化", "幻觉分析", "模型压缩"]
+title: >-
+  [论文解读] Towards Understanding How Knowledge Evolves in Large Vision-Language Models
+description: >-
+  [CVPR 2025][多模态][LVLM可解释性] 首次系统分析LVLM中多模态知识的演化过程，从**单token概率**、**token概率分布**和**特征编码**三个层次揭示知识演化的"关键层-突变层"双节点模式，将演化过程划分为**快速演化→稳定→突变**三个阶段，并发现深层突变与幻觉现象密切相关。
+tags:
+  - CVPR 2025
+  - 多模态
+  - LVLM可解释性
+  - 知识演化
+  - early exit
+  - 幻觉分析
+  - 层级分析
+  - 模型压缩
 ---
 
 # Towards Understanding How Knowledge Evolves in Large Vision-Language Models
@@ -114,10 +124,10 @@ LVLM（如LLaVA系列）已成为许多AI应用的基础模型，但其内部工
 
 ## 相关论文
 
-- [VILA-M3: Enhancing Vision-Language Models with Medical Expert Knowledge](vila-m3_enhancing_vision-language_models_with_medical_expert_knowledge.md)
 - [Thinking in Space: How Multimodal Large Language Models See, Remember, and Recall Spaces](thinking_in_space_how_multimodal_large_language_models_see_remember_and_recall_s.md)
-- [FlySearch: Exploring how vision-language models explore](../../NeurIPS2025/multimodal_vlm/flysearch_exploring_how_vision-language_models_explore.md)
+- [VILA-M3: Enhancing Vision-Language Models with Medical Expert Knowledge](vila-m3_enhancing_vision-language_models_with_medical_expert_knowledge.md)
 - [EventGPT: Event Stream Understanding with Multimodal Large Language Models](eventgpt_event_stream_understanding_with_multimodal_large_language_models.md)
 - [Embodied Scene Understanding for Vision Language Models via MetaVQA](embodied_scene_understanding_for_vision_language_models_via_metavqa.md)
+- [FlySearch: Exploring how vision-language models explore](../../NeurIPS2025/multimodal_vlm/flysearch_exploring_how_vision-language_models_explore.md)
 
 <!-- RELATED:END -->

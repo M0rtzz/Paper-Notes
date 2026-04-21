@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SDP-CROWN: Efficient Bound Propagation for Neural Network Verification with Tightness of Semidefinite Programming
 description: >-

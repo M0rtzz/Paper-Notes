@@ -1,15 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] How Should We Evaluate Data Deletion in Graph-Based ANN Indexes?
 description: >-
-  [NeurIPS 2025 Workshop][ANNS] 面向实际部署场景，提出图基ANN索引数据删除的统一评估方法论，形式化三种删除策略（逻辑/物理/重建），并提出Deletion Control算法根据精度要求动态切换删除方法。
+  [NeurIPS 2025 (Workshop on ML for Systems)][ANNS] 针对图基ANN索引缺乏统一数据删除评估方法的问题，形式化定义了逻辑删除、物理删除和重建三种基准方法，提出面向实际部署的评估框架和指标体系，并基于实验分析提出Deletion Control算法在精度约束下动态切换删除策略。
 tags:
-  - NeurIPS 2025 Workshop
+  - NeurIPS 2025 (Workshop on ML for Systems)
   - ANNS
   - HNSW
   - 数据删除
   - 向量数据库
-  - RAG
+  - 评估框架
 ---
 
 # How Should We Evaluate Data Deletion in Graph-Based ANN Indexes?
@@ -133,9 +133,9 @@ Deletion Control验证（SIFT1B, b=10⁵, α=0.84）：
 ## 相关论文
 
 - [The Atlas of In-Context Learning: How Attention Heads Shape In-Context Retrieval Augmentation](the_atlas_of_in-context_learning_how_attention_heads_shape_in-context_retrieval_.md)
-- [Graph of Records: Boosting Retrieval Augmented Generation for Long-context Summarization with Graphs](../../ACL2025/information_retrieval/gor_rag_long_context_summary.md)
-- [STRUCTURE: With Limited Data for Multimodal Alignment, Let the Structure Guide You](with_limited_data_for_multimodal_alignment_let_the_structure_guide_you.md)
+- [On Synthetic Data Strategies for Domain-Specific Generative Retrieval](../../ACL2025/information_retrieval/on_synthetic_data_strategies_for_domain-specific_generative_retrieval.md)
 - [When Should Dense Retrievers Be Updated in Evolving Corpora? Detecting Out-of-Distribution Corpora Using GradNormIR](../../ACL2025/information_retrieval/when_should_dense_retrievers_be_updated_in_evolving_corpora_detecting_out-of-dis.md)
-- [G-reasoner: Foundation Models for Unified Reasoning over Graph-structured Knowledge](../../ICLR2026/information_retrieval/g-reasoner_foundation_models_for_unified_reasoning_over_graph-structured_knowled.md)
+- [KnowShiftQA: How Robust are RAG Systems when Textbook Knowledge Shifts in K-12 Education?](../../ACL2025/information_retrieval/knowshiftqa_rag_knowledge_shifts.md)
+- [MuRating: A High Quality Data Selecting Approach to Multilingual Large Language Model Pretraining](murating_a_high_quality_data_selecting_approach_to_multilingual_large_language_m.md)
 
 <!-- RELATED:END -->

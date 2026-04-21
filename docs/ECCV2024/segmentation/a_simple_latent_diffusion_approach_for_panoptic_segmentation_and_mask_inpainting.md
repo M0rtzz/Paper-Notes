@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Simple Latent Diffusion Approach for Panoptic Segmentation and Mask Inpainting
 description: >-

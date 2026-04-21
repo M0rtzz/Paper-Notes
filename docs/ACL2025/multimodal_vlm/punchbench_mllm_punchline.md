@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PunchBench: Benchmarking MLLMs in Multimodal Punchline Comprehension
 description: >-

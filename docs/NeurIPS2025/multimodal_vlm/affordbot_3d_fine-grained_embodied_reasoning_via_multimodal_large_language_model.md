@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AffordBot: 3D Fine-grained Embodied Reasoning via Multimodal Large Language Models
 description: >-

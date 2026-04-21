@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] I See What You Mean: Co-Speech Gestures for Reference Resolution in Multimodal Dialogue
 description: >-

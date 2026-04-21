@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Internal and External Impacts of Natural Language Processing Papers
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PRISM: Video Dataset Condensation with Progressive Refinement and Insertion for Sparse Motion
 description: >-

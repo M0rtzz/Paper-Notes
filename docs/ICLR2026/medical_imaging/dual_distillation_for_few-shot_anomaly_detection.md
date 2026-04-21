@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dual Distillation for Few-Shot Anomaly Detection
 description: >-
@@ -118,9 +118,9 @@ L = lambda * L_TSD + L_SSD_L2W，lambda = 0.1（TSD 权重较低，SSD 主导）
 ## 相关论文
 
 - [Bidirectional Multimodal Prompt Learning with Scale-Aware Training for Few-Shot Multi-Class Anomaly Detection](../../CVPR2026/medical_imaging/bidirectional_multimodal_prompt_learning_with_scale-aware_training_for_few-shot_.md)
+- [UniVAD: A Training-free Unified Model for Few-shot Visual Anomaly Detection](../../CVPR2025/medical_imaging/univad_a_training-free_unified_model_for_few-shot_visual_anomaly_detection.md)
 - [MoECLIP: Patch-Specialized Experts for Zero-shot Anomaly Detection](../../CVPR2026/medical_imaging/moeclip_patch-specialized_experts_for_zero-shot_anomaly_detection.md)
 - [VisualAD: Language-Free Zero-Shot Anomaly Detection via Vision Transformer](../../CVPR2026/medical_imaging/visualad_language-free_zero-shot_anomaly_detection_via_vision_transformer.md)
-- [AA-CLIP: Enhancing Zero-Shot Anomaly Detection via Anomaly-Aware CLIP](../../CVPR2025/medical_imaging/aa-clip_enhancing_zero-shot_anomaly_detection_via_anomaly-aware_clip.md)
 - [Exploiting Low-Dimensional Manifold of Features for Few-Shot Whole Slide Image Classification](exploiting_low-dimensional_manifold_of_features_for_few-shot_whole_slide_image_c.md)
 
 <!-- RELATED:END -->

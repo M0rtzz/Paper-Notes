@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HiEI: A Universal Framework for Generating High-quality Emerging Images from Natural Images
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Global Context-aware Representation Learning for Spatially Resolved Transcriptomics
 description: >-
@@ -156,7 +156,7 @@ Spotscape 在全部 16 个切片、4 个数据集上的 ARI/NMI/CA 均为最优�
 - [Discovering Global False Negatives On the Fly for Self-supervised Contrastive Learning](discovering_global_false_negatives_on_the_fly_for_self-supervised_contrastive_le.md)
 - [Self-Organizing Visual Prototypes for Non-Parametric Representation Learning](self-organizing_visual_prototypes_for_non-parametric_representation_learning.md)
 - [DA-Mamba: Learning Domain-Aware State Space Model for Global-Local Alignment in Domain Adaptive Object Detection](../../CVPR2026/object_detection/da-mamba_learning_domain-aware_state_space_model_for_global-local_alignment_in_d.md)
-- [Understanding the Emergence of Multimodal Representation Alignment](understanding_the_emergence_of_multimodal_representation_alignment.md)
+- [Generative Modeling of Class Probability for Multi-Modal Representation Learning](../../CVPR2025/object_detection/generative_modeling_of_class_probability_for_multi_modal_representation_learning.md)
 - [SSTAG: Structure-Aware Self-Supervised Learning Method for Text-Attributed Graphs](../../NeurIPS2025/object_detection/sstag_structure-aware_self-supervised_learning_method_for_text-attributed_graphs.md)
 
 <!-- RELATED:END -->

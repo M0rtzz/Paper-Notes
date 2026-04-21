@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ABRA: Teleporting Fine-Tuned Knowledge Across Domains for Open-Vocabulary Object Detection
 description: >-
@@ -166,9 +166,9 @@ ABRA 的流程分为三步：
 ## 相关论文
 
 - [BACON: Improving Clarity of Image Captions via Bag-of-Concept Graphs](bacon_improving_clarity_of_image_captions_via_bag-of-concept_graphs.md)
+- [Towards RAW Object Detection in Diverse Conditions](towards_raw_object_detection_in_diverse_conditions.md)
 - [MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism](mi-detr_an_object_detection_model_with_multi-time_inquiries_mechanism.md)
-- [Large Self-Supervised Models Bridge the Gap in Domain Adaptive Object Detection](large_self-supervised_models_bridge_the_gap_in_domain_adaptive_object_detection.md)
-- [Interpreting Object-level Foundation Models via Visual Precision Search](interpreting_object-level_foundation_models_via_visual_precision_search.md)
-- [Multiple Object Tracking as ID Prediction](multiple_object_tracking_as_id_prediction.md)
+- [Efficient Test-Time Adaptive Object Detection via Sensitivity-Guided Pruning](efficient_test-time_adaptive_object_detection_via_sensitivity-guided_pruning.md)
+- [SimLTD: Simple Supervised and Semi-Supervised Long-Tailed Object Detection](simltd_simple_supervised_and_semi-supervised_long-tailed_object_detection.md)
 
 <!-- RELATED:END -->

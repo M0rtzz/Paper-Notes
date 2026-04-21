@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HermesFlow: Seamlessly Closing the Gap in Multimodal Understanding and Generation
 description: >-

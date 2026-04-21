@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Position Paper: If Innovation in AI Systematically Violates Fundamental Rights, Is It Innovation at All?
 description: >-

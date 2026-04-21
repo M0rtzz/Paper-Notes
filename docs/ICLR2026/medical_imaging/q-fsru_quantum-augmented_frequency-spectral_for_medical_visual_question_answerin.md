@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Q-FSRU: Quantum-Augmented Frequency-Spectral Fusion for Medical Visual Question Answering
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exploring Guided Sampling of Conditional GANs
 description: >-
@@ -121,6 +121,6 @@ GANdance框架建立在预训练的条件GAN之上。其核心思路是：在已
 - [A Framework for Efficient Model Evaluation through Stratification, Sampling, and Estimation](a_framework_for_efficient_model_evaluation_through_stratific.md)
 - [Wavelength-Embedding-guided Filter-Array Transformer for Spectral Demosaicing](wavelength-embedding-guided_filter-array_transformer_for_spectral_demosaicing.md)
 - [despite exploring contrastive deep skeletonpointcloudimutext](../../ICCV2025/others/despite_exploring_contrastive_deep_skeletonpointcloudimutext.md)
-- [Robust Sampling for Active Statistical Inference](../../NeurIPS2025/others/robust_sampling_for_active_statistical_inference.md)
+- [Sample-Adaptivity Tradeoff in On-Demand Sampling](../../NeurIPS2025/others/sample-adaptivity_tradeoff_in_on-demand_sampling.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DecoupledGaussian: Object-Scene Decoupling for Physics-Based Interaction
 description: >-
@@ -117,10 +117,10 @@ tags:
 
 ## 相关论文
 
+- [Spatiotemporal Decoupling for Efficient Vision-Based Occupancy Forecasting](spatiotemporal_decoupling_for_efficient_vision-based_occupancy_forecasting.md)
 - [InteractionMap: Improving Online Vectorized HDMap Construction with Interaction](interactionmap_improving_online_vectorized_hdmap_construction_with_interaction.md)
 - [AdaptiveAD: Decoupling Scene Perception and Ego Status for End-to-End Autonomous Driving](../../AAAI2026/autonomous_driving/decoupling_scene_perception_and_ego_status_a_multi-context_fusion_approach_for_e.md)
 - [Future-Aware Interaction Network For Motion Forecasting](../../ICCV2025/autonomous_driving/future-aware_interaction_network_for_motion_forecasting.md)
 - [Towards Physics-Informed Spatial Intelligence with Human Priors: An Autonomous Driving Perspective](../../NeurIPS2025/autonomous_driving/towards_physics-informed_spatial_intelligence_with_human_priors_an_autonomous_dr.md)
-- [UniScene: Unified Occupancy-centric Driving Scene Generation](uniscene_unified_occupancy-centric_driving_scene_generation.md)
 
 <!-- RELATED:END -->

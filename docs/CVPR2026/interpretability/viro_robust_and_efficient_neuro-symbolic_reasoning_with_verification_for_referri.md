@@ -1,16 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] VIRO: Robust and Efficient Neuro-Symbolic Reasoning with Verification for Referring Expression Comprehension
 description: >-
-  [CVPR 2026][多模态VLM][指代表达理解] 提出VIRO框架，在神经符号推理管道中嵌入算子级验证机制（不确定性验证+逻辑验证），解决组合推理中的级联错误和强制预测问题，实现无目标场景的稳健检测，零样本设置下在gRefCOCO无目标分割和标准REC基准上达到SOTA。
+  [CVPR 2026][指代表达理解] VIRO在神经符号REC管道中嵌入轻量算子级验证机制（CLIP不确定性验证+空间逻辑验证），使每个推理步骤能自我验证并在无目标时提前终止，在零样本设置下以61.1%平衡准确率大幅超越组合推理baselines，同时保持0.3%以下的程序失败率和高效推理速度。
 tags:
   - CVPR 2026
-  - 多模态VLM
   - 指代表达理解
   - 神经符号推理
+  - 算子级验证
   - 零样本学习
-  - 开放词汇检测
-  - CLIP验证
+  - 无目标检测
 ---
 
 # VIRO: Robust and Efficient Neuro-Symbolic Reasoning with Verification for Referring Expression Comprehension

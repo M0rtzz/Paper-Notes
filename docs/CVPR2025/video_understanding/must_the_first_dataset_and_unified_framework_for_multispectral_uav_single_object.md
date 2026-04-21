@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MUST: The First Dataset and Unified Framework for Multispectral UAV Single Object Tracking
 description: >-
@@ -146,10 +146,10 @@ HOT 数据集上 SOTA 精度 + 最快速度（37 FPS）。GOT10K 上与 SOTA 持
 
 ## 相关论文
 
+- [Learning Occlusion-Robust Vision Transformers for Real-Time UAV Tracking](learning_occlusion-robust_vision_transformers_for_real-time_uav_tracking.md)
 - [UETrack: A Unified and Efficient Framework for Single Object Tracking](../../CVPR2026/video_understanding/uetrack_a_unified_and_efficient_framework_for_single_object_tracking.md)
 - [General Compression Framework for Efficient Transformer Object Tracking](../../ICCV2025/video_understanding/general_compression_framework_for_efficient_transformer_object_tracking.md)
-- [MITracker: Multi-View Integration for Visual Object Tracking](mitracker_multi-view_integration_for_visual_object_tracking.md)
-- [FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking](fc-track_overlap-aware_post-association_correction_for_online_multi-object_track.md)
-- [Beyond Single-Sample: Reliable Multi-Sample Distillation for Video Understanding](beyond_single-sample_reliable_multi-sample_distillation_for_video_understanding.md)
+- [Similarity-Guided Layer-Adaptive Vision Transformer for UAV Tracking](similarity-guided_layer-adaptive_vision_transformer_for_uav_tracking.md)
+- [OmniTrack: Omnidirectional Multi-Object Tracking](omnidirectional_multi-object_tracking.md)
 
 <!-- RELATED:END -->

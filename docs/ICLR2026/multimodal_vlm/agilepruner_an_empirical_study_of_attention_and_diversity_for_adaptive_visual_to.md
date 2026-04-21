@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AgilePruner: An Empirical Study of Attention and Diversity for Adaptive Visual Token Pruning in LVLMs
 description: >-

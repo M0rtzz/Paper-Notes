@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hybrid eTFCE–GRF: Exact Cluster-Size Retrieval with Analytical p-Values for Voxel-Based Morphometry
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EVATok: Adaptive Length Video Tokenization for Efficient Visual Autoregressive Generation
 description: >-
@@ -150,6 +150,6 @@ EVATok 的核心区别在于从定义"最优"的标准入手（proxy reward）�
 - [PROMO: Promptable Outfitting for Efficient High-Fidelity Virtual Try-On](promo_promptable_outfitting_for_efficient_high-fidelity_virtual_try-on.md)
 - [Physics-Consistent Diffusion for Efficient Fluid Super-Resolution via Multiscale Residual Correction](physics-consistent_diffusion_for_efficient_fluid_super-resolution_via_multiscale.md)
 - [TAP: A Token-Adaptive Predictor Framework for Training-Free Diffusion Acceleration](tap_a_token-adaptive_predictor_framework_for_training-free_diffusion_acceleratio.md)
-- [BiGain: Unified Token Compression for Joint Generation and Classification](bigain_unified_token_compression_for_joint_generation_and_classification.md)
+- [Causal Motion Diffusion Models for Autoregressive Motion Generation](causal_motion_diffusion_models_for_autoregressive_motion_generation.md)
 
 <!-- RELATED:END -->

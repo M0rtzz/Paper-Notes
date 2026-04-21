@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SceneScribe-1M: A Large-Scale Video Dataset with Comprehensive Geometric and Semantic Annotations
 description: >-

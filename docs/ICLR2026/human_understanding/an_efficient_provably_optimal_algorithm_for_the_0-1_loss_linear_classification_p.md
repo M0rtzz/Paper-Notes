@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] An Efficient, Provably Optimal Algorithm for the 0-1 Loss Linear Classification Problem
 description: >-

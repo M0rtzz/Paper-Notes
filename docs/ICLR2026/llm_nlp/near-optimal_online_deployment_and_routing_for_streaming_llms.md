@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Near-Optimal Online Deployment and Routing for Streaming LLMs
 description: >-
@@ -114,7 +114,7 @@ StageRoute 是一个两层分层算法，镜像问题的层级结构：
 - [BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute](../../ICML2025/llm_nlp/best-route_adaptive_llm_routing_with_test-time_optimal_compute.md)
 - [ICL-Router: In-Context Learned Model Representations for LLM Routing](../../AAAI2026/llm_nlp/icl-router_in-context_learned_model_representations_for_llm_routing.md)
 - [LLM as Effective Streaming Processor: Bridging Streaming-Batch Mismatches with Group Position Encoding](../../ACL2025/llm_nlp/llm_as_effective_streaming_processor_bridging_streaming-batch_mismatches_with_gr.md)
-- [DiSCo: Device-Server Collaborative LLM-Based Text Streaming Services](../../ACL2025/llm_nlp/disco_device-server_collaborative_llm-based_text_streaming_services.md)
+- [WebDevJudge: Evaluating (M)LLMs as Critiques for Web Development Quality](webdevjudge_mllm_web_development.md)
 - [d²Cache: Accelerating Diffusion-Based LLMs via Dual Adaptive Caching](d2cache_accelerating_diffusion-based_llms_via_dual_adaptive_caching.md)
 
 <!-- RELATED:END -->

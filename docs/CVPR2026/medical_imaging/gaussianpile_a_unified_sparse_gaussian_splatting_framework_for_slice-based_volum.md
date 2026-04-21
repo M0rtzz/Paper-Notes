@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GaussianPile: A Unified Sparse Gaussian Splatting Framework for Slice-based Volumetric Reconstruction
 description: >-

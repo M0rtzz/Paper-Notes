@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LR-SGS: Robust LiDAR-Reflectance-Guided Salient Gaussian Splatting for Self-Driving Scene Reconstruction
 description: >-

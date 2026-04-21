@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GazeOnce360: Fisheye-Based 360° Multi-Person Gaze Estimation with Global-Local Feature Fusion
 description: >-

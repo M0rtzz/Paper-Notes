@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Attributions of Input Variables in a Coalition
 description: >-
@@ -146,7 +146,7 @@ tags:
 - [Minimizing False-Positive Attributions in Explanations of Non-Linear Models](../../NeurIPS2025/interpretability/minimizing_false-positive_attributions_in_explanations_of_non-linear_models.md)
 - [Feature Attribution Stability Suite: How Stable Are Post-Hoc Attributions?](../../CVPR2026/interpretability/feature_attribution_stability_suite_how_stable_are_post-hoc_attributions.md)
 - [ShapBPT: Image Feature Attributions Using Data-Aware Binary Partition Trees](../../AAAI2026/interpretability/shapbpt_image_feature_attributions_using_data-aware_binary_partition_trees.md)
-- [Foundation Molecular Grammar: Multi-Modal Foundation Models Induce Interpretable Molecular Grammar](foundation_molecular_grammar_multi-modal_foundation_models_induce_interpretable_.md)
-- [Do Sparse Autoencoders Generalize? A Case Study of Answerability](do_sparse_autoencoders_generalize_a_case_study_of_answerability.md)
+- [Evolving Prompts In-Context: An Open-ended, Self-replicating Perspective](evolving_prompts_in-context_an_open-ended_self-replicating_perspective.md)
+- [What Makes an Ensemble (Un)interpretable?](what_makes_an_ensemble_un_interpretable.md)
 
 <!-- RELATED:END -->

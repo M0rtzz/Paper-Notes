@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Open-World Generation of Stereo Images and Unsupervised Matching
 description: >-
@@ -153,8 +153,8 @@ GenStereo 在 PSNR 上提升约 10 dB，SSIM 提升近一倍。
 
 - [AGO: Adaptive Grounding for Open World 3D Occupancy Prediction](ago_adaptive_grounding_for_open_world_3d_occupancy_predictio.md)
 - [Towards Foundational LiDAR World Models with Efficient Latent Flow Matching](../../NeurIPS2025/autonomous_driving/towards_foundational_lidar_world_models_with_efficient_latent_flow_matching.md)
-- [Helvipad: A Real-World Dataset for Omnidirectional Stereo Depth Estimation](../../CVPR2025/autonomous_driving/helvipad_a_real-world_dataset_for_omnidirectional_stereo_depth_estimation.md)
 - [Hermes: A Unified Self-Driving World Model for Simultaneous 3D Scene Understanding and Generation](hermes_a_unified_self-driving_world_model_for_simultaneous_3d_scene_understandin.md)
+- [Helvipad: A Real-World Dataset for Omnidirectional Stereo Depth Estimation](../../CVPR2025/autonomous_driving/helvipad_a_real-world_dataset_for_omnidirectional_stereo_depth_estimation.md)
 - [Epona: Autoregressive Diffusion World Model for Autonomous Driving](epona_autoregressive_diffusion_world_model_for_autonomous_driving.md)
 
 <!-- RELATED:END -->

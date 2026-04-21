@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Look and Tell: A Dataset for Multimodal Grounding Across Egocentric and Exocentric Views
 description: >-

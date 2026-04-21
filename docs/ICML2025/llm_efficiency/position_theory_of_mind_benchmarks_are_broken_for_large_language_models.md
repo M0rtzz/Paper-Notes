@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Position: Theory of Mind Benchmarks are Broken for Large Language Models
 description: >-
@@ -247,10 +247,10 @@ Lowe 等、Akata 等已关注多体行为建模。
 
 ## 相关论文
 
-- [SepLLM: Accelerate Large Language Models by Compressing One Segment into One Separator](sepllm_accelerate_large_language_models_by_compressing_one_segment_into_one_sepa.md)
 - [LongSafety: Evaluating Long-Context Safety of Large Language Models](../../ACL2025/llm_efficiency/longsafety_evaluating_long-context_safety_of_large_language_models.md)
 - [Robust Utility-Preserving Text Anonymization Based on Large Language Models](../../ACL2025/llm_efficiency/robust_utility-preserving_text_anonymization_based_on_large_language_models.md)
 - [Scaling Inference-Efficient Language Models](scaling_inference-efficient_language_models.md)
-- [Fourier Position Embedding: Enhancing Attention's Periodic Extension for Length Generalization](fourier_position_embedding_enhancing_attentions_periodic_extension_for_length_ge.md)
+- [LongReward: Improving Long-context Large Language Models with AI Feedback](../../ACL2025/llm_efficiency/longreward_improving_long-context_large_language_models_with_ai_feedback.md)
+- [GradOT: Training-free Gradient-preserving Offsite-tuning for Large Language Models](../../ACL2025/llm_efficiency/gradot_offsite_tuning.md)
 
 <!-- RELATED:END -->

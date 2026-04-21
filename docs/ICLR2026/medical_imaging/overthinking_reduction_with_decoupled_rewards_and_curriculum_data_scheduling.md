@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Overthinking Reduction with Decoupled Rewards and Curriculum Data Scheduling
 description: >-

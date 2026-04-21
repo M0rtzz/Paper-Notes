@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Recurrent Memory for Online Interdomain Gaussian Processes
 description: >-
@@ -144,6 +144,6 @@ OHSGPR 比 OSGPR 快 **300-450倍**，因为不需要优化诱导点位置。
 - [Gaussian Mixture Flow Matching Models](../../ICML2025/image_generation/gaussian_mixture_flow_matching_models.md)
 - [Modern Methods in Associative Memory](../../ICML2025/image_generation/modern_methods_in_associative_memory.md)
 - [Quantum Algorithms for Finite-horizon Markov Decision Processes](../../ICML2025/image_generation/quantum_algorithms_for_finite-horizon_markov_decision_processes.md)
-- [Improving Editability in Image Generation with Layer-wise Memory](../../CVPR2025/image_generation/improving_editability_in_image_generation_with_layer-wise_memory.md)
+- [Nonisotropic Gaussian Diffusion for Realistic 3D Human Motion Prediction](../../CVPR2025/image_generation/nonisotropic_gaussian_diffusion_for_realistic_3d_human_motion_prediction.md)
 
 <!-- RELATED:END -->

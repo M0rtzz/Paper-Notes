@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Embodied Representation Alignment with Mirror Neurons
 description: >-
@@ -126,6 +126,6 @@ tags:
 - [Rep-MTL: Unleashing the Power of Representation-Level Task Saliency for Multi-Task Learning](rep-mtl_unleashing_the_power_of_representation-level_task_saliency_for_multi-tas.md)
 - [EvolvingGrasp: Evolutionary Grasp Generation via Efficient Preference Alignment](evolvinggrasp_evolutionary_grasp_generation_via_efficient_preference_alignment.md)
 - [LaDA: Language-Grounded Decoupled Action Representation for Robotic Manipulation](../../CVPR2025/robotics/language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
-- [ASAP: Advancing Semantic Alignment for Multi-Modal Manipulation Detection](../../CVPR2025/robotics/asap_advancing_semantic_alignment_promotes_multi-modal_manipulation_detecting_an.md)
+- [TesserAct: Learning 4D Embodied World Models](learning_4d_embodied_world_models.md)
 
 <!-- RELATED:END -->

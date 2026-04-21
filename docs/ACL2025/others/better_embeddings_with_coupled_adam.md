@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Better Embeddings with Coupled Adam
 description: >-
@@ -122,8 +122,8 @@ tags:
 
 ## 相关论文
 
-- [Hierarchical Attention Generates Better Proofs](hierarchical_attention_generates_better_proofs.md)
 - [Towards Better Evaluation for Generated Patent Claims](patclaimeval_patent_evaluation.md)
+- [Hierarchical Attention Generates Better Proofs](hierarchical_attention_generates_better_proofs.md)
 - [Partial Colexifications Improve Concept Embeddings](partial_colexifications_improve_concept_embeddings.md)
 - [Byte Latent Transformer: Patches Scale Better Than Tokens](byte_latent_transformer.md)
 - [The Knowledge Microscope: Features as Better Analytical Lenses than Neurons](the_knowledge_microscope_features_as_better_analytical_lenses_than_neurons.md)

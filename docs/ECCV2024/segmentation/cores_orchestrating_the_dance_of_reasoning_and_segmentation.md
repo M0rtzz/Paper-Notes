@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoReS: Orchestrating the Dance of Reasoning and Segmentation
 description: >-

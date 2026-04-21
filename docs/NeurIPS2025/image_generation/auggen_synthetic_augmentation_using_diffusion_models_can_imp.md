@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AugGen: Synthetic Augmentation using Diffusion Models Can Improve Recognition
 description: >-

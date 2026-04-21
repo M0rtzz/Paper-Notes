@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PromptIQA: Boosting the Performance and Generalization for No-Reference Image Quality Assessment via Prompts
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CLaMP 3: Universal Music Information Retrieval Across Unaligned Modalities and Unseen Languages
 description: >-

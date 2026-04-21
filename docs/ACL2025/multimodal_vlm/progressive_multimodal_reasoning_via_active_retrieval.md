@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Progressive Multimodal Reasoning via Active Retrieval
 description: >-

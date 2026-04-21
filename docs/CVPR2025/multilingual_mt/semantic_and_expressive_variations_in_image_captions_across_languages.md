@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Semantic and Expressive Variation in Image Captions Across Languages
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SeeDNorm: Self-Rescaled Dynamic Normalization
 description: >-

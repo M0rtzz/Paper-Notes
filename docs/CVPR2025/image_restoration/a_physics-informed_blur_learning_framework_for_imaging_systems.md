@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Physics-Informed Blur Learning Framework for Imaging Systems
 description: >-
@@ -138,10 +138,10 @@ $$\text{PSF}(H, \lambda) = |\mathcal{F}(A(\mathbf{p}) \exp(i \frac{2\pi W(H, \la
 
 ## 相关论文
 
+- [Proximal Algorithm Unrolling: Flexible and Efficient Reconstruction Networks for Single-Pixel Imaging](proximal_algorithm_unrolling_flexible_and_efficient_reconstruction_networks_for_.md)
 - [Blur-Robust Detection via Feature Restoration: An End-to-End Framework for Prior-Guided Infrared UAV Target Detection](../../AAAI2026/image_restoration/blur-robust_detection_via_feature_restoration_an_end-to-end_framework_for_prior-.md)
 - [UniPhys: Unified Planner and Controller with Diffusion for Flexible Physics-Based Character Control](../../ICCV2025/image_restoration/uniphys_unified_planner_and_controller_with_diffusion_for_flexible_physics-based.md)
 - [Consistent Time-of-Flight Depth Denoising via Graph-Informed Geometric Attention](../../ICCV2025/image_restoration/consistent_time-of-flight_depth_denoising_via_graph-informed_geometric_attention.md)
 - [Generalized Recorrupted-to-Recorrupted: Self-Supervised Learning Beyond Gaussian Noise](generalized_recorrupted-to-recorrupted_self-supervised_learning_beyond_gaussian_.md)
-- [Classic Video Denoising in a Machine Learning World: Robust, Fast, and Controllable](classic_video_denoising_in_a_machine_learning_world_robust_fast_and_controllable.md)
 
 <!-- RELATED:END -->

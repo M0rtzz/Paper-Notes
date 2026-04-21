@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Verifying Chain-of-Thought Reasoning via Its Computational Graph
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PanoNav: Mapless Zero-Shot Object Navigation with Panoramic Scene Parsing and Dynamic Memory
 description: >-
@@ -163,7 +163,7 @@ PanoNav 是一个**零样本（zero-shot）框架**，不需要任何训练。�
 
 ## 相关论文
 
-- [Prioritized Semantic Learning for Zero-shot Instance Navigation](../../ECCV2024/robotics/prioritized_semantic_learning_for_zero-shot_instance_navigation.md)
+- [Prioritized Semantic Learning for Zero-Shot Instance Navigation](../../ECCV2024/robotics/prioritized_semantic_learning_for_zeroshot_instance_navigation.md)
 - [EvoEmpirBench: Dynamic Spatial Reasoning with Agent-ExpVer](evoempirbench_dynamic_spatial_reasoning_with_agent-expver.md)
 - [From Passive Perception to Active Memory: A Weakly Supervised Image Manipulation Localization Framework Driven by Coarse-Grained Annotations](from_passive_perception_to_active_memory_a_weakly_supervised_image_manipulation_.md)
 - [Neural Graph Navigation for Intelligent Subgraph Matching](neural_graph_navigation_for_intelligent_subgraph_matching.md)

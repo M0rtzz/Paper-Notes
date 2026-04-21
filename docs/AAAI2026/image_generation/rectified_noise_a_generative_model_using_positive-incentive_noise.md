@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rectified Noise: A Generative Model Using Positive-incentive Noise
 description: >-

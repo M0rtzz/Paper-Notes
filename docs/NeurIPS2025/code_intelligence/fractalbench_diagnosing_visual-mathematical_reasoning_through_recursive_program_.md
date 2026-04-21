@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FractalBench: Diagnosing Visual-Mathematical Reasoning Through Recursive Program Synthesis
 description: >-

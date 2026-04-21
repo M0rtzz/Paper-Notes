@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SD-VLM: Spatial Measuring and Understanding with Depth-Encoded Vision-Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ELECTRA: A Cartesian Network for 3D Charge Density Prediction with Floating Orbitals
 description: >-

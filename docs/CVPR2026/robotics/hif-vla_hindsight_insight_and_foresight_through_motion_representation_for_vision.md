@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HiF-VLA: Hindsight, Insight and Foresight through Motion Representation for Vision-Language-Action Models
 description: >-

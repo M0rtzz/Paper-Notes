@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DataRater: Meta-Learned Dataset Curation
 description: >-
@@ -126,8 +126,8 @@ DataRater 是一个双层优化框架：
 ## 相关论文
 
 - [MetaWriter: Personalized Handwritten Text Recognition Using Meta-Learned Prompt Tuning](../../CVPR2025/self_supervised/metawriter_personalized_handwritten_text_recognition_using_meta-learned_prompt_t.md)
+- [Hybrid Autoencoders for Tabular Data: Leveraging Model-Based Augmentation in Low-Label Settings](hybrid_autoencoders_for_tabular_data_leveraging_model-based_augmentation_in_low-.md)
 - [T-REGS: Minimum Spanning Tree Regularization for Self-Supervised Learning](t-regs_minimum_spanning_tree_regularization_for_self-supervised_learning.md)
-- [Know Thyself by Knowing Others: Learning Neuron Identity from Population Context](know_thyself_by_knowing_others_learning_neuron_identity_from_population_context.md)
 - [Understanding Ice Crystal Habit Diversity with Self-Supervised Learning](understanding_ice_crystal_habit_diversity_with_self-supervised_learning.md)
 - [Soft Task-Aware Routing of Experts for Equivariant Representation Learning](soft_task-aware_routing_of_experts_for_equivariant_representation_learning.md)
 

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Regret-Guided Search Control for Efficient Learning in AlphaZero
 description: >-

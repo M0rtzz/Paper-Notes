@@ -141,8 +141,8 @@ IS成功捕捉到：$\mathcal{IS}(F \to L) \leq \mathcal{IS}(F\vee L \to L)$，$
 
 - [Infogen: Generating Complex Statistical Infographics from Documents](infogen_generating_complex_statistical_infographics_from_documents.md)
 - [Statistical Inference Under Performativity](../../NeurIPS2025/others/statistical_inference_under_performativity.md)
-- [Robust Sampling for Active Statistical Inference](../../NeurIPS2025/others/robust_sampling_for_active_statistical_inference.md)
 - [Statistical Inference for Gradient Boosting Regression](../../NeurIPS2025/others/statistical_inference_for_gradient_boosting_regression.md)
+- [Robust Sampling for Active Statistical Inference](../../NeurIPS2025/others/robust_sampling_for_active_statistical_inference.md)
 - [Causal Estimation of Tokenisation Bias](causal_tokenisation_bias.md)
 
 <!-- RELATED:END -->

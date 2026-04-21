@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] General Exploratory Bonus for Optimistic Exploration in RLHF
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VisionTS: Visual Masked Autoencoders Are Free-Lunch Zero-Shot Time Series Forecasters
 description: >-
@@ -147,6 +147,6 @@ VisionTS 在 GIFT-Eval 排行榜上同样取得与专用时序基础模型可比
 - [Conformal Prediction for Zero-Shot Models](../../CVPR2025/human_understanding/conformal_prediction_for_zero-shot_models.md)
 - [SAEBench: A Comprehensive Benchmark for Sparse Autoencoders in Language Model Interpretability](saebench_a_comprehensive_benchmark_for_sparse_autoencoders_in_language_model_int.md)
 - [L2GTX: From Local to Global Time Series Explanations](../../CVPR2025/human_understanding/l2gtx_from_local_to_global_time_series_explanations.md)
-- [NegRefine: Refining Negative Label-Based Zero-Shot OOD Detection](../../ICCV2025/human_understanding/negrefine_refining_negative_label-based_zero-shot_ood_detection.md)
+- [Zero-Shot Head Swapping in Real-World Scenarios](../../CVPR2025/human_understanding/zero-shot_head_swapping_in_real-world_scenarios.md)
 
 <!-- RELATED:END -->

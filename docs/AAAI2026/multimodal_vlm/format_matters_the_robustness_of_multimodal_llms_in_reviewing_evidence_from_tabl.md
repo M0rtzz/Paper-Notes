@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Format Matters: The Robustness of Multimodal LLMs in Reviewing Evidence from Tables and Charts
 description: >-

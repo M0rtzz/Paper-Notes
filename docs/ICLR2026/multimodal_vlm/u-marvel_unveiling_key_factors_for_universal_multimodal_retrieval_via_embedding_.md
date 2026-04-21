@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] U-MARVEL: Unveiling Key Factors for Universal Multimodal Retrieval via Embedding Learning
 description: >-
@@ -181,6 +181,6 @@ U-MARVEL单模型63.2%已接近LamRA的双模型63.7%，验证了蒸馏策略的
 - [MegaPairs: Massive Data Synthesis For Universal Multimodal Retrieval](../../ACL2025/multimodal_vlm/megapairs_massive_data_synthesis_for_universal_multimodal_retrieval.md)
 - [PPE: Positional Preservation Embedding for Token Compression in Multimodal Large Language Models](ppe_positional_preservation_embedding_for_token_compression_in_multimodal_large_.md)
 - [Retrv-R1: A Reasoning-Driven MLLM Framework for Universal and Efficient Multimodal Retrieval](../../NeurIPS2025/multimodal_vlm/retrv-r1_a_reasoning-driven_mllm_framework_for_universal_and_efficient_multimoda.md)
-- [Reasoning-Driven Multimodal LLM for Domain Generalization](reasoning-driven_multimodal_llm_for_domain_generalization.md)
+- [Directional Embedding Smoothing for Robust Vision Language Models](directional_embedding_smoothing_for_robust_vision_language_models.md)
 
 <!-- RELATED:END -->

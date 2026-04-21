@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MVPortrait: Text-Guided Motion and Emotion Control for Multi-View Vivid Portrait Animation
 description: >-
@@ -140,7 +140,7 @@ MVPortrait包含两阶段：**Text2FLAME**阶段，从参考图像用DECA提取F
 - [FG-Portrait: 3D Flow Guided Editable Portrait Animation](../../CVPR2026/image_generation/fg-portrait_3d_flow_guided_editable_portrait_animation.md)
 - [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
 - [Multitwine: Multi-Object Compositing with Text and Layout Control](multitwine_multi-object_compositing_with_text_and_layout_control.md)
+- [RoomPainter: View-Integrated Diffusion for Consistent Indoor Scene Texturing](roompainter_view-integrated_diffusion_for_consistent_indoor_scene_texturing.md)
 - [LivePhoto: Real Image Animation with Text-guided Motion Control](../../ECCV2024/image_generation/livephoto_real_image_animation_with_text-guided_motion_control.md)
-- [Consistent and Controllable Image Animation with Motion Diffusion Models](consistent_and_controllable_image_animation_with_motion_diffusion_models.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] World Modeling Makes a Better Planner: Dual Preference Optimization for Embodied Task Planning
 description: >-

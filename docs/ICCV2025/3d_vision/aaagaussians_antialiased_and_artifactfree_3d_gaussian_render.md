@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AAA-Gaussians: Anti-Aliased and Artifact-Free 3D Gaussian Rendering
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PreLAR: World Model Pre-training with Learnable Action Representation
 description: >-

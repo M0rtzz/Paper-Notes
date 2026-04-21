@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] STELAR-Vision: Self-Topology-Aware Efficient Learning for Aligned Reasoning in Vision
 description: >-
@@ -192,6 +192,6 @@ STELAR-Vision-Short† 减少 18.1% 输出长度，仍超基座模型 +2.5%。
 - [Open Vision Reasoner: Transferring Linguistic Cognitive Behavior for Visual Reasoning](../../NeurIPS2025/reinforcement_learning/open_vision_reasoner_transferring_linguistic_cognitive_behavior_for_visual_reaso.md)
 - [BAMAS: Structuring Budget-Aware Multi-Agent Systems](bamas_structuring_budget-aware_multi-agent_systems.md)
 - [Where and What Matters: Sensitivity-Aware Task Vectors for Many-Shot Multimodal In-Context Learning](where_and_what_matters_sensitivity-aware_task_vectors_for_many-shot_multimodal_i.md)
-- [Octopus: Embodied Vision-Language Programmer from Environmental Feedback](../../ECCV2024/reinforcement_learning/octopus_embodied_vision-language_programmer_from_environmental_feedback.md)
+- [In-Token Rationality Optimization: Towards Accurate and Concise LLM Reasoning via Self-Feedback](in-token_rationality_optimization_towards_accurate_and_concise_llm_reasoning_via.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PAM: A Pose-Appearance-Motion Engine for Sim-to-Real HOI Video Generation
 description: >-

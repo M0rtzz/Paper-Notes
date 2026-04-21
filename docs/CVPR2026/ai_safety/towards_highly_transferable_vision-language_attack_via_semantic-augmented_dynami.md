@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Highly Transferable Vision-Language Attack via Semantic-Augmented Dynamic Contrastive Interaction
 description: >-

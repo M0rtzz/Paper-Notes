@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MTBBench: A Multimodal Sequential Clinical Decision-Making Benchmark in Oncology
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Index-Preserving Lightweight Token Pruning for Efficient Document Understanding
 description: >-

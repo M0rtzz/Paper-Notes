@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] How Bias Binds: Measuring Hidden Associations for Bias Control in Text-to-Image Compositions
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GUIDE: Guided Updates for In-context Decision Evolution in LLM-Driven Spacecraft Operations
 description: >-
@@ -114,10 +114,10 @@ tags:
 
 ## 相关论文
 
-- [Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning](../../ACL2025/llm_nlp/problem-solving_logic_guided_curriculum_in-context_learning_for_llms_complex_rea.md)
 - [LLM Braces: Straightening Out LLM Predictions with Relevant Sub-Updates](../../ACL2025/llm_nlp/llm_braces_straightening.md)
-- [ELLMob: Event-Driven Human Mobility Generation with Self-Aligned LLM Framework](../../ICLR2026/llm_nlp/ellmob_event-driven_human_mobility_generation_with_self-aligned_llm_framework.md)
+- [Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning](../../ACL2025/llm_nlp/problem-solving_logic_guided_curriculum_in-context_learning_for_llms_complex_rea.md)
 - [ICL-Router: In-Context Learned Model Representations for LLM Routing](../../AAAI2026/llm_nlp/icl-router_in-context_learned_model_representations_for_llm_routing.md)
+- [ELLMob: Event-Driven Human Mobility Generation with Self-Aligned LLM Framework](../../ICLR2026/llm_nlp/ellmob_event-driven_human_mobility_generation_with_self-aligned_llm_framework.md)
 - [PRAISE: Enhancing Product Descriptions with LLM-Driven Structured Insights](../../ACL2025/llm_nlp/praise_enhancing_product_descriptions_with_llm-driven_structured_insights.md)
 
 <!-- RELATED:END -->

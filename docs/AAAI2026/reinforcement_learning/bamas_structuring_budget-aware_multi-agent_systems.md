@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BAMAS: Structuring Budget-Aware Multi-Agent Systems
 description: >-

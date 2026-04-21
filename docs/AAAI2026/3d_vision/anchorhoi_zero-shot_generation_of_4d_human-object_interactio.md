@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AnchorHOI: Zero-shot Generation of 4D Human-Object Interaction via Anchor-based Prior Distillation
 description: >-

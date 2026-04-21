@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Structure-Aware Encodings of Argumentation Properties for Clique-width
 description: >-

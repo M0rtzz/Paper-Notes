@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bridging Generalization Gap of Heterogeneous Federated Clients Using Generative Models
 description: >-

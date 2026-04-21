@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SIC: Similarity-Based Interpretable Image Classification with Neural Networks
 description: >-

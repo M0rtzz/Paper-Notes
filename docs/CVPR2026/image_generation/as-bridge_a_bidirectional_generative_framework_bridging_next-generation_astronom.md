@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AS-Bridge: A Bidirectional Generative Framework Bridging Next-Generation Astronomical Surveys
 description: >-

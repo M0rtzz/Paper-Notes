@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Homogeneous Dynamics Space for Heterogeneous Humans
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Revisiting Instance-Optimal Cluster Recovery in the Labeled Stochastic Block Model
 description: >-

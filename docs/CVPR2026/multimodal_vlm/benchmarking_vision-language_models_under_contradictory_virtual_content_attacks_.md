@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Benchmarking Vision-Language Models under Contradictory Virtual Content Attacks in Augmented Reality
 description: >-
@@ -139,9 +139,9 @@ tags:
 
 ## 相关论文
 
-- [GraphVLM: Benchmarking Vision Language Models for Multimodal Graph Learning](graphvlm_benchmark_vlm_graph_learning.md)
+- [GraphVLM: Benchmarking Vision Language Models for Multimodal Graph Learning](graphvlm_benchmarking_vision_language_models_for_multimodal_graph_learning.md)
 - [Do Vision-Language Models Leak What They Learn? Adaptive Token-Weighted Model Inversion Attacks](vlm_model_inversion_adaptive_token_weight.md)
-- [CLAP: Isolating Content from Style through Contrastive Learning with Augmented Prompts](../../ECCV2024/multimodal_vlm/clap_isolating_content_from_style_through_contrastive_learning_with_augmented_pr.md)
+- [CLAP: Isolating Content from Style Through Contrastive Learning with Augmented Prompts](../../ECCV2024/multimodal_vlm/clap_isolating_content_from_style_through_contrastive_learni.md)
 - [Multi-Crit: Benchmarking Multimodal Judges on Pluralistic Criteria-Following](multi-crit_benchmarking_multimodal_judges_on_pluralistic_criteria-following.md)
 - [World-Env: Leveraging World Model as a Virtual Environment for VLA Post-Training](rehearsevla_simulated_posttraining_world_model.md)
 

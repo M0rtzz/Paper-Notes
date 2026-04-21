@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GeoCodeBench: Benchmarking PhD-Level Coding in 3D Geometric Computer Vision
 description: >-

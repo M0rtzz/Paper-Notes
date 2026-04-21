@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLM-as-a-Judge for Scalable Test Coverage Evaluation
 description: >-
@@ -135,6 +135,6 @@ LAJ（LLM-as-a-Judge）框架：接收Jira需求+Gherkin测试脚本→通过rub
 - [Scalable Vision-Guided Crop Yield Estimation](scalable_vision-guided_crop_yield_estimation.md)
 - [YESciEval: Robust LLM-as-a-Judge for Scientific Question Answering](../../ACL2025/llm_evaluation/yescieval_llm_judge_science.md)
 - [Position: AI Evaluation Should Learn from How We Test Humans](../../ICML2025/llm_evaluation/position_ai_evaluation_should_learn_from_how_we_test_humans.md)
-- [Graph Out-of-Distribution Detection via Test-Time Calibration with Dual Dynamic Dictionaries](graph_out-of-distribution_detection_via_test-time_calibration_with_dual_dynamic_.md)
+- [MoETTA: Test-Time Adaptation Under Mixed Distribution Shifts with MoE-LayerNorm](moetta_test-time_adaptation_under_mixed_distribution_shifts_with_moe-layernorm.md)
 
 <!-- RELATED:END -->

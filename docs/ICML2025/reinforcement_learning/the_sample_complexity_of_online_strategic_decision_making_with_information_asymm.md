@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Sample Complexity of Online Strategic Decision Making with Information Asymmetry and Knowledge Transportability
 description: >-

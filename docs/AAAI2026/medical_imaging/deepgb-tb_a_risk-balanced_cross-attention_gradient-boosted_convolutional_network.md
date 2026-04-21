@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DeepGB-TB: A Risk-Balanced Cross-Attention Gradient-Boosted Convolutional Network for Rapid, Interpretable Tuberculosis Screening
 description: >-

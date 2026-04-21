@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GPTAQ: Efficient Finetuning-Free Quantization for Asymmetric Calibration
 description: >-
@@ -128,9 +128,9 @@ GPTAQ 是无微调方法，不涉及梯度更新训练。其"训练"过程即为
 ## 相关论文
 
 - [OuroMamba: A Data-Free Quantization Framework for Vision Mamba](../../ICCV2025/model_compression/ouromamba_a_data-free_quantization_framework_for_vision_mamba.md)
-- [Structured Language Generation Model: Loss Calibration and Formatted Decoding for Efficient Text](../../AAAI2026/model_compression/structured_language_generation_model_loss_calibration_and_formatted_decoding_for.md)
-- [BlockDialect: Block-wise Fine-grained Mixed Format Quantization for Energy-Efficient LLM Inference](blockdialect_block-wise_fine-grained_mixed_format_quantization_for_energy-effici.md)
 - [Robust Federated Finetuning of LLMs via Alternating Optimization of LoRA](../../NeurIPS2025/model_compression/robust_federated_finetuning_of_llms_via_alternating_optimization_of_lora.md)
+- [BlockDialect: Block-wise Fine-grained Mixed Format Quantization for Energy-Efficient LLM Inference](blockdialect_block-wise_fine-grained_mixed_format_quantization_for_energy-effici.md)
+- [REP: Resource-Efficient Prompting for Rehearsal-Free Continual Learning](../../NeurIPS2025/model_compression/rep_resource-efficient_prompting_for_rehearsal-free_continual_learning.md)
 - [GuidedQuant: Large Language Model Quantization via Exploiting End Loss Guidance](guidedquant_large_language_model_quantization_via_exploiting_end_loss_guidance.md)
 
 <!-- RELATED:END -->

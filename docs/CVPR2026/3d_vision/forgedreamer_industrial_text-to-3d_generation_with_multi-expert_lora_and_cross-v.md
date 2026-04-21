@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ForgeDreamer: Industrial Text-to-3D Generation with Multi-Expert LoRA and Cross-View Hypergraph
 description: >-

@@ -169,6 +169,6 @@ $$\theta_j = \theta_{j-1} - \beta \cdot \text{sign}(\nabla_\theta \ell_{\text{MU
 - [MUNBa: Machine Unlearning via Nash Bargaining](../../ICCV2025/image_generation/munba_machine_unlearning_via_nash_bargaining.md)
 - [Model Collapse Is Not a Bug but a Feature in Machine Unlearning for LLMs](../../ICLR2026/image_generation/model_collapse_is_not_a_bug_but_a_feature_in_machine_unlearning_for_llms.md)
 - [Invisible Watermarks, Visible Gains: Steering Machine Unlearning with Bi-Level Watermarking Design](../../ICCV2025/image_generation/invisible_watermarks_visible_gains_steering_machine_unlearning_with_bi-level_wat.md)
-- [SMooDi: Stylized Motion Diffusion Model](smoodi_stylized_motion_diffusion_model.md)
+- [NeuSDFusion: A Spatial-Aware Generative Model for 3D Shape Completion, Reconstruction, and Generation](neusdfusion_a_spatial-aware_generative_model_for_3d_shape_completion_reconstruct.md)
 
 <!-- RELATED:END -->

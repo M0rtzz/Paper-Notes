@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AutoFly: Vision-Language-Action Model for UAV Autonomous Navigation in the Wild
 description: >-

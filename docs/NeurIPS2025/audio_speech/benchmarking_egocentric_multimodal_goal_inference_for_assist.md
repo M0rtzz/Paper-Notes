@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Benchmarking Egocentric Multimodal Goal Inference for Assistive Wearable Agents
 description: >-

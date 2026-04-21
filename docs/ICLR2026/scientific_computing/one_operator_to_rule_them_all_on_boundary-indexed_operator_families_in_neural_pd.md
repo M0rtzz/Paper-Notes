@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers
 description: >-

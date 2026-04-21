@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Checklists Are Better Than Reward Models For Aligning Language Models
 description: >-

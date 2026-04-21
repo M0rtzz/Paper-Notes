@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3D Congealing: 3D-Aware Image Alignment in the Wild
 description: >-

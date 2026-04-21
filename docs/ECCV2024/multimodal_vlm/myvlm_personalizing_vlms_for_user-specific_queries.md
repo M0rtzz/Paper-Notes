@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MyVLM: Personalizing VLMs for User-Specific Queries
 description: >-
@@ -123,10 +123,10 @@ MyVLM采用两阶段pipeline：(1) 外部概念头识别图像中是否存在目
 
 ## 相关论文
 
-- [To See or To Read: User Behavior Reasoning in Multimodal LLMs](../../NeurIPS2025/multimodal_vlm/to_see_or_to_read_user_behavior_reasoning_in_multimodal_llms.md)
-- [TrimLLM: Progressive Layer Dropping for Domain-Specific LLMs](../../ACL2025/multimodal_vlm/trimllm_layer_dropping.md)
-- [MIRe: Enhancing Multimodal Queries Representation via Fusion-Free Modality Interaction](../../ACL2025/multimodal_vlm/mire_enhancing_multimodal_queries_representation_via_fusion-free_modality_intera.md)
-- [Chimera: Improving Generalist Model with Domain-Specific Experts](../../ICCV2025/multimodal_vlm/chimera_improving_generalist_model_with_domain-specific_experts.md)
-- [LADA: Scalable Label-Specific CLIP Adapter for Continual Learning](../../ICML2025/multimodal_vlm/lada_scalable_label-specific_clip_adapter_for_continual_learning.md)
+- [Meta-Prompting for Automating Zero-shot Visual Recognition with LLMs](metaprompting_for_automating_zeroshot_visual_recognitio.md)
+- [FlexAttention for Efficient High-Resolution Vision-Language Models](flexattention_for_efficient_highresolution_visionlanguage_mo.md)
+- [DeCUR: Decoupling Common and Unique Representations for Multimodal Self-supervised Learning](decoupling_common_and_unique_representations_for_multimodal_.md)
+- [UniCode: Learning a Unified Codebook for Multimodal Large Language Models](unicode_learning_a_unified_codebook_for_multimodal_large_language_models.md)
+- [Groma: Localized Visual Tokenization for Grounding Multimodal Large Language Models](groma_localized_visual_tokenization_for_grounding_multimodal.md)
 
 <!-- RELATED:END -->

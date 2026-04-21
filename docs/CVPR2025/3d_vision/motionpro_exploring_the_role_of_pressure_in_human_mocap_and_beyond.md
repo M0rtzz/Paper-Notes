@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] MotionPRO: Exploring the Role of Pressure in Human MoCap and Beyond
 description: >-
-  [CVPR 2025][human motion capture] 构建大规模压力-RGB-光学动捕数据集 MotionPRO（70人/400动作/12.4M帧），提出 FRAPPE 基线融合压力与 RGB 实现物理合理的全身姿态与全局轨迹估计，并扩展至人形机器人驱动。
+  [CVPR 2025][3D视觉][human motion capture] 构建大规模压力-RGB-光学动捕数据集 MotionPRO（70人/400类动作/12.4M帧），并提出 FRAPPE 基线将压力信号与单目 RGB 融合，显著提升全身姿态估计的物理合理性和全局轨迹精度，进一步将压力先验扩展至人形机器人驱动。
 tags:
   - CVPR 2025
+  - 3D视觉
   - human motion capture
   - pressure sensing
-  - multi-modal fusion
+  - 多模态
+  - global trajectory
   - humanoid robot
-  - SMPL
 ---
 
 # MotionPRO: Exploring the Role of Pressure in Human MoCap and Beyond
@@ -138,9 +139,9 @@ FRAPPE 在 RTE 上较 WHAM 降低 **96%**，WBCE 降低 **91%**。
 ## 相关论文
 
 - [PressTrack-HMR: Pressure-Based Top-Down Multi-Person Global Human Mesh Recovery](../../AAAI2026/3d_vision/presstrack-hmr_pressure-based_top-down_multi-person_global_human_mesh_recovery.md)
-- [HOI3DGen: Generating High-Quality Human-Object-Interactions in 3D](hoi3dgen_generating_high-quality_human-object-interactions_in_3d.md)
-- [Gaze Beyond the Frame: Forecasting Egocentric 3D Visual Span](../../NeurIPS2025/3d_vision/gaze_beyond_the_frame_forecasting_egocentric_3d_visual_span.md)
 - [Gaussian Eigen Models for Human Heads](gaussian_eigen_models_for_human_heads.md)
+- [PromptHMR: Promptable Human Mesh Recovery](prompthmr_promptable_human_mesh_recovery.md)
+- [Gaze Beyond the Frame: Forecasting Egocentric 3D Visual Span](../../NeurIPS2025/3d_vision/gaze_beyond_the_frame_forecasting_egocentric_3d_visual_span.md)
 - [Cue3D: Quantifying the Role of Image Cues in Single-Image 3D Generation](../../NeurIPS2025/3d_vision/cue3d_quantifying_the_role_of_image_cues_in_single-image_3d_generation.md)
 
 <!-- RELATED:END -->

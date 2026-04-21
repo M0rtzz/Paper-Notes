@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Un-EVIMO: Unsupervised Event-based Independent Motion Segmentation
 description: >-
@@ -127,9 +127,9 @@ Un-EVIMO 由两个核心模块组成：
 ## 相关论文
 
 - [ColorMAE: Exploring Data-Independent Masking Strategies in Masked AutoEncoders](colormae_exploring_data-independent_masking_strategies_in_masked_autoencoders.md)
-- [Unsupervised Moving Object Segmentation with Atmospheric Turbulence](unsupervised_moving_object_segmentation_with_atmospheric_turbulence.md)
 - [ProMerge: Prompt and Merge for Unsupervised Instance Segmentation](promerge_prompt_and_merge_for_unsupervised_instance_segmentation.md)
+- [Unsupervised Moving Object Segmentation with Atmospheric Turbulence](unsupervised_moving_object_segmentation_with_atmospheric_turbulence.md)
 - [Skeleton Motion Words for Unsupervised Skeleton-Based Temporal Action Segmentation](../../ICCV2025/segmentation/skeleton_motion_words_for_unsupervised_skeleton-based_temporal_action_segmentati.md)
-- [ActionVOS: Actions as Prompts for Video Object Segmentation](actionvos_actions_as_prompts_for_video_object_segmentation.md)
+- [Scene-Centric Unsupervised Panoptic Segmentation](../../CVPR2025/segmentation/scene-centric_unsupervised_panoptic_segmentation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FedDifRC: Unlocking the Potential of Text-to-Image Diffusion Models in Heterogeneous Federated Learning
 description: >-

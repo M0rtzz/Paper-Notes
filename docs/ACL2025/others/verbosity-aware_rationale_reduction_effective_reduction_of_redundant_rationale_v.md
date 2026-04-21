@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Verbosity-Aware Rationale Reduction: Effective Reduction of Redundant Rationale
 description: >-

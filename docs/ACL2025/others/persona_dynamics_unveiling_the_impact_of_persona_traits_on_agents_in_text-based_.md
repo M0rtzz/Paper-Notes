@@ -2,9 +2,15 @@
 title: >-
   [论文解读] Persona Dynamics: Unveiling the Impact of Personality Traits on Agents in Text-Based Games
 description: >-
-   提出 PANDA 方法，将人类人格特质（Big Five + Dark Triad 共8种）投射到文本游戏智能体的策略学习中，通过人格分类器引导 Q 值调整，发现高开放性（Openness）人格在冒险类文本游戏中表现显著优于其他人格类型。
+  [ACL 2025][personality traits] 提出 PANDA 方法，将人类人格特质（Big Five + Dark Triad 共8种）投射到文本游戏智能体的策略学习中，通过人格分类器引导 Q 值调整，发现高开放性（Openness）人格在冒险类文本游戏中表现显著优于其他人格类型。
 tags:
-
+  - ACL 2025
+  - personality traits
+  - text-based games
+  - Big Five
+  - Dark Triad
+  - DRRN
+  - 强化学习
 ---
 
 # Persona Dynamics: Unveiling the Impact of Personality Traits on Agents in Text-Based Games
@@ -159,8 +165,8 @@ $$\pi(a_t = a_t^i | s_t) = \frac{\exp(Q(s_t, a_t^i))}{\sum_{j=1}^{|A_t|} \exp(Q(
 
 - [Unveiling Dual Quality in Product Reviews: An NLP-Based Approach](unveiling_dual_quality_in_product_reviews_an_nlp-based_approach.md)
 - [Evolutionary Prediction Games](../../NeurIPS2025/others/evolutionary_prediction_games.md)
-- [Efficient Kernelized Learning in Polyhedral Games Beyond Full-Information: From Colonel Blotto to Congestion Games](../../NeurIPS2025/others/efficient_kernelized_learning_in_polyhedral_games_beyond_full-information_from_c.md)
-- [Normalization in Attention Dynamics](../../NeurIPS2025/others/normalization_in_attention_dynamics.md)
 - [Towards Text-Image Interleaved Retrieval](towards_text-image_interleaved_retrieval.md)
+- [SHARE: An SLM-based Hierarchical Action CorREction Assistant for Text-to-SQL](share_text_to_sql_correction.md)
+- [Tree-of-Debate: Multi-Persona Debate Trees Elicit Critical Thinking for Scientific Comparative Analysis](tree-of-debate_multi-persona_debate_trees_elicit_critical_thinking_for_scientifi.md)
 
 <!-- RELATED:END -->

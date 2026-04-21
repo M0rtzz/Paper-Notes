@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HealSplit: Towards Self-Healing through Adversarial Distillation in Split Federated Learning
 description: >-

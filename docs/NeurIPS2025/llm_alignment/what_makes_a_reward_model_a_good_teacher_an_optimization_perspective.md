@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] What Makes a Reward Model a Good Teacher? An Optimization Perspective
 description: >-

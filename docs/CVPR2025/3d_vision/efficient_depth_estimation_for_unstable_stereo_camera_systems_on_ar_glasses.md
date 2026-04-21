@@ -1,7 +1,16 @@
-﻿---
-title: "Efficient Depth Estimation for Unstable Stereo Camera Systems on AR Glasses"
-description: "面向AR眼镜不稳定立体相机系统的高效深度估计方法，通过多头代价体积和单应性估计消除预处理需求"
-tags: ["深度估计", "AR眼镜", "立体匹配", "代价体积", "3D视觉"]
+---
+title: >-
+  [论文解读] Efficient Depth Estimation for Unstable Stereo Camera Systems on AR Glasses
+description: >-
+  [CVPR 2025][3D视觉][立体深度估计] 提出 MultiHeadDepth 和 HomoDepth 两个模型，分别通过硬件友好的多头代价体积（LayerNorm+点积近似余弦相似度 + 分组点卷积）和单应性矩阵估计网络 + 2D 矫正位置编码 (RPE) 来优化立体深度估计中代价体积和预处理的延迟瓶颈，在 AR 眼镜场景下精度提升 11.8-30.3% 的同时端到端延迟降低 44.5%。
+tags:
+  - CVPR 2025
+  - 3D视觉
+  - 立体深度估计
+  - AR眼镜
+  - 代价体积优化
+  - 单应性估计
+  - 矫正位置编码
 ---
 
 # Efficient Depth Estimation for Unstable Stereo Camera Systems on AR Glasses
@@ -127,8 +136,8 @@ tags: ["深度估计", "AR眼镜", "立体匹配", "代价体积", "3D视觉"]
 
 - [Depth Any Camera: Zero-Shot Metric Depth Estimation from Any Camera](depth_any_camera_zero-shot_metric_depth_estimation_from_any_camera.md)
 - [DEFOM-Stereo: Depth Foundation Model Based Stereo Matching](defom-stereo_depth_foundation_model_based_stereo_matching.md)
-- [Blurry-Edges: Photon-Limited Depth Estimation from Defocused Boundaries](blurry-edges_photon-limited_depth_estimation_from_defocused_boundaries.md)
-- [3D Visual Illusion Depth Estimation](../../NeurIPS2025/3d_vision/3d_visual_illusion_depth_estimation.md)
-- [RePoseD: Efficient Relative Pose Estimation with Known Depth Information](../../ICCV2025/3d_vision/reposed_efficient_relative_pose_estimation_with_known_depth_information.md)
+- [UniK3D: Universal Camera Monocular 3D Estimation](unik3d_universal_camera_monocular_3d_estimation.md)
+- [Scalable Autoregressive Monocular Depth Estimation](scalable_autoregressive_monocular_depth_estimation.md)
+- [Video Depth Anything: Consistent Depth Estimation for Super-Long Videos](video_depth_anything_consistent_depth_estimation_for_super-long_videos.md)
 
 <!-- RELATED:END -->

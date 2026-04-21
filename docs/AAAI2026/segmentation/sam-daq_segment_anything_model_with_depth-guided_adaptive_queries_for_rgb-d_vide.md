@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SAM-DAQ: Segment Anything Model with Depth-guided Adaptive Queries for RGB-D Video Salient Object Detection
 description: >-
@@ -190,8 +190,8 @@ $$\mathcal{L}_{total} = \mathcal{L}_{pred} + \alpha \cdot \mathcal{L}_{inter}$$
 
 - [SAQ-SAM: Semantically-Aligned Quantization for Segment Anything Model](saq-sam_semantically-aligned_quantization_for_segment_anything_model.md)
 - [Segment and Matte Anything in a Unified Model (SAMA)](segment_and_matte_anything_in_a_unified_model.md)
-- [Segment Anything Across Shots: A Method and Benchmark](segment_anything_across_shots_a_method_and_benchmark.md)
 - [RSONet: Region-guided Selective Optimization Network for RGB-T Salient Object Detection](../../CVPR2026/segmentation/rsonet_regionguided_selective_optimization_network.md)
+- [Segment Anything Across Shots: A Method and Benchmark](segment_anything_across_shots_a_method_and_benchmark.md)
 - [Vista: Scene-Aware Optimization for Streaming Video Question Answering Under Post-Hoc Queries](vista_scene-aware_optimization_for_streaming_video_question_answering_under_post.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Team RAS in 10th ABAW Competition: Multimodal Valence and Arousal Estimation Approach
 description: >-

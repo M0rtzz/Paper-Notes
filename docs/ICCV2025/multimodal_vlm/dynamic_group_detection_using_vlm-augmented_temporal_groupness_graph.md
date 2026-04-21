@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamic Group Detection using VLM-augmented Temporal Groupness Graph
 description: >-

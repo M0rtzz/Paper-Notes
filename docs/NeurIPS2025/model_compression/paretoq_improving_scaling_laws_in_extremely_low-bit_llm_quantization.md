@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ParetoQ: Improving Scaling Laws in Extremely Low-bit LLM Quantization
 description: >-

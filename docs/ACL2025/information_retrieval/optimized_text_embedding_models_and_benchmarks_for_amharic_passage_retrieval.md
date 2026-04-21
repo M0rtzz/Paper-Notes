@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Optimized Text Embedding Models and Benchmarks for Amharic Passage Retrieval
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LMM-Det: Make Large Multimodal Models Excel in Object Detection
 description: >-

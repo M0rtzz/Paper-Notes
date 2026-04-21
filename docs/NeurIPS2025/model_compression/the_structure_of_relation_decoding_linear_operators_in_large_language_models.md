@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Structure of Relation Decoding Linear Operators in Large Language Models
 description: >-
@@ -137,6 +137,6 @@ Hernandez et al. (2023) 发现 Transformer 语言模型中的关系知识（如"
 - [Hyperbolic Fine-Tuning for Large Language Models](hyperbolic_fine-tuning_for_large_language_models.md)
 - [Correlation Dimension of Auto-Regressive Large Language Models](correlation_dimension_of_auto-regressive_large_language_models.md)
 - [Restoring Pruned Large Language Models via Lost Component Compensation](restoring_pruned_large_language_models_via_lost_component_compensation.md)
-- [Infrequent Exploration in Linear Bandits](infrequent_exploration_in_linear_bandits.md)
+- [LayerIF: Estimating Layer Quality for Large Language Models using Influence Functions](layerif_estimating_layer_quality_for_large_language_models_using_influence_funct.md)
 
 <!-- RELATED:END -->

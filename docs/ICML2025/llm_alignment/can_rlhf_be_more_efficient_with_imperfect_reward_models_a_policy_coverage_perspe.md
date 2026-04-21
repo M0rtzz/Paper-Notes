@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Can RLHF be More Efficient with Imperfect Reward Models? A Policy Coverage Perspective
 description: >-

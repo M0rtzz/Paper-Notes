@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction
 description: >-
@@ -154,6 +154,6 @@ POLISH 系列采用端到端 CNN（基于 WDSR 架构），直接学习从低分
 - [Beyond the Ground Truth: Enhanced Supervision for Image Restoration](beyond_the_ground_truth_enhanced_supervision_for_image_restoration.md)
 - [Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
 - [BHCast: Unlocking Black Hole Plasma Dynamics from a Single Blurry Image with Long-Term Forecasting](bhcast_unlocking_black_hole_plasma_dynamics_from_a_single_blurry_image_with_long.md)
-- [RAW-Domain Degradation Models for Realistic Smartphone Super-Resolution](raw-domain_degradation_models_for_realistic_smartphone_super-resolution.md)
+- [RAW-Domain Degradation Models for Realistic Smartphone Super-Resolution](rawdomain_degradation_models_smartphone_sr.md)
 
 <!-- RELATED:END -->

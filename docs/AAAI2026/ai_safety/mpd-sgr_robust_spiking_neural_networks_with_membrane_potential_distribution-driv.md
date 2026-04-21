@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MPD-SGR: Robust Spiking Neural Networks with Membrane Potential Distribution-Driven Surrogate Gradient Regularization
 description: >-

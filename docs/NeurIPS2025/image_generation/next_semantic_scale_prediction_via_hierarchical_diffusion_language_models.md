@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Next Semantic Scale Prediction via Hierarchical Diffusion Language Models
 description: >-

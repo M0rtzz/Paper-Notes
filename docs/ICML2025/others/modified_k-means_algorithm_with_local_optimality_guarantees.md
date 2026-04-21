@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Modified K-means Algorithm with Local Optimality Guarantees
 description: >-

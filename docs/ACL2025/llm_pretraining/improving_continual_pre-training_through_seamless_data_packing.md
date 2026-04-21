@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving Continual Pre-training Through Seamless Data Packing
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Category Adaptation Meets Projected Distillation in Generalized Continual Category Discovery
 description: >-

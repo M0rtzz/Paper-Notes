@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Splat-SAP: Feed-Forward Gaussian Splatting for Human-Centered Scene with Scale-Aware Point Map Reconstruction
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Characterizing the Expressivity of Fixed-Precision Transformer Language Models
 description: >-

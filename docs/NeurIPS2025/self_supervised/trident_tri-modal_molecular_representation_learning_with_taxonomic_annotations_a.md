@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TRIDENT: Tri-Modal Molecular Representation Learning with Taxonomic Annotations and Structural Relationships
 description: >-

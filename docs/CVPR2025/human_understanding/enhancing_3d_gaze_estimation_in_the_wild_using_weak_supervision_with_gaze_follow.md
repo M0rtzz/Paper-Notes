@@ -1,7 +1,16 @@
-﻿---
-title: "Enhancing 3D Gaze Estimation in the Wild Using Weak Supervision with Gaze Following Labels"
-description: "提出ST-WSGE弱监督框架和模态无关的GaT Transformer，利用2D注视跟随数据生成伪3D标签提升野外注视估计泛化性"
-tags: ["gaze estimation", "weak supervision", "self-training", "transformer", "CVPR2025"]
+---
+title: >-
+  [论文解读] Enhancing 3D Gaze Estimation in the Wild Using Weak Supervision with Gaze Following Labels
+description: >-
+  [CVPR 2025][人体理解][注视估计] 提出一种两阶段自训练弱监督框架 ST-WSGE，利用 2D 注视跟随数据集（如 GazeFollow）生成 3D 伪标签来增强野外 3D 注视估计的泛化能力，同时设计了模态无关的 Gaze Transformer（GaT）统一处理图像和视频输入，在 Gaze360、GFIE、MPIIFaceGaze 等数据集上取得 SOTA。
+tags:
+  - CVPR 2025
+  - 人体理解
+  - 注视估计
+  - 弱监督学习
+  - 自训练
+  - 注视跟随
+  - 视频理解
 ---
 
 # Enhancing 3D Gaze Estimation in the Wild Using Weak Supervision with Gaze Following Labels
@@ -118,9 +127,9 @@ ST-WSGE 是一个两阶段训练流程，输入包括 3D 注视数据集（Gaze3
 ## 相关论文
 
 - [3DGazeNet: Generalizing 3D Gaze Estimation with Weak-Supervision from Synthetic Views](../../ECCV2024/human_understanding/3dgazenet_generalizing_3d_gaze_estimation_with_weak-supervision_from_synthetic_v.md)
+- [WildAvatar: Learning In-the-Wild 3D Avatars from the Web](wildavatar_learning_in-the-wild_3d_avatars_from_the_web.md)
 - [Multi-view Gaze Target Estimation](../../ICCV2025/human_understanding/multi-view_gaze_target_estimation.md)
-- [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
-- [Co-op: Correspondence-Based Novel Object Pose Estimation](co-op_correspondence-based_novel_object_pose_estimation.md)
-- [CRISP: Object Pose and Shape Estimation with Test-Time Adaptation](crisp_object_pose_and_shape_estimation_with_test-time_adaptation.md)
+- [Analyzing the Synthetic-to-Real Domain Gap in 3D Hand Pose Estimation](analyzing_the_synthetic-to-real_domain_gap_in_3d_hand_pose_estimation.md)
+- [SocialGesture: Delving into Multi-Person Gesture Understanding](socialgesture_delving_into_multi-person_gesture_understanding.md)
 
 <!-- RELATED:END -->

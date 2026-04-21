@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Variance-Aware Feel-Good Thompson Sampling for Contextual Bandits
 description: >-

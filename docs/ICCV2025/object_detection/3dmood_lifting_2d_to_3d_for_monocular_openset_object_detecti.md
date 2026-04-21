@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3D-MOOD: Lifting 2D to 3D for Monocular Open-Set Object Detection
 description: >-

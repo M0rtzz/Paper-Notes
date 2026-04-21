@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Curly Flow Matching for Learning Non-gradient Field Dynamics
 description: >-

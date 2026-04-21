@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ConFu: Contemplate the Future for Better Speculative Sampling
 description: >-
@@ -123,6 +123,6 @@ tags:
 - [Portrait4D-v2: Pseudo Multi-View Data Creates Better 4D Head Synthesizer](../../ECCV2024/object_detection/portrait4d-v2_pseudo_multi-view_data_creates_better_4d_head_synthesizer.md)
 - [Ground What You See: Hallucination-Resistant MLLMs via Caption Feedback, Diversity-Aware Sampling, and Conflict Regularization](../../AAAI2026/object_detection/ground_what_you_see_hallucination-resistant_mllms_via_caption_feedback_diversity.md)
 - [Learn from the Learnt: Source-Free Active Domain Adaptation via Contrastive Sampling and Visual Persistence](../../ECCV2024/object_detection/learn_from_the_learnt_source-free_active_domain_adaptation_via_contrastive_sampl.md)
-- [From Narrow to Panoramic Vision: Attention-Guided Cold-Start Reshapes Multimodal Reasoning](from_narrow_to_panoramic_vision_attention-guided_cold-start_reshapes_multimodal_.md)
+- [What Layers When: Learning to Skip Compute in LLMs with Residual Gates](what_layers_when_learning_to_skip_compute_in_llms_with_residual_gates.md)
 
 <!-- RELATED:END -->

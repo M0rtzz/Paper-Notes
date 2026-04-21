@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Provably Cost-Sensitive Adversarial Defense via Randomized Smoothing
 description: >-
@@ -149,6 +149,6 @@ Margin-CS 在准确率上高出近 20 个百分点，鲁棒性也更优。
 - [A Unified Framework for Provably Efficient Algorithms to Estimate Shapley Values](../../NeurIPS2025/llm_evaluation/a_unified_framework_for_provably_efficient_algorithms_to_estimate_shapley_values.md)
 - [Deep Cost Ray Fusion for Sparse Depth Video Completion](../../ECCV2024/llm_evaluation/deep_cost_ray_fusion_for_sparse_depth_video_completion.md)
 - [CounselBench: A Large-Scale Expert Evaluation and Adversarial Benchmarking of LLMs in Mental Health QA](../../ICLR2026/llm_evaluation/counselbench_llm_mental_health_qa.md)
-- [Gradient Aligned Regression via Pairwise Losses](gradient_aligned_regression_via_pairwise_losses.md)
+- [Faster and Stronger: When ANN-SNN Conversion Meets Parallel Spiking Calculation](faster_and_stronger_when_ann-snn_conversion_meets_parallel_spiking_calculation.md)
 
 <!-- RELATED:END -->

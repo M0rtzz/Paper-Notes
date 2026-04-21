@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Global Convergence and Rich Feature Learning in $L$-Layer Infinite-Width Neural Networks under $\mu$P Parametrization
 description: >-
@@ -164,6 +164,6 @@ $$\text{Cov}(\hat{Z}^{W_0^l \delta x_s^{l-1}(\xi)}, \hat{Z}^{W_0^l \delta x_t^{l
 - [Random Feature Representation Boosting](random_feature_representation_boosting.md)
 - [Directional Convergence, Benign Overfitting of Gradient Descent in leaky ReLU two-layer Neural Networks](../../ICLR2026/optimization/directional_convergence_benign_overfitting_of_gradient_descent_in_leaky_relu_two.md)
 - [Learning Quadratic Neural Networks in High Dimensions: SGD Dynamics and Scaling Laws](../../NeurIPS2025/optimization/learning_quadratic_neural_networks_in_high_dimensions_sgd_dynamics_and_scaling_l.md)
-- [Layer-wise Quantization for Quantized Optimistic Dual Averaging](layer-wise_quantization_for_quantized_optimistic_dual_averaging.md)
+- [Exact and Linear Convergence for Federated Learning under Arbitrary Client Participation is Attainable](../../NeurIPS2025/optimization/exact_and_linear_convergence_for_federated_learning_under_arbitrary_client_parti.md)
 
 <!-- RELATED:END -->

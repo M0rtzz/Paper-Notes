@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Unified Framework for Establishing the Universal Approximation of Transformer-Type Architectures
 description: >-

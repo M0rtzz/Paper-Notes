@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FIRE: Frobenius-Isometry Reinitialization for Balancing the Stability-Plasticity Tradeoff
 description: >-
@@ -126,7 +126,7 @@ tags:
 ## 相关论文
 
 - [Sample-Adaptivity Tradeoff in On-Demand Sampling](../../NeurIPS2025/others/sample-adaptivity_tradeoff_in_on-demand_sampling.md)
-- [Your Classifier Can Do More: Towards Balancing the Gaps in Classification, Robustness, and Generation](../../CVPR2026/others/your_classifier_can_do_more_towards_balancing_the.md)
+- [Your Classifier Can Do More: Towards Balancing the Gaps in Classification, Robustness, and Generation](../../CVPR2026/others/your_classifier_can_do_more_towards_balancing_the_gaps_in_classification_robustn.md)
 - [Guided Perturbation Sensitivity (GPS): Detecting Adversarial Text via Embedding Stability and Word Importance](../../AAAI2026/others/guided_perturbation_sensitivity_gps_detecting_adversarial_text_via_embedding_sta.md)
 - [Meta-learning three-factor plasticity rules for structured credit assignment with sparse feedback](../../NeurIPS2025/others/meta-learning_three-factor_plasticity_rules_for_structured_credit_assignment_wit.md)
 - [CLR-GAN: Improving GANs Stability and Quality via Consistent Latent Representation and Reconstruction](../../ECCV2024/others/clr-gan_improving_gans_stability_and_quality_via_consistent_latent_representatio.md)

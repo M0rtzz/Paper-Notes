@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GRAPHITE: Graph Homophily Booster — Reimagining the Role of Discrete Features in Heterophilic Graph Learning
 description: >-

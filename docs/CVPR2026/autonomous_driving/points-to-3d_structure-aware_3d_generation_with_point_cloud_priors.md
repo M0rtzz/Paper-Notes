@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Points-to-3D: Structure-Aware 3D Generation with Point Cloud Priors
 description: >-

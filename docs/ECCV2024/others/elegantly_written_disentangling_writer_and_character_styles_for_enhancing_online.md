@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Elegantly Written: Disentangling Writer and Character Styles for Enhancing Online Chinese Handwriting
 description: >-

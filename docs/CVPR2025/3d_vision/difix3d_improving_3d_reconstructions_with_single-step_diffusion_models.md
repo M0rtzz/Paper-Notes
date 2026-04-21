@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Difix3D+: Improving 3D Reconstructions with Single-Step Diffusion Models
 description: >-
@@ -123,9 +123,9 @@ Difix3D+ 管线分三步：(1) Difix 模型：微调 SD-Turbo 去除渲染图像
 ## 相关论文
 
 - [BokehDiff: Neural Lens Blur with One-Step Diffusion](../../ICCV2025/3d_vision/bokehdiff_neural_lens_blur_with_one-step_diffusion.md)
+- [Novel View Synthesis with Pixel-Space Diffusion Models](novel_view_synthesis_with_pixel-space_diffusion_models.md)
 - [Improving Gaussian Splatting with Localized Points Management](improving_gaussian_splatting_with_localized_points_management.md)
-- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
-- [DiffPortrait360: Consistent Portrait Diffusion for 360° View Synthesis](diffportrait360_consistent_portrait_diffusion_for_360_view_synthesis.md)
-- [Linearly Constrained Diffusion Implicit Models](../../NeurIPS2025/3d_vision/linearly_constrained_diffusion_implicit_models.md)
+- [Scaling Properties of Diffusion Models for Perceptual Tasks](scaling_properties_of_diffusion_models_for_perceptual_tasks.md)
+- [Kiss3DGen: Repurposing Image Diffusion Models for 3D Asset Generation](kiss3dgen_repurposing_image_diffusion_models_for_3d_asset_generation.md)
 
 <!-- RELATED:END -->

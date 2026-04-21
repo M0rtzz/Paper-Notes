@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generalizable Slum Detection from Satellite Imagery with Mixture-of-Experts
 description: >-
@@ -172,7 +172,7 @@ GRAM 在所有城市全面领先，特别是在 Dar es Salaam 提升最为显著
 - [Spatio-Semantic Expert Routing Architecture with Mixture-of-Experts for Referring Image Segmentation](../../CVPR2026/segmentation/spatio-semantic_expert_routing_architecture_with_mixture-of-experts_for_referrin.md)
 - [Harnessing Massive Satellite Imagery with Efficient Masked Image Modeling](../../ICCV2025/segmentation/harnessing_massive_satellite_imagery_with_efficient_masked_image_modeling.md)
 - [Alberta Wells Dataset: Pinpointing Oil and Gas Wells from Satellite Imagery](../../ICML2025/segmentation/alberta_wells_dataset_pinpointing_oil_and_gas_wells_from_satellite_imagery.md)
+- [Towards Generalizable Scene Change Detection](../../CVPR2025/segmentation/towards_generalizable_scene_change_detection.md)
 - [Using Multiple Input Modalities Can Improve Data-Efficiency and O.O.D. Generalization for ML with Satellite Imagery](../../ICML2025/segmentation/using_multiple_input_modalities_can_improve_data-efficiency_and_ood_generalizati.md)
-- [Generalizable Knowledge Distillation from Vision Foundation Models for Semantic Segmentation](../../CVPR2026/segmentation/generalizable_knowledge_distillation_from_vision_foundation_models_for_semantic_.md)
 
 <!-- RELATED:END -->

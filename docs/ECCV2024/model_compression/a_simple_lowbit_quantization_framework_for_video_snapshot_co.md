@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Simple Low-bit Quantization Framework for Video Snapshot Compressive Imaging
 description: >-

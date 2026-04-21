@@ -1,16 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] GREAT: Geometry-Intention Collaborative Inference for Open-Vocabulary 3D Object Affordance Grounding
 description: >-
-  [CVPR 2025][3D affordance] 提出 GREAT 框架，通过多头 Affordance Chain-of-Thought 微调 MLLM 挖掘物体几何属性和交互意图，结合跨模态自适应融合模块实现开放词汇 3D 物体 affordance 定位。
+  [CVPR 2025][3D视觉][open-vocabulary affordance] 提出 GREAT 框架，通过多头 Affordance Chain-of-Thought (MHACoT) 微调 InternVL 推理交互图像中的物体几何属性和潜在交互意图，形成 affordance 知识字典，并通过跨模态自适应融合模块（CMAFM）将知识注入点云和图像特征，实现开放词汇 3D 物体 affordance 定位。同时构建最大规模 3D affordance 数据集 PIADv2（15K 图像 + 38K 点云）。
 tags:
   - CVPR 2025
-  - affordance grounding
-  - open-vocabulary
+  - 3D视觉
+  - open-vocabulary affordance
   - chain-of-thought
-  - MLLM
-  - 3D 点云
-  - 跨模态融合
+  - MLLM (InternVL)
+  - 点云
+  - 跨模态
+  - PIADv2 dataset
 ---
 
 # GREAT: Geometry-Intention Collaborative Inference for Open-Vocabulary 3D Object Affordance Grounding
@@ -164,9 +165,9 @@ $$\mathcal{L}_{total} = \mathcal{L}_{focal} + \mathcal{L}_{dice}$$
 ## 相关论文
 
 - [Grounding 3D Object Affordance with Language Instructions, Visual Observations and Interactions](grounding_3d_object_affordance_with_language_instructions_visual_observations_an.md)
-- [Mosaic3D: Foundation Dataset and Model for Open-Vocabulary 3D Segmentation](mosaic3d_foundation_dataset_and_model_for_open-vocabulary_3d_segmentation.md)
+- [SeeGround: See and Ground for Zero-Shot Open-Vocabulary 3D Visual Grounding](seeground_see_and_ground_for_zero-shot_open-vocabulary_3d_visual_grounding.md)
+- [Reconstructing In-the-Wild Open-Vocabulary Human-Object Interactions](reconstructing_in-the-wild_open-vocabulary_human-object_interactions.md)
 - [Masked Point-Entity Contrast for Open-Vocabulary 3D Scene Understanding](masked_point-entity_contrast_for_open-vocabulary_3d_scene_understanding.md)
-- [JOPP-3D: Joint Open Vocabulary Semantic Segmentation on Point Clouds and Panoramas](jopp-3d_joint_open_vocabulary_semantic_segmentation_on_point_clouds_and_panorama.md)
-- [GO-N3RDet: Geometry Optimized NeRF-enhanced 3D Object Detector](go-n3rdet_geometry_optimized_nerf-enhanced_3d_object_detector.md)
+- [Mosaic3D: Foundation Dataset and Model for Open-Vocabulary 3D Segmentation](mosaic3d_foundation_dataset_and_model_for_open-vocabulary_3d_segmentation.md)
 
 <!-- RELATED:END -->

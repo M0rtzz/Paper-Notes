@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Near-Optimal Quantum Algorithms for Computing (Coarse) Correlated Equilibria of General-Sum Games
 description: >-

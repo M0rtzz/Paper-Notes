@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] PoseCrafter: Extreme Pose Estimation with Hybrid Video Synthesis
 description: >-
-  [NeurIPS 2025][3D视觉][极端位姿估计] 提出 PoseCrafter，一种无需训练的极端位姿估计框架：通过混合视频生成（HVG，DynamiCrafter+ViewCrafter双阶段）合成高保真中间帧解决极小/无重叠图像对的位姿估计，配合特征匹配选择器（FMS）高效选取最有用的中间帧，在四个数据集上显著提升极端位姿估计精度。
+  [NeurIPS 2025][极端位姿估计] 提出 PoseCrafter，一种无需训练的极端位姿估计框架：通过混合视频生成（HVG，DynamiCrafter+ViewCrafter双阶段）合成高保真中间帧解决极小/无重叠图像对的位姿估计，配合特征匹配选择器（FMS）高效选取最有用的中间帧，在四个数据集上显著提升极端位姿估计精度。
 tags:
   - NeurIPS 2025
-  - 3D视觉
   - 极端位姿估计
   - 视频扩散
   - 混合视频生成
@@ -123,10 +122,10 @@ tags:
 
 ## 相关论文
 
+- [PoseTraj: Pose-Aware Trajectory Control in Video Diffusion](../../CVPR2025/video_generation/posetraj_pose-aware_trajectory_control_in_video_diffusion.md)
 - [LeviTor: 3D Trajectory Oriented Image-to-Video Synthesis](../../CVPR2025/video_generation/levitor_3d_trajectory_oriented_image-to-video_synthesis.md)
 - [MimicMotion: High-Quality Human Motion Video Generation with Confidence-aware Pose Guidance](../../ICML2025/video_generation/mimicmotion_high-quality_human_motion_video_generation_with_confidence-aware_pos.md)
 - [PerformRecast: Expression and Head Pose Disentanglement for Portrait Video Editing](../../CVPR2026/video_generation/performrecast_expression_and_head_pose_disentanglement_for_portrait_video_editin.md)
-- [Causal-Entity Reflected Egocentric Traffic Accident Video Synthesis](../../ICCV2025/video_generation/causal-entity_reflected_egocentric_traffic_accident_video_synthesis.md)
 - [MIMO: Controllable Character Video Synthesis with Spatial Decomposed Modeling](../../CVPR2025/video_generation/mimo_controllable_character_video_synthesis_with_spatial_decomposed_modeling.md)
 
 <!-- RELATED:END -->

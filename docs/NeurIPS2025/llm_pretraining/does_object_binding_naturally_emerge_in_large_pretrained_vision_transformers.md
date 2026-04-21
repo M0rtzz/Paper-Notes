@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Does Object Binding Naturally Emerge in Large Pretrained Vision Transformers?
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scalable Signature Kernel Computations for Long Time Series via Local Neumann Series Expansions
 description: >-

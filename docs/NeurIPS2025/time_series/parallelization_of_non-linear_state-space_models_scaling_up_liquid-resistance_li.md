@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Parallelization of Non-linear State-Space Models: Scaling Up Liquid-Resistance Liquid-Capacitance Networks for Efficient Sequence Modeling
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AQuaMaM: An Autoregressive, Quaternion Manifold Model for Rapidly Estimating Complex SO(3) Distributions
 description: >-

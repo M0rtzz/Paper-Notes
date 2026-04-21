@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Recovery Guarantee for Sparse Neural Networks
 description: >-
@@ -120,7 +120,7 @@ MSE 损失 $f(w) = \frac{1}{2}\|Aw - y\|_2^2$，IHT 更新 $w^{k+1} = H_{\tilde{
 - [Adaptive Width Neural Networks](adaptive_width_neural_networks.md)
 - [Fine-tuning Quantized Neural Networks with Zeroth-order Optimization](fine-tuning_quantized_neural_networks_with_zeroth-order_optimization.md)
 - [PASER: Post-Training Data Selection for Efficient Pruned Large Language Model Recovery](paser_post-training_data_selection_for_efficient_pruned_large_language_model_rec.md)
-- [FASA: Frequency-aware Sparse Attention](fasa_frequency-aware_sparse_attention.md)
 - [Improved Exploration in GFlowNets via Enhanced Epistemic Neural Networks](../../ICML2025/model_compression/improved_exploration_in_gflownets_via_enhanced_epistemic_neural_networks.md)
+- [Topology and Geometry of the Learning Space of ReLU Networks: Connectivity and Size](topology_and_geometry_of_the_learning_space_of_relu_networks_connectivity_and_si.md)
 
 <!-- RELATED:END -->

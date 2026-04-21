@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Nonparametric Modern Hopfield Models
 description: >-

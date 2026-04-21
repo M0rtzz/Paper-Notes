@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] What AI Speaks for Your Community: Polling AI Agents for Public Opinion on Data Center Projects
 description: >-

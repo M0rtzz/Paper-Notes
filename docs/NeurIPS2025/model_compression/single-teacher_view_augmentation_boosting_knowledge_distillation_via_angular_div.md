@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Single-Teacher View Augmentation: Boosting Knowledge Distillation via Angular Diversity
 description: >-

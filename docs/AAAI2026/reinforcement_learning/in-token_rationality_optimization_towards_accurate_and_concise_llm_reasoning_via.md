@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] In-Token Rationality Optimization: Towards Accurate and Concise LLM Reasoning via Self-Feedback
 description: >-
@@ -177,6 +177,6 @@ $$w_{t,i} = \frac{\pi_\theta(z_t^i|x\oplus y, z_{<t})}{\pi_\theta(z_t^i|x, z_{<t
 - [STELAR-Vision: Self-Topology-Aware Efficient Learning for Aligned Reasoning in Vision](stelar-vision_self-topology-aware_efficient_learning_for_aligned_reasoning_in_vi.md)
 - [MARS: Multi-Agent Adaptive Reasoning with Socratic Guidance for Automated Prompt Optimization](mars_multi-agent_adaptive_reasoning_with_socratic_guidance_f.md)
 - [Spotlight on Token Perception for Multimodal Reinforcement Learning](../../ICLR2026/reinforcement_learning/spotlight_on_token_perception_for_multimodal_reinforcement_learning.md)
-- [G-UBS: Towards Robust Understanding of Implicit Feedback via Group-Aware User Behavior Simulation](g-ubs_towards_robust_understanding_of_implicit_feedback_via_group-aware_user_beh.md)
+- [Bi-Level Contextual Bandits for Individualized Resource Allocation under Delayed Feedback](bi-level_contextual_bandits_for_individualized_resource_allocation_under_delayed.md)
 
 <!-- RELATED:END -->

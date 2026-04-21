@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] R&D-Agent-Quant: A Multi-Agent Framework for Data-Centric Factors and Model Joint Optimization
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] S2AM3D: Scale-controllable Part Segmentation of 3D Point Clouds
 description: >-

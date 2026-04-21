@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Imagine and Seek: Improving Composed Image Retrieval with an Imagined Proxy
 description: >-
@@ -115,9 +115,9 @@ tags:
 ## 相关论文
 
 - [Soft Filtering: Guiding Zero-Shot Composed Image Retrieval with Prescriptive and Proscriptive Prompts](../../AAAI2026/llm_nlp/soft_filtering_guiding_zero-shot_composed_image_retrieval_with_prescriptive_and_.md)
-- [Improving Contextual Faithfulness of Large Language Models via Retrieval Heads-Induced Optimization](../../ACL2025/llm_nlp/improving_contextual_faithfulness_of_large_language_models_via_retrieval_heads-i.md)
 - [Improving Autoregressive Visual Generation with Cluster-Oriented Token Prediction](improving_autoregressive_visual_generation_with_cluster-oriented_token_predictio.md)
 - [Chat-based Person Retrieval via Dialogue-Refined Cross-Modal Alignment](chat-based_person_retrieval_via_dialogue-refined_cross-modal_alignment.md)
-- [ATRIE: Automating Legal Interpretation with LLMs: Retrieval, Generation, and Evaluation](../../ACL2025/llm_nlp/atrie_legal_interpretation.md)
+- [Improving Contextual Faithfulness of Large Language Models via Retrieval Heads-Induced Optimization](../../ACL2025/llm_nlp/improving_contextual_faithfulness_of_large_language_models_via_retrieval_heads-i.md)
+- [Attribute-formed Class-specific Concept Space: Endowing Language Bottleneck Model with Better Generalization](attribute-formed_class-specific_concept_space_endowing_language_bottleneck_model.md)
 
 <!-- RELATED:END -->

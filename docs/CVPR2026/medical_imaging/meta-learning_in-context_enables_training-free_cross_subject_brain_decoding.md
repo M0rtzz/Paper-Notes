@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Meta-learning In-Context Enables Training-Free Cross Subject Brain Decoding
 description: >-

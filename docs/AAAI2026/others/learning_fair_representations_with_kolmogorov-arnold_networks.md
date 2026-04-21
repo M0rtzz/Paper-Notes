@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Fair Representations with Kolmogorov-Arnold Networks
 description: >-

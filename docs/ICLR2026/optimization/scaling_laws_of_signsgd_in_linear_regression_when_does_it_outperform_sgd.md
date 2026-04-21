@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling Laws of SignSGD in Linear Regression: When Does It Outperform SGD?
 description: >-

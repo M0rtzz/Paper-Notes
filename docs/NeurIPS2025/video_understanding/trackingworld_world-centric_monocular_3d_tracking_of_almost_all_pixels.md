@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TrackingWorld: World-centric Monocular 3D Tracking of Almost All Pixels
 description: >-

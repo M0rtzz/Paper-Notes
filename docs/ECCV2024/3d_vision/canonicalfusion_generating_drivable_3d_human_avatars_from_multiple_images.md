@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CanonicalFusion: Generating Drivable 3D Human Avatars from Multiple Images
 description: >-

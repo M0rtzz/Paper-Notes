@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention
 description: >-

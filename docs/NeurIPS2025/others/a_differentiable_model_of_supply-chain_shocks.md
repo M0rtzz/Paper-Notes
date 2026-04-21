@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Differentiable Model of Supply-Chain Shocks
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Real-Data-Driven 2000 FPS Color Video from Mosaicked Chromatic Spikes
 description: >-

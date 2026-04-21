@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Synchronous Diffusion for Unsupervised Smooth Non-Rigid 3D Shape Matching
 description: >-

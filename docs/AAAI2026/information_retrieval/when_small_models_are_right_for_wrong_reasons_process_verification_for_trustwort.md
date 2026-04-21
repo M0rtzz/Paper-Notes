@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When Small Models Are Right for Wrong Reasons: Process Verification for Trustworthy Agents
 description: >-

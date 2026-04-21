@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AHAN: Asymmetric Hierarchical Attention Network for Identical Twin Face Verification
 description: >-

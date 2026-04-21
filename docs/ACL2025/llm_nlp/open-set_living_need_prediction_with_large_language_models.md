@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Open-Set Living Need Prediction with Large Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ReaSon: Reinforced Causal Search with Information Bottleneck for Video Understanding
 description: >-

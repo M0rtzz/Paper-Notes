@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HoPE: Hybrid of Position Embedding for Long Context Vision-Language Models
 description: >-

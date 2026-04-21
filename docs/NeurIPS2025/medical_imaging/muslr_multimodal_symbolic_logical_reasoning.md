@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MuSLR: Multimodal Symbolic Logical Reasoning
 description: >-

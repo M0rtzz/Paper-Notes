@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Representing Topological Self-Similarity Using Fractal Feature Maps for Accurate Segmentation of Tubular Structures
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Aligning Machiavellian Agents: Behavior Steering via Test-Time Policy Shaping
 description: >-

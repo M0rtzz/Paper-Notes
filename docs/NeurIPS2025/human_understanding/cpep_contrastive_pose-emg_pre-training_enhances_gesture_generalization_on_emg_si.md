@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CPEP: Contrastive Pose-EMG Pre-training Enhances Gesture Generalization on EMG Signals
 description: >-

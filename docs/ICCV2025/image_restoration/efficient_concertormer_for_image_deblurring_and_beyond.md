@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Concertormer for Image Deblurring and Beyond
 description: >-
@@ -149,6 +149,6 @@ Concertormer 采用多尺度 U-Net 架构。输入图像通过双线性下采样
 - [Blind Noisy Image Deblurring Using Residual Guidance Strategy](blind_noisy_image_deblurring_using_residual_guidance_strateg.md)
 - [Emulating Self-Attention with Convolution for Efficient Image Super-Resolution](emulating_self-attention_with_convolution_for_efficient_image_super-resolution.md)
 - [EAMamba: Efficient All-Around Vision State Space Model for Image Restoration](eamamba_efficient_all-around_vision_state_space_model_for_image_restoration.md)
-- [Devil is in the Uniformity: Exploring Diverse Learners within Transformer for Image Restoration](devil_is_in_the_uniformity_exploring_diverse_learners_within_transformer_for_ima.md)
+- [Gyro-based Neural Single Image Deblurring](../../CVPR2025/image_restoration/gyro-based_neural_single_image_deblurring.md)
 
 <!-- RELATED:END -->

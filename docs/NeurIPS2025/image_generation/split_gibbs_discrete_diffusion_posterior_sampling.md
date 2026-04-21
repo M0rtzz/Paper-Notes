@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Split Gibbs Discrete Diffusion Posterior Sampling
 description: >-
@@ -144,6 +144,6 @@ SGDD 在 XOR 任务上 PSNR 提升 **8.36 dB**。
 - [Constrained Discrete Diffusion](constrained_discrete_diffusion.md)
 - [Information-Theoretic Discrete Diffusion](information-theoretic_discrete_diffusion.md)
 - [Learnable Sampler Distillation for Discrete Diffusion Models](learnable_sampler_distillation_for_discrete_diffusion_models.md)
-- [LD-RPS: Zero-Shot Unified Image Restoration via Latent Diffusion Recurrent Posterior Sampling](../../ICCV2025/image_generation/ld-rps_zero-shot_unified_image_restoration_via_latent_diffusion_recurrent_poster.md)
+- [Non-Markovian Discrete Diffusion with Causal Language Models](non-markovian_discrete_diffusion_with_causal_language_models.md)
 
 <!-- RELATED:END -->

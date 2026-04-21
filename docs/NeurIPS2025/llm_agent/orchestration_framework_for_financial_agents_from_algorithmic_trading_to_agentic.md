@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Orchestration Framework for Financial Agents: From Algorithmic Trading to Agentic Trading
 description: >-

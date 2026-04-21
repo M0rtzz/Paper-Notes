@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LSSF: Safety Alignment via Low-Rank Safety Subspace Fusion
 description: >-
@@ -147,7 +147,7 @@ LSSF 是完全免训练的后验方法。不涉及任何损失函数或梯度优
 - [SEA: Low-Resource Safety Alignment for Multimodal Large Language Models via Synthetic Embeddings](sea_lowresource_safety_alignment_for_multimodal.md)
 - [Atyaephyra at SemEval-2025 Task 4: Low-Rank Negative Preference Optimization](atyaephyra_at_semeval-2025_task_4_low-rank_negative_preference_optimization.md)
 - [Towards Understanding Safety Alignment: A Mechanistic Perspective from Safety Neurons](../../NeurIPS2025/llm_alignment/towards_understanding_safety_alignment_a_mechanistic_perspective_from_safety_neu.md)
+- [PKU-SafeRLHF: Towards Multi-Level Safety Alignment for LLMs with Human Preference](pku-saferlhf_towards_multi-level_safety_alignment_for_llms_with_human_preference.md)
 - [Safety Alignment Can Be Not Superficial With Explicit Safety Signals](../../ICML2025/llm_alignment/safety_alignment_can_be_not_superficial_with_explicit_safety_signals.md)
-- [MPO: Multilingual Safety Alignment via Reward Gap Optimization](mpo_multilingual_safety_alignment.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking Optimal Verification Granularity for Compute-Efficient Test-Time Scaling
 description: >-

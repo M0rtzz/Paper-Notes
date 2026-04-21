@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SAFNet: Selective Alignment Fusion Network for Efficient HDR Imaging
 description: >-
@@ -134,6 +134,6 @@ SAFNet 包含三个子网络：金字塔编码器 E、由粗到精解码器 D、
 - [RGNet: A Unified Clip Retrieval and Grounding Network for Long Videos](rgnet_a_unified_clip_retrieval_and_grounding_network_for_long_videos.md)
 - [PiTe: Pixel-Temporal Alignment for Large Video-Language Model](pite_pixel-temporal_alignment_for_large_video-language_model.md)
 - [SAVA-X: Ego-to-Exo Imitation Error Detection via Scene-Adaptive View Alignment and Bidirectional Cross View Fusion](../../CVPR2026/video_understanding/savax_egotoexo_imitation_error_detection_via_scene.md)
-- [SPAMming Labels: Efficient Annotations for the Trackers of Tomorrow](spamming_labels_efficient_annotations_for_the_trackers_of_tomorrow.md)
+- [Video-Panda: Parameter-efficient Alignment for Encoder-free Video-Language Models](../../CVPR2025/video_understanding/video-panda_parameter-efficient_alignment_for_encoder-free_video-language_models.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ColaVLA: Leveraging Cognitive Latent Reasoning for Hierarchical Parallel Trajectory Planning in Autonomous Driving
 description: >-

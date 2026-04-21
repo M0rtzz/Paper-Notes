@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Discriminative Policy Optimization for Token-Level Reward Models
 description: >-
@@ -150,6 +150,6 @@ $$p(\tau^w \succeq \tau^l) = \sigma\left[\beta\left(\frac{1}{N}\sum_{t=0}^{N-1}Z
 - [Direct Discriminative Optimization: Your Likelihood-Based Visual Generative Model is also a GAN Discriminator](direct_discriminative_optimization_your_likelihood-based_visual_generative_model.md)
 - [ToMA: Token Merge with Attention for Diffusion Models](toma_token_merge_with_attention_for_diffusion_models.md)
 - [PCPO: Proportionate Credit Policy Optimization for Aligning Image Generation Models](../../ICLR2026/image_generation/pcpo_proportionate_credit_policy_optimization_for_aligning_image_generation_mode.md)
-- [GRAM: A Generative Foundation Reward Model for Reward Generalization](gram_a_generative_foundation_reward_model_for_reward_generalization.md)
+- [AdaNAT: Exploring Adaptive Policy for Token-Based Image Generation](../../ECCV2024/image_generation/adanat_exploring_adaptive_policy_for_token-based_image_generation.md)
 
 <!-- RELATED:END -->

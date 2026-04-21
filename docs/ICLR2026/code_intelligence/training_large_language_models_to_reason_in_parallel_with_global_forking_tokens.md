@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Training Large Language Models To Reason In Parallel With Global Forking Tokens
 description: >-
@@ -150,8 +150,8 @@ $$\mathcal{L}_{\text{Hungarian}}(\boldsymbol{\theta}) = -\mathbb{E}_{\mathbf{x},
 
 - [DRO-InstructZero: Distributionally Robust Prompt Optimization for Large Language Models](dro-instructzero_distributionally_robust_prompt_optimization_for_large_language_.md)
 - [Learning to Reason without External Rewards](learning_to_reason_without_external_rewards.md)
-- [Personality-Guided Code Generation Using Large Language Models](../../ACL2025/code_intelligence/personality_guided_code_gen.md)
+- [DiaBlo: Diagonal Blocks Are Sufficient For Finetuning](diablo_diagonal_blocks_are_sufficient_for_finetuning.md)
 - [SPAN: Benchmarking and Improving Cross-Calendar Temporal Reasoning of Large Language Models](../../AAAI2026/code_intelligence/span_benchmarking_and_improving_cross-calendar_temporal_reasoning_of_large_langu.md)
-- [CodeReviewQA: The Code Review Comprehension Assessment for Large Language Models](../../ACL2025/code_intelligence/codereviewqa_the_code_review_comprehension_assessment_for_large_language_models.md)
+- [EquaCode: A Multi-Strategy Jailbreak Approach for Large Language Models via Equation Solving and Code Completion](../../AAAI2026/code_intelligence/equacode_a_multi-strategy_jailbreak_approach_for_large_language_models_via_equat.md)
 
 <!-- RELATED:END -->

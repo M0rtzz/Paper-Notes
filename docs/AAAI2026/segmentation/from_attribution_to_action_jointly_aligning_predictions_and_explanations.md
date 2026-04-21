@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Attribution to Action: Jointly ALIGNing Predictions and Explanations
 description: >-

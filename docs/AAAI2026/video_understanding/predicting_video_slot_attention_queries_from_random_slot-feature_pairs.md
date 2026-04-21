@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Predicting Video Slot Attention Queries from Random Slot-Feature Pairs
 description: >-
@@ -182,6 +182,6 @@ $$\phi_r: S_{t_1} + E[t+1-t_1], F_{t_2} + E[t+1-t_2] \rightarrow Q_{t+1}$$
 - [Distillation Dynamics: Towards Understanding Feature-Based Distillation in Vision Transformers](distillation_dynamics_towards_understanding_feature-based_di.md)
 - [VideoNSA: Native Sparse Attention Scales Video Understanding](../../ICLR2026/video_understanding/videonsa_native_sparse_attention_scales_video_understanding.md)
 - [Online Time Series Prediction Using Feature Adjustment](../../ICLR2026/video_understanding/online_time_series_prediction_using_feature_adjustment.md)
-- [Attend Before Attention: Efficient and Scalable Video Understanding via Autoregressive Gazing](../../CVPR2026/video_understanding/attend_before_attention_efficient_and_scalable_video_understanding_via_autoregre.md)
+- [Stay in your Lane: Role Specific Queries with Overlap Suppression Loss for Dense Video Captioning](../../CVPR2026/video_understanding/stay_in_your_lane_role_specific_queries_with_overlap_suppression_loss_for_dense_.md)
 
 <!-- RELATED:END -->

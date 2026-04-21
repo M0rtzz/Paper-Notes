@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adapting Point Cloud Analysis via Multimodal Bayesian Distribution Learning
 description: >-

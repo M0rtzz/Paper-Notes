@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Contribution of Task-Irrelevant Stimuli to Drift of Neural Representations
 description: >-

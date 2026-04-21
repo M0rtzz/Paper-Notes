@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Open Source Planning & Control System with Language Agents for Autonomous Scientific Discovery
 description: >-

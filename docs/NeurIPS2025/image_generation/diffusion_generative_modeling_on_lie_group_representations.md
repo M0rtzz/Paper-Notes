@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Diffusion Generative Modeling on Lie Group Representations
 description: >-
@@ -188,6 +188,6 @@ $$\mathbb{E}_t\left\{w(t)\mathbb{E}_{\mathbf{x}(0)}\mathbb{E}_{\mathbf{x}(t)}\le
 - [Coupling Generative Modeling and an Autoencoder with the Causal Bridge](coupling_generative_modeling_and_an_autoencoder_with_the_causal_bridge.md)
 - [UniCom: Unified Multimodal Modeling via Compressed Continuous Semantic Representations](../../CVPR2025/image_generation/unicom_unified_multimodal_modeling_via_compressed_continuous_semantic_representa.md)
 - [SummDiff: Generative Modeling of Video Summarization with Diffusion](../../ICCV2025/image_generation/summdiff_generative_modeling_of_video_summarization_with_diffusion.md)
-- [Hephaestus: Mixture Generative Modeling with Energy Guidance for Large-scale QoS Degradation](hephaestus_mixture_generative_modeling_with_energy_guidance_for_large-scale_qos_.md)
+- [Latent Zoning Network: A Unified Principle for Generative Modeling, Representation Learning, and Classification](latent_zoning_network_a_unified_principle_for_generative_modeling_representation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiffWind: Physics-Informed Differentiable Modeling of Wind-Driven Object Dynamics
 description: >-

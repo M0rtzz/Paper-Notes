@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Graph of Records: Boosting Retrieval Augmented Generation for Long-context Summarization with Graphs
 description: >-

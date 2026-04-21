@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Inter-Intra Modal Measure: A Predictive Lens on Fine-Tuning Outcomes in Vision-Language Models
 description: >-

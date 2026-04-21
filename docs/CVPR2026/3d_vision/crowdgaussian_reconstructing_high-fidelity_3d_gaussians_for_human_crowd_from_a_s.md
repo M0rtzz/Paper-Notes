@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CrowdGaussian: Reconstructing High-Fidelity 3D Gaussians for Human Crowd from a Single Image
 description: >-

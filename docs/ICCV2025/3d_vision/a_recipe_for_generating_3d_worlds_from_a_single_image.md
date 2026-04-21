@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Recipe for Generating 3D Worlds from a Single Image
 description: >-

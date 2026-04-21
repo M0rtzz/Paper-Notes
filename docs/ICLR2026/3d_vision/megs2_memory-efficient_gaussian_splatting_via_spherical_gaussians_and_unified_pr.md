@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MEGS2: Memory-Efficient Gaussian Splatting via Spherical Gaussians and Unified Pruning
 description: >-

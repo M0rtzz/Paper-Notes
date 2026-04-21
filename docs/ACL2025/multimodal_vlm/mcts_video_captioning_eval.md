@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Evaluating Multimodal Large Language Models on Video Captioning via Monte Carlo Tree Search
 description: >-

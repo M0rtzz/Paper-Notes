@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ReMoGen: Real-time Human Interaction-to-Reaction Generation via Modular Learning from Diverse Data
 description: >-

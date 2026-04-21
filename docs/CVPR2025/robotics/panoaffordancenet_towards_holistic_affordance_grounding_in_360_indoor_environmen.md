@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PanoAffordanceNet: Towards Holistic Affordance Grounding in 360° Indoor Environments
 description: >-
@@ -128,10 +128,10 @@ tags:
 
 ## 相关论文
 
-- [Prof. Robot: Differentiable Robot Rendering without Static and Self-Collisions](prof_robot_differentiable_robot_rendering_without_static_and_self-collisions.md)
-- [Think Small, Act Big: Primitive Prompt Learning for Lifelong Robot Manipulation](think_small_act_big_primitive_prompt_learning_for_lifelong_robot_manipulation.md)
-- [RoboGround: Robotic Manipulation with Grounded Vision-Language Priors](roboground_robotic_manipulation_with_grounded_vision-language_priors.md)
-- [SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](sapave_towards_active_perception_and_manipulation_in_vision-language-action_mode.md)
-- [A Data-Centric Revisit of Pre-Trained Vision Models for Robot Learning](a_data-centric_revisit_of_pre-trained_vision_models_for_robot_learning.md)
+- [ASAP: Advancing Semantic Alignment Promotes Multi-Modal Manipulation Detecting and Grounding](asap_advancing_semantic_alignment_promotes_multi-modal_manipulation_de.md)
+- [Towards Long-Horizon Vision-Language Navigation: Platform, Benchmark and Method](towards_long-horizon_vision-language_navigation_platform_benchmark_and_method.md)
+- [UniAct: Universal Actions for Enhanced Embodied Foundation Models](universal_actions_for_enhanced_embodied_foundation_models.md)
+- [Robotic Visual Instruction](robotic_visual_instruction.md)
+- [Instruction-based Image Manipulation by Watching How Things Move](instruction-based_image_manipulation_by_watching_how_things_move.md)
 
 <!-- RELATED:END -->

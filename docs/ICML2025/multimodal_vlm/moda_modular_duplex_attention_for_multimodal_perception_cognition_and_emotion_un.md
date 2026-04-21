@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MODA: MOdular Duplex Attention for Multimodal Perception, Cognition, and Emotion Understanding
 description: >-

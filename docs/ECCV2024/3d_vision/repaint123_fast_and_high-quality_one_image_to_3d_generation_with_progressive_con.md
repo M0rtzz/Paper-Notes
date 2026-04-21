@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Repaint123: Fast and High-Quality One Image to 3D Generation with Progressive Controllable Repainting
 description: >-

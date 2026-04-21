@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SeHDR: Single-Exposure HDR Novel View Synthesis via 3D Gaussian Bracketing
 description: >-
@@ -158,9 +158,9 @@ HDR-NVS 旨在从 LDR 图像重建并渲染 HDR 场景。现有方法（HDR-NeRF
 ## 相关论文
 
 - [High Dynamic Range Novel View Synthesis with Single Exposure](../../ICML2025/3d_vision/high_dynamic_range_novel_view_synthesis_with_single_exposure.md)
+- [Physically Inspired Gaussian Splatting for HDR Novel View Synthesis](../../CVPR2026/3d_vision/physically_inspired_gaussian_splatting_for_hdr_novel_view_synthesis.md)
 - [Learning Neural Exposure Fields for View Synthesis](../../NeurIPS2025/3d_vision/learning_neural_exposure_fields_for_view_synthesis.md)
 - [Self-Ensembling Gaussian Splatting for Few-Shot Novel View Synthesis](self-ensembling_gaussian_splatting_for_few-shot_novel_view_synthesis.md)
-- [Physically Inspired Gaussian Splatting for HDR Novel View Synthesis](../../CVPR2026/3d_vision/physically_inspired_gaussian_splatting_for_hdr_novel_view_synthesis.md)
 - [BillBoard Splatting (BBSplat): Learnable Textured Primitives for Novel View Synthesis](billboard_splatting_bbsplat_learnable_textured_primitives_fo.md)
 
 <!-- RELATED:END -->

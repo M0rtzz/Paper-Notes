@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Benchmarking is Broken — Don't Let AI be its Own Judge
 description: >-

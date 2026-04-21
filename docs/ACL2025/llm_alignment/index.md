@@ -1,14 +1,14 @@
 ---
 title: >-
-  ACL2025 对齐/RLHF方向 62篇论文解读
+  ACL2025 对齐/RLHF方向 63篇论文解读
 description: >-
-  62篇ACL2025 对齐/RLHF方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  63篇ACL2025 对齐/RLHF方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐/RLHF
 
-**💬 ACL2025** · **62** 篇论文解读
+**💬 ACL2025** · **63** 篇论文解读
 
 **[AgentAlign: Navigating Safety Alignment in the Shift from Informative to Agentic LLMs](agentalign_navigating_safety_alignment_in_the_shift_from_informative_to_agentic_.md)**
 
@@ -169,6 +169,10 @@ description: >-
 **[Optimal Transport-Based Token Weighting for Enhanced Preference Optimization](otpo_token_weighting.md)**
 
 :   OTPO 利用无平衡最优传输（UOT）在 chosen/rejected 回复的 token 表示之间计算语义对齐权重，使偏好优化聚焦于关键差异 token 而非均等对待所有 token，在 AlpacaEval2 上将 DPO 的 LC WR 从 48.14% 提升至 55.84%，并将 DPO/SimPO/SamPO/LDDPO 统一为 token 加权的特例。
+
+**[Whose Boat Does it Float? Improving Personalization in Preference Tuning via Inferred User Personas](personalized_preference_opt.md)**
+
+:   提出基于**溯因推理（abductive reasoning）**的偏好个性化框架：通过 **Persona Inference (PI)** 推断偏好数据 chosen/rejected 回答背后的用户画像，再用画像增强的偏好数据进行 **Persona Tailoring (PT)** 训练，使 LLM 能根据用户画像生成个性化回答，在对话、问答、教育三个领域均大幅提升个性化适配能力。
 
 **[PIG: Privacy Jailbreak Attack on LLMs via Gradient-based Iterative Prompts](pig_privacy_jailbreak.md)**
 

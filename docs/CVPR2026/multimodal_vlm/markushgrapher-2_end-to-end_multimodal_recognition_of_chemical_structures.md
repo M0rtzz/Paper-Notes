@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MarkushGrapher-2: End-to-end Multimodal Recognition of Chemical Structures
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WildCap: Facial Albedo Capture in the Wild via Hybrid Inverse Rendering
 description: >-
@@ -136,9 +136,9 @@ SwitchLight 的预测图像并非物理光源照射产生，传统 SH 环境光�
 ## 相关论文
 
 - [DiffBMP: Differentiable Rendering with Bitmap Primitives](diffbmp_differentiable_rendering_with_bitmap_primitives.md)
+- [NeISF++: Neural Incident Stokes Field for Polarized Inverse Rendering of Conductors and Dielectrics](../../CVPR2025/others/neisf_neural_incident_stokes_field_for_polarized_inverse_rendering_of_conductors.md)
 - [Locally Orderless Images for Optimization in Differentiable Rendering](../../CVPR2025/others/locally_orderless_images_for_optimization_in_differentiable_rendering.md)
 - [Rethinking SNN Online Training and Deployment: Gradient-Coherent Learning via Hybrid-Driven LIF Model](rethinking_snn_online_training_and_deployment_grad.md)
 - [UniPhy: Learning a Unified Constitutive Model for Inverse Physics Simulation](../../CVPR2025/others/uniphy_learning_a_unified_constitutive_model_for_inverse_physics_simulation.md)
-- [Hybrid-Balance GFlowNet for Solving Vehicle Routing Problems](../../NeurIPS2025/others/hybrid-balance_gflownet_for_solving_vehicle_routing_problems.md)
 
 <!-- RELATED:END -->

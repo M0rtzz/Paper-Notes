@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Approximating Shapley Explanations in Reinforcement Learning
 description: >-
@@ -138,9 +138,9 @@ FastSVERL 将近似问题分解为两个层次：
 ## 相关论文
 
 - [Reinforcement Learning with Action Chunking](reinforcement_learning_with_action_chunking.md)
-- [Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
 - [Learning to Clean: Reinforcement Learning for Noisy Label Correction](learning_to_clean_reinforcement_learning_for_noisy_label_correction.md)
+- [Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
 - [Hybrid Latent Reasoning via Reinforcement Learning](hybrid_latent_reasoning_via_reinforcement_learning.md)
-- [Continual Knowledge Adaptation for Reinforcement Learning](continual_knowledge_adaptation_for_reinforcement_learning.md)
+- [Towards Provable Emergence of In-Context Reinforcement Learning](towards_provable_emergence_of_in-context_reinforcement_learning.md)
 
 <!-- RELATED:END -->

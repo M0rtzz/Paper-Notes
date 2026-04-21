@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] InfoCom: Kilobyte-Scale Communication-Efficient Collaborative Perception with Information-Aware Feature Compression
 description: >-

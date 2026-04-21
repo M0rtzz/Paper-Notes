@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Visual Language Models as Zero-Shot Deepfake Detectors
 description: >-
@@ -119,7 +119,7 @@ tags:
 - [Zero-Shot Adaptation of Parameter-Efficient Fine-Tuning in Diffusion Models](zero-shot_adaptation_of_parameter-efficient_fine-tuning_in_diffusion_models.md)
 - [Towards Robust Zero-Shot Reinforcement Learning](../../NeurIPS2025/image_generation/towards_robust_zero-shot_reinforcement_learning.md)
 - [Semantic Surgery: Zero-Shot Concept Erasure in Diffusion Models](../../NeurIPS2025/image_generation/semantic_surgery_zero-shot_concept_erasure_in_diffusion_models.md)
-- [AnyPortal: Zero-Shot Consistent Video Background Replacement](../../ICCV2025/image_generation/anyportal_zero-shot_consistent_video_background_replacement.md)
-- [Overcoming Visual Clutter in Vision Language Action Models via Concept-Gated Visual Distillation](../../CVPR2025/image_generation/overcoming_visual_clutter_in_vision_language_action_models_via_concept-gated_vis.md)
+- [Visual Lexicon: Rich Image Features in Language Space](../../CVPR2025/image_generation/visual_lexicon_rich_image_features_in_language_space.md)
+- [Zero-Shot Image Restoration Using Few-Step Guidance of Consistency Models (and Beyond)](../../CVPR2025/image_generation/zero-shot_image_restoration_using_few-step_guidance_of_consistency_models_and_be.md)
 
 <!-- RELATED:END -->

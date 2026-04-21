@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Distracting Effect: Understanding Irrelevant Passages in RAG
 description: >-

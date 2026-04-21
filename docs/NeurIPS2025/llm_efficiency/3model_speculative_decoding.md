@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3-Model Speculative Decoding (PyramidSD)
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Attribution as Retrieval: Model-Agnostic AI-Generated Image Attribution
 description: >-

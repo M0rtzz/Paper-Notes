@@ -1,15 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Tuning the Frequencies: Robust Training for Sinusoidal Neural Networks
 description: >-
-  [CVPR 2025][隐式神经表示][训练策略] 提出针对正弦神经网络的鲁棒训练方法，通过频率调谐改善初始化和训练稳定性
+  [CVPR 2025][正弦神经网络] 针对正弦神经网络（如 SIREN）的初始化和训练不稳定问题，提出基于理论分析的频率调谐方法，使训练过程更鲁棒、更可预测。
 tags:
   - CVPR 2025
-  - 隐式神经表示
-  - 正弦网络
-  - 训练稳定性
-  - 频率初始化
-  - INR
+  - 正弦神经网络
+  - SIREN
+  - 频率调谐
+  - 训练鲁棒性
+  - 初始化策略
 ---
 
 # Tuning the Frequencies: Robust Training for Sinusoidal Neural Networks

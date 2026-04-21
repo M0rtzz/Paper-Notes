@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multi-Aspect Cross-modal Quantization for Generative Recommendation
 description: >-
@@ -214,6 +214,6 @@ MACRec 有效降低了两种模态的 ID 冲突率。
 - [Multi-Metric Preference Alignment for Generative Speech Restoration](multi-metric_preference_alignment_for_generative_speech_restoration.md)
 - [Cross-Modal Emotion Transfer for Emotion Editing in Talking Face Video](../../CVPR2026/image_generation/cross-modal_emotion_transfer_for_emotion_editing_in_talking_face_video.md)
 - [Quantization with Unified Adaptive Distillation to enable multi-LoRA based one-for-all Generative Vision Models on edge](../../CVPR2026/image_generation/quantization_with_unified_adaptive_distillation_to_enable_multi-lora_based_one-f.md)
-- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](../../ECCV2024/image_generation/xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
+- [Unified Multi-Modal Interactive & Reactive 3D Motion Generation via Rectified Flow](../../ICLR2026/image_generation/unified_multi-modal_interactive_reactive_3d_motion_generation_via_rectified_flow.md)
 
 <!-- RELATED:END -->

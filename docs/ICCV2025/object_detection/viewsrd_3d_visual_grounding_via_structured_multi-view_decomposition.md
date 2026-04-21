@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ViewSRD: 3D Visual Grounding via Structured Multi-View Decomposition
 description: >-

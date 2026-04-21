@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PSA-MF: Personality-Sentiment Aligned Multi-Level Fusion for Multimodal Sentiment Analysis
 description: >-

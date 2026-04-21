@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving Agent Behaviors with RL Fine-tuning for Autonomous Driving
 description: >-
@@ -128,6 +128,6 @@ tags:
 - [SMART-R1: Advancing Multi-agent Traffic Simulation via R1-Style Reinforcement Fine-Tuning](../../ICLR2026/autonomous_driving/advancing_multi-agent_traffic_simulation_via_r1-style_reinforcement_fine-tuning.md)
 - [AutoVLA: A Vision-Language-Action Model for End-to-End Autonomous Driving with Adaptive Reasoning and Reinforcement Fine-Tuning](../../NeurIPS2025/autonomous_driving/autovla_a_vision-language-action_model_for_end-to-end_autonomous_driving_with_ad.md)
 - [Neural Volumetric World Models for Autonomous Driving](neural_volumetric_world_models_for_autonomous_driving.md)
-- [Reason2Drive: Towards Interpretable and Chain-based Reasoning for Autonomous Driving](reason2drive_towards_interpretable_and_chain-based_reasoning_for_autonomous_driv.md)
+- [Reason2Drive: Towards Interpretable and Chain-Based Reasoning for Autonomous Driving](reason2drive_towards_interpretable_and_chainbased_reasoning.md)
 
 <!-- RELATED:END -->

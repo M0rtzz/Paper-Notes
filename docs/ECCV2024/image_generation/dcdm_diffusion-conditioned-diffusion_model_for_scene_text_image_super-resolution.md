@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DCDM: Diffusion-Conditioned-Diffusion Model for Scene Text Image Super-Resolution
 description: >-

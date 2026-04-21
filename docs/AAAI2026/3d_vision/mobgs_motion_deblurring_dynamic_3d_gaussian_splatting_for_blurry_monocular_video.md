@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MoBGS: Motion Deblurring Dynamic 3D Gaussian Splatting for Blurry Monocular Video
 description: >-

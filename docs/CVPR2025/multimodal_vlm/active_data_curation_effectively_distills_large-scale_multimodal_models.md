@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Active Data Curation Effectively Distills Large-Scale Multimodal Models
 description: >-

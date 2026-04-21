@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Parity Requires Unified Input Dependence and Negative Eigenvalues in SSMs
 description: >-

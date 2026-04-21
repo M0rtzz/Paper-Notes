@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ImageSentinel: Protecting Visual Datasets from Unauthorized Retrieval-Augmented Image Generation
 description: >-

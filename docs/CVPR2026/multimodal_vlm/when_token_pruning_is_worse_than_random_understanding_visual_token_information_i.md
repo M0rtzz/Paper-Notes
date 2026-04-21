@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When Token Pruning is Worse than Random: Understanding Visual Token Information in VLLMs
 description: >-

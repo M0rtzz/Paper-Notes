@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Straighten Viscous Rectified Flow via Noise Optimization
 description: >-

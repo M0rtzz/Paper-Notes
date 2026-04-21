@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Domain-Adaptive Transformer for Data-Efficient Glioma Segmentation in Sub-Saharan MRI
 description: >-

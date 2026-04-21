@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unlocking the Power of Rehearsal in Continual Learning: A Theoretical Perspective
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Evaluation of LLMs in Medical Text Summarization: The Role of Vocabulary Adaptation in High OOV Settings
 description: >-

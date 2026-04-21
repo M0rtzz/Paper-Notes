@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Verifiable Dot to Reward Chain: Harnessing Verifiable Reference-based Rewards for RL of Open-ended Generation
 description: >-

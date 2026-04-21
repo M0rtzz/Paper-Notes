@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MPDiT: Multi-Patch Global-to-Local Transformer Architecture for Efficient Flow Matching
 description: >-

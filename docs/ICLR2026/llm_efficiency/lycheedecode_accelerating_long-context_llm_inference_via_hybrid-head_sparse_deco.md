@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LycheeDecode: Accelerating Long-Context LLM Inference via Hybrid-Head Sparse Decoding
 description: >-
@@ -118,10 +118,10 @@ LycheeDecode 是一个头级稀疏解码框架，包含两个核心组件：
 
 ## 相关论文
 
-- [Star Attention: Efficient LLM Inference over Long Sequences](../../ICML2025/llm_efficiency/star_attention_efficient_llm_inference_over_long_sequences.md)
-- [When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework](when_does_divide_and_conquer_work_for_long_context_llm_a_noise_decomposition_fra.md)
 - [Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models](understanding_and_improving_length_generalization_in_hierarchical_sparse_attenti.md)
-- [Ladder Residual: Parallelism-Aware Architecture for Accelerating Large Model Inference](../../ICML2025/llm_efficiency/ladder-residual_parallelism-aware_architecture_for_accelerating_large_model_infe.md)
-- [DISC: Dynamic Decomposition Improves LLM Inference Scaling](../../NeurIPS2025/llm_efficiency/disc_dynamic_decomposition_improves_llm_inference_scaling.md)
+- [When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework](when_does_divide_and_conquer_work_for_long_context_llm_a_noise_decomposition_fra.md)
+- [SwingArena: Adversarial Programming Arena for Long-context GitHub Issue Solving](swingarena_competitive_programming_arena_for_long-context_github_issue_solving.md)
+- [Token-level Data Selection for Safe LLM Fine-tuning](token-level_data_selection_for_safe_llm_fine-tuning.md)
+- [Semantic Parallelism: Redefining Efficient MoE Inference via Model-Data Co-Scheduling](semantic_parallelism_redefining_efficient_moe_inference_via_model-data_co-schedu.md)
 
 <!-- RELATED:END -->

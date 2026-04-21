@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Thickness-aware E(3)-Equivariant 3D Mesh Neural Networks
 description: >-

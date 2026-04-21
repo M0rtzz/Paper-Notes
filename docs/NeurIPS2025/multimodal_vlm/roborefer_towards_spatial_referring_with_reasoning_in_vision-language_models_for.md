@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RoboRefer: Towards Spatial Referring with Reasoning in Vision-Language Models for Robotics
 description: >-

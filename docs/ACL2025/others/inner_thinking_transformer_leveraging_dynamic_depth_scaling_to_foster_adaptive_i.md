@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Inner Thinking Transformer: Leveraging Dynamic Depth Scaling to Foster Adaptive Internal Thinking
 description: >-

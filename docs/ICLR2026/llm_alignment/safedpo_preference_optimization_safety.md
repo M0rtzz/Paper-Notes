@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SafeDPO: A Simple Approach to Direct Preference Optimization with Enhanced Safety
 description: >-

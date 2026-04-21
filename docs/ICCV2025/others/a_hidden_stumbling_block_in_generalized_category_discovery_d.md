@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Hidden Stumbling Block in Generalized Category Discovery: Distracted Attention
 description: >-

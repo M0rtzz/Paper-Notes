@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Momentum-GS: Momentum Gaussian Self-Distillation for High-Quality Large Scene Reconstruction
 description: >-
@@ -137,8 +137,8 @@ MatrixCity 结果：Momentum-GS PSNR 29.11 / SSIM 0.881 / LPIPS 0.180，全面�
 
 - [S3R-GS: Streamlining the Pipeline for Large-Scale Street Scene Reconstruction](s3r-gs_streamlining_the_pipeline_for_large-scale_street_scene_reconstruction.md)
 - [OccluGaussian: Occlusion-Aware Gaussian Splatting for Large Scene Reconstruction and Rendering](occlugaussian_occlusion-aware_gaussian_splatting_for_large_scene_reconstruction_.md)
-- [HRAvatar: High-Quality and Relightable Gaussian Head Avatar](../../CVPR2025/3d_vision/hravatar_high-quality_and_relightable_gaussian_head_avatar.md)
 - [RayZer: A Self-supervised Large View Synthesis Model](rayzer_a_self-supervised_large_view_synthesis_model.md)
-- [CityGaussian: Real-Time High-Quality Large-Scale Scene Rendering with Gaussians](../../ECCV2024/3d_vision/citygaussian_real-time_high-quality_large-scale_scene_rendering_with_gaussians.md)
+- [HRAvatar: High-Quality and Relightable Gaussian Head Avatar](../../CVPR2025/3d_vision/hravatar_high-quality_and_relightable_gaussian_head_avatar.md)
+- [GS-LRM: Large Reconstruction Model for 3D Gaussian Splatting](../../ECCV2024/3d_vision/gs-lrm_large_reconstruction_model_for_3d_gaussian_splatting.md)
 
 <!-- RELATED:END -->

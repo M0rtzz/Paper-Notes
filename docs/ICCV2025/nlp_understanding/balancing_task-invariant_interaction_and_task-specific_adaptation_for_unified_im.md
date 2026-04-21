@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Balancing Task-Invariant Interaction and Task-Specific Adaptation for Unified Image Fusion
 description: >-
@@ -161,6 +161,6 @@ TITA 在不使用任务标识的前提下，多项指标超越专用方法和通
 - [CaLMQA: Exploring Culturally Specific Long-Form Question Answering across 23 Languages](../../ACL2025/nlp_understanding/calmqa_cultural_multilingual_qa.md)
 - [End-to-End Dialog Neural Coreference Resolution: Balancing Efficiency and Accuracy in Large-Scale Systems](../../ACL2025/nlp_understanding/end-to-end_dialog_neural_coreference_resolution_balancing_efficiency_and_accurac.md)
 - [Multi-Hop Reasoning for Question Answering with Hyperbolic Representations](../../ACL2025/nlp_understanding/multi-hop_reasoning_for_question_answering_with_hyperbolic_representations.md)
-- [Disambiguate First, Parse Later: Generating Interpretations for Ambiguity Resolution in Semantic Parsing](../../ACL2025/nlp_understanding/disambiguate_first_parse_later_generating_interpretations_for_ambiguity_resoluti.md)
+- [Rethinking Semantic Parsing for Large Language Models: Enhancing LLM Performance with Semantic Hints](../../ACL2025/nlp_understanding/rethinking_semantic_parsing_for_large_language_models_enhancing_llm_performance_.md)
 
 <!-- RELATED:END -->

@@ -2,9 +2,15 @@
 title: >-
   [论文解读] SongComposer: A Large Language Model for Lyric and Melody Generation in Song Composition
 description: >-
-  [LLM/NLP] SongComposer是首个能够同时生成歌词和旋律的音乐专用大语言模型，通过词级对齐的元组格式、基于音乐知识的标量音高初始化、以及渐进式结构感知训练（motif→独立全曲→短语级配对），在歌词配旋律、旋律配歌词、歌曲续写和文本生成歌曲等任务上全面超越GPT-4。
+  [ACL 2025][LLM/NLP][歌曲创作] SongComposer是首个能够同时生成歌词和旋律的音乐专用大语言模型，通过词级对齐的元组格式、基于音乐知识的标量音高初始化、以及渐进式结构感知训练（motif→独立全曲→短语级配对），在歌词配旋律、旋律配歌词、歌曲续写和文本生成歌曲等任务上全面超越GPT-4。
 tags:
+  - ACL 2025
   - LLM/NLP
+  - 歌曲创作
+  - 大语言模型
+  - 旋律生成
+  - 歌词生成
+  - 符号音乐表示
 ---
 
 # SongComposer: A Large Language Model for Lyric and Melody Generation in Song Composition
@@ -134,10 +140,10 @@ $$\text{emb}(\langle p \rangle) = c_p \cdot \text{emb}(\langle 66 \rangle)$$
 
 ## 相关论文
 
+- [JoPA: Explaining Large Language Model's Generation via Joint Prompt Attribution](jopa_explaining_large_language_models_generation_via_joint_prompt_attribution.md)
+- [Representation Bending for Large Language Model Safety](repbend_representation_bending_safety.md)
+- [Binary Classifier Optimization for Large Language Model Alignment](bco_binary_classifier_alignment.md)
+- [SR-LLM: Rethinking the Structured Representation in Large Language Model](sr-llm_rethinking_the_structured_representation_in_large_language_model.md)
 - [InfiniSST: Simultaneous Translation of Unbounded Speech with Large Language Model](infinisst_simultaneous_translation_of_unbounded_speech_with_large_language_model.md)
-- [A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](a_survey_on_efficient_large_language.md)
-- [DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models](difflm_controllable_synthetic_data_generation_via_diffusion_language_models.md)
-- [Improve Language Model and Brain Alignment via Associative Memory](improve_language_model_and_brain_alignment_via_associative_memory.md)
-- [SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence](selfelicit_evidence_highlighting.md)
 
 <!-- RELATED:END -->

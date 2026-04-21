@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling Backwards: Minimal Synthetic Pre-training?
 description: >-

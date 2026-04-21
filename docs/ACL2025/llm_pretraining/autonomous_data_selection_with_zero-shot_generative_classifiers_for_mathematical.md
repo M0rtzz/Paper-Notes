@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AutoDS: Autonomous Data Selection with Zero-shot Generative Classifiers for Mathematical Texts
 description: >-

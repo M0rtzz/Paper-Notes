@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FreqKV: Key-Value Compression in Frequency Domain for Context Window Extension
 description: >-
@@ -174,7 +174,7 @@ FreqKV 首次将频域学习的思想引入 decoder-only LLM 的 KV 缓存压缩
 - [QSVD: Efficient Low-Rank Approximation for Unified Query-Key-Value Weight Compression](../../NeurIPS2025/model_compression/qsvd_efficient_low-rank_approximation_for_unified_query-key-value_weight_compres.md)
 - [Earth-Adapter: Bridge Geospatial Domain Gaps with Mixture of Frequency Adaptation](../../AAAI2026/model_compression/earth-adapter_bridge_the_geospatial_domain_gaps_with_mixture_of_frequency_adapta.md)
 - [Cross-Domain Lossy Compression via Rate- and Classification-Constrained Optimal Transport](cross_domain_lossy_compression_optimal_transport.md)
-- [FASA: Frequency-aware Sparse Attention](fasa_frequency-aware_sparse_attention.md)
 - [In-Context Learning for Pure Exploration](in-context_learning_for_pure_exploration.md)
+- [COMI: Coarse-to-fine Context Compression via Marginal Information Gain](comi_coarse-to-fine_context_compression_via_marginal_information_gain.md)
 
 <!-- RELATED:END -->

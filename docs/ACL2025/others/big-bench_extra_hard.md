@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BIG-Bench Extra Hard
 description: >-

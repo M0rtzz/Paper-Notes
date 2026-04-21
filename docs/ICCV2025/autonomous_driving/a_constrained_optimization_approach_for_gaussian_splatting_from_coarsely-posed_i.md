@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Constrained Optimization Approach for Gaussian Splatting from Coarsely-posed Images and Noisy Lidar Point Clouds
 description: >-
@@ -207,6 +207,6 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{pixel}} + 0.2 \cdot \mathcal{L
 - [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multiview_robust_physical_adver.md)
 - [IGL-Nav: Incremental 3D Gaussian Localization for Image-goal Navigation](igl-nav_incremental_3d_gaussian_localization_for_image-goal_navigation.md)
 - [Splat-LOAM: Gaussian Splatting LiDAR Odometry and Mapping](splat-loam_gaussian_splatting_lidar_odometry_and_mapping.md)
-- [Leveraging 2D Priors and SDF Guidance for Dynamic Urban Scene Rendering](leveraging_2d_priors_and_sdf_guidance_for_urban_scene_rendering.md)
+- [Counting Stacked Objects](counting_stacked_objects.md)
 
 <!-- RELATED:END -->

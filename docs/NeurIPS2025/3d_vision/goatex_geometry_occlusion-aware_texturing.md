@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GOATex: Geometry & Occlusion-Aware Texturing
 description: >-
@@ -129,6 +129,6 @@ GOATex 完全不需要微调预训练扩散模型，使用预训练的 Stable Di
 - [OccluGaussian: Occlusion-Aware Gaussian Splatting for Large Scene Reconstruction and Rendering](../../ICCV2025/3d_vision/occlugaussian_occlusion-aware_gaussian_splatting_for_large_scene_reconstruction_.md)
 - [SeeThrough3D: Occlusion Aware 3D Control in Text-to-Image Generation](../../CVPR2026/3d_vision/seethrough3d_occlusion_aware_3d_control_in_text-to-image_generation.md)
 - [Geometry Distributions](../../ICCV2025/3d_vision/geometry_distributions.md)
-- [TAPIP3D: Tracking Any Point in Persistent 3D Geometry](tapip3d_tracking_any_point_in_persistent_3d_geometry.md)
+- [RoomTour3D: Geometry-Aware Video-Instruction Tuning for Embodied Navigation](../../CVPR2025/3d_vision/roomtour3d_geometry-aware_video-instruction_tuning_for_embodied_navigation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Toward Universal and Transferable Jailbreak Attacks on Vision-Language Models (UltraBreak)
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Table-Critic: A Multi-Agent Framework for Collaborative Criticism and Refinement in Table Reasoning
 description: >-
@@ -155,7 +155,7 @@ Table-Critic 基于 Chain-of-Table 生成初始推理链，然后通过四个 Ag
 - [Theorem-of-Thought: A Multi-Agent Framework for Abductive, Deductive, and Inductive Reasoning in Language Models](theorem-of-thought_a_multi-agent_framework_for_abductive_deductive_and_inductive.md)
 - [SynWorld: Virtual Scenario Synthesis for Agentic Action Knowledge Refinement](synworld_agentic_action_knowledge.md)
 - [Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools](agentic_reasoning_tools.md)
-- [Bel Esprit: Multi-Agent Framework for Building AI Model Pipelines](bel_esprit_multi-agent_framework_for_building_ai_model_pipelines.md)
 - [EcoAgent: An Efficient Device-Cloud Collaborative Multi-Agent Framework for Mobile Automation](../../AAAI2026/llm_agent/ecoagent_an_efficient_device-cloud_collaborative_multi-agent.md)
+- [Bel Esprit: Multi-Agent Framework for Building AI Model Pipelines](bel_esprit_multi-agent_framework_for_building_ai_model_pipelines.md)
 
 <!-- RELATED:END -->

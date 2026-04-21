@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Amodal Depth Anything: Amodal Depth Estimation in the Wild
 description: >-
@@ -141,10 +141,10 @@ tags:
 
 ## 相关论文
 
+- [Video Depth Anything: Consistent Depth Estimation for Super-Long Videos](../../CVPR2025/3d_vision/video_depth_anything_consistent_depth_estimation_for_super-long_videos.md)
 - [Amodal3R: Amodal 3D Reconstruction from Occluded 2D Images](amodal3r_amodal_3d_reconstruction_from_occluded_2d_images.md)
-- [Depth AnyEvent: A Cross-Modal Distillation Paradigm for Event-Based Monocular Depth Estimation](depth_anyevent_a_cross-modal_distillation_paradigm_for_event-based_monocular_dep.md)
 - [Seeing and Seeing Through the Glass: Real and Synthetic Data for Multi-Layer Depth Estimation](seeing_and_seeing_through_the_glass_real_and_synthetic_data_for_multi-layer_dept.md)
+- [Depth AnyEvent: A Cross-Modal Distillation Paradigm for Event-Based Monocular Depth Estimation](depth_anyevent_a_cross-modal_distillation_paradigm_for_event-based_monocular_dep.md)
 - [Contact-Aware Amodal Completion for Human-Object Interaction via Multi-Regional Inpainting](contact-aware_amodal_completion_for_human-object_interaction_via_multi-regional_.md)
-- [RePoseD: Efficient Relative Pose Estimation with Known Depth Information](reposed_efficient_relative_pose_estimation_with_known_depth_information.md)
 
 <!-- RELATED:END -->

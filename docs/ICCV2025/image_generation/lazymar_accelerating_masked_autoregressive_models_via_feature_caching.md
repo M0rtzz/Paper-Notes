@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LazyMAR: Accelerating Masked Autoregressive Models via Feature Caching
 description: >-

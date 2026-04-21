@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Reasoning Trap — Logical Reasoning as a Mechanistic Pathway to Situational Awareness
 description: >-
@@ -126,10 +126,10 @@ RAISE 框架将三种逻辑推理模式（演绎、归纳、溯因）分别映�
 
 ## 相关论文
 
+- [Position: The Reasoning Trap — Logical Reasoning as a Mechanistic Pathway to Advanced AI Self-Awareness](the_reasoning_trap_--_logical_reasoning_as_a_mechanistic_pathway_to_advanced_jai.md)
 - [ActivationReasoning: Logical Reasoning in Latent Activation Spaces](activationreasoning_logical_reasoning_in_latent_activation_spaces.md)
 - [When Thinking Backfires: Mechanistic Insights Into Reasoning-Induced Misalignment](when_thinking_backfires_mechanistic_insights_into_reasoning-induced_misalignment.md)
 - [RADAR: Reasoning-Ability and Difficulty-Aware Routing for Reasoning LLMs](radar_reasoning-ability_and_difficulty-aware_routing_for_reasoning_llms.md)
-- [Modal Logical Neural Networks for Financial AI](modal_logical_neural_networks_for_financial_ai.md)
-- [Internal Planning in Language Models: Characterizing Horizon and Branch Awareness](internal_planning_in_language_models_characterizing_horizon_and_branch_awareness.md)
+- [Dynamic Reflections: Probing Video Representations with Text-Driven Reasoning](dynamic_reflections_probing_video_representations_with_text_driven_reasoning.md)
 
 <!-- RELATED:END -->

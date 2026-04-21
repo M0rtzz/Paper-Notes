@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SceneDesigner: Controllable Multi-Object Image Generation with 9-DoF Pose Manipulation
 description: >-

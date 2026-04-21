@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Uncovering Pretraining Code in LLMs: A Syntax-Aware Attribution Approach
 description: >-
@@ -132,6 +132,6 @@ tags:
 - [Enhancing Training Data Attribution with Representational Optimization](../../NeurIPS2025/llm_pretraining/enhancing_training_data_attribution_with_representational_optimization.md)
 - [Identifying and Evaluating Inactive Heads in Pretrained LLMs](../../ICLR2026/llm_pretraining/identifying_and_evaluating_inactive_heads_in_pretrained_llms.md)
 - [Final-Model-Only Data Attribution with a Unifying View of Gradient-Based Methods](../../NeurIPS2025/llm_pretraining/final-model-only_data_attribution_with_a_unifying_view_of_gradient-based_methods.md)
-- [Understanding and Enhancing Mask-Based Pretraining towards Universal Representations](../../NeurIPS2025/llm_pretraining/understanding_and_enhancing_mask-based_pretraining_towards_universal_representat.md)
+- [SoftShadow: Leveraging Soft Masks for Penumbra-Aware Shadow Removal](../../CVPR2025/llm_pretraining/softshadow_leveraging_soft_masks_for_penumbra-aware_shadow_removal.md)
 
 <!-- RELATED:END -->

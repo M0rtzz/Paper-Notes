@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Layer-wise Alignment: Examining Safety Alignment Across Image Encoder Layers in Vision Language Models
 description: >-

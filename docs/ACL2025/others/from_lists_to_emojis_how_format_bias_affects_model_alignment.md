@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Lists to Emojis: How Format Bias Affects Model Alignment
 description: >-

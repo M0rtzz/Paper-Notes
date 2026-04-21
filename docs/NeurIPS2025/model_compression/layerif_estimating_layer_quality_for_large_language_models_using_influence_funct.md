@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LayerIF: Estimating Layer Quality for Large Language Models using Influence Functions
 description: >-

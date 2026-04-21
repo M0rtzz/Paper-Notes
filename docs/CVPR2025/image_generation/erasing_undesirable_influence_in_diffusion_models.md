@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Erasing Undesirable Influence in Diffusion Models (EraseDiff)
 description: >-
@@ -126,9 +126,9 @@ tags:
 ## 相关论文
 
 - [DMin: Scalable Training Data Influence Estimation for Diffusion Models](../../CVPR2026/image_generation/dmin_scalable_training_data_influence_estimation_for_diffusion_models.md)
-- [Hiding Images in Diffusion Models by Editing Learned Score Functions](hiding_images_in_diffusion_models_by_editing_learned_score_functions.md)
-- [Enhancing Image Aesthetics with Dual-Conditioned Diffusion Models Guided by Multimodal Perception](enhancing_image_aesthetics_with_dual-conditioned_diffusion_models_guided_by_mult.md)
-- [Nearly Zero-Cost Protection Against Mimicry by Personalized Diffusion Models](nearly_zero-cost_protection_against_mimicry_by_personalized_diffusion_models.md)
-- [One Image is Worth a Thousand Words: A Usability Preservable Text-Image Collaborative Erasing Framework](../../ICML2025/image_generation/one_image_is_worth_a_thousand_words_a_usability_preservable_text-image_collabora.md)
+- [MixerMDM: Learnable Composition of Human Motion Diffusion Models](mixermdm_learnable_composition_of_human_motion_diffusion_models.md)
+- [UIBDiffusion: Universal Imperceptible Backdoor Attack for Diffusion Models](uibdiffusion_universal_imperceptible_backdoor_attack_for_diffusion_models.md)
+- [The Art of Deception: Color Visual Illusions and Diffusion Models](the_art_of_deception_color_visual_illusions_and_diffusion_models.md)
+- [RAD: Region-Aware Diffusion Models for Image Inpainting](rad_region-aware_diffusion_models_for_image_inpainting.md)
 
 <!-- RELATED:END -->

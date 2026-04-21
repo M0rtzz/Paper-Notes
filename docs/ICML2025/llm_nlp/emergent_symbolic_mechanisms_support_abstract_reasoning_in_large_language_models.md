@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Emergent Symbolic Mechanisms Support Abstract Reasoning in Large Language Models
 description: >-
@@ -137,7 +137,7 @@ tags:
 - [SynapticRAG: Enhancing Temporal Memory Retrieval in Large Language Models through Synaptic Mechanisms](../../ACL2025/llm_nlp/synapticrag_enhancing_temporal_memory_retrieval_in_large_language_models_through.md)
 - [TReMu: Towards Neuro-Symbolic Temporal Reasoning for LLM-Agents with Memory in Multi-Session Dialogues](../../ACL2025/llm_nlp/tremu_towards_neuro-symbolic_temporal_reasoning_for_llm-agents_with_memory_in_mu.md)
 - [Compositional-ARC: Assessing Systematic Generalization in Abstract Spatial Reasoning](../../ICLR2026/llm_nlp/compositional-arc_assessing_systematic_generalization_in_abstract_spatial_reason.md)
-- [Disentangling Memory and Reasoning Ability in Large Language Models](../../ACL2025/llm_nlp/disentangle_memory_reasoning.md)
 - [The Role of Deductive and Inductive Reasoning in Large Language Models](../../ACL2025/llm_nlp/the_role_of_deductive_and_inductive_reasoning_in_large_language_models.md)
+- [Disentangling Memory and Reasoning Ability in Large Language Models](../../ACL2025/llm_nlp/disentangle_memory_reasoning.md)
 
 <!-- RELATED:END -->

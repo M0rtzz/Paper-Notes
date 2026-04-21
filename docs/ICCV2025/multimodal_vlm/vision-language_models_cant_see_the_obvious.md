@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Vision-Language Models Can't See the Obvious
 description: >-

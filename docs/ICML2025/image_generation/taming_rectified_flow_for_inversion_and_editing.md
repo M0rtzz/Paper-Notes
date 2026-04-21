@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Taming Rectified Flow for Inversion and Editing
 description: >-
@@ -153,8 +153,8 @@ RF-Solver 在 FLUX 和 OpenSora 上均大幅超越 vanilla Euler 采样器，PSN
 
 - [Free Lunch for Stabilizing Rectified Flow Inversion](../../ICLR2026/image_generation/free_lunch_for_stabilizing_rectified_flow_inversion.md)
 - [FlowEdit: Inversion-Free Text-Based Editing Using Pre-Trained Flow Models](../../ICCV2025/image_generation/flowedit_inversion-free_text-based_editing_using_pre-trained_flow_models.md)
+- [Unveil Inversion and Invariance in Flow Transformer for Versatile Image Editing](../../CVPR2025/image_generation/unveil_inversion_and_invariance_in_flow_transformer_for_versatile_image_editing.md)
 - [ReFlex: Text-Guided Editing of Real Images in Rectified Flow via Mid-Step Feature Extraction and Attention Adaptation](../../ICCV2025/image_generation/reflex_text-guided_editing_of_real_images_in_rectified_flow_via_mid-step_feature.md)
 - [Balanced Conic Rectified Flow](../../NeurIPS2025/image_generation/balanced_conic_rectified_flow.md)
-- [Efficient Rectified Flow for Image Fusion](../../NeurIPS2025/image_generation/efficient_rectified_flow_for_image_fusion.md)
 
 <!-- RELATED:END -->

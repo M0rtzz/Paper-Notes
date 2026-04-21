@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Optimization Robustness in 1-bit Neural Networks through Stochastic Sign Descent
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Satisficing and Optimal Generalised Planning via Goal Regression (Extended Version)
 description: >-

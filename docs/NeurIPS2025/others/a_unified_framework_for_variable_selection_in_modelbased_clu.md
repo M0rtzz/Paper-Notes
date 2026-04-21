@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Unified Framework for Variable Selection in Model-Based Clustering with Missing Not at Random
 description: >-
@@ -119,8 +119,8 @@ Stage A使用惩罚对数似然（含ℓ1均值惩罚和adaptive glasso精度矩
 
 - [MutualVPR: A Mutual Learning Framework for Resolving Supervision Inconsistencies via Adaptive Clustering](mutualvpr_a_mutual_learning_framework_for_resolving_supervision_inconsistencies_.md)
 - [Distributionally Robust Feature Selection](distributionally_robust_feature_selection.md)
-- [UniPhy: Learning a Unified Constitutive Model for Inverse Physics Simulation](../../CVPR2025/others/uniphy_learning_a_unified_constitutive_model_for_inverse_physics_simulation.md)
 - [Learning to Align Multi-Faceted Evaluation: A Unified and Robust Framework](../../ACL2025/others/learning_to_align_multi-faceted_evaluation_a_unified_and_robust_framework.md)
+- [UniPhy: Learning a Unified Constitutive Model for Inverse Physics Simulation](../../CVPR2025/others/uniphy_learning_a_unified_constitutive_model_for_inverse_physics_simulation.md)
 - [An Incremental Unified Framework for Small Defect Inspection](../../ECCV2024/others/an_incremental_unified_framework_for_small_defect_inspection.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HistoPrism: Unlocking Functional Pathway Analysis from Pan-Cancer Histology via Gene Expression Prediction
 description: >-

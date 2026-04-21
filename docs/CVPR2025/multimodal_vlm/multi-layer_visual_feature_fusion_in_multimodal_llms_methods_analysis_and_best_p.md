@@ -1,7 +1,10 @@
 ---
-title: "Multi-Layer Visual Feature Fusion in Multimodal LLMs: Methods, Analysis, and Best Practices"
-description: "系统研究多层视觉特征在MLLM中的层选择和融合策略，发现跨阶段单层选择+外部直接融合最优"
-tags: ["MLLM", "visual feature fusion", "layer selection", "multi-layer", "LLaVA", "CVPR2025"]
+title: >-
+  [论文解读] Multi-Layer Visual Feature Fusion in Multimodal LLMs: Methods, Analysis, and Best Practices
+description: >-
+  [多模态] 本文系统研究了多模态 LLM 中多层视觉特征融合的两个核心问题：**(1) 如何选择最有效的视觉层**和 **(2) 如何最好地融合到语言模型中**，发现从不同表示相似性阶段各选一层 + 外部直接融合是最优实践。
+tags:
+  - 多模态
 ---
 
 # Multi-Layer Visual Feature Fusion in Multimodal LLMs: Methods, Analysis, and Best Practices
@@ -154,10 +157,10 @@ tags: ["MLLM", "visual feature fusion", "layer selection", "multi-layer", "LLaVA
 
 ## 相关论文
 
-- [From Multimodal LLMs to Generalist Embodied Agents: Methods and Lessons](from_multimodal_llms_to_generalist_embodied_agents_methods_and_lessons.md)
-- [Vision Function Layer in Multimodal LLMs](../../NeurIPS2025/multimodal_vlm/vision_function_layer_in_multimodal_llms.md)
-- [Multi-Modal Image Fusion via Intervention-Stable Feature Learning](../../CVPR2026/multimodal_vlm/multi-modal_image_fusion_via_intervention-stable_feature_learning.md)
-- [MM1: Methods, Analysis & Insights from Multimodal LLM Pre-training](../../ECCV2024/multimodal_vlm/mm1_methods_analysis_and_insights_from_multimodal_llm_pre-training.md)
-- [TrimLLM: Progressive Layer Dropping for Domain-Specific LLMs](../../ACL2025/multimodal_vlm/trimllm_layer_dropping.md)
+- [Hints of Prompt: Enhancing Visual Representation for Multimodal LLMs in Autonomous Driving](../../ICCV2025/multimodal_vlm/hints_of_prompt_enhancing_visual_representation_for_multimodal_llms_in_autonomou.md)
+- [ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](../../ACL2025/multimodal_vlm/reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)
+- [Table Understanding and (Multimodal) LLMs: A Cross-Domain Case Study on Scientific Tables](../../ACL2025/multimodal_vlm/table_understanding_and_multimodal_llms_a_cross-domain_case_study_on_scientific_.md)
+- [Mixture of Decoding: An Attention-Inspired Adaptive Decoding Strategy to Mitigate Hallucination in Multimodal LLMs](../../ACL2025/multimodal_vlm/mixture_of_decoding_an_attention-inspired_adaptive_decoding_strategy_to_mitigate.md)
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
 
 <!-- RELATED:END -->

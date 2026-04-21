@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Phantom Menace: Exploring and Enhancing the Robustness of VLA Models Against Physical Sensor Attacks
 description: >-

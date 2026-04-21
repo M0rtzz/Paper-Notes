@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MoMa: Modulating Mamba for Adapting Image Foundation Models to Video Recognition
 description: >-
@@ -176,9 +176,9 @@ $$\mathbf{V}^{i+1} = \text{FFN}(\text{SeqMod}(\mathbf{x}^i, \mathbf{y}_1^i, \mat
 ## 相关论文
 
 - [Efficient Transfer Learning for Video-language Foundation Models](../../CVPR2025/video_understanding/efficient_transfer_learning_for_video-language_foundation_models.md)
+- [PAVE: Patching and Adapting Video Large Language Models](../../CVPR2025/video_understanding/pave_patching_and_adapting_video_large_language_models.md)
 - [MimeQA: Towards Socially-Intelligent Nonverbal Foundation Models](../../NeurIPS2025/video_understanding/mimeqa_towards_socially-intelligent_nonverbal_foundation_models.md)
 - [FlowSeek: Optical Flow Made Easier with Depth Foundation Models and Motion Bases](../../ICCV2025/video_understanding/flowseek_optical_flow_made_easier_with_depth_foundation_models_and_motion_bases.md)
 - [Mamba-3: Improved Sequence Modeling using State Space Principles](../../ICLR2026/video_understanding/mamba-3_improved_sequence_modeling_using_state_space_principles.md)
-- [Adapt2Reward: Adapting Video-Language Models to Generalizable Robotic Rewards via Failure Prompts](../../ECCV2024/video_understanding/adapt2reward_adapting_videolanguage_models_to_generalizable.md)
 
 <!-- RELATED:END -->

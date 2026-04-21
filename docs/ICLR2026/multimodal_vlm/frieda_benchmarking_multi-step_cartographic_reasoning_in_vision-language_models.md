@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FRIEDA: Benchmarking Multi-Step Cartographic Reasoning in Vision-Language Models
 description: >-

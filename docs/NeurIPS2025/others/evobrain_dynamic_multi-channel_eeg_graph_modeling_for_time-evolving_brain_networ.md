@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EvoBrain: Dynamic Multi-Channel EEG Graph Modeling for Time-Evolving Brain Networks
 description: >-

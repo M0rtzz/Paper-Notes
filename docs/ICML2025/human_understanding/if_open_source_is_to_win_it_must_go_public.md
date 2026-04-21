@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] If Open Source Is to Win, It Must Go Public
 description: >-
@@ -263,6 +263,6 @@ tags:
 - [Why Do Open-Source LLMs Struggle with Data Analysis? A Systematic Empirical Study](../../AAAI2026/human_understanding/why_do_open-source_llms_struggle_with_data_analysis_a_systematic_empirical_study.md)
 - [Mixing Expert Knowledge: Bring Human Thoughts Back to the Game of Go](../../NeurIPS2025/human_understanding/mixing_expert_knowledge_bring_human_thoughts_back_to_the_game_of_go.md)
 - [On Large Multimodal Models as Open-World Image Classifiers](../../ICCV2025/human_understanding/on_large_multimodal_models_as_open-world_image_classifiers.md)
-- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+- [Optimal Transport-Guided Source-Free Adaptation for Face Anti-Spoofing](../../CVPR2025/human_understanding/optimal_transport-guided_source-free_adaptation_for_face_anti-spoofing.md)
 
 <!-- RELATED:END -->

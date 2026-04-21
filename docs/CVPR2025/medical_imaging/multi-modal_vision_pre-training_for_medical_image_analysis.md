@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multi-modal Vision Pre-training for Medical Image Analysis (BrainMVP)
 description: >-
@@ -129,10 +129,10 @@ BrainMVP提出首个多模态视觉预训练范式，通过跨模态掩码重建
 
 ## 相关论文
 
+- [Revisiting MAE Pre-Training for 3D Medical Image Segmentation](revisiting_mae_pre-training_for_3d_medical_image_segmentation.md)
 - [Boosting Vision Semantic Density with Anatomy Normality Modeling for Medical Vision-language Pre-training](../../ICCV2025/medical_imaging/boosting_vision_semantic_density_with_anatomy_normality_modeling_for_medical_vis.md)
 - [Interactive Medical Image Analysis with Concept-based Similarity Reasoning](interactive_medical_image_analysis_with_concept-based_similarity_reasoning.md)
+- [Multi-Resolution Pathology-Language Pre-training Model with Text-Guided Visual Representation](multi-resolution_pathology-language_pre-training_model_with_text-guided_visual_r.md)
 - [Boltzmann Attention Sampling for Image Analysis with Small Objects](boltzmann_attention_sampling_for_image_analysis_with_small_objects.md)
-- [EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis](../../NeurIPS2025/medical_imaging/endobench_a_comprehensive_evaluation_of_multi-modal_large_language_models_for_en.md)
-- [Multimodal 3D Genome Pre-training](../../NeurIPS2025/medical_imaging/multimodal_3d_genome_pre-training.md)
 
 <!-- RELATED:END -->

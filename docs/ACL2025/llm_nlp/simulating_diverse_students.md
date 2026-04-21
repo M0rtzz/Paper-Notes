@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Embracing Imperfection: Simulating Students with Diverse Cognitive Levels Using LLM-based Agents
 description: >-

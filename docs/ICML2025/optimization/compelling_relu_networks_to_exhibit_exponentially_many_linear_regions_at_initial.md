@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Compelling ReLU Networks to Exhibit Exponentially Many Linear Regions at Initialization and During Training
 description: >-

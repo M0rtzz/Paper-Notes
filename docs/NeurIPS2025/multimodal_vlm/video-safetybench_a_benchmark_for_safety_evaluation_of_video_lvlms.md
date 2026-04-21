@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Video-SafetyBench: A Benchmark for Safety Evaluation of Video LVLMs
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay
 description: >-

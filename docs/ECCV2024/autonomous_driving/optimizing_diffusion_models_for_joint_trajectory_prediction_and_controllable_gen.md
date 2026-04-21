@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Optimizing Diffusion Models for Joint Trajectory Prediction and Controllable Generation
 description: >-
@@ -150,9 +150,9 @@ ECM 的单步推理时间与 NNM 相当（111ms vs 113ms），但效果远优；
 ## 相关论文
 
 - [Safe-Sim: Safety-Critical Closed-Loop Traffic Simulation with Diffusion-Controllable Adversaries](safe-sim_safety-critical_closed-loop_traffic_simulation_with_diffusion-controlla.md)
+- [VisionTrap: Vision-Augmented Trajectory Prediction Guided by Textual Descriptions](visiontrap_visionaugmented_trajectory_prediction_guided.md)
 - [UniTraj: A Unified Framework for Scalable Vehicle Trajectory Prediction](unitraj_a_unified_framework_for_scalable_vehicle_trajectory_prediction.md)
-- [Generative Active Learning for Long-tail Trajectory Prediction via Controllable Diffusion Model](../../ICCV2025/autonomous_driving/generative_active_learning_for_long-tail_trajectory_prediction_via_controllable_.md)
 - [DySeT: A Dynamic Masked Self-distillation Approach for Robust Trajectory Prediction](dyset_a_dynamic_masked_self-distillation_approach_for_robust_trajectory_predicti.md)
-- [Navigation Instruction Generation with BEV Perception and Large Language Models](navigation_instruction_generation_with_bev_perception_and_large_language_models.md)
+- [Generative Active Learning for Long-tail Trajectory Prediction via Controllable Diffusion Model](../../ICCV2025/autonomous_driving/generative_active_learning_for_long-tail_trajectory_prediction_via_controllable_.md)
 
 <!-- RELATED:END -->

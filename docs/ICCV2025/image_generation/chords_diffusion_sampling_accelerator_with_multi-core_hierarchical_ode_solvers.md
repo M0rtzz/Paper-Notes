@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CHORDS: Diffusion Sampling Accelerator with Multi-Core Hierarchical ODE Solvers
 description: >-
@@ -185,9 +185,9 @@ Chords 是**训练无关**的方法，不涉及任何训练过程。它直接用
 ## 相关论文
 
 - [Accelerating Diffusion Sampling via Exploiting Local Transition Coherence](accelerating_diffusion_sampling_via_exploiting_local_transition_coherence.md)
+- [Fewer Denoising Steps or Cheaper Per-Step Inference: Towards Compute-Optimal Diffusion Model Deployment](fewer_denoising_steps_or_cheaper_per-step_inference_towards_compute-optimal_diff.md)
+- [REDUCIO! Generating 1K Video within 16 Seconds using Extremely Compressed Motion Latents](reducio_generating_1k_video_within_16_seconds_using_extremely_compressed_motion_.md)
+- [From Reusing to Forecasting: Accelerating Diffusion Models with TaylorSeers](from_reusing_to_forecasting_accelerating_diffusion_models_with_taylorseers.md)
 - [HypDAE: Hyperbolic Diffusion Autoencoders for Hierarchical Few-shot Image Generation](hypdae_hyperbolic_diffusion_autoencoders_for_hierarchical_few-shot_image_generat.md)
-- [Hierarchical Koopman Diffusion: Fast Generation with Interpretable Diffusion Trajectory](../../NeurIPS2025/image_generation/hierarchical_koopman_diffusion_fast_generation_with_interpretable_diffusion_traj.md)
-- [Fast Solvers for Discrete Diffusion Models: Theory and Applications of High-Order Algorithms](../../NeurIPS2025/image_generation/fast_solvers_for_discrete_diffusion_models_theory_and_applications_of_high-order.md)
-- [A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation](a0_an_affordance-aware_hierarchical_model_for_general_robotic_manipulation.md)
 
 <!-- RELATED:END -->

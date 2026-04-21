@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PVP: An Image Dataset for Personalized Visual Persuasion with Persuasion Strategies, Viewer Characteristics, and Persuasiveness Ratings
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sheaf Graph Neural Networks via PAC-Bayes Spectral Optimization
 description: >-

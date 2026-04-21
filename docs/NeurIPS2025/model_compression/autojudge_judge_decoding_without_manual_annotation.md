@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AutoJudge: Judge Decoding Without Manual Annotation
 description: >-
@@ -131,7 +131,7 @@ AutoJudge 自动化了 Judge Decoding 中"重要 token"的标注——通过半�
 - [Elastic ViTs from Pretrained Models without Retraining](elastic_vits_from_pretrained_models_without_retraining.md)
 - [Traversal Verification for Speculative Tree Decoding](traversal_verification_for_speculative_tree_decoding.md)
 - [Robustifying Learning-Augmented Caching Efficiently without Compromising 1-Consistency](robustifying_learning-augmented_caching_efficiently_without_compromising_1-consi.md)
-- [Reject Only Critical Tokens: Pivot-Aware Speculative Decoding](reject_only_critical_tokens_pivot-aware_speculative_decoding.md)
 - [The Structure of Relation Decoding Linear Operators in Large Language Models](the_structure_of_relation_decoding_linear_operators_in_large_language_models.md)
+- [Reject Only Critical Tokens: Pivot-Aware Speculative Decoding](reject_only_critical_tokens_pivot-aware_speculative_decoding.md)
 
 <!-- RELATED:END -->

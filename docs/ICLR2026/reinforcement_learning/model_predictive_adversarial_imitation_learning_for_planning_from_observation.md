@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Model Predictive Adversarial Imitation Learning for Planning from Observation
 description: >-
@@ -140,8 +140,8 @@ MPAIL 的规划 horizon 仅 3 米，但任务 horizon 可达规划 horizon 的 1
 ## 相关论文
 
 - [Near-Optimal Second-Order Guarantees for Model-Based Adversarial Imitation Learning](near-optimal_second-order_guarantees_for_model-based_adversarial_imitation_learn.md)
-- [On Discovering Algorithms for Adversarial Imitation Learning](on_discovering_algorithms_for_adversarial_imitation_learning.md)
 - [Latent Wasserstein Adversarial Imitation Learning](latent_wasserstein_adversarial_imitation_learning.md)
+- [On Discovering Algorithms for Adversarial Imitation Learning](on_discovering_algorithms_for_adversarial_imitation_learning.md)
 - [One Model for All Tasks: Leveraging Efficient World Models in Multi-Task Planning](one_model_for_all_tasks_leveraging_efficient_world_models_in_multi-task_planning.md)
 - [Language Model Distillation: A Temporal Difference Imitation Learning Perspective](../../AAAI2026/reinforcement_learning/language_model_distillation_a_temporal_difference_imitation_learning_perspective.md)
 

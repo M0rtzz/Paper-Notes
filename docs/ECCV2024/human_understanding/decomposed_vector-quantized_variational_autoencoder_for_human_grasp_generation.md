@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Decomposed Vector-Quantized Variational Autoencoder for Human Grasp Generation
 description: >-
@@ -161,9 +161,9 @@ DVQ-VAE 基于编码器-解码器范式，核心创新在于：
 ## 相关论文
 
 - [TELA: Text to Layer-wise 3D Clothed Human Generation](tela_text_to_layer-wise_3d_clothed_human_generation.md)
+- [Modelling the Effects of Hearing Loss on Neural Coding in the Auditory Midbrain with Variational Conditioning](../../AAAI2026/human_understanding/modelling_the_effects_of_hearing_loss_on_neural_coding_in_the_auditory_midbrain_.md)
 - [MOSPA: Human Motion Generation Driven by Spatial Audio](../../NeurIPS2025/human_understanding/mospa_human_motion_generation_driven_by_spatial_audio.md)
 - [KinMo: Kinematic-Aware Human Motion Understanding and Generation](../../ICCV2025/human_understanding/kinmo_kinematic-aware_human_motion_understanding_and_generation.md)
-- [Modelling the Effects of Hearing Loss on Neural Coding in the Auditory Midbrain with Variational Conditioning](../../AAAI2026/human_understanding/modelling_the_effects_of_hearing_loss_on_neural_coding_in_the_auditory_midbrain_.md)
-- [MoLingo: Motion-Language Alignment for Text-to-Human Motion Generation](../../CVPR2026/human_understanding/molingo_motion-language_alignment_for_text-to-motion_generation.md)
+- [GaussianIP: Identity-Preserving Realistic 3D Human Generation via Human-Centric Diffusion Prior](../../CVPR2025/human_understanding/gaussianip_identity-preserving_realistic_3d_human_generation_via_human-centric_d.md)
 
 <!-- RELATED:END -->

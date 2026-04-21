@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Plan, Posture and Go: Towards Open-Vocabulary Text-to-Motion Generation
 description: >-
@@ -123,6 +123,6 @@ PRO-Motion 由三个模块组成，形成一个流水线：（1）**Motion Plann
 - [FlowMotion: Training-Free Flow Guidance for Video Motion Transfer](../../CVPR2026/llm_pretraining/flowmotion_training-free_flow_guidance_for_video_motion_transfer.md)
 - [How to Synthesize Text Data without Model Collapse?](../../ICML2025/llm_pretraining/how_to_synthesize_text_data_without_model_collapse.md)
 - [TokAlign: Efficient Vocabulary Adaptation via Token Alignment](../../ACL2025/llm_pretraining/tokalign_vocab_adaptation.md)
-- [Large Vocabulary Size Improves Large Language Models](../../ACL2025/llm_pretraining/large_vocabulary_size_improves_large_language_models.md)
+- [Lossless Vocabulary Reduction for Auto-Regressive Language Models](../../ICLR2026/llm_pretraining/lossless_vocabulary_reduction_for_auto-regressive_language_models.md)
 
 <!-- RELATED:END -->

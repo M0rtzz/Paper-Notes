@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EVEv2: Improved Baselines for Encoder-Free Vision-Language Models
 description: >-

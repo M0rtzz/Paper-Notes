@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HACK: Head-Aware KV Cache Compression for Efficient Visual Autoregressive Modeling
 description: >-

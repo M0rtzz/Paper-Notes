@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Verb Mirage: Unveiling and Assessing Verb Concept Hallucinations in Multimodal Large Language Models
 description: >-
@@ -171,9 +171,9 @@ tags:
 ## 相关论文
 
 - [Concept-RuleNet: Grounded Multi-Agent Neurosymbolic Reasoning in Vision Language Models](concept-rulenet_grounded_multi-agent_neurosymbolic_reasoning.md)
-- [ODE: Open-Set Evaluation of Hallucinations in Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/ode_open-set_evaluation_of_hallucinations_in_multimodal_large_language_models.md)
 - [Seeing is Believing? Mitigating OCR Hallucinations in Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/seeing_is_believing_mitigating_ocr_hallucinations_in_multimodal_large_language_m.md)
+- [ODE: Open-Set Evaluation of Hallucinations in Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/ode_open-set_evaluation_of_hallucinations_in_multimodal_large_language_models.md)
 - [SDEval: Safety Dynamic Evaluation for Multimodal Large Language Models](sdeval_safety_dynamic_evaluation_for_multimodal_large_language_models.md)
-- [VP-Bench: A Comprehensive Benchmark for Visual Prompting in Multimodal Large Language Models](vp-bench_a_comprehensive_benchmark_for_visual_prompting_in_m.md)
+- [MIRAGE: A Benchmark for Multimodal Information-Seeking and Reasoning in Agriculture](../../NeurIPS2025/multimodal_vlm/mirage_a_benchmark_for_multimodal_information-seeking_and_reasoning_in_agricultu.md)
 
 <!-- RELATED:END -->

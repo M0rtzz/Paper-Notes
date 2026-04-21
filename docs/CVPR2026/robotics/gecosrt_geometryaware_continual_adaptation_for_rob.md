@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer
 description: >-

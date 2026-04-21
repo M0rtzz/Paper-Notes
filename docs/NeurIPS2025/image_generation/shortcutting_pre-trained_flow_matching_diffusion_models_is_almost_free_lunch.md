@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Shortcutting Pre-trained Flow Matching Diffusion Models is Almost Free Lunch
 description: >-

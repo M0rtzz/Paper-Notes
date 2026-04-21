@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] T5Score: A Methodology for Automatically Assessing the Quality of LLM Generated Multi-Document Topic Sets
 description: >-

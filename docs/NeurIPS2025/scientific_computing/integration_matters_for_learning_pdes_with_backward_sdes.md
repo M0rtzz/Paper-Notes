@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Integration Matters for Learning PDEs with Backward SDEs
 description: >-

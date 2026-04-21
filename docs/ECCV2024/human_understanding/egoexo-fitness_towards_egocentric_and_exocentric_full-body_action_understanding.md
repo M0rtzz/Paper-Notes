@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EgoExo-Fitness: Towards Egocentric and Exocentric Full-Body Action Understanding
 description: >-
@@ -169,8 +169,8 @@ EgoExo-Fitness 是一个**数据集+基准**贡献，核心包含三个部分：
 
 - [3D Hand Pose Estimation in Everyday Egocentric Images](3d_hand_pose_estimation_in_everyday_egocentric_images.md)
 - [Learning Physics-Based Full-Body Human Reaching and Grasping from Brief Walking References](../../CVPR2025/human_understanding/learning_physics-based_full-body_human_reaching_and_grasping_from_brief_walking_.md)
-- [QUAR-VLA: Vision-Language-Action Model for Quadruped Robots](quar-vla_vision-language-action_model_for_quadruped_robots.md)
 - [HUMOS: Human Motion Model Conditioned on Body Shape](humos_human_motion_model_conditioned_on_body_shape.md)
-- [Bridging the Gap Between Human Motion and Action Semantics via Kinematic Phrases](bridging_the_gap_between_human_motion_and_action_semantics_via_kinematic_phrases.md)
+- [QUAR-VLA: Vision-Language-Action Model for Quadruped Robots](quarvla_visionlanguageaction_model_for_quadruped_robots.md)
+- [Nymeria: A Massive Collection of Multimodal Egocentric Daily Motion in the Wild](nymeria_a_massive_collection_of_multimodal_egocentric_daily_motion_in_the_wild.md)
 
 <!-- RELATED:END -->

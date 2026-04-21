@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DejaVid: Encoder-Agnostic Learned Temporal Matching for Video Classification
 description: >-

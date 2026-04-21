@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OmniSAM: Omnidirectional Segment Anything Model for UDA in Panoramic Semantic Segmentation
 description: >-
@@ -149,10 +149,10 @@ OmniSAM 框架包含以下关键组件：
 
 ## 相关论文
 
+- [SAM2-LOVE: Segment Anything Model 2 in Language-Aided Audio-Visual Scenes](../../CVPR2025/segmentation/sam2-love_segment_anything_model_2_in_language-aided_audio-visual_scenes.md)
 - [Segment and Matte Anything in a Unified Model (SAMA)](../../AAAI2026/segmentation/segment_and_matte_anything_in_a_unified_model.md)
-- [InfoSAM: Fine-Tuning the Segment Anything Model from An Information-Theoretic Perspective](../../ICML2025/segmentation/infosam_fine-tuning_the_segment_anything_model_from_an_information-theoretic_per.md)
 - [E-SAM: Training-Free Segment Every Entity Model](e-sam_training-free_segment_every_entity_model.md)
-- [Segment Anything Across Shots: A Method and Benchmark](../../AAAI2026/segmentation/segment_anything_across_shots_a_method_and_benchmark.md)
+- [InfoSAM: Fine-Tuning the Segment Anything Model from An Information-Theoretic Perspective](../../ICML2025/segmentation/infosam_fine-tuning_the_segment_anything_model_from_an_information-theoretic_per.md)
 - [SAQ-SAM: Semantically-Aligned Quantization for Segment Anything Model](../../AAAI2026/segmentation/saq-sam_semantically-aligned_quantization_for_segment_anything_model.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DenseDPO: Fine-Grained Temporal Preference Optimization for Video Diffusion Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] One Missing Piece for Open-Source Reasoning Models: A Dataset to Mitigate Cold-Starting Short CoT LLMs in RL
 description: >-
@@ -192,10 +192,10 @@ GPQA 上 Llama-8B 提升 60%（22.7→36.4），Qwen-7B-LC 超越 Bespoke-7B（�
 
 ## 相关论文
 
-- [Many LLMs Are More Utilitarian Than One](../../NeurIPS2025/llm_reasoning/many_llms_are_more_utilitarian_than_one.md)
+- [Improve Vision Language Model Chain-of-thought Reasoning](improve_vlm_cot_reasoning.md)
 - [Fine-Tuning on Diverse Reasoning Chains Drives Within-Inference CoT Refinement in LLMs](dcot_diverse_cot_refinement.md)
 - [CoT-UQ: Improving Response-wise Uncertainty Quantification in LLMs with Chain-of-Thought](cot-uq_improving_response-wise_uncertainty_quantification_in_llms_with_chain-of-.md)
-- [Towards Safety Reasoning in LLMs: AI-agentic Deliberation for Policy-embedded CoT Data Creation](towards_safety_reasoning_in_llms_ai-agentic_deliberation_for_policy-embedded_cot.md)
 - [Enhancing Mathematical Reasoning in LLMs by Stepwise Correction](enhancing_mathematical_reasoning_in_llms_by_stepwise_correction.md)
+- [SoftCoT: Soft Chain-of-Thought for Efficient Reasoning with LLMs](softcot_soft_chain_of_thought.md)
 
 <!-- RELATED:END -->

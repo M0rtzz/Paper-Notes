@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] egoPPG: Heart Rate Estimation from Eye-Tracking Cameras in Egocentric Systems to Benefit Downstream Vision Tasks
 description: >-

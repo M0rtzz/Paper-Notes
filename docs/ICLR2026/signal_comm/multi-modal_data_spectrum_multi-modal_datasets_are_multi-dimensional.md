@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multi-modal Data Spectrum: Multi-modal Datasets are Multi-dimensional
 description: >-
@@ -242,7 +242,7 @@ tags:
 - [Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology](../../NeurIPS2025/signal_comm/multi-modal_masked_autoencoders_for_learning_image-spectrum_associations_for_gal.md)
 - [Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies](multi-agent_design_optimizing_agents_with_better_prompts_and_topologies.md)
 - [Spectrum Tuning: Post-Training for Distributional Coverage and In-Context Steerability](spectrum_tuning_post-training_for_distributional_coverage_and_in-context_steerab.md)
-- [Frequency Switching Mechanism for Parameter-Efficient Multi-Task Learning](../../CVPR2026/signal_comm/frequency_switching_mechanism_for_parameter-ecient_multi-task_learning.md)
 - [FAAR: Efficient Frequency-Aware Multi-Task Fine-Tuning via Automatic Rank Selection](../../CVPR2026/signal_comm/faar_efficient_frequency-aware_multi-task_fine-tuning_via_automatic_rank_selecti.md)
+- [Text-Guided Channel Perturbation and Pretrained Knowledge Integration for Unified Multi-Modality Image Fusion](../../AAAI2026/signal_comm/text-guided_channel_perturbation_and_pretrained_knowledge_integration_for_unifie.md)
 
 <!-- RELATED:END -->

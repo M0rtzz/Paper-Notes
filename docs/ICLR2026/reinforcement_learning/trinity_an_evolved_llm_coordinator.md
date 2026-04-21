@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Trinity: An Evolved LLM Coordinator
 description: >-
@@ -137,7 +137,7 @@ LiveCodeBench SOTA: **86.2% pass@1**（V1 train → V6 test）。
 - [References Improve LLM Alignment in Non-Verifiable Domains](references_improve_llm_alignment_in_non-verifiable_domains.md)
 - [How Far Can Unsupervised RLVR Scale LLM Training?](how_far_can_unsupervised_rlvr_scale_llm_training.md)
 - [$\textbf{Re}^{2}$: Unlocking LLM Reasoning via Reinforcement Learning with Re-solving](textbfre2_unlocking_llm_reasoning_via_reinforcement_learning_with_re-solving.md)
+- [Toward a Dynamic Stackelberg Game-Theoretic Framework for Agent-Based Conversational AI Defense Against LLM Jailbreaking](toward_a_dynamic_stackelberg_game-theoretic_framework_for_agent-based_conversat.md)
 - [In-Token Rationality Optimization: Towards Accurate and Concise LLM Reasoning via Self-Feedback](../../AAAI2026/reinforcement_learning/in-token_rationality_optimization_towards_accurate_and_concise_llm_reasoning_via.md)
-- [TowerMind: A Tower Defence Game Learning Environment and Benchmark for LLM as Agents](../../AAAI2026/reinforcement_learning/towermind_a_tower_defence_game_learning_environment_and_benchmark_for_llm_as_age.md)
 
 <!-- RELATED:END -->

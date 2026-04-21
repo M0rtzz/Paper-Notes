@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Pairwise is Not Enough: Hypergraph Neural Networks for Multi-Agent Pathfinding
 description: >-

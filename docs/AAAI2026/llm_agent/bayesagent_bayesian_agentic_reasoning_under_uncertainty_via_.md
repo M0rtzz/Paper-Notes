@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BayesAgent: Bayesian Agentic Reasoning Under Uncertainty via Verbalized Probabilistic Graphical Modeling
 description: >-

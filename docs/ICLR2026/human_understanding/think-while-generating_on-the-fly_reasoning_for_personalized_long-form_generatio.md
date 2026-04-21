@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Think-While-Generating: On-the-Fly Reasoning for Personalized Long-Form Generation
 description: >-
@@ -137,8 +137,8 @@ FlyThinker 在所有任务上均超越基线，BLEU 相比 SFT 提升约10%。
 
 - [AutoFigure: Generating and Refining Publication-Ready Scientific Illustrations](autofigure_generating_and_refining_publication-ready_scientific_illustrations.md)
 - [P-GenRM: Personalized Generative Reward Model with Test-time User-based Scaling](p-genrm_personalized_generative_reward_model_with_test-time_user-based_scaling.md)
+- [FreeCloth: Free-Form Generation Enhances Challenging Clothed Human Modeling](../../CVPR2025/human_understanding/freecloth_free-form_generation_enhances_challenging_clothed_human_modeling.md)
 - [AMemGym: Interactive Memory Benchmarking for Assistants in Long-Horizon Conversations](amemgym_interactive_memory_benchmarking_for_assistants_in_long-horizon_conversat.md)
 - [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](../../ICML2025/human_understanding/towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
-- [Inverse Virtual Try-On: Generating Multi-Category Product-Style Images from Clothed Individuals](inverse_virtual_try-on_generating_multi-category_product-style_images_from_cloth.md)
 
 <!-- RELATED:END -->

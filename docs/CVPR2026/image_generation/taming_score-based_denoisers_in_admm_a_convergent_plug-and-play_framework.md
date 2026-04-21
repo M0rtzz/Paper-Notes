@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Taming Score-Based Denoisers in ADMM: A Convergent Plug-and-Play Framework
 description: >-
@@ -184,6 +184,6 @@ $$\bm{w}^{(k,j+1)} = \bm{w}^{(k,j)} + \eta^{(k)}\left(\frac{1}{\sigma_{\bm{s}^{(
 - [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
 - [coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](codrawagents_a_multi-agent_dialogue_framework_for_compositional_image_generation.md)
 - [Reviving ConvNeXt for Efficient Convolutional Diffusion Models](reviving_convnext_for_efficient_convolutional_diffusion_models.md)
-- [Imagine Before Concentration: Diffusion-Guided Registers Enhance Partially Relevant Video Retrieval](imagine_before_concentration_diffusion-guided_registers_enhance_partially_releva.md)
+- [Pose-dIVE: Pose-Diversified Augmentation with Diffusion Model for Person Re-Identification](pose-dive_pose-diversified_augmentation_with_diffusion_model_for_person_re-ident.md)
 
 <!-- RELATED:END -->

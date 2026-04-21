@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Procedural-aware Video Representations through State-Grounded Hierarchy Unfolding
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SouPLe: Enhancing Audio-Visual Localization and Segmentation with Learnable Prompt Contexts
 description: >-
@@ -140,10 +140,10 @@ AVSBench S4 (零样本)：mIoU 62.89 (+3.13), F-Score 71.47 (+2.44)
 
 ## 相关论文
 
+- [Robust Audio-Visual Segmentation via Audio-Guided Visual Convergent Alignment](../../CVPR2025/segmentation/robust_audio-visual_segmentation_via_audio-guided_visual_convergent_alignment.md)
 - [Love Me, Love My Label: Rethinking the Role of Labels in Prompt Retrieval for Visual In-Context Learning](love_me_love_my_label_rethinking_the_role_of_labels_in_prompt_retrieval_for_visu.md)
-- [Dynamic Derivation and Elimination: Audio Visual Segmentation with Enhanced Audio Semantics](../../CVPR2025/segmentation/dynamic_derivation_and_elimination_audio_visual_segmentation_with_enhanced_audio.md)
 - [GeoSURGE: Geo-localization using Semantic Fusion with Hierarchy of Geographic Embeddings](geosurge_geo-localization_using_semantic_fusion_with_hierarchy_of_geographic_emb.md)
 - [CPM: Class-Conditional Prompting Machine for Audio-Visual Segmentation](../../ECCV2024/segmentation/cpm_class-conditional_prompting_machine_for_audio-visual_segmentation.md)
-- [Audio-Visual Instance Segmentation](../../CVPR2025/segmentation/audio-visual_instance_segmentation.md)
+- [Dynamic Derivation and Elimination: Audio Visual Segmentation with Enhanced Audio Semantics](../../CVPR2025/segmentation/dynamic_derivation_and_elimination_audio_visual_segmentation_with_enhanced_audio.md)
 
 <!-- RELATED:END -->

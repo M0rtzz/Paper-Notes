@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] FaithDiff: Unleashing Diffusion Priors for Faithful Image Super-Resolution
 description: >-
-  [CVPR 2025][image super-resolution] 提出 FaithDiff，通过释放（fine-tune）扩散模型先验而非冻结它，并设计对齐模块联合优化 VAE encoder 和扩散模型，实现高保真图像超分辨率。
+  [CVPR 2025][图像生成][超分辨率] 提出 FaithDiff，首次释放（fine-tune）预训练扩散模型先验用于图像超分辨率，并设计对齐模块桥接退化图像特征与扩散噪声隐空间，通过联合优化 encoder 和扩散模型实现高保真结构恢复。
 tags:
   - CVPR 2025
-  - image super-resolution
-  - diffusion model
-  - latent diffusion
-  - faithful restoration
+  - 图像生成
+  - 超分辨率
+  - 扩散模型
   - alignment module
+  - joint fine-tuning
+  - faithful restoration
 ---
 
 # FaithDiff: Unleashing Diffusion Priors for Faithful Image Super-Resolution
@@ -135,10 +136,10 @@ tags:
 
 ## 相关论文
 
+- [Uncertainty-guided Perturbation for Image Super-Resolution Diffusion Model](uncertainty-guided_perturbation_for_image_super-resolution_diffusion_model.md)
 - [Arbitrary-Steps Image Super-Resolution via Diffusion Inversion](arbitrary-steps_image_super-resolution_via_diffusion_inversion.md)
-- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](../../ECCV2024/image_generation/xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
-- [Diffusion-4K: Ultra-High-Resolution Image Synthesis with Latent Diffusion Models](diffusion-4k_ultra-high-resolution_image_synthesis_with_latent_diffusion_models.md)
-- [Trust Your Critic: Robust Reward Modeling and Reinforcement Learning for Faithful Image Editing and Generation](trust_your_critic_robust_reward_modeling_and_reinforcement_learning_for_faithful.md)
+- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](../../ECCV2024/image_generation/xpsr_crossmodal_priors_for_diffusionbased_image_superresolut.md)
+- [Image Super-Resolution with Guarantees via Conformalized Generative Models](../../NeurIPS2025/image_generation/image_super-resolution_with_guarantees_via_conformalized_generative_models.md)
 - [FreeScale: Unleashing the Resolution of Diffusion Models via Tuning-Free Scale Fusion](../../ICCV2025/image_generation/freescale_unleashing_the_resolution_of_diffusion_models_via_tuning-free_scale_fu.md)
 
 <!-- RELATED:END -->

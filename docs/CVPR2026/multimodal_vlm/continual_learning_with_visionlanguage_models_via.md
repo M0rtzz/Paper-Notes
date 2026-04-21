@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Continual Learning with Vision-Language Models via Semantic-Geometry Preservation
 description: >-

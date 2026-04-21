@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond CVaR: Leveraging Static Spectral Risk Measures for Enhanced Decision-Making in Distributional Reinforcement Learning
 description: >-

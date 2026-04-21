@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] What Expressivity Theory Misses: Message Passing Complexity for GNNs
 description: >-
@@ -123,8 +123,8 @@ lossyWL：标准 WL 的概率化版本，每条消息 $m_{u \to v}$ 以概率 $I
 
 - [Beyond Message Passing: Neural Graph Pattern Machine](../../ICML2025/graph_learning/beyond_message_passing_neural_graph_pattern_machine.md)
 - [Open Your Eyes: Vision Enhances Message Passing Neural Networks in Link Prediction](../../ICML2025/graph_learning/open_your_eyes_vision_enhances_message_passing_neural_networks_in_link_predictio.md)
-- [Connectivity-Guided Sparsification of 2-FWL GNNs Preserving Full Expressivity](../../AAAI2026/graph_learning/connectivity-guided_sparsification_of_2-fwl_gnns_preserving_full_expressivity_wi.md)
 - [Disentangling Hyperedges through the Lens of Category Theory](disentangling_hyperedges_through_the_lens_of_category_theory.md)
 - [GlycanAA: Modeling All-Atom Glycan Structures via Hierarchical Message Passing and Multi-Scale Pre-training](../../ICML2025/graph_learning/modeling_all-atom_glycan_structures_via_hierarchical_message_passing_and_multi-s.md)
+- [Moscat: Mixture of Scope Experts at Test for Generalizing Deeper GNNs](mixture_of_scope_experts_at_test_generalizing_deeper_graph_neural_networks_with_.md)
 
 <!-- RELATED:END -->

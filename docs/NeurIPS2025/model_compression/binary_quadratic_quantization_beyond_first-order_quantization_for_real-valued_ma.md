@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Binary Quadratic Quantization: Beyond First-Order Quantization for Real-Valued Matrix Compression
 description: >-

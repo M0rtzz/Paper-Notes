@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Image Pre-Training with Siamese Cropped Masked Autoencoders
 description: >-

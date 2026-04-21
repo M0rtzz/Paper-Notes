@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Online Iterative Self-Alignment for Radiology Report Generation
 description: >-

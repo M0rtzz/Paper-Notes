@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Video Thinking Test: A Holistic Benchmark for Advanced Video Reasoning and Understanding
 description: >-
@@ -140,8 +140,8 @@ Video-TT 由 1000 个 YouTube Shorts 视频组成，每个视频配有 1 个主�
 
 - [VTimeCoT: Thinking by Drawing for Video Temporal Grounding and Reasoning](vtimecot_thinking_by_drawing_for_video_temporal_grounding_and_reasoning.md)
 - [When Thinking Drifts: Evidential Grounding for Robust Video Reasoning](../../NeurIPS2025/video_understanding/when_thinking_drifts_evidential_grounding_for_robust_video_reasoning.md)
+- [Q-Bench-Video: Benchmark the Video Quality Understanding of LMMs](../../CVPR2025/video_understanding/q-bench-video_benchmark_the_video_quality_understanding_of_lmms.md)
 - [VideoAuto-R1: Video Auto Reasoning via Thinking Once, Answering Twice](../../CVPR2026/video_understanding/videoauto-r1_video_auto_reasoning_via_thinking_once_answering_twice.md)
 - [MINERVA-Cultural: A Benchmark for Cultural and Multilingual Long Video Reasoning](../../CVPR2026/video_understanding/minerva-cultural_a_benchmark_for_cultural_and_multilingual_long_video_reasoning.md)
-- [Breaking the Encoder Barrier for Seamless Video-Language Understanding](breaking_the_encoder_barrier_for_seamless_video-language_understanding.md)
 
 <!-- RELATED:END -->

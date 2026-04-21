@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] An Incremental Unified Framework for Small Defect Inspection
 description: >-
@@ -131,7 +131,7 @@ IUF基于Transformer重建网络（以UniAD为基础）。整体流程为：正�
 - [STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning](stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning.md)
 - [AnalyticKWS: Towards Exemplar-Free Analytic Class Incremental Learning for Small-footprint Keyword Spotting](../../ACL2025/others/analytickws_towards_exemplar-free_analytic_class_incremental_learning_for_small-.md)
 - [Learning to Align Multi-Faceted Evaluation: A Unified and Robust Framework](../../ACL2025/others/learning_to_align_multi-faceted_evaluation_a_unified_and_robust_framework.md)
-- [Kaputt: A Large-Scale Dataset for Visual Defect Detection](../../ICCV2025/others/kaputt_a_large-scale_dataset_for_visual_defect_detection.md)
+- [SSUF: A Semi-supervised Scalable Unified Framework for E-commerce Query Classification](../../ACL2025/others/a_semi-supervised_scalable_unified_framework_for_e-commerce_query_classification.md)
 - [A Unified Framework for Variable Selection in Model-Based Clustering with Missing Not at Random](../../NeurIPS2025/others/a_unified_framework_for_variable_selection_in_modelbased_clu.md)
 
 <!-- RELATED:END -->

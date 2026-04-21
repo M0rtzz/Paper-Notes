@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Ambiguity-aware Truncated Flow Matching for Ambiguous Medical Image Segmentation
 description: >-

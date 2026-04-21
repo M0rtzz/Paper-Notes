@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Monitoring Decoding: Mitigating Hallucination via Evaluating the Factuality of Partial Response during Generation
 description: >-

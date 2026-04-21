@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Continual SFT Matches Multimodal RLHF with Negative Supervision
 description: >-
@@ -143,9 +143,9 @@ SOTA 对比（混合 15k 数据，与 SeVa、SIMA 等方法在其各自最优设
 ## 相关论文
 
 - [$\varphi$-DPO: Fairness Direct Preference Optimization Approach to Continual Learning in Large Multimodal Models](../../CVPR2026/llm_alignment/φ-dpo_fairness_direct_preference_optimization_approach_to_continual_learning_in_.md)
+- [SymDPO: Boosting In-Context Learning of Large Multimodal Models with Symbol Demonstration Direct Preference Optimization](symdpo_boosting_in-context_learning_of_large_multimodal_models_with_symbol_demon.md)
 - [Debiasing Multimodal Large Language Models via Noise-Aware Preference Optimization](debiasing_multimodal_large_language_models_via_noise-aware_preference_optimizati.md)
 - [DPO Meets PPO: Reinforced Token Optimization for RLHF](../../ICML2025/llm_alignment/dpo_meets_ppo_reinforced_token_optimization_for_rlhf.md)
-- [SymDPO: Boosting In-Context Learning of Large Multimodal Models with Symbol Demonstration Direct Preference Optimization](symdpo_boosting_in-context_learning_of_large_multimodal_models_with_symbol_demon.md)
 - [Simplicity Prevails: Rethinking Negative Preference Optimization for LLM Unlearning](../../NeurIPS2025/llm_alignment/simplicity_prevails_rethinking_negative_preference_optimization_for_llm_unlearni.md)
 
 <!-- RELATED:END -->

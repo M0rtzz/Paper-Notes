@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Controllable Examination for Long-Context Language Models
 description: >-
@@ -109,6 +109,6 @@ LongBioBench的核心idea非常简洁：用**虚构传记**同时作为needle和
 - [Does Your Voice Assistant Remember? Analyzing Conversational Context Recall and Utilization in Voice Interaction Models](../../ACL2025/audio_speech/does_your_voice_assistant_remember_analyzing_conversational_context_recall_and_u.md)
 - [Associative Syntax and Maximal Repetitions Reveal Context-Dependent Complexity in Fruit Bat Communication](associative_syntax_and_maximal_repetitions_reveal_context-dependent_complexity_i.md)
 - [End-to-end Contrastive Language-Speech Pretraining Model For Long-form Spoken Question Answering](../../AAAI2026/audio_speech/end-to-end_contrastive_language-speech_pretraining_model_for_long-form_spoken_qu.md)
-- [Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models](../../ACL2025/audio_speech/investigating_and_enhancing_vision-audio_capability_in_omnimodal_large_language_.md)
+- [EMoVA: Empowering Language Models to See, Hear and Speak with Vivid Emotions](../../CVPR2025/audio_speech/emova_empowering_language_models_to_see_hear_and_speak_with_vivid_emotions.md)
 
 <!-- RELATED:END -->

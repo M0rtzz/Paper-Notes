@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Instant Video Models: Universal Adapters for Stabilizing Image-Based Networks
 description: >-
@@ -164,9 +164,9 @@ tags:
 ## 相关论文
 
 - [Styl3R: Instant 3D Stylized Reconstruction for Arbitrary Scenes and Styles](styl3r_instant_3d_stylized_reconstruction_for_arbitrary_scenes_and_styles.md)
+- [Video Depth Without Video Models](../../CVPR2025/3d_vision/video_depth_without_video_models.md)
 - [High Resolution UDF Meshing via Iterative Networks](high_resolution_udf_meshing_via_iterative_networks.md)
 - [Copresheaf Topological Neural Networks: A Generalized Deep Learning Framework](copresheaf_topological_neural_networks_a_generalized_deep_learning_framework.md)
-- [CLIPGaussian: Universal and Multimodal Style Transfer Based on Gaussian Splatting](clipgaussian_universal_and_multimodal_style_transfer_based_on_gaussian_splatting.md)
 - [More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
 
 <!-- RELATED:END -->

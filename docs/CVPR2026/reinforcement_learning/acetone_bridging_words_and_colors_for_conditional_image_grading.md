@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AceTone: Bridging Words and Colors for Conditional Image Grading
 description: >-

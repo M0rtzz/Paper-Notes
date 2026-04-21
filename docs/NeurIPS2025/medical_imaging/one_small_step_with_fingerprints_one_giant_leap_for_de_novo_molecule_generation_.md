@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] One Small Step with Fingerprints, One Giant Leap for De Novo Molecule Generation from Mass Spectra
 description: >-
@@ -125,8 +125,8 @@ tags:
 
 - [Atomic Diffusion Models for Small Molecule Structure Elucidation from NMR Spectra](atomic_diffusion_models_for_small_molecule_structure_elucidation_from_nmr_spectr.md)
 - [De novo generation of functional terpene synthases using TpsGPT](de_novo_generation_of_functional_terpene_synthases_using_tpsgpt.md)
+- [Towards All-in-One Medical Image Re-Identification](../../CVPR2025/medical_imaging/towards_all-in-one_medical_image_re-identification.md)
 - [EchoONE: Segmenting Multiple Echocardiography Planes in One Model](../../CVPR2025/medical_imaging/echoone_segmenting_multiple_echocardiography_planes_in_one_model.md)
 - [PVChat: Personalized Video Chat with One-Shot Learning](../../ICCV2025/medical_imaging/pvchat_personalized_video_chat_with_one-shot_learning.md)
-- [Unified All-Atom Molecule Generation with Neural Fields](unified_all-atom_molecule_generation_with_neural_fields.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CORAL: Disentangling Latent Representations in Long-Tailed Diffusion
 description: >-
@@ -125,6 +125,6 @@ CORAL 在标准 DDPM 训练流程上做了两处修改：(1) 在 U-Net 瓶颈层
 - [Bitrate-Controlled Diffusion for Disentangling Motion and Content in Video](../../ICCV2025/image_generation/bitrate-controlled_diffusion_for_disentangling_motion_and_content_in_video.md)
 - [Towards General Modality Translation with Contrastive and Predictive Latent Diffusion Bridge](towards_general_modality_translation_with_contrastive_and_predictive_latent_diff.md)
 - [A Gradient Flow Approach to Solving Inverse Problems with Latent Diffusion Models](a_gradient_flow_approach_to_solving_inverse_problems_with_latent_diffusion_model.md)
-- [Video Prediction Policy: A Generalist Robot Policy with Predictive Visual Representations](../../ICML2025/image_generation/video_prediction_policy_a_generalist_robot_policy_with_predictive_visual_represe.md)
+- [Vicinity-Guided Discriminative Latent Diffusion for Privacy-Preserving Domain Adaptation](vicinity-guided_discriminative_latent_diffusion_for_privacy-preserving_domain_ad.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MuRating: A High Quality Data Selecting Approach to Multilingual Large Language Model Pretraining
 description: >-
@@ -192,6 +192,6 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{pairwise}} + \lambda \cdot \ma
 - [Towards Open-Ended Visual Recognition with Large Language Model](../../ECCV2024/information_retrieval/towards_open-ended_visual_recognition_with_large_language_models.md)
 - [Investigating Language Preference of Multilingual RAG Systems](../../ACL2025/information_retrieval/investigating_language_preference_of_multilingual_rag_systems.md)
 - [LamRA: Large Multimodal Model as Your Advanced Retrieval Assistant](../../CVPR2025/information_retrieval/lamra_large_multimodal_model_as_your_advanced_retrieval_assistant.md)
-- [STRUCTURE: With Limited Data for Multimodal Alignment, Let the Structure Guide You](with_limited_data_for_multimodal_alignment_let_the_structure_guide_you.md)
+- [How Should We Evaluate Data Deletion in Graph-Based ANN Indexes?](how_should_we_evaluate_data_deletion_in_graph-based_ann_indexes.md)
 
 <!-- RELATED:END -->

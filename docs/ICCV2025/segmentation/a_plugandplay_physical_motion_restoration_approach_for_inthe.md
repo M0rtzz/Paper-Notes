@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Plug-and-Play Physical Motion Restoration Approach for In-the-Wild High-Difficulty Motions
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Back on Track: Bundle Adjustment for Dynamic Scene Reconstruction
 description: >-
@@ -172,6 +172,6 @@ $$\mathcal{L}_{total} = \mathcal{L}_{3D} + w_1 \mathcal{L}_{vis} + w_2 \mathcal{
 - [BezierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](beziergs_dynamic_urban_scene_reconstruction_with_bezier_curve_gaussian_splatting.md)
 - [BézierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](beziergs_dynamic_urban_scene_reconstruction_with_bezier_curv.md)
 - [Dynamic Point Maps: A Versatile Representation for Dynamic 3D Reconstruction](dynamic_point_maps_a_versatile_representation_for_dynamic_3d_reconstruction.md)
-- [Proactive Scene Decomposition and Reconstruction](proactive_scene_decomposition_and_reconstruction.md)
+- [Scene Coordinate Reconstruction Priors](scene_coordinate_reconstruction_priors.md)
 
 <!-- RELATED:END -->

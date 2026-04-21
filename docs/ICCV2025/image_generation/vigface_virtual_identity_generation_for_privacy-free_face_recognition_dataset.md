@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VIGFace: Virtual Identity Generation for Privacy-Free Face Recognition Dataset
 description: >-

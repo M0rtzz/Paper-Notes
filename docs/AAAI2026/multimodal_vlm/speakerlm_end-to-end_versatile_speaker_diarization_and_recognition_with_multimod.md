@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpeakerLM: End-to-End Versatile Speaker Diarization and Recognition with Multimodal Large Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Annotation-Efficient Universal Honesty Alignment
 description: >-

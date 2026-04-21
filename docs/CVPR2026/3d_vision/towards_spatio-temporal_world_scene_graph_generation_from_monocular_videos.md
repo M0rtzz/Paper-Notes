@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos
 description: >-

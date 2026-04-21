@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SparseLaneSTP: Leveraging Spatio-Temporal Priors with Sparse Transformers for 3D Lane Detection
 description: >-

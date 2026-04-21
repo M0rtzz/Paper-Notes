@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Show, Don't Tell: Detecting Novel Objects by Watching Human Videos
 description: >-

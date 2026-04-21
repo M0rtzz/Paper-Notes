@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Call for Rigor in Reporting Quality of Instruction Tuning Data
 description: >-

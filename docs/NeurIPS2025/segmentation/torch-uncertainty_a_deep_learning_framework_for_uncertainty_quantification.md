@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Torch-Uncertainty: A Deep Learning Framework for Uncertainty Quantification
 description: >-

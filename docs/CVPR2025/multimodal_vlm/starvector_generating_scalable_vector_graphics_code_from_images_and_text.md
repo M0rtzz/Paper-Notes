@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] StarVector: Generating Scalable Vector Graphics Code from Images and Text
 description: >-

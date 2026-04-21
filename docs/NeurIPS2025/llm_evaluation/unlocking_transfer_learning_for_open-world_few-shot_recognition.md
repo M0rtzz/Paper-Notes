@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Unlocking Transfer Learning for Open-World Few-Shot Recognition
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning to Steer: Input-dependent Steering for Multimodal LLMs
 description: >-
@@ -139,8 +139,8 @@ tags:
 
 - [Analyzing Finetuning Representation Shift for Multimodal LLMs Steering](../../ICCV2025/multimodal_vlm/analyzing_finetuning_representation_shift_for_multimodal_llms_steering.md)
 - [ADMN: A Layer-Wise Adaptive Multimodal Network for Dynamic Input Noise and Compute Resources](admn_a_layerwise_adaptive_multimodal_network_for_dynamic_inp.md)
-- [Vision Function Layer in Multimodal LLMs](vision_function_layer_in_multimodal_llms.md)
 - [BridgeVLA: Input-Output Alignment for Efficient 3D Manipulation Learning with Vision-Language Models](bridgevla_input-output_alignment_for_efficient_3d_manipulation_learning_with_vis.md)
+- [Vision Function Layer in Multimodal LLMs](vision_function_layer_in_multimodal_llms.md)
 - [VT-FSL: Bridging Vision and Text with LLMs for Few-Shot Learning](vt-fsl_bridging_vision_and_text_with_llms_for_few-shot_learning.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MIP against Agent: Malicious Image Patches Hijacking Multimodal OS Agents
 description: >-

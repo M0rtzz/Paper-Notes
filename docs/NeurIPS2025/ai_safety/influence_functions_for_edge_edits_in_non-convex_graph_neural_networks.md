@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Influence Functions for Edge Edits in Non-Convex Graph Neural Networks
 description: >-
@@ -150,7 +150,7 @@ $$\frac{df(\theta^*_\epsilon, \mathcal{G}^\epsilon)}{d\epsilon}\bigg|_{\epsilon=
 - [ATEX-CF: Attack-Informed Counterfactual Explanations for Graph Neural Networks](../../ICLR2026/ai_safety/atex-cf_attack-informed_counterfactual_explanations_for_graph_neural_networks.md)
 - [Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
 - [Lyapunov Stable Graph Neural Flow](../../CVPR2025/ai_safety/lyapunov_stable_graph_neural_flow.md)
-- [Robust Graph Condensation via Classification Complexity Mitigation](robust_graph_condensation_via_classification_complexity_mitigation.md)
 - [Enhancing Graph Classification Robustness with Singular Pooling](enhancing_graph_classification_robustness_with_singular_pooling.md)
+- [Robust Graph Condensation via Classification Complexity Mitigation](robust_graph_condensation_via_classification_complexity_mitigation.md)
 
 <!-- RELATED:END -->

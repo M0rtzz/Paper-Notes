@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving
 description: >-

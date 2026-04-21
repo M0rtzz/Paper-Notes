@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Safe and Controllable Protein Generation via Knowledge Preference Optimization
 description: >-

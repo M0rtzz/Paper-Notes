@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Asynchronous Denoising Diffusion Models for Aligning Text-to-Image Generation
 description: >-

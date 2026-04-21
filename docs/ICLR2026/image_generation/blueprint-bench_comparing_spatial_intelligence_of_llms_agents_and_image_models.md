@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Blueprint-Bench: Comparing Spatial Intelligence of LLMs, Agents and Image Models
 description: >-
@@ -146,7 +146,7 @@ Blueprint-Bench 通过"从公寓室内照片生成 2D 平面图"的任务评测 
 - [Everything in Its Place: Benchmarking Spatial Intelligence of Text-to-Image Models](everything_in_its_place_benchmarking_spatial_intelligence_of_text-to-image_model.md)
 - [MICON-Bench: Benchmarking and Enhancing Multi-Image Context Image Generation in Unified Multimodal Models](../../CVPR2026/image_generation/micon-bench_benchmarking_and_enhancing_multi-image_context_image_generation_in_u.md)
 - [Model Collapse Is Not a Bug but a Feature in Machine Unlearning for LLMs](model_collapse_is_not_a_bug_but_a_feature_in_machine_unlearning_for_llms.md)
-- [Step-Aware Residual-Guided Diffusion for EEG Spatial Super-Resolution](step-aware_residual-guided_diffusion_for_eeg_spatial_super-resolution.md)
 - [SSG: Scaled Spatial Guidance for Multi-Scale Visual Autoregressive Generation](ssg_scaled_spatial_guidance_for_multi-scale_visual_autoregressive_generation.md)
+- [Step-Aware Residual-Guided Diffusion for EEG Spatial Super-Resolution](step-aware_residual-guided_diffusion_for_eeg_spatial_super-resolution.md)
 
 <!-- RELATED:END -->

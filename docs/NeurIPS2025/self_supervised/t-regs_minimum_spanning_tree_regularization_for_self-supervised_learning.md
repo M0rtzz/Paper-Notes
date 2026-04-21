@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] T-REGS: Minimum Spanning Tree Regularization for Self-Supervised Learning
 description: >-

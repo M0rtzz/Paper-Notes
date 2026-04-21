@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generalizable Insights for Graph Transformers in Theory and Practice
 description: >-
@@ -146,6 +146,6 @@ GDT 基于标准 Transformer 编码器层，支持两种 token 化：
 - [Adversarial Attention Perturbations for Large Object Detection Transformers](../../ICCV2025/object_detection/adversarial_attention_perturbations_for_large_object_detection_transformers.md)
 - [Dual Data Alignment Makes AI-Generated Image Detector Easier Generalizable](dual_data_alignment_makes_ai-generated_image_detector_easier_generalizable.md)
 - [TAPTR: Tracking Any Point with Transformers as Detection](../../ECCV2024/object_detection/taptr_tracking_any_point_with_transformers_as_detection.md)
-- [Just-in-Time: Training-Free Spatial Acceleration for Diffusion Transformers](../../CVPR2026/object_detection/just-in-time_training-free_spatial_acceleration_for_diffusion_transformers.md)
+- [Mr. DETR++: Instructive Multi-Route Training for Detection Transformers with MoE](../../CVPR2025/object_detection/mr_detr_instructive_multi-route_training_for_detection_transformers.md)
 
 <!-- RELATED:END -->

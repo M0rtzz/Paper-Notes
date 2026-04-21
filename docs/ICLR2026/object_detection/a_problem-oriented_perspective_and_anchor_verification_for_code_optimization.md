@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Problem-Oriented Perspective and Anchor Verification for Code Optimization
 description: >-

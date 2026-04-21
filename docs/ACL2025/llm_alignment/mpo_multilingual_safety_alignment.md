@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MPO: Multilingual Safety Alignment via Reward Gap Optimization
 description: >-

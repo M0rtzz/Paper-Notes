@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Inferring Functionality of Attention Heads from their Parameters
 description: >-

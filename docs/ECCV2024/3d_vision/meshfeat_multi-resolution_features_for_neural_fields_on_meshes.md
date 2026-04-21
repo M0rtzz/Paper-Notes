@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MeshFeat: Multi-Resolution Features for Neural Fields on Meshes
 description: >-

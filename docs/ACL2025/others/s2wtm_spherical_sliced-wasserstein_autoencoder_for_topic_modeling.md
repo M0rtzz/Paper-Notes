@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] S2WTM: Spherical Sliced-Wasserstein Autoencoder for Topic Modeling
 description: >-
@@ -162,9 +162,9 @@ S2WTM 在全部 7 个数据集上的 NPMI 均为最高，大幅领先。
 ## 相关论文
 
 - [Understanding Cross-Domain Adaptation in Low-Resource Topic Modeling](understanding_cross-domain_adaptation_in_low-resource_topic_modeling.md)
-- [Persistent Homology of Topic Networks for the Prediction of Reader Curiosity](persistent_homology_of_topic_networks_for_the_prediction_of_reader_curiosity.md)
-- [Improving Language and Modality Transfer in Translation by Character-level Modeling](improving_language_and_modality_transfer_in.md)
-- [DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
 - [ProxAnn: Use-Oriented Evaluations of Topic Models and Document Clustering](proxann_topic_model_eval.md)
+- [Persistent Homology of Topic Networks for the Prediction of Reader Curiosity](persistent_homology_of_topic_networks_for_the_prediction_of_reader_curiosity.md)
+- [DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
+- [Improving Language and Modality Transfer in Translation by Character-level Modeling](improving_language_and_modality_transfer_in.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Robust Estimation Under Heterogeneous Corruption Rates
 description: >-
@@ -120,9 +120,9 @@ Figure 1直观展示了三种权重方案下Tukey深度的等高线图：最优�
 ## 相关论文
 
 - [Near-Exponential Savings for Mean Estimation with Active Learning](near-exponential_savings_for_mean_estimation_with_active_learning.md)
-- [Estimation of Stochastic Optimal Transport Maps](estimation_of_stochastic_optimal_transport_maps.md)
-- [Adaptive Algorithms with Sharp Convergence Rates for Stochastic Hierarchical Optimization](adaptive_algorithms_with_sharp_convergence_rates_for_stochas.md)
+- [On Minimax Estimation of Parameters in Softmax-Contaminated Mixture of Experts](on_minimax_estimation_of_parameters_in_softmax-contaminated_mixture_of_experts.md)
 - [Optimal Rates for Generalization of Gradient Descent for Deep ReLU Classification](optimal_rates_for_generalization_of_gradient_descent_for_deep_relu_classificatio.md)
+- [Adaptive Algorithms with Sharp Convergence Rates for Stochastic Hierarchical Optimization](adaptive_algorithms_with_sharp_convergence_rates_for_stochas.md)
 - [Doubly Robust Alignment for Large Language Models](doubly_robust_alignment_for_large_language_models.md)
 
 <!-- RELATED:END -->

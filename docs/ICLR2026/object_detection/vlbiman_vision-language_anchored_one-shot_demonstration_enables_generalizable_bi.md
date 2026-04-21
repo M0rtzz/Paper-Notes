@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VLBiMan: Vision-Language Anchored One-Shot Demonstration Enables Generalizable Bimanual Robotic Manipulation
 description: >-

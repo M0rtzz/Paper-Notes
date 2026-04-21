@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Continuous Diffusion Model for Language Modeling
 description: >-

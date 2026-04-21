@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Global and Local Entailment Learning for Natural World Imagery
 description: >-

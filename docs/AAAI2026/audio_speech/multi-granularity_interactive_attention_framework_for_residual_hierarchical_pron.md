@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multi-granularity Interactive Attention Framework for Residual Hierarchical Pronunciation Assessment
 description: >-

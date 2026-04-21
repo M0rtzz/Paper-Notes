@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spectral Bellman Method: Unifying Representation and Exploration in RL
 description: >-
@@ -159,10 +159,10 @@ $\tilde{\theta}(\theta)$ 实现为残差网络：$\tilde{\theta}(\theta) = \thet
 
 ## 相关论文
 
-- [Sample-efficient and Scalable Exploration in Continuous-Time RL](sample-efficient_and_scalable_exploration_in_continuous-time_rl.md)
 - [A Unifying View of Coverage in Linear Off-Policy Evaluation](a_unifying_view_of_coverage_in_linear_off-policy_evaluation.md)
+- [Gradual Transition from Bellman Optimality Operator to Bellman Operator in Online RL](../../ICML2025/reinforcement_learning/gradual_transition_from_bellman_optimality_operator_to_bellman_operator_in.md)
+- [Sample-efficient and Scalable Exploration in Continuous-Time RL](sample-efficient_and_scalable_exploration_in_continuous-time_rl.md)
 - [Stackelberg Coupling of Online Representation Learning and Reinforcement Learning](stackelberg_coupling_of_online_representation_learning_and_reinforcement_learnin.md)
-- [Learning to Trust Bellman Updates: Selective State-Adaptive Regularization for Offline RL](../../ICML2025/reinforcement_learning/learning_to_trust_bellman_updates_selective_state-adaptive_regularization_for_of.md)
 - [Emergence of Spatial Representation in an Actor-Critic Agent with Hippocampus-Inspired Sequence Generator](emergence_of_spatial_representation_in_an_actor-critic_agent_with_hippocampus-in.md)
 
 <!-- RELATED:END -->

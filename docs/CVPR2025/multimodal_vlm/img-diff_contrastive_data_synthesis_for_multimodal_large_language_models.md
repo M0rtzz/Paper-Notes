@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Img-Diff: Contrastive Data Synthesis for Multimodal Large Language Models
 description: >-

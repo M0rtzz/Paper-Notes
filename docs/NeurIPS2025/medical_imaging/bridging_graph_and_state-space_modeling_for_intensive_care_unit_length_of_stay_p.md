@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bridging Graph and State-Space Modeling for Intensive Care Unit Length of Stay Prediction
 description: >-

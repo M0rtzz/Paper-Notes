@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fern: Chaining Spectral Pearls — Ellipsoidal Forecasting Beyond Trajectories for Time Series
 description: >-

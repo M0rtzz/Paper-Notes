@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Realistic Synthetic Household Data Generation at Scale
 description: >-

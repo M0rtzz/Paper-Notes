@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bitrate-Controlled Diffusion for Disentangling Motion and Content in Video
 description: >-

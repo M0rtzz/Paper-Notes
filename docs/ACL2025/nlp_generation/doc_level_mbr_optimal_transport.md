@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Document-Level Text Generation with Minimum Bayes Risk Decoding using Optimal Transport
 description: >-

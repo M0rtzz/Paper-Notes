@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Equivariant Spatio-Temporal Self-Supervision for LiDAR Object Detection
 description: >-

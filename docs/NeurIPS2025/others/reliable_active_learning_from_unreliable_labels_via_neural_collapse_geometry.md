@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry
 description: >-

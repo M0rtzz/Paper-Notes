@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BeyondBench: Contamination-Resistant Evaluation of Reasoning in Language Models
 description: >-

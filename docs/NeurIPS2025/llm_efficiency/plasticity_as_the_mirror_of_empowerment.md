@@ -154,8 +154,8 @@ $$\mathfrak{E}_{a:b}^{c:d}(\lambda, e) + \mathfrak{P}_{c:d}^{a:b}(\lambda, e) \l
 ## 相关论文
 
 - [Structure-Aware Spectral Sparsification via Uniform Edge Sampling](structure-aware_spectral_sparsification_via_uniform_edge_sampling.md)
-- [Not All Splits Are Equal: Rethinking Attribute Generalization Across Unrelated Categories](not_all_splits_are_equal_rethinking_attribute_generalization_across_unrelated_ca.md)
 - [Unmasking COVID-19 Vulnerability in Nigeria: Mapping Risks Beyond Urban Hotspots](unmasking_covid-19_vulnerability_in_nigeria_mapping_risks_beyond_urban_hotspots.md)
+- [Not All Splits Are Equal: Rethinking Attribute Generalization Across Unrelated Categories](not_all_splits_are_equal_rethinking_attribute_generalization_across_unrelated_ca.md)
 - [Hardware-aligned Hierarchical Sparse Attention for Efficient Long-term Memory Access](hardware-aligned_hierarchical_sparse_attention_for_efficient_long-term_memory_ac.md)
 - [3-Model Speculative Decoding (PyramidSD)](3model_speculative_decoding.md)
 

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3DGS-LM: Faster Gaussian-Splatting Optimization with Levenberg-Marquardt
 description: >-

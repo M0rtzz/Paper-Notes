@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Does YOLO Really Need to See Every Training Image in Every Epoch?
 description: >-
@@ -196,8 +196,8 @@ State Update 是加速的关键——无 SU 时虽精度达标但加速仅 1.26�
 
 - [Does FLUX Already Know How to Perform Physically Plausible Image Composition?](../../ICLR2026/object_detection/does_flux_already_know_how_to_perform_physically_plausible_image_composition.md)
 - [YOLO-Count: Differentiable Object Counting for Text-to-Image Generation](../../ICCV2025/object_detection/yolo-count_differentiable_object_counting_for_text-to-image_generation.md)
+- [YOLO-IOD: Towards Real Time Incremental Object Detection](../../AAAI2026/object_detection/yolo-iod_towards_real_time_incremental_object_detection.md)
 - [Training-free Detection of Generated Videos via Spatial-Temporal Likelihoods](training-free_detection_of_generated_videos_via_spatial-temporal_likelihoods.md)
 - [PET-DINO: Unifying Visual Cues into Grounding DINO with Prompt-Enriched Training](pet-dino_unifying_visual_cues_into_grounding_dino_with_prompt-enriched_training.md)
-- [SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking](slice_semantic_latent_injection_via_compartmentali.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TEMPLE: Incentivizing Temporal Understanding of Video LLMs via Progressive Pre-SFT Alignment
 description: >-

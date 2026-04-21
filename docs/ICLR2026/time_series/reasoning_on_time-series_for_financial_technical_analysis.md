@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reasoning on Time-Series for Financial Technical Analysis
 description: >-

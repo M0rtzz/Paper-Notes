@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CORDIAL: Can Multimodal Large Language Models Effectively Understand Coherence Relations?
 description: >-

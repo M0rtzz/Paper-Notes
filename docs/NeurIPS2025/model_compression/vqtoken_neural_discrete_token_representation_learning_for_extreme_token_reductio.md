@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VQToken: Neural Discrete Token Representation Learning for Extreme Token Reduction in Video Large Language Models
 description: >-

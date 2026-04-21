@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MultiFoley: Video-Guided Foley Sound Generation with Multimodal Controls
 description: >-
@@ -141,6 +141,6 @@ VGGSound 测试集（8702 视频）上的 V2A 生成对比：
 - [VinTAGe: Joint Video and Text Conditioning for Holistic Audio Generation](vintage_joint_video_and_text_conditioning_for_holistic_audio_generation.md)
 - [Exploring Timeline Control for Facial Motion Generation](exploring_timeline_control_for_facial_motion_generation.md)
 - [How Would It Sound? Material-Controlled Multimodal Acoustic Profile Generation for Objects](../../ICCV2025/audio_speech/how_would_it_sound_material-controlled_multimodal_acoustic_profile_generation_fo.md)
-- [Improving Sound Source Localization with Joint Slot Attention on Image and Audio](improving_sound_source_localization_with_joint_slot_attention_on_image_and_audio.md)
+- [Object-aware Sound Source Localization via Audio-Visual Scene Understanding](object-aware_sound_source_localization_via_audio-visual_scene_understanding.md)
 
 <!-- RELATED:END -->

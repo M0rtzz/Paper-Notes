@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Modeling and Driving Human Body Soundfields through Acoustic Primitives
 description: >-
@@ -163,8 +163,8 @@ $$\mathcal{L}_{total} = \lambda_{amp}\mathcal{L}_{amp} + \lambda_{ri}\mathcal{L}
 
 - [Upper-Body Hierarchical Graph for Skeleton Based Emotion Recognition in Assistive Driving](upper-body_hierarchical_graph_for_skeleton_based_emotion_recognition_in_assistiv.md)
 - [HUMOS: Human Motion Model Conditioned on Body Shape](humos_human_motion_model_conditioned_on_body_shape.md)
-- [PoseSOR: Human Pose Can Guide Our Attention](posesor_human_pose_can_guide_our_attention.md)
 - [EgoExo-Fitness: Towards Egocentric and Exocentric Full-Body Action Understanding](egoexo-fitness_towards_egocentric_and_exocentric_full-body_action_understanding.md)
+- [PoseSOR: Human Pose Can Guide Our Attention](posesor_human_pose_can_guide_our_attention.md)
 - [LaPose: Laplacian Mixture Shape Modeling for RGB-Based Category-Level Object Pose Estimation](lapose_laplacian_mixture_shape_modeling_for_rgb-based_category-level_object_pose.md)
 
 <!-- RELATED:END -->

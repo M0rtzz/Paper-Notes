@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Re-FORC: Adaptive Reward Prediction for Efficient Chain-of-Thought Reasoning
 description: >-
@@ -121,7 +121,7 @@ Re-FORC由两部分组成：(1) **冻结的推理LLM** $\pi$（如Qwen3系列）
 - [ARM: Adaptive Reasoning Model](arm_adaptive_reasoning_model.md)
 - [Unlocking Multimodal Mathematical Reasoning via Process Reward Model](unlocking_multimodal_mathematical_reasoning_via_process_reward_model.md)
 - [Adaptive Dual Reasoner: Large Reasoning Models Can Think Efficiently by Hybrid Reasoning](adaptive_dual_reasoner_large_reasoning_models_can_think_efficiently_by_hybrid_re.md)
-- [SoftCoT: Soft Chain-of-Thought for Efficient Reasoning with LLMs](../../ACL2025/llm_reasoning/softcot_soft_chain_of_thought.md)
 - [LIMOPro: Reasoning Refinement for Efficient and Effective Test-time Scaling](limopro_reasoning_refinement_for_efficient_and_effective_test-time_scaling.md)
+- [SoftCoT: Soft Chain-of-Thought for Efficient Reasoning with LLMs](../../ACL2025/llm_reasoning/softcot_soft_chain_of_thought.md)
 
 <!-- RELATED:END -->

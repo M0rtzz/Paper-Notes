@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BaSIC: BayesNet Structure Learning for Computational Scalable Neural Image Compression
 description: >-

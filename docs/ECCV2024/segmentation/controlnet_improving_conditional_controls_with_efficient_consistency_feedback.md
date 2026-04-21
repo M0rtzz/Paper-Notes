@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ControlNet++: Improving Conditional Controls with Efficient Consistency Feedback
 description: >-
@@ -165,10 +165,10 @@ ControlNet++ 在所有条件控制下显著优于现有方法。
 
 ## 相关论文
 
-- [SiLC: Improving Vision Language Pretraining with Self-Distillation](silc_improving_vision_language_pretraining_with_self-distillation.md)
+- [SegGen: Supercharging Segmentation Models with Text2Mask and Mask2Img Synthesis](seggen_supercharging_segmentation_models_with_text2mask_and_mask2img_synthesis.md)
+- [Diffusion Models for Open-Vocabulary Segmentation](diffusion_models_for_open-vocabulary_segmentation.md)
+- [UDiffText: A Unified Framework for High-quality Text Synthesis in Arbitrary Images via Character-aware Diffusion Models](udifftext_a_unified_framework_for_high-quality_text_synthesis_in_arbitrary_image.md)
+- [Dataset Enhancement with Instance-Level Augmentations](dataset_enhancement_with_instance-level_augmentations.md)
 - [CPM: Class-Conditional Prompting Machine for Audio-Visual Segmentation](cpm_class-conditional_prompting_machine_for_audio-visual_segmentation.md)
-- [CoLA: Conditional Dropout and Language-Driven Robust Dual-Modal Salient Object Detection](cola_conditional_dropout_and_language-driven_robust_dual-modal_salient_object_de.md)
-- [SeiT++: Masked Token Modeling Improves Storage-Efficient Training](seit_masked_token_modeling_improves_storage-efficient_training.md)
-- [Efficient and Versatile Robust Fine-Tuning of Zero-shot Models](efficient_and_versatile_robust_fine-tuning_of_zero-shot_models.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MixA-Q: Revisiting Activation Sparsity for Vision Transformers from a Mixed-Precision Quantization Perspective
 description: >-

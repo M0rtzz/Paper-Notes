@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] FilmWeaver: Weaving Consistent Multi-Shot Videos with Cache-Guided Autoregressive Diffusion
 description: >-
-  [AAAI 2026][视频理解][多镜头视频生成] 提出 FilmWeaver 框架，通过双层缓存（Shot Cache + Temporal Cache）引导自回归扩散模型，实现任意长度、跨镜头一致性的多镜头视频生成。
+  [AAAI 2026][多镜头视频生成] 提出 FilmWeaver 框架，通过双层缓存（Shot Cache + Temporal Cache）引导自回归扩散模型，实现任意长度、跨镜头一致性的多镜头视频生成。
 tags:
   - AAAI 2026
-  - 视频理解
   - 多镜头视频生成
   - 自回归扩散
   - 缓存机制
@@ -155,10 +154,10 @@ FilmWeaver 在一致性和角色文本对齐指标上取得 SOTA，同时 Incept
 
 ## 相关论文
 
+- [ShotAdapter: Text-to-Multi-Shot Video Generation with Diffusion Models](../../CVPR2025/video_generation/shotadapter_text-to-multi-shot_video_generation_with_diffusion_models.md)
 - [Ca2-VDM: Efficient Autoregressive Video Diffusion Model with Causal Generation and Cache Sharing](../../ICML2025/video_generation/ca2-vdm_efficient_autoregressive_video_diffusion_model_with_causal_generation_an.md)
 - [Rethinking Position Embedding as a Context Controller for Multi-Reference and Multi-Shot Video Generation](../../CVPR2026/video_generation/rethinking_position_embedding_as_a_context_controller_for_multi-reference_and_mu.md)
+- [MoVieDrive: Urban Scene Synthesis with Multi-Modal Multi-View Video Diffusion Transformer](../../CVPR2026/video_generation/moviedrive_urban_scene_synthesis_with_multi-modal_multi-view_video_diffusion_tra.md)
 - [MoFu: Scale-Aware Modulation and Fourier Fusion for Multi-Subject Video Generation](mofu_scale-aware_modulation_and_fourier_fusion_for_multi-subject_video_generatio.md)
-- [Lumos-1: On Autoregressive Video Generation with Discrete Diffusion from a Unified Model Perspective](../../ICLR2026/video_generation/lumos-1_on_autoregressive_video_generation_with_discrete_diffusion_from_a_unifie.md)
-- [ActivityForensics: A Comprehensive Benchmark for Localizing Manipulated Activity in Videos](../../CVPR2026/video_generation/activityforensics_a_comprehensive_benchmark_for_localizing_manipulated_activity_.md)
 
 <!-- RELATED:END -->

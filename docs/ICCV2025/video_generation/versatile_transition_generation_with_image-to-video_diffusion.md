@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Versatile Transition Generation with Image-to-Video Diffusion
 description: >-
@@ -114,9 +114,9 @@ tags:
 ## 相关论文
 
 - [Multi-identity Human Image Animation with Structural Video Diffusion](multi-identity_human_image_animation_with_structural_video_diffusion.md)
-- [Adversarial Distribution Matching for Diffusion Distillation Towards Efficient Image and Video Synthesis](adversarial_distribution_matching_for_diffusion_distillation_towards_efficient_i.md)
 - [TIP-I2V: A Million-Scale Real Text and Image Prompt Dataset for Image-to-Video Generation](tip-i2v_a_million-scale_real_text_and_image_prompt_dataset_for_image-to-video_ge.md)
+- [Adversarial Distribution Matching for Diffusion Distillation Towards Efficient Image and Video Synthesis](adversarial_distribution_matching_for_diffusion_distillation_towards_efficient_i.md)
 - [STiV: Scalable Text and Image Conditioned Video Generation](stiv_scalable_text_and_image_conditioned_video_generation.md)
-- [MotionStone: Decoupled Motion Intensity Modulation with Diffusion Transformer for Image-to-Video Generation](../../CVPR2025/video_generation/motionstone_decoupled_motion_intensity_modulation_with_diffusion_transformer_for.md)
+- [Pathways on the Image Manifold: Image Editing via Video Generation](../../CVPR2025/video_generation/pathways_on_the_image_manifold_image_editing_via_video_generation.md)
 
 <!-- RELATED:END -->

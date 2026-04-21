@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Text-to-Image Models Leave Identifiable Signatures: Implications for Leaderboard Security
 description: >-
@@ -136,6 +136,6 @@ tags:
 - [OVERT: A Benchmark for Over-Refusal Evaluation on Text-to-Image Models](overt_a_benchmark_for_over-refusal_evaluation_on_text-to-image_models.md)
 - [Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
 - [Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models](training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)
-- [FairImagen: Post-Processing for Bias Mitigation in Text-to-Image Models](fairimagen_post-processing_for_bias_mitigation_in_text-to-image_models.md)
+- [Scaling Down Text Encoders of Text-to-Image Diffusion Models](../../CVPR2025/image_generation/scaling_down_text_encoders_of_text-to-image_diffusion_models.md)
 
 <!-- RELATED:END -->

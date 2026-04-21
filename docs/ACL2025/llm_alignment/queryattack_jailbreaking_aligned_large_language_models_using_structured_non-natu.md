@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] QueryAttack: Jailbreaking Aligned Large Language Models Using Structured Non-natural Query Language
 description: >-

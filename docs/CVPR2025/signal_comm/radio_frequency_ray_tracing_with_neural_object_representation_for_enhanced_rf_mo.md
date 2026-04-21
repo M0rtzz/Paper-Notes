@@ -1,14 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] Radio Frequency Ray Tracing with Neural Object Representation for Enhanced RF Modeling
 description: >-
-  [CVPR 2025][射频建模][神经表示] 提出RFScape框架，用神经场景表示桥接可见光渲染和射频传播建模
+  [CVPR 2025][射频传播] 提出 RFScape 框架，将神经场景表示（如 NeRF）扩展到射频（RF）频段，通过适配电磁传播物理特性实现增强的 RF 传播建模。
 tags:
   - CVPR 2025
-  - 射频建模
-  - 神经表示
+  - 射频传播
+  - 神经场表示
   - 光线追踪
-  - 电磁传播
+  - 电磁仿真
+  - 无线通信
 ---
 
 # Radio Frequency Ray Tracing with Neural Object Representation for Enhanced RF Modeling
@@ -61,7 +62,7 @@ tags:
 - [Neural Video Compression with Context Modulation](neural_video_compression_with_context_modulation.md)
 - [Tuning the Frequencies: Robust Training for Sinusoidal Neural Networks](tuning_the_frequencies_robust_training_for_sinusoidal_neural_networks.md)
 - [WirelessMathBench: A Mathematical Modeling Benchmark for LLMs in Wireless Communications](../../ACL2025/signal_comm/wirelessmathbench_a_mathematical_modeling_benchmark_for_llms_in_wireless_communi.md)
-- [Masked Symbol Modeling for Demodulation of Oversampled Baseband Communication Signals](../../NeurIPS2025/signal_comm/masked_symbol_modeling_for_demodulation_of_oversampled_baseband_communication_si.md)
 - [FASA: Frequency-Aware Sparse Attention](../../ICLR2026/signal_comm/fasa_frequency-aware_sparse_attention.md)
+- [Masked Symbol Modeling for Demodulation of Oversampled Baseband Communication Signals](../../NeurIPS2025/signal_comm/masked_symbol_modeling_for_demodulation_of_oversampled_baseband_communication_si.md)
 
 <!-- RELATED:END -->

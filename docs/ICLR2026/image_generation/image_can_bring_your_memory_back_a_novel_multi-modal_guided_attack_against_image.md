@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Image Can Bring Your Memory Back: A Novel Multi-Modal Guided Attack against Image Generation Model Unlearning
 description: >-

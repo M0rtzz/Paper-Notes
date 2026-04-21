@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ShifCon: Enhancing Non-Dominant Language Capabilities with a Shift-based Multilingual Contrastive Framework
 description: >-

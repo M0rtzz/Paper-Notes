@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Layer Consistency Matters: Elegant Latent Transition Discrepancy for Generalizable Synthetic Image Detection
 description: >-
-  [CVPR 2026][图像生成][AI生成图像检测] 提出LTD方法，发现真实图像在ViT中间层具有稳定的层间特征一致性，而生成图像呈现突变，利用层间转换差异实现跨GAN/DM的通用生成图像检测，在UFD/DRCT-2M/GenImage上均超越SOTA。
+  [CVPR 2026][图像生成][合成图像检测] 发现真实图像在冻结CLIP ViT中间层的特征表示呈现稳定的层间过渡，而合成图像在中间层出现显著的注意力突变，提出Layer Transition Discrepancy (LTD) 方法建模该差异，在UFD上mean Acc达96.90%，DRCT-2M上达99.54%，GenImage上达91.62%，全面超越SOTA。
 tags:
   - CVPR 2026
   - 图像生成
-  - AI生成图像检测
-  - CLIP
-  - ViT
-  - 层间一致性
+  - 合成图像检测
+  - 层间转换差异
+  - CLIP-ViT
+  - 跨域泛化
+  - 动态层选择
 ---
 
 # Layer Consistency Matters: Elegant Latent Transition Discrepancy for Generalizable Synthetic Image Detection
@@ -122,9 +123,9 @@ tags:
 ## 相关论文
 
 - [From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition](from_inpainting_to_layer_decomposition_repurposing_generative_inpainting_models_.md)
-- [Diversity over Uniformity: Rethinking Representation in Generated Image Detection](diversity_over_uniformity_rethinking_representation_in_generated_image_detection.md)
-- [CausalCLIP: Causally-Informed Feature Disentanglement and Filtering for Generalizable Detection of Generated Images](../../AAAI2026/image_generation/causalclip_causally-informed_feature_disentanglement_and_filtering_for_generaliz.md)
+- [FerretNet: Efficient Synthetic Image Detection via Local Pixel Dependencies](../../NeurIPS2025/image_generation/ferretnet_efficient_synthetic_image_detection_via_local_pixel_dependencies.md)
 - [Image Diffusion Preview with Consistency Solver](image_diffusion_preview_with_consistency_solver.md)
 - [TriDF: Evaluating Perception, Detection, and Hallucination for Interpretable DeepFake Detection](tridf_evaluating_perception_detection_and_hallucination_for_interpretable_deepfa.md)
+- [Diversity over Uniformity: Rethinking Representation in Generated Image Detection](diversity_over_uniformity_rethinking_representation_in_generated_image_detection.md)
 
 <!-- RELATED:END -->

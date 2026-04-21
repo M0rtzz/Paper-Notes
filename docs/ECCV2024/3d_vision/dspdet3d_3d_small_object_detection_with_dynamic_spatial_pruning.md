@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DSPDet3D: 3D Small Object Detection with Dynamic Spatial Pruning
 description: >-
@@ -129,8 +129,8 @@ DSPDet3D 基于 TR3D 的多级 FCOS 风格架构，使用稀疏卷积 backbone �
 ## 相关论文
 
 - [Interactive 3D Object Detection with Prompts](interactive_3d_object_detection_with_prompts.md)
-- [Accelerate 3D Object Detection Models via Zero-Shot Attention Key Pruning](../../ICCV2025/3d_vision/accelerate_3d_object_detection_models_via_zero-shot_attention_key_pruning.md)
 - [SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection](../../CVPR2026/3d_vision/span_spatial_projection_alignment_mono3d.md)
+- [Accelerate 3D Object Detection Models via Zero-Shot Attention Key Pruning](../../ICCV2025/3d_vision/accelerate_3d_object_detection_models_via_zero-shot_attention_key_pruning.md)
 - [Few-Shot Incremental 3D Object Detection in Dynamic Indoor Environments](../../CVPR2026/3d_vision/few-shot_incremental_3d_object_detection_in_dynamic_indoor_environments.md)
 - [NOVUM: Neural Object Volumes for Robust Object Classification](novum_neural_object_volumes_for_robust_object_classification.md)
 

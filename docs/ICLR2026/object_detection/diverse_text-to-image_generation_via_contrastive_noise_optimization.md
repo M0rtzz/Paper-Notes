@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Diverse Text-to-Image Generation via Contrastive Noise Optimization
 description: >-
@@ -152,7 +152,7 @@ $$\mathcal{L}_{\text{CNO}} = -\frac{1}{B}\sum_{i=1}^{B}\log\frac{\exp(\text{sim}
 - [SAGA: Learning Signal-Aligned Distributions for Improved Text-to-Image Generation](../../AAAI2026/object_detection/saga_learning_signal-aligned_distributions_for_improved_text-to-image_generation.md)
 - [Neighbor GRPO: Contrastive ODE Policy Optimization Aligns Flow Models](../../CVPR2026/object_detection/neighbor_grpo_contrastive_ode_policy_optimization_aligns_flow_models.md)
 - [YOLO-Count: Differentiable Object Counting for Text-to-Image Generation](../../ICCV2025/object_detection/yolo-count_differentiable_object_counting_for_text-to-image_generation.md)
-- [MCCD: Multi-Agent Collaboration-based Compositional Diffusion for Complex Text-to-Image Generation](../../CVPR2025/object_detection/mccd_multi-agent_collaboration-based_compositional_diffusion_for_complex_text-to.md)
+- [Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](../../ECCV2024/object_detection/be_yourself_bounded_attention_for_multisubject_texttoimage_g.md)
 - [SERUM: Simple, Efficient, Robust, and Unifying Marking for Diffusion-based Image Generation](serum_simple_efficient_robust_and_unifying_marking_for_diffusion-based_image_gen.md)
 
 <!-- RELATED:END -->

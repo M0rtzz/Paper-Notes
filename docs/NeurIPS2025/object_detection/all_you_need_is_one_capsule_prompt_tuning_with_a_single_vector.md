@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] All You Need is One: Capsule Prompt Tuning with a Single Vector
 description: >-
@@ -109,6 +109,6 @@ tags:
 - [PandaPose: 3D Human Pose Lifting from a Single Image via Propagating 2D Pose Prior to 3D Anchor Space](pandapose_3d_human_pose_lifting_from_a_single_image_via_propagating_2d_pose_prio.md)
 - [You Can Trust Your Clustering Model: A Parameter-free Self-Boosting Plug-in for Deep Clustering](you_can_trust_your_clustering_model_a_parameter-free_self-boosting_plug-in_for_d.md)
 - [APL: Anchor-based Prompt Learning for One-stage Weakly Supervised Referring Expression Comprehension](../../ECCV2024/object_detection/apl_anchor-based_prompt_learning_for_one-stage_weakly_supervised_referring_expre.md)
-- [Test-Time Adaptive Object Detection with Foundation Model](test-time_adaptive_object_detection_with_foundation_model.md)
+- [InstanceAssemble: Layout-Aware Image Generation via Instance Assembling Attention](instanceassemble_layoutaware_image_generation_via_instance_a.md)
 
 <!-- RELATED:END -->

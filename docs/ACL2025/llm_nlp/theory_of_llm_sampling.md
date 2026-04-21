@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Theory of Response Sampling in LLMs: Part Descriptive and Part Prescriptive
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 3D-Mem: 3D Scene Memory for Embodied Exploration and Reasoning
 description: >-
@@ -122,10 +122,10 @@ tags:
 
 ## 相关论文
 
+- [Touch2Shape: Touch-Conditioned 3D Diffusion for Shape Exploration and Reconstruction](touch2shape_touch-conditioned_3d_diffusion_for_shape_exploration_and_reconstruct.md)
 - [InteractVLM: 3D Interaction Reasoning from 2D Foundational Models](interactvlm_3d_interaction_reasoning_from_2d_foundational_models.md)
 - [Context-Nav: Context-Driven Exploration and Viewpoint-Aware 3D Spatial Reasoning for Instance Navigation](../../CVPR2026/3d_vision/context-nav_context-driven_exploration_and_viewpoint-aware_3d_spatial_reasoning_.md)
 - [FrameVGGT: Frame Evidence Rolling Memory for streaming VGGT](framevggt_frame_evidence_rolling_memory_for_streaming_vggt.md)
-- [FreeScene: Mixed Graph Diffusion for 3D Scene Synthesis from Free Prompts](freescene_mixed_graph_diffusion_for_3d_scene_synthesis_from_free_prompts.md)
-- [MSGNav: Unleashing the Power of Multi-modal 3D Scene Graph for Zero-Shot Embodied Navigation](../../CVPR2026/3d_vision/msgnav_unleashing_the_power_of_multi-modal_3d_scene_graph_for_zero-shot_embodied.md)
+- [RoomTour3D: Geometry-Aware Video-Instruction Tuning for Embodied Navigation](roomtour3d_geometry-aware_video-instruction_tuning_for_embodied_navigation.md)
 
 <!-- RELATED:END -->

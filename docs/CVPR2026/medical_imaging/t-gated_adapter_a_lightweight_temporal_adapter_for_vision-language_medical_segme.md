@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] T-Gated Adapter: A Lightweight Temporal Adapter for Vision-Language Medical Segmentation
 description: >-

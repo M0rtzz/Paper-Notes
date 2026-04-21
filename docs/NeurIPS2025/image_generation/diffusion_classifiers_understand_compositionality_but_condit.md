@@ -164,8 +164,8 @@ $$\mathcal{L}_{\mathrm{RF}}(\mathbf{x}_0) = \mathbb{E}_{t,\epsilon}[w_t \|\epsil
 
 ## 相关论文
 
-- [Guiding Diffusion Models with Semantically Degraded Conditions](../../CVPR2026/image_generation/guiding_diffusion_models_with_semantically_degraded_conditions.md)
 - [Exploring Conditions for Diffusion Models in Robotic Control](../../CVPR2026/image_generation/exploring_conditions_for_diffusion_models_in_robotic_control.md)
+- [Guiding Diffusion Models with Semantically Degraded Conditions](../../CVPR2026/image_generation/guiding_diffusion_models_with_semantically_degraded_conditions.md)
 - [Understand Before You Generate: Self-Guided Training for Autoregressive Image Generation](understand_before_you_generate_self-guided_training_for_autoregressive_image_gen.md)
 - [OmniVCus: Feedforward Subject-driven Video Customization with Multimodal Control Conditions](omnivcus_feedforward_subject-driven_video_customization_with_multimodal_control_.md)
 - [DiffA: Large Language Diffusion Models Can Listen and Understand](../../AAAI2026/image_generation/diffa_large_language_diffusion_models_can_listen_and_understand.md)

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Position: AI Evaluation Should Learn from How We Test Humans
 description: >-

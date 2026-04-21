@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CausalCLIP: Causally-Informed Feature Disentanglement and Filtering for Generalizable Detection of Generated Images
 description: >-
@@ -187,7 +187,7 @@ CausalCLIP 平均 AP 较 VIB-Net 提升 2.32%，ACC 提升 4.62%。在未见的 
 - [Diversity over Uniformity: Rethinking Representation in Generated Image Detection](../../CVPR2026/image_generation/diversity_over_uniformity_rethinking_representation_in_generated_image_detection.md)
 - [Aggregating Diverse Cue Experts for AI-Generated Image Detection](aggregating_diverse_cue_experts_for_ai-generated_image_detec.md)
 - [Beautiful Images, Toxic Words: Understanding and Addressing Offensive Text in Generated Images](beautiful_images_toxic_words_understanding_and_addressing_offensive_text_in_gene.md)
-- [Layer Consistency Matters: Elegant Latent Transition Discrepancy for Generalizable Synthetic Image Detection](../../CVPR2026/image_generation/layer_consistency_matters_elegant_latent_transition_discrepancy_for_generalizabl.md)
+- [Epistemic Uncertainty for Generated Image Detection](../../NeurIPS2025/image_generation/epistemic_uncertainty_for_generated_image_detection.md)
 - [Detecting Generated Images by Fitting Natural Image Distributions](../../NeurIPS2025/image_generation/detecting_generated_images_by_fitting_natural_image_distributions.md)
 
 <!-- RELATED:END -->

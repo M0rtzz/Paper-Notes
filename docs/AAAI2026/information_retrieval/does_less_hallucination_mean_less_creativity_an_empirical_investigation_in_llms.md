@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Does Less Hallucination Mean Less Creativity? An Empirical Investigation in LLMs
 description: >-

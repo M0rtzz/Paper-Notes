@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Limitations and Power of NP-Oracle-Based Functional Synthesis Techniques
 description: >-

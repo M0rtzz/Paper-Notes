@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Aligning VLM Assistants with Personalized Situated Cognition
 description: >-

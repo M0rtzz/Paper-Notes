@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Information-Bottleneck Driven Binary Neural Network for Change Detection
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Model Inversion with Layer-Specific Modeling and Alignment for Data-Free Continual Learning
 description: >-

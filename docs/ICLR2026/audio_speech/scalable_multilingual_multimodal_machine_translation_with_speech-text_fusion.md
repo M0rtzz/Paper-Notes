@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Geometric and Photometric Features from Panoramic LiDAR Scans for Outdoor Place Categorization
 description: >-

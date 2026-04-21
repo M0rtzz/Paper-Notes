@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Test-Time Adaptive Object Detection with Foundation Model
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neural Augmented Kalman Filters for Road Network Assisted GNSS Positioning
 description: >-
@@ -134,9 +134,9 @@ KF 状态 8 维：3D 位置 + 3D 速度 + 时钟偏差/漂移。道路量测更�
 ## 相关论文
 
 - [Information-Bottleneck Driven Binary Neural Network for Change Detection](../../ICCV2025/remote_sensing/information-bottleneck_driven_binary_neural_network_for_change_detection.md)
-- [LIGHTHOUSE: Fast and Precise Distance to Shoreline Calculations from Anywhere on Earth](lighthouse_fast_and_precise_distance_to_shoreline_calculations_from_anywhere_on_.md)
-- [High-Resolution Live Fuel Moisture Content (LFMC) Maps for Wildfire Risk from Multimodal Earth Observation Data](high-resolution_live_fuel_moisture_content_lfmc_maps_for_wildfire_risk_from_mult.md)
 - [Causal Foundation Models: Disentangling Physics from Instrument Properties](causal_foundation_models_disentangling_physics_from_instrument_properties.md)
+- [High-Resolution Live Fuel Moisture Content (LFMC) Maps for Wildfire Risk from Multimodal Earth Observation Data](high-resolution_live_fuel_moisture_content_lfmc_maps_for_wildfire_risk_from_mult.md)
+- [LIGHTHOUSE: Fast and Precise Distance to Shoreline Calculations from Anywhere on Earth](lighthouse_fast_and_precise_distance_to_shoreline_calculations_from_anywhere_on_.md)
 - [AVION: Aerial Vision-Language Instruction from Offline Teacher to Prompt-Tuned Network](../../CVPR2026/remote_sensing/avion_aerial_visionlanguage_instruction_from_offli.md)
 
 <!-- RELATED:END -->

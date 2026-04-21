@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FreeUV: Ground-Truth-Free Realistic Facial UV Texture Recovery via Cross-Assembly
 description: >-
@@ -125,9 +125,9 @@ FreeUV 基于预训练 Stable Diffusion v1.5，包含两个独立训练的网络
 ## 相关论文
 
 - [Realistic Face Reconstruction from Facial Embeddings via Diffusion Models](../../AAAI2026/image_generation/realistic_face_reconstruction_from_facial_embeddings_via_diffusion_models.md)
+- [Where's the Liability in the Generative Era? Recovery-Based Black-Box Detection of AI-Generated Content](wheres_the_liability_in_the_generative_era_recovery-based_black-box_detection_of.md)
 - [Realistic Human Motion Generation with Cross-Diffusion Models](../../ECCV2024/image_generation/realistic_human_motion_generation_with_cross-diffusion_models.md)
-- [Broadband Ground Motion Synthesis by Diffusion Model with Minimal Condition](../../ICML2025/image_generation/broadband_ground_motion_synthesis_by_diffusion_model_with_minimal_condition.md)
-- [Free-viewpoint Human Animation with Pose-correlated Reference Selection](free-viewpoint_human_animation_with_pose-correlated_reference_selection.md)
-- [Diffusion-based 3D Hand Motion Recovery with Intuitive Physics](../../ICCV2025/image_generation/diffusion-based_3d_hand_motion_recovery_with_intuitive_physics.md)
+- [T2ICount: Enhancing Cross-modal Understanding for Zero-Shot Counting](t2icount_enhancing_cross-modal_understanding_for_zero-shot_counting.md)
+- [Nonisotropic Gaussian Diffusion for Realistic 3D Human Motion Prediction](nonisotropic_gaussian_diffusion_for_realistic_3d_human_motion_prediction.md)
 
 <!-- RELATED:END -->

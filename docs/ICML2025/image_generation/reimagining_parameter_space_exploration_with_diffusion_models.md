@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reimagining Parameter Space Exploration with Diffusion Models
 description: >-
@@ -114,10 +114,10 @@ Wild-P-Diff 框架包含：(1) 参数编码：VAE 将 LoRA 参数编码为隐空
 
 ## 相关论文
 
-- [Parameter-Efficient Fine-Tuning of State Space Models](parameter-efficient_fine-tuning_of_state_space_models.md)
 - [Synthetic Face Datasets Generation via Latent Space Exploration from Brownian Identity Diffusion](synthetic_face_datasets_generation_via_latent_space_exploration_from_brownian_id.md)
 - [Zero-Shot Adaptation of Parameter-Efficient Fine-Tuning in Diffusion Models](zero-shot_adaptation_of_parameter-efficient_fine-tuning_in_diffusion_models.md)
 - [Provable Maximum Entropy Manifold Exploration via Diffusion Models](provable_maximum_entropy_manifold_exploration_via_diffusion_models.md)
 - [ETTA: Elucidating the Design Space of Text-to-Audio Models](etta_elucidating_the_design_space_of_text-to-audio_models.md)
+- [Hessian Geometry of Latent Space in Generative Models](hessian_geometry_of_latent_space_in_generative_models.md)
 
 <!-- RELATED:END -->

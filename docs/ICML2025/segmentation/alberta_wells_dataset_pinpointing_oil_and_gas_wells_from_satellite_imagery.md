@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Alberta Wells Dataset: Pinpointing Oil and Gas Wells from Satellite Imagery
 description: >-

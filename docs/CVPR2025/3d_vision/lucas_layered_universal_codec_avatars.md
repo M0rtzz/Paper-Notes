@@ -1,16 +1,18 @@
-﻿---
+---
 title: >-
   [论文解读] LUCAS: Layered Universal Codec Avatars
 description: >-
-  [CVPR 2025][3D avatar][face-hair] 提出 LUCAS，首个基于 mesh 的通用先验模型（UPM），通过分层表征将人脸和头发解耦为独立分支，支持实时渲染（移动端 45 FPS）和跨身份泛化，显著提升头发动态和面部表情迁移质量。
+  [CVPR 2025][3D视觉][codec avatar] 提出 LUCAS，首个将人脸和头发解耦为分层 mesh 的通用先验 Avatar 模型，通过共享表情编码 + 独立解码实现自然的面部-头发交互，同时支持实时 mesh 渲染（45 FPS mobile）和高保真 Gaussian 渲染，在跨身份零样本驱动中达到 SOTA。
 tags:
   - CVPR 2025
-  - 3D avatar
+  - 3D视觉
   - codec avatar
   - layered representation
-  - face-hair disentanglement
-  - Gaussian splatting
   - universal prior model
+  - face-hair disentanglement
+  - Pixel Codec Avatar
+  - Gaussian splatting
+  - real-time rendering
 ---
 
 # LUCAS: Layered Universal Codec Avatars
@@ -136,10 +138,10 @@ LUCAS gs 通用模型超越 URAvatar +1.4 dB PSNR。
 
 ## 相关论文
 
+- [SimAvatar: Simulation-Ready Avatars with Layered Hair and Clothing](simavatar_simulation-ready_avatars_with_layered_hair_and_clothing.md)
+- [Volumetric Surfaces: Representing Fuzzy Geometries with Layered Meshes](volumetric_surfaces_representing_fuzzy_geometries_with_layered_meshes.md)
 - [Layered Motion Fusion: Lifting Motion Segmentation to 3D in Egocentric Videos](layered_motion_fusion_lifting_motion_segmentation_to_3d_in_egocentric_videos.md)
 - [GASP: Gaussian Avatars with Synthetic Priors](gasp_gaussian_avatars_with_synthetic_priors.md)
-- [CLIPGaussian: Universal and Multimodal Style Transfer Based on Gaussian Splatting](../../NeurIPS2025/3d_vision/clipgaussian_universal_and_multimodal_style_transfer_based_on_gaussian_splatting.md)
-- [DUNE: Distilling a Universal Encoder from Heterogeneous 2D and 3D Teachers](dune_distilling_a_universal_encoder_from_heterogeneous_2d_and_3d_teachers.md)
-- [3D Gaussian Head Avatars with Expressive Dynamic Appearances by Compact Tensorial Representations](3d_gaussian_head_avatars_with_expressive_dynamic_appearances_by_compact_tensoria.md)
+- [UniK3D: Universal Camera Monocular 3D Estimation](unik3d_universal_camera_monocular_3d_estimation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SpaRE: Enhancing Spatial Reasoning in Vision-Language Models with Synthetic Data
 description: >-

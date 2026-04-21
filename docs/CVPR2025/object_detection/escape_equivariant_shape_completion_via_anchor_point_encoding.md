@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ESCAPE: Equivariant Shape Completion via Anchor Point Encoding
 description: >-

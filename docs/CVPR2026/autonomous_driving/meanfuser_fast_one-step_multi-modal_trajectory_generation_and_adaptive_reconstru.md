@@ -1,16 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] MeanFuser: Fast One-Step Multi-Modal Trajectory Generation and Adaptive Reconstruction via MeanFlow for End-to-End Autonomous Driving
 description: >-
-  [CVPR 2026][自动驾驶][轨迹规划] 提出MeanFuser，首个将MeanFlow范式引入端到端自动驾驶的框架，通过高斯混合噪声(GMN)替代离散锚点词汇表实现连续轨迹空间建模，利用MeanFlow Identity实现一步采样消除ODE数值误差，设计自适应重建模块(ARM)隐式选择或重构最优轨迹，在NAVSIM上达到89.0 PDMS/89.5 EPDMS且推理速度59 FPS。
+  [CVPR 2026][自动驾驶][端到端规划] 提出MeanFuser端到端自动驾驶框架，用高斯混合噪声替代离散轨迹词汇表实现连续多模态轨迹建模，通过MeanFlow Identity实现一步采样消除ODE数值误差，并设计ARM模块隐式判断是选择现有proposal还是重构新轨迹，在NAVSIM上以仅RGB输入+ResNet-34骨干达到89.0 PDMS且59 FPS。
 tags:
   - CVPR 2026
   - 自动驾驶
-  - 轨迹规划
-  - MeanFlow
-  - 高斯混合模型
-  - 一步采样
   - 端到端规划
+  - MeanFlow
+  - 高斯混合噪声
+  - 一步采样
+  - 自适应轨迹重建
 ---
 
 # MeanFuser: Fast One-Step Multi-Modal Trajectory Generation and Adaptive Reconstruction via MeanFlow for End-to-End Autonomous Driving

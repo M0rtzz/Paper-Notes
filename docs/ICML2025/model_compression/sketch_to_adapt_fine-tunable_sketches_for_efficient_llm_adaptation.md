@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sketch to Adapt: Fine-Tunable Sketches for Efficient LLM Adaptation
 description: >-
@@ -140,10 +140,10 @@ SpaLLM 的流程分为两个阶段：
 
 ## 相关论文
 
+- [Sketch Down the FLOPs: Towards Efficient Networks for Human Sketch](../../CVPR2025/model_compression/sketch_down_the_flops_towards_efficient_networks_for_human_sketch.md)
 - [BlockDialect: Block-wise Fine-grained Mixed Format Quantization for Energy-Efficient LLM Inference](blockdialect_block-wise_fine-grained_mixed_format_quantization_for_energy-effici.md)
-- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](../../NeurIPS2025/model_compression/reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
 - [Parameter-Efficient Fine-Tuning of State Space Models](parameter-efficient_fine-tuning_of_state_space_models.md)
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](../../NeurIPS2025/model_compression/reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
 - [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](../../NeurIPS2025/model_compression/data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
-- [Lego Sketch: A Scalable Memory-augmented Neural Network for Sketching Data Streams](lego_sketch_a_scalable_memory-augmented_neural_network_for_sketching_data_stream.md)
 
 <!-- RELATED:END -->

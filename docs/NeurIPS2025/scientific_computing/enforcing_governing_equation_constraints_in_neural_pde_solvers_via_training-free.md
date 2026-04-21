@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enforcing Governing Equation Constraints in Neural PDE Solvers via Training-free Projections
 description: >-

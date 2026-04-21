@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A2D: Any-Order, Any-Step Safety Alignment for Diffusion Language Models
 description: >-
@@ -119,7 +119,7 @@ A2D 修改了标准 masked diffusion 训练目标：(1) 对有害文本，所有
 - [GuardAlign: Test-time Safety Alignment in Multimodal Large Language Models](guardalign_test-time_safety_alignment_in_multimodal_large_language_models.md)
 - [Mitigating the Safety Alignment Tax with Null-Space Constrained Policy Optimization](mitigating_the_safety_alignment_tax_with_null-space_constrained_policy_optimizat.md)
 - [Superficial Safety Alignment Hypothesis](superficial_safety_alignment_hypothesis.md)
-- [Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization](../../CVPR2025/llm_alignment/aesthetic_post-training_diffusion_models_from_generic_preferences_with_step-by-s.md)
 - [EASE: Practical and Efficient Safety Alignment for Small Language Models](../../AAAI2026/llm_alignment/ease_practical_and_efficient_safety_alignment_for_small_language_models.md)
+- [Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization](../../CVPR2025/llm_alignment/aesthetic_post-training_diffusion_models_from_generic_preferences_with_step-by-s.md)
 
 <!-- RELATED:END -->

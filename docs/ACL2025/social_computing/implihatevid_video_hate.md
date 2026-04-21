@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ImpliHateVid: Implicit Hate Speech Detection in Videos
 description: >-

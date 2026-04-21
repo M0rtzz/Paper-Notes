@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Closing the Modality Gap Aligns Group-Wise Semantics
 description: >-

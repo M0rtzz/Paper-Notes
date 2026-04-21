@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spectral Gaps and Spatial Priors: Studying Hyperspectral Downstream Adaptation Using TerraMind
 description: >-
@@ -124,8 +124,8 @@ $$\hat{w}_{j,k} = \frac{\phi_k(\lambda_j)}{\sum_{m=1}^{C_{in}} w_{m,k}}$$
 
 - [MapEval: A Map-Based Evaluation of Geo-Spatial Reasoning in Foundation Models](../../ICML2025/remote_sensing/mapeval_a_map-based_evaluation_of_geo-spatial_reasoning_in_foundation_models.md)
 - [No Labels, No Look-Ahead: Unsupervised Online Video Stabilization with Classical Priors](../../CVPR2026/remote_sensing/no_labels_no_look-ahead_unsupervised_online_video_stabilization_with_classical_p.md)
-- [M3SR: Multi-Scale Multi-Perceptual Mamba for Efficient Spectral Reconstruction](../../AAAI2026/remote_sensing/m3sr_multi-scale_multi-perceptual_mamba_for_efficient_spectral_reconstruction.md)
 - [Exploring Spatiotemporal Feature Propagation for Video-Level Compressive Spectral Reconstruction](../../CVPR2026/remote_sensing/exploring_spatiotemporal_feature_propagation_for_video-level_compressive_spectra.md)
+- [M3SR: Multi-Scale Multi-Perceptual Mamba for Efficient Spectral Reconstruction](../../AAAI2026/remote_sensing/m3sr_multi-scale_multi-perceptual_mamba_for_efficient_spectral_reconstruction.md)
 - [MetaSpectra+: A Compact Broadband Metasurface Camera for Snapshot Hyperspectral+ Imaging](../../CVPR2026/remote_sensing/metaspectra_a_compact_broadband_metasurface_camera.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] M-GRPO: Stabilizing Self-Supervised Reinforcement Learning for Large Language Models with Momentum-Anchored Policy Optimization
 description: >-
@@ -154,10 +154,10 @@ Rollout 数量缩放分析（M-GRPO+IQR）：
 
 ## 相关论文
 
-- [Neighbor GRPO: Contrastive ODE Policy Optimization Aligns Flow Models](../../CVPR2026/object_detection/neighbor_grpo_contrastive_ode_policy_optimization_aligns_flow_models.md)
 - [XIFBench: Evaluating Large Language Models on Multilingual Instruction Following](xifbench_evaluating_large_language_models_on_multilingual_instruction_following.md)
 - [SSTAG: Structure-Aware Self-Supervised Learning Method for Text-Attributed Graphs](sstag_structure-aware_self-supervised_learning_method_for_text-attributed_graphs.md)
-- [Large Self-Supervised Models Bridge the Gap in Domain Adaptive Object Detection](../../CVPR2025/object_detection/large_self-supervised_models_bridge_the_gap_in_domain_adaptive_object_detection.md)
+- [Preference Learning with Lie Detectors can Induce Honesty or Evasion](preference_learning_with_lie_detectors_can_induce_honesty_or_evasion.md)
 - [Sample Complexity of Distributionally Robust Average-Reward Reinforcement Learning](sample_complexity_of_distributionally_robust_average-reward_reinforcement_learni.md)
+- [SAFE: Multitask Failure Detection for Vision-Language-Action Models](safe_multitask_failure_detection_for_vision-language-action_models.md)
 
 <!-- RELATED:END -->

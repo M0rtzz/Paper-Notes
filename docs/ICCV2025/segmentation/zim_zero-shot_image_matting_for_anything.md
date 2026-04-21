@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ZIM: Zero-Shot Image Matting for Anything
 description: >-
@@ -129,10 +129,10 @@ ZIM基于SAM架构，包含四个组件：(1) 图像编码器（ViT-B, stride 16
 
 ## 相关论文
 
+- [Robust 3D Shape Reconstruction in Zero-Shot from a Single Image in the Wild](../../CVPR2025/segmentation/robust_3d_shape_reconstruction_in_zero-shot_from_a_single_image_in_the_wild.md)
 - [DSS: Discover, Segment, and Select - A Progressive Mechanism for Zero-shot Camouflaged Object Segmentation](../../CVPR2026/segmentation/dss_discover_segment_select_zero_shot_cos.md)
 - [DSS: Discover, Segment, and Select for Zero-shot Camouflaged Object Segmentation](../../CVPR2026/segmentation/discover_segment_and_select_a_progressive_mechanism_for_zero-shot_camouflaged_ob.md)
-- [Efficient and Versatile Robust Fine-Tuning of Zero-shot Models](../../ECCV2024/segmentation/efficient_and_versatile_robust_fine-tuning_of_zero-shot_models.md)
 - [Object-level Correlation for Few-Shot Segmentation](object-level_correlation_for_few-shot_segmentation.md)
-- [OmniSAM: Omnidirectional Segment Anything Model for UDA in Panoramic Semantic Segmentation](omnisam_omnidirectional_segment_anything_model_for_uda_in_panoramic_semantic_seg.md)
+- [MOVE: Motion-Guided Few-Shot Video Object Segmentation](move_motion-guided_few-shot_video_object_segmentation.md)
 
 <!-- RELATED:END -->

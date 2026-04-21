@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Advancing Safe Mechanical Ventilation Using Offline RL With Hybrid Actions and Clinically Aligned Rewards
 description: >-

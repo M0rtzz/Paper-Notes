@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Synergy of Sight and Semantics: Visual Intention Understanding with CLIP
 description: >-

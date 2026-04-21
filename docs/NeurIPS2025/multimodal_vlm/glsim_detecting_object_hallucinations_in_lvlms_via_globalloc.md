@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GLSim: Detecting Object Hallucinations in LVLMs via Global-Local Similarity
 description: >-

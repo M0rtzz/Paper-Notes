@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generative Photomontage
 description: >-
@@ -122,9 +122,9 @@ tags:
 ## 相关论文
 
 - [Generative Image Layer Decomposition with Visual Effects](generative_image_layer_decomposition_with_visual_effects.md)
-- [Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
 - [GIF: Generative Inspiration for Face Recognition at Scale](gif_generative_inspiration_for_face_recognition_at_scale.md)
-- [GCC: Generative Color Constancy via Diffusing a Color Checker](gcc_generative_color_constancy_via_diffusing_a_color_checker.md)
-- [Can Generative Video Models Help Pose Estimation?](can_generative_video_models_help_pose_estimation.md)
+- [Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
+- [Symbolic Representation for Any-to-Any Generative Tasks](symbolic_representation_for_any-to-any_generative_tasks.md)
+- [Goku: Flow Based Video Generative Foundation Models](goku_flow_based_video_generative_foundation_models.md)
 
 <!-- RELATED:END -->

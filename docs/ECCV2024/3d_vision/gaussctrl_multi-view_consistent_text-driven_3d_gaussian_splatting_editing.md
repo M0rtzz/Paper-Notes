@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GaussCtrl: Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing
 description: >-

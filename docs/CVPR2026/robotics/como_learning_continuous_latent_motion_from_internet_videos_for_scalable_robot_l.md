@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoMo: Learning Continuous Latent Motion from Internet Videos for Scalable Robot Learning
 description: >-

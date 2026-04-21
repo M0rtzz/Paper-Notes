@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning 3D Geometry and Feature Consistent Gaussian Splatting for Object Removal
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multimodal Latent Diffusion Model for Complex Sewing Pattern Generation
 description: >-
@@ -151,7 +151,7 @@ SewingLDM 包含三个核心组件：
 - [MamTiff-CAD: Multi-Scale Latent Diffusion with Mamba+ for Complex Parametric Sequence](mamtiff-cad_multi-scale_latent_diffusion_with_mamba_for_complex_parametric_seque.md)
 - [MotionStreamer: Streaming Motion Generation via Diffusion-based Autoregressive Model in Causal Latent Space](motionstreamer_streaming_motion_generation_via_diffusion-based_autoregressive_mo.md)
 - [What's in a Latent? Leveraging Diffusion Latent Space for Domain Generalization](whats_in_a_latent_leveraging_diffusion_latent_space_for_domain_generalization.md)
+- [WeGen: A Unified Model for Interactive Multimodal Generation as We Chat](../../CVPR2025/image_generation/wegen_a_unified_model_for_interactive_multimodal_generation_as_we_chat.md)
 - [Enhancing Dance-to-Music Generation via Negative Conditioning Latent Diffusion Model](../../CVPR2025/image_generation/enhancing_dance-to-music_generation_via_negative_conditioning_latent_diffusion_m.md)
-- [Latent Diffusion Models with Masked AutoEncoders](latent_diffusion_models_with_masked_autoencoders.md)
 
 <!-- RELATED:END -->

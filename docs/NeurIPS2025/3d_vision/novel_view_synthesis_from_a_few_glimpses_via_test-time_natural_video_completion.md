@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Novel View Synthesis from A Few Glimpses via Test-Time Natural Video Completion
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Harmonic Structure of Information Contours
 description: >-

@@ -1,12 +1,10 @@
 ---
-title: "DUNE: Distilling a Universal Encoder from Heterogeneous 2D and 3D Teachers"
-conference: "CVPR 2025"
-arXiv: "2503.14405"
-link: "https://arxiv.org/abs/2503.14405"
-code: "https://europe.naverlabs.com/dune"
-domain: "3D视觉"
-keywords: ["知识蒸馏", "多教师蒸馏", "通用编码器", "2D-3D统一", "视觉基础模型"]
-rating: ⭐⭐⭐⭐
+title: >-
+  [论文解读] DUNE: Distilling a Universal Encoder from Heterogeneous 2D and 3D Teachers
+description: >-
+  [3D视觉] DUNE 提出了异构教师联合蒸馏（co-distillation）框架，将来自不同任务和数据域的 2D（DINOv2）与 3D（MASt3R、Multi-HMR）教师模型统一蒸馏为一个 ViT-Base 通用编码器，在语义分割、深度估计、3D 重建和人体姿态恢复等多任务上均达到或超越各自 ViT-Large 教师的性能。
+tags:
+  - 3D视觉
 ---
 
 # DUNE: Distilling a Universal Encoder from Heterogeneous 2D and 3D Teachers
@@ -128,10 +126,10 @@ $$\mathcal{L}_{\text{distil}} = \sum_{i=1}^{N} \mathcal{L}_{cos}(f_i(x), t_i(x))
 
 ## 相关论文
 
-- [LUCAS: Layered Universal Codec Avatars](lucas_layered_universal_codec_avatars.md)
-- [Multi-Scale Finetuning for Encoder-based Time Series Foundation Models](../../NeurIPS2025/3d_vision/multi-scale_finetuning_for_encoder-based_time_series_foundation_models.md)
-- [InteractVLM: 3D Interaction Reasoning from 2D Foundational Models](interactvlm_3d_interaction_reasoning_from_2d_foundational_models.md)
 - [Universal Beta Splatting](../../ICLR2026/3d_vision/universal_beta_splatting.md)
-- [Articulate3D: Holistic Understanding of 3D Scenes as Universal Scene Description](../../ICCV2025/3d_vision/articulate3d_holistic_understanding_of_3d_scenes_as_universa.md)
+- [CutS3D: Cutting Semantics in 3D for 2D Unsupervised Instance Segmentation](../../ICCV2025/3d_vision/cuts3d_cutting_semantics_in_3d_for_2d_unsupervised_instance_segmentation.md)
+- [Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation](../../ICCV2025/3d_vision/repurposing_2d_diffusion_models_with_gaussian_atlas_for_3d_generation.md)
+- [Dual Exposure Stereo for Extended Dynamic Range 3D Imaging](dual_exposure_stereo_for_extended_dynamic_range_3d_imaging.md)
+- [DualPM: Dual Posed-Canonical Point Maps for 3D Shape and Pose Reconstruction](dualpm_dual_posed-canonical_point_maps_for_3d_shape_and_pose_reconstruction.md)
 
 <!-- RELATED:END -->

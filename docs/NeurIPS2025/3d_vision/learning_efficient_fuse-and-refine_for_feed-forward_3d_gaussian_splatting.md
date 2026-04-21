@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Efficient Fuse-and-Refine for Feed-Forward 3D Gaussian Splatting
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Score-informed Neural Operator for Enhancing Ordering-based Causal Discovery
 description: >-
@@ -127,7 +127,7 @@ SciNO 分两步：(1) 在光滑函数空间中训练神经算子来近似 score 
 - [Neural Entropy](neural_entropy.md)
 - [What We Don't C: Manifold Disentanglement for Structured Discovery](what_we_dont_c_manifold_disentanglement_for_structured_discovery.md)
 - [Flow Matching Neural Processes](flow_matching_neural_processes.md)
-- [A Connection Between Score Matching and Local Intrinsic Dimension](a_connection_between_score_matching_and_local_intrinsic_dimension.md)
 - [Coupling Generative Modeling and an Autoencoder with the Causal Bridge](coupling_generative_modeling_and_an_autoencoder_with_the_causal_bridge.md)
+- [A Connection Between Score Matching and Local Intrinsic Dimension](a_connection_between_score_matching_and_local_intrinsic_dimension.md)
 
 <!-- RELATED:END -->

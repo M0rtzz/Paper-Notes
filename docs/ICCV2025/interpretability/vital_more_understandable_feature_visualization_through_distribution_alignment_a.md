@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VITAL: More Understandable Feature Visualization through Distribution Alignment and Relevant Information Flow
 description: >-
@@ -145,9 +145,9 @@ $$\mathcal{L}_{\text{VITAL}}(x^*, \mathcal{X}_{ref}) = \mathcal{L}_{\text{SM}}(x
 ## 相关论文
 
 - [Distribution-Based Feature Attribution for Explaining the Predictions of Any Classifier](../../AAAI2026/interpretability/distribution-based_feature_attribution_for_explaining_the_predictions_of_any_cla.md)
+- [Towards Human-Understandable Multi-Dimensional Concept Discovery](../../CVPR2025/interpretability/towards_human-understandable_multi-dimensional_concept_discovery.md)
 - [Unsupervised Feature Selection Through Group Discovery](../../AAAI2026/interpretability/unsupervised_feature_selection_through_group_discovery.md)
 - [ArgoTweak: Towards Self-Updating HD Maps through Structured Priors](argotweak_towards_self-updating_hd_maps_through_structured_priors.md)
 - [Out of Control -- Why Alignment Needs Formal Control Theory (and an Alignment Control Stack)](../../NeurIPS2025/interpretability/out_of_control_--_why_alignment_needs_formal_control_theory_and_an_alignment_con.md)
-- [A is for Absorption: Studying Feature Splitting and Absorption in Sparse Autoencoders](../../NeurIPS2025/interpretability/a_is_for_absorption_studying_feature_splitting_and_absorption_in_sparse_autoenco.md)
 
 <!-- RELATED:END -->

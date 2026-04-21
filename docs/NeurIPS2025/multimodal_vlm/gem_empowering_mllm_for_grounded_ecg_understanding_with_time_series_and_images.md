@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GEM: Empowering MLLM for Grounded ECG Understanding with Time Series and Images
 description: >-

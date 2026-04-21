@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Nonlinearly Preconditioned Gradient Methods: Momentum and Stochastic Analysis
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HPFF: Hierarchical Locally Supervised Learning with Patch Feature Fusion
 description: >-

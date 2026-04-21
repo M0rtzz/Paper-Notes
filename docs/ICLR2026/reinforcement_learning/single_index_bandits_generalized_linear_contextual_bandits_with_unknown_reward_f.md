@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Single Index Bandits: Generalized Linear Contextual Bandits with Unknown Reward Functions
 description: >-

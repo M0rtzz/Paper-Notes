@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Optimistic Task Inference for Behavior Foundation Models
 description: >-

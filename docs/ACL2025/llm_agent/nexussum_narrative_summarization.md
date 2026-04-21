@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NexusSum: Hierarchical LLM Agents for Long-Form Narrative Summarization
 description: >-
@@ -123,6 +123,6 @@ MENSA 数据集上各模块贡献（逐步累加）：
 - [Deep Video Discovery: Agentic Search with Tool Use for Long-form Video Understanding](../../NeurIPS2025/llm_agent/deep_video_discovery_agentic_search_with_tool_use_for_longfo.md)
 - [Self-Taught Agentic Long-Context Understanding](self_taught_agentic_long_ctx.md)
 - [Multiple LLM Agents Debate for Equitable Cultural Alignment](multiple_llm_agents_debate_for_equitable.md)
-- [Beyond Numeric Rewards: In-Context Dueling Bandits with LLM Agents](beyond_numeric_rewards_in-context_dueling_bandits_with_llm_agents.md)
+- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
 
 <!-- RELATED:END -->

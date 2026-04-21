@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LACA: Improving Cross-lingual Aspect-Based Sentiment Analysis with LLM Data Augmentation
 description: >-

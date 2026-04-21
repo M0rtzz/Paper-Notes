@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Back to Point: Exploring Point-Language Models for Zero-Shot 3D Anomaly Detection
 description: >-

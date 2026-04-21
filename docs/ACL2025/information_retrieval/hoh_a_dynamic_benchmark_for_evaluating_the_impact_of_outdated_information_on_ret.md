@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on Retrieval-Augmented Generation
 description: >-

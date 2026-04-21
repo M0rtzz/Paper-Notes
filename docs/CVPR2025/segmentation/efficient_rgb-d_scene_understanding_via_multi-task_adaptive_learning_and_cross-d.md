@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance
 description: >-
@@ -168,10 +168,10 @@ RGBD 输入 → 改进融合编码器（4 阶段，基于 FasterNet-M）→ 三�
 
 ## 相关论文
 
-- [Dual-Agent Optimization framework for Cross-Domain Few-Shot Segmentation](dual-agent_optimization_framework_for_cross-domain_few-shot_segmentation.md)
-- [Holmes-VAU: Towards Long-term Video Anomaly Understanding at Any Granularity](holmes-vau_towards_long-term_video_anomaly_understanding_at_any_granularity.md)
-- [COSMOS: Cross-Modality Self-Distillation for Vision Language Pre-training](cosmos_cross-modality_self-distillation_for_vision_language_pre-training.md)
-- [HFP-SAM: Hierarchical Frequency Prompted SAM for Efficient Marine Animal Segmentation](hfp-sam_hierarchical_frequency_prompted_sam_for_efficient_marine_animal_segmenta.md)
-- [G2HFNet: GeoGran-Aware Hierarchical Feature Fusion Network for Salient Object Detection in Optical Remote Sensing Images](binwang2hfnet_geogran-aware_hierarchical_feature_fusion_network_for_salient_obje.md)
+- [Towards Generalizable Scene Change Detection](towards_generalizable_scene_change_detection.md)
+- [Task-driven Image Fusion with Learnable Fusion Loss](task-driven_image_fusion_with_learnable_fusion_loss.md)
+- [SmartEraser: Remove Anything from Images using Masked-Region Guidance](smarteraser_remove_anything_from_images_using_masked-region_guidance.md)
+- [Scene-Centric Unsupervised Panoptic Segmentation](scene-centric_unsupervised_panoptic_segmentation.md)
+- [Scale Efficient Training for Large Datasets](scale_efficient_training_for_large_datasets.md)
 
 <!-- RELATED:END -->

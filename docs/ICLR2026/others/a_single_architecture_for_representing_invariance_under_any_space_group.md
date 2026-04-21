@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Single Architecture for Representing Invariance Under Any Space Group
 description: >-

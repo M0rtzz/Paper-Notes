@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Ctrl&Shift: High-Quality Geometry-Aware Object Manipulation in Visual Generation
 description: >-

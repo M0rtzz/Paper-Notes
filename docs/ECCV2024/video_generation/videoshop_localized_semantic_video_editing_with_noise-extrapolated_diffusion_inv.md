@@ -2,10 +2,9 @@
 title: >-
   [论文解读] Videoshop: Localized Semantic Video Editing with Noise-Extrapolated Diffusion Inversion
 description: >-
-  [ECCV 2024][图像生成] 提出Videoshop——一种免训练的局部语义视频编辑方法，用户可通过任意图像编辑工具修改视频首帧，系统基于噪声外推扩散反演和隐变量归一化技术，自动将编辑传播到所有帧，同时保持语义、空间和时序一致性，在10个指标上超越6个基线方法。
+  [ECCV 2024] 提出Videoshop——一种免训练的局部语义视频编辑方法，用户可通过任意图像编辑工具修改视频首帧，系统基于噪声外推扩散反演和隐变量归一化技术，自动将编辑传播到所有帧，同时保持语义、空间和时序一致性，在10个指标上超越6个基线方法。
 tags:
   - ECCV 2024
-  - 图像生成
 ---
 
 # Videoshop: Localized Semantic Video Editing with Noise-Extrapolated Diffusion Inversion
@@ -131,7 +130,7 @@ MagicBrush数据集定量对比（10个指标）：
 - [MagDiff: Multi-Alignment Diffusion for High-Fidelity Video Generation and Editing](magdiff_multi-alignment_diffusion_for_high-fidelity_video_generation_and_editing.md)
 - [VFusion3D: Learning Scalable 3D Generative Models from Video Diffusion Models](vfusion3d_learning_scalable_3d_generative_models_from_video_diffusion_models.md)
 - [MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model](mofa-video_controllable_image_animation_via_generative_motion_field_adaptions_in.md)
-- [DIVE: Taming DINO for Subject-Driven Video Editing](../../ICCV2025/video_generation/dive_taming_dino_for_subject-driven_video_editing.md)
+- [Visual Prompting for One-Shot Controllable Video Editing Without Inversion](../../CVPR2025/video_generation/visual_prompting_for_one-shot_controllable_video_editing_without_inversion.md)
 - [DreamMotion: Space-Time Self-Similar Score Distillation for Zero-Shot Video Editing](dreammotion_space-time_self-similar_score_distillation_for_zero-shot_video_editi.md)
 
 <!-- RELATED:END -->

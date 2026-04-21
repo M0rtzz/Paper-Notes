@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Mingle: Mixture of Null-Space Gated Low-Rank Experts for Test-Time Continual Model Merging
 description: >-
@@ -150,6 +150,6 @@ BWT(遗忘度量，越高越好)：Mingle在所有设定下BWT接近零(-0.1%到
 - [FW-Merging: Scaling Model Merging with Frank-Wolfe Optimization](../../ICCV2025/human_understanding/fw-merging_scaling_model_merging_with_frank-wolfe_optimization.md)
 - [A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](../../ICCV2025/human_understanding/a_qualityguided_mixture_of_scorefusion_experts_framework_for.md)
 - [Less is More: Efficient Model Merging with Binary Task Switch](../../CVPR2025/human_understanding/less_is_more_efficient_model_merging_with_binary_task_switch.md)
-- [K-DeCore: Facilitating Knowledge Transfer in Continual Structured Knowledge Reasoning](k-decore_facilitating_knowledge_transfer_in_continual_structured_knowledge_reaso.md)
+- [MoEE: Mixture of Emotion Experts for Audio-Driven Portrait Animation](../../CVPR2025/human_understanding/moee_mixture_of_emotion_experts_for_audio-driven_portrait_animation.md)
 
 <!-- RELATED:END -->

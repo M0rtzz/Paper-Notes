@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DISTA-Net: Dynamic Closely-Spaced Infrared Small Target Unmixing
 description: >-
@@ -136,8 +136,8 @@ $$\mathcal{L} = \mathcal{L}_{\text{discrepancy}} + \gamma \mathcal{L}_{\text{con
 
 - [Rethinking Evaluation of Infrared Small Target Detection](../../NeurIPS2025/llm_evaluation/rethinking_evaluation_of_infrared_small_target_detection.md)
 - [InterSyn: Interleaved Learning for Dynamic Motion Synthesis in the Wild](intersyn_interleaved_learning_for_dynamic_motion_synthesis_in_the_wild.md)
-- [Generative Zoo](generative_zoo.md)
+- [SVTRv2: CTC Beats Encoder-Decoder Models in Scene Text Recognition](svtrv2_ctc_beats_encoder-decoder_models_in_scene_text_recognition.md)
+- [On the Robustness Tradeoff in Fine-Tuning](on_the_robustness_tradeoff_in_fine-tuning.md)
 - [ODP-Bench: Benchmarking Out-of-Distribution Performance Prediction](odp-bench_benchmarking_out-of-distribution_performance_prediction.md)
-- [3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark](3dsrbench_a_comprehensive_3d_spatial_reasoning_benchmark.md)
 
 <!-- RELATED:END -->

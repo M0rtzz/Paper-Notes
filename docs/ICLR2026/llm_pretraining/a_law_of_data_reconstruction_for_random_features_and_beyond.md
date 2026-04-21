@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Law of Data Reconstruction for Random Features (and Beyond)
 description: >-

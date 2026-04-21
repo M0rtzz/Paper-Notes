@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adapter Naturally Serves as Decoupler for Cross-Domain Few-Shot Semantic Segmentation
 description: >-
@@ -155,9 +155,9 @@ SAM 扰动目标对比：
 ## 相关论文
 
 - [Self-Disentanglement and Re-Composition for Cross-Domain Few-Shot Segmentation](self-disentanglement_and_re-composition_for_cross-domain_few-shot_segmentation.md)
-- [Dual-Agent Optimization framework for Cross-Domain Few-Shot Segmentation](../../CVPR2025/segmentation/dual-agent_optimization_framework_for_cross-domain_few-shot_segmentation.md)
 - [Bridging Granularity Gaps: Hierarchical Semantic Learning for Cross-Domain Few-Shot Segmentation](../../AAAI2026/segmentation/bridging_granularity_gaps_hierarchical_semantic_learning_for_cross-domain_few-sh.md)
+- [Dual-Agent Optimization framework for Cross-Domain Few-Shot Segmentation](../../CVPR2025/segmentation/dual-agent_optimization_framework_for_cross-domain_few-shot_segmentation.md)
+- [The Devil is in Low-Level Features for Cross-Domain Few-Shot Segmentation](../../CVPR2025/segmentation/the_devil_is_in_low-level_features_for_cross-domain_few-shot_segmentation.md)
 - [Object-level Correlation for Few-Shot Segmentation](../../ICCV2025/segmentation/object-level_correlation_for_few-shot_segmentation.md)
-- [Mask-Adapter: The Devil is in the Masks for Open-Vocabulary Segmentation](../../CVPR2025/segmentation/mask-adapter_the_devil_is_in_the_masks_for_open-vocabulary_segmentation.md)
 
 <!-- RELATED:END -->

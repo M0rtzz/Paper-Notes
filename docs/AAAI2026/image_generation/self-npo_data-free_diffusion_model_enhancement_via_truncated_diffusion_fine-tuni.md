@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-NPO: Data-Free Diffusion Model Enhancement via Truncated Diffusion Fine-Tuning
 description: >-

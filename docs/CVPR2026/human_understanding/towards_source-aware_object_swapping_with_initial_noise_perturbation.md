@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Source-Aware Object Swapping with Initial Noise Perturbation
 description: >-
@@ -127,8 +127,8 @@ $$\hat{z}_T^H[c,k] = \tilde{z}_T^H[c,\pi(k)]$$
 
 - [Transferable Backdoor Attacks for Code Models via Sharpness-Aware Adversarial Perturbation](../../AAAI2026/human_understanding/transferable_backdoor_attacks_for_code_models_via_sharpness-aware_adversarial_pe.md)
 - [COG: Confidence-aware Optimal Geometric Correspondence for Unsupervised Single-reference Novel Object Pose Estimation](cog_confidence-aware_optimal_geometric_correspondence_for_unsupervised_single-re.md)
-- [Controllable and Expressive One-Shot Video Head Swapping](../../ICCV2025/human_understanding/controllable_and_expressive_one-shot_video_head_swapping.md)
 - [SAMO: A Lightweight Sharpness-Aware Approach for Multi-Task Optimization with Joint Global-Local Perturbation](../../ICCV2025/human_understanding/samo_a_lightweight_sharpness-aware_approach_for_multi-task_optimization_with_joi.md)
-- [PAD-Hand: Physics-Aware Diffusion for Hand Motion Recovery](pad-hand_physics-aware_diffusion_for_hand_motion_recovery.md)
+- [Zero-Shot Head Swapping in Real-World Scenarios](../../CVPR2025/human_understanding/zero-shot_head_swapping_in_real-world_scenarios.md)
+- [Controllable and Expressive One-Shot Video Head Swapping](../../ICCV2025/human_understanding/controllable_and_expressive_one-shot_video_head_swapping.md)
 
 <!-- RELATED:END -->

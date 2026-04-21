@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Understanding Co-speech Gestures in-the-wild
 description: >-

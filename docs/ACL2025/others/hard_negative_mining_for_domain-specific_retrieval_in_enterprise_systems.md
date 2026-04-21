@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hard Negative Mining for Domain-Specific Retrieval in Enterprise Systems
 description: >-

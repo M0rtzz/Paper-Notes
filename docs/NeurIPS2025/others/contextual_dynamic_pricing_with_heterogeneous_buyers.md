@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Contextual Dynamic Pricing with Heterogeneous Buyers
 description: >-
@@ -126,8 +126,8 @@ $d=1$ 时，结合方差感知置信区间的自适应离散化：
 
 - [Brain-Like Processing Pathways Form in Models With Heterogeneous Experts](brain-like_processing_pathways_form_in_models_with_heterogeneous_experts.md)
 - [ConceptCarve: Dynamic Realization of Evidence](../../ACL2025/others/conceptcarve_dynamic_realization_of_evidence.md)
-- [You Share Beliefs, I Adapt: Progressive Heterogeneous Collaborative Perception](../../ICCV2025/others/you_share_beliefs_i_adapt_progressive_heterogeneous_collaborative_perception.md)
 - [Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](../../ACL2025/others/federated_lora_heterogeneous.md)
+- [You Share Beliefs, I Adapt: Progressive Heterogeneous Collaborative Perception](../../ICCV2025/others/you_share_beliefs_i_adapt_progressive_heterogeneous_collaborative_perception.md)
 - [Area-Optimal Control Strategies for Heterogeneous Multi-Agent Pursuit](../../AAAI2026/others/area-optimal_control_strategies_for_heterogeneous_multi-agen.md)
 
 <!-- RELATED:END -->

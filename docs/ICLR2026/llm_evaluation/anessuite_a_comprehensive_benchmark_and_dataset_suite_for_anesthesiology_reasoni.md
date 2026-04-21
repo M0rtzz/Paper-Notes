@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] AnesSuite: A Comprehensive Benchmark and Dataset Suite for Anesthesiology Reasoning
 description: >-

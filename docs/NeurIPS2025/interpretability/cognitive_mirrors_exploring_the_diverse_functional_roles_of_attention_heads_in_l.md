@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Cognitive Mirrors: Exploring the Diverse Functional Roles of Attention Heads in LLM Reasoning
 description: >-

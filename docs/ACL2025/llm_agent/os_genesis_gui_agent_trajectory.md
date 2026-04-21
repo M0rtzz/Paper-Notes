@@ -2,9 +2,15 @@
 title: >-
   [论文解读] OS-Genesis: Automating GUI Agent Trajectory Construction via Reverse Task Synthesis
 description: >-
-  [LLM Agent] 提出 OS-Genesis，一种交互驱动的 GUI Agent 轨迹合成 pipeline，通过先让 agent 在环境中探索交互再反向推导任务（Reverse Task Synthesis），结合轨迹奖励模型 (TRM) 过滤质量，生成高质量多样化的训练轨迹，在 AndroidWorld 上性能接近翻倍。
+  [ACL 2025][LLM Agent][GUI Agent] 提出 OS-Genesis，一种交互驱动的 GUI Agent 轨迹合成 pipeline，通过先让 agent 在环境中探索交互再反向推导任务（Reverse Task Synthesis），结合轨迹奖励模型 (TRM) 过滤质量，生成高质量多样化的训练轨迹，在 AndroidWorld 上性能接近翻倍。
 tags:
+  - ACL 2025
   - LLM Agent
+  - GUI Agent
+  - Trajectory Synthesis
+  - Reverse Task Synthesis
+  - VLM
+  - Reward Model
 ---
 
 # OS-Genesis: Automating GUI Agent Trajectory Construction via Reverse Task Synthesis
@@ -114,10 +120,10 @@ OS-Genesis 包含三个核心阶段：(1) **交互驱动的功能发现** ——
 
 ## 相关论文
 
-- [OS Agents: A Survey on MLLM-based Agents for General Computing Devices Use](os_agents_survey_mllm.md)
-- [AndroidGen: Building an Android Language Agent under Data Scarcity](androidgen_agent_data_scarcity.md)
-- [METAL: A Multi-Agent Framework for Chart Generation with Test-Time Scaling](metal_a_multi-agent_framework_for_chart_generation_with_test-time_scaling.md)
-- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
+- [OS-Kairos: Adaptive Interaction for MLLM-Powered GUI Agents](os-kairos_adaptive_interaction_for_mllm-powered_gui_agents.md)
 - [HATS: Hardness-Aware Trajectory Synthesis for GUI Agents](../../CVPR2026/llm_agent/hats_hardness-aware_trajectory_synthesis_for_gui_agents.md)
+- [Explorer: Scaling Exploration-Driven Web Trajectory Synthesis for Multimodal Web Agents](explorer_scaling_exploration-driven_web_trajectory_synthesis_for_multimodal_web_.md)
+- [GUI-explorer: Autonomous Exploration and Mining of Transition-aware Knowledge for GUI Agent](gui_explorer_autonomous.md)
+- [GUICourse: From General Vision Language Model to Versatile GUI Agent](guicourse_from_general_vision_language_model_to_versatile_gui_agent.md)
 
 <!-- RELATED:END -->

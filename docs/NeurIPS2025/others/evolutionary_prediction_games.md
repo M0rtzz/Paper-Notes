@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Evolutionary Prediction Games
 description: >-

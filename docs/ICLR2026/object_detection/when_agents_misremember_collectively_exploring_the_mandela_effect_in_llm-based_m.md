@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When Agents "Misremember" Collectively: Exploring the Mandela Effect in LLM-based Multi-Agent Systems
 description: >-
@@ -153,6 +153,6 @@ $$\sigma_{max} = |(\mathcal{Q}_{\times}^{GS} \cup \mathcal{Q}_{\times}^{GL} \cup
 - [When Hallucination Costs Millions: Benchmarking AI Agents in High-Stakes Adversarial Financial Markets](../../AAAI2026/object_detection/when_hallucination_costs_millions_benchmarking_ai_agents_in_high-stakes_adversar.md)
 - [What Layers When: Learning to Skip Compute in LLMs with Residual Gates](what_layers_when_learning_to_skip_compute_in_llms_with_residual_gates.md)
 - [Is Your Paper Being Reviewed by an LLM? Benchmarking AI Text Detection in Peer Review](is_your_paper_being_reviewed_by_an_llm_benchmarking_ai_text_detection_in_peer_re.md)
-- [FusionAgent: A Multimodal Agent with Dynamic Model Selection for Human Recognition](../../CVPR2026/object_detection/fusionagent_a_multimodal_agent_with_dynamic_model_selection_for_human_recognitio.md)
+- [MCCD: Multi-Agent Collaboration-based Compositional Diffusion for Complex Text-to-Image Generation](../../CVPR2025/object_detection/mccd_multi-agent_collaboration-based_compositional_diffusion_for_complex_text-to.md)
 
 <!-- RELATED:END -->

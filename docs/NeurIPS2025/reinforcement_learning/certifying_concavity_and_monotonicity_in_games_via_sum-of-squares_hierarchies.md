@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Certifying Concavity and Monotonicity in Games via Sum-of-Squares Hierarchies
 description: >-

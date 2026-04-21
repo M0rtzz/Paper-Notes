@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] APPLE: Attribute-Preserving Pseudo-Labeling for Diffusion-Based Face Swapping
 description: >-

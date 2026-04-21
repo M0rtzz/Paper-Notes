@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Effortless Active Labeling for Long-Term Test-Time Adaptation
 description: >-

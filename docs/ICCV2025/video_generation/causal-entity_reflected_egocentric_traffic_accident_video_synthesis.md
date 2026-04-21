@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Causal-Entity Reflected Egocentric Traffic Accident Video Synthesis
 description: >-
@@ -117,6 +117,6 @@ CTS/CTG扩展到CogVideoX-2B和Latte后也取得一致显著提升。
 - [Adversarial Distribution Matching for Diffusion Distillation Towards Efficient Image and Video Synthesis](adversarial_distribution_matching_for_diffusion_distillation_towards_efficient_i.md)
 - [MIMO: Controllable Character Video Synthesis with Spatial Decomposed Modeling](../../CVPR2025/video_generation/mimo_controllable_character_video_synthesis_with_spatial_decomposed_modeling.md)
 - [Ca2-VDM: Efficient Autoregressive Video Diffusion Model with Causal Generation and Cache Sharing](../../ICML2025/video_generation/ca2-vdm_efficient_autoregressive_video_diffusion_model_with_causal_generation_an.md)
-- [LeviTor: 3D Trajectory Oriented Image-to-Video Synthesis](../../CVPR2025/video_generation/levitor_3d_trajectory_oriented_image-to-video_synthesis.md)
+- [Chain of Event-Centric Causal Thought for Physically Plausible Video Generation](../../CVPR2026/video_generation/chain_of_event-centric_causal_thought_for_physically_plausible_video_generation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Progress Driven Multi-Agent Curriculum
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VAGEN: Reinforcing World Model Reasoning for Multi-Turn VLM Agents
 description: >-

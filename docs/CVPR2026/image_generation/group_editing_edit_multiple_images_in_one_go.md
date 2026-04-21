@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Group Editing: Edit Multiple Images in One Go
 description: >-
@@ -118,6 +118,6 @@ tags:
 - [Language-Free Generative Editing from One Visual Example](language-free_generative_editing_from_one_visual_example.md)
 - [ChordEdit: One-Step Low-Energy Transport for Image Editing](chordedit_one-step_low-energy_transport_for_image_editing.md)
 - [SimLBR: Learning to Detect Fake Images by Learning to Detect Real Images](simlbr_learning_to_detect_fake_images_by_learning_to_detect_real_images.md)
-- [Low-Resolution Editing is All You Need for High-Resolution Editing](low-resolution_editing_is_all_you_need_for_high-resolution_editing.md)
+- [RewardFlow: Generate Images by Optimizing What You Reward](rewardflow_generate_images_by_optimizing_what_you_reward.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Breaking the Correlation Plateau: On the Optimization and Capacity Limits of Attention-Based Regressors
 description: >-
@@ -136,6 +136,6 @@ $$\mathcal{L}_{\text{Total}} = \mathcal{L}_{\text{MSE}} + \lambda_{\text{PCC}} \
 - [Spectral Attention Steering for Prompt Highlighting](spectral_attention_steering_for_prompt_highlighting.md)
 - [Soft Quality-Diversity Optimization](soft_quality-diversity_optimization.md)
 - [Prompt and Parameter Co-Optimization for Large Language Models](prompt_and_parameter_co-optimization_for_large_language_models.md)
-- [PaTH Attention: Position Encoding via Accumulating Householder Transformations](../../NeurIPS2025/llm_evaluation/path_attention_position_encoding_via_accumulating_householder_transformations.md)
+- [Prompt and Parameter Co-Optimization for Large Language Model Task Adaptation](prompt_and_parameter_co-optimization_for_large_language_model_task_adaptation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Empower Words: DualGround for Structured Phrase and Sentence-Level Temporal Grounding
 description: >-
@@ -133,9 +133,9 @@ DualGround在两个基准上的MR和HD任务均达到SOTA。
 ## 相关论文
 
 - [Moment Quantization for Video Temporal Grounding](../../ICCV2025/video_understanding/moment_quantization_for_video_temporal_grounding.md)
-- [VTimeCoT: Thinking by Drawing for Video Temporal Grounding and Reasoning](../../ICCV2025/video_understanding/vtimecot_thinking_by_drawing_for_video_temporal_grounding_and_reasoning.md)
 - [Disentangled Concepts Speak Louder Than Words: Explainable Video Action Recognition](disentangled_concepts_speak_louder_than_words_explainable_video_action_recogniti.md)
-- [SlotVTG: Object-Centric Adapter for Generalizable Video Temporal Grounding](../../CVPR2026/video_understanding/slotvtg_object-centric_adapter_for_generalizable_video_temporal_grounding.md)
-- [TimeExpert: An Expert-Guided Video LLM for Video Temporal Grounding](../../ICCV2025/video_understanding/timeexpert_an_expert-guided_video_llm_for_video_temporal_grounding.md)
+- [VTimeCoT: Thinking by Drawing for Video Temporal Grounding and Reasoning](../../ICCV2025/video_understanding/vtimecot_thinking_by_drawing_for_video_temporal_grounding_and_reasoning.md)
+- [Seq2Time: Sequential Knowledge Transfer for Video LLM Temporal Grounding](../../CVPR2025/video_understanding/seq2time_sequential_knowledge_transfer_for_video_llm_temporal_grounding.md)
+- [Number it: Temporal Grounding Videos like Flipping Manga](../../CVPR2025/video_understanding/number_it_temporal_grounding_videos_like_flipping_manga.md)
 
 <!-- RELATED:END -->

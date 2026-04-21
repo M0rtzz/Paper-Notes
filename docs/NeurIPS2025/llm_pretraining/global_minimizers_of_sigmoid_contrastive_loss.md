@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Global Minimizers of Sigmoid Contrastive Loss
 description: >-
@@ -164,7 +164,7 @@ $$\mathcal{L}^{RB-Sig}(\theta, \phi; t, b_{rel}) = \sum_{i} \log(1+\exp(-t\langl
 - [Training Dynamics Underlying Language Model Scaling Laws: Loss Deceleration and Zero-Sum Learning](../../ACL2025/llm_pretraining/training_dynamics_underlying_language_model_scaling_laws_loss_deceleration_and_z.md)
 - [Implicit Bias and Loss of Plasticity in Matrix Completion: Depth Promotes Low-Rank](../../ICLR2026/llm_pretraining/implicit_bias_and_loss_of_plasticity_in_matrix_completion_depth_promotes_low-ran.md)
 - [Gemstones: A Model Suite for Multi-Faceted Scaling Laws](gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)
-- [Superposition Yields Robust Neural Scaling](superposition_yields_robust_neural_scaling.md)
-- [Scaling Embedding Layers in Language Models](scaling_embedding_layers_in_language_models.md)
+- [Nemotron-CLIMB: CLustering-based Iterative Data Mixture Bootstrapping for Language Model Pre-training](nemotron-climb_clustering-based_iterative_data_mixture_bootstrapping_for_languag.md)
+- [Born a Transformer – Always a Transformer? On the Effect of Pretraining on Architectural Abilities](born_a_transformer_--_always_a_transformer_on_the_effect_of_pretraining_on_archi.md)
 
 <!-- RELATED:END -->

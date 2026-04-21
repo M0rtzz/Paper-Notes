@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SPAR: Single-Pass Any-Resolution ViT for Open-Vocabulary Segmentation
 description: >-

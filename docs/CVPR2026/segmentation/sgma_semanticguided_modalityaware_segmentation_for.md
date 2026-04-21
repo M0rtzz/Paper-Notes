@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SGMA: Semantic-Guided Modality-Aware Segmentation for Remote Sensing with Incomplete Multimodal Data
 description: >-

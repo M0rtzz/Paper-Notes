@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Open Vision Reasoner: Transferring Linguistic Cognitive Behavior for Visual Reasoning
 description: >-

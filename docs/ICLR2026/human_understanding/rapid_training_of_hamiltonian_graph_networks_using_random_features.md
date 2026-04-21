@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rapid Training of Hamiltonian Graph Networks using Random Features
 description: >-

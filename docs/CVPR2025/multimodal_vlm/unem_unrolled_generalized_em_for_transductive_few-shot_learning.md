@@ -1,7 +1,16 @@
 ---
-title: "UNEM: UNrolled Generalized EM for Transductive Few-Shot Learning"
-description: "提出UNEM，将广义EM算法展开为神经网络架构，自动学习类平衡和温度缩放超参数，在vision-only和vision-language少样本学习上大幅超越基线"
-tags: ["CVPR2025", "少样本学习", "EM算法", "算法展开", "超参数优化"]
+title: >-
+  [论文解读] UNEM: UNrolled Generalized EM for Transductive Few-Shot Learning
+description: >-
+  [CVPR 2025][多模态][转导式少样本学习] 提出UNEM，将广义EM（GEM）算法的每次迭代展开为神经网络的一层，通过端到端学习自动优化**类平衡超参数λ**和**温度缩放T**，在11个细粒度数据集上实现vision-language设置下平均77.8%的准确率（vs. EM-Dirichlet的73.6%），vision-only设置下提升最高达10%。
+tags:
+  - CVPR 2025
+  - 多模态
+  - 转导式少样本学习
+  - EM算法展开
+  - 超参数学习
+  - CLIP
+  - Dirichlet分布
 ---
 
 # UNEM: UNrolled Generalized EM for Transductive Few-Shot Learning
@@ -123,10 +132,10 @@ UNEM将广义EM算法的L次迭代展开为L层神经网络。每层对应一次
 
 ## 相关论文
 
-- [Visual and Semantic Prompt Collaboration for Generalized Zero-Shot Learning](visual_and_semantic_prompt_collaboration_for_generalized_zero-shot_learning.md)
 - [Generalized Few-Shot 3D Point Cloud Segmentation with Vision-Language Model](generalized_few-shot_3d_point_cloud_segmentation_with_vision-language_model.md)
-- [Causal Disentanglement and Cross-Modal Alignment for Enhanced Few-Shot Learning](../../ICCV2025/multimodal_vlm/causal_disentanglement_and_cross-modal_alignment_for_enhanced_few-shot_learning.md)
-- [VT-FSL: Bridging Vision and Text with LLMs for Few-Shot Learning](../../NeurIPS2025/multimodal_vlm/vt-fsl_bridging_vision_and_text_with_llms_for_few-shot_learning.md)
+- [Visual and Semantic Prompt Collaboration for Generalized Zero-Shot Learning](visual_and_semantic_prompt_collaboration_for_generalized_zero-shot_learning.md)
 - [Rethinking Few-Shot Adaptation of Vision-Language Models in Two Stages](rethinking_few-shot_adaptation_of_vision-language_models_in_two_stages.md)
+- [Causal Disentanglement and Cross-Modal Alignment for Enhanced Few-Shot Learning](../../ICCV2025/multimodal_vlm/causal_disentanglement_and_cross-modal_alignment_for_enhanced_few-shot_learning.md)
+- [Single Domain Generalization for Few-Shot Counting via Universal Representation Matching](single_domain_generalization_for_few-shot_counting_via_universal_representation_.md)
 
 <!-- RELATED:END -->

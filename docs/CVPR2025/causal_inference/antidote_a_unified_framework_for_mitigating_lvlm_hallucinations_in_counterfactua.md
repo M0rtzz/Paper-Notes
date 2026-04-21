@@ -1,14 +1,14 @@
-﻿---
+---
 title: >-
   [论文解读] Antidote: A Unified Framework for Mitigating LVLM Hallucinations in Counterfactual Presupposition
 description: >-
-  [CVPR 2025][LVLM幻觉][反事实推理] 提出Antidote统一框架，解决大型视觉语言模型在反事实预设场景下的幻觉问题
+  [CVPR 2025][LVLM幻觉] 提出 Antidote 统一框架，专门解决大型视觉语言模型在面对含反事实预设的问题（如"图中的大象是什么颜色的？"而图中没有大象）时的幻觉生成问题。
 tags:
   - CVPR 2025
   - LVLM幻觉
-  - 反事实推理
-  - 视觉语言模型
-  - 幻觉缓解
+  - 反事实预设
+  - 统一框架
+  - 视觉忠实性
 ---
 
 # Antidote: A Unified Framework for Mitigating LVLM Hallucinations in Counterfactual Presupposition
@@ -58,7 +58,7 @@ tags:
 ## 相关论文
 
 - [Seeing Far and Clearly: Mitigating Hallucinations in MLLMs with Attention Causal Decoding](seeing_far_and_clearly_mitigating_hallucinations_in_mllms_with_attention_causal_.md)
-- [Fighting Hallucinations with Counterfactuals: Diffusion-Guided Perturbations for LVLM Hallucination Suppression](../../CVPR2026/causal_inference/cipher_counterfactual_diffusion_hallucination_sup.md)
+- [Fighting Hallucinations with Counterfactuals: Diffusion-Guided Perturbations for LVLM Hallucination Suppression](../../CVPR2026/causal_inference/fighting_hallucinations_with_counterfactuals_diffusion-guided_perturbations_for_.md)
 - [FitCF: A Framework for Automatic Feature Importance-guided Counterfactual Example Generation](../../ACL2025/causal_inference/fitcf_a_framework_for_automatic_feature_importance-guided_counterfactual_example.md)
 - [Towards Fine-Grained Interpretability: Counterfactual Explanations for Misclassification](towards_fine-grained_interpretability_counterfactual_explanations_for_misclassif.md)
 - [Image Quality Assessment: Investigating Causal Perceptual Effects with Abductive Counterfactual](image_quality_assessment_investigating_causal_perceptual_effects_with_abductive_.md)

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Weight Space Representation Learning on Diverse NeRF Architectures
 description: >-

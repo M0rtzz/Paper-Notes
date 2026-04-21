@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Improving Rationality in the Reasoning Process of Language Models through Self-playing Game
 description: >-

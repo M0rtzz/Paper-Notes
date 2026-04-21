@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Finer-CAM: Spotting the Difference Reveals Finer Details for Visual Explanation
 description: >-
@@ -120,6 +120,6 @@ tags:
 - [iFinder: Structured Zero-Shot VLM Grounding for Dash-Cam Video Reasoning](../../NeurIPS2025/multimodal_vlm/ifinder_structured_zero-shot_vision-based_llm_grounding_for_dash-cam_video_reaso.md)
 - [Difference Vector Equalization for Robust Fine-tuning of Vision-Language Models](../../AAAI2026/multimodal_vlm/difference_vector_equalization_for_robust_fine-tuning_of_vis.md)
 - [Relation-Rich Visual Document Generator for Visual Information Extraction](relation-rich_visual_document_generator_for_visual_information_extraction.md)
-- [NVILA: Efficient Frontier Visual Language Models](nvila_efficient_frontier_visual_language_models.md)
+- [Synthetic Visual Genome](synthetic_visual_genome.md)
 
 <!-- RELATED:END -->

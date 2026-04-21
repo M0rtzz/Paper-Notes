@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoT Red-Handed: Stress Testing Chain-of-Thought Monitoring
 description: >-
@@ -131,8 +131,8 @@ Hybrid 比 action-only 高 21%，比 CoT 高 42%。在 subtle 任务上 catch ra
 
 - [笔记1: CoT是幻觉吗？数据分布角度](is_chain-of-thought_reasoning_of_llms_a_mirage_a_data_distribution_lens.md)
 - [CoT-Valve: Length-Compressible Chain-of-Thought Tuning](../../ACL2025/llm_reasoning/cot-valve_length-compressible_chain-of-thought_tuning.md)
-- [CoT-UQ: Improving Response-wise Uncertainty Quantification in LLMs with Chain-of-Thought](../../ACL2025/llm_reasoning/cot-uq_improving_response-wise_uncertainty_quantification_in_llms_with_chain-of-.md)
 - [CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models](../../CVPR2025/llm_reasoning/cot-vla_visual_chain-of-thought_reasoning_for_vision-language-action_models.md)
+- [CoT-UQ: Improving Response-wise Uncertainty Quantification in LLMs with Chain-of-Thought](../../ACL2025/llm_reasoning/cot-uq_improving_response-wise_uncertainty_quantification_in_llms_with_chain-of-.md)
 - [CoT-ICL Lab: A Synthetic Framework for Studying Chain-of-Thought Learning from In-Context Demonstrations](../../ACL2025/llm_reasoning/cot-icl_lab_a_synthetic_framework_for_studying_chain-of-thought_learning_from_in.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Position: Solve Layerwise Linear Models First to Understand Neural Dynamical Phenomena
 description: >-

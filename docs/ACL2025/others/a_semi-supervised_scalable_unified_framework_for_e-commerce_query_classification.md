@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SSUF: A Semi-supervised Scalable Unified Framework for E-commerce Query Classification
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Revisiting Unknowns: Towards Effective and Efficient Open-Set Active Learning
 description: >-

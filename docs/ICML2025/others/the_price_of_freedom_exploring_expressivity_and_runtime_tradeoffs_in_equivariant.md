@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Price of Freedom: Exploring Expressivity and Runtime Tradeoffs in Equivariant Networks
 description: >-

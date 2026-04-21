@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Key and Value Weights Are Probably All You Need: On the Necessity of the Query, Key, and Value Weight Triplet in Self-Attention
 description: >-

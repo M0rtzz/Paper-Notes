@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TabXEval: Why this is a Bad Table? An eXhaustive Rubric for Table Evaluation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CapeLLM: Support-Free Category-Agnostic Pose Estimation with Multimodal Large Language Models
 description: >-
@@ -136,6 +136,6 @@ CapeLLM由三个核心组件构成：（1）DINOv2视觉编码器提取图像特
 - [Bidirectional Likelihood Estimation with Multi-Modal Large Language Models for Text-Video Retrieval](bidirectional_likelihood_estimation_with_multi-modal_large_language_models_for_t.md)
 - [Visual-Oriented Fine-Grained Knowledge Editing for MultiModal Large Language Models](visual-oriented_fine-grained_knowledge_editing_for_multimodal_large_language_mod.md)
 - [BASIC: Boosting Visual Alignment with Intrinsic Refined Embeddings in Multimodal Large Language Models](basic_boosting_visual_alignment_with_intrinsic_refined_embeddings_in_multimodal_.md)
-- [Jailbreaking Multimodal Large Language Models via Shuffle Inconsistency](jailbreaking_multimodal_large_language_models_via_shuffle_inconsistency.md)
+- [FreeMotion: MoCap-Free Human Motion Synthesis with Multimodal Large Language Models](../../ECCV2024/multimodal_vlm/freemotion_mocapfree_human_motion_synthesis_with_multimodal_.md)
 
 <!-- RELATED:END -->

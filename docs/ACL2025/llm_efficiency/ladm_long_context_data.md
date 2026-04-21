@@ -2,9 +2,15 @@
 title: >-
   [论文解读] LADM: Long-context Training Data Selection with Attention-based Dependency Measurement for LLMs
 description: >-
-  [LLM效率] LADM提出了一种基于注意力机制的长上下文训练数据选择框架，通过训练一个小型Long Attention Calculator来计算span间的注意力依赖分数（PFS → AFS → CDS），从大规模语料中高效筛选具有强长程依赖的高质量样本用于持续预训练，仅用1B tokens即可显著提升LLM的长上下文能力。
+  [ACL 2025][LLM效率][长上下文建模] LADM提出了一种基于注意力机制的长上下文训练数据选择框架，通过训练一个小型Long Attention Calculator来计算span间的注意力依赖分数（PFS → AFS → CDS），从大规模语料中高效筛选具有强长程依赖的高质量样本用于持续预训练，仅用1B tokens即可显著提升LLM的长上下文能力。
 tags:
+  - ACL 2025
   - LLM效率
+  - 长上下文建模
+  - 数据选择
+  - 注意力机制
+  - 上下文依赖
+  - 持续预训练
 ---
 
 # LADM: Long-context Training Data Selection with Attention-based Dependency Measurement for LLMs
@@ -137,10 +143,10 @@ $$\text{CDS}(S) = \sum_{j=n_0}^{N-1} \frac{j}{N} \cdot \text{AFS}(j)$$
 
 ## 相关论文
 
-- [Efficient Many-Shot In-Context Learning with Dynamic Block-Sparse Attention](efficient_many-shot_in-context_learning_with_dynamic_block-sparse_attention.md)
-- [Fourier Position Embedding: Enhancing Attention's Periodic Extension for Length Generalization](../../ICML2025/llm_efficiency/fourier_position_embedding_enhancing_attentions_periodic_extension_for_length_ge.md)
-- [LooGLE v2: Are LLMs Ready for Real World Long Dependency Challenges?](../../NeurIPS2025/llm_efficiency/loogle_v2_are_llms_ready_for_real_world_long_dependency_challenges.md)
+- [Scaling Context, Not Parameters: Training a Compact 7B Language Model for Efficient Long-Context Processing](scaling_context_not_parameters_training_a_compact_7b_language_model_for_efficien.md)
 - [Long-Context Modeling with Dynamic Hierarchical Sparse Attention for On-Device LLMs](../../NeurIPS2025/llm_efficiency/long-context_modeling_with_dynamic_hierarchical_sparse_attention_for_on-device_l.md)
-- [Dynamic Chunking and Selection for Reading Comprehension of Ultra-Long Context in Large Language Models](dynamic_chunking_and_selection_for_reading_comprehension_of_ultra-long_context_i.md)
+- [LooGLE v2: Are LLMs Ready for Real World Long Dependency Challenges?](../../NeurIPS2025/llm_efficiency/loogle_v2_are_llms_ready_for_real_world_long_dependency_challenges.md)
+- [LaMPE: Length-aware Multi-grained Positional Encoding for Adaptive Long-context Scaling Without Training](adaptive_grouped_pe_context_window.md)
+- [Long-Short Alignment for Effective Long-Context Modeling in LLMs](../../ICML2025/llm_efficiency/long-short_alignment_for_effective_long-context_modeling_in_llms.md)
 
 <!-- RELATED:END -->

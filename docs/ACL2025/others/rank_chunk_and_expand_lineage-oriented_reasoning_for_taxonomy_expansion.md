@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rank, Chunk, and Expand: Lineage-Oriented Reasoning for Taxonomy Expansion
 description: >-
@@ -166,9 +166,9 @@ LORex（图 2）分为四个模块：
 ## 相关论文
 
 - [CoLA: Collaborative Low-Rank Adaptation](cola_collaborative_low-rank_adaptation.md)
-- [Explaining Matters: Leveraging Definitions and Semantic Expansion for Sexism Detection](explaining_matters_leveraging_definitions_and_semantic_expansion_for_sexism_dete.md)
 - [SoRFT: Issue Resolving with Subtask-oriented Reinforced Fine-Tuning](sorft_issue_resolving_with_subtask-oriented_reinforced_fine-tuning.md)
+- [Explaining Matters: Leveraging Definitions and Semantic Expansion for Sexism Detection](explaining_matters_leveraging_definitions_and_semantic_expansion_for_sexism_dete.md)
+- [ProxAnn: Use-Oriented Evaluations of Topic Models and Document Clustering](proxann_topic_model_eval.md)
 - [Low-Rank Interconnected Adaptation across Layers](low-rank_interconnected_adaptation_across_layers.md)
-- [ChuLo: Chunk-Level Key Information Representation for Long Document Understanding](chulo_chunk-level_key_information_representation_for_long_document_understanding.md)
 
 <!-- RELATED:END -->

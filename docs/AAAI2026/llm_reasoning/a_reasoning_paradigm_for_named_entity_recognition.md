@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Reasoning Paradigm for Named Entity Recognition
 description: >-

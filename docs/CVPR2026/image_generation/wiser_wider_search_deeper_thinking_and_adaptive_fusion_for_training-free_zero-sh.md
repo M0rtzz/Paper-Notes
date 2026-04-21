@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WISER: Wider Search, Deeper Thinking, and Adaptive Fusion for Training-Free Zero-Shot Composed Image Retrieval
 description: >-

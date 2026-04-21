@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Completion: A Foundation Model for General Knowledge Graph Reasoning
 description: >-
@@ -131,6 +131,6 @@ tags:
 - [GFM-RAG: Graph Foundation Model for Retrieval Augmented Generation](../../NeurIPS2025/graph_learning/gfm-rag_graph_foundation_model_for_retrieval_augmented_generation.md)
 - [Uncertain Knowledge Graph Completion via Semi-Supervised Confidence Distribution Learning](../../NeurIPS2025/graph_learning/uncertain_knowledge_graph_completion_via_semi-supervised_confidence_distribution.md)
 - [Reasoning Meets Representation: Envisioning Neuro-Symbolic Wireless Foundation Models](../../NeurIPS2025/graph_learning/reasoning_meets_representation_envisioning_neuro-symbolic_wireless_foundation_mo.md)
-- [Deliberation on Priors: Trustworthy Reasoning of LLMs on Knowledge Graphs](../../NeurIPS2025/graph_learning/deliberation_on_priors_trustworthy_reasoning_of_large_language_models_on_knowled.md)
+- [Disentangled Multi-span Evolutionary Network against Temporal Knowledge Graph Reasoning](disentangled_multi-span_evolutionary_network_against_temporal_knowledge_graph_re.md)
 
 <!-- RELATED:END -->

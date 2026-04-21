@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LumiCtrl: Learning Illuminant Prompts for Lighting Control in Personalized Text-to-Image Models
 description: >-
@@ -134,8 +134,8 @@ LumiCtrl 在 Angular Error 上比最强基线 IC-Light (10.39) 降低了 56.6%�
 
 - [ConsistCompose: Unified Multimodal Layout Control for Image Composition](consistcompose_multimodal_layout_control.md)
 - [Learning to Sample Effective and Diverse Prompts for Text-to-Image Generation](../../CVPR2025/image_generation/learning_to_sample_effective_and_diverse_prompts_for_text-to-image_generation.md)
+- [Verify Claimed Text-to-Image Models via Boundary-Aware Prompt Optimization](verify_claimed_text-to-image_models_via_boundary-aware_prompt_optimization.md)
 - [Powerful and Flexible: Personalized Text-to-Image Generation via Reinforcement Learning](../../ECCV2024/image_generation/powerful_and_flexible_personalized_text-to-image_generation_via_reinforcement_le.md)
 - [PureCC: Pure Learning for Text-to-Image Concept Customization](purecc_pure_learning_for_text-to-image_concept_customization.md)
-- [Erasure or Erosion? Evaluating Compositional Degradation in Unlearned Text-To-Image Diffusion Models](erasure_or_erosion_evaluating_compositional_degradation_in_unlearned_text-to-ima.md)
 
 <!-- RELATED:END -->

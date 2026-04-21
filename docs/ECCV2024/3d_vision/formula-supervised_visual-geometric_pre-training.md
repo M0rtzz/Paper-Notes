@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Formula-Supervised Visual-Geometric Pre-training (FSVGP)
 description: >-
@@ -127,9 +127,9 @@ FSVGP包含两个核心组件：(1) VG-FractalDB数据集构建——使用3D迭
 ## 相关论文
 
 - [E-RayZer: Self-supervised 3D Reconstruction as Spatial Visual Pre-training](../../CVPR2026/3d_vision/e-rayzer_self-supervised_3d_reconstruction_as_spatial_visual_pre-training.md)
-- [4D Visual Pre-training for Robot Learning](../../ICCV2025/3d_vision/4d_visual_pre-training_for_robot_learning.md)
+- [4D Visual Pre-training for Robot Learning](../../ICCV2025/3d_vision/4d_visual_pretraining_for_robot_learning.md)
 - [Improving Domain Generalization in Self-Supervised Monocular Depth Estimation via Stabilized Adversarial Training](improving_domain_generalization_in_self-supervised_monocular_depth_estimation_vi.md)
 - [Deep Patch Visual SLAM](deep_patch_visual_slam.md)
-- [ScanReason: Empowering 3D Visual Grounding with Reasoning Capabilities](scanreason_empowering_3d_visual_grounding_with_reasoning_capabilities.md)
+- [TCC-Det: Temporarily Consistent Cues for Weakly-Supervised 3D Detection](tcc-det_temporarily_consistent_cues_for_weakly-supervised_3d_detection.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SCOPE: Semantic Coreset with Orthogonal Projection Embeddings for Federated Learning
 description: >-
@@ -127,9 +127,9 @@ SCOPE 提出了一种面向联邦学习的语义 coreset 选择框架，利用 V
 ## 相关论文
 
 - [Federated Learning with Domain Shift Eraser](federated_learning_with_domain_shift_eraser.md)
+- [Model Poisoning Attacks to Federated Learning via Multi-Round Consistency](model_poisoning_attacks_to_federated_learning_via_multi-round_consistency.md)
 - [Mind the Gap: Confidence Discrepancy Can Guide Federated Semi-Supervised Learning](mind_the_gap_confidence_discrepancy_can_guide_federated_semi-supervised_learning.md)
 - [Automatic Joint Structured Pruning and Quantization for Efficient Neural Network Training and Compression](automatic_joint_structured_pruning_and_quantization_for_efficient_neural_network.md)
-- [Stop Walking in Circles! Bailing Out Early in Projected Gradient Descent](stop_walking_in_circles_bailing_out_early_in_projected_gradient_descent.md)
 - [Leveraging Perturbation Robustness to Enhance Out-of-Distribution Detection](leveraging_perturbation_robustness_to_enhance_out-of-distribution_detection.md)
 
 <!-- RELATED:END -->

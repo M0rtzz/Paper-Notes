@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Curve-Aware Gaussian Splatting for 3D Parametric Curve Reconstruction
 description: >-

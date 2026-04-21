@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] More Than Irrational: Modeling Belief-Biased Agents
 description: >-

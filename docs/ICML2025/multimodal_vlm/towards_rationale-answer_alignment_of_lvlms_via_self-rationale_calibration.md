@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Rationale-Answer Alignment of LVLMs via Self-Rationale Calibration
 description: >-

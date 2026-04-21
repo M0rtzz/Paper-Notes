@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DuoLens: A Framework for Robust Detection of Machine-Generated Multilingual Text and Code
 description: >-

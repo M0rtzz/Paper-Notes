@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] QuRe: Query-Relevant Retrieval through Hard Negative Sampling in Composed Image Retrieval
 description: >-

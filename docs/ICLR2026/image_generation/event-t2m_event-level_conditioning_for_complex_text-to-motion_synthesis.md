@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Event-T2M: Event-level Conditioning for Complex Text-to-Motion Synthesis
 description: >-

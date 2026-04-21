@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Randomized Autoregressive Visual Generation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Agentic Retoucher for Text-To-Image Generation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Community Forensics: Using Thousands of Generators to Train Fake Image Detectors
 description: >-
@@ -122,10 +122,10 @@ tags:
 
 ## 相关论文
 
-- [Flatten Graphs as Sequences: Transformers are Scalable Graph Generators](../../NeurIPS2025/image_generation/flatten_graphs_as_sequences_transformers_are_scalable_graph_generators.md)
 - [Visual Language Models as Zero-Shot Deepfake Detectors](../../ICML2025/image_generation/visual_language_models_as_zero-shot_deepfake_detectors.md)
+- [Flatten Graphs as Sequences: Transformers are Scalable Graph Generators](../../NeurIPS2025/image_generation/flatten_graphs_as_sequences_transformers_are_scalable_graph_generators.md)
 - [SimLBR: Learning to Detect Fake Images by Learning to Detect Real Images](../../CVPR2026/image_generation/simlbr_learning_to_detect_fake_images_by_learning_to_detect_real_images.md)
-- [DreamOmni: Unified Image Generation and Editing](dreamomni_unified_image_generation_and_editing.md)
-- [Language-Guided Image Tokenization for Generation](language-guided_image_tokenization_for_generation.md)
+- [TurboFill: Adapting Few-Step Text-to-Image Model for Fast Image Inpainting](turbofill_adapting_few-step_text-to-image_model_for_fast_image_inpainting.md)
+- [Reversing Flow for Image Restoration](reversing_flow_for_image_restoration.md)
 
 <!-- RELATED:END -->

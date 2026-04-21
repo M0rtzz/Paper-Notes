@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Revisiting Supervision for Continual Representation Learning
 description: >-

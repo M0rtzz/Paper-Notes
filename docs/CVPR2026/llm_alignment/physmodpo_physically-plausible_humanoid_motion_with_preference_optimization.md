@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization
 description: >-
@@ -176,6 +176,6 @@ $$\mathcal{L} = \mathcal{L}_{\text{DPO}}(X_{\text{win}}, X_{\text{lose}}) + \lam
 - [Rethinking Direct Preference Optimization in Diffusion Models](../../AAAI2026/llm_alignment/rethinking_direct_preference_optimization_in_diffusion_models.md)
 - [Margin-aware Preference Optimization for Aligning Diffusion Models without Reference](../../AAAI2026/llm_alignment/margin-aware_preference_optimization_for_aligning_diffusion_models_without_refer.md)
 - [LocalDPO: Direct Localized Detail Preference Optimization for Video Diffusion Models](mind_the_generative_details_direct_localized_detail_preference_optimization_for_.md)
-- [$\varphi$-DPO: Fairness Direct Preference Optimization Approach to Continual Learning in Large Multimodal Models](φ-dpo_fairness_direct_preference_optimization_approach_to_continual_learning_in_.md)
+- [MoD-DPO: Towards Mitigating Cross-modal Hallucinations in Omni LLMs using Modality Decoupled Preference Optimization](mod-dpo_towards_mitigating_cross-modal_hallucinations_in_omni_llms_using_modalit.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CLIPErase: Efficient Unlearning of Visual-Textual Associations in CLIP
 description: >-
@@ -127,6 +127,6 @@ $$\mathcal{L} = \lambda_1 \mathcal{L}_{RM} + \lambda_2 \mathcal{L}_{FM} + \lambd
 - [SafeRoute: Adaptive Model Selection for Efficient and Accurate Safety Guardrails in Large Language Models](saferoute_adaptive_model_selection_for_efficient_and_accurate_safety_guardrails_.md)
 - [Demystifying Language Model Forgetting with Low-Rank Example Associations](../../NeurIPS2025/llm_safety/demystifying_language_model_forgetting_with_low-rank_example_associations.md)
 - [SEUF: Is Unlearning One Expert Enough for Mixture-of-Experts LLMs?](seuf_is_unlearning_one_expert_enough_for_mixture-of-experts_llms.md)
-- [Which Retain Set Matters for LLM Unlearning? A Case Study on Entity Unlearning](which_retain_set_matters_for_llm_unlearning_a_case_study_on_entity_unlearning.md)
+- [REVS: Unlearning Sensitive Information in Language Models via Rank Editing in the Vocabulary Space](revs_unlearning_sensitive_information_in_language_models_via_rank_editing_in_the.md)
 
 <!-- RELATED:END -->

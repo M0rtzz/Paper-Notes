@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Kalman-Inspired Feature Propagation for Video Face Super-Resolution
 description: >-
@@ -113,9 +113,9 @@ KEEP 在所有指标上均取得最优，PSNR 超出次优方法 BasicVSR++ 约 
 ## 相关论文
 
 - [RealViformer: Investigating Attention for Real-World Video Super-Resolution](realviformer_investigating_attention_for_real-world_video_super-resolution.md)
+- [VideoGigaGAN: Towards Detail-rich Video Super-Resolution](../../CVPR2025/video_generation/videogigagan_towards_detail-rich_video_super-resolution.md)
+- [PatchVSR: Breaking Video Diffusion Resolution Limits with Patch-Wise Video Super-Resolution](../../CVPR2025/video_generation/patchvsr_breaking_video_diffusion_resolution_limits_with_patch-wise_video_super-.md)
 - [VSRM: A Robust Mamba-Based Framework for Video Super-Resolution](../../ICCV2025/video_generation/vsrm_a_robust_mamba-based_framework_for_video_super-resolution.md)
 - [Compressed-Domain-Aware Online Video Super-Resolution](../../CVPR2026/video_generation/compressed-domain-aware_online_video_super-resolution.md)
-- [BF-STVSR: B-Splines and Fourier—Best Friends for High Fidelity Spatial-Temporal Video Super-Resolution](../../CVPR2025/video_generation/bf-stvsr_b-splines_and_fourier---best_friends_for_high_fidelity_spatial-temporal.md)
-- [Exploring Pre-trained Text-to-Video Diffusion Models for Referring Video Object Segmentation](exploring_pre-trained_text-to-video_diffusion_models_for_referring_video_object_.md)
 
 <!-- RELATED:END -->

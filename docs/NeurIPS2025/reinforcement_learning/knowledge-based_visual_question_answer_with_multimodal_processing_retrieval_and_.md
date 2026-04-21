@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Knowledge-based Visual Question Answer with Multimodal Processing, Retrieval and Filtering
 description: >-

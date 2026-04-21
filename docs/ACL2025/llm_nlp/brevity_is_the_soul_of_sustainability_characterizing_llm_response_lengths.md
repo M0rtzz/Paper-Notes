@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Brevity is the soul of sustainability: Characterizing LLM response lengths
 description: >-

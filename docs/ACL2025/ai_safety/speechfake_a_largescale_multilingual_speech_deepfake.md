@@ -114,6 +114,6 @@ tags:
 - [Towards Fairness Assessment of Dutch Hate Speech Detection](towards_fairness_assessment_of_dutch_hate_speech_detection.md)
 - [SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders](../../NeurIPS2025/ai_safety/saemark_steering_personalized_multilingual_llm_watermarks_with_sparse_autoencode.md)
 - [Ensemble Watermarks for Large Language Models](ensemble_watermarks_llm.md)
-- [CPRet: A Dataset, Benchmark, and Model for Retrieval in Competitive Programming](../../NeurIPS2025/ai_safety/cpret_a_dataset_benchmark_and_model_for_retrieval_in_competitive_programming.md)
+- [Improved Unbiased Watermark for Large Language Models](improved_unbiased_watermark_for_large_language.md)
 
 <!-- RELATED:END -->

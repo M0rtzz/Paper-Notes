@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLM Agent Communication Protocol (LACP) Requires Urgent Standardization: A Telecom-Inspired Protocol is Necessary
 description: >-

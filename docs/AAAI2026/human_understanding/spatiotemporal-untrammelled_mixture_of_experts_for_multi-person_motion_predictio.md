@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spatiotemporal-Untrammelled Mixture of Experts for Multi-Person Motion Prediction
 description: >-
@@ -209,9 +209,9 @@ $$L_t = \text{MSE}(\text{Conv}(\textbf{P}_{\text{pred}}), \text{Conv}(\textbf{P}
 ## 相关论文
 
 - [mmPred: Radar-based Human Motion Prediction in the Dark](mmpred_radar-based_human_motion_prediction_in_the_dark.md)
-- [A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](../../ICCV2025/human_understanding/a_qualityguided_mixture_of_scorefusion_experts_framework_for.md)
 - [MoEE: Mixture of Emotion Experts for Audio-Driven Portrait Animation](../../CVPR2025/human_understanding/moee_mixture_of_emotion_experts_for_audio-driven_portrait_animation.md)
-- [Modality-Aware Bias Mitigation and Invariance Learning for Unsupervised Visible-Infrared Person Re-Identification](modality-aware_bias_mitigation_and_invariance_learning_for_unsupervised_visible-.md)
-- [Mingle: Mixture of Null-Space Gated Low-Rank Experts for Test-Time Continual Model Merging](../../NeurIPS2025/human_understanding/mingle_mixture_of_null-space_gated_low-rank_experts_for_test-time_continual_mode.md)
+- [A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](../../ICCV2025/human_understanding/a_quality-guided_mixture_of_score-fusion_experts_framework_for_human_recognition.md)
+- [SimMotionEdit: Text-Based Human Motion Editing with Motion Similarity Prediction](../../CVPR2025/human_understanding/simmotionedit_text-based_human_motion_editing_with_motion_similarity_prediction.md)
+- [SocialGesture: Delving into Multi-Person Gesture Understanding](../../CVPR2025/human_understanding/socialgesture_delving_into_multi-person_gesture_understanding.md)
 
 <!-- RELATED:END -->

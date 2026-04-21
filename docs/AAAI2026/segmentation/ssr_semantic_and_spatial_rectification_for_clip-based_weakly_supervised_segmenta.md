@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SSR: Semantic and Spatial Rectification for CLIP-based Weakly Supervised Segmentation
 description: >-
@@ -177,8 +177,8 @@ CAM种子质量方面，SSR在VOC train上取得78.7% mIoU，超越SOTA至少0.7
 
 - [Exploring CLIP's Dense Knowledge for Weakly Supervised Semantic Segmentation](../../CVPR2025/segmentation/exploring_clips_dense_knowledge_for_weakly_supervised_semantic_segmentation.md)
 - [Target Refocusing via Attention Redistribution for Open-Vocabulary Semantic Segmentation: An Explainability Perspective](target_refocusing_via_attention_redistribution_for_open-vocabulary_semantic_segm.md)
+- [Soft Self-Labeling and Potts Relaxations for Weakly-Supervised Segmentation](../../CVPR2025/segmentation/soft_self-labeling_and_potts_relaxations_for_weakly-supervised_segmentation.md)
 - [Know Your Attention Maps: Class-specific Token Masking for Weakly Supervised Semantic Segmentation](../../ICCV2025/segmentation/know_your_attention_maps_class-specific_token_masking_for_weakly_supervised_sema.md)
 - [DeBias-CLIP: CLIP Is Shortsighted — Paying Attention Beyond the First Sentence](../../CVPR2026/segmentation/clip_shortsighted_beyond_first_sentence.md)
-- [Learning from the Web: Language Drives Weakly-Supervised Incremental Learning for Semantic Segmentation](../../ECCV2024/segmentation/learning_from_the_web_language_drives_weakly-supervised_incremental_learning_for.md)
 
 <!-- RELATED:END -->

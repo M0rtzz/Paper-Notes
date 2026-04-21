@@ -1,16 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model
 description: >-
-  [CVPR 2025][3D视觉][单图3D生成] GS-RGBN 提出混合体素-高斯表示和 RGBN 跨体积融合模块，从单张图像快速生成高保真 3D 对象。体素网格为无结构 2D 高斯提供空间约束，同时跨注意力融合 RGB 语义特征和法线几何特征，在 GSO 数据集上全面超越现有方法。
+  [CVPR 2025][3D视觉][单图 3D 重建] GS-RGBN 提出混合 Voxel-Gaussian 表示为无结构高斯提供 3D 空间约束，并设计跨体积融合（CVF）模块在特征层面融合 RGB 语义信息和法线几何信息，从单张图像在数秒内生成高保真 3D 对象，在 GSO 数据集上 PSNR 超出次优方法 5.59dB。
 tags:
   - CVPR 2025
   - 3D视觉
-  - 单图3D重建
-  - 高斯溅射
-  - 体素
+  - 单图 3D 重建
+  - 2D 高斯溅射
+  - 体素-高斯混合
   - 法线融合
-  - 多视角扩散
+  - 跨体积注意力
+  - 前馈 3D 生成
 ---
 
 # High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model
@@ -138,9 +139,9 @@ GSO 数据集新视角合成：
 ## 相关论文
 
 - [Floating No More: Object-Ground Reconstruction from a Single Image](floating_no_more_object-ground_reconstruction_from_a_single_image.md)
-- [AniGS: Animatable Gaussian Avatar from a Single Image with Inconsistent Gaussian Reconstruction](anigs_animatable_gaussian_avatar_from_a_single_image_with_inconsistent_gaussian_.md)
 - [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
-- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
-- [Disco4D: Disentangled 4D Human Generation and Animation from a Single Image](disco4d_disentangled_4d_human_generation_and_animation_from_a_single_image.md)
+- [AniGS: Animatable Gaussian Avatar from a Single Image with Inconsistent Gaussian Reconstruction](anigs_animatable_gaussian_avatar_from_a_single_image_with_inconsistent_gaussian_.md)
+- [WonderWorld: Interactive 3D Scene Generation from a Single Image](wonderworld_interactive_3d_scene_generation_from_a_single_image.md)
+- [ARM: Appearance Reconstruction Model for Relightable 3D Generation](arm_appearance_reconstruction_model_for_relightable_3d_generation.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FastVLM: Efficient Vision Encoding for Vision Language Models
 description: >-

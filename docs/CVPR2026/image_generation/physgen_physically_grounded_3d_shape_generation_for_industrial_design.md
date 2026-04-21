@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PhysGen: Physically Grounded 3D Shape Generation for Industrial Design
 description: >-

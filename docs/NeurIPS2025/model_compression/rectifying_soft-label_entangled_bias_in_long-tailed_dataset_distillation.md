@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rectifying Soft-Label Entangled Bias in Long-Tailed Dataset Distillation
 description: >-

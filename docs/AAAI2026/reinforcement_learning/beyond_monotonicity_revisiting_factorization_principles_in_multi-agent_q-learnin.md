@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Monotonicity: Revisiting Factorization Principles in Multi-Agent Q-Learning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fast Data Attribution for Text-to-Image Models
 description: >-

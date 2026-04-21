@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] InteractVLM: 3D Interaction Reasoning from 2D Foundational Models
 description: >-
@@ -139,10 +139,10 @@ F1提升20.6%，测地距离从21.32cm大幅降低到2.89cm。
 
 ## 相关论文
 
+- [Reconstructing Close Human Interaction with Appearance and Proxemics Reasoning](reconstructing_close_human_interaction_with_appearance_and_proxemics_reasoning.md)
+- [Perception Tokens Enhance Visual Reasoning in Multimodal Language Models](perception_tokens_enhance_visual_reasoning_in_multimodal_language_models.md)
 - [Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation](../../ICCV2025/3d_vision/repurposing_2d_diffusion_models_with_gaussian_atlas_for_3d_generation.md)
 - [3D-Mem: 3D Scene Memory for Embodied Exploration and Reasoning](3d-mem_3d_scene_memory_for_embodied_exploration_and_reasoning.md)
-- [SyncHuman: Synchronizing 2D and 3D Generative Models for Single-View Human Reconstruction](../../NeurIPS2025/3d_vision/synchuman_synchronizing_2d_and_3d_generative_models_for_single-view_human_recons.md)
-- [Learning 3D Object Spatial Relationships from Pre-trained 2D Diffusion Models](../../ICCV2025/3d_vision/learning_3d_object_spatial_relationships_from_pre-trained_2d_diffusion_models.md)
 - [HybridGS: Decoupling Transients and Statics with 2D and 3D Gaussian Splatting](hybridgs_decoupling_transients_and_statics_with_2d_and_3d_gaussian_splatting.md)
 
 <!-- RELATED:END -->

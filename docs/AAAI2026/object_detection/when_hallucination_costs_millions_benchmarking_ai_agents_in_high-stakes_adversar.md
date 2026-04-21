@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When Hallucination Costs Millions: Benchmarking AI Agents in High-Stakes Adversarial Financial Markets
 description: >-

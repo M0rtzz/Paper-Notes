@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation
 description: >-

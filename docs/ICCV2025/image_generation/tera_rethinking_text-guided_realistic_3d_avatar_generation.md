@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TeRA: Rethinking Text-guided Realistic 3D Avatar Generation
 description: >-

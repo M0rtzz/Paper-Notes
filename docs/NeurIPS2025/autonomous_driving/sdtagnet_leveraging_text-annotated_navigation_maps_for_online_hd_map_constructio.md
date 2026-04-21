@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SDTagNet: Leveraging Text-Annotated Navigation Maps for Online HD Map Construction
 description: >-
@@ -126,7 +126,7 @@ SDTagNet 是一个可插拔的 SD 地图先验编码模块，接入 MapTRv2 基�
 - [MapGCLR: Geospatial Contrastive Learning of Representations for Online Vectorized HD Map Construction](../../CVPR2025/autonomous_driving/mapgclr_geospatial_contrastive_learning_of_representations_for_online_vectorized.md)
 - [DAMap: Distance-aware MapNet for High Quality HD Map Construction](../../ICCV2025/autonomous_driving/damap_distance-aware_mapnet_for_high_quality_hd_map_construction.md)
 - [SafeMap: Robust HD Map Construction from Incomplete Observations](../../ICML2025/autonomous_driving/safemap_robust_hd_map_construction_from_incomplete_observations.md)
+- [Uncertainty-Instructed Structure Injection for Generalizable HD Map Construction](../../CVPR2025/autonomous_driving/uncertainty-instructed_structure_injection_for_generalizable_hd_map_construction.md)
 - [Stream Query Denoising for Vectorized HD-Map Construction](../../ECCV2024/autonomous_driving/stream_query_denoising_for_vectorized_hd-map_construction.md)
-- [Enhancing Vectorized Map Perception with Historical Rasterized Maps](../../ECCV2024/autonomous_driving/enhancing_vectorized_map_perception_with_historical_rasterized_maps.md)
 
 <!-- RELATED:END -->

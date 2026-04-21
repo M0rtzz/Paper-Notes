@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Actor-Free Continuous Control via Structurally Maximizable Q-Functions
 description: >-

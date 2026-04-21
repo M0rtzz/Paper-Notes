@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DVHGNN: Multi-Scale Dilated Vision HGNN for Efficient Vision Recognition
 description: >-

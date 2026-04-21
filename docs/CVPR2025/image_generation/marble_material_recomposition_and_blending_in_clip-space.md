@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] MARBLE: Material Recomposition and Blending in CLIP-Space
 description: >-
-  [CVPR 2025][material editing] 提出 MARBLE 框架，通过在 CLIP 空间操作材质嵌入，实现图像中物体的材质混合、参数化属性控制（粗糙度/金属度/透明度/发光），无需微调扩散模型。
+  [CVPR 2025][图像生成][material editing] 仅在 CLIP 空间操作材质嵌入，通过定向注入 UNet 中的材质响应层实现材质迁移和混合，并通过轻量 MLP 预测属性编辑方向实现粗糙度/金属度/透明度/发光的参数化控制，无需微调扩散模型。
 tags:
   - CVPR 2025
+  - 图像生成
   - material editing
-  - CLIP
-  - diffusion model
-  - 材质迁移
-  - 图像编辑
+  - CLIP-space
+  - material blending
+  - parametric control
+  - 扩散模型
 ---
 
 # MARBLE: Material Recomposition and Blending in CLIP-Space
@@ -143,10 +144,10 @@ tags:
 
 ## 相关论文
 
-- [Latent Space Imaging](latent_space_imaging.md)
-- [LaTexBlend: Scaling Multi-concept Customized Generation with Latent Textual Blending](latexblend_scaling_multi-concept_customized_generation_with_latent_textual_blend.md)
 - [Dynamic Motion Blending for Versatile Motion Editing (MotionReFit)](dynamic_motion_blending_for_versatile_motion_editing.md)
-- [CLIP Under the Microscope: A Fine-Grained Analysis of Multi-Object Representation](clip_under_the_microscope_a_fine-grained_analysis_of_multi-object_representation.md)
-- [FineLIP: Extending CLIP's Reach via Fine-Grained Alignment with Longer Text Inputs](finelip_extending_clips_reach_via_fine-grained_alignment_with_longer_text_inputs.md)
+- [Latent Space Imaging](latent_space_imaging.md)
+- [Visual Lexicon: Rich Image Features in Language Space](visual_lexicon_rich_image_features_in_language_space.md)
+- [LaTexBlend: Scaling Multi-concept Customized Generation with Latent Textual Blending](latexblend_scaling_multi-concept_customized_generation_with_latent_textual_blend.md)
+- [LLM Meets Diffusion: A Hybrid Framework for Crystal Material Generation](../../NeurIPS2025/image_generation/llm_meets_diffusion_a_hybrid_framework_for_crystal_material_generation.md)
 
 <!-- RELATED:END -->

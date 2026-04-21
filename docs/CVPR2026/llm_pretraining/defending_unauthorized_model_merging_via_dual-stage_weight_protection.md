@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Defending Unauthorized Model Merging via Dual-Stage Weight Protection
 description: >-
@@ -129,7 +129,7 @@ MergeGuard的平均精度下降比PaRaMS多 **21.35个百分点**。
 - [Gradient-Weight Alignment as a Train-Time Proxy for Generalization in Classification Tasks](../../NeurIPS2025/llm_pretraining/gradient-weight_alignment_as_a_train-time_proxy_for_generalization_in_classifica.md)
 - [Power Lines: Scaling Laws for Weight Decay and Batch Size in LLM Pre-training](../../NeurIPS2025/llm_pretraining/power_lines_scaling_laws_for_weight_decay_and_batch_size_in_llm_pre-training.md)
 - [Scaling and Transferability of Annealing Strategies in Large Language Model Training](../../AAAI2026/llm_pretraining/scaling_and_transferability_of_annealing_strategies_in_large_language_model_trai.md)
-- [How to Synthesize Text Data without Model Collapse?](../../ICML2025/llm_pretraining/how_to_synthesize_text_data_without_model_collapse.md)
 - [Gemstones: A Model Suite for Multi-Faceted Scaling Laws](../../NeurIPS2025/llm_pretraining/gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)
+- [Metadata Conditioning Accelerates Language Model Pre-training](../../ICML2025/llm_pretraining/metadata_conditioning_accelerates_language_model_pre-training.md)
 
 <!-- RELATED:END -->

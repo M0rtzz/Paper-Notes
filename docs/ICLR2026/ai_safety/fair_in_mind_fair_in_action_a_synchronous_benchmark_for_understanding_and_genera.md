@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fair in Mind, Fair in Action? A Synchronous Benchmark for Understanding and Generation in UMLLMs
 description: >-

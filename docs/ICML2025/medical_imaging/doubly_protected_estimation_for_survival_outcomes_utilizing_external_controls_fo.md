@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Doubly Protected Estimation for Survival Outcomes Utilizing External Controls for Randomized Clinical Trials
 description: >-
@@ -139,6 +139,6 @@ $$\theta_\tau = \int_0^\tau \{S_1(t|R=1) - S_0(t|R=1)\} dt$$
 - [SurvHTE-Bench: A Benchmark for Heterogeneous Treatment Effect Estimation in Survival Analysis](../../ICLR2026/medical_imaging/survhte-bench_a_benchmark_for_heterogeneous_treatment_effect_estimation_in_survi.md)
 - [Dual Mixture-of-Experts Framework for Discrete-Time Survival Analysis](../../NeurIPS2025/medical_imaging/dual_mixture-of-experts_framework_for_discrete-time_survival_analysis.md)
 - [EEG-Language Pretraining for Highly Label-Efficient Clinical Phenotyping](eeg-language_pretraining_for_highly_label-efficient_clinical_phenotyping.md)
-- [Foundation Models for Clinical Records at Health System Scale](foundation_models_for_clinical_records_at_health_system_scale.md)
+- [Distilled Prompt Learning for Incomplete Multimodal Survival Prediction](../../CVPR2025/medical_imaging/distilled_prompt_learning_for_incomplete_multimodal_survival_prediction.md)
 
 <!-- RELATED:END -->

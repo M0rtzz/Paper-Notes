@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SegPoint: Segment Any Point Cloud via Large Language Model
 description: >-
@@ -163,7 +163,7 @@ Multi3DRefer 上超越对手 +3.5 mIoU。
 - [PointLLM: Empowering Large Language Models to Understand Point Clouds](pointllm_empowering_large_language_models_to_understand_point_clouds.md)
 - [Equi-GSPR: Equivariant SE(3) Graph Network Model for Sparse Point Cloud Registration](equi-gspr_equivariant_se3_graph_network_model_for_sparse_point_cloud_registratio.md)
 - [AnyPcc: Compressing Any Point Cloud with a Single Universal Model](../../CVPR2026/3d_vision/anypcc_compressing_any_point_cloud_with_a_single_universal_model.md)
+- [GS-LRM: Large Reconstruction Model for 3D Gaussian Splatting](gs-lrm_large_reconstruction_model_for_3d_gaussian_splatting.md)
 - [GRM: Large Gaussian Reconstruction Model for Efficient 3D Reconstruction and Generation](grm_large_gaussian_reconstruction_model_for_efficient_3d_reconstruction_and_gene.md)
-- [DG-PIC: Domain Generalized Point-In-Context Learning for Point Cloud Understanding](dg-pic_domain_generalized_point-in-context_learning_for_point_cloud_understandin.md)
 
 <!-- RELATED:END -->

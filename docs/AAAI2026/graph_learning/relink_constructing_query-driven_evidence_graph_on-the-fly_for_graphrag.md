@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Relink: Constructing Query-Driven Evidence Graph On-the-Fly for GraphRAG
 description: >-
@@ -130,7 +130,7 @@ Relink包含三个核心组件：(1)异构知识源构建——高精度事实KG
 - [Is Complex Query Answering Really Complex?](../../ICML2025/graph_learning/is_complex_query_answering_really_complex.md)
 - [RFKG-CoT: Relation-Driven Adaptive Hop-count Selection and Few-Shot Path Guidance for Knowledge-Aware QA](rfkg-cot_relation-driven_adaptive_hop-count_selection_and_few-shot_path_guidance.md)
 - [Toward Data-centric Directed Graph Learning: An Entropy-driven Approach](../../ICML2025/graph_learning/toward_data-centric_directed_graph_learning_an_entropy-driven_approach.md)
-- [SPOT-Trip: Dual-Preference Driven Out-of-Town Trip Recommendation](../../NeurIPS2025/graph_learning/spot-trip_dual-preference_driven_out-of-town_trip_recommendation.md)
 - [PKD: Preference-driven Knowledge Distillation for Few-shot Node Classification](../../NeurIPS2025/graph_learning/preference-driven_knowledge_distillation_for_few-shot_node_classification.md)
+- [SPOT-Trip: Dual-Preference Driven Out-of-Town Trip Recommendation](../../NeurIPS2025/graph_learning/spot-trip_dual-preference_driven_out-of-town_trip_recommendation.md)
 
 <!-- RELATED:END -->

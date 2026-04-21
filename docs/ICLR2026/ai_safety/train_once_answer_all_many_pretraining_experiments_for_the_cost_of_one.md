@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Train Once, Answer All: Many Pretraining Experiments for the Cost of One
 description: >-
@@ -157,9 +157,9 @@ CPDT 依赖性测试结果：
 
 ## 相关论文
 
-- [Can One Safety Loop Guard Them All? Agentic Guard Rails for Federated Computing](../../ICML2025/ai_safety/can_one_safety_loop_guard_them_all_agentic_guard_rails_for_federated_computing.md)
 - [Attention Smoothing Is All You Need For Unlearning](attention_smoothing_is_all_you_need_for_unlearning.md)
 - [Oasis: One Image is All You Need for Multimodal Instruction Data Synthesis](../../ICCV2025/ai_safety/oasis_one_image_is_all_you_need_for_multimodal_instruction_data_synthesis.md)
+- [Can One Safety Loop Guard Them All? Agentic Guard Rails for Federated Computing](../../ICML2025/ai_safety/can_one_safety_loop_guard_them_all_agentic_guard_rails_for_federated_computing.md)
 - [Matrix-Free Two-to-Infinity and One-to-Two Norms Estimation](../../AAAI2026/ai_safety/matrix-free_two-to-infinity_and_one-to-two_norms_estimation.md)
 - [Federated In-Context Learning: Iterative Refinement for Improved Answer Quality](../../ICML2025/ai_safety/federated_in-context_learning_iterative_refinement_for_improved_answer_quality.md)
 

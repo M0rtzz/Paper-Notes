@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LLMind: Bio-inspired Training-free Adaptive Visual Representations for Vision-Language Models
 description: >-

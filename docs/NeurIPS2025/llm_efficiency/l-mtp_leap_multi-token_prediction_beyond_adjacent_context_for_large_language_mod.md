@@ -138,8 +138,8 @@ L-MTP 在绝大多数设置下优于 MTP，在 Gemma 3 12B 上提升尤为显著
 
 - [Dynamics of Spontaneous Topic Changes in Next Token Prediction with Self-Attention](dynamics_of_spontaneous_topic_changes_in_next_token_prediction_with_self-attenti.md)
 - [LongSafety: Evaluating Long-Context Safety of Large Language Models](../../ACL2025/llm_efficiency/longsafety_evaluating_long-context_safety_of_large_language_models.md)
+- [LongReward: Improving Long-context Large Language Models with AI Feedback](../../ACL2025/llm_efficiency/longreward_improving_long-context_large_language_models_with_ai_feedback.md)
 - [CNNSum: Exploring Long-Context Summarization with Large Language Models in Chinese Novels](../../ACL2025/llm_efficiency/cnnsum_exploring_long-context_summarization_with_large_language_models_in_chines.md)
 - [On the Entropy Calibration of Language Models](on_the_entropy_calibration_of_language_models.md)
-- [Dynamic Chunking and Selection for Reading Comprehension of Ultra-Long Context in Large Language Models](../../ACL2025/llm_efficiency/dynamic_chunking_and_selection_for_reading_comprehension_of_ultra-long_context_i.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Position: There Is No Free Bayesian Uncertainty Quantification
 description: >-
@@ -165,6 +165,6 @@ $$\mathbb{P}((X^v, Y^v) \text{ s.t. } R((X,Y), \hat{q}) \leq \alpha + C(\epsilon
 - [Adjusted Count Quantification Learning on Graphs](adjusted_count_quantification_learning_on_graphs.md)
 - [Uncertainty Estimation by Flexible Evidential Deep Learning](uncertainty_estimation_by_flexible_evidential_deep_learning.md)
 - [Latent Variable Estimation in Bayesian Black-Litterman Models](../../ICML2025/others/latent_variable_estimation_in_bayesian_black-litterman_models.md)
-- [Weight Weaving: Parameter Pooling for Data-Free Model Merging](weight_weaving_parameter_pooling_for_data-free_model_merging.md)
+- [Depth-Supervised Fusion Network for Seamless-Free Image Stitching](depth-supervised_fusion_network_for_seamless-free_image_stitching.md)
 
 <!-- RELATED:END -->

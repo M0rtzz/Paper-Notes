@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Deep (Predictive) Discounted Counterfactual Regret Minimization
 description: >-

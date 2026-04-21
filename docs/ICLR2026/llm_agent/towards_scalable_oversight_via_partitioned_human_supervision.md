@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards Scalable Oversight via Partitioned Human Supervision
 description: >-

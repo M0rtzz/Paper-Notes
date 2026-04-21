@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Adjacent Words, Divergent Intents: Jailbreaking Large Language Models via Task Concurrency
 description: >-

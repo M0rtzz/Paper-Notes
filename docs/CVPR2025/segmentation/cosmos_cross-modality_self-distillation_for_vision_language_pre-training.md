@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] COSMOS: Cross-Modality Self-Distillation for Vision Language Pre-training
 description: >-
@@ -128,8 +128,8 @@ COSMOS 采用学生-教师自蒸馏框架。学生模型和教师模型共享相
 
 - [SiLC: Improving Vision Language Pretraining with Self-Distillation](../../ECCV2024/segmentation/silc_improving_vision_language_pretraining_with_self-distillation.md)
 - [DreamLIP: Language-Image Pre-training with Long Captions](../../ECCV2024/segmentation/dreamlip_language-image_pre-training_with_long_captions.md)
-- [A Two-Stage Progressive Pre-training using Multi-Modal Contrastive Masked Autoencoders](multi-modal_contrastive_masked_autoencoders_a_two-stage_progressive_pre-training.md)
+- [ResCLIP: Residual Attention for Training-free Dense Vision-language Inference](resclip_residual_attention_for_training-free_dense_vision-language_inference.md)
 - [DFormerv2: Geometry Self-Attention for RGBD Semantic Segmentation](dformerv2_geometry_self-attention_for_rgbd_semantic_segmentation.md)
-- [Vision Transformers with Self-Distilled Registers](../../NeurIPS2025/segmentation/vision_transformers_with_self-distilled_registers.md)
+- [Assessing and Learning Alignment of Unimodal Vision and Language Models (SAIL)](assessing_and_learning_alignment_of_unimodal_vision_and_language_model.md)
 
 <!-- RELATED:END -->

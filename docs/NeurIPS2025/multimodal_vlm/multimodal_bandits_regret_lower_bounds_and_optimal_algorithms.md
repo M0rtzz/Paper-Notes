@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Multimodal Bandits: Regret Lower Bounds and Optimal Algorithms
 description: >-

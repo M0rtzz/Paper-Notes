@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiffVax: Optimization-Free Image Immunization Against Diffusion-Based Editing
 description: >-
@@ -130,10 +130,10 @@ $$\mathcal{L} = \alpha \cdot \mathcal{L}_{\text{noise}} + \mathcal{L}_{\text{edi
 
 ## 相关论文
 
-- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
 - [Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback](../../CVPR2026/human_understanding/referencefree_image_quality_assessment_for_virtual.md)
 - [Node-Based Editing for Multimodal Generation of Text, Audio, Image, and Video](../../NeurIPS2025/human_understanding/node-based_editing_for_multimodal_generation_of_text_audio_image_and_video.md)
 - [Scaling Speech Tokenizers with Diffusion Autoencoders](scaling_speech_tokenizers_with_diffusion_autoencoders.md)
+- [Antibody: Strengthening Defense Against Harmful Fine-Tuning for Large Language Models via Attenuating Harmful Gradient Influence](antibody_strengthening_defense_against_harmful_fine-tuning_for_large_language_mo.md)
 - [MolLangBench: A Comprehensive Benchmark for Language-Prompted Molecular Structure Recognition, Editing, and Generation](mollangbench_a_comprehensive_benchmark_for_language-prompted_molecular_structure.md)
 
 <!-- RELATED:END -->

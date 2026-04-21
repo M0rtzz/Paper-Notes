@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Loss Values: Robust Dynamic Pruning via Loss Trajectory Alignment
 description: >-
@@ -109,10 +109,10 @@ tags:
 
 ## 相关论文
 
-- [Structured Language Generation Model: Loss Calibration and Formatted Decoding for Efficient Text](../../AAAI2026/model_compression/structured_language_generation_model_loss_calibration_and_formatted_decoding_for.md)
 - [GuidedQuant: Large Language Model Quantization via Exploiting End Loss Guidance](../../ICML2025/model_compression/guidedquant_large_language_model_quantization_via_exploiting_end_loss_guidance.md)
+- [PPCL: Pluggable Pruning with Contiguous Layer Distillation for Diffusion Transformers](ppcl_pluggable_pruning_dit_distillation.md)
+- [HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers](hiap_a_multi-granular_stochastic_auto-pruning_framework_for_vision_transformers.md)
 - [Make LoRA Great Again: Boosting LoRA with Adaptive Singular Values and Mixture-of-Experts Optimization Alignment](../../ICML2025/model_compression/make_lora_great_again_boosting_lora_with_adaptive_singular_values_and_mixture-of.md)
 - [DLP: Dynamic Layerwise Pruning in Large Language Models](../../ICML2025/model_compression/dlp_dynamic_layerwise_pruning_in_large_language_models.md)
-- [PPCL: Pluggable Pruning with Contiguous Layer Distillation for Diffusion Transformers](ppcl_pluggable_pruning_dit_distillation.md)
 
 <!-- RELATED:END -->

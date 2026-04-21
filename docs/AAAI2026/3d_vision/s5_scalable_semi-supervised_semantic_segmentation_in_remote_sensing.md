@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] S5: Scalable Semi-Supervised Semantic Segmentation in Remote Sensing
 description: >-
@@ -156,8 +156,8 @@ MoE-MDF 在参数量仅为 SDF 的 1/3 时，平均精度提升 0.64 个点。α
 
 ## 相关论文
 
-- [Rewis3d: Reconstruction Improves Weakly-Supervised Semantic Segmentation](../../CVPR2026/3d_vision/rewis3d_reconstruction_improves_weaklysupervised_s.md)
 - [SkySense V2: A Unified Foundation Model for Multi-Modal Remote Sensing](../../ICCV2025/3d_vision/skysense_v2_a_unified_foundation_model_for_multi-modal_remote_sensing.md)
+- [Rewis3d: Reconstruction Improves Weakly-Supervised Semantic Segmentation](../../CVPR2026/3d_vision/rewis3d_reconstruction_improves_weaklysupervised_s.md)
 - [EPSegFZ: Efficient Point Cloud Semantic Segmentation for Few- and Zero-Shot Scenarios](epsegfz_efficient_point_cloud_semantic_segmentation_for_few-_and_zero-shot_scena.md)
 - [PartSAM: A Scalable Promptable Part Segmentation Model Trained on Native 3D Data](../../ICLR2026/3d_vision/partsam_a_scalable_promptable_part_segmentation_model_trained_on_native_3d_data.md)
 - [ASSIST-3D: Adapted Scene Synthesis for Class-Agnostic 3D Instance Segmentation](assist-3d_adapted_scene_synthesis_for_class-agnostic_3d_instance_segmentation.md)

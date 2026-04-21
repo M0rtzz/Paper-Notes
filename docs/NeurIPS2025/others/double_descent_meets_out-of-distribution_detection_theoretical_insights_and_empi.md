@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Double Descent Meets Out-of-Distribution Detection: Theoretical Insights and Empirical Analysis
 description: >-

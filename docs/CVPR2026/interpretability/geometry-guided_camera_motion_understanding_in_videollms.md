@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Geometry-Guided Camera Motion Understanding in VideoLLMs
 description: >-
@@ -142,8 +142,8 @@ Pipeline 分为四步（见图1）：(1) 输入视频分割为 shot，每个 sho
 
 - [Text-guided Fine-Grained Video Anomaly Understanding](text-guided_fine-grained_video_anomaly_understanding.md)
 - [Missing No More: Dictionary-Guided Cross-Modal Image Fusion under Missing Infrared](missing_no_more_dictionary-guided_cross-modal_image_fusion_under_missing_infrare.md)
-- [Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP](beyond_semantics_disentangling_information_scope_in_sparse_autoencoders_for_clip.md)
-- [Measuring the (Un)Faithfulness of Concept-Based Explanations](measuring_the_unfaithfulness_of_concept-based_explanations.md)
-- [Feature Attribution Stability Suite: How Stable Are Post-Hoc Attributions?](feature_attribution_stability_suite_how_stable_are_post-hoc_attributions.md)
+- [Draft and Refine with Visual Experts](draft_and_refine_with_visual_experts.md)
+- [Inside-Out: Measuring Generalization in Vision Transformers Through Inner Workings](inside-out_measuring_generalization_in_vision_transformers_through_inner_working.md)
+- [Language Models Can Explain Visual Features via Steering](language_models_can_explain_visual_features_via_steering.md)
 
 <!-- RELATED:END -->

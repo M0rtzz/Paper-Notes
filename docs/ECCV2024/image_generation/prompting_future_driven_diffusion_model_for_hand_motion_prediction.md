@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Prompting Future Driven Diffusion Model for Hand Motion Prediction
 description: >-
@@ -124,6 +124,6 @@ STEN使用标准扩散去噪损失 $\mathcal{L}_{STEN} = \mathbb{E}\|\epsilon - 
 - [NL2Contact: Natural Language Guided 3D Hand-Object Contact Modeling with Diffusion Model](nl2contact_natural_language_guided_3d_hand-object_contact_modeling_with_diffusio.md)
 - [Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
 - [Learning Semantic Latent Directions for Accurate and Controllable Human Motion Prediction](learning_semantic_latent_directions_for_accurate_and_controllable_human_motion_p.md)
-- [EMDM: Efficient Motion Diffusion Model for Fast and High-Quality Motion Generation](emdm_efficient_motion_diffusion_model_for_fast_and_high-quality_motion_generatio.md)
+- [EMDM: Efficient Motion Diffusion Model for Fast and High-Quality Motion Generation](emdm_efficient_motion_diffusion_model_for_fast_and_high.md)
 
 <!-- RELATED:END -->

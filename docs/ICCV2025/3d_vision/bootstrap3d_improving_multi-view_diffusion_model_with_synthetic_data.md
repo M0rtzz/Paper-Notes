@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bootstrap3D: Improving Multi-view Diffusion Model with Synthetic Data
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards a Golden Classifier-Free Guidance Path via Foresight Fixed Point Iterations
 description: >-
@@ -186,10 +186,10 @@ FSG是纯推理时方法，无需训练。核心决策：
 
 ## 相关论文
 
+- [TCFG: Tangential Damping Classifier-Free Guidance](../../CVPR2025/image_generation/tcfg_tangential_damping_classifier-free_guidance.md)
 - [Studying Classifier(-Free) Guidance From A Classifier-Centric Perspective](../../AAAI2026/image_generation/studying_classifier-free_guidance_from_a_classifier-centric_perspective.md)
-- [CFG-Ctrl: Control-Based Classifier-Free Diffusion Guidance](../../CVPR2026/image_generation/cfg-ctrl_control-based_classifier-free_diffusion_guidance.md)
 - [DICE: Distilling Classifier-Free Guidance into Text Embeddings](../../AAAI2026/image_generation/dice_distilling_classifier-free_guidance_into_text_embedding.md)
+- [CFG-Ctrl: Control-Based Classifier-Free Diffusion Guidance](../../CVPR2026/image_generation/cfg-ctrl_control-based_classifier-free_diffusion_guidance.md)
 - [TeEFusion: Blending Text Embeddings to Distill Classifier-Free Guidance](../../ICCV2025/image_generation/teefusion_blending_text_embeddings_to_distill_classifier-free_guidance.md)
-- [Classifier-Free Guidance inside the Attraction Basin May Cause Memorization](../../CVPR2025/image_generation/classifier-free_guidance_inside_the_attraction_basin_may_cause_memorization.md)
 
 <!-- RELATED:END -->

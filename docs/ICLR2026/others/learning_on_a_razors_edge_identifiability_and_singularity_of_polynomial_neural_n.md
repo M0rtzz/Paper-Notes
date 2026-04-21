@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning on a Razor's Edge: Identifiability and Singularity of Polynomial Neural Networks
 description: >-

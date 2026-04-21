@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Distributionally Robust Online Markov Game with Linear Function Approximation
 description: >-
@@ -173,10 +173,10 @@ $$\text{Regret}(K) = \max_{i \in [n]} \sum_{k=1}^K [V_{i,1}^{\star, \pi_{-i}^k, 
 
 ## 相关论文
 
-- [HiLoMix: Robust High- and Low-Frequency Graph Learning Framework for Mixing Address Association](hilomix_robust_high-_and_low-frequency_graph_learning_framework_for_mixing_addre.md)
-- [Mechanistic Interpretability of RNNs Emulating Hidden Markov Models](../../NeurIPS2025/human_understanding/mechanistic_interpretability_of_rnns_emulating_hidden_markov_models.md)
 - [Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](../../ICLR2026/human_understanding/function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)
+- [HiLoMix: Robust High- and Low-Frequency Graph Learning Framework for Mixing Address Association](hilomix_robust_high-_and_low-frequency_graph_learning_framework_for_mixing_addre.md)
 - [An Efficient, Provably Optimal Algorithm for the 0-1 Loss Linear Classification Problem](../../ICLR2026/human_understanding/an_efficient_provably_optimal_algorithm_for_the_0-1_loss_linear_classification_p.md)
+- [Mixing Expert Knowledge: Bring Human Thoughts Back to the Game of Go](../../NeurIPS2025/human_understanding/mixing_expert_knowledge_bring_human_thoughts_back_to_the_game_of_go.md)
 - [REA-RL: Reflection-Aware Online Reinforcement Learning for Efficient Reasoning](../../ICLR2026/human_understanding/rea-rl_reflection-aware_online_reinforcement_learning_for_efficient_reasoning.md)
 
 <!-- RELATED:END -->

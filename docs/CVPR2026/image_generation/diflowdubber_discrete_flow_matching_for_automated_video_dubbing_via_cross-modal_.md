@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiFlowDubber: Discrete Flow Matching for Automated Video Dubbing via Cross-Modal Alignment and Synchronization
 description: >-

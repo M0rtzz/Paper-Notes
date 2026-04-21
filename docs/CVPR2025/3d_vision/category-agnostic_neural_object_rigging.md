@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Category-Agnostic Neural Object Rigging
 description: >-
@@ -128,8 +128,8 @@ tags:
 
 - [Any3DIS: Class-Agnostic 3D Instance Segmentation by 2D Mask Tracking](any3dis_class-agnostic_3d_instance_segmentation_by_2d_mask_tracking.md)
 - [RigAnyFace: Scaling Neural Facial Mesh Auto-Rigging with Unlabeled Data](../../NeurIPS2025/3d_vision/riganyface_scaling_neural_facial_mesh_auto-rigging_with_unlabeled_data.md)
+- [RigGS: Rigging of 3D Gaussians for Modeling Articulated Objects in Videos](riggs_rigging_of_3d_gaussians_for_modeling_articulated_objects_in_videos.md)
+- [Multi-View Pose-Agnostic Change Localization with Zero Labels](multi-view_pose-agnostic_change_localization_with_zero_labels.md)
 - [Unified Category-Level Object Detection and Pose Estimation from RGB Images using 3D Prototypes](../../ICCV2025/3d_vision/unified_category-level_object_detection_and_pose_estimation_from_rgb_images_usin.md)
-- [Omni6D: Large-Vocabulary 3D Object Dataset for Category-Level 6D Object Pose Estimation](../../ECCV2024/3d_vision/omni6d_large-vocabulary_3d_object_dataset_for_category-level_6d_object_pose_esti.md)
-- [NOVUM: Neural Object Volumes for Robust Object Classification](../../ECCV2024/3d_vision/novum_neural_object_volumes_for_robust_object_classification.md)
 
 <!-- RELATED:END -->

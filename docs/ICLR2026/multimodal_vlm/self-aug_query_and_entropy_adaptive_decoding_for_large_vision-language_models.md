@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Self-Aug: Query and Entropy Adaptive Decoding for Large Vision-Language Models
 description: >-

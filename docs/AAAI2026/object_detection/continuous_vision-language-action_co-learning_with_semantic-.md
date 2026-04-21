@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Continuous Vision-Language-Action Co-Learning with Semantic-Physical Alignment for Behavioral Cloning
 description: >-

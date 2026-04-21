@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VoiceCloak: A Multi-Dimensional Defense Framework against Unauthorized Diffusion-based Voice Cloning
 description: >-
@@ -111,6 +111,6 @@ $$\mathcal{L}_{sem} = 1 - \cos(f_{adv}^{(l,t)}, f^{(l,t)}) + \cos(f_{adv}^{(l,t)
 - [coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](../../CVPR2026/image_generation/codrawagents_a_multi-agent_dialogue_framework_for_compositional_image_generation.md)
 - [DCT-Shield: A Robust Frequency Domain Defense against Malicious Image Editing](../../ICCV2025/image_generation/dct-shield_a_robust_frequency_domain_defense_against_malicious_image_editing.md)
 - [T2I-RiskyPrompt: A Benchmark for Safety Evaluation, Attack, and Defense on Text-to-Image Model](t2i-riskyprompt_a_benchmark_for_safety_evaluation_attack_and_defense_on_text-to-.md)
-- [Understanding Representation Dynamics of Diffusion Models via Low-Dimensional Models](../../NeurIPS2025/image_generation/understanding_representation_dynamics_of_diffusion_models_via_low-dimensional_mo.md)
+- [Towards Robust Content Watermarking Against Removal and Forgery Attacks](../../CVPR2026/image_generation/towards_robust_content_watermarking_against_removal_and_forgery_attacks.md)
 
 <!-- RELATED:END -->

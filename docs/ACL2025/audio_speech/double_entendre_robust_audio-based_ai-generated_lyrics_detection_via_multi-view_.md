@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Double Entendre: Robust Audio-Based AI-Generated Lyrics Detection via Multi-View Fusion
 description: >-

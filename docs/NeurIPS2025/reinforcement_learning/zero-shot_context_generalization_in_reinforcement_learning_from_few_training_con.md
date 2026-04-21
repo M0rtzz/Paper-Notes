@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Zero-Shot Context Generalization in Reinforcement Learning from Few Training Contexts
 description: >-
@@ -127,6 +127,6 @@ tags:
 - [Zero-Shot Generalization of Vision-Based RL Without Data Augmentation](../../ICML2025/reinforcement_learning/zero-shot_generalization_of_vision-based_rl_without_data_augmentation.md)
 - [Towards Provable Emergence of In-Context Reinforcement Learning](towards_provable_emergence_of_in-context_reinforcement_learning.md)
 - [Memo: Training Memory-Efficient Embodied Agents with Reinforcement Learning](memo_training_memory-efficient_embodied_agents_with_reinforcement_learning.md)
-- [Cross-environment Cooperation Enables Zero-shot Multi-agent Coordination](../../ICML2025/reinforcement_learning/cross-environment_cooperation_enables_zero-shot_multi-agent_coordination.md)
+- [Pessimism Principle Can Be Effective: Towards a Framework for Zero-Shot Transfer RL](../../ICML2025/reinforcement_learning/pessimism_principle_can_be_effective_towards_a_framework_for_zero-shot_transfer_.md)
 
 <!-- RELATED:END -->

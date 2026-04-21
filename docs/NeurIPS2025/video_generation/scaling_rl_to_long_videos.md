@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Scaling RL to Long Videos
 description: >-
@@ -153,10 +153,10 @@ tags:
 
 ## 相关论文
 
-- [OmniHuman-1: Rethinking the Scaling-Up of One-Stage Conditioned Human Animation Models](../../ICCV2025/video_generation/omnihuman-1_rethinking_the_scaling-up_of_one-stage_conditioned_human_animation_m.md)
+- [Towards Precise Scaling Laws for Video Diffusion Transformers](../../CVPR2025/video_generation/towards_precise_scaling_laws_for_video_diffusion_transformers.md)
 - [Radial Attention: O(n log n) Sparse Attention with Energy Decay for Long Video Generation](radial_attention_onlog_n_sparse_attention_with_energy_decay_for_long_video_gener.md)
 - [Long Context Tuning for Video Generation](../../ICCV2025/video_generation/long_context_tuning_for_video_generation.md)
-- [ActivityForensics: A Comprehensive Benchmark for Localizing Manipulated Activity in Videos](../../CVPR2026/video_generation/activityforensics_a_comprehensive_benchmark_for_localizing_manipulated_activity_.md)
-- [LongDiff: Training-Free Long Video Generation in One Go](../../CVPR2025/video_generation/longdiff_training-free_long_video_generation_in_one_go.md)
+- [OmniHuman-1: Rethinking the Scaling-Up of One-Stage Conditioned Human Animation Models](../../ICCV2025/video_generation/omnihuman-1_rethinking_the_scaling-up_of_one-stage_conditioned_human_animation_m.md)
+- [Tracktention: Leveraging Point Tracking to Attend Videos Faster and Better](../../CVPR2025/video_generation/tracktention_leveraging_point_tracking_to_attend_videos_faster_and_better.md)
 
 <!-- RELATED:END -->

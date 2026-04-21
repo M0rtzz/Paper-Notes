@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Embedding Safety into RL: A New Take on Trust Region Methods
 description: >-
@@ -192,6 +192,6 @@ $$\bar{H}_C(\theta_k) = G_K(\theta_k) + \beta \phi''(b - V_c(\theta)) \nabla_\th
 - [Learning to Trust Bellman Updates: Selective State-Adaptive Regularization for Offline RL](learning_to_trust_bellman_updates_selective_state-adaptive_regularization_for_of.md)
 - [PIGDreamer: Privileged Information Guided World Models for Safe Partially Observable RL](pigdreamer_privileged_information_guided_world_models_for_safe_partially_observa.md)
 - [Safety Certificate against Latent Variables with Partially Unidentifiable Dynamics](safety_certificate_against_latent_variables_with_partially_unidentifiable_dynami.md)
-- [LEAST: The Courage to Stop — Overcoming Sunk Cost Fallacy in Deep RL](the_courage_to_stop_overcoming_sunk_cost_fallacy_in_deep_reinforcement_learning.md)
+- [Pessimism Principle Can Be Effective: Towards a Framework for Zero-Shot Transfer RL](pessimism_principle_can_be_effective_towards_a_framework_for_zero-shot_transfer_.md)
 
 <!-- RELATED:END -->

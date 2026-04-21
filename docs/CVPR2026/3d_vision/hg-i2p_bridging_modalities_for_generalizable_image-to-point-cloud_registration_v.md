@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hg-I2P: Bridging Modalities for Generalizable Image-to-Point-Cloud Registration via Heterogeneous Graphs
 description: >-

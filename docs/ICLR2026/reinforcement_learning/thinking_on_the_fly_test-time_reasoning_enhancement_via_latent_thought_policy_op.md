@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Thinking on the Fly: Test-Time Reasoning Enhancement via Latent Thought Policy Optimization
 description: >-

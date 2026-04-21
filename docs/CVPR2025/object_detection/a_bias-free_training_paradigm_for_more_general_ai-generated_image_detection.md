@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Bias-Free Training Paradigm for More General AI-generated Image Detection
 description: >-
@@ -120,6 +120,6 @@ tags:
 - [Is Less More? Exploring Token Condensation as Training-free Test-time Adaptation](../../ICCV2025/object_detection/is_less_more_exploring_token_condensation_as_training-free_test-time_adaptation.md)
 - [Dual Data Alignment Makes AI-Generated Image Detector Easier Generalizable](../../NeurIPS2025/object_detection/dual_data_alignment_makes_ai-generated_image_detector_easier_generalizable.md)
 - [Training-free Detection of Generated Videos via Spatial-Temporal Likelihoods](../../CVPR2026/object_detection/training-free_detection_of_generated_videos_via_spatial-temporal_likelihoods.md)
-- [Co-Spy: Combining Semantic and Pixel Features to Detect Synthetic Images by AI](co-spy_combining_semantic_and_pixel_features_to_detect_synthetic_images_by_ai.md)
+- [Zero-Shot Detection of AI-Generated Images](../../ECCV2024/object_detection/zero-shot_detection_of_ai-generated_images.md)
 
 <!-- RELATED:END -->

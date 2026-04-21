@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] When Large Multimodal Models Confront Evolving Knowledge: Challenges and Explorations
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Uncovering Grounding IDs: How External Cues Shape Multimodal Binding
 description: >-

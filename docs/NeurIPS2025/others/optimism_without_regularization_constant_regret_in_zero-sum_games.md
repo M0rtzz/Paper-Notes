@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Optimism Without Regularization: Constant Regret in Zero-Sum Games
 description: >-

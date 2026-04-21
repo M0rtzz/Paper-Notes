@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spatial Reasoning is Not a Free Lunch: A Controlled Study on LLaVA
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Strategyproof Reinforcement Learning from Human Feedback
 description: >-

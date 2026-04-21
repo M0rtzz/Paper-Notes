@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing SAM with Efficient Prompting and Preference Optimization for Semi-Supervised Medical Image Segmentation
 description: >-
-  [CVPR 2025][医学图像分割] 提出增强SAM框架，利用CLIP和VQA无监督生成标注高效的提示，结合DPO偏好优化和虚拟标注器实现半监督医学图像分割，在肺/乳腺肿瘤/器官分割上达到SOTA
+  [CVPR 2025][LLM对齐][SAM] 提出一种增强 SAM 的半监督医学图像分割框架：通过 CLIP 和 VQA 无监督生成包含语义、位置和形状信息的高效提示（无需专家标注），再用 DPO 偏好优化技术配合虚拟标注器（代替人类标注者提供排名/评分）训练最优分割策略，在肺分割、乳腺肿瘤分割、器官分割等多模态任务上达到 SOTA。
 tags:
   - CVPR 2025
-  - 医学图像分割
+  - LLM对齐
   - SAM
-  - 偏好优化
-  - 半监督学习
-  - DPO
+  - 半监督分割
+  - DPO偏好优化
+  - 无监督提示生成
+  - 虚拟标注器
 ---
 
 # Enhancing SAM with Efficient Prompting and Preference Optimization for Semi-Supervised Medical Image Segmentation
@@ -127,10 +128,10 @@ tags:
 
 ## 相关论文
 
-- [InPO: Inversion Preference Optimization with Reparametrized DDIM for Efficient Diffusion Model Alignment](inpo_inversion_preference_optimization_with_reparametrized_ddim_for_efficient_di.md)
 - [Boost Your Human Image Generation Model via Direct Preference Optimization](boost_your_human_image_generation_model_via_direct_preference_optimization.md)
+- [InPO: Inversion Preference Optimization with Reparametrized DDIM for Efficient Diffusion Model Alignment](inpo_inversion_preference_optimization_with_reparametrized_ddim_for_efficient_di.md)
 - [Fine-grained Video Dubbing Duration Alignment with Segment Supervised Preference Optimization](../../ACL2025/llm_alignment/fine-grained_video_dubbing_duration_alignment_with_segment_supervised_preference.md)
+- [MMedPO: Aligning Medical Vision-Language Models with Clinical-Aware Multimodal Preference Optimization](../../ICML2025/llm_alignment/mmedpo_aligning_medical_vision-language_models_with_clinical-aware_multimodal_pr.md)
 - [Enhancing Safe and Controllable Protein Generation via Knowledge Preference Optimization](../../ACL2025/llm_alignment/kpo_protein_safety.md)
-- [DP²O-SR: Direct Perceptual Preference Optimization for Real-World Image Super-Resolution](../../NeurIPS2025/llm_alignment/dp2o-sr_direct_perceptual_preference_optimization_for_real-world_image_super-res.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SM3Det: A Unified Model for Multi-Modal Remote Sensing Object Detection
 description: >-

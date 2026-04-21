@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Benchmarking LLMs for Political Science: A United Nations Perspective
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FedALT: Federated Fine-Tuning through Adaptive Local Training with Rest-of-World LoRA
 description: >-
@@ -133,7 +133,7 @@ FedALT 平均性能 67.55%，比最佳基线 FDLoRA 高 2.38%，比 Local Only �
 - [Adaptive LoRA Experts Allocation and Selection for Federated Fine-Tuning](../../NeurIPS2025/ai_safety/adaptive_lora_experts_allocation_and_selection_for_federated_fine-tuning.md)
 - [LoRA-FAIR: Federated LoRA Fine-Tuning with Aggregation and Initialization Refinement](../../ICCV2025/ai_safety/lora-fair_federated_lora_fine-tuning_with_aggregation_and_initialization_refinem.md)
 - [SHE-LoRA: Selective Homomorphic Encryption for Federated Tuning with Heterogeneous LoRA](../../ICLR2026/ai_safety/she-lora_selective_homomorphic_encryption_for_federated_tuning_with_heterogeneou.md)
-- [Plug-and-Play Parameter-Efficient Tuning of Embeddings for Federated Recommendation](plug-and-play_parameter-efficient_tuning_of_embeddings_for_federated_recommendat.md)
 - [FedSVD: Adaptive Orthogonalization for Private Federated Learning with LoRA](../../NeurIPS2025/ai_safety/fedsvd_adaptive_orthogonalization_for_private_federated_learning_with_lora.md)
+- [Plug-and-Play Parameter-Efficient Tuning of Embeddings for Federated Recommendation](plug-and-play_parameter-efficient_tuning_of_embeddings_for_federated_recommendat.md)
 
 <!-- RELATED:END -->

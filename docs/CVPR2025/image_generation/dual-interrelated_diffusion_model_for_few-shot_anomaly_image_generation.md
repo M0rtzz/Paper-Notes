@@ -1,12 +1,10 @@
-﻿---
-title: "Dual-Interrelated Diffusion Model for Few-Shot Anomaly Image Generation"
-conference: "CVPR 2025"
-arxiv: "2408.13509"
-code: "https://github.com/yinyjin/DualAnoDiff"
-project: ""
-领域: "图像生成"
-关键词: ["异常检测", "小样本生成", "扩散模型", "工业缺陷", "双分支扩散"]
-评分: "⭐⭐⭐⭐"
+---
+title: >-
+  [论文解读] DualAnoDiff: Dual-Interrelated Diffusion Model for Few-Shot Anomaly Image Generation
+description: >-
+  [图像生成] 提出 DualAnoDiff，通过双相互关联扩散模型（全局分支生成整体异常图像+异常分支生成局部异常部分）同时生成高质量的异常图像-掩码对，并引入背景补偿模块维持背景和物体形状的一致性，显著提升下游异常检测/定位/分类的性能。
+tags:
+  - 图像生成
 ---
 
 # DualAnoDiff: Dual-Interrelated Diffusion Model for Few-Shot Anomaly Image Generation
@@ -120,10 +118,10 @@ $$\mathcal{L} = \mathbb{E}_{\mathcal{E}(I),\epsilon,t}\left[\|\epsilon - \epsilo
 
 ## 相关论文
 
-- [HypDAE: Hyperbolic Diffusion Autoencoders for Hierarchical Few-shot Image Generation](../../ICCV2025/image_generation/hypdae_hyperbolic_diffusion_autoencoders_for_hierarchical_few-shot_image_generat.md)
 - [Dual Diffusion for Unified Image Generation and Understanding](dual_diffusion_for_unified_image_generation_and_understanding.md)
-- [V-Bridge: Bridging Video Generative Priors to Versatile Few-shot Image Restoration](v-bridge_bridging_video_generative_priors_to_versatile_few-shot_image_restoratio.md)
-- [Uni-DAD: Unified Distillation and Adaptation of Diffusion Models for Few-step Few-shot Image Generation](../../CVPR2026/image_generation/uni-dad_unified_distillation_and_adaptation_of_diffusion_models_for_few-step_few.md)
-- [Diffusion Self-Distillation for Zero-Shot Customized Image Generation](diffusion_self-distillation_for_zero-shot_customized_image_generation.md)
+- [Dual Prompting Image Restoration with Diffusion Transformers (DPIR)](dual_prompting_image_restoration_with_diffusion_transformers.md)
+- [EmotiCrafter: Text-to-Emotional-Image Generation based on Valence-Arousal Model](../../ICCV2025/image_generation/emoticrafter_text-to-emotional-image_generation_based_on_valence-arousal_model.md)
+- [Timestep-Aware Diffusion Model for Extreme Image Rescaling](../../ICCV2025/image_generation/timestep-aware_diffusion_model_for_extreme_image_rescaling.md)
+- [FreeMorph: Tuning-Free Generalized Image Morphing with Diffusion Model](../../ICCV2025/image_generation/freemorph_tuning-free_generalized_image_morphing_with_diffusion_model.md)
 
 <!-- RELATED:END -->

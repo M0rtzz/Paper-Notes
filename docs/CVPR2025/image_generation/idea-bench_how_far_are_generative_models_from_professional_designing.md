@@ -1,15 +1,17 @@
-﻿---
+---
 title: >-
   [论文解读] IDEA-Bench: How Far are Generative Models from Professional Designing?
 description: >-
-  [CVPR 2025][benchmark][image generation] 提出 IDEA-Bench，包含 100 个真实世界专业设计任务和 275 个测试案例的综合基准，系统评估生成模型在专业级图像设计场景中的能力，揭示当前最强模型仅达 22.48 分。
+  [CVPR 2025][图像生成][benchmark] 提出首个面向专业级图像设计的综合基准 IDEA-Bench，涵盖 100 个真实设计任务（海报、绘本、字体、特效等）和 5 种输入输出模式，揭示当前最强模型仅获 22.48/100 分，距离专业设计仍有巨大鸿沟。
 tags:
   - CVPR 2025
+  - 图像生成
   - benchmark
-  - image generation
   - professional design
-  - MLLM evaluation
-  - generative model
+  - evaluation
+  - MLLM
+  - visual effects
+  - storyboard
 ---
 
 # IDEA-Bench: How Far are Generative Models from Professional Designing?

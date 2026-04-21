@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UDiffText: A Unified Framework for High-quality Text Synthesis in Arbitrary Images via Character-aware Diffusion Models
 description: >-

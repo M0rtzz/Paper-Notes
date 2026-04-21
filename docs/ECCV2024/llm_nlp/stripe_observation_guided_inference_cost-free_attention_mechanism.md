@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stripe Observation Guided Inference Cost-Free Attention Mechanism
 description: >-

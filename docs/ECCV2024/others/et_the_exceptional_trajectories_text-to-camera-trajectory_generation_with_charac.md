@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ET: The Exceptional Trajectories - Text-to-Camera-Trajectory Generation with Character Awareness
 description: >-

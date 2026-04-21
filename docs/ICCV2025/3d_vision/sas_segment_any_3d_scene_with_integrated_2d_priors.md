@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SAS: Segment Any 3D Scene with Integrated 2D Priors
 description: >-

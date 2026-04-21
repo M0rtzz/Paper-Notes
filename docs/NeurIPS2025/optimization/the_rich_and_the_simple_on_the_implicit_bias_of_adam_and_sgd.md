@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Rich and the Simple: On the Implicit Bias of Adam and SGD
 description: >-

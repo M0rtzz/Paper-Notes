@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Editing Physiological Signals in Videos Using Latent Representations
 description: >-
@@ -156,7 +156,7 @@ tags:
 - [Can Editing LLMs Inject Harm?](../../AAAI2026/ai_safety/can_editing_llms_inject_harm.md)
 - [Any Target Can Be Offense: Adversarial Example Generation via Generalized Latent Infection](../../ECCV2024/ai_safety/any_target_can_be_offense_adversarial_example_generation_via_generalized_latent_.md)
 - [Private Memorization Editing: Turning Memorization into a Defense to Strengthen Data Privacy in Large Language Models](../../ACL2025/ai_safety/private_memorization_editing_turning_memorization_into_a_defense_to_strengthen_d.md)
+- [Domain-Skewed Federated Learning with Feature Decoupling and Calibration](domain-skewed_federated_learning_with_feature_decoupling_and_calibration.md)
 - [Rethinking VLMs for Image Forgery Detection and Localization](rethinking_vlms_for_image_forgery_detection_and_localization.md)
-- [All Vehicles Can Lie: Efficient Adversarial Defense in Fully Untrusted-Vehicle Collaborative Perception via Pseudo-Random Bayesian Inference](all_vehicles_can_lie_efficient_adversarial_defense_in_fully_untrusted-vehicle_co.md)
 
 <!-- RELATED:END -->

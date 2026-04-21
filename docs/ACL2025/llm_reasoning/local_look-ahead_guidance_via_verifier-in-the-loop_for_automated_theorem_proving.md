@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Local Look-Ahead Guidance via Verifier-in-the-Loop for Automated Theorem Proving
 description: >-
@@ -130,8 +130,8 @@ tags:
 
 - [ProofCompass: Enhancing Specialized Provers with LLM Guidance](../../ICML2025/llm_reasoning/proofcompass_enhancing_specialized_provers_with_llm_guidance.md)
 - [Improving Value-based Process Verifier via Low-Cost Variance Reduction](../../AAAI2026/llm_reasoning/improving_value-based_process_verifier_via_low-cost_variance_reduction.md)
+- [Marco-o1 v2: Towards Widening The Distillation Bottleneck for Reasoning Models](marco-o1_v2_towards_widening_the_distillation_bottleneck_for_reasoning_models.md)
 - [Safe: Enhancing Mathematical Reasoning in Large Language Models via Retrospective Step-aware Formal Verification](safe_math_reasoning.md)
 - [Improve Vision Language Model Chain-of-thought Reasoning](improve_vlm_cot_reasoning.md)
-- [SoftCoT: Soft Chain-of-Thought for Efficient Reasoning with LLMs](softcot_soft_chain_of_thought.md)
 
 <!-- RELATED:END -->

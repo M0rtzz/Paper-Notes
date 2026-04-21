@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Outcome Reward-Based RL Training of MLLMs with Self-Consistency Sampling
 description: >-

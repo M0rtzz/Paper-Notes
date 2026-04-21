@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Solar-GECO: Perovskite Solar Cell Property Prediction with Geometric-Aware Co-Attention
 description: >-

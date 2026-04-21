@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] LODGE: Level-of-Detail Large-Scale Gaussian Splatting with Efficient Rendering
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Enhancing Generative Auto-bidding with Offline Reward Evaluation and Policy Search
 description: >-

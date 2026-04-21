@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Annealed Relaxation of Speculative Decoding for Faster Autoregressive Image Generation
 description: >-

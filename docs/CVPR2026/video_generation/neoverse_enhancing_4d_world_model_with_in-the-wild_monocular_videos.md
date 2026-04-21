@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NeoVerse: Enhancing 4D World Model with in-the-wild Monocular Videos
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VisFocus: Prompt-Guided Vision Encoders for OCR-Free Dense Document Understanding
 description: >-
@@ -160,9 +160,9 @@ $$\mathcal{M}(\mathbf{p}, X) = \mathcal{M}_L(\mathbf{p}, \mathcal{M}_V^p(\mathbf
 ## 相关论文
 
 - [KITAB-Bench: A Comprehensive Multi-Domain Benchmark for Arabic OCR and Document Understanding](../../ACL2025/llm_evaluation/kitab-bench_a_comprehensive_multi-domain_benchmark_for_arabic_ocr_and_document_u.md)
-- [Scalable Vision-Guided Crop Yield Estimation](../../AAAI2026/llm_evaluation/scalable_vision-guided_crop_yield_estimation.md)
 - [SIGMA: Sinkhorn-Guided Masked Video Modeling](sigma_sinkhorn-guided_masked_video_modeling.md)
 - [OGNI-DC: Robust Depth Completion with Optimization-Guided Neural Iterations](ogni-dc_robust_depth_completion_with_optimization-guided_neural_iterations.md)
-- [MMLU-CF: A Contamination-free Multi-task Language Understanding Benchmark](../../ACL2025/llm_evaluation/mmlu-cf_a_contamination-free_multi-task_language_understanding_benchmark.md)
+- [Gradient-Regularized Out-of-Distribution Detection](gradient-regularized_out-of-distribution_detection.md)
+- [Eliminating Warping Shakes for Unsupervised Online Video Stitching](eliminating_warping_shakes_for_unsupervised_online_video_stitching.md)
 
 <!-- RELATED:END -->

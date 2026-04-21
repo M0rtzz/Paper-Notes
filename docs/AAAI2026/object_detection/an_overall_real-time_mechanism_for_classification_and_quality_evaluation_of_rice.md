@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] An Overall Real-Time Mechanism for Classification and Quality Evaluation of Rice
 description: >-
@@ -163,10 +163,10 @@ tags:
 
 ## 相关论文
 
+- [YOLO-IOD: Towards Real Time Incremental Object Detection](yolo-iod_towards_real_time_incremental_object_detection.md)
 - [YOLOE: Real-Time Seeing Anything](../../ICCV2025/object_detection/yoloe_realtime_seeing_anything.md)
-- [StreamAvatar: Streaming Diffusion Models for Real-Time Interactive Human Avatars](../../CVPR2026/object_detection/streamavatar_streaming_diffusion_models_for_real-time_interactive_human_avatars.md)
 - [MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism](../../CVPR2025/object_detection/mi-detr_an_object_detection_model_with_multi-time_inquiries_mechanism.md)
+- [StreamAvatar: Streaming Diffusion Models for Real-Time Interactive Human Avatars](../../CVPR2026/object_detection/streamavatar_streaming_diffusion_models_for_real-time_interactive_human_avatars.md)
 - [Perceive, Act and Correct: Confidence Is Not Enough for Hyperspectral Classification](perceive_act_and_correct_confidence_is_not_enough_for_hyperspectral_classificati.md)
-- [Test-time Diverse Reasoning by Riemannian Activation Steering](test-time_diverse_reasoning_by_riemannian_activation_steering.md)
 
 <!-- RELATED:END -->

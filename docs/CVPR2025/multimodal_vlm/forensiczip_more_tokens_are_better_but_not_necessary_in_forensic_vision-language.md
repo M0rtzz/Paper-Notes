@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ForensicZip: More Tokens are Better but Not Necessary in Forensic Vision-Language Models
 description: >-

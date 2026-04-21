@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Multi-Agent Framework for Mitigating Dialect Biases in Privacy Policy Question-Answering Systems
 description: >-
@@ -132,10 +132,10 @@ tags:
 
 ## 相关论文
 
+- [REPRO-Bench: Can Agentic AI Systems Assess the Reproducibility of Social Science Research?](repro-bench_can_agentic_ai_systems_assess_the_reproducibility_of_research_claims.md)
 - [Unveiling Privacy Risks in LLM Agent Memory](mextra_agent_memory_privacy.md)
 - [iAgent: LLM Agent as a Shield between User and Recommender Systems](iagent_llm_agent_as_a_shield_between_user_and_recommender_systems.md)
 - [Bel Esprit: Multi-Agent Framework for Building AI Model Pipelines](bel_esprit_multi-agent_framework_for_building_ai_model_pipelines.md)
 - [Table-Critic: A Multi-Agent Framework for Collaborative Criticism and Refinement in Table Reasoning](table_critic_multi_agent.md)
-- [EMULATE: A Multi-Agent Framework for Determining the Veracity of Atomic Claims by Emulating Human Actions](emulate_a_multi-agent_framework_for_determining_the_veracity_of_atomic_claims_by.md)
 
 <!-- RELATED:END -->

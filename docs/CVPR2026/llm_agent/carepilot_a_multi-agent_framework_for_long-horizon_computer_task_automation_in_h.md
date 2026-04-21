@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare
 description: >-

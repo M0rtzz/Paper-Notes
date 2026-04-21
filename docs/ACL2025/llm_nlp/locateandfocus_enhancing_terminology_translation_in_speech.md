@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Locate-and-Focus: Enhancing Terminology Translation in Speech Language Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] UniConvNet: Expanding Effective Receptive Field while Maintaining Asymptotically Gaussian Distribution for ConvNets of Any Scale
 description: >-
@@ -139,9 +139,9 @@ UniConvNet采用四阶段金字塔结构（stem + 4 stages），每个stage由�
 ## 相关论文
 
 - [MobileMamba: Lightweight Multi-Receptive Visual Mamba Network](../../CVPR2025/model_compression/mobilemamba_lightweight_multi-receptive_visual_mamba_network.md)
+- [FGFP: A Fractional Gaussian Filter and Pruning for DNN Compression](../../ICML2025/model_compression/fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compression.md)
 - [Beyond Low-Rank Tuning: Model Prior-Guided Rank Allocation for Effective Transfer in Low-Data and Large-Gap Regimes](beyond_low-rank_tuning_model_prior-guided_rank_allocation_for_effective_transfer.md)
 - [FGFP: A Fractional Gaussian Filter and Pruning for Deep Neural Networks Compression](../../ICML2025/model_compression/fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compressi.md)
 - [4DGCPro: Efficient Hierarchical 4D Gaussian Compression for Progressive Volumetric Video Streaming](../../NeurIPS2025/model_compression/4dgcpro_efficient_hierarchical_4d_gaussian_compression_for_p.md)
-- [IAM: Efficient Inference through Attention Mapping between Different-scale LLMs](../../ACL2025/model_compression/iam_efficient_inference_through_attention_mapping_between_different-scale_llms.md)
 
 <!-- RELATED:END -->

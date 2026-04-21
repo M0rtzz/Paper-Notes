@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CAT: Circular-Convolutional Attention for Sub-Quadratic Transformers
 description: >-

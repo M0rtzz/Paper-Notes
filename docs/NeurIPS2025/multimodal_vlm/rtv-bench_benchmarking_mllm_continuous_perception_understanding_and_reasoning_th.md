@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RTV-Bench: Benchmarking MLLM Continuous Perception, Understanding and Reasoning through Real-Time Video
 description: >-

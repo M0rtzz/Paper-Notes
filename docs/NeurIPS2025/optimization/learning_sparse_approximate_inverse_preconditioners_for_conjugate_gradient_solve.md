@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Sparse Approximate Inverse Preconditioners for Conjugate Gradient Solvers on GPUs
 description: >-
@@ -140,9 +140,9 @@ $$\mathcal{L}_{\text{SAI}}(\mathbf{A}, \mathbf{M}^{-1}, \mathbf{w}) = \left\|\le
 ## 相关论文
 
 - [Natural Gradient VI: Guarantees for Non-Conjugate Models](natural_gradient_vi_guarantees_for_non-conjugate_models.md)
-- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
 - [Projecting Assumptions: The Duality Between Sparse Autoencoders and Concept Geometry](projecting_assumptions_the_duality_between_sparse_autoencoders_and_concept_geome.md)
 - [Learning Provably Improves the Convergence of Gradient Descent](learning_provably_improves_the_convergence_of_gradient_descent.md)
 - [Understanding the Generalization of Stochastic Gradient Adam in Learning Neural Networks](understanding_the_generalization_of_stochastic_gradient_adam_in_learning_neural_.md)
+- [FedQS: Optimizing Gradient and Model Aggregation for Semi-Asynchronous Federated Learning](fedqs_optimizing_gradient_and_model_aggregation_for_semi-asynchronous_federated_.md)
 
 <!-- RELATED:END -->

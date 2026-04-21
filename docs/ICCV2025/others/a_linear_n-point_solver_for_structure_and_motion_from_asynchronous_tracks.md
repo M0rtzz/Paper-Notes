@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] A Linear N-Point Solver for Structure and Motion from Asynchronous Tracks
 description: >-

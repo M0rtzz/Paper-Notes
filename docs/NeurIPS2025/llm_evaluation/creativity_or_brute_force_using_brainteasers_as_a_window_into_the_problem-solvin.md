@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Creativity or Brute Force? Using Brainteasers as a Window into the Problem-Solving Abilities of Large Language Models
 description: >-

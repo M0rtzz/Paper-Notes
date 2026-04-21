@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Understanding Impact of Human Feedback via Influence Functions
 description: >-
@@ -142,8 +142,8 @@ RM 训练使用标准 Bradley-Terry 偏好损失。模型为 Llama-3-8B + LoRA�
 
 - [Curiosity-Driven Reinforcement Learning from Human Feedback](curiosity_driven_rlhf.md)
 - [Strategyproof Reinforcement Learning from Human Feedback](../../NeurIPS2025/llm_alignment/strategyproof_reinforcement_learning_from_human_feedback.md)
+- [PKU-SafeRLHF: Towards Multi-Level Safety Alignment for LLMs with Human Preference](pku-saferlhf_towards_multi-level_safety_alignment_for_llms_with_human_preference.md)
 - [M³HF: Multi-agent Reinforcement Learning from Multi-phase Human Feedback of Mixed Quality](../../ICML2025/llm_alignment/m3hf_multi-agent_reinforcement_learning_from_multi-phase_human_feedback_of_mixed.md)
 - [Debate, Reflect, and Distill: Multi-Agent Feedback with Tree-Structured Preference Optimization for Efficient Language Model Enhancement](debate_reflect_and_distill_multi-agent_feedback_with_tree-structured_preference_.md)
-- [Cheems: A Practical Guidance for Building and Evaluating Chinese Reward Models from Scratch](cheems_chinese_reward_models.md)
 
 <!-- RELATED:END -->

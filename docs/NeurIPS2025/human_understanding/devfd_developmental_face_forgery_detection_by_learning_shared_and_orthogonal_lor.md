@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DevFD: Developmental Face Forgery Detection by Learning Shared and Orthogonal LoRA Subspaces
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MVSGaussian: Fast Generalizable Gaussian Splatting Reconstruction from Multi-View Stereo
 description: >-

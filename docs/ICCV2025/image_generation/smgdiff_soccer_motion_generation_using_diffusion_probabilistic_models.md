@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SMGDiff: Soccer Motion Generation using Diffusion Probabilistic Models
 description: >-
@@ -206,7 +206,7 @@ SMGDiff 在几乎所有指标上都显著优于基线方法，尤其是技能准
 - [Elucidated Rolling Diffusion Models for Probabilistic Forecasting of Complex Dynamics](../../NeurIPS2025/image_generation/elucidated_rolling_diffusion_models_for_probabilistic_forecasting_of_complex_dyn.md)
 - [Diffusion-based 3D Hand Motion Recovery with Intuitive Physics](diffusion-based_3d_hand_motion_recovery_with_intuitive_physics.md)
 - [Bitrate-Controlled Diffusion for Disentangling Motion and Content in Video](bitrate-controlled_diffusion_for_disentangling_motion_and_content_in_video.md)
+- [EMDM: Efficient Motion Diffusion Model for Fast and High-Quality Motion Generation](../../ECCV2024/image_generation/emdm_efficient_motion_diffusion_model_for_fast_and_high.md)
 - [Less is More: Improving Motion Diffusion Models with Sparse Keyframes](less_is_more_improving_motion_diffusion_models_with_sparse_keyframes.md)
-- [Causal Motion Diffusion Models for Autoregressive Motion Generation](../../CVPR2026/image_generation/causal_motion_diffusion_models_for_autoregressive_motion_generation.md)
 
 <!-- RELATED:END -->

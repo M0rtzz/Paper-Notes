@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Skip Tuning: Pre-trained Vision-Language Models are Effective and Efficient Adapters Themselves
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] On Measuring Long-Range Interactions in Graph Neural Networks
 description: >-

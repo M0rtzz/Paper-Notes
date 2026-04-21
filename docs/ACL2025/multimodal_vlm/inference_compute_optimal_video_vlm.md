@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Inference Compute-Optimal Video Vision Language Models
 description: >-

@@ -1,7 +1,16 @@
-﻿---
-title: "HyperNVD: Accelerating Neural Video Decomposition via Hypernetworks"
-description: "提出HyperNVD元学习策略，通过超网络根据视频嵌入生成INR参数，加速神经视频分解在新视频上的收敛并减少单视频过拟合"
-tags: ["视频分解", "超网络", "元学习", "隐式神经表示", "CVPR2025"]
+---
+title: >-
+  [论文解读] HyperNVD: Accelerating Neural Video Decomposition via Hypernetworks
+description: >-
+  [CVPR 2025][视频分解] HyperNVD 提出利用超网络 (Hypernetwork) 根据 VideoMAE 编码的视频嵌入动态生成隐式神经表示 (INR) 的参数，实现跨视频的通用视频分解模型，在新视频上可比从头训练快 30+ 分钟达到相同 PSNR，同时最终性能平均提升 0.8dB。
+tags:
+  - CVPR 2025
+  - 视频分解
+  - 超网络
+  - 隐式神经表示
+  - 元学习
+  - 视频编辑
+  - 层分解
 ---
 
 # HyperNVD: Accelerating Neural Video Decomposition via Hypernetworks
@@ -107,6 +116,6 @@ HyperNVD 包含三个组件：(1) **VideoMAE 编码器**——预训练的视频
 - [Generative Neural Video Compression via Video Diffusion Prior](../../CVPR2026/video_generation/generative_neural_video_compression_via_video_diffusion_prior.md)
 - [Q2E: Query-to-Event Decomposition for Zero-Shot Multilingual Text-to-Video Retrieval](../../ACL2025/video_generation/q2e_query-to-event_decomposition_for_zero-shot_multilingual_text-to-video_retrie.md)
 - [DisCa: Accelerating Video Diffusion Transformers with Distillation-Compatible Learnable Feature Caching](../../CVPR2026/video_generation/disca_accelerating_video_diffusion_transformers_wi.md)
-- [HOIGen-1M: A Large-Scale Dataset for Human-Object Interaction Video Generation](hoigen-1m_a_large-scale_dataset_for_human-object_interaction_video_generation.md)
+- [VideoDirector: Precise Video Editing via Text-to-Video Models](videodirector_precise_video_editing_via_text-to-video_models.md)
 
 <!-- RELATED:END -->

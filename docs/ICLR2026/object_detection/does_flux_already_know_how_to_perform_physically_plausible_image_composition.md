@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Does FLUX Already Know How to Perform Physically Plausible Image Composition?
 description: >-

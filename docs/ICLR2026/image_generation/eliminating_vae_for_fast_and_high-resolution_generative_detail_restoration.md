@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Eliminating VAE for Fast and High-Resolution Generative Detail Restoration
 description: >-

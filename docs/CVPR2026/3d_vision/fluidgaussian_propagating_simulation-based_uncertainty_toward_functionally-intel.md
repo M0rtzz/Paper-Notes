@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FluidGaussian: Propagating Simulation-Based Uncertainty Toward Functionally-Intelligent 3D Reconstruction
 description: >-

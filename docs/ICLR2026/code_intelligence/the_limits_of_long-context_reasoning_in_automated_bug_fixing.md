@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Limits of Long-Context Reasoning in Automated Bug Fixing
 description: >-
@@ -131,7 +131,7 @@ mini-SWE-agent 使用线性历史 —— 每步执行 bash 命令后将输出追
 - [LongCodeU: Benchmarking Long-Context Language Models on Long Code Understanding](../../ACL2025/code_intelligence/benchmarking_long-context_language_models_on_long_code_understanding.md)
 - [MathFimer: Enhancing Mathematical Reasoning by Expanding Reasoning Steps through Fill-in-the-Middle Task](mathfimer_enhancing_mathematical_reasoning_by_expanding_reasoning_steps_through_.md)
 - [Supervised Reinforcement Learning: From Expert Trajectories to Step-wise Reasoning](supervised_reinforcement_learning_from_expert_trajectories_to_step-wise_reasonin.md)
-- [Ambig-SWE: Interactive Agents to Overcome Underspecificity in Software Engineering](ambig-swe_interactive_agents_to_overcome_underspecificity_in_software_engineerin.md)
 - [Improving Code Localization with Repository Memory](improving_code_localization_with_repository_memory.md)
+- [Ambig-SWE: Interactive Agents to Overcome Underspecificity in Software Engineering](ambig-swe_interactive_agents_to_overcome_underspecificity_in_software_engineerin.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Detection of Human and Machine-Authored Fake News in Urdu
 description: >-

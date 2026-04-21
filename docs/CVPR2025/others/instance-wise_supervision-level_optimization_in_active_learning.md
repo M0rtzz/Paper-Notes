@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Instance-wise Supervision-level Optimization in Active Learning
 description: >-
@@ -143,6 +143,6 @@ ISO 在 Round 5 比传统AL方法高 **10%+**，比APFWA高约 **6%**。传统�
 - [From Easy to Hard: Progressive Active Learning Framework for Infrared Small Target Detection with Single Point Supervision](../../ICCV2025/others/from_easy_to_hard_progressive_active_learning_framework_for_infrared_small_targe.md)
 - [Effortless Active Labeling for Long-Term Test-Time Adaptation](effortless_active_labeling_for_long-term_test-time_adaptation.md)
 - [Mitigating Instance Entanglement in Instance-Dependent Partial Label Learning](../../CVPR2026/others/mitigating_instance_entanglement_in_instance-dependent_partial_label_learning.md)
-- [Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry](../../NeurIPS2025/others/reliable_active_learning_from_unreliable_labels_via_neural_collapse_geometry.md)
+- [AutoAL: Automated Active Learning with Differentiable Query Strategy Search](../../ICML2025/others/autoal_automated_active_learning_with_differentiable_query_strategy_search.md)
 
 <!-- RELATED:END -->

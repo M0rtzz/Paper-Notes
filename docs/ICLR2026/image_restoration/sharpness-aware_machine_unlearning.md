@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sharpness-Aware Machine Unlearning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Parameterized Skills from Demonstrations
 description: >-
@@ -156,8 +156,8 @@ DEPS 训练一个三层层次结构：
 ## 相关论文
 
 - [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
-- [Wasserstein Transfer Learning](wasserstein_transfer_learning.md)
 - [Learning from Interval Targets](learning_from_interval_targets.md)
+- [Wasserstein Transfer Learning](wasserstein_transfer_learning.md)
 - [Streaming Federated Learning with Markovian Data](streaming_federated_learning_with_markovian_data.md)
 - [Learning Theory for Kernel Bilevel Optimization](learning_theory_for_kernel_bilevel_optimization.md)
 

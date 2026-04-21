@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Understanding Prompt Tuning and In-Context Learning via Meta-Learning
 description: >-
@@ -152,8 +152,8 @@ $$\mathscr{R}_{\tilde\theta}^{P^{Target}}(N) = \mathbb{E}_{\tau^*} \mathbb{E}_{P
 ## 相关论文
 
 - [MaNGO: Adaptable Graph Network Simulators via Meta-Learning](mango_-_adaptable_graph_network_simulators_via_meta-learning.md)
-- [Learning Spatial-Aware Manipulation Ordering](learning_spatial-aware_manipulation_ordering.md)
 - [Think Small, Act Big: Primitive Prompt Learning for Lifelong Robot Manipulation](../../CVPR2025/robotics/think_small_act_big_primitive_prompt_learning_for_lifelong_robot_manipulation.md)
+- [Learning Spatial-Aware Manipulation Ordering](learning_spatial-aware_manipulation_ordering.md)
 - [Learning to Stop: Deep Learning for Mean Field Optimal Stopping](../../ICML2025/robotics/learning_to_stop_deep_learning_for_mean_field_optimal_stopping.md)
 - [MindForge: Empowering Embodied Agents with Theory of Mind for Lifelong Cultural Learning](mindforge_empowering_embodied_agents_with_theory_of_mind_for_lifelong_cultural_l.md)
 

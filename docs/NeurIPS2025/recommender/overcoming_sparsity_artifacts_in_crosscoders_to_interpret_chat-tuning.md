@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Overcoming Sparsity Artifacts in Crosscoders to Interpret Chat-Tuning
 description: >-
@@ -256,8 +256,8 @@ tags:
 
 - [Transformer Copilot: Learning from The Mistake Log in LLM Fine-tuning](transformer_copilot_learning_from_the_mistake_log_in_llm_fine-tuning.md)
 - [RecLM: Recommendation Instruction Tuning](../../ACL2025/recommender/reclm_recommendation_instruction_tuning.md)
-- [Radial Neighborhood Smoothing Recommender System](radial_neighborhood_smoothing_recommender_system.md)
-- [Validating LLM-as-a-Judge Systems under Rating Indeterminacy](validating_llm-as-a-judge_systems_under_rating_indeterminacy.md)
-- [TV-Rec: Time-Variant Convolutional Filter for Sequential Recommendation](tv-rec_time-variant_convolutional_filter_for_sequential_recommendation.md)
+- [NeurIPS Should Lead Scientific Consensus on AI Policy](neurips_should_lead_scientific_consensus_on_ai_policy.md)
+- [MMPB: It's Time for Multi-Modal Personalization](mmpb_its_time_for_multi-modal_personalization.md)
+- [Position: Towards Bidirectional Human-AI Alignment](position_towards_bidirectional_human-ai_alignment.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Structural Approach to Guiding a Present-Biased Agent
 description: >-

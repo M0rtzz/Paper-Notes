@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Interpretable Debiasing of Vision-Language Models for Social Fairness
 description: >-
@@ -116,7 +116,7 @@ tags:
 
 ## 相关论文
 
-- [A Closed-Form Solution for Debiasing Vision-Language Models with Utility Guarantees Across Modalities and Tasks](a_closedform_solution_for_debiasing_visionlanguage.md)
+- [A Closed-Form Solution for Debiasing Vision-Language Models with Utility Guarantees Across Modalities and Tasks](a_closed-form_solution_for_debiasing_vision-language_models_with_utility_guarant.md)
 - [FairLLaVA: Fairness-Aware Parameter-Efficient Fine-Tuning for Large Vision-Language Models](fairllava_fairness-aware_parameter-efficient_fine-tuning_for_large_vision-langua.md)
 - [BiPrompt: Bilateral Prompt Optimization for Visual and Textual Debiasing in Vision-Language Models](../../AAAI2026/multimodal_vlm/biprompt_bilateral_prompt_optimization_for_visual_and_textual_debiasing_in_visio.md)
 - [Demographic Fairness in Multimodal LLMs: A Benchmark of Gender and Ethnicity Bias in Face Verification](demographic_fairness_in_multimodal_llms_a_benchmark_of_gender_and_ethnicity_bias.md)

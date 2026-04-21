@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PFΔ: A Benchmark Dataset for Power Flow under Load, Generation, and Topology Variations
 description: >-

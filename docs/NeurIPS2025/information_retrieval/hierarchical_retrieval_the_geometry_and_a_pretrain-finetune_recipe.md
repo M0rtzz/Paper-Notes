@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hierarchical Retrieval: The Geometry and a Pretrain-Finetune Recipe
 description: >-

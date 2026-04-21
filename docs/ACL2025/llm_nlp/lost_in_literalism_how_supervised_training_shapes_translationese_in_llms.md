@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Lost in Literalism: How Supervised Training Shapes Translationese in LLMs
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Free-Form Scene Editor: Enabling Multi-Round Object Manipulation like in a 3D Engine
 description: >-

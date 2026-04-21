@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Near-Exponential Savings for Mean Estimation with Active Learning
 description: >-
@@ -123,8 +123,8 @@ PartiBandits 是一个两阶段算法：
 
 - [Covariances for Free: Exploiting Mean Distributions for Training-free Federated Learning](covariances_for_free_exploiting_mean_distributions_for_training-free_federated_l.md)
 - [Robust Estimation Under Heterogeneous Corruption Rates](robust_estimation_under_heterogeneous_corruption_rates.md)
-- [Estimation of Stochastic Optimal Transport Maps](estimation_of_stochastic_optimal_transport_maps.md)
 - [On Minimax Estimation of Parameters in Softmax-Contaminated Mixture of Experts](on_minimax_estimation_of_parameters_in_softmax-contaminated_mixture_of_experts.md)
 - [A Unified View on Learning Unnormalized Distributions via Noise-Contrastive Estimation](../../ICML2025/optimization/a_unified_view_on_learning_unnormalized_distributions_via_noise-contrastive_esti.md)
+- [FSL-SAGE: Accelerating Federated Split Learning via Smashed Activation Gradient Estimation](../../ICML2025/optimization/fsl-sage_accelerating_federated_split_learning_via_smashed_activation_gradient_e.md)
 
 <!-- RELATED:END -->

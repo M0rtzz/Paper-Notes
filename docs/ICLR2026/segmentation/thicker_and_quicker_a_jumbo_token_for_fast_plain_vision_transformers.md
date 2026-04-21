@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Thicker and Quicker: A Jumbo Token for Fast Plain Vision Transformers
 description: >-

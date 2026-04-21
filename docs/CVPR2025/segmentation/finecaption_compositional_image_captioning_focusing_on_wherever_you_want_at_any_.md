@@ -1,7 +1,16 @@
-﻿---
-title: "FineCaption: Compositional Image Captioning Focusing on Wherever You Want at Any Granularity"
-description: "FineCaption：支持任意mask引用的多粒度组合式区域图像描述VLM，结合mask感知编码器和高分辨率编码器实现精准区域理解"
-tags: ["region-captioning", "VLM", "mask-aware", "high-resolution", "compositionality"]
+---
+title: >-
+  [论文解读] FineCaption: Compositional Image Captioning Focusing on Wherever You Want at Any Granularity
+description: >-
+  [CVPR 2025][图像分割][区域描述] FineCaption 提出一种支持任意 mask 引用和高分辨率图像输入的视觉语言模型，结合 mask 感知 CLIP 编码器、ConvNeXT 和 SAM 高分辨率编码器，以及新构建的 CompositionCap 数据集，实现了多粒度组合式区域图像描述任务。
+tags:
+  - CVPR 2025
+  - 图像分割
+  - 区域描述
+  - 视觉语言模型
+  - mask引用
+  - 高分辨率编码
+  - 组合式属性
 ---
 
 # FineCaption: Compositional Image Captioning Focusing on Wherever You Want at Any Granularity
@@ -120,7 +129,7 @@ CompositionCap 数据集统计：
 - [Holmes-VAU: Towards Long-term Video Anomaly Understanding at Any Granularity](holmes-vau_towards_long-term_video_anomaly_understanding_at_any_granularity.md)
 - [Panoptic Captioning: An Equivalence Bridge for Image and Text](../../NeurIPS2025/segmentation/panoptic_captioning_an_equivalence_bridge_for_image_and_text.md)
 - [VSC: Visual Search Compositional Text-to-Image Diffusion Model](../../ICCV2025/segmentation/vsc_visual_search_compositional_text-to-image_diffusion_model.md)
+- [Segment Any Motion in Videos](segment_any_motion_in_videos.md)
 - [SAP: Segment Any 4K Panorama](sap_segment_any_4k_panorama.md)
-- [Refer to Any Segmentation Mask Group With Vision-Language Prompts](../../ICCV2025/segmentation/refer_to_any_segmentation_mask_group_with_vision-language_prompts.md)
 
 <!-- RELATED:END -->

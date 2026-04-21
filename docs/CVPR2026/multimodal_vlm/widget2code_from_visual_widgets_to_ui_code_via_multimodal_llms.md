@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Widget2Code: From Visual Widgets to UI Code via Multimodal LLMs
 description: >-

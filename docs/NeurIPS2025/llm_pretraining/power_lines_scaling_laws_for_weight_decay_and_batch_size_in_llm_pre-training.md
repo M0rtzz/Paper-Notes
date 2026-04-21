@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Power Lines: Scaling Laws for Weight Decay and Batch Size in LLM Pre-training
 description: >-

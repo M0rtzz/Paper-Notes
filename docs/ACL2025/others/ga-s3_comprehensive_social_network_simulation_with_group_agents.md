@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GA-S3: Comprehensive Social Network Simulation with Group Agents
 description: >-

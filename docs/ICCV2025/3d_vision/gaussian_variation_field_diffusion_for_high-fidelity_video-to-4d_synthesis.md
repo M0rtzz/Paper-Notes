@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Gaussian Variation Field Diffusion for High-fidelity Video-to-4D Synthesis
 description: >-

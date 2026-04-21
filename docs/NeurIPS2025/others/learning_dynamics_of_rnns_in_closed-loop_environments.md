@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Dynamics of RNNs in Closed-Loop Environments
 description: >-

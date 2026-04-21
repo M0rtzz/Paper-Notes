@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] X-Scene: Large-Scale Driving Scene Generation with High Fidelity and Flexible Controllability
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Teaching Tailored to Talent: Adverse Weather Restoration via Prompt Pool and Depth-Anything Constraint
 description: >-
@@ -208,10 +208,10 @@ $$\mathcal{L}_{total} = \lambda_1 \mathcal{L}_{res} + \lambda_2 \mathcal{L}_{cp}
 
 ## 相关论文
 
-- [Shifted Autoencoders for Point Annotation Restoration in Object Counting](shifted_autoencoders_for_point_annotation_restoration_in_object_counting.md)
-- [Omni-DC: Highly Robust Depth Completion with Multiresolution Depth Integration](../../ICCV2025/others/omni-dc_highly_robust_depth_completion_with_multiresolution_depth_integration.md)
-- [Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method](../../ICML2025/others/efficient_optimization_with_orthogonality_constraint_a_randomized_riemannian_sub.md)
-- [Anything Goes? A Crosslinguistic Study of (Im)possible Language Learning in LMs](../../ACL2025/others/anything_goes_a_crosslinguistic_study_of_impossible_language_learning_in_lms.md)
-- [Depth-Bounds for Neural Networks via the Braid Arrangement](../../NeurIPS2025/others/depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+- [AddMe: Zero-Shot Group-Photo Synthesis by Inserting People Into Scenes](addme_zero-shot_group-photo_synthesis_by_inserting_people_into_scenes.md)
+- [Active Generation for Image Classification](active_generation_for_image_classification.md)
+- [Brain Netflix: Scaling Data to Reconstruct Videos from Brain Signals](brain_netflix_scaling_data_to_reconstruct_videos_from_brain_signals.md)
+- [A High-Quality Robust Diffusion Framework for Corrupted Dataset](a_highquality_robust_diffusion_framework_for_corrupted_datas.md)
+- [ET: The Exceptional Trajectories - Text-to-Camera-Trajectory Generation with Character Awareness](et_the_exceptional_trajectories_text-to-camera-trajectory_generation_with_charac.md)
 
 <!-- RELATED:END -->

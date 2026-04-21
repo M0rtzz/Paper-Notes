@@ -2,14 +2,15 @@
 title: >-
   [论文解读] Model Poisoning Attacks to Federated Learning via Multi-Round Consistency
 description: >-
-  [CVPR 2025][federated learning] 提出 PoisonedFL 攻击方法，通过跨轮次一致性（固定随机方向 + 动态幅度调节 + 假设检验）解决现有攻击效果自相抵消的问题，在最小知识假设下击穿 8 种 SOTA 防御。
+  [CVPR 2025][优化][联邦学习] 发现现有联邦学习模型投毒攻击因跨轮次方向不一致导致效果自相抵消，提出 PoisonedFL 通过固定随机方向向量 + 动态幅度调节 + 假设检验机制实现多轮一致性攻击，在无需任何真实客户端信息的前提下击穿 8 种 SOTA 防御。
 tags:
   - CVPR 2025
-  - federated learning
+  - 优化
+  - 联邦学习
   - model poisoning
-  - adversarial attack
+  - multi-round consistency
+  - untargeted attack
   - Byzantine robustness
-  - security
 ---
 
 # Model Poisoning Attacks to Federated Learning via Multi-Round Consistency
@@ -132,6 +133,6 @@ PoisonedFL vs 7 种攻击 × 9 种防御 × 5 数据集，测试错误率（%）
 - [FedQS: Optimizing Gradient and Model Aggregation for Semi-Asynchronous Federated Learning](../../NeurIPS2025/optimization/fedqs_optimizing_gradient_and_model_aggregation_for_semi-asynchronous_federated_.md)
 - [Federated Learning with Domain Shift Eraser](federated_learning_with_domain_shift_eraser.md)
 - [SCOPE: Semantic Coreset with Orthogonal Projection Embeddings for Federated Learning](scope_semantic_coreset_with_orthogonal_projection_embeddings_for_federated_learn.md)
-- [Mind the Gap: Confidence Discrepancy Can Guide Federated Semi-Supervised Learning](mind_the_gap_confidence_discrepancy_can_guide_federated_semi-supervised_learning.md)
+- [Streaming Federated Learning with Markovian Data](../../NeurIPS2025/optimization/streaming_federated_learning_with_markovian_data.md)
 
 <!-- RELATED:END -->

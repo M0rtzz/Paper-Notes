@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Visual Structures Help Visual Reasoning: Addressing the Binding Problem in LVLMs
 description: >-

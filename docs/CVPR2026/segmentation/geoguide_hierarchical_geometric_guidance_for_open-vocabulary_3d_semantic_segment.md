@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GeoGuide: Hierarchical Geometric Guidance for Open-Vocabulary 3D Semantic Segmentation
 description: >-

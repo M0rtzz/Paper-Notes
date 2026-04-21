@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Evaluating VLMs' Spatial Reasoning Over Robot Motion: A Step Towards Robot Planning with Motion Preferences
 description: >-

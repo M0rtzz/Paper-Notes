@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PSDesigner: Automated Graphic Design with a Human-Like Creative Workflow
 description: >-

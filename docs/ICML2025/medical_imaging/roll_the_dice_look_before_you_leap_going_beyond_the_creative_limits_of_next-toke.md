@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Roll the Dice & Look Before You Leap: Going Beyond the Creative Limits of Next-Token Prediction
 description: >-

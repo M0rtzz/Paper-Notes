@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] TalkSketch: Multimodal Generative AI for Real-time Sketch Ideation with Speech
 description: >-
@@ -185,8 +185,8 @@ TalkSketch由三个核心模块组成：
 
 - [P-GenRM: Personalized Generative Reward Model with Test-time User-based Scaling](../../ICLR2026/human_understanding/p-genrm_personalized_generative_reward_model_with_test-time_user-based_scaling.md)
 - [ReMoGen: Real-time Human Interaction-to-Reaction Generation via Modular Learning from Diverse Data](../../CVPR2026/human_understanding/remogen_real-time_human_interaction-to-reaction_generation_via_modular_learning_.md)
+- [Quaffure: Real-Time Quasi-Static Neural Hair Simulation](../../CVPR2025/human_understanding/quaffure_real-time_quasi-static_neural_hair_simulation.md)
 - [From IDs to Semantics: A Generative Framework for Cross-Domain Recommendation with Adaptive Semantic Tokenization](from_ids_to_semantics_a_generative_framework_for_cross-domain_recommendation_wit.md)
-- [LUMIA: A Handheld Vision-to-Music System for Real-Time, Embodied Composition](../../NeurIPS2025/human_understanding/lumia_a_handheld_vision-to-music_system_for_real-time_embodied_composition.md)
 - [HOP: Heterogeneous Topology-based Multimodal Entanglement for Co-Speech Gesture Generation](../../CVPR2025/human_understanding/hop_heterogeneous_topology-based_multimodal_entanglement_for_co-speech_gesture_g.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Towards LLM-Empowered Knowledge Tracing via LLM-Student Hierarchical Behavior Alignment in Hyperbolic Space
 description: >-

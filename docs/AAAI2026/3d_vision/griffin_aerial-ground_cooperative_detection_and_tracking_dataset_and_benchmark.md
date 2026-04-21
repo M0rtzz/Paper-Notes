@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Griffin: Aerial-Ground Cooperative Detection and Tracking Dataset and Benchmark
 description: >-

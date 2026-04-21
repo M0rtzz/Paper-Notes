@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ZIPA: A Family of Efficient Models for Multilingual Phone Recognition
 description: >-

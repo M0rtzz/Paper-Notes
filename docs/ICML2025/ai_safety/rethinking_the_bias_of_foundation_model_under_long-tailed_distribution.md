@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Rethinking the Bias of Foundation Model under Long-tailed Distribution
 description: >-
@@ -140,9 +140,9 @@ tags:
 ## 相关论文
 
 - [FLUX: Efficient Descriptor-Driven Clustered Federated Learning under Arbitrary Distribution Shifts](../../NeurIPS2025/ai_safety/flux_efficient_descriptor-driven_clustered_federated_learning_under_arbitrary_di.md)
-- [De-AntiFake: Rethinking the Protective Perturbations Against Voice Cloning Attacks](de-antifake_rethinking_the_protective_perturbations_against_voice_cloning_attack.md)
 - [Accelerating Spectral Clustering under Fairness Constraints](accelerating_spectral_clustering_under_fairness_constraints.md)
 - [Easy to Learn, Yet Hard to Forget: Towards Robust Unlearning Under Bias](../../AAAI2026/ai_safety/easy_to_learn_yet_hard_to_forget_towards_robust_unlearning_under_bias.md)
+- [De-AntiFake: Rethinking the Protective Perturbations Against Voice Cloning Attacks](de-antifake_rethinking_the_protective_perturbations_against_voice_cloning_attack.md)
 - [Private Model Personalization Revisited](private_model_personalization_revisited.md)
 
 <!-- RELATED:END -->

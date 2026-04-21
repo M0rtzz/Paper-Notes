@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Neural Network for Simulating Radio Emission from Extensive Air Showers
 description: >-
@@ -145,6 +145,6 @@ tags:
 - [Depth-Supervised Fusion Network for Seamless-Free Image Stitching](depth-supervised_fusion_network_for_seamless-free_image_stitching.md)
 - [Out of the Shadows: Exploring a Latent Space for Neural Network Verification](../../ICLR2026/others/out_of_the_shadows_exploring_a_latent_space_for_neural_network_verification.md)
 - [Variational Regularized Unbalanced Optimal Transport: Single Network, Least Action](variational_regularized_unbalanced_optimal_transport_single_network_least_action.md)
-- [Depth-Bounds for Neural Networks via the Braid Arrangement](depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+- [VKDNW: Training-free Neural Architecture Search through Variance of Knowledge of Deep Network Weights](../../CVPR2025/others/training-free_neural_architecture_search_through_variance_of_knowledge_of_deep_n.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CoT-based Synthesizer: Enhancing LLM Performance through Answer Synthesis
 description: >-

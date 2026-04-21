@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Query-Guided Spatial-Temporal-Frequency Interaction for Music Audio-Visual Question Answering
 description: >-

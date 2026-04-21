@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Revealing POMDPs: Qualitative and Quantitative Analysis for Parity Objectives
 description: >-

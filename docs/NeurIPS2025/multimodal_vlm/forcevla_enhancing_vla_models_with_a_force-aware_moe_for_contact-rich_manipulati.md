@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ForceVLA: Enhancing VLA Models with a Force-aware MoE for Contact-rich Manipulation
 description: >-

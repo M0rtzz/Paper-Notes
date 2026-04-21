@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OmniSync: Towards Universal Lip Synchronization via Diffusion Transformers
 description: >-
@@ -152,9 +152,9 @@ OmniSync的pipeline很直观：给定一段源视频 $V_{cd}$ 和目标音频 $A
 ## 相关论文
 
 - [Scaling Diffusion Transformers Efficiently via μP](scaling_diffusion_transformers_efficiently_via_μp.md)
+- [SyncSDE: A Probabilistic Framework for Diffusion Synchronization](../../CVPR2025/image_generation/syncsde_a_probabilistic_framework_for_diffusion_synchronization.md)
 - [OminiControl: Minimal and Universal Control for Diffusion Transformer](../../ICCV2025/image_generation/ominicontrol_minimal_and_universal_control_for_diffusion_transformer.md)
 - [Unleashing Diffusion Transformers for Visual Correspondence by Modulating Massive Activations](unleashing_diffusion_transformers_for_visual_correspondence_by_modulating_massiv.md)
-- [The Universal Normal Embedding](../../CVPR2026/image_generation/the_universal_normal_embedding.md)
-- [EDiT: Efficient Diffusion Transformers with Linear Compressed Attention](../../ICCV2025/image_generation/edit_efficient_diffusion_transformers_with_linear_compressed_attention.md)
+- [TinyFusion: Diffusion Transformers Learned Shallow](../../CVPR2025/image_generation/tinyfusion_diffusion_transformers_learned_shallow.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Direct Segmentation without Logits Optimization for Training-Free Open-Vocabulary Semantic Segmentation
 description: >-

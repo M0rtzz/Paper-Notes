@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sequential Gaussian Avatars with Hierarchical Motion Context
 description: >-
@@ -170,7 +170,7 @@ I3D-Human数据集（Novel View，4个场景平均）：
 - [Motion-Aware Animatable Gaussian Avatars Deblurring](../../CVPR2026/3d_vision/motion-aware_animatable_gaussian_avatars_deblurring.md)
 - [CoMoGaussian: Continuous Motion-Aware Gaussian Splatting from Motion-Blurred Images](comogaussian_continuous_motionaware_gaussian_splatting_from.md)
 - [Hierarchical Material Recognition from Local Appearance](hierarchical_material_recognition_from_local_appearance.md)
+- [SfM-Free 3D Gaussian Splatting via Hierarchical Training](../../CVPR2025/3d_vision/sfm-free_3d_gaussian_splatting_via_hierarchical_training.md)
 - [CATSplat: Context-Aware Transformer with Spatial Guidance for Generalizable 3D Gaussian Splatting from A Single-View Image](catsplat_contextaware_transformer_with_spatial_guidance_for.md)
-- [Image as an IMU: Estimating Camera Motion from a Single Motion-Blurred Image](image_as_an_imu_estimating_camera_motion_from_a_single_motion-blurred_image.md)
 
 <!-- RELATED:END -->

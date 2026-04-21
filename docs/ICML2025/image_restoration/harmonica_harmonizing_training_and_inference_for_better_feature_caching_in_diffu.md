@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HarmoniCa: Harmonizing Training and Inference for Better Feature Caching in Diffusion Transformer Acceleration
 description: >-

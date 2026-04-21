@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SMART-R1: Advancing Multi-agent Traffic Simulation via R1-Style Reinforcement Fine-Tuning
 description: >-

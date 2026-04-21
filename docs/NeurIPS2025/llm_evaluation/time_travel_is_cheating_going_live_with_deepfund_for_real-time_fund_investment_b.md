@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Time Travel is Cheating: Going Live with DeepFund for Real-Time Fund Investment Benchmarking
 description: >-
@@ -142,7 +142,7 @@ DeepFund 系统由三部分组成：(1) **Live Environment** 持续接入实时�
 - [Test-Time Adaptation by Causal Trimming](test-time_adaptation_by_causal_trimming.md)
 - [TripTailor: A Real-World Benchmark for Personalized Travel Planning](../../ACL2025/llm_evaluation/triptailor_a_real-world_benchmark_for_personalized_travel_planning.md)
 - [BATCLIP: Bimodal Online Test-Time Adaptation for CLIP](../../ICCV2025/llm_evaluation/batclip_bimodal_online_test-time_adaptation_for_clip.md)
+- [OODD: Test-time Out-of-Distribution Detection with Dynamic Dictionary](../../CVPR2025/llm_evaluation/oodd_test-time_out-of-distribution_detection_with_dynamic_dictionary.md)
 - [TiC-LM: A Web-Scale Benchmark for Time-Continual LLM Pretraining](../../ACL2025/llm_evaluation/tic-lm_a_web-scale_benchmark_for_time-continual_llm_pretraining.md)
-- [OptScale: Probabilistic Optimality for Inference-time Scaling](../../AAAI2026/llm_evaluation/optscale_probabilistic_optimality_for_inference-time_scaling.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Click-Gaussian: Interactive Segmentation to Any 3D Gaussians
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] YOLOv9: Learning What You Want to Learn Using Programmable Gradient Information
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Distraction is All You Need for Multimodal Large Language Model Jailbreaking
 description: >-

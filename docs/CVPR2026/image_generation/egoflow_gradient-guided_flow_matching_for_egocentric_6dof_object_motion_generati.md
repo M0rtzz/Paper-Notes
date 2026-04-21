@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EgoFlow: Gradient-Guided Flow Matching for Egocentric 6DoF Object Motion Generation
 description: >-

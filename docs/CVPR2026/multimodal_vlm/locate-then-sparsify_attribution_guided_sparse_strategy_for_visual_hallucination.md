@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Locate-then-Sparsify: Attribution Guided Sparse Strategy for Visual Hallucination Mitigation
 description: >-

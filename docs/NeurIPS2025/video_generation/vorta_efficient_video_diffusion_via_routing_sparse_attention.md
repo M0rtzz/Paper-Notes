@@ -1,11 +1,10 @@
-﻿---
+---
 title: >-
   [论文解读] VORTA: Efficient Video Diffusion via Routing Sparse Attention
 description: >-
-  [NeurIPS 2025][视频理解][视频扩散模型加速] 提出VORTA框架，通过桶化核心集注意力（建模长程依赖）和信号感知路由机制（自适应选择稀疏注意力分支），在不损失生成质量的前提下实现视频扩散Transformer端到端1.76×加速，并可与缓存和蒸馏方法叠加达到14.41×加速。
+  [NeurIPS 2025][视频扩散模型加速] 提出VORTA框架，通过桶化核心集注意力（建模长程依赖）和信号感知路由机制（自适应选择稀疏注意力分支），在不损失生成质量的前提下实现视频扩散Transformer端到端1.76×加速，并可与缓存和蒸馏方法叠加达到14.41×加速。
 tags:
   - NeurIPS 2025
-  - 视频理解
   - 视频扩散模型加速
   - 稀疏注意力
   - 路由机制
@@ -170,10 +169,10 @@ $$\mathcal{L} = \mathcal{L}_{\text{CFM}} + \lambda_{\text{distill}} \cdot \text{
 
 ## 相关论文
 
-- [Radial Attention: O(n log n) Sparse Attention with Energy Decay for Long Video Generation](radial_attention_onlog_n_sparse_attention_with_energy_decay_for_long_video_gener.md)
 - [VSA: Faster Video Diffusion with Trainable Sparse Attention](vsa_faster_video_diffusion_with_trainable_sparse_attention.md)
+- [Radial Attention: O(n log n) Sparse Attention with Energy Decay for Long Video Generation](radial_attention_onlog_n_sparse_attention_with_energy_decay_for_long_video_gener.md)
 - [S²Q-VDiT: Accurate Quantized Video Diffusion Transformer with Salient Data and Sparse Token Distillation](s2q-vdit_accurate_quantized_video_diffusion_transformer_with_salient_data_and_sp.md)
 - [LeMiCa: Lexicographic Minimax Path Caching for Efficient Diffusion-Based Video Generation](lemica_lexicographic_minimax_path_caching_for_efficient_diffusion-based_video_ge.md)
-- [Training-Free Efficient Video Generation via Dynamic Token Carving (Jenga)](training-free_efficient_video_generation_via_dynamic_token_carving.md)
+- [LinVideo: A Post-Training Framework towards O(n) Attention in Efficient Video Generation](../../CVPR2026/video_generation/linvideo_linear_attention_video_generation.md)
 
 <!-- RELATED:END -->

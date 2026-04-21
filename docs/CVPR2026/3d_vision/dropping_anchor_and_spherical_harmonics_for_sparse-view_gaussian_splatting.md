@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DropAnSH-GS: Dropping Anchor and Spherical Harmonics for Sparse-view Gaussian Splatting
 description: >-

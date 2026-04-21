@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamics-Aligned Latent Imagination in Contextual World Models for Zero-Shot Generalization
 description: >-

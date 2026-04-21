@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Minerva: Evaluating Complex Video Reasoning
 description: >-
@@ -159,9 +159,9 @@ Minerva 的构建和评估包含三个层次：
 ## 相关论文
 
 - [A Unified Reasoning Framework for Holistic Zero-Shot Video Anomaly Analysis](../../NeurIPS2025/interpretability/a_unified_reasoning_framework_for_holistic_zeroshot_video_an.md)
+- [Dynamic Reflections: Probing Video Representations with Text-Driven Reasoning](../../ICLR2026/interpretability/dynamic_reflections_probing_video_representations_with_text_driven_reasoning.md)
 - [Evaluating LLMs in Open-Source Games](../../NeurIPS2025/interpretability/evaluating_llms_in_open-source_games.md)
 - [Evaluating Neuron Explanations: A Unified Framework with Sanity Checks](../../ICML2025/interpretability/evaluating_neuron_explanations_a_unified_framework_with_sanity_checks.md)
-- [VADTree: Explainable Training-Free Video Anomaly Detection via Hierarchical Granularity](../../NeurIPS2025/interpretability/vadtree_explainable_training-free_video_anomaly_detection_via_hierarchical_granu.md)
 - [KVQ: Boosting Video Quality Assessment via Saliency-Guided Local Perception](../../CVPR2025/interpretability/kvq_boosting_video_quality_assessment_via_saliency-guided_local_perception.md)
 
 <!-- RELATED:END -->

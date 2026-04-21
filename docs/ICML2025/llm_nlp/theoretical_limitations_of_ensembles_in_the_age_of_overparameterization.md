@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Theoretical Limitations of Ensembles in the Age of Overparameterization
 description: >-
@@ -158,7 +158,7 @@ California Housing, N=12, D=200, ReLU：集成-单模型差异随 $\lambda$ 线�
 - [On Expressive Power of Looped Transformers: Theoretical Analysis and Enhancement via Timestep Encoding](on_expressive_power_of_looped_transformers_theoretical_analysis_and_enhancement_.md)
 - [Can LLMs Identify Critical Limitations within Scientific Research? A Systematic Evaluation on AI Research Papers](../../ACL2025/llm_nlp/can_llms_identify_critical_limitations_within_scientific_research_a_systematic_e.md)
 - [Adaptive Multi-prompt Contrastive Network for Few-shot Out-of-distribution Detection](adaptive_multi-prompt_contrastive_network_for_few-shot_out-of-distribution_detec.md)
-- [Beyond Induction Heads: In-Context Meta Learning Induces Multi-Phase Circuit Emergence](beyond_induction_heads_in-context_meta_learning_induces_multi-phase_circuit_emer.md)
 - [LaRoSA: Enhancing LLM Efficiency via Layerwise Rotated Sparse Activation](la_rosa_enhancing_llm_efficiency_via_layerwise_rotated_sparse_activation.md)
+- [QuEst: Enhancing Estimates of Quantile-Based Distributional Measures Using Model Predictions](quest_enhancing_estimates_of_quantile-based_distributional_measures_using_model_.md)
 
 <!-- RELATED:END -->

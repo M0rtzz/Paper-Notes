@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Information-Theoretic Discrete Diffusion
 description: >-
@@ -208,6 +208,6 @@ Time-free 估计的计算成本约为 $K$ 次前向推理（$K$ 为 MC 样本数
 - [Information Theoretic Learning for Diffusion Models with Warm Start](information_theoretic_learning_for_diffusion_models_with_warm_start.md)
 - [Constrained Discrete Diffusion](constrained_discrete_diffusion.md)
 - [MMG: Mutual Information Estimation via the MMSE Gap in Diffusion](mmg_mutual_information_estimation_via_the_mmse_gap_in_diffusion.md)
-- [Split Gibbs Discrete Diffusion Posterior Sampling](split_gibbs_discrete_diffusion_posterior_sampling.md)
+- [Learnable Sampler Distillation for Discrete Diffusion Models](learnable_sampler_distillation_for_discrete_diffusion_models.md)
 
 <!-- RELATED:END -->

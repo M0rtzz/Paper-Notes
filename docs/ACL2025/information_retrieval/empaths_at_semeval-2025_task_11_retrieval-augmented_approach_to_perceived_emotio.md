@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Empaths at SemEval-2025 Task 11: Retrieval-Augmented Approach to Perceived Emotions Prediction
 description: >-

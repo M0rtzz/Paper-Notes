@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fine-grained Spatiotemporal Grounding on Egocentric Videos
 description: >-

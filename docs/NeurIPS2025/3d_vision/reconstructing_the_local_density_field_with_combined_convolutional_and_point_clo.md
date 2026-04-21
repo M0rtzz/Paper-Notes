@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Reconstructing the Local Density Field with Combined Convolutional and Point Cloud Architecture
 description: >-
@@ -103,8 +103,8 @@ tags:
 ## 相关论文
 
 - [DANCE: Density-Agnostic and Class-Aware Network for Point Cloud Completion](../../AAAI2026/3d_vision/dance_density-agnostic_and_class-aware_network_for_point_cloud_completion.md)
-- [Graph Smoothing for Enhanced Local Geometry Learning in Point Cloud Analysis](../../AAAI2026/3d_vision/graph_smoothing_for_enhanced_local_geometry_learning_in_point_cloud_analysis.md)
 - [ECKConv: Learning Coordinate-based Convolutional Kernels for Continuous SE(3) Equivariant Point Cloud Analysis](../../CVPR2026/3d_vision/learning_coordinate-based_convolutional_kernels_for_continuous_se3_equivariant_a.md)
+- [Graph Smoothing for Enhanced Local Geometry Learning in Point Cloud Analysis](../../AAAI2026/3d_vision/graph_smoothing_for_enhanced_local_geometry_learning_in_point_cloud_analysis.md)
 - [Rectified Point Flow: Generic Point Cloud Pose Estimation](rectified_point_flow_generic_point_cloud_pose_estimation.md)
 - [GPSFormer: A Global Perception and Local Structure Fitting-Based Transformer for Point Cloud Understanding](../../ECCV2024/3d_vision/gpsformer_a_global_perception_and_local_structure_fitting-based_transformer_for_.md)
 

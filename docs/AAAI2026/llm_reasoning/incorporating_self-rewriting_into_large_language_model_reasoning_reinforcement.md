@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Incorporating Self-Rewriting into Large Language Model Reasoning Reinforcement
 description: >-

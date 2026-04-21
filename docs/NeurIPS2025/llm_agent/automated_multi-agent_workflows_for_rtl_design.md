@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Automated Multi-Agent Workflows for RTL Design
 description: >-
@@ -200,9 +200,9 @@ VeriMaAS 在 token 成本上接近轻量级 CoT，远低于 SelfRefine（约 2×
 
 ## 相关论文
 
-- [Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies](../../ICLR2026/llm_agent/multi-agent_design_optimizing_agents_with_better_prompts_and_topologies.md)
 - [Benchmarking Agentic Systems in Automated Scientific Information Extraction with ChemX](benchmarking_agentic_systems_in_automated_scientific_information_extraction_with.md)
 - [Automated Composition of Agents: A Knapsack Approach for Agentic Component Selection](automated_composition_of_agents_a_knapsack_approach_for_agentic_component_select.md)
+- [AgentSwift: Efficient LLM Agent Design via Value-guided Hierarchical Search](../../AAAI2026/llm_agent/agentswift_efficient_llm_agent_design_via_value-guided_hierarchical_search.md)
 - [Zero-Shot Large Language Model Agents for Fully Automated Radiotherapy Treatment Planning](zero-shot_large_language_model_agents_for_fully_automated_radiotherapy_treatment.md)
 - [MAT-Agent: Adaptive Multi-Agent Training Optimization](mat-agent_adaptive_multi-agent_training_optimization.md)
 

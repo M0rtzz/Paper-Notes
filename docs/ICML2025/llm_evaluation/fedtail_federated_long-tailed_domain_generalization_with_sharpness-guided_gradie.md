@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] FEDTAIL: Federated Long-Tailed Domain Generalization with Sharpness-Guided Gradient Matching
 description: >-

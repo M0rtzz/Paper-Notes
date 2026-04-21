@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Ego4o: Egocentric Human Motion Capture and Understanding from Multi-Modal Input
 description: >-

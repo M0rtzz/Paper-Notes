@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] COSMO: Combination of Selective Memorization for Low-cost Vision-and-Language Navigation
 description: >-

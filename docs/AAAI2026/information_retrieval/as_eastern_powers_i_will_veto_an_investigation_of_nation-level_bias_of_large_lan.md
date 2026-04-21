@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] "As Eastern Powers, I Will Veto." : An Investigation of Nation-Level Bias of Large Language Models in International Relations
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MITracker: Multi-View Integration for Visual Object Tracking
 description: >-
@@ -119,10 +119,10 @@ $$L_{track} = L_{cls} + \lambda_{giou}L_{giou} + \lambda_{L_1}L_1 + \lambda_{bev
 
 ## 相关论文
 
+- [OmniTrack: Omnidirectional Multi-Object Tracking](omnidirectional_multi-object_tracking.md)
 - [FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking](fc-track_overlap-aware_post-association_correction_for_online_multi-object_track.md)
 - [Dynamic Updates for Language Adaptation in Visual-Language Tracking](dynamic_updates_for_language_adaptation_in_visual-language_tracking.md)
-- [HERBench: A Benchmark for Multi-Evidence Integration in Video Question Answering](../../CVPR2026/video_understanding/herbench_a_benchmark_for_multi-evidence_integration_in_video_question_answering.md)
 - [MUST: The First Dataset and Unified Framework for Multispectral UAV Single Object Tracking](must_the_first_dataset_and_unified_framework_for_multispectral_uav_single_object.md)
-- [PlugTrack: Multi-Perceptive Motion Analysis for Adaptive Fusion in Multi-Object Tracking](../../AAAI2026/video_understanding/plugtrack_multi-perceptive_motion_analysis_for_adaptive_fusion_in_multi-object_t.md)
+- [HERBench: A Benchmark for Multi-Evidence Integration in Video Question Answering](../../CVPR2026/video_understanding/herbench_a_benchmark_for_multi-evidence_integration_in_video_question_answering.md)
 
 <!-- RELATED:END -->

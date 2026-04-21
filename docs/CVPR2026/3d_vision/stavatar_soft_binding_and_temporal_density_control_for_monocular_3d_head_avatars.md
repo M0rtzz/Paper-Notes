@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] STAvatar: Soft Binding and Temporal Density Control for Monocular 3D Head Avatars Reconstruction
 description: >-

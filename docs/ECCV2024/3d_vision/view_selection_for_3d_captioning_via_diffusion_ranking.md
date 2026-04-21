@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] View Selection for 3D Captioning via Diffusion Ranking
 description: >-

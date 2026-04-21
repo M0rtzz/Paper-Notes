@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MotionFollower: Editing Video Motion via Lightweight Score-Guided Diffusion
 description: >-

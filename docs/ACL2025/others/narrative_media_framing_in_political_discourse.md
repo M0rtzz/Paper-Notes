@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Narrative Media Framing in Political Discourse
 description: >-

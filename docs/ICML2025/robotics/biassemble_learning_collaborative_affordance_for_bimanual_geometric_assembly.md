@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BiAssemble: Learning Collaborative Affordance for Bimanual Geometric Assembly
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning a Distance Measure from the Information-Estimation Geometry of Data
 description: >-

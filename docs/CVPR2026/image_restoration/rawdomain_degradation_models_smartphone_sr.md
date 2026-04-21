@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RAW-Domain Degradation Models for Realistic Smartphone Super-Resolution
 description: >-
@@ -109,7 +109,7 @@ tags:
 - PSF 标定仅覆盖有限的空间位置和光照条件，对极端条件（如Very低光、强逆光）的泛化需要更多标定点
 - 当前方法针对单图 SR，未考虑 burst SR（多帧融合）场景中的帧间对齐退化
 - Unprocessing 管线的每一步都可能引入累计误差——逆色调映射和逆 CCM 的精度是整体系统的瓶颈
-- 仅验证了有限数量的手机设备，更大规模的跨设备泛化实验有待补充
+- 仅验证了有限数量的手机设备，更大规模的跨设备泛化实验尚未覆盖
 
 ## 相关工作与启发
 
@@ -124,3 +124,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐（验证了核心假设，但设备数量有限；消融实验覆盖 PSF 和噪声的独立贡献）
 - **写作质量**: ⭐⭐⭐⭐（问题动机清晰，实验论证紧凑）
 - **价值**: ⭐⭐⭐⭐（对手机 SR 的工业实践有直接参考价值，"精确建模 > 大量随机"的结论有广泛启示）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
+- [BHCast: Unlocking Black Hole Plasma Dynamics from a Single Blurry Image with Long-Term Forecasting](bhcast_unlocking_black_hole_plasma_dynamics_from_a_single_blurry_image_with_long.md)
+- [Beyond the Ground Truth: Enhanced Supervision for Image Restoration](beyond_the_ground_truth_enhanced_supervision_for_image_restoration.md)
+- [POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](polishing_the_sky_wide-field_and_high-dynamic_range_interferometric_image_recons.md)
+- [Bridging the Perception Gap in Image Super-Resolution Evaluation](bridging_the_perception_gap_in_image_super-resolution_evaluation.md)
+
+<!-- RELATED:END -->

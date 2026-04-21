@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Prune2Drive: A Plug-and-Play Framework for Accelerating Vision-Language Models in Autonomous Driving
 description: >-

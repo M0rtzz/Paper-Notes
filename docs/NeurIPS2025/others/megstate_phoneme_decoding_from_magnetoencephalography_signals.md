@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MEGState: Phoneme Decoding from Magnetoencephalography Signals
 description: >-

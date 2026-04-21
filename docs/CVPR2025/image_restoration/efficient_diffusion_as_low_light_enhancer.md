@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Efficient Diffusion as Low Light Enhancer (ReDDiT)
 description: >-
@@ -120,9 +120,9 @@ tags:
 ## 相关论文
 
 - [DarkIR: Robust Low-Light Image Restoration](darkir_robust_low-light_image_restoration.md)
+- [URWKV: Unified RWKV Model with Multi-State Perspective for Low-Light Image Restoration](urwkv_unified_rwkv_model_with_multi-state_perspective_for_low-light_image_restor.md)
 - [CWNet: Causal Wavelet Network for Low-Light Image Enhancement](../../ICCV2025/image_restoration/cwnet_causal_wavelet_network_for_low-light_image_enhancement.md)
 - [Low-Light Image Enhancement using Event-Based Illumination Estimation (RetinEV)](../../ICCV2025/image_restoration/low-light_image_enhancement_using_event-based_illumination_estimation.md)
 - [Towards Real-world Event-guided Low-light Video Enhancement and Deblurring](../../ECCV2024/image_restoration/towards_real-world_event-guided_low-light_video_enhancement_and_deblurring.md)
-- [Efficient Visual State Space Model for Image Deblurring](efficient_visual_state_space_model_for_image_deblurring.md)
 
 <!-- RELATED:END -->

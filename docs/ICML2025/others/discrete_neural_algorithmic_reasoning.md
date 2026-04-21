@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Discrete Neural Algorithmic Reasoning
 description: >-

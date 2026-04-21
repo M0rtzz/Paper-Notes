@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] DiffusionDrive: Truncated Diffusion Model for End-to-End Autonomous Driving
 description: >-

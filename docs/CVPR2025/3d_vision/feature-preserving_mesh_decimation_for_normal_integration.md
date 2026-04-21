@@ -1,15 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] Feature-Preserving Mesh Decimation for Normal Integration
 description: >-
-  [CVPR 2025][mesh decimation] 从法线贴图出发推导屏幕空间 quadric error metric，结合广义 Delaunay 三角化实现各向异性网格简化，在保持高精度的同时将法线积分运行时间从小时级降至分钟级。
+  [CVPR 2025][3D视觉][mesh decimation] 将经典的 quadric error metric（QEM）推导到屏幕空间并以法线贴图为输入，结合最优 Delaunay 三角化实现各向异性网格简化，在 90%+ 压缩率下仍保持亚毫米级精度，将高分辨率法线积分从小时级加速到分钟级。
 tags:
   - CVPR 2025
+  - 3D视觉
   - mesh decimation
   - normal integration
   - quadric error metric
+  - anisotropic meshing
   - Delaunay triangulation
-  - surface reconstruction
 ---
 
 # Feature-Preserving Mesh Decimation for Normal Integration
@@ -136,8 +137,8 @@ tags:
 
 - [Gaussian Splatting Feature Fields for Privacy-Preserving Visual Localization](gaussian_splatting_feature_fields_for_privacy-preserving_visual_localization.md)
 - [Geometry in Style: 3D Stylization via Surface Normal Deformation](geometry_in_style_3d_stylization_via_surface_normal_deformation.md)
-- [Identity-preserving Distillation Sampling by Fixed-Point Iterator](identity-preserving_distillation_sampling_by_fixed-point_iterator.md)
 - [3D Dental Model Segmentation with Geometrical Boundary Preserving](3d_dental_model_segmentation_with_geometrical_boundary_preserving.md)
+- [Identity-preserving Distillation Sampling by Fixed-Point Iterator](identity-preserving_distillation_sampling_by_fixed-point_iterator.md)
 - [CoMatcher: Multi-View Collaborative Feature Matching](comatcher_multi-view_collaborative_feature_matching.md)
 
 <!-- RELATED:END -->

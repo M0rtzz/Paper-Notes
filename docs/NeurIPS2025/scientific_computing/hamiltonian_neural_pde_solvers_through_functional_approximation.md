@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hamiltonian Neural PDE Solvers through Functional Approximation
 description: >-

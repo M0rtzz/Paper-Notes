@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ThinkOmni: Lifting Textual Reasoning to Omni-modal Scenarios via Guidance Decoding
 description: >-

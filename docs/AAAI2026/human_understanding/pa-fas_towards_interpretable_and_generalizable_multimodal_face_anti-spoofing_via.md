@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PA-FAS: Towards Interpretable and Generalizable Multimodal Face Anti-Spoofing via Path-Augmented Reinforcement Learning
 description: >-

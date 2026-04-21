@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fantastic Features and Where to Find Them: A Probing Method to Combine Features from Multiple Foundation Models
 description: >-
@@ -140,8 +140,8 @@ ComBo Top-2（78.6）超越了需要昂贵蒸馏的 RADIOv2.5+Adapter+，且不�
 
 - [Language Models Can Explain Visual Features via Steering](../../CVPR2026/interpretability/language_models_can_explain_visual_features_via_steering.md)
 - [Probing Preference Representations: A Multi-Dimensional Evaluation and Analysis Method for Reward Models](../../AAAI2026/interpretability/probing_preference_representations_a_multi-dimensional_evaluation_and_analysis_m.md)
-- [Probing Subphonemes in Morphology Models](../../ACL2025/interpretability/probing_subphonemes_in_morphology_models.md)
 - [Foundation Molecular Grammar: Multi-Modal Foundation Models Induce Interpretable Molecular Grammar](../../ICML2025/interpretability/foundation_molecular_grammar_multi-modal_foundation_models_induce_interpretable_.md)
+- [Probing Subphonemes in Morphology Models](../../ACL2025/interpretability/probing_subphonemes_in_morphology_models.md)
 - [LLM Probing with Contrastive Eigenproblems: Improving Understanding and Applicability of CCS](llm_probing_with_contrastive_eigenproblems_improving_understanding_and_applicabi.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Uncertain Knowledge Graph Completion via Semi-Supervised Confidence Distribution Learning
 description: >-

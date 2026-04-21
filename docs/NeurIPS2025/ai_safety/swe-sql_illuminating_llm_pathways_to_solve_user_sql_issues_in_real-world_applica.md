@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SWE-SQL: Illuminating LLM Pathways to Solve User SQL Issues in Real-World Applications
 description: >-
@@ -162,6 +162,6 @@ Bird-Fixer 基于 14B 参数模型，达到与 O3-Mini 可比的性能，超越 
 - [AgentStealth: Reinforcing Large Language Model for Anonymizing User-generated Text](agentstealth_reinforcing_large_language_model_for_anonymizing_user-generated_tex.md)
 - [Keep It Real: Challenges in Attacking Compression-Based Adversarial Purification](keep_it_real_challenges_in_attacking_compression-based_adversarial_purification.md)
 - [Spectral Perturbation Bounds for Low-Rank Approximation with Applications to Privacy](spectral_perturbation_bounds_for_low-rank_approximation_with_applications_to_pri.md)
-- [SECA: Semantically Equivalent and Coherent Attacks for Eliciting LLM Hallucinations](seca_semantically_equivalent_and_coherent_attacks_for_eliciting_llm_hallucinatio.md)
+- [Bias in the Picture: Benchmarking VLMs with Social-Cue News Images and LLM-as-Judge Assessment](bias_in_the_picture_benchmarking_vlms_with_social-cue_news_images_and_llm-as-jud.md)
 
 <!-- RELATED:END -->

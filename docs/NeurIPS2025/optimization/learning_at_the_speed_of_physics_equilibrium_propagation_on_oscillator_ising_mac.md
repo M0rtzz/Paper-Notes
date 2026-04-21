@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning at the Speed of Physics: Equilibrium Propagation on Oscillator Ising Machines
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Nonverbal Interaction Detection
 description: >-
@@ -155,8 +155,8 @@ NVI-DEHR 在 test 集上达到 74.67 AR，比最好的 baseline m-GEN-VLKT 提�
 
 - [Zero-shot HOI Detection with MLLM-based Detector-agnostic Interaction Recognition](../../ICLR2026/object_detection/zero-shot_hoi_detection_with_mllm-based_detector-agnostic_interaction_recognitio.md)
 - [Mining Instance-Centric Vision-Language Contexts for Human-Object Interaction Detection](../../CVPR2026/object_detection/mining_instance-centric_vision-language_contexts_for_human-object_interaction_de.md)
+- [VerbDiff: Text-Only Diffusion Models with Enhanced Interaction Awareness](../../CVPR2025/object_detection/verbdiff_text-only_diffusion_models_with_enhanced_interaction_awareness.md)
 - [UI-Vision: A Desktop-centric GUI Benchmark for Visual Perception and Interaction](../../ICML2025/object_detection/ui-vision_a_desktop-centric_gui_benchmark_for_visual_perception_and_interaction.md)
 - [TAPTR: Tracking Any Point with Transformers as Detection](taptr_tracking_any_point_with_transformers_as_detection.md)
-- [DAMSDet: Dynamic Adaptive Multispectral Detection Transformer](damsdet_dynamic_adaptive_multispectral_detection_transformer_with_competitive_qu.md)
 
 <!-- RELATED:END -->

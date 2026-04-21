@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Kinetic Langevin Diffusion for Crystalline Materials Generation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Theory of Space: Can Foundation Models Construct Spatial Beliefs through Active Exploration?
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond the Mean: Fisher-Orthogonal Projection for Natural Gradient Descent in Large Batch Training
 description: >-

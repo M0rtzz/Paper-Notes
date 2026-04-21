@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Fine-Grained Post-Training Quantization for Large Vision Language Models with Quantization-Aware Integrated Gradients
 description: >-

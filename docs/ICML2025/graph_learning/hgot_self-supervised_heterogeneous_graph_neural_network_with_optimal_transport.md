@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] HGOT: Self-supervised Heterogeneous Graph Neural Network with Optimal Transport
 description: >-

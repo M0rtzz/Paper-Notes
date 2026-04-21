@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MoMa: A Simple Modular Deep Learning Framework for Material Property Prediction
 description: >-

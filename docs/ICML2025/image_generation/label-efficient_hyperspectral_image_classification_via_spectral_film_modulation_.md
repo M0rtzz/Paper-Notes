@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Label-Efficient Hyperspectral Image Classification via Spectral FiLM Modulation of Low-Level Pretrained Diffusion Features
 description: >-
@@ -175,7 +175,7 @@ FiLM (Feature-wise Linear Modulation) 融合机制的核心流程：
 - [IntLoRA: Integral Low-rank Adaptation of Quantized Diffusion Models](intlora_integral_low-rank_adaptation_of_quantized_diffusion_models.md)
 - [FocalCodec: Low-Bitrate Speech Coding via Focal Modulation Networks](../../NeurIPS2025/image_generation/focalcodec_low-bitrate_speech_coding_via_focal_modulation_networks.md)
 - [Spectral Image Tokenizer](../../ICCV2025/image_generation/spectral_image_tokenizer.md)
+- [Visual Lexicon: Rich Image Features in Language Space](../../CVPR2025/image_generation/visual_lexicon_rich_image_features_in_language_space.md)
 - [Efficient Input-Level Backdoor Defense on Text-to-Image Synthesis via Neuron Activation Variation](../../ICCV2025/image_generation/efficient_input-level_backdoor_defense_on_text-to-image_synthesis_via_neuron_act.md)
-- [CleanDIFT: Diffusion Features without Noise](../../CVPR2025/image_generation/cleandift_diffusion_features_without_noise.md)
 
 <!-- RELATED:END -->

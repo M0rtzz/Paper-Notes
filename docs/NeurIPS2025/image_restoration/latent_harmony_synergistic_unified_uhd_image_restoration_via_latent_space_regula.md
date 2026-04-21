@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Latent Harmony: Synergistic Unified UHD Image Restoration via Latent Space Regularization and Controllable Refinement
 description: >-
@@ -174,9 +174,9 @@ $$L_{Stage1} = L_{VAE} + \lambda_{Inv} L_{Inv} + \lambda_{Eqv} L_{Eqv}$$
 ## 相关论文
 
 - [Audio Super-Resolution with Latent Bridge Models](audio_super-resolution_with_latent_bridge_models.md)
-- [Detail-Preserving Latent Diffusion for Stable Shadow Removal](../../CVPR2025/image_restoration/detail-preserving_latent_diffusion_for_stable_shadow_removal.md)
 - [MS-BART: Unified Modeling of Mass Spectra and Molecules for Structure Elucidation](ms-bart_unified_modeling_of_mass_spectra_and_molecules_for_structure_elucidation.md)
-- [EQ-Reg: A Regularization-Guided Equivariant Approach for Image Restoration](../../CVPR2025/image_restoration/a_regularization-guided_equivariant_approach_for_image_restoration.md)
-- [Rethinking Nighttime Image Deraining via Learnable Color Space Transformation](rethinking_nighttime_image_deraining_via_learnable_color_space_transformation.md)
+- [MoDEM: A Morton-Order Degradation Estimation Mechanism for Adverse Weather Image Restoration](modem_a_morton-order_degradation_estimation_mechanism_for_adverse_weather_image_.md)
+- [Real-World Adverse Weather Image Restoration via Dual-Level Reinforcement Learning with High-Quality Cold Start](real-world_adverse_weather_image_restoration_via_dual-level_reinforcement_learni.md)
+- [DynaGuide: Steering Diffusion Policies with Active Dynamic Guidance](dynaguide_steering_diffusion_polices_with_active_dynamic_guidance.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] STAIR: Addressing Stage Misalignment through Temporal-Aligned Preference Reinforcement Learning
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] T-SHIRT: Token-Selective Hierarchical Data Selection for Instruction Tuning
 description: >-

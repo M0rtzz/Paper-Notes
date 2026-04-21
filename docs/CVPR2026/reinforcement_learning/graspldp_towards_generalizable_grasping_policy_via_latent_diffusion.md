@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GraspLDP: Towards Generalizable Grasping Policy via Latent Diffusion
 description: >-
@@ -127,7 +127,7 @@ GraspLDP 采用两阶段训练：(1) Action Latent Learning 阶段：用 VAE 将
 
 - [Thinking on the Fly: Test-Time Reasoning Enhancement via Latent Thought Policy Optimization](../../ICLR2026/reinforcement_learning/thinking_on_the_fly_test-time_reasoning_enhancement_via_latent_thought_policy_op.md)
 - [Formal Verification of Diffusion Auctions](../../AAAI2026/reinforcement_learning/formal_verification_of_diffusion_auctions.md)
-- [Lifelong Imitation Learning with Multimodal Latent Replay and Incremental Adjustment](lifelong_imitation_learning_multimodal_latent_rep.md)
+- [Lifelong Imitation Learning with Multimodal Latent Replay and Incremental Adjustment](lifelong_imitation_learning_with_multimodal_latent_replay_and_incremental_adjust.md)
 - [Object-Centric Latent Action Learning](../../AAAI2026/reinforcement_learning/object-centric_latent_action_learning.md)
 - [EgoBridge: Domain Adaptation for Generalizable Imitation from Egocentric Human Data](../../NeurIPS2025/reinforcement_learning/egobridge_domain_adaptation_for_generalizable_imitation_from_egocentric_human_da.md)
 

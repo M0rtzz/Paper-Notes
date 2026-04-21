@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning Ordinal Probabilistic Reward from Preferences (OPRM)
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SMRS: Advocating a Unified Reporting Standard for Surrogate Models in the Artificial Intelligence Era
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OmniFC: Rethinking Federated Clustering via Lossless and Secure Distance Reconstruction
 description: >-

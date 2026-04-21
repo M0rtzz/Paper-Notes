@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Easy3E: Feed-Forward 3D Asset Editing via Rectified Voxel Flow
 description: >-

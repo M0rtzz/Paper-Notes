@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Can Large Language Models Detect Errors in Long Chain-of-Thought Reasoning?
 description: >-

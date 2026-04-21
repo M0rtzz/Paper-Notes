@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Sound Logical Explanations for Mean Aggregation Graph Neural Networks
 description: >-

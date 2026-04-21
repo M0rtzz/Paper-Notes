@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Infrequent Exploration in Linear Bandits
 description: >-
@@ -132,8 +132,8 @@ $$\mathcal{R}_{\text{INFEX}}(T) \leq \mathcal{R}_{\mathsf{Alg}}(f(T)) + G_{\text
 
 - [Linear Attention for Efficient Bidirectional Sequence Modeling](linear_attention_for_efficient_bidirectional_sequence_modeling.md)
 - [The Structure of Relation Decoding Linear Operators in Large Language Models](the_structure_of_relation_decoding_linear_operators_in_large_language_models.md)
+- [Ensemble++: Scalable Exploration via Ensemble](scalable_exploration_via_ensemble.md)
+- [LALIC: Linear Attention Modeling for Learned Image Compression](../../CVPR2025/model_compression/linear_attention_modeling_for_learned_image_compression.md)
 - [FastVAR: Linear Visual Autoregressive Modeling via Cached Token Pruning](../../ICCV2025/model_compression/fastvar_linear_visual_autoregressive_modeling_via_cached_token_pruning.md)
-- [Trajectory Balance with Asynchrony: Decoupling Exploration and Learning for Fast, Scalable LLM Post-Training](trajectory_balance_with_asynchrony_decoupling_exploration_and_learning_for_fast_.md)
-- [ViT-Linearizer: Distilling Quadratic Knowledge into Linear-Time Vision Models](../../ICCV2025/model_compression/vit-linearizer_distilling_quadratic_knowledge_into_linear-time_vision_models.md)
 
 <!-- RELATED:END -->

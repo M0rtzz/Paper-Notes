@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Query-driven Document-level Scientific Evidence Extraction from Biomedical Studies
 description: >-

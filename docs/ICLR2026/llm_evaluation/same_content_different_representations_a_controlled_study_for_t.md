@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Same Content, Different Representations: A Controlled Study for Table QA
 description: >-

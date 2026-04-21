@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Intention-Guided Cognitive Reasoning for Egocentric Long-Term Action Anticipation
 description: >-
@@ -194,7 +194,7 @@ $$R = \omega_1 S_{len} R_{task} + \omega_2 R_{Soft}$$
 - [Unveiling the Cognitive Compass: Theory-of-Mind-Guided Multimodal Emotion Reasoning](../../ICLR2026/reinforcement_learning/unveiling_the_cognitive_compass_theory-of-mind-guided_multimodal_emotion_reasoni.md)
 - [LoongRL: Reinforcement Learning for Advanced Reasoning over Long Contexts](../../ICLR2026/reinforcement_learning/loongrl_rl_for_reasoning_long_contexts.md)
 - [Object-Centric Latent Action Learning](object-centric_latent_action_learning.md)
-- [Vision-Language Reasoning for Geolocalization: A Reinforcement Learning Approach](vision-language_reasoning_for_geolocalization_a_reinforcement_learning_approach.md)
 - [TextShield-R1: Reinforced Reasoning for Tampered Text Detection](textshield-r1_reinforced_reasoning_for_tampered_text_detection.md)
+- [Vision-Language Reasoning for Geolocalization: A Reinforcement Learning Approach](vision-language_reasoning_for_geolocalization_a_reinforcement_learning_approach.md)
 
 <!-- RELATED:END -->

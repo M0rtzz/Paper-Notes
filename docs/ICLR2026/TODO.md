@@ -1,7 +1,7 @@
 <!-- 由 src/gen_todo.py 自动生成 -->
 # ICLR2026 论文笔记 TODO
 
-总计: 1514 篇 | 已完成: 1511 | 待更新: 3
+总计: 1514 篇 | 已完成: 1512 | 待更新: 2
 
 ---
 
@@ -545,7 +545,7 @@
 - [x] [Generalization Below the Edge of Stability: The Role of Data Geometry](optimization/generalization_below_the_edge_of_stability_the_role_of_data_geometry.md) | arXiv: 2510.18120
 - [x] [Generalization of Diffusion Models Arises with a Balanced Representation Space](image_generation/generalization_of_diffusion_models_arises_with_a_balanced_representation_space.md) | arXiv: 2512.20963
 - [x] [Generalizing Linear Autoencoder Recommenders with Decoupled Expected Quadratic Loss](image_restoration/generalizing_linear_autoencoder_recommenders_with_decoupled_expec.md) | arXiv: 2603.07402
-- [ ] [Generate Any Scene: Scene Graph Driven Data Synthesis for Visual Generation Training](image_generation/generate_any_scene_scene_graph_driven_data_synthesis_for_visual_generation_train.md) | arXiv: 2412.08221
+- [x] [Generate Any Scene: Scene Graph Driven Data Synthesis for Visual Generation Training](image_generation/generate_any_scene_scene_graph_driven_data_synthesis_for_visual_generation_train.md) | arXiv: 2412.08221
 - [x] [Generating Directed Graphs with Dual Attention and Asymmetric Encoding](image_generation/generating_directed_graphs_with_dual_attention_and_asymmetric_encoding.md) | arXiv: 2506.16404
 - [x] [Generative Value Conflicts Reveal LLM Priorities](llm_nlp/generative_value_conflicts_reveal_llm_priorities.md) | arXiv: 2509.25369
 - [x] [GeoDiv: Framework For Measuring Geographical Diversity In Text-To-Image Models](image_generation/geodiv_framework_for_measuring_geographical_diversity_in_text-to-image_models.md) | arXiv: 2602.22120

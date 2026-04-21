@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Computable Universal Online Learning
 description: >-

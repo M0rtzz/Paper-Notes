@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BridgeDrive: Diffusion Bridge Policy for Closed-Loop Trajectory Planning in Autonomous Driving
 description: >-

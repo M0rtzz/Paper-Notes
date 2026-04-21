@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition
 description: >-
@@ -131,7 +131,7 @@ Outpaint-and-Remove 基于预训练的 FLUX.1-Fill-dev（一个基于 DiT 的 in
 - [Referring Layer Decomposition](../../ICLR2026/image_generation/referring_layer_decomposition.md)
 - [Generative Image Layer Decomposition with Visual Effects](../../CVPR2025/image_generation/generative_image_layer_decomposition_with_visual_effects.md)
 - [Cycle-Consistent Tuning for Layered Image Decomposition](cycle-consistent_tuning_for_layered_image_decomposition.md)
-- [FreeInpaint: Tuning-free Prompt Alignment and Visual Rationality Enhancement in Image Inpainting](../../AAAI2026/image_generation/freeinpaint_tuning-free_prompt_alignment_and_visual_rationality_enhancement_in_i.md)
 - [Pluggable Pruning with Contiguous Layer Distillation for Diffusion Transformers](pluggable_pruning_with_contiguous_layer_distillation_for_diffusion_transformers.md)
+- [FreeInpaint: Tuning-free Prompt Alignment and Visual Rationality Enhancement in Image Inpainting](../../AAAI2026/image_generation/freeinpaint_tuning-free_prompt_alignment_and_visual_rationality_enhancement_in_i.md)
 
 <!-- RELATED:END -->

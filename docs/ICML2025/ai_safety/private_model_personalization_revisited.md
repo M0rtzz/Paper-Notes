@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Private Model Personalization Revisited
 description: >-
@@ -128,6 +128,6 @@ tags:
 - [Clients Collaborate: Flexible Differentially Private Federated Learning with Guaranteed Improvement of Utility-Privacy Trade-off](clients_collaborate_flexible_differentially_private_federated_learning_with_guar.md)
 - [Faster Rates for Private Adversarial Bandits](faster_rates_for_private_adversarial_bandits.md)
 - [Improving the Variance of Differentially Private Randomized Experiments through Clustering](improving_the_variance_of_differentially_private_randomized_experiments_through_.md)
-- [Understanding Model Ensemble in Transferable Adversarial Attack](understanding_model_ensemble_in_transferable_adversarial_attack.md)
+- [An Efficient Private GPT Never Autoregressively Decodes](an_efficient_private_gpt_never_autoregressively_decodes.md)
 
 <!-- RELATED:END -->

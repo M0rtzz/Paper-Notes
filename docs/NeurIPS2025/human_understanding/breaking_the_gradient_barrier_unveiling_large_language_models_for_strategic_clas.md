@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Breaking the Gradient Barrier: Unveiling Large Language Models for Strategic Classification
 description: >-

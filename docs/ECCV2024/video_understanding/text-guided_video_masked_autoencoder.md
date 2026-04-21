@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Text-Guided Video Masked Autoencoder
 description: >-
@@ -146,7 +146,7 @@ tags:
 - [Masked Video and Body-worn IMU Autoencoder for Egocentric Action Recognition](masked_video_and_body-worn_imu_autoencoder_for_egocentric_action_recognition.md)
 - [Data Collection-Free Masked Video Modeling](data_collection-free_masked_video_modeling.md)
 - [Rethinking Video-Text Understanding: Retrieval from Counterfactually Augmented Data](rethinking_video-text_understanding_retrieval_from_counterfactually_augmented_da.md)
-- [Towards Efficient General Feature Prediction in Masked Skeleton Modeling](../../ICCV2025/video_understanding/towards_efficient_general_feature_prediction_in_masked_skeleton_modeling.md)
-- [Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
+- [Evaluating Text-to-Visual Generation with Image-to-Text Generation](evaluating_text-to-visual_generation_with_image-to-text_generation.md)
+- [Learning Audio-Guided Video Representation with Gated Attention for Video-Text Retrieval](../../CVPR2025/video_understanding/learning_audio-guided_video_representation_with_gated_attention_for_video-text_r.md)
 
 <!-- RELATED:END -->

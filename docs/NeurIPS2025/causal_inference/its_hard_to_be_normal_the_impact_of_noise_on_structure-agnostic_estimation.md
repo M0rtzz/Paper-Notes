@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] It's Hard to Be Normal: The Impact of Noise on Structure-agnostic Estimation
 description: >-

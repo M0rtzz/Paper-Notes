@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] STAR: Learning Diverse Robot Skill Abstractions through Rotation-Augmented Vector Quantization
 description: >-

@@ -2,9 +2,15 @@
 title: >-
   [论文解读] Efficient OpAmp Adaptation for Zoom Attention to Golden Contexts
 description: >-
-   受运算放大器（OpAmp）电路启发，提出 OpAmp Adaptation 方法通过 adapter 高效改造预训练 Transformer 的注意力机制，在噪声上下文场景下让 LLM 更精准聚焦于 golden document，Qwen2.5-OpAmp-72B 在多个噪声上下文基准上超越 DeepSeek-V3 和 GPT-4o。
+  [ACL 2025][注意力机制] 受运算放大器（OpAmp）电路启发，提出 OpAmp Adaptation 方法通过 adapter 高效改造预训练 Transformer 的注意力机制，在噪声上下文场景下让 LLM 更精准聚焦于 golden document，Qwen2.5-OpAmp-72B 在多个噪声上下文基准上超越 DeepSeek-V3 和 GPT-4o。
 tags:
-
+  - ACL 2025
+  - 注意力机制
+  - RAG
+  - noisy context
+  - operational amplifier
+  - adapter
+  - PEFT
 ---
 
 # Efficient OpAmp Adaptation for Zoom Attention to Golden Contexts
@@ -139,9 +145,9 @@ $$\bar{M} = A_d(M^+ - M^-) + \frac{A_c}{2}(M^+ + M^-)$$
 ## 相关论文
 
 - [EpMAN: Episodic Memory AttentioN for Generalizing to Longer Contexts](epman_episodic_memory_attention_for_generalizing_to_longer_contexts.md)
-- [Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](federated_lora_heterogeneous.md)
 - [HATA: Trainable and Hardware-Efficient Hash-Aware Top-k Attention for Scalable Large Model Inference](hata_trainable_and_hardware-efficient_hash-aware_top-k_attention_for_scalable_la.md)
-- [AttnZero: Efficient Attention Discovery for Vision Transformers](../../ECCV2024/others/attnzero_efficient_attention_discovery_for_vision_transformers.md)
-- [CoLA: Collaborative Low-Rank Adaptation](cola_collaborative_low-rank_adaptation.md)
+- [Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](federated_lora_heterogeneous.md)
+- [Unique Hard Attention: A Tale of Two Sides](unique_hard_attention_a_tale_of_two_sides.md)
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
 
 <!-- RELATED:END -->

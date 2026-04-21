@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Memory-Augmented Potential Field Theory: A Framework for Adaptive Control in Non-Convex Domains
 description: >-

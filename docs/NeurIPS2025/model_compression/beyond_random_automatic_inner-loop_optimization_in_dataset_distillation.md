@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Random: Automatic Inner-Loop Optimization in Dataset Distillation
 description: >-
@@ -126,8 +126,8 @@ tags:
 ## 相关论文
 
 - [Hyperbolic Dataset Distillation](hyperbolic_dataset_distillation.md)
-- [Optimizing Distributional Geometry Alignment with Optimal Transport for Generative Dataset Distillation](optimizing_distributional_geometry_alignment_with_optimal_transport_for_generati.md)
 - [Rectifying Soft-Label Entangled Bias in Long-Tailed Dataset Distillation](rectifying_soft-label_entangled_bias_in_long-tailed_dataset_distillation.md)
+- [Optimizing Distributional Geometry Alignment with Optimal Transport for Generative Dataset Distillation](optimizing_distributional_geometry_alignment_with_optimal_transport_for_generati.md)
 - [Dataset Distillation via the Wasserstein Metric](../../ICCV2025/model_compression/dataset_distillation_via_the_wasserstein_metric.md)
 - [From Fewer Samples to Fewer Bits: Reframing Dataset Distillation as Joint Optimization of Precision and Compactness](../../CVPR2026/model_compression/from_fewer_samples_to_fewer_bits_reframing_dataset_distillation_as_joint_optimiz.md)
 

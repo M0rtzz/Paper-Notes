@@ -1,7 +1,16 @@
 ---
-title: "Taxonomy-Aware Evaluation of Vision-Language Models"
-description: "提出基于分类学的VLM评估框架，利用层次精度(hP)和层次召回(hR)度量VLM在细粒度视觉分类中的准确性和具体性，揭示传统文本相似度指标无法捕捉的分类学关系"
-tags: ["CVPR2025", "VLM评估", "细粒度分类", "层次度量", "分类学"]
+title: >-
+  [论文解读] Taxonomy-Aware Evaluation of Vision-Language Models
+description: >-
+  [CVPR 2025][多模态][VLM评估] 提出taxonomy-aware VLM评估框架，通过将VLM的自由文本输出映射到分类学树上，利用**层次精度(hP)**和**层次召回(hR)**来量化预测的正确性和具体性，解决了传统精确匹配/文本相似度无法给"部分正确"答案打分的问题。
+tags:
+  - CVPR 2025
+  - 多模态
+  - VLM评估
+  - 细粒度视觉分类
+  - 层次度量
+  - 分类学映射
+  - 文本-分类学对齐
 ---
 
 # Taxonomy-Aware Evaluation of Vision-Language Models
@@ -116,10 +125,10 @@ $$hR = \frac{1}{N}\sum_{n=1}^{N}\frac{|anc(v_n^{pr}) \cap anc(v_n^{gt})|}{|anc(v
 
 ## 相关论文
 
-- [Do Vision-Language Models Have Internal World Models? Towards an Atomic Evaluation](../../ACL2025/multimodal_vlm/do_vision-language_models_have_internal_world_models_towards_an_atomic_evaluatio.md)
 - [Hyperbolic Safety-Aware Vision-Language Models](hyperbolic_safety-aware_vision-language_models.md)
+- [ODE: Open-Set Evaluation of Hallucinations in Multimodal Large Language Models](ode_open-set_evaluation_of_hallucinations_in_multimodal_large_language_models.md)
+- [Do Vision-Language Models Have Internal World Models? Towards an Atomic Evaluation](../../ACL2025/multimodal_vlm/do_vision-language_models_have_internal_world_models_towards_an_atomic_evaluatio.md)
 - [Taxonomy-Aware Representation Alignment for Hierarchical Visual Recognition with Large Multimodal Models](../../CVPR2026/multimodal_vlm/taxonomy-aware_representation_alignment_for_hierarchical_visual_recognition_with.md)
 - [UPME: An Unsupervised Peer Review Framework for Multimodal Large Language Model Evaluation](upme_an_unsupervised_peer_review_framework_for_multimodal_large_language_model_e.md)
-- [ODE: Open-Set Evaluation of Hallucinations in Multimodal Large Language Models](ode_open-set_evaluation_of_hallucinations_in_multimodal_large_language_models.md)
 
 <!-- RELATED:END -->

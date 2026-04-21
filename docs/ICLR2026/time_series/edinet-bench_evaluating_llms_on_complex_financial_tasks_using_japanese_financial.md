@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EDINET-Bench: Evaluating LLMs on Complex Financial Tasks using Japanese Financial Statements
 description: >-

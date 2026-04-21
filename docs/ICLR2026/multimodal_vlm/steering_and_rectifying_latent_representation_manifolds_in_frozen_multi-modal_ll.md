@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Steering and Rectifying Latent Representation Manifolds in Frozen Multi-Modal LLMs for Video Anomaly Detection
 description: >-

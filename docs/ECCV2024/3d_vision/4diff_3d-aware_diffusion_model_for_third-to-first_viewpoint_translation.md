@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] 4Diff: 3D-Aware Diffusion Model for Third-to-First Viewpoint Translation
 description: >-

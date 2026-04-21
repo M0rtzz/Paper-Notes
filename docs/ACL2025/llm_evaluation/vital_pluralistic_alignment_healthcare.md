@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VITAL: A New Dataset for Benchmarking Pluralistic Alignment in Healthcare
 description: >-

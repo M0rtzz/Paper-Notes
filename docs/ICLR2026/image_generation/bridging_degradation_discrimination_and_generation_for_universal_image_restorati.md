@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Bridging Degradation Discrimination and Generation for Universal Image Restoration
 description: >-

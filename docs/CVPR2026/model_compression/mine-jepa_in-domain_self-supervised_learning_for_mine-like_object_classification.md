@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MINE-JEPA: In-Domain Self-Supervised Learning for Mineral Exploration
 description: >-
@@ -183,10 +183,10 @@ Mine-JEPA 遵循三阶段流水线：
 
 ## 相关论文
 
-- [GeoChemAD: Benchmarking Unsupervised Geochemical Anomaly Detection for Mineral Exploration](geochemad_benchmarking_unsupervised_geochemical_an.md)
+- [GeoChemAD: Benchmarking Unsupervised Geochemical Anomaly Detection for Mineral Exploration](geochemad_benchmarking_unsupervised_geochemical_anomaly_detection_for_mineral_ex.md)
 - [DOS: Distilling Observable Softmaps of Zipfian Prototypes for Self-Supervised Point Representation](../../AAAI2026/model_compression/dos_distilling_observable_softmaps_of_zipfian_prototypes_for_self-supervised_poi.md)
+- [AutoSSVH: Exploring Automated Frame Sampling for Efficient Self-Supervised Video Hashing](../../CVPR2025/model_compression/autossvh_exploring_automated_frame_sampling_for_efficient_self-supervised_video_h.md)
 - [In-Context Learning for Pure Exploration](../../ICLR2026/model_compression/in-context_learning_for_pure_exploration.md)
 - [CHEEM: Continual Learning by Reuse, New, Adapt and Skip -- A Hierarchical Exploration-Exploitation Approach](cheem_continual_learning_by_reuse_new_adapt_and_skip_--_a_hierarchical_explorati.md)
-- [VESSA: Video-based objEct-centric Self-Supervised Adaptation for Visual Foundation Models](../../NeurIPS2025/model_compression/vessa_video-based_object-centric_self-supervised_adaptation_for_visual_foundatio.md)
 
 <!-- RELATED:END -->

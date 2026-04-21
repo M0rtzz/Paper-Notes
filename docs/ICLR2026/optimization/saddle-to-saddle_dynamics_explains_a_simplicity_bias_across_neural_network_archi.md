@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Saddle-to-Saddle Dynamics Explains A Simplicity Bias Across Neural Network Architectures
 description: >-

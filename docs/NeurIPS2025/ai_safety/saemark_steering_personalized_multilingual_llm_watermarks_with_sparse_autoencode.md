@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders
 description: >-
@@ -128,8 +128,8 @@ $N=50$ 时单单元成功率 >99%，$N=10$ 时仍达61%。
 
 - [Can LLM Watermarks Robustly Prevent Unauthorized Knowledge Distillation?](../../ACL2025/ai_safety/llm_watermark_distillation_robustness.md)
 - [Ensemble Watermarks for Large Language Models](../../ACL2025/ai_safety/ensemble_watermarks_llm.md)
+- [Bias in the Picture: Benchmarking VLMs with Social-Cue News Images and LLM-as-Judge Assessment](bias_in_the_picture_benchmarking_vlms_with_social-cue_news_images_and_llm-as-jud.md)
 - [MaskSQL: Safeguarding Privacy for LLM-Based Text-to-SQL via Abstraction](masksql_safeguarding_privacy_for_llm-based_text-to-sql_via_abstraction.md)
 - [Traceable Black-box Watermarks for Federated Learning](../../ICLR2026/ai_safety/traceable_black-box_watermarks_for_federated_learning.md)
-- [SECA: Semantically Equivalent and Coherent Attacks for Eliciting LLM Hallucinations](seca_semantically_equivalent_and_coherent_attacks_for_eliciting_llm_hallucinatio.md)
 
 <!-- RELATED:END -->

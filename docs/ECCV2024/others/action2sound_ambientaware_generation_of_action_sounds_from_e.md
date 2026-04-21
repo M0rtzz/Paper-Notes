@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Action2Sound: Ambient-Aware Generation of Action Sounds from Egocentric Videos
 description: >-

@@ -1,7 +1,15 @@
-﻿---
-title: "DocoPilot: Improving Multimodal Models for Document-Level Understanding"
-description: "提出高质量文档级数据集Doc-750K和原生多模态文档理解模型Docopilot，无需RAG即可处理长文档的跨页依赖"
-tags: ["document-understanding", "multimodal-llm", "long-context", "dataset", "knowledge-distillation"]
+---
+title: >-
+  [论文解读] DocoPilot: Improving Multimodal Models for Document-Level Understanding
+description: >-
+  [CVPR 2025][文档理解] 本文构建了 Doc-750K——一个包含 758K 问答对和 3.1M 图像的高质量文档级多模态数据集，并基于此训练原生文档理解模型 Docopilot，在 MM-NIAH 上超越 InternVL2-8B 达 19.9 个百分点，无需 RAG 即可高效处理多页文档。
+tags:
+  - CVPR 2025
+  - 文档理解
+  - 长上下文
+  - 多模态数据集
+  - 原生文档模型
+  - 多页推理
 ---
 
 # DocoPilot: Improving Multimodal Models for Document-Level Understanding
@@ -124,6 +132,6 @@ Docopilot-8B 在 MM-NIAH 上超越 InternVL2-8B +19.9 点，超越 InternVL2-26B
 - [Towards Storage-Efficient Visual Document Retrieval: An Empirical Study on Reducing Patch-Level Embeddings](../../ACL2025/information_retrieval/towards_storage-efficient_visual_document_retrieval_an_empirical_study_on_reduci.md)
 - [RAVENEA: A Benchmark for Multimodal Retrieval-Augmented Visual Culture Understanding](../../ICLR2026/information_retrieval/ravenea_a_benchmark_for_multimodal_retrieval-augmented_visual_culture_understand.md)
 - [Query-Level Uncertainty in Large Language Models](../../ICLR2026/information_retrieval/query-level_uncertainty_in_large_language_models.md)
-- [The Narrow Gate: Localized Image-Text Communication in Native Multimodal Models](../../NeurIPS2025/information_retrieval/the_narrow_gate_localized_imagetext_communication_in_native.md)
+- [GENIUS: A Generative Framework for Universal Multimodal Search](genius_a_generative_framework_for_universal_multimodal_search.md)
 
 <!-- RELATED:END -->

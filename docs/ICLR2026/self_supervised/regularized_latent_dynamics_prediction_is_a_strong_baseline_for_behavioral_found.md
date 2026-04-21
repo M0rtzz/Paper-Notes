@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Regularized Latent Dynamics Prediction is a Strong Baseline for Behavioral Foundation Models
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Extreme Rotation Estimation in the Wild
 description: >-
@@ -133,10 +133,10 @@ wELP测试集（真实in-the-wild图像）。在无重叠对上，本文方法MG
 
 ## 相关论文
 
+- [Zero-Shot Monocular Scene Flow Estimation in the Wild](zero-shot_monocular_scene_flow_estimation_in_the_wild.md)
 - [PersPose: 3D Human Pose Estimation with Perspective Encoding and Perspective Rotation](../../ICCV2025/3d_vision/perspose_3d_human_pose_estimation_with_perspective_encoding_and_perspective_rota.md)
-- [Amodal Depth Anything: Amodal Depth Estimation in the Wild](../../ICCV2025/3d_vision/amodal_depth_anything_amodal_depth_estimation_in_the_wild.md)
+- [Reconstructing Animals and the Wild](reconstructing_animals_and_the_wild.md)
 - [EAG3R: Event-Augmented 3D Geometry Estimation for Dynamic and Extreme-Lighting Scenes](../../NeurIPS2025/3d_vision/eag3r_event-augmented_3d_geometry_estimation_for_dynamic_and_extreme-lighting_sc.md)
-- [Generative Multiview Relighting for 3D Reconstruction under Extreme Illumination Variation](generative_multiview_relighting_for_3d_reconstruction_under_extreme_illumination.md)
-- [DroneSplat: 3D Gaussian Splatting for Robust 3D Reconstruction from In-the-Wild Drone Imagery](dronesplat_3d_gaussian_splatting_for_robust_3d_reconstruction_from_in-the-wild_d.md)
+- [Amodal Depth Anything: Amodal Depth Estimation in the Wild](../../ICCV2025/3d_vision/amodal_depth_anything_amodal_depth_estimation_in_the_wild.md)
 
 <!-- RELATED:END -->

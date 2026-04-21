@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Representation Learning for Spatiotemporal Physical Systems
 description: >-
@@ -135,6 +135,6 @@ JEPA vs VideoMAE 改善：Active Matter **51%**，Shear Flow **43%**，Rayleigh-
 - [TrackMAE: Video Representation Learning via Track, Mask, and Predict](trackmae_video_representation_learning_via_track_mask_and_predict.md)
 - [DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers](diversedit_towards_diverse_representation_learning_in_diffusion_transformers.md)
 - [D2Dewarp: Dual Dimensions Geometric Representation Learning Based Document Image Dewarping](d2dewarp_dual_dimensions_geometric_representation_learning_based_document_image_.md)
-- [BoSS: A Best-of-Strategies Selector as an Oracle for Deep Active Learning](boss_a_bestofstrategies_selector_as_an_oracle_for.md)
+- [BoSS: A Best-of-Strategies Selector as an Oracle for Deep Active Learning](boss_a_best-of-strategies_selector_as_an_oracle_for_deep_active_learning.md)
 
 <!-- RELATED:END -->

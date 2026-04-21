@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stop DDoS Attacking the Research Community with AI-Generated Survey Papers
 description: >-
@@ -175,10 +175,10 @@ tags:
 
 ## 相关论文
 
-- [TRUST -- Transformer-Driven U-Net for Sparse Target Recovery](trust_--_transformer-driven_u-net_for_sparse_target_recovery.md)
+- [Demystifying Language Model Forgetting with Low-Rank Example Associations](demystifying_language_model_forgetting_with_low-rank_example_associations.md)
+- [SIMU: Selective Influence Machine Unlearning](simu_selective_influence_machine_unlearning.md)
 - [Buffer Layers for Test-Time Adaptation](buffer_layers_for_test-time_adaptation.md)
-- [A Cramér–von Mises Approach to Incentivizing Truthful Data Sharing](a_cramrvon_mises_approach_to_incentivizing_truthful_data_sha.md)
+- [Procurement Auctions with Predictions: Improved Frugality for Facility Location](procurement_auctions_with_predictions_improved_frugality_for_facility_location.md)
 - [A Reliable Cryptographic Framework for Empirical Machine Unlearning Evaluation](a_reliable_cryptographic_framework_for_empirical_machine_unl.md)
-- [Angular Steering: Behavior Control via Rotation in Activation Space](angular_steering_behavior_control_via_rotation_in_activation_space.md)
 
 <!-- RELATED:END -->

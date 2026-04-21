@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Leveraging Hierarchical Feature Sharing for Efficient Dataset Condensation
 description: >-
@@ -217,6 +217,6 @@ HMN 在公平对比下优势更加明显，分别领先次优方法 3.7%/5.9%/2.
 - [Improving Knowledge Distillation via Regularizing Feature Direction and Norm](improving_knowledge_distillation_via_regularizing_feature_direction_and_norm.md)
 - [Toward Efficient Inference Attacks: Shadow Model Sharing via Mixture-of-Experts](../../NeurIPS2025/model_compression/toward_efficient_inference_attacks_shadow_model_sharing_via_mixture-of-experts.md)
 - [ELSE: Efficient Deep Neural Network Inference through Line-based Sparsity Exploration](else_efficient_deep_neural_network_inference_through_line-based_sparsity_explora.md)
-- [PYRA: Parallel Yielding Re-Activation for Training-Inference Efficient Task Adaptation](pyra_parallel_yielding_re-activation_for_training-inference_efficient_task_adapt.md)
+- [EEG-DLite: Dataset Distillation for Efficient Large EEG Model Training](../../AAAI2026/model_compression/eeg-dlite_dataset_distillation_for_efficient_large_eeg_model_training.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] WearVQA: A Visual Question Answering Benchmark for Wearables in Egocentric Authentic Real-world scenarios
 description: >-

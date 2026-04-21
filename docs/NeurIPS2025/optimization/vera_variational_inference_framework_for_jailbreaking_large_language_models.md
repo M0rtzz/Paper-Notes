@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] VERA: Variational Inference Framework for Jailbreaking Large Language Models
 description: >-

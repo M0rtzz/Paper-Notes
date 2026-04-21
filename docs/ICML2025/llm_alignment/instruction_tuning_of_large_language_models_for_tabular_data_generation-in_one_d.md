@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Instruction Tuning of Large Language Models for Tabular Data Generation—in One Day
 description: >-

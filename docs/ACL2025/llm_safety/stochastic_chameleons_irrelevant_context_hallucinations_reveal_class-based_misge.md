@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Stochastic Chameleons: Irrelevant Context Hallucinations Reveal Class-Based (Mis)Generalization in LLMs
 description: >-

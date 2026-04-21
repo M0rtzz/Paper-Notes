@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RoiRL: Efficient, Self-Supervised Reasoning with Offline Iterative Reinforcement Learning
 description: >-
@@ -126,8 +126,8 @@ $$\theta_m = \arg\max_{\theta} \sum_{i=1}^{n} \mathbb{E}_{(c,y) \sim \pi_{m-1}(\
 ## 相关论文
 
 - [Sample-Efficient Tabular Self-Play for Offline Robust Reinforcement Learning](sample-efficient_tabular_self-play_for_offline_robust_reinforcement_learning.md)
-- [Structural Information-based Hierarchical Diffusion for Offline Reinforcement Learning](structural_information-based_hierarchical_diffusion_for_offline_reinforcement_le.md)
 - [Forecasting in Offline Reinforcement Learning for Non-stationary Environments](forecasting_in_offline_reinforcement_learning_for_non-stationary_environments.md)
+- [Structural Information-based Hierarchical Diffusion for Offline Reinforcement Learning](structural_information-based_hierarchical_diffusion_for_offline_reinforcement_le.md)
 - [Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
 - [Online Optimization for Offline Safe Reinforcement Learning](online_optimization_for_offline_safe_reinforcement_learning.md)
 

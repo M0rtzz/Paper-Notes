@@ -1,15 +1,15 @@
-﻿---
+---
 title: >-
   [论文解读] FADE: Frequency-Aware Diffusion Model Factorization for Video Editing
 description: >-
-  [CVPR 2025][video editing] 提出 FADE，一种免训练的视频编辑框架，通过频率感知的扩散模型分解和频谱引导调制，利用预训练 T2V 模型的视频先验实现高保真、时间一致的视频编辑。
+  [CVPR 2025][video editing] 提出 FADE，一种免训练的视频编辑方法，通过分析 T2V 模型中各 transformer block 的频率角色（sketching vs sharpening），利用频谱引导调制在频域中分离保留与编辑内容，实现高质量的外观和运动编辑。
 tags:
   - CVPR 2025
   - video editing
-  - diffusion model
-  - frequency domain
+  - 扩散模型
+  - frequency-aware factorization
+  - spectrum-guided modulation
   - training-free
-  - temporal consistency
 ---
 
 # FADE: Frequency-Aware Diffusion Model Factorization for Video Editing
@@ -141,9 +141,9 @@ tags:
 ## 相关论文
 
 - [Identity-Preserving Text-to-Video Generation by Frequency Decomposition](identity-preserving_text-to-video_generation_by_frequency_decomposition.md)
+- [PoseTraj: Pose-Aware Trajectory Control in Video Diffusion](posetraj_pose-aware_trajectory_control_in_video_diffusion.md)
 - [Improved Video VAE for Latent Video Diffusion Model](improved_video_vae_for_latent_video_diffusion_model.md)
-- [Exploring Temporally-Aware Features for Point Tracking](exploring_temporally-aware_features_for_point_tracking.md)
-- [Target-Aware Video Diffusion Models](../../ICLR2026/video_generation/target-aware_video_diffusion_models.md)
-- [Training-free Motion Factorization for Compositional Video Generation](../../CVPR2026/video_generation/training-free_motion_factorization_for_compositional_video_generation.md)
+- [Timestep Embedding Tells: It's Time to Cache for Video Diffusion Model](timestep_embedding_tells_its_time_to_cache_for_video_diffusion_model.md)
+- [VideoScene: Distilling Video Diffusion Model to Generate 3D Scenes in One Step](videoscene_distilling_video_diffusion_model_to_generate_3d_scenes_in_one_step.md)
 
 <!-- RELATED:END -->

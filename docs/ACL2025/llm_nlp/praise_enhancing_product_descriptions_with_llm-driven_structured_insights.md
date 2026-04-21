@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PRAISE: Enhancing Product Descriptions with LLM-Driven Structured Insights
 description: >-

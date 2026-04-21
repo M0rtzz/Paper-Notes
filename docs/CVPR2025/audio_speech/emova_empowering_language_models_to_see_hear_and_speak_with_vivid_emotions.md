@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EMoVA: Empowering Language Models to See, Hear and Speak with Vivid Emotions
 description: >-
@@ -143,6 +143,6 @@ Stage 1: 视觉投影器对齐（LCS-558K）。Stage 2: 自回归语言模型损
 - [AudSemThinker: Enhancing Audio-Language Models through Reasoning over Semantics of Sound](../../NeurIPS2025/audio_speech/audsemthinker_enhancing_audio-language_models_through_reasoning_over_semantics_o.md)
 - [Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models](../../ACL2025/audio_speech/investigating_and_enhancing_vision-audio_capability_in_omnimodal_large_language_.md)
 - [Benchmarking Open-ended Audio Dialogue Understanding for Large Audio-Language Models](../../ACL2025/audio_speech/audio_dialogue_benchmark.md)
-- [ControlLLM: Augment Language Models with Tools by Searching on Graphs](../../ECCV2024/audio_speech/controlllm_augment_language_models_with_tools_by_searching_on_graphs.md)
+- [ControlLLM: Augment Language Models with Tools by Searching on Graphs](../../ECCV2024/audio_speech/controlllm_augment_language_models_with_tools.md)
 
 <!-- RELATED:END -->

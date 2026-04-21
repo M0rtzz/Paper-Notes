@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Beyond Low-Rank Tuning: Model Prior-Guided Rank Allocation for Effective Transfer in Low-Data and Large-Gap Regimes
 description: >-

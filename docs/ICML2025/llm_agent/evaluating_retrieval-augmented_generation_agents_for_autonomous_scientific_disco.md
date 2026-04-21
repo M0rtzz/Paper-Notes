@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Evaluating Retrieval-Augmented Generation Agents for Autonomous Scientific Discovery in Astrophysics
 description: >-
@@ -136,6 +136,6 @@ tags:
 - [NewtonBench: Benchmarking Generalizable Scientific Law Discovery in LLM Agents](../../ICLR2026/llm_agent/newtonbench_benchmarking_generalizable_scientific_law_discovery_in_llm_agents.md)
 - [Aguvis: Unified Pure Vision Agents for Autonomous GUI Interaction](aguvis_unified_pure_vision_agents_for_autonomous_gui_interaction.md)
 - [SR-Scientist: Scientific Equation Discovery With Agentic AI](../../ICLR2026/llm_agent/sr-scientist_scientific_equation_discovery_with_agentic_ai.md)
-- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](../../ACL2025/llm_agent/multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
+- [LLM Agents for Knowledge Discovery in Atomic Layer Processing](../../NeurIPS2025/llm_agent/llm_agents_for_knowledge_discovery_in_atomic_layer_processing.md)
 
 <!-- RELATED:END -->

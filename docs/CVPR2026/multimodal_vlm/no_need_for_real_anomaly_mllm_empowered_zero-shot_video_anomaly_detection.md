@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] No Need For Real Anomaly: MLLM Empowered Zero-Shot Video Anomaly Detection
 description: >-

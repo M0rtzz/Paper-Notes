@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MDiff4STR: Mask Diffusion Model for Scene Text Recognition
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GT-SNT: A Linear-Time Transformer for Large-Scale Graphs via Spiking Node Tokenization
 description: >-

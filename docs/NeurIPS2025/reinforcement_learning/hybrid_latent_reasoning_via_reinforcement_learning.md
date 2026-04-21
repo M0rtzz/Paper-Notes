@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Hybrid Latent Reasoning via Reinforcement Learning
 description: >-

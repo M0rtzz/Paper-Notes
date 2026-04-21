@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Layer-wise Update Aggregation with Recycling for Communication-Efficient Federated Learning
 description: >-

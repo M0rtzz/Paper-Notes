@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] RingID: Rethinking Tree-Ring Watermarking for Enhanced Multi-Key Identification
 description: >-

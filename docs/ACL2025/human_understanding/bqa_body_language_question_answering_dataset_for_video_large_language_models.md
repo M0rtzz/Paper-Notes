@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] BQA: Body Language Question Answering Dataset for Video Large Language Models
 description: >-

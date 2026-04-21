@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Exposing the Cracks: Vulnerabilities of Retrieval-Augmented LLM-Based Machine Translation
 description: >-

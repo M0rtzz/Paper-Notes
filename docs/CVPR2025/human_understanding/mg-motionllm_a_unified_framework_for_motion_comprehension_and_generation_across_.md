@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MG-MotionLLM: A Unified Framework for Motion Comprehension and Generation across Multiple Granularities
 description: >-
@@ -130,10 +130,10 @@ MG-MotionLLM 由两个核心组件组成：(1) Motion VQ-VAE 负责将原始动�
 
 ## 相关论文
 
-- [Large Motion Model for Unified Multi-Modal Motion Generation](../../ECCV2024/human_understanding/large_motion_model_for_unified_multi-modal_motion_generation.md)
-- [FreeMotion: A Unified Framework for Number-free Text-to-Motion Synthesis](../../ECCV2024/human_understanding/freemotion_a_unified_framework_for_number-free_text-to-motion_synthesis.md)
-- [Words That Unite The World: A Unified Framework for Deciphering Central Bank Communications Globally](../../NeurIPS2025/human_understanding/words_that_unite_the_world_a_unified_framework_for_deciphering_central_bank_comm.md)
+- [UniPose: A Unified Multimodal Framework for Human Pose Comprehension, Generation and Editing](unipose_a_unified_multimodal_framework_for_human_pose_comprehension_generation_a.md)
 - [MaRI: Material Retrieval Integration across Domains](mari_material_retrieval_integration_across_domains.md)
-- [VimoRAG: Video-based Retrieval-augmented 3D Motion Generation for Motion Language Models](../../NeurIPS2025/human_understanding/vimorag_video-based_retrieval-augmented_3d_motion_generation_for_motion_language.md)
+- [SemGeoMo: Dynamic Contextual Human Motion Generation with Semantic and Geometric Guidance](semgeomo_dynamic_contextual_human_motion_generation_with_semantic_and_geometric_.md)
+- [Words That Unite The World: A Unified Framework for Deciphering Central Bank Communications Globally](../../NeurIPS2025/human_understanding/words_that_unite_the_world_a_unified_framework_for_deciphering_central_bank_comm.md)
+- [Large Motion Model for Unified Multi-Modal Motion Generation](../../ECCV2024/human_understanding/large_motion_model_for_unified_multimodal_motion_generation.md)
 
 <!-- RELATED:END -->

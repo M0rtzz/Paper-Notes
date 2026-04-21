@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CLIP-GS: Unifying Vision-Language Representation with 3D Gaussian Splatting
 description: >-

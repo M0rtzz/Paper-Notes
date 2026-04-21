@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Generalizable, Real-Time Neural Decoding with Hybrid State-Space Models
 description: >-

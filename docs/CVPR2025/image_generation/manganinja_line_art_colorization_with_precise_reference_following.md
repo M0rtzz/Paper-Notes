@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MangaNinja: Line Art Colorization with Precise Reference Following
 description: >-
@@ -117,10 +117,10 @@ MangaNinja 在所有指标上大幅领先，尤其 DINO 相似度（+6.12 vs Any
 
 ## 相关论文
 
-- [Image Referenced Sketch Colorization Based on Animation Creation Workflow](image_referenced_sketch_colorization_based_on_animation_creation_workflow.md)
-- [Free-viewpoint Human Animation with Pose-correlated Reference Selection](free-viewpoint_human_animation_with_pose-correlated_reference_selection.md)
 - [InsightEdit: Towards Better Instruction Following for Image Editing](insightedit_towards_better_instruction_following_for_image_editing.md)
-- [CompleteMe: Reference-based Human Image Completion](../../ICCV2025/image_generation/completeme_reference-based_human_image_completion.md)
-- [Precise Object and Effect Removal with Adaptive Target-Aware Attention](../../CVPR2026/image_generation/precise_object_and_effect_removal_with_adaptive_target-aware_attention.md)
+- [Image Referenced Sketch Colorization Based on Animation Creation Workflow](image_referenced_sketch_colorization_based_on_animation_creation_workflow.md)
+- [The Art of Deception: Color Visual Illusions and Diffusion Models](the_art_of_deception_color_visual_illusions_and_diffusion_models.md)
+- [Free-viewpoint Human Animation with Pose-correlated Reference Selection](free-viewpoint_human_animation_with_pose-correlated_reference_selection.md)
+- [Precise, Fast, and Low-cost Concept Erasure in Value Space: Orthogonal Complement Matters](precise_fast_and_low-cost_concept_erasure_in_value_space_orthogonal_complement_m.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] OS-Harm: A Benchmark for Measuring Safety of Computer Use Agents
 description: >-
@@ -121,6 +121,6 @@ OS-Harm 构建在 OSWorld 之上，使用 Ubuntu 虚拟机提供隔离执行环�
 - [Measuring Social Biases in Masked Language Models by Proxy of Prediction Quality](../../ACL2025/social_computing/measuring_social_biases_in_masked_language_models_by_proxy_of_prediction_quality.md)
 - [A Multi-Task Benchmark for Abusive Language Detection in Low-Resource Settings](a_multitask_benchmark_for_abusive_language_detection_in_lowr.md)
 - [OR-Bench: An Over-Refusal Benchmark for Large Language Models](../../ICML2025/social_computing/or-bench_an_over-refusal_benchmark_for_large_language_models.md)
-- [GG-BBQ: German Gender Bias Benchmark for Question Answering](../../ACL2025/social_computing/gg-bbq_german_gender_bias_benchmark_for_question_answering.md)
+- [BiasFreeBench: a Benchmark for Mitigating Bias in Large Language Model Responses](../../ICLR2026/social_computing/biasfreebench_a_benchmark_for_mitigating_bias_in_large_language_model_responses.md)
 
 <!-- RELATED:END -->

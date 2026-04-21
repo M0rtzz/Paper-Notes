@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Human Knowledge Integrated Multi-modal Learning for Single Source Domain Generalization
 description: >-

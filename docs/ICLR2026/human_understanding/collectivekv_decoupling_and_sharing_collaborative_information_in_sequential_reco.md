@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] CollectiveKV: Decoupling and Sharing Collaborative Information in Sequential Recommendation
 description: >-

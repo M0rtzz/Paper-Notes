@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] MimeQA: Towards Socially-Intelligent Nonverbal Foundation Models
 description: >-

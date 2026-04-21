@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] GDKVM: Echocardiography Video Segmentation via Spatiotemporal Key-Value Memory with Gated Delta Rule
 description: >-

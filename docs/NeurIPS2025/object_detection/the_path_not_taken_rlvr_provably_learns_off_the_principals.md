@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] The Path Not Taken: RLVR Provably Learns Off the Principals
 description: >-
@@ -158,7 +158,7 @@ PEFT 方法在 RLVR 上的表现对比：
 - [Perceive, Act and Correct: Confidence Is Not Enough for Hyperspectral Classification](../../AAAI2026/object_detection/perceive_act_and_correct_confidence_is_not_enough_for_hyperspectral_classificati.md)
 - [Fixed Anchors Are Not Enough: Dynamic Retrieval and Persistent Homology for Dataset Distillation](../../CVPR2026/object_detection/fixed_anchors_are_not_enough_dynamic_retrieval_and_persistent_homology_for_datas.md)
 - [BeautyGRPO: Aesthetic Alignment for Face Retouching via Dynamic Path Guidance and Fine-Grained Preference Modeling](../../CVPR2026/object_detection/beautygrpo_aesthetic_alignment_for_face_retouching_via_dynamic_path_guidance_and.md)
+- [All You Need is One: Capsule Prompt Tuning with a Single Vector](all_you_need_is_one_capsule_prompt_tuning_with_a_single_vector.md)
 - [ReCon: Region-Controllable Data Augmentation with Rectification and Alignment for Object Detection](recon_region-controllable_data_augmentation_with_rectification_and_alignment_for.md)
-- [FlexEvent: Towards Flexible Event-Frame Object Detection at Varying Operational Frequencies](flexevent_towards_flexible_event-frame_object_detection_at_varying_operational_f.md)
 
 <!-- RELATED:END -->

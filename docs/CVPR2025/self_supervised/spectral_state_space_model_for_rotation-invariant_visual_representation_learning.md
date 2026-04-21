@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Spectral State Space Model for Rotation-Invariant Visual Representation Learning
 description: >-

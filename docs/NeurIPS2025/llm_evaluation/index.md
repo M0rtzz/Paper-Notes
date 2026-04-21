@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 LLM评测方向 70篇论文解读
+  NeurIPS2025 LLM评测方向 71篇论文解读
 description: >-
-  70篇NeurIPS2025 LLM评测方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  71篇NeurIPS2025 LLM评测方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📊 LLM评测
 
-**🧠 NeurIPS2025** · **70** 篇论文解读
+**🧠 NeurIPS2025** · **71** 篇论文解读
 
 **[A High-Dimensional Statistical Method for Optimizing Transfer Quantities in Multi-Source Transfer Learning](a_highdimensional_statistical_method_for_optimizing_transfer.md)**
 
@@ -125,6 +125,10 @@ description: >-
 **[Generalization Error Analysis for Selective State-Space Models Through the Lens of Attention](generalization_error_analysis_for_selective_state-space_models_through_the_lens_.md)**
 
 :   将选择性SSM（Mamba）展开为注意力形式，利用覆盖数技术推导出受连续时间状态矩阵谱横断面$s_{\mathbf{A}}$控制的泛化界——$s_{\mathbf{A}}<0$时泛化界与序列长度无关，$s_{\mathbf{A}}\geq0$时指数增长，并证明这种依赖不可消除。
+
+**[HouseLayout3D: A Benchmark and Training-Free Baseline for 3D Layout Estimation in the Wild](houselayout3d_a_benchmark_and_training-free_baseline_for_3d_layout_estimation_in.md)**
+
+:   提出 HouseLayout3D——首个面向多层建筑的真实世界 3D 布局估计基准（16 栋建筑、33 层楼、317 房间、292 门、379 窗、34 楼梯），以及完全 training-free 的 MultiFloor3D 四阶段 pipeline（3D 重建 → 骨架提取 → 多边形拟合 → 场景图构建），在多层建筑场景中全面超越 RoomFormer 和 SceneScript。
 
 **[HybridNorm: Towards Stable and Efficient Transformer Training via Hybrid Normalization](hybridnorm_towards_stable_and_efficient_transformer_training_via_hybrid_normaliz.md)**
 

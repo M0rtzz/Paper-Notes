@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PRUE: A Practical Recipe for Field Boundary Segmentation at Scale
 description: >-

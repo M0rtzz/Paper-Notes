@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Partially Equivariant Reinforcement Learning in Symmetry-Breaking Environments
 description: >-
@@ -152,8 +152,8 @@ PERL（Partially Equivariant RL）的整体流程是：维护两套并行的值�
 
 - [Breaking Barriers: Do Reinforcement Post Training Gains Transfer To Unseen Domains?](breaking_barriers_do_reinforcement_post_training_gains_transfer_to_unseen_domain.md)
 - [Time Reversal Symmetry for Efficient Robotic Manipulations in Deep Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/time_reversal_symmetry_for_efficient_robotic_manipulations_in_deep_reinforcement.md)
-- [Craftium: An Extensible Framework for Creating Reinforcement Learning Environments](../../ICML2025/reinforcement_learning/craftium_bridging_flexibility_and_efficiency_for_rich_3d_single-_and_multi-agent.md)
 - [Forecasting in Offline Reinforcement Learning for Non-stationary Environments](../../NeurIPS2025/reinforcement_learning/forecasting_in_offline_reinforcement_learning_for_non-stationary_environments.md)
+- [Craftium: An Extensible Framework for Creating Reinforcement Learning Environments](../../ICML2025/reinforcement_learning/craftium_bridging_flexibility_and_efficiency_for_rich_3d_single-_and_multi-agent.md)
 - [Reasoning Gym: Reasoning Environments for Reinforcement Learning with Verifiable Rewards](../../NeurIPS2025/reinforcement_learning/reasoning_gym_reasoning_environments_for_reinforcement_learning_with_verifiable_.md)
 
 <!-- RELATED:END -->

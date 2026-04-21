@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Learning to Generate Conditional Tri-Plane for 3D-Aware Expression Controllable Portrait Animation
 description: >-

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] ParetoHqD: Fast Offline Multiobjective Alignment of Large Language Models Using Pareto High-Quality Data
 description: >-

@@ -138,8 +138,8 @@ $$W^* = \arg\min_W \mathbb{E} [(y - \text{SM}(Z, W))^2]$$
 
 - [Test-Time Canonicalization by Foundation Models for Robust Perception](test-time_canonicalization_by_foundation_models_for_robust_perception.md)
 - [PDE-Transformer: Efficient and Versatile Transformers for Physics Simulations](pde-transformer_efficient_and_versatile_transformers_for_physics_simulations.md)
-- [AcTTA: Rethinking Test-Time Adaptation via Dynamic Activation](../../CVPR2026/self_supervised/actta_rethinking_test-time_adaptation_via_dynamic_activation.md)
-- [Spectrum Tuning: Post-Training for Distributional Coverage and In-Context Steerability](../../ICLR2026/self_supervised/spectrum_tuning_post-training_for_distributional_coverage_and_in-context_steerab.md)
 - [Transformers without Normalization](../../CVPR2025/self_supervised/transformers_without_normalization.md)
+- [Re-Depth Anything: Test-Time Depth Refinement via Self-Supervised Re-lighting](../../CVPR2026/self_supervised/redepth_anything_test-time_depth_refinement_via_self-supervised_re-lighting.md)
+- [Know Thyself by Knowing Others: Learning Neuron Identity from Population Context](../../NeurIPS2025/self_supervised/know_thyself_by_knowing_others_learning_neuron_identity_from_population_context.md)
 
 <!-- RELATED:END -->

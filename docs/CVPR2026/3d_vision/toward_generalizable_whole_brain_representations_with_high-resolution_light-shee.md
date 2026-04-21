@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Toward Generalizable Whole Brain Representations with High-Resolution Light-Sheet Data
 description: >-

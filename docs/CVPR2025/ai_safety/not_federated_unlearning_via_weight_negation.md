@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] NoT: Federated Unlearning via Weight Negation
 description: >-
@@ -90,9 +90,9 @@ tags:
 ## 相关论文
 
 - [Do Not Mimic My Voice: Speaker Identity Unlearning for Zero-Shot Text-to-Speech](../../ICML2025/ai_safety/do_not_mimic_my_voice_speaker_identity_unlearning_for_zero-shot_text-to-speech.md)
+- [Towards Source-Free Machine Unlearning](towards_source-free_machine_unlearning.md)
 - [Align-then-Unlearn: Embedding Alignment for LLM Unlearning](../../ICML2025/ai_safety/align-then-unlearn_embedding_alignment_for_llm_unlearning.md)
 - [Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](../../NeurIPS2025/ai_safety/rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
-- [A Simple Data Augmentation for Feature Distribution Skewed Federated Learning](a_simple_data_augmentation_for_feature_distribution_skewed_federated_learning.md)
 - [Infighting in the Dark: Multi-Label Backdoor Attack in Federated Learning](infighting_in_the_dark_multi-label_backdoor_attack_in_federated_learning.md)
 
 <!-- RELATED:END -->

@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Dynamic Knowledge Integration for Evidence-Driven Counter-Argument Generation with Large Language Models
 description: >-

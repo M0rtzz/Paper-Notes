@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Automated Model Evaluation for Object Detection via Prediction Consistency and Reliability
 description: >-

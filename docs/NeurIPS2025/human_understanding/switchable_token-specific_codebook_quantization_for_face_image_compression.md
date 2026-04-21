@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Switchable Token-Specific Codebook Quantization for Face Image Compression
 description: >-

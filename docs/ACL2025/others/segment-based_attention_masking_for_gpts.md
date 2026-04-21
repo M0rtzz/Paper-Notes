@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Segment-Based Attention Masking for GPTs
 description: >-

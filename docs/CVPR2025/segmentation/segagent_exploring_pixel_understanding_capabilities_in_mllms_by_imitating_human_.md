@@ -1,16 +1,16 @@
-﻿---
+---
 title: >-
   [论文解读] SegAgent: Exploring Pixel Understanding Capabilities in MLLMs by Imitating Human Annotator Trajectories
 description: >-
-  [CVPR 2025][Segmentation][Agent] 提出 SegAgent，将图像分割建模为模仿人类标注员的多步 MDP——MLLM 迭代预测点击坐标，交互式分割模型更新 mask。通过自动生成标注轨迹训练 + StaR+ 策略改进 + PRM 树搜索，在 RefCOCO 上比 LISA+SAM 提升 4-7% IoU。
+  [CVPR 2025][图像分割][交互式分割] SegAgent 将 referring expression segmentation 建模为人类标注员的迭代操作过程——MLLM 观察当前 mask 状态后预测下一个点击位置，交互式分割模型据此更新 mask，经过多轮迭代得到最终分割结果；通过 StaR+ 策略改进和 PRM+树搜索，在复杂场景下大幅提升分割精度。
 tags:
   - CVPR 2025
-  - Segmentation
-  - Agent
+  - 图像分割
   - 交互式分割
-  - MLLM
-  - 强化学习
+  - MLLM标注代理
+  - 多步MDP
   - 过程奖励模型
+  - 策略改进
 ---
 
 # SegAgent: Exploring Pixel Understanding Capabilities in MLLMs by Imitating Human Annotator Trajectories
@@ -123,9 +123,9 @@ SegAgent 将 referring expression segmentation 建模为人类标注员的迭代
 ## 相关论文
 
 - [SPARROW: Learning Spatial Precision and Temporal Referential Consistency in Pixel-Grounded Video MLLMs](sparrow_learning_spatial_precision_and_temporal_referential_consistency_in_pixel.md)
+- [Exploring CLIP's Dense Knowledge for Weakly Supervised Semantic Segmentation](exploring_clips_dense_knowledge_for_weakly_supervised_semantic_segmentation.md)
 - [Image Quality Assessment: From Human to Machine Preference](image_quality_assessment_from_human_to_machine_preference.md)
 - [Holmes-VAU: Towards Long-term Video Anomaly Understanding at Any Granularity](holmes-vau_towards_long-term_video_anomaly_understanding_at_any_granularity.md)
-- [Exploring CLIP's Dense Knowledge for Weakly Supervised Semantic Segmentation](exploring_clips_dense_knowledge_for_weakly_supervised_semantic_segmentation.md)
 - [DINOv2 Meets Text: A Unified Framework for Image- and Pixel-Level Vision-Language Alignment](dinov2_meets_text_a_unified_framework_for_image-_and_pixel-level_vision-language.md)
 
 <!-- RELATED:END -->

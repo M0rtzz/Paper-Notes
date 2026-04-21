@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Training the Untrainable: Introducing Inductive Bias via Representational Alignment
 description: >-

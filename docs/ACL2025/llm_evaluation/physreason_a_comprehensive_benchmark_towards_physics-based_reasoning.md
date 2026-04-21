@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] PhysReason: A Comprehensive Benchmark towards Physics-Based Reasoning
 description: >-

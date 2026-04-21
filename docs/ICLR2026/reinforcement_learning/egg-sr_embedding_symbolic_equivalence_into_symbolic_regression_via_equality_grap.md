@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] EGG-SR: Embedding Symbolic Equivalence into Symbolic Regression via Equality Graph
 description: >-

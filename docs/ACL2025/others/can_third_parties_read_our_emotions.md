@@ -1,4 +1,4 @@
-﻿---
+---
 title: >-
   [论文解读] Can Third-parties Read Our Emotions?
 description: >-
@@ -139,7 +139,7 @@ LLM vs 人类标注者对比（Wilcoxon检验）：
 - [Can Uniform Meaning Representation Help GPT-4 Translate from Indigenous Languages?](can_uniform_meaning_representation_help_gpt-4_translate_from_indigenous_language.md)
 - [GPT-4 as a Homework Tutor can Improve Student Engagement and Learning Outcomes](gpt-4_as_a_homework_tutor_can_improve_student_engagement_and_learning_outcomes.md)
 - [I Can't Believe It's Not Scene Flow!](../../ECCV2024/others/i_canapost_believe_itaposs_not_scene_flow.md)
-- [Your Classifier Can Do More: Towards Balancing the Gaps in Classification, Robustness, and Generation](../../CVPR2026/others/your_classifier_can_do_more_towards_balancing_the.md)
+- [Your Classifier Can Do More: Towards Balancing the Gaps in Classification, Robustness, and Generation](../../CVPR2026/others/your_classifier_can_do_more_towards_balancing_the_gaps_in_classification_robustn.md)
 - [How Hard Is It to Rig a Tournament When Few Players Can Beat or Be Beaten by the Favorite?](../../AAAI2026/others/how_hard_is_it_to_rig_a_tournament_when_few_players_can_beat_or_be_beaten_by_the.md)
 
 <!-- RELATED:END -->
