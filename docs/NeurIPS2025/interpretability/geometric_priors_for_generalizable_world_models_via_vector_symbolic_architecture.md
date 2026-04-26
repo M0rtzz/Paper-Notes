@@ -361,10 +361,10 @@ $$s^\star = \arg\max_{s \in \mathcal{S}} \operatorname{Re}\langle x, \Phi_s \ran
 
 ## 相关论文
 
-- [Towards Scaling Laws for Symbolic Regression](towards_scaling_laws_for_symbolic_regression.md)
-- [Beyond Components: Singular Vector-Based Interpretability of Transformer Circuits](beyond_components_singular_vector-based_interpretability_of_transformer_circuits.md)
-- [ArgoTweak: Towards Self-Updating HD Maps through Structured Priors](../../ICCV2025/interpretability/argotweak_towards_self-updating_hd_maps_through_structured_priors.md)
-- [Toward Real-world Text Image Forgery Localization: Structured and Interpretable Data Synthesis](toward_real-world_text_image_forgery_localization_structured_and_interpretable_d.md)
-- [A Cortically Inspired Architecture for Modular Perceptual AI](../../ICLR2026/interpretability/a_cortically_inspired_architecture_for_modular_perceptual_ai.md)
+- [\[NeurIPS 2025\] Towards Scaling Laws for Symbolic Regression](towards_scaling_laws_for_symbolic_regression.md)
+- [\[NeurIPS 2025\] Beyond Components: Singular Vector-Based Interpretability of Transformer Circuits](beyond_components_singular_vector-based_interpretability_of_transformer_circuits.md)
+- [\[ICCV 2025\] ArgoTweak: Towards Self-Updating HD Maps through Structured Priors](../../ICCV2025/interpretability/argotweak_towards_self-updating_hd_maps_through_structured_priors.md)
+- [\[NeurIPS 2025\] Toward Real-world Text Image Forgery Localization: Structured and Interpretable Data Synthesis](toward_real-world_text_image_forgery_localization_structured_and_interpretable_d.md)
+- [\[ICLR 2026\] A Cortically Inspired Architecture for Modular Perceptual AI](../../ICLR2026/interpretability/a_cortically_inspired_architecture_for_modular_perceptual_ai.md)
 
 <!-- RELATED:END -->

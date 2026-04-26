@@ -176,10 +176,10 @@ Beta post-hoc calibration使ECE降低约3倍，同时提升准确率，但不构
 
 ## 相关论文
 
-- [Gender Bias in Emotion Recognition by Large Language Models](gender_bias_in_emotion_recognition_by_large_language_models.md)
-- [On the Robustness of Verbal Confidence of LLMs in Adversarial Attacks](../../NeurIPS2025/ai_safety/on_the_robustness_of_verbal_confidence_of_llms_in_adversarial_attacks.md)
-- [Can Editing LLMs Inject Harm?](can_editing_llms_inject_harm.md)
-- [Privacy on the Fly: A Predictive Adversarial Transformation Network for Mobile Sensor Data](privacy_on_the_fly_a_predictive_adversarial_transformation_network_for_mobile_se.md)
-- [ProbLog4Fairness: A Neurosymbolic Approach to Modeling and Mitigating Bias](problog4fairness_a_neurosymbolic_approach_to_modeling_and_mitigating_bias.md)
+- [\[AAAI 2026\] Gender Bias in Emotion Recognition by Large Language Models](gender_bias_in_emotion_recognition_by_large_language_models.md)
+- [\[NeurIPS 2025\] On the Robustness of Verbal Confidence of LLMs in Adversarial Attacks](../../NeurIPS2025/ai_safety/on_the_robustness_of_verbal_confidence_of_llms_in_adversarial_attacks.md)
+- [\[AAAI 2026\] Can Editing LLMs Inject Harm?](can_editing_llms_inject_harm.md)
+- [\[AAAI 2026\] Privacy on the Fly: A Predictive Adversarial Transformation Network for Mobile Sensor Data](privacy_on_the_fly_a_predictive_adversarial_transformation_network_for_mobile_se.md)
+- [\[AAAI 2026\] ProbLog4Fairness: A Neurosymbolic Approach to Modeling and Mitigating Bias](problog4fairness_a_neurosymbolic_approach_to_modeling_and_mitigating_bias.md)
 
 <!-- RELATED:END -->

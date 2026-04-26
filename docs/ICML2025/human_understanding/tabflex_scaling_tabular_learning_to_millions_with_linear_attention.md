@@ -131,10 +131,10 @@ poker-hand (100 万+ 样本) 上，TabFlex 仅用 **4.88 秒**完成分类，第
 
 ## 相关论文
 
-- [Scaling Large Motion Models with Million-Level Human Motions](scaling_large_motion_models_with_million-level_human_motions.md)
-- [FW-Merging: Scaling Model Merging with Frank-Wolfe Optimization](../../ICCV2025/human_understanding/fw-merging_scaling_model_merging_with_frank-wolfe_optimization.md)
-- [SpecAttn: Speculating Sparse Attention](../../NeurIPS2025/human_understanding/specattn_speculating_sparse_attention.md)
-- [Native Hybrid Attention for Efficient Sequence Modeling](../../ACL2026/human_understanding/native_hybrid_attention_for_efficient_sequence_modeling.md)
-- [Scaling Generalist Data-Analytic Agents](../../ICLR2026/human_understanding/scaling_generalist_data-analytic_agents.md)
+- [\[ICML 2025\] Scaling Large Motion Models with Million-Level Human Motions](scaling_large_motion_models_with_million-level_human_motions.md)
+- [\[ICCV 2025\] FW-Merging: Scaling Model Merging with Frank-Wolfe Optimization](../../ICCV2025/human_understanding/fw-merging_scaling_model_merging_with_frank-wolfe_optimization.md)
+- [\[NeurIPS 2025\] SpecAttn: Speculating Sparse Attention](../../NeurIPS2025/human_understanding/specattn_speculating_sparse_attention.md)
+- [\[ACL 2026\] Native Hybrid Attention for Efficient Sequence Modeling](../../ACL2026/human_understanding/native_hybrid_attention_for_efficient_sequence_modeling.md)
+- [\[ICLR 2026\] Scaling Generalist Data-Analytic Agents](../../ICLR2026/human_understanding/scaling_generalist_data-analytic_agents.md)
 
 <!-- RELATED:END -->

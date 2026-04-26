@@ -129,10 +129,10 @@ tags:
 
 ## 相关论文
 
-- [OPTS: Bandit-Based Prompt Design Strategy Selection Improves Prompt Optimizers](bandit-based_prompt_design_strategy_selection_improves_prompt_optimizers.md)
-- [A Survey of Automatic Prompt Optimization with Instruction-focused Heuristic-based Search Algorithm](a_survey_of_automatic_prompt_optimization_with_instruction-focused_heuristic-bas.md)
-- [InductionBench: LLMs Fail in the Simplest Complexity Class](inductionbench_llms_fail_in_the_simplest_complexity_class.md)
-- [What Makes a Good Natural Language Prompt?](good_natural_language_prompt.md)
-- [Beyond Prompt Engineering: Robust Behavior Control in LLMs via Steering Target Atoms](beyond_prompt_engineering_robust_behavior_control_in_llms_via_steering_target_at.md)
+- [\[ACL 2025\] OPTS: Bandit-Based Prompt Design Strategy Selection Improves Prompt Optimizers](bandit-based_prompt_design_strategy_selection_improves_prompt_optimizers.md)
+- [\[ACL 2025\] A Survey of Automatic Prompt Optimization with Instruction-focused Heuristic-based Search Algorithm](a_survey_of_automatic_prompt_optimization_with_instruction-focused_heuristic-bas.md)
+- [\[ACL 2025\] InductionBench: LLMs Fail in the Simplest Complexity Class](inductionbench_llms_fail_in_the_simplest_complexity_class.md)
+- [\[ACL 2025\] What Makes a Good Natural Language Prompt?](good_natural_language_prompt.md)
+- [\[ACL 2025\] Beyond Prompt Engineering: Robust Behavior Control in LLMs via Steering Target Atoms](beyond_prompt_engineering_robust_behavior_control_in_llms_via_steering_target_at.md)
 
 <!-- RELATED:END -->

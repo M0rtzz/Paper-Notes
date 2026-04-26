@@ -171,10 +171,10 @@ ST4VLA 在所有 8 个泛化维度全面领先，平均成功率 65% vs GR00T 48
 
 ## 相关论文
 
-- [Learning Vision-Language-Action World Models for Autonomous Driving](../../CVPR2026/autonomous_driving/vla_world_learning_vision_language_action_world_models_for_autonomous_driving.md)
-- [NoRD: A Data-Efficient Vision-Language-Action Model that Drives without Reasoning](../../CVPR2026/autonomous_driving/nord_a_data-efficient_vision-language-action_model_that_drives_without_reasoning.md)
-- [Drive My Way: Preference Alignment of Vision-Language-Action Model for Personalized Driving](../../CVPR2026/autonomous_driving/drive_my_way_preference_alignment_of_vision-language-action_model_for_personaliz.md)
-- [SEAL: Segment Any Events with Language](segment_any_events_with_language.md)
-- [SPACeR: Self-Play Anchoring with Centralized Reference Models](spacer_self-play_anchoring_with_centralized_reference_models.md)
+- [\[CVPR 2026\] Learning Vision-Language-Action World Models for Autonomous Driving](../../CVPR2026/autonomous_driving/vla_world_learning_vision_language_action_world_models_for_autonomous_driving.md)
+- [\[CVPR 2026\] NoRD: A Data-Efficient Vision-Language-Action Model that Drives without Reasoning](../../CVPR2026/autonomous_driving/nord_a_data-efficient_vision-language-action_model_that_drives_without_reasoning.md)
+- [\[CVPR 2026\] Drive My Way: Preference Alignment of Vision-Language-Action Model for Personalized Driving](../../CVPR2026/autonomous_driving/drive_my_way_preference_alignment_of_vision-language-action_model_for_personaliz.md)
+- [\[ICLR 2026\] SEAL: Segment Any Events with Language](segment_any_events_with_language.md)
+- [\[ICLR 2026\] SPACeR: Self-Play Anchoring with Centralized Reference Models](spacer_self-play_anchoring_with_centralized_reference_models.md)
 
 <!-- RELATED:END -->

@@ -181,10 +181,10 @@ GeoRemover 的核心优势在于融合了两类方法的长处：在几何域享
 
 ## 相关论文
 
-- [DeCaFlow: A Deconfounding Causal Generative Model](decaflow_a_deconfounding_causal_generative_model.md)
-- [Temporal Score Analysis for Understanding and Correcting Diffusion Artifacts](../../CVPR2025/image_generation/temporal_score_analysis_for_understanding_and_correcting_diffusion_artifacts.md)
-- [Coupling Generative Modeling and an Autoencoder with the Causal Bridge](coupling_generative_modeling_and_an_autoencoder_with_the_causal_bridge.md)
-- [Non-Markovian Discrete Diffusion with Causal Language Models](non-markovian_discrete_diffusion_with_causal_language_models.md)
-- [Make It Count: Text-to-Image Generation with an Accurate Number of Objects](../../CVPR2025/image_generation/make_it_count_text-to-image_generation_with_an_accurate_number_of_objects.md)
+- [\[NeurIPS 2025\] DeCaFlow: A Deconfounding Causal Generative Model](decaflow_a_deconfounding_causal_generative_model.md)
+- [\[CVPR 2025\] Temporal Score Analysis for Understanding and Correcting Diffusion Artifacts](../../CVPR2025/image_generation/temporal_score_analysis_for_understanding_and_correcting_diffusion_artifacts.md)
+- [\[NeurIPS 2025\] Coupling Generative Modeling and an Autoencoder with the Causal Bridge](coupling_generative_modeling_and_an_autoencoder_with_the_causal_bridge.md)
+- [\[NeurIPS 2025\] Non-Markovian Discrete Diffusion with Causal Language Models](non-markovian_discrete_diffusion_with_causal_language_models.md)
+- [\[CVPR 2025\] Make It Count: Text-to-Image Generation with an Accurate Number of Objects](../../CVPR2025/image_generation/make_it_count_text-to-image_generation_with_an_accurate_number_of_objects.md)
 
 <!-- RELATED:END -->

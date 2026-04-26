@@ -144,10 +144,10 @@ ROI 内 shuffle 测试（验证体素间多样性）：
 
 ## 相关论文
 
-- [3DrawAgent: Teaching LLM to Draw in 3D with Early Contrastive Experience](../../CVPR2026/3d_vision/3drawagent_teaching_llm_to_draw_in_3d_with_early_contrastive_experience.md)
-- [ArtLLM: Generating Articulated Assets via 3D LLM](../../CVPR2026/3d_vision/artllm_generating_articulated_assets_via_3d_llm.md)
-- [Quantized Visual Geometry Grounded Transformer](quantized_visual_geometry_grounded_transformer.md)
-- [View Selection for 3D Captioning via Diffusion Ranking](../../ECCV2024/3d_vision/view_selection_for_3d_captioning_via_diffusion_ranking.md)
-- [Bi-directional Contextual Attention for 3D Dense Captioning](../../ECCV2024/3d_vision/bi-directional_contextual_attention_for_3d_dense_captioning.md)
+- [\[CVPR 2026\] 3DrawAgent: Teaching LLM to Draw in 3D with Early Contrastive Experience](../../CVPR2026/3d_vision/3drawagent_teaching_llm_to_draw_in_3d_with_early_contrastive_experience.md)
+- [\[CVPR 2026\] ArtLLM: Generating Articulated Assets via 3D LLM](../../CVPR2026/3d_vision/artllm_generating_articulated_assets_via_3d_llm.md)
+- [\[ICLR 2026\] Quantized Visual Geometry Grounded Transformer](quantized_visual_geometry_grounded_transformer.md)
+- [\[ECCV 2024\] View Selection for 3D Captioning via Diffusion Ranking](../../ECCV2024/3d_vision/view_selection_for_3d_captioning_via_diffusion_ranking.md)
+- [\[ECCV 2024\] Bi-directional Contextual Attention for 3D Dense Captioning](../../ECCV2024/3d_vision/bi-directional_contextual_attention_for_3d_dense_captioning.md)
 
 <!-- RELATED:END -->

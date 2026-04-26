@@ -164,10 +164,10 @@ $$\text{flip}_\eta(x) \coloneqq \Pr_{r,r' \sim \mu}[b_r^{(\eta)}(x) \neq b_{r'}^
 
 ## 相关论文
 
-- [Membership Inference Attacks Against Fine-tuned Diffusion Language Models (SAMA)](../../ICLR2026/ai_safety/membership_inference_attacks_against_fine-tuned_diffusion_language_models.md)
-- [Distributive Fairness in Large Language Models: Evaluating Alignment with Human Values](distributive_fairness_in_large_language_models_evaluating_alignment_with_human_v.md)
-- [Impact of Dataset Properties on Membership Inference Vulnerability of Deep Transfer Learning](impact_of_dataset_properties_on_membership_inference.md)
-- [Merge Hijacking: Backdoor Attacks to Model Merging of Large Language Models](../../ACL2025/ai_safety/merge_hijacking_backdoor_attacks_to_model_merging_of_large_language_models.md)
-- [Jailbreaking Large Language Models with Morality Attacks](../../ACL2026/ai_safety/jailbreaking_large_language_models_with_morality_attacks.md)
+- [\[ICLR 2026\] Membership Inference Attacks Against Fine-tuned Diffusion Language Models (SAMA)](../../ICLR2026/ai_safety/membership_inference_attacks_against_fine-tuned_diffusion_language_models.md)
+- [\[NeurIPS 2025\] Distributive Fairness in Large Language Models: Evaluating Alignment with Human Values](distributive_fairness_in_large_language_models_evaluating_alignment_with_human_v.md)
+- [\[NeurIPS 2025\] Impact of Dataset Properties on Membership Inference Vulnerability of Deep Transfer Learning](impact_of_dataset_properties_on_membership_inference.md)
+- [\[ACL 2025\] Merge Hijacking: Backdoor Attacks to Model Merging of Large Language Models](../../ACL2025/ai_safety/merge_hijacking_backdoor_attacks_to_model_merging_of_large_language_models.md)
+- [\[ACL 2026\] Jailbreaking Large Language Models with Morality Attacks](../../ACL2026/ai_safety/jailbreaking_large_language_models_with_morality_attacks.md)
 
 <!-- RELATED:END -->

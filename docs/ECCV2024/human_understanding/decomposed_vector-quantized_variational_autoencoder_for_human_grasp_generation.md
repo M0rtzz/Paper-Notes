@@ -160,10 +160,10 @@ DVQ-VAE 基于编码器-解码器范式，核心创新在于：
 
 ## 相关论文
 
-- [TELA: Text to Layer-wise 3D Clothed Human Generation](tela_text_to_layer-wise_3d_clothed_human_generation.md)
-- [Vocab Diet: Reshaping the Vocabulary of LLMs via Vector Arithmetic](../../ACL2026/human_understanding/vocab_diet_reshaping_the_vocabulary_of_llms_via_vector_arithmetic.md)
-- [WordRobe: Text-Guided Generation of Textured 3D Garments](wordrobe_text-guided_generation_of_textured_3d_garments.md)
-- [Motion Mamba: Efficient and Long Sequence Motion Generation](motion_mamba_efficient_and_long_sequence_motion_generation.md)
-- [Modelling the Effects of Hearing Loss on Neural Coding in the Auditory Midbrain with Variational Conditioning](../../AAAI2026/human_understanding/modelling_the_effects_of_hearing_loss_on_neural_coding_in_the_auditory_midbrain_.md)
+- [\[ECCV 2024\] TELA: Text to Layer-wise 3D Clothed Human Generation](tela_text_to_layer-wise_3d_clothed_human_generation.md)
+- [\[ACL 2026\] Vocab Diet: Reshaping the Vocabulary of LLMs via Vector Arithmetic](../../ACL2026/human_understanding/vocab_diet_reshaping_the_vocabulary_of_llms_via_vector_arithmetic.md)
+- [\[ECCV 2024\] WordRobe: Text-Guided Generation of Textured 3D Garments](wordrobe_text-guided_generation_of_textured_3d_garments.md)
+- [\[ECCV 2024\] Motion Mamba: Efficient and Long Sequence Motion Generation](motion_mamba_efficient_and_long_sequence_motion_generation.md)
+- [\[AAAI 2026\] Modelling the Effects of Hearing Loss on Neural Coding in the Auditory Midbrain with Variational Conditioning](../../AAAI2026/human_understanding/modelling_the_effects_of_hearing_loss_on_neural_coding_in_the_auditory_midbrain_.md)
 
 <!-- RELATED:END -->

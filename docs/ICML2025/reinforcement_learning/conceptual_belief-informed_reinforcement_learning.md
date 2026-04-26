@@ -114,10 +114,10 @@ tags:
 
 ## 相关论文
 
-- [Benchmarking Quantum Reinforcement Learning](benchmarking_quantum_reinforcement_learning.md)
-- [The Impact of On-Policy Parallelized Data Collection on Deep Reinforcement Learning Networks](the_impact_of_on-policy_parallelized_data_collection_on_deep_reinforcement_learn.md)
-- [Position: Lifetime Tuning is Incompatible with Continual Reinforcement Learning](position_lifetime_tuning_is_incompatible_with_continual_reinforcement_learning.md)
-- [Craftium: An Extensible Framework for Creating Reinforcement Learning Environments](craftium_bridging_flexibility_and_efficiency_for_rich_3d_single-_and_multi-agent.md)
-- [Maximum Total Correlation Reinforcement Learning](maximum_total_correlation_reinforcement_learning.md)
+- [\[ICML 2025\] Benchmarking Quantum Reinforcement Learning](benchmarking_quantum_reinforcement_learning.md)
+- [\[ICML 2025\] The Impact of On-Policy Parallelized Data Collection on Deep Reinforcement Learning Networks](the_impact_of_on-policy_parallelized_data_collection_on_deep_reinforcement_learn.md)
+- [\[ICML 2025\] Position: Lifetime Tuning is Incompatible with Continual Reinforcement Learning](position_lifetime_tuning_is_incompatible_with_continual_reinforcement_learning.md)
+- [\[ICML 2025\] Craftium: An Extensible Framework for Creating Reinforcement Learning Environments](craftium_bridging_flexibility_and_efficiency_for_rich_3d_single-_and_multi-agent.md)
+- [\[ICML 2025\] Maximum Total Correlation Reinforcement Learning](maximum_total_correlation_reinforcement_learning.md)
 
 <!-- RELATED:END -->

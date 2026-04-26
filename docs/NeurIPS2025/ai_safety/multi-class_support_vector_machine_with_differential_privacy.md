@@ -119,10 +119,10 @@ $$\hat{\mathbf{w}}_{t+1} = \hat{\mathbf{w}}_t - \eta_t \left\{ \frac{1}{n}\sum_{
 
 ## 相关论文
 
-- [Sequentially Auditing Differential Privacy](sequentially_auditing_differential_privacy.md)
-- [Unifying Re-Identification, Attribute Inference, and Data Reconstruction Risks in Differential Privacy](unifying_re-identification_attribute_inference_and_data_reconstruction_risks_in_.md)
-- [Mitigating Privacy-Utility Trade-off in Decentralized Federated Learning via f-Differential Privacy](mitigating_privacy-utility_trade-off_in_decentralized_federated_learning_via_f-d.md)
-- [Building a Long Text Privacy Policy Corpus with Multi-Class Labels](../../ACL2025/ai_safety/building_a_long_text_privacy_policy_corpus_with_multi-class_labels.md)
-- [Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
+- [\[NeurIPS 2025\] Sequentially Auditing Differential Privacy](sequentially_auditing_differential_privacy.md)
+- [\[NeurIPS 2025\] Unifying Re-Identification, Attribute Inference, and Data Reconstruction Risks in Differential Privacy](unifying_re-identification_attribute_inference_and_data_reconstruction_risks_in_.md)
+- [\[NeurIPS 2025\] Mitigating Privacy-Utility Trade-off in Decentralized Federated Learning via f-Differential Privacy](mitigating_privacy-utility_trade-off_in_decentralized_federated_learning_via_f-d.md)
+- [\[ACL 2025\] Building a Long Text Privacy Policy Corpus with Multi-Class Labels](../../ACL2025/ai_safety/building_a_long_text_privacy_policy_corpus_with_multi-class_labels.md)
+- [\[NeurIPS 2025\] Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
 
 <!-- RELATED:END -->

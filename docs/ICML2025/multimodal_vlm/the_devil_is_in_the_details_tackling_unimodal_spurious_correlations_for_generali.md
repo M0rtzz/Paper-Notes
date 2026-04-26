@@ -117,10 +117,10 @@ SFC 的梯度被 detach，仅作为加权系数，不参与反向传播。
 
 ## 相关论文
 
-- [OmniGaze: Reward-inspired Generalizable Gaze Estimation in the Wild](../../NeurIPS2025/multimodal_vlm/omnigaze_reward-inspired_generalizable_gaze_estimation_in_the_wild.md)
-- [Unlocking the Capabilities of Large Vision-Language Models for Generalizable and Explainable Deepfake Detection](unlocking_the_capabilities_of_large_vision-language_models_for_generalizable_and.md)
-- [ELEMENTAL: Interactive Learning from Demonstrations and Vision-Language Models for Reward Design in Robotics](elemental_interactive_learning_from_demonstrations_and_vision-language_models_fo.md)
-- [InternLM-XComposer2.5-Reward: A Simple Yet Effective Multi-Modal Reward Model](../../ACL2025/multimodal_vlm/internlm-xcomposer25-reward_a_simple_yet_effective_multi-modal_reward_model.md)
-- [Multimodal LLMs as Customized Reward Models for Text-to-Image Generation](../../ICCV2025/multimodal_vlm/multimodal_llms_as_customized_reward_models_for_text-to-image_generation.md)
+- [\[NeurIPS 2025\] OmniGaze: Reward-inspired Generalizable Gaze Estimation in the Wild](../../NeurIPS2025/multimodal_vlm/omnigaze_reward-inspired_generalizable_gaze_estimation_in_the_wild.md)
+- [\[ICML 2025\] Unlocking the Capabilities of Large Vision-Language Models for Generalizable and Explainable Deepfake Detection](unlocking_the_capabilities_of_large_vision-language_models_for_generalizable_and.md)
+- [\[ICML 2025\] ELEMENTAL: Interactive Learning from Demonstrations and Vision-Language Models for Reward Design in Robotics](elemental_interactive_learning_from_demonstrations_and_vision-language_models_fo.md)
+- [\[ACL 2025\] InternLM-XComposer2.5-Reward: A Simple Yet Effective Multi-Modal Reward Model](../../ACL2025/multimodal_vlm/internlm-xcomposer25-reward_a_simple_yet_effective_multi-modal_reward_model.md)
+- [\[ICCV 2025\] Multimodal LLMs as Customized Reward Models for Text-to-Image Generation](../../ICCV2025/multimodal_vlm/multimodal_llms_as_customized_reward_models_for_text-to-image_generation.md)
 
 <!-- RELATED:END -->

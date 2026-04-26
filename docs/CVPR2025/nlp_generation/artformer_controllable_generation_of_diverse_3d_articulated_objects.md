@@ -107,10 +107,10 @@ $L_{trans} = \beta_o L_o + \beta_P L_P + L_a$（终止分类 + 编码簿KL + 属
 
 ## 相关论文
 
-- [XtraGPT: Context-Aware and Controllable Academic Paper Revision via Human-AI Collaboration](../../ACL2026/nlp_generation/xtragpt_context-aware_and_controllable_academic_paper_revision_via_human-ai_coll.md)
-- [Abstractive Snippet Generation](../../ACL2025/nlp_generation/abstractive_snippet_generation.md)
-- [ATGen: A Framework for Active Text Generation](../../ACL2025/nlp_generation/atgen_a_framework_for_active_text_generation.md)
-- [Personalized Text Generation with Contrastive Activation Steering](../../ACL2025/nlp_generation/personalized_text_generation_with_contrastive_activation_steering.md)
-- [Writing Like the Best: Exemplar-Based Expository Text Generation](../../ACL2025/nlp_generation/writing_like_best_exemplar.md)
+- [\[ACL 2026\] XtraGPT: Context-Aware and Controllable Academic Paper Revision via Human-AI Collaboration](../../ACL2026/nlp_generation/xtragpt_context-aware_and_controllable_academic_paper_revision_via_human-ai_coll.md)
+- [\[ACL 2025\] Abstractive Snippet Generation](../../ACL2025/nlp_generation/abstractive_snippet_generation.md)
+- [\[ACL 2025\] ATGen: A Framework for Active Text Generation](../../ACL2025/nlp_generation/atgen_a_framework_for_active_text_generation.md)
+- [\[ACL 2025\] Personalized Text Generation with Contrastive Activation Steering](../../ACL2025/nlp_generation/personalized_text_generation_with_contrastive_activation_steering.md)
+- [\[ACL 2025\] Writing Like the Best: Exemplar-Based Expository Text Generation](../../ACL2025/nlp_generation/writing_like_best_exemplar.md)
 
 <!-- RELATED:END -->

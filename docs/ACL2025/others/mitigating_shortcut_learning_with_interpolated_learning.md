@@ -130,10 +130,10 @@ $$J_{\text{ERM}}(\theta) = \frac{1}{n} \sum_{i=1}^{n} \ell(f_{\text{cls}}(z_i), 
 
 ## 相关论文
 
-- [Mitigating Instance Entanglement in Instance-Dependent Partial Label Learning](../../CVPR2026/others/mitigating_instance_entanglement_in_instance-dependent_partial_label_learning.md)
-- [Value Residual Learning](value_residual_learning.md)
-- [Retrospective Learning from Interactions](retrospective_learning_from_interactions.md)
-- [Mitigating Confounding in Speech-Based Dementia Detection through Weight Masking](mitigating_confounding_in_speech-based_dementia_detection_through_weight_masking.md)
-- [Learning to Reason from Feedback at Test-Time](learning_to_reason_from_feedback_at_test-time.md)
+- [\[CVPR 2026\] Mitigating Instance Entanglement in Instance-Dependent Partial Label Learning](../../CVPR2026/others/mitigating_instance_entanglement_in_instance-dependent_partial_label_learning.md)
+- [\[ACL 2025\] Value Residual Learning](value_residual_learning.md)
+- [\[ACL 2025\] Retrospective Learning from Interactions](retrospective_learning_from_interactions.md)
+- [\[ACL 2025\] Mitigating Confounding in Speech-Based Dementia Detection through Weight Masking](mitigating_confounding_in_speech-based_dementia_detection_through_weight_masking.md)
+- [\[ACL 2025\] Learning to Reason from Feedback at Test-Time](learning_to_reason_from_feedback_at_test-time.md)
 
 <!-- RELATED:END -->

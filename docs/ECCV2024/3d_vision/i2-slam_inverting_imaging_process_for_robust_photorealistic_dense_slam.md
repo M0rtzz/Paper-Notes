@@ -123,10 +123,10 @@ I²-SLAM是一个通用模块，可以挂载到任何基于图像输入的dense 
 
 ## 相关论文
 
-- [SGS-SLAM: Semantic Gaussian Splatting for Neural Dense SLAM](sgs-slam_semantic_gaussian_splatting_for_neural_dense_slam.md)
-- [CG-SLAM: Efficient Dense RGB-D SLAM in a Consistent Uncertainty-Aware 3D Gaussian Field](cg-slam_efficient_dense_rgb-d_slam_in_a_consistent_uncertainty-aware_3d_gaussian.md)
-- [Deep Patch Visual SLAM](deep_patch_visual_slam.md)
-- [Unblur-SLAM: Dense Neural SLAM for Blurry Inputs](../../CVPR2026/3d_vision/unblur-slam_dense_neural_slam_for_blurry_inputs.md)
-- [MASt3R-SLAM: Real-Time Dense SLAM with 3D Reconstruction Priors](../../CVPR2025/3d_vision/mast3r-slam_real-time_dense_slam_with_3d_reconstruction_priors.md)
+- [\[ECCV 2024\] SGS-SLAM: Semantic Gaussian Splatting for Neural Dense SLAM](sgs-slam_semantic_gaussian_splatting_for_neural_dense_slam.md)
+- [\[ECCV 2024\] CG-SLAM: Efficient Dense RGB-D SLAM in a Consistent Uncertainty-Aware 3D Gaussian Field](cg-slam_efficient_dense_rgb-d_slam_in_a_consistent_uncertainty-aware_3d_gaussian.md)
+- [\[ECCV 2024\] Deep Patch Visual SLAM](deep_patch_visual_slam.md)
+- [\[CVPR 2026\] Unblur-SLAM: Dense Neural SLAM for Blurry Inputs](../../CVPR2026/3d_vision/unblur-slam_dense_neural_slam_for_blurry_inputs.md)
+- [\[CVPR 2025\] MASt3R-SLAM: Real-Time Dense SLAM with 3D Reconstruction Priors](../../CVPR2025/3d_vision/mast3r-slam_real-time_dense_slam_with_3d_reconstruction_priors.md)
 
 <!-- RELATED:END -->

@@ -132,10 +132,10 @@ tags:
 
 ## 相关论文
 
-- [Hessian-guided Perturbed Wasserstein Gradient Flows for Escaping Saddle Points](../../NeurIPS2025/others/hessian-guided_perturbed_wasserstein_gradient_flows_for_escaping_saddle_points.md)
-- [Learning Distances from Data with Normalizing Flows and Score Matching](learning_distances_from_data_with_normalizing_flows_and_score_matching.md)
-- [SAD Neural Networks: Divergent Gradient Flows and Asymptotic Optimality via o-minimal Structures](../../NeurIPS2025/others/sad_neural_networks_divergent_gradient_flows_and_asymptotic_optimality_via_o-min.md)
-- [Fishers for Free? Approximating the Fisher Information Matrix by Recycling the Squared Gradient Accumulator](fishers_for_free_approximating_the_fisher_information_matrix_by_recycling_the_sq.md)
-- [Generation from Noisy Examples](generation_from_noisy_examples.md)
+- [\[NeurIPS 2025\] Hessian-guided Perturbed Wasserstein Gradient Flows for Escaping Saddle Points](../../NeurIPS2025/others/hessian-guided_perturbed_wasserstein_gradient_flows_for_escaping_saddle_points.md)
+- [\[ICML 2025\] Learning Distances from Data with Normalizing Flows and Score Matching](learning_distances_from_data_with_normalizing_flows_and_score_matching.md)
+- [\[NeurIPS 2025\] SAD Neural Networks: Divergent Gradient Flows and Asymptotic Optimality via o-minimal Structures](../../NeurIPS2025/others/sad_neural_networks_divergent_gradient_flows_and_asymptotic_optimality_via_o-min.md)
+- [\[ICML 2025\] Fishers for Free? Approximating the Fisher Information Matrix by Recycling the Squared Gradient Accumulator](fishers_for_free_approximating_the_fisher_information_matrix_by_recycling_the_sq.md)
+- [\[ICML 2025\] Generation from Noisy Examples](generation_from_noisy_examples.md)
 
 <!-- RELATED:END -->

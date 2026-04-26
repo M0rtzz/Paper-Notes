@@ -189,10 +189,10 @@ tags:
 
 ## 相关论文
 
-- [Adversarial Concept Distillation for One-Step Diffusion Personalization](../../CVPR2026/model_compression/adversarial_concept_distillation_for_one-step_diffusion_personalization.md)
-- [Think Outside the Policy: In-Context Steered Policy Optimization](../../ACL2026/model_compression/think_outside_the_policy_in-context_steered_policy_optimization.md)
-- [WPT: World-to-Policy Transfer via Online World Model Distillation](../../CVPR2026/model_compression/wpt_world-to-policy_transfer_via_online_world_model_distillation.md)
-- [OPAD: Adversarial Concept Distillation for One-Step Diffusion Personalization](../../CVPR2026/model_compression/opad_adversarial_concept_distillation_for_one-step_diffusion_personalization.md)
-- [Temperature as a Meta-Policy: Adaptive Temperature in LLM Reinforcement Learning](temperature_as_a_meta-policy_adaptive_temperature_in_llm_reinforcement_learning.md)
+- [\[CVPR 2026\] Adversarial Concept Distillation for One-Step Diffusion Personalization](../../CVPR2026/model_compression/adversarial_concept_distillation_for_one-step_diffusion_personalization.md)
+- [\[ACL 2026\] Think Outside the Policy: In-Context Steered Policy Optimization](../../ACL2026/model_compression/think_outside_the_policy_in-context_steered_policy_optimization.md)
+- [\[CVPR 2026\] WPT: World-to-Policy Transfer via Online World Model Distillation](../../CVPR2026/model_compression/wpt_world-to-policy_transfer_via_online_world_model_distillation.md)
+- [\[CVPR 2026\] OPAD: Adversarial Concept Distillation for One-Step Diffusion Personalization](../../CVPR2026/model_compression/opad_adversarial_concept_distillation_for_one-step_diffusion_personalization.md)
+- [\[ICLR 2026\] Temperature as a Meta-Policy: Adaptive Temperature in LLM Reinforcement Learning](temperature_as_a_meta-policy_adaptive_temperature_in_llm_reinforcement_learning.md)
 
 <!-- RELATED:END -->

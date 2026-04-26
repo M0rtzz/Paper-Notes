@@ -163,10 +163,10 @@ $$\boldsymbol{c}(r) = \mathcal{F}_{point}(\{\boldsymbol{H}_q, \boldsymbol{H}_k, 
 
 ## 相关论文
 
-- [Flying with Photons: Rendering Novel Views of Propagating Light](flying_with_photons_rendering_novel_views_of_propagating_light.md)
-- [CaesarNeRF: Calibrated Semantic Representation for Few-Shot Generalizable Neural Rendering](caesarnerf_calibrated_semantic_representation_for_few-shot_generalizable_neural_.md)
-- [DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation](diffusiondepth_diffusion_denoising_approach_for_monocular_depth_estimation.md)
-- [TrackNeRF: Bundle Adjusting NeRF from Sparse and Noisy Views via Feature Tracks](tracknerf_bundle_adjusting_nerf_from_sparse_and_noisy_views_via_feature_tracks.md)
-- [G3R: Gradient Guided Generalizable Reconstruction](g3r_gradient_guided_generalizable_reconstruction.md)
+- [\[ECCV 2024\] Flying with Photons: Rendering Novel Views of Propagating Light](flying_with_photons_rendering_novel_views_of_propagating_light.md)
+- [\[ECCV 2024\] CaesarNeRF: Calibrated Semantic Representation for Few-Shot Generalizable Neural Rendering](caesarnerf_calibrated_semantic_representation_for_few-shot_generalizable_neural_.md)
+- [\[ECCV 2024\] DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation](diffusiondepth_diffusion_denoising_approach_for_monocular_depth_estimation.md)
+- [\[ECCV 2024\] TrackNeRF: Bundle Adjusting NeRF from Sparse and Noisy Views via Feature Tracks](tracknerf_bundle_adjusting_nerf_from_sparse_and_noisy_views_via_feature_tracks.md)
+- [\[ECCV 2024\] G3R: Gradient Guided Generalizable Reconstruction](g3r_gradient_guided_generalizable_reconstruction.md)
 
 <!-- RELATED:END -->

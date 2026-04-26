@@ -176,10 +176,10 @@ LocAgent 在所有级别上全面领先。
 
 ## 相关论文
 
-- [GeAR: Graph-enhanced Agent for Retrieval-augmented Generation](gear_graph-enhanced_agent_for_retrieval-augmented_generation.md)
-- [The Lighthouse of Language: Enhancing LLM Agents via Critique-Guided Improvement](../../NeurIPS2025/llm_agent/the_lighthouse_of_language_enhancing_llm_agents_via_critique-guided_improvement.md)
-- [Distilling LLM Agent into Small Models with Retrieval and Code Tools](../../NeurIPS2025/llm_agent/distilling_llm_agent_into_small_models_with_retrieval_and_co.md)
-- [CodeStruct: Code Agents over Structured Action Spaces](../../ACL2026/llm_agent/codestruct_code_agents_over_structured_action_spaces.md)
-- [Reflection-Driven Control for Trustworthy Code Agents](../../AAAI2026/llm_agent/reflection-driven_control_for_trustworthy_code_agents.md)
+- [\[ACL 2025\] GeAR: Graph-enhanced Agent for Retrieval-augmented Generation](gear_graph-enhanced_agent_for_retrieval-augmented_generation.md)
+- [\[NeurIPS 2025\] The Lighthouse of Language: Enhancing LLM Agents via Critique-Guided Improvement](../../NeurIPS2025/llm_agent/the_lighthouse_of_language_enhancing_llm_agents_via_critique-guided_improvement.md)
+- [\[NeurIPS 2025\] Distilling LLM Agent into Small Models with Retrieval and Code Tools](../../NeurIPS2025/llm_agent/distilling_llm_agent_into_small_models_with_retrieval_and_co.md)
+- [\[ACL 2026\] CodeStruct: Code Agents over Structured Action Spaces](../../ACL2026/llm_agent/codestruct_code_agents_over_structured_action_spaces.md)
+- [\[AAAI 2026\] Reflection-Driven Control for Trustworthy Code Agents](../../AAAI2026/llm_agent/reflection-driven_control_for_trustworthy_code_agents.md)
 
 <!-- RELATED:END -->

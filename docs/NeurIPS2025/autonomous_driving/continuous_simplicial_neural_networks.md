@@ -138,10 +138,10 @@ $$\delta_{\mathbf{X}_k} \leq t_d \delta_{k,d} e^{t_d \delta_{k,d}}(\|\mathbf{x}_
 
 ## 相关论文
 
-- [Unleashing the Temporal Potential of Stereo Event Cameras for Continuous-Time 3D Perception](../../ICCV2025/autonomous_driving/unleashing_the_temporal_potential_of_stereo_event_cameras_for_continuous-time_3d.md)
-- [Neural Inverse Rendering from Propagating Light](../../CVPR2025/autonomous_driving/neural_inverse_rendering_from_propagating_light.md)
-- [SOLVE: Synergy of Language-Vision and End-to-End Networks for Autonomous Driving](../../CVPR2025/autonomous_driving/solve_synergy_of_language-vision_and_end-to-end_networks_for_autonomous_driving.md)
-- [I-INR: Iterative Implicit Neural Representations](../../AAAI2026/autonomous_driving/i-inr_iterative_implicit_neural_representations.md)
-- [Neural Volumetric World Models for Autonomous Driving](../../ECCV2024/autonomous_driving/neural_volumetric_world_models_for_autonomous_driving.md)
+- [\[ICCV 2025\] Unleashing the Temporal Potential of Stereo Event Cameras for Continuous-Time 3D Perception](../../ICCV2025/autonomous_driving/unleashing_the_temporal_potential_of_stereo_event_cameras_for_continuous-time_3d.md)
+- [\[CVPR 2025\] Neural Inverse Rendering from Propagating Light](../../CVPR2025/autonomous_driving/neural_inverse_rendering_from_propagating_light.md)
+- [\[CVPR 2025\] SOLVE: Synergy of Language-Vision and End-to-End Networks for Autonomous Driving](../../CVPR2025/autonomous_driving/solve_synergy_of_language-vision_and_end-to-end_networks_for_autonomous_driving.md)
+- [\[AAAI 2026\] I-INR: Iterative Implicit Neural Representations](../../AAAI2026/autonomous_driving/i-inr_iterative_implicit_neural_representations.md)
+- [\[ECCV 2024\] Neural Volumetric World Models for Autonomous Driving](../../ECCV2024/autonomous_driving/neural_volumetric_world_models_for_autonomous_driving.md)
 
 <!-- RELATED:END -->

@@ -135,10 +135,10 @@ $$r_{\text{int}} = \|f(s; \theta) - \hat{f}(s; \hat{\theta})\|^2$$
 
 ## 相关论文
 
-- [GoRA: Gradient-Driven Adaptive Low Rank Adaptation](gora_gradient-driven_adaptive_low_rank_adaptation.md)
-- [Fleet of Agents: Coordinated Problem Solving with Large Language Models](../../ICML2025/model_compression/fleet_of_agents_coordinated_problem_solving_with_large_language_models.md)
-- [Exploration-Driven Generative Interactive Environments](../../CVPR2025/model_compression/exploration-driven_generative_interactive_environments.md)
-- [Semantic Exploration with Adaptive Gating for Efficient Problem Solving with Language Models](../../ACL2025/model_compression/semantic_exploration_adaptive_gating.md)
-- [CoEvo: Continual Evolution of Symbolic Solutions Using Large Language Models](../../AAAI2026/model_compression/coevo_continual_evolution_of_symbolic_solutions_using_large_language_models.md)
+- [\[NeurIPS 2025\] GoRA: Gradient-Driven Adaptive Low Rank Adaptation](gora_gradient-driven_adaptive_low_rank_adaptation.md)
+- [\[ICML 2025\] Fleet of Agents: Coordinated Problem Solving with Large Language Models](../../ICML2025/model_compression/fleet_of_agents_coordinated_problem_solving_with_large_language_models.md)
+- [\[CVPR 2025\] Exploration-Driven Generative Interactive Environments](../../CVPR2025/model_compression/exploration-driven_generative_interactive_environments.md)
+- [\[ACL 2025\] Semantic Exploration with Adaptive Gating for Efficient Problem Solving with Language Models](../../ACL2025/model_compression/semantic_exploration_adaptive_gating.md)
+- [\[AAAI 2026\] CoEvo: Continual Evolution of Symbolic Solutions Using Large Language Models](../../AAAI2026/model_compression/coevo_continual_evolution_of_symbolic_solutions_using_large_language_models.md)
 
 <!-- RELATED:END -->

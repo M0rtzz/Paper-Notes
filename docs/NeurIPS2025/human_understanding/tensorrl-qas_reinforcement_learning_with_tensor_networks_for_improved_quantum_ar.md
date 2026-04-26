@@ -119,10 +119,10 @@ TensorRL-QAS 由三个步骤组成：
 
 ## 相关论文
 
-- [Agentic Conversational Search with Contextualized Reasoning via Reinforcement Learning](../../ACL2026/human_understanding/agentic_conversational_search_with_contextualized_reasoning_via_reinforcement_le.md)
-- [Succeed or Learn Slowly: Sample Efficient Off-Policy Reinforcement Learning for Mobile App Control](succeed_or_learn_slowly_sample_efficient_off-policy_reinforcement_learning_for_m.md)
-- [A Differential and Pointwise Control Approach to Reinforcement Learning](a_differential_and_pointwise_control_approach_to_reinforceme.md)
-- [Renormalization Group Guided Tensor Network Structure Search](../../AAAI2026/human_understanding/renormalization_group_guided_tensor_network_structure_search.md)
-- [Power Ensemble Aggregation for Improved Extreme Event AI Prediction](power_ensemble_aggregation_for_improved_extreme_event_ai_prediction.md)
+- [\[ACL 2026\] Agentic Conversational Search with Contextualized Reasoning via Reinforcement Learning](../../ACL2026/human_understanding/agentic_conversational_search_with_contextualized_reasoning_via_reinforcement_le.md)
+- [\[NeurIPS 2025\] Succeed or Learn Slowly: Sample Efficient Off-Policy Reinforcement Learning for Mobile App Control](succeed_or_learn_slowly_sample_efficient_off-policy_reinforcement_learning_for_m.md)
+- [\[NeurIPS 2025\] A Differential and Pointwise Control Approach to Reinforcement Learning](a_differential_and_pointwise_control_approach_to_reinforceme.md)
+- [\[AAAI 2026\] Renormalization Group Guided Tensor Network Structure Search](../../AAAI2026/human_understanding/renormalization_group_guided_tensor_network_structure_search.md)
+- [\[NeurIPS 2025\] Power Ensemble Aggregation for Improved Extreme Event AI Prediction](power_ensemble_aggregation_for_improved_extreme_event_ai_prediction.md)
 
 <!-- RELATED:END -->

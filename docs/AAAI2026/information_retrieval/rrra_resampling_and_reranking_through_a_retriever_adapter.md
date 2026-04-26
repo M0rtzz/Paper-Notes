@@ -174,10 +174,10 @@ NQ R@1上比SimANS高+6.2，MS-Doc R@1上高+4.7。
 
 ## 相关论文
 
-- [Reranking-based Generation for Unbiased Perspective Summarization](../../ACL2025/information_retrieval/reranking-based_generation_for_unbiased_perspective_summarization.md)
-- [Revela: Dense Retriever Learning via Language Modeling](../../ICLR2026/information_retrieval/revela_dense_retriever_learning_via_language_modeling.md)
-- [Gumbel Reranking: Differentiable End-to-End Reranker Optimization](../../ACL2025/information_retrieval/gumbel_reranking.md)
-- [Explaining CLIP Zero-shot Predictions Through Concepts](../../CVPR2026/information_retrieval/explaining_clip_zero-shot_predictions_through_concepts.md)
-- [FAITH: Factuality Alignment through Integrating Trustworthiness and Honestness](../../ACL2026/information_retrieval/faith_factuality_alignment_through_integrating_trustworthiness_and_honestness.md)
+- [\[ACL 2025\] Reranking-based Generation for Unbiased Perspective Summarization](../../ACL2025/information_retrieval/reranking-based_generation_for_unbiased_perspective_summarization.md)
+- [\[ICLR 2026\] Revela: Dense Retriever Learning via Language Modeling](../../ICLR2026/information_retrieval/revela_dense_retriever_learning_via_language_modeling.md)
+- [\[ACL 2025\] Gumbel Reranking: Differentiable End-to-End Reranker Optimization](../../ACL2025/information_retrieval/gumbel_reranking.md)
+- [\[CVPR 2026\] Explaining CLIP Zero-shot Predictions Through Concepts](../../CVPR2026/information_retrieval/explaining_clip_zero-shot_predictions_through_concepts.md)
+- [\[ACL 2026\] FAITH: Factuality Alignment through Integrating Trustworthiness and Honestness](../../ACL2026/information_retrieval/faith_factuality_alignment_through_integrating_trustworthiness_and_honestness.md)
 
 <!-- RELATED:END -->

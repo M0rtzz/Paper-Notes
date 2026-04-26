@@ -143,10 +143,10 @@ Safety Gymnasium 基准（多种安全约束环境）：
 
 ## 相关论文
 
-- [Action-Constrained Imitation Learning](action-constrained_imitation_learning.md)
-- [Extreme Value Policy Optimization for Safe Reinforcement Learning](extreme_value_policy_optimization_for_safe_reinforcement_learning.md)
-- [Risk-Averse Constrained Reinforcement Learning with Optimized Certainty Equivalents](../../NeurIPS2025/reinforcement_learning/risk-averse_constrained_reinforcement_learning_with_optimized_certainty_equivale.md)
-- [Automaton Constrained Q-Learning](../../NeurIPS2025/reinforcement_learning/automaton_constrained_q-learning.md)
-- [Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
+- [\[ICML 2025\] Action-Constrained Imitation Learning](action-constrained_imitation_learning.md)
+- [\[ICML 2025\] Extreme Value Policy Optimization for Safe Reinforcement Learning](extreme_value_policy_optimization_for_safe_reinforcement_learning.md)
+- [\[NeurIPS 2025\] Risk-Averse Constrained Reinforcement Learning with Optimized Certainty Equivalents](../../NeurIPS2025/reinforcement_learning/risk-averse_constrained_reinforcement_learning_with_optimized_certainty_equivale.md)
+- [\[NeurIPS 2025\] Automaton Constrained Q-Learning](../../NeurIPS2025/reinforcement_learning/automaton_constrained_q-learning.md)
+- [\[NeurIPS 2025\] Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
 
 <!-- RELATED:END -->

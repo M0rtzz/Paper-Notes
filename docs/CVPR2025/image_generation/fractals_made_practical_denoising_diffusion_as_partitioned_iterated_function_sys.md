@@ -138,10 +138,10 @@ tags:
 
 ## 相关论文
 
-- [Optimizing for the Shortest Path in Denoising Diffusion Model](optimizing_for_the_shortest_path_in_denoising_diffusion_model.md)
-- [DiffSensei: Bridging Multi-Modal LLMs and Diffusion Models for Customized Manga Generation](diffsensei_bridging_multi-modal_llms_and_diffusion_models_for_customized_manga_g.md)
-- [Visual Lexicon: Rich Image Features in Language Space](visual_lexicon_rich_image_features_in_language_space.md)
-- [Tiled Diffusion](tiled_diffusion.md)
-- [Decentralized Diffusion Models](decentralized_diffusion_models.md)
+- [\[CVPR 2025\] Optimizing for the Shortest Path in Denoising Diffusion Model](optimizing_for_the_shortest_path_in_denoising_diffusion_model.md)
+- [\[CVPR 2025\] DiffSensei: Bridging Multi-Modal LLMs and Diffusion Models for Customized Manga Generation](diffsensei_bridging_multi-modal_llms_and_diffusion_models_for_customized_manga_g.md)
+- [\[CVPR 2025\] Visual Lexicon: Rich Image Features in Language Space](visual_lexicon_rich_image_features_in_language_space.md)
+- [\[CVPR 2025\] Tiled Diffusion](tiled_diffusion.md)
+- [\[CVPR 2025\] Decentralized Diffusion Models](decentralized_diffusion_models.md)
 
 <!-- RELATED:END -->

@@ -192,10 +192,10 @@ $\lambda$ 增大使统计维度 $s_\lambda$ 减小（加速），但 $\beta$ 增
 
 ## 相关论文
 
-- [Feedback-driven Recurrent Quantum Neural Network Universality](feedback-driven_recurrent_quantum_neural_network_universality.md)
-- [Quantum Doubly Stochastic Transformers](../../NeurIPS2025/physics/quantum_doubly_stochastic_transformers.md)
-- [Data Verification is the Future of Quantum Computing Copilots](../../AAAI2026/physics/data_verification_is_the_future_of_quantum_computing_copilots.md)
-- [QKD: Quantum-Gated Task-interaction Knowledge Distillation for Class-Incremental Learning](../../CVPR2026/physics/qkd_quantum_gated_incremental_learning.md)
-- [Robust Fitting on a Gate Quantum Computer](../../ECCV2024/physics/robust_fitting_on_a_gate_quantum_computer.md)
+- [\[ICLR 2026\] Feedback-driven Recurrent Quantum Neural Network Universality](feedback-driven_recurrent_quantum_neural_network_universality.md)
+- [\[NeurIPS 2025\] Quantum Doubly Stochastic Transformers](../../NeurIPS2025/physics/quantum_doubly_stochastic_transformers.md)
+- [\[AAAI 2026\] Data Verification is the Future of Quantum Computing Copilots](../../AAAI2026/physics/data_verification_is_the_future_of_quantum_computing_copilots.md)
+- [\[CVPR 2026\] QKD: Quantum-Gated Task-interaction Knowledge Distillation for Class-Incremental Learning](../../CVPR2026/physics/qkd_quantum_gated_incremental_learning.md)
+- [\[ECCV 2024\] Robust Fitting on a Gate Quantum Computer](../../ECCV2024/physics/robust_fitting_on_a_gate_quantum_computer.md)
 
 <!-- RELATED:END -->

@@ -163,10 +163,10 @@ $$\mathcal{L}_\text{CTPD} = -\mathbb{E}_{(x, y_w, y_l) \sim \mathcal{D}} \left[\
 
 ## 相关论文
 
-- [EA-KD: Entropy-based Adaptive Knowledge Distillation](../../ICCV2025/object_detection/ea-kd_entropy-based_adaptive_knowledge_distillation.md)
-- [Lost in Translation? A Comparative Study on the Cross-Lingual Transfer of Composite Harms](lost_in_translation_a_comparative_study_on_the_cross-lingual_transfer_of_composi.md)
-- [Preference Learning with Lie Detectors can Induce Honesty or Evasion](../../NeurIPS2025/object_detection/preference_learning_with_lie_detectors_can_induce_honesty_or_evasion.md)
-- [Fixed Anchors Are Not Enough: Dynamic Retrieval and Persistent Homology for Dataset Distillation](../../CVPR2026/object_detection/fixed_anchors_are_not_enough_dynamic_retrieval_and_persistent_homology_for_datas.md)
-- [BeautyGRPO: Aesthetic Alignment for Face Retouching via Dynamic Path Guidance and Fine-Grained Preference Modeling](../../CVPR2026/object_detection/beautygrpo_aesthetic_alignment_for_face_retouching_via_dynamic_path_guidance_and.md)
+- [\[ICCV 2025\] EA-KD: Entropy-based Adaptive Knowledge Distillation](../../ICCV2025/object_detection/ea-kd_entropy-based_adaptive_knowledge_distillation.md)
+- [\[AAAI 2026\] Lost in Translation? A Comparative Study on the Cross-Lingual Transfer of Composite Harms](lost_in_translation_a_comparative_study_on_the_cross-lingual_transfer_of_composi.md)
+- [\[NeurIPS 2025\] Preference Learning with Lie Detectors can Induce Honesty or Evasion](../../NeurIPS2025/object_detection/preference_learning_with_lie_detectors_can_induce_honesty_or_evasion.md)
+- [\[CVPR 2026\] Fixed Anchors Are Not Enough: Dynamic Retrieval and Persistent Homology for Dataset Distillation](../../CVPR2026/object_detection/fixed_anchors_are_not_enough_dynamic_retrieval_and_persistent_homology_for_datas.md)
+- [\[CVPR 2026\] BeautyGRPO: Aesthetic Alignment for Face Retouching via Dynamic Path Guidance and Fine-Grained Preference Modeling](../../CVPR2026/object_detection/beautygrpo_aesthetic_alignment_for_face_retouching_via_dynamic_path_guidance_and.md)
 
 <!-- RELATED:END -->

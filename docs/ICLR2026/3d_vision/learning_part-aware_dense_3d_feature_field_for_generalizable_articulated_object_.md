@@ -149,10 +149,10 @@ Open Bottle 任务泛化性分析（真实世界，10 次试验完成率 %）：
 
 ## 相关论文
 
-- [Ctrl&Shift: High-Quality Geometry-Aware Object Manipulation in Visual Generation](ctrlshift_high-quality_geometry-aware_object_manipulation_in_visual_generation.md)
-- [Generalizable Coarse-to-Fine Robot Manipulation via Language-Aligned 3D Keypoints](generalizable_coarse-to-fine_robot_manipulation_via_language-aligned_3d_keypoint.md)
-- [PD²GS: Part-Level Decoupling and Continuous Deformation of Articulated Objects via Gaussian Splatting](pd2gs_part-level_decoupling_and_continuous_deformation_of_articulated_objects_vi.md)
-- [Learning 3D-Aware GANs from Unposed Images with Template Feature Field](../../ECCV2024/3d_vision/learning_3d-aware_gans_from_unposed_images_with_template_feature_field.md)
-- [Splat Feature Solver](splat_feature_solver.md)
+- [\[ICLR 2026\] Ctrl&Shift: High-Quality Geometry-Aware Object Manipulation in Visual Generation](ctrlshift_high-quality_geometry-aware_object_manipulation_in_visual_generation.md)
+- [\[ICLR 2026\] Generalizable Coarse-to-Fine Robot Manipulation via Language-Aligned 3D Keypoints](generalizable_coarse-to-fine_robot_manipulation_via_language-aligned_3d_keypoint.md)
+- [\[ICLR 2026\] PD²GS: Part-Level Decoupling and Continuous Deformation of Articulated Objects via Gaussian Splatting](pd2gs_part-level_decoupling_and_continuous_deformation_of_articulated_objects_vi.md)
+- [\[ECCV 2024\] Learning 3D-Aware GANs from Unposed Images with Template Feature Field](../../ECCV2024/3d_vision/learning_3d-aware_gans_from_unposed_images_with_template_feature_field.md)
+- [\[ICLR 2026\] Splat Feature Solver](splat_feature_solver.md)
 
 <!-- RELATED:END -->

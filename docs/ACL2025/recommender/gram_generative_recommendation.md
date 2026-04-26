@@ -129,10 +129,10 @@ GRAM 基于 T5 encoder-decoder 架构，包含两个核心组件协同工作：*
 
 ## 相关论文
 
-- [Align³GR: Unified Multi-Level Alignment for LLM-based Generative Recommendation](../../AAAI2026/recommender/align3gr_unified_multi-level_alignment_for_llm-based_generat.md)
-- [Inductive Generative Recommendation via Retrieval-based Speculation](../../AAAI2026/recommender/inductive_generative_recommendation_via_retrieval-based_speculation.md)
-- [RecLM: Recommendation Instruction Tuning](reclm_recommendation_instruction_tuning.md)
-- [PARM: Multi-Objective Test-Time Alignment via Preference-Aware Autoregressive Reward Model](../../ICML2025/recommender/parm_multi-objective_test-time_alignment_via_preference-aware_autoregressive_rew.md)
-- [When Top-ranked Recommendations Fail: Modeling Multi-Granular Negative Feedback for Explainable and Robust Video Recommendation](../../AAAI2026/recommender/when_top-ranked_recommendations_fail_modeling_multi-granular_negative_feedback_f.md)
+- [\[AAAI 2026\] Align³GR: Unified Multi-Level Alignment for LLM-based Generative Recommendation](../../AAAI2026/recommender/align3gr_unified_multi-level_alignment_for_llm-based_generat.md)
+- [\[AAAI 2026\] Inductive Generative Recommendation via Retrieval-based Speculation](../../AAAI2026/recommender/inductive_generative_recommendation_via_retrieval-based_speculation.md)
+- [\[ACL 2025\] RecLM: Recommendation Instruction Tuning](reclm_recommendation_instruction_tuning.md)
+- [\[ICML 2025\] PARM: Multi-Objective Test-Time Alignment via Preference-Aware Autoregressive Reward Model](../../ICML2025/recommender/parm_multi-objective_test-time_alignment_via_preference-aware_autoregressive_rew.md)
+- [\[AAAI 2026\] When Top-ranked Recommendations Fail: Modeling Multi-Granular Negative Feedback for Explainable and Robust Video Recommendation](../../AAAI2026/recommender/when_top-ranked_recommendations_fail_modeling_multi-granular_negative_feedback_f.md)
 
 <!-- RELATED:END -->

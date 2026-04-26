@@ -143,10 +143,10 @@ AlwaysTool 在平均 $R_{\text{total}}$ 上最高，但置信区间宽。
 
 ## 相关论文
 
-- [Log-Sum-Exponential Estimator for Off-Policy Evaluation and Learning](../../ICML2025/human_understanding/log-sum-exponential_estimator_for_off-policy_evaluation_and_learning.md)
-- [ODUTQA-MDC: A Task for Open-Domain Underspecified Tabular QA with Multi-turn Dialogue-based Clarification](../../ACL2026/human_understanding/odutqa-mdc_a_task_for_open-domain_underspecified_tabular_qa_with_multi-turn_dial.md)
-- [A Practical Guide for Incorporating Symmetry in Diffusion Policy](a_practical_guide_for_incorporating_symmetry_in_diffusion_policy.md)
-- [Enhancing LLM-based Search Agents via Contribution Weighted Group Relative Policy Optimization](../../ACL2026/human_understanding/enhancing_llm-based_search_agents_via_contribution_weighted_group_relative_polic.md)
-- [Policy Compatible Skill Incremental Learning via Lazy Learning Interface](policy_compatible_skill_incremental_learning_via_lazy_learning_interface.md)
+- [\[ICML 2025\] Log-Sum-Exponential Estimator for Off-Policy Evaluation and Learning](../../ICML2025/human_understanding/log-sum-exponential_estimator_for_off-policy_evaluation_and_learning.md)
+- [\[ACL 2026\] ODUTQA-MDC: A Task for Open-Domain Underspecified Tabular QA with Multi-turn Dialogue-based Clarification](../../ACL2026/human_understanding/odutqa-mdc_a_task_for_open-domain_underspecified_tabular_qa_with_multi-turn_dial.md)
+- [\[NeurIPS 2025\] A Practical Guide for Incorporating Symmetry in Diffusion Policy](a_practical_guide_for_incorporating_symmetry_in_diffusion_policy.md)
+- [\[ACL 2026\] Enhancing LLM-based Search Agents via Contribution Weighted Group Relative Policy Optimization](../../ACL2026/human_understanding/enhancing_llm-based_search_agents_via_contribution_weighted_group_relative_polic.md)
+- [\[NeurIPS 2025\] Policy Compatible Skill Incremental Learning via Lazy Learning Interface](policy_compatible_skill_incremental_learning_via_lazy_learning_interface.md)
 
 <!-- RELATED:END -->

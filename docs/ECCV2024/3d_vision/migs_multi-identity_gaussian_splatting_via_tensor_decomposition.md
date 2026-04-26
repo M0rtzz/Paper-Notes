@@ -138,10 +138,10 @@ R=10不足以捕获多身份的多样性，R=100已经足够，R=200无显著提
 
 ## 相关论文
 
-- [3iGS: Factorised Tensorial Illumination for 3D Gaussian Splatting](3igs_factorised_tensorial_illumination_for_3d_gaussian_splatting.md)
-- [MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images](mvsplat_efficient_3d_gaussian_splatting_from_sparse_multi-view_images.md)
-- [GaussCtrl: Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing](gaussctrl_multi-view_consistent_text-driven_3d_gaussian_splatting_editing.md)
-- [Reparameterized Tensor Ring Functional Decomposition for Multi-Dimensional Data Recovery](../../CVPR2026/3d_vision/reparameterized_tensor_ring_functional_decomposition_for_multi-dimensional_data_.md)
-- [QuadSync: Quadrifocal Tensor Synchronization via Tucker Decomposition](../../CVPR2026/3d_vision/quadsync_quadrifocal_tensor_synchronization_via_tucker_decomposition.md)
+- [\[ECCV 2024\] 3iGS: Factorised Tensorial Illumination for 3D Gaussian Splatting](3igs_factorised_tensorial_illumination_for_3d_gaussian_splatting.md)
+- [\[ECCV 2024\] MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images](mvsplat_efficient_3d_gaussian_splatting_from_sparse_multi-view_images.md)
+- [\[ECCV 2024\] GaussCtrl: Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing](gaussctrl_multi-view_consistent_text-driven_3d_gaussian_splatting_editing.md)
+- [\[CVPR 2026\] Reparameterized Tensor Ring Functional Decomposition for Multi-Dimensional Data Recovery](../../CVPR2026/3d_vision/reparameterized_tensor_ring_functional_decomposition_for_multi-dimensional_data_.md)
+- [\[CVPR 2026\] QuadSync: Quadrifocal Tensor Synchronization via Tucker Decomposition](../../CVPR2026/3d_vision/quadsync_quadrifocal_tensor_synchronization_via_tucker_decomposition.md)
 
 <!-- RELATED:END -->

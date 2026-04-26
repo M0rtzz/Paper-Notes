@@ -119,10 +119,10 @@ RLP**不包含标准NTP损失**，仅优化信息增益目标：$\max_\theta J(\
 
 ## 相关论文
 
-- [Towards Bridging the Gap between Large-Scale Pretraining and Efficient Finetuning for Humanoid Control](towards_bridging_the_gap_between_large-scale_pretraining_and_efficient_finetunin.md)
-- [Robust Multi-Objective Controlled Decoding of Large Language Models](robust_multi-objective_controlled_decoding_of_large_language_models.md)
-- [Scalable Multi-Objective and Meta Reinforcement Learning via Gradient Estimation](../../AAAI2026/reinforcement_learning/scalable_multi-objective_and_meta_reinforcement_learning_via_gradient_estimation.md)
-- [Provable Ordering and Continuity in Vision-Language Pretraining for Generalizable Embodied Agents](../../NeurIPS2025/reinforcement_learning/provable_ordering_and_continuity_in_vision-language_pretraining_for_generalizabl.md)
-- [BEAVER: Building Environments with Assessable Variation for Evaluating Multi-Objective Reinforcement Learning](../../ICML2025/reinforcement_learning/beaver_building_environments_with_assessable_variation_for_evaluating_multi-obje.md)
+- [\[ICLR 2026\] Towards Bridging the Gap between Large-Scale Pretraining and Efficient Finetuning for Humanoid Control](towards_bridging_the_gap_between_large-scale_pretraining_and_efficient_finetunin.md)
+- [\[ICLR 2026\] Robust Multi-Objective Controlled Decoding of Large Language Models](robust_multi-objective_controlled_decoding_of_large_language_models.md)
+- [\[AAAI 2026\] Scalable Multi-Objective and Meta Reinforcement Learning via Gradient Estimation](../../AAAI2026/reinforcement_learning/scalable_multi-objective_and_meta_reinforcement_learning_via_gradient_estimation.md)
+- [\[NeurIPS 2025\] Provable Ordering and Continuity in Vision-Language Pretraining for Generalizable Embodied Agents](../../NeurIPS2025/reinforcement_learning/provable_ordering_and_continuity_in_vision-language_pretraining_for_generalizabl.md)
+- [\[ICML 2025\] BEAVER: Building Environments with Assessable Variation for Evaluating Multi-Objective Reinforcement Learning](../../ICML2025/reinforcement_learning/beaver_building_environments_with_assessable_variation_for_evaluating_multi-obje.md)
 
 <!-- RELATED:END -->

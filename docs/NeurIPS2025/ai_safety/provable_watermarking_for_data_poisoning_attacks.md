@@ -145,10 +145,10 @@ tags:
 
 ## 相关论文
 
-- [ToxicTextCLIP: Text-Based Poisoning and Backdoor Attacks on CLIP Pre-training](toxictextclip_text-based_poisoning_and_backdoor_attacks_on_clip_pre-training.md)
-- [Virus Infection Attack on LLMs: Your Poisoning Can Spread "VIA" Synthetic Data](virus_infection_attack_on_llms_your_poisoning_can_spread_via_synthetic_data.md)
-- [FedFACT: A Provable Framework for Controllable Group-Fairness Calibration in Federated Learning](fedfact_a_provable_framework_for_controllable_group-fairness_calibration_in_fede.md)
-- [Perturb Your Data: Paraphrase-Guided Training Data Watermarking](../../AAAI2026/ai_safety/perturb_your_data_paraphrase-guided_training_data_watermarking.md)
-- [Robust Data Watermarking in Language Models by Injecting Fictitious Knowledge](../../ACL2025/ai_safety/robust_data_watermarking_in_language_models_by_injecting_fictitious_knowledge.md)
+- [\[NeurIPS 2025\] ToxicTextCLIP: Text-Based Poisoning and Backdoor Attacks on CLIP Pre-training](toxictextclip_text-based_poisoning_and_backdoor_attacks_on_clip_pre-training.md)
+- [\[NeurIPS 2025\] Virus Infection Attack on LLMs: Your Poisoning Can Spread "VIA" Synthetic Data](virus_infection_attack_on_llms_your_poisoning_can_spread_via_synthetic_data.md)
+- [\[NeurIPS 2025\] FedFACT: A Provable Framework for Controllable Group-Fairness Calibration in Federated Learning](fedfact_a_provable_framework_for_controllable_group-fairness_calibration_in_fede.md)
+- [\[AAAI 2026\] Perturb Your Data: Paraphrase-Guided Training Data Watermarking](../../AAAI2026/ai_safety/perturb_your_data_paraphrase-guided_training_data_watermarking.md)
+- [\[ACL 2025\] Robust Data Watermarking in Language Models by Injecting Fictitious Knowledge](../../ACL2025/ai_safety/robust_data_watermarking_in_language_models_by_injecting_fictitious_knowledge.md)
 
 <!-- RELATED:END -->

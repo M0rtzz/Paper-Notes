@@ -122,10 +122,10 @@ tags:
 
 ## 相关论文
 
-- [Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
-- [Efficient Few-Shot Action Recognition via Multi-Level Post-Reasoning](efficient_few-shot_action_recognition_via_multi-level_post-reasoning.md)
-- [On the Utility of 3D Hand Poses for Action Recognition](on_the_utility_of_3d_hand_poses_for_action_recognition.md)
-- [Leveraging Temporal Contextualization for Video Action Recognition](leveraging_temporal_contextualization_for_video_action_recognition.md)
-- [Vamos: Versatile Action Models for Video Understanding](vamos_versatile_action_models_for_video_understanding.md)
+- [\[ECCV 2024\] Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
+- [\[ECCV 2024\] Efficient Few-Shot Action Recognition via Multi-Level Post-Reasoning](efficient_few-shot_action_recognition_via_multi-level_post-reasoning.md)
+- [\[ECCV 2024\] On the Utility of 3D Hand Poses for Action Recognition](on_the_utility_of_3d_hand_poses_for_action_recognition.md)
+- [\[ECCV 2024\] Leveraging Temporal Contextualization for Video Action Recognition](leveraging_temporal_contextualization_for_video_action_recognition.md)
+- [\[ECCV 2024\] Vamos: Versatile Action Models for Video Understanding](vamos_versatile_action_models_for_video_understanding.md)
 
 <!-- RELATED:END -->

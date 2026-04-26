@@ -117,10 +117,10 @@ tags:
 
 ## 相关论文
 
-- [Randomized Autoregressive Visual Generation](../../ICCV2025/image_generation/randomized_autoregressive_visual_generation.md)
-- [InfinityStar: Unified Spacetime AutoRegressive Modeling for Visual Generation](../../NeurIPS2025/image_generation/infinitystar_unified_spacetime_autoregressive_modeling_for_v.md)
-- [Visual Generation Without Guidance](visual_generation_without_guidance.md)
-- [Continuous Semi-Implicit Models](continuous_semi-implicit_models.md)
-- [Watermarking Autoregressive Image Generation](../../NeurIPS2025/image_generation/watermarking_autoregressive_image_generation.md)
+- [\[ICCV 2025\] Randomized Autoregressive Visual Generation](../../ICCV2025/image_generation/randomized_autoregressive_visual_generation.md)
+- [\[NeurIPS 2025\] InfinityStar: Unified Spacetime AutoRegressive Modeling for Visual Generation](../../NeurIPS2025/image_generation/infinitystar_unified_spacetime_autoregressive_modeling_for_v.md)
+- [\[ICML 2025\] Visual Generation Without Guidance](visual_generation_without_guidance.md)
+- [\[ICML 2025\] Continuous Semi-Implicit Models](continuous_semi-implicit_models.md)
+- [\[NeurIPS 2025\] Watermarking Autoregressive Image Generation](../../NeurIPS2025/image_generation/watermarking_autoregressive_image_generation.md)
 
 <!-- RELATED:END -->

@@ -191,10 +191,10 @@ $$\tilde{\mu}_i^t = (1+w)\mu_i^t(\cdot; 1) - w \cdot \mu_i^t(\cdot; \tau)$$
 
 ## 相关论文
 
-- [Amortized Sampling with Transferable Normalizing Flows](../../NeurIPS2025/image_generation/amortized_sampling_with_transferable_normalizing_flows.md)
-- [Flowing Backwards: Improving Normalizing Flows via Reverse Representation Alignment](../../AAAI2026/image_generation/flowing_backwards_improving_normalizing_flows_via_reverse_representation_alignme.md)
-- [Multimodal Generative Flows for LHC Jets](../../NeurIPS2025/image_generation/multimodal_generative_flows_for_lhc_jets.md)
-- [Graph Generative Pre-trained Transformer (G2PT)](graph_generative_pre-trained_transformer.md)
-- [All-atom Diffusion Transformers: Unified Generative Modelling of Molecules and Materials](all-atom_diffusion_transformers_unified_generative_modelling_of_molecules_and_ma.md)
+- [\[NeurIPS 2025\] Amortized Sampling with Transferable Normalizing Flows](../../NeurIPS2025/image_generation/amortized_sampling_with_transferable_normalizing_flows.md)
+- [\[AAAI 2026\] Flowing Backwards: Improving Normalizing Flows via Reverse Representation Alignment](../../AAAI2026/image_generation/flowing_backwards_improving_normalizing_flows_via_reverse_representation_alignme.md)
+- [\[NeurIPS 2025\] Multimodal Generative Flows for LHC Jets](../../NeurIPS2025/image_generation/multimodal_generative_flows_for_lhc_jets.md)
+- [\[ICML 2025\] Graph Generative Pre-trained Transformer (G2PT)](graph_generative_pre-trained_transformer.md)
+- [\[ICML 2025\] All-atom Diffusion Transformers: Unified Generative Modelling of Molecules and Materials](all-atom_diffusion_transformers_unified_generative_modelling_of_molecules_and_ma.md)
 
 <!-- RELATED:END -->

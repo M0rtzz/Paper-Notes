@@ -165,10 +165,10 @@ $$\mathcal{P}(S_t | S_{t-1}) = \frac{\det(\tilde{\mathbf{L}}_{S_{t-1} \cup S_t})
 
 ## 相关论文
 
-- [VinePPO: Refining Credit Assignment in RL Training of LLMs](../../ICML2025/reinforcement_learning/vineppo_refining_credit_assignment_in_rl_training_of_llms.md)
-- [Flow of Reasoning: Training LLMs for Divergent Reasoning with Minimal Examples](../../ICML2025/reinforcement_learning/flow_of_reasoning_training_llms_for_divergent_reasoning_with_minimal_examples.md)
-- [RL-Selector: Reinforcement Learning-Guided Data Selection via Redundancy Assessment](reinforcement_learning-guided_data_selection_via_redundancy_assessment.md)
-- [A Multi-Agent Conversational Bandit Approach to Online Evaluation and Selection of User-Aligned LLM Responses](../../AAAI2026/reinforcement_learning/a_multi-agent_conversational_bandit_approach_to_online_evaluation_and_selection_.md)
-- [ThinkStream: Thinking in Streaming Video](../../CVPR2025/reinforcement_learning/thinking_in_streaming_video.md)
+- [\[ICML 2025\] VinePPO: Refining Credit Assignment in RL Training of LLMs](../../ICML2025/reinforcement_learning/vineppo_refining_credit_assignment_in_rl_training_of_llms.md)
+- [\[ICML 2025\] Flow of Reasoning: Training LLMs for Divergent Reasoning with Minimal Examples](../../ICML2025/reinforcement_learning/flow_of_reasoning_training_llms_for_divergent_reasoning_with_minimal_examples.md)
+- [\[ICCV 2025\] RL-Selector: Reinforcement Learning-Guided Data Selection via Redundancy Assessment](reinforcement_learning-guided_data_selection_via_redundancy_assessment.md)
+- [\[AAAI 2026\] A Multi-Agent Conversational Bandit Approach to Online Evaluation and Selection of User-Aligned LLM Responses](../../AAAI2026/reinforcement_learning/a_multi-agent_conversational_bandit_approach_to_online_evaluation_and_selection_.md)
+- [\[CVPR 2025\] ThinkStream: Thinking in Streaming Video](../../CVPR2025/reinforcement_learning/thinking_in_streaming_video.md)
 
 <!-- RELATED:END -->

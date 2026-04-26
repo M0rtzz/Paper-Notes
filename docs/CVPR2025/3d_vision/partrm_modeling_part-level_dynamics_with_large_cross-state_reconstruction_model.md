@@ -128,10 +128,10 @@ Stage 1 使用 splatter image 像素级 L2 损失：$\mathcal{L}_1 = \sum \|\mat
 
 ## 相关论文
 
-- [LIM: Large Interpolator Model for Dynamic Reconstruction](lim_large_interpolator_model_for_dynamic_reconstruction.md)
-- [Continuous 3D Perception Model with Persistent State](continuous_3d_perception_model_with_persistent_state.md)
-- [SUM Parts: Benchmarking Part-Level Semantic Segmentation of Urban Meshes](sum_parts_benchmarking_part-level_semantic_segmentation_of_urban_meshes.md)
-- [Matrix3D: Large Photogrammetry Model All-in-One](matrix3d_large_photogrammetry_model_all-in-one.md)
-- [Mesh Mamba: A Unified State Space Model for Saliency Prediction in Non-Textured and Textured Meshes](mesh_mamba_a_unified_state_space_model_for_saliency_prediction_in_non-textured_a.md)
+- [\[CVPR 2025\] LIM: Large Interpolator Model for Dynamic Reconstruction](lim_large_interpolator_model_for_dynamic_reconstruction.md)
+- [\[CVPR 2025\] Continuous 3D Perception Model with Persistent State](continuous_3d_perception_model_with_persistent_state.md)
+- [\[CVPR 2025\] SUM Parts: Benchmarking Part-Level Semantic Segmentation of Urban Meshes](sum_parts_benchmarking_part-level_semantic_segmentation_of_urban_meshes.md)
+- [\[CVPR 2025\] Matrix3D: Large Photogrammetry Model All-in-One](matrix3d_large_photogrammetry_model_all-in-one.md)
+- [\[CVPR 2025\] Mesh Mamba: A Unified State Space Model for Saliency Prediction in Non-Textured and Textured Meshes](mesh_mamba_a_unified_state_space_model_for_saliency_prediction_in_non-textured_a.md)
 
 <!-- RELATED:END -->

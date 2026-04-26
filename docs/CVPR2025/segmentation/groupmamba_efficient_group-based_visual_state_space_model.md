@@ -144,10 +144,10 @@ $$\mathcal{L}_{total} = \alpha \mathcal{L}_{CE}(Z_s, y) + (1-\alpha) \mathcal{L}
 
 ## 相关论文
 
-- [DefMamba: Deformable Visual State Space Model](defmamba_deformable_visual_state_space_model.md)
-- [2DMamba: Efficient State Space Model for Image Representation with Applications on Giga-Pixel Whole Slide Image Classification](2dmamba_efficient_state_space_model_for_image_representation_with_applications_o.md)
-- [Exploiting Temporal State Space Sharing for Video Semantic Segmentation](exploiting_temporal_state_space_sharing_for_video_semantic_segmentation.md)
-- [MV-SSM: Multi-View State Space Modeling for 3D Human Pose Estimation](mv-ssm_multi-view_state_space_modeling_for_3d_human_pose_estimation.md)
-- [EdgeTAM: On-Device Track Anything Model](edgetam_on-device_track_anything_model.md)
+- [\[CVPR 2025\] DefMamba: Deformable Visual State Space Model](defmamba_deformable_visual_state_space_model.md)
+- [\[CVPR 2025\] 2DMamba: Efficient State Space Model for Image Representation with Applications on Giga-Pixel Whole Slide Image Classification](2dmamba_efficient_state_space_model_for_image_representation_with_applications_o.md)
+- [\[CVPR 2025\] Exploiting Temporal State Space Sharing for Video Semantic Segmentation](exploiting_temporal_state_space_sharing_for_video_semantic_segmentation.md)
+- [\[CVPR 2025\] MV-SSM: Multi-View State Space Modeling for 3D Human Pose Estimation](mv-ssm_multi-view_state_space_modeling_for_3d_human_pose_estimation.md)
+- [\[CVPR 2025\] EdgeTAM: On-Device Track Anything Model](edgetam_on-device_track_anything_model.md)
 
 <!-- RELATED:END -->

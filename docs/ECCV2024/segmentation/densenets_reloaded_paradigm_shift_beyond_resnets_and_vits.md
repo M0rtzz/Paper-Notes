@@ -134,10 +134,10 @@ DenseNet 的密集拼接连接是否真的不如 ResNet 式的加法连接？能
 
 ## 相关论文
 
-- [Token CropR: Faster ViTs for Quite a Few Tasks](../../CVPR2025/segmentation/token_cropr_faster_vits_for_quite_a_few_tasks.md)
-- [Hybrid-TTA: Continual Test-time Adaptation via Dynamic Domain Shift Detection](../../ICCV2025/segmentation/hybrid-tta_continual_test-time_adaptation_via_dynamic_domain_shift_detection.md)
-- [Seeing Beyond: Extrapolative Domain Adaptive Panoramic Segmentation](../../CVPR2026/segmentation/seeing_beyond_extrapolative_domain_adaptive_panoramic_segmentation.md)
-- [Low-Data Supervised Adaptation Outperforms Prompting for Cloud Segmentation Under Domain Shift](../../CVPR2026/segmentation/low_data_supervised_adaptation_outperforms_prompting_for_cloud_segmentation.md)
-- [CLIP Is Shortsighted: Paying Attention Beyond the First Sentence](../../CVPR2026/segmentation/clip_is_shortsighted_paying_attention_beyond_the_first_sentence.md)
+- [\[CVPR 2025\] Token CropR: Faster ViTs for Quite a Few Tasks](../../CVPR2025/segmentation/token_cropr_faster_vits_for_quite_a_few_tasks.md)
+- [\[ICCV 2025\] Hybrid-TTA: Continual Test-time Adaptation via Dynamic Domain Shift Detection](../../ICCV2025/segmentation/hybrid-tta_continual_test-time_adaptation_via_dynamic_domain_shift_detection.md)
+- [\[CVPR 2026\] Seeing Beyond: Extrapolative Domain Adaptive Panoramic Segmentation](../../CVPR2026/segmentation/seeing_beyond_extrapolative_domain_adaptive_panoramic_segmentation.md)
+- [\[CVPR 2026\] Low-Data Supervised Adaptation Outperforms Prompting for Cloud Segmentation Under Domain Shift](../../CVPR2026/segmentation/low_data_supervised_adaptation_outperforms_prompting_for_cloud_segmentation.md)
+- [\[CVPR 2026\] CLIP Is Shortsighted: Paying Attention Beyond the First Sentence](../../CVPR2026/segmentation/clip_is_shortsighted_paying_attention_beyond_the_first_sentence.md)
 
 <!-- RELATED:END -->

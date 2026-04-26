@@ -131,10 +131,10 @@ LocoTrack采用两阶段架构：**Track初始化阶段**使用全局2D相关性
 
 ## 相关论文
 
-- [Self-Supervised Any-Point Tracking by Contrastive Random Walks](self-supervised_any-point_tracking_by_contrastive_random_walks.md)
-- [DINO-Tracker: Taming DINO for Self-Supervised Point Tracking in a Single Video](dino-tracker_taming_dino_for_self-supervised_point_tracking_in_a_single_video.md)
-- [ETAP: Event-based Tracking of Any Point](../../CVPR2025/video_understanding/etap_event-based_tracking_of_any_point.md)
-- [TrackingWorld: World-centric Monocular 3D Tracking of Almost All Pixels](../../NeurIPS2025/video_understanding/trackingworld_world-centric_monocular_3d_tracking_of_almost_all_pixels.md)
-- [Real-World Point Tracking with Verifier-Guided Pseudo-Labeling](../../CVPR2026/video_understanding/real-world_point_tracking_with_verifier-guided_pseudo-labeling.md)
+- [\[ECCV 2024\] Self-Supervised Any-Point Tracking by Contrastive Random Walks](self-supervised_any-point_tracking_by_contrastive_random_walks.md)
+- [\[ECCV 2024\] DINO-Tracker: Taming DINO for Self-Supervised Point Tracking in a Single Video](dino-tracker_taming_dino_for_self-supervised_point_tracking_in_a_single_video.md)
+- [\[CVPR 2025\] ETAP: Event-based Tracking of Any Point](../../CVPR2025/video_understanding/etap_event-based_tracking_of_any_point.md)
+- [\[NeurIPS 2025\] TrackingWorld: World-centric Monocular 3D Tracking of Almost All Pixels](../../NeurIPS2025/video_understanding/trackingworld_world-centric_monocular_3d_tracking_of_almost_all_pixels.md)
+- [\[CVPR 2026\] Real-World Point Tracking with Verifier-Guided Pseudo-Labeling](../../CVPR2026/video_understanding/real-world_point_tracking_with_verifier-guided_pseudo-labeling.md)
 
 <!-- RELATED:END -->

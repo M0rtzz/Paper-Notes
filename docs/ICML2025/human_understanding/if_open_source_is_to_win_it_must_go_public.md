@@ -259,10 +259,10 @@ tags:
 
 ## 相关论文
 
-- [Improving Model Alignment through Collective Intelligence of Open-Source LLMs](improving_model_alignment_through_collective_intelligence_of_open-source_llms.md)
-- [Why Do Open-Source LLMs Struggle with Data Analysis? A Systematic Empirical Study](../../AAAI2026/human_understanding/why_do_open-source_llms_struggle_with_data_analysis_a_systematic_empirical_study.md)
-- [Mixing Expert Knowledge: Bring Human Thoughts Back to the Game of Go](../../NeurIPS2025/human_understanding/mixing_expert_knowledge_bring_human_thoughts_back_to_the_game_of_go.md)
-- [Optimal Transport-Guided Source-Free Adaptation for Face Anti-Spoofing](../../CVPR2025/human_understanding/optimal_transport-guided_source-free_adaptation_for_face_anti-spoofing.md)
-- [On Large Multimodal Models as Open-World Image Classifiers](../../ICCV2025/human_understanding/on_large_multimodal_models_as_open-world_image_classifiers.md)
+- [\[ICML 2025\] Improving Model Alignment through Collective Intelligence of Open-Source LLMs](improving_model_alignment_through_collective_intelligence_of_open-source_llms.md)
+- [\[AAAI 2026\] Why Do Open-Source LLMs Struggle with Data Analysis? A Systematic Empirical Study](../../AAAI2026/human_understanding/why_do_open-source_llms_struggle_with_data_analysis_a_systematic_empirical_study.md)
+- [\[NeurIPS 2025\] Mixing Expert Knowledge: Bring Human Thoughts Back to the Game of Go](../../NeurIPS2025/human_understanding/mixing_expert_knowledge_bring_human_thoughts_back_to_the_game_of_go.md)
+- [\[CVPR 2025\] Optimal Transport-Guided Source-Free Adaptation for Face Anti-Spoofing](../../CVPR2025/human_understanding/optimal_transport-guided_source-free_adaptation_for_face_anti-spoofing.md)
+- [\[ICCV 2025\] On Large Multimodal Models as Open-World Image Classifiers](../../ICCV2025/human_understanding/on_large_multimodal_models_as_open-world_image_classifiers.md)
 
 <!-- RELATED:END -->

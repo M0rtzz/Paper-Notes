@@ -183,10 +183,10 @@ JFT memory 在 IN-R、IN-Sketch 上大幅超越 linear probe；Gemini re-ranking
 
 ## 相关论文
 
-- [Flexible Concept Bottleneck Model](../../AAAI2026/interpretability/flexible_concept_bottleneck_model.md)
-- [KVQ: Boosting Video Quality Assessment via Saliency-Guided Local Perception](../../CVPR2025/interpretability/kvq_boosting_video_quality_assessment_via_saliency-guided_local_perception.md)
-- [Steering Information Utility in Key-Value Memory for Language Model Post-Training](../../NeurIPS2025/interpretability/steering_information_utility_in_key-value_memory_for_language_model_post-trainin.md)
-- [ChemVLR: Prioritizing Reasoning in Perception for Chemical Vision-Language Understanding](../../ACL2026/interpretability/chemvlr_prioritizing_reasoning_in_perception_for_chemical_vision-language_unders.md)
-- [TokenSeek: Memory Efficient Fine Tuning via Instance-Aware Token Ditching](../../ICLR2026/interpretability/tokenseek_memory_efficient_fine_tuning_via_instance-aware_token_ditching.md)
+- [\[AAAI 2026\] Flexible Concept Bottleneck Model](../../AAAI2026/interpretability/flexible_concept_bottleneck_model.md)
+- [\[CVPR 2025\] KVQ: Boosting Video Quality Assessment via Saliency-Guided Local Perception](../../CVPR2025/interpretability/kvq_boosting_video_quality_assessment_via_saliency-guided_local_perception.md)
+- [\[NeurIPS 2025\] Steering Information Utility in Key-Value Memory for Language Model Post-Training](../../NeurIPS2025/interpretability/steering_information_utility_in_key-value_memory_for_language_model_post-trainin.md)
+- [\[ACL 2026\] ChemVLR: Prioritizing Reasoning in Perception for Chemical Vision-Language Understanding](../../ACL2026/interpretability/chemvlr_prioritizing_reasoning_in_perception_for_chemical_vision-language_unders.md)
+- [\[ICLR 2026\] TokenSeek: Memory Efficient Fine Tuning via Instance-Aware Token Ditching](../../ICLR2026/interpretability/tokenseek_memory_efficient_fine_tuning_via_instance-aware_token_ditching.md)
 
 <!-- RELATED:END -->

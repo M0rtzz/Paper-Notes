@@ -182,10 +182,10 @@ $$\sqrt{T}(\hat{\theta}_T - \theta) \xrightarrow{d} \mathcal{N}(0, V)$$
 
 ## 相关论文
 
-- [Evaluating Language Models as Synthetic Data Generators](../../ACL2025/llm_nlp/evaluating_lms_synthetic_data_gen.md)
-- [DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models](../../ACL2025/llm_nlp/difflm_controllable_synthetic_data_generation_via_diffusion_language_models.md)
-- [Wider or Deeper: Scaling LLM Inference-Time Compute with Adaptive Branching Tree Search](wider_or_deeper_scaling_llm_inference-time_compute_with_adaptive_branching_tree_.md)
-- [Value Portrait: Assessing Language Models' Values through Psychometrically and Ecologically Valid Items](../../ACL2025/llm_nlp/value_portrait_assessing_language_models_values_through_psychometrically_and_eco.md)
-- [Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models](../../ACL2025/llm_nlp/astute_rag_knowledge_conflicts.md)
+- [\[ACL 2025\] Evaluating Language Models as Synthetic Data Generators](../../ACL2025/llm_nlp/evaluating_lms_synthetic_data_gen.md)
+- [\[ACL 2025\] DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models](../../ACL2025/llm_nlp/difflm_controllable_synthetic_data_generation_via_diffusion_language_models.md)
+- [\[NeurIPS 2025\] Wider or Deeper: Scaling LLM Inference-Time Compute with Adaptive Branching Tree Search](wider_or_deeper_scaling_llm_inference-time_compute_with_adaptive_branching_tree_.md)
+- [\[ACL 2025\] Value Portrait: Assessing Language Models' Values through Psychometrically and Ecologically Valid Items](../../ACL2025/llm_nlp/value_portrait_assessing_language_models_values_through_psychometrically_and_eco.md)
+- [\[ACL 2025\] Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models](../../ACL2025/llm_nlp/astute_rag_knowledge_conflicts.md)
 
 <!-- RELATED:END -->

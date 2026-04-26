@@ -126,10 +126,10 @@ tags:
 
 ## 相关论文
 
-- [Decomposed Opinion Summarization with Verified Aspect-Aware Modules](../../ACL2025/nlp_generation/decomposed_opinion_summarization_with_verified_aspect-aware_modules.md)
-- [Context-Aware Hierarchical Merging for Long Document Summarization](../../ACL2025/nlp_generation/context-aware_hierarchical_merging_for_long_document_summarization.md)
-- [XtraGPT: Context-Aware and Controllable Academic Paper Revision via Human-AI Collaboration](../../ACL2026/nlp_generation/xtragpt_context-aware_and_controllable_academic_paper_revision_via_human-ai_coll.md)
-- [ATGen: A Framework for Active Text Generation](../../ACL2025/nlp_generation/atgen_a_framework_for_active_text_generation.md)
-- [Personalized Text Generation with Contrastive Activation Steering](../../ACL2025/nlp_generation/personalized_text_generation_with_contrastive_activation_steering.md)
+- [\[ACL 2025\] Decomposed Opinion Summarization with Verified Aspect-Aware Modules](../../ACL2025/nlp_generation/decomposed_opinion_summarization_with_verified_aspect-aware_modules.md)
+- [\[ACL 2025\] Context-Aware Hierarchical Merging for Long Document Summarization](../../ACL2025/nlp_generation/context-aware_hierarchical_merging_for_long_document_summarization.md)
+- [\[ACL 2026\] XtraGPT: Context-Aware and Controllable Academic Paper Revision via Human-AI Collaboration](../../ACL2026/nlp_generation/xtragpt_context-aware_and_controllable_academic_paper_revision_via_human-ai_coll.md)
+- [\[ACL 2025\] ATGen: A Framework for Active Text Generation](../../ACL2025/nlp_generation/atgen_a_framework_for_active_text_generation.md)
+- [\[ACL 2025\] Personalized Text Generation with Contrastive Activation Steering](../../ACL2025/nlp_generation/personalized_text_generation_with_contrastive_activation_steering.md)
 
 <!-- RELATED:END -->

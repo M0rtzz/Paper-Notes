@@ -185,10 +185,10 @@ GazeInterpreter 不需要传统意义上的模型训练，而是利用预训练 
 
 ## 相关论文
 
-- [Enhancing 3D Gaze Estimation in the Wild Using Weak Supervision with Gaze Following Labels](../../CVPR2025/human_understanding/enhancing_3d_gaze_estimation_in_the_wild_using_weak_supervision_with_gaze_follow.md)
-- [Multi-view Gaze Target Estimation](../../ICCV2025/human_understanding/multi-view_gaze_target_estimation.md)
-- [Learning From Design Procedure To Generate CAD Programs for Data Augmentation](../../NeurIPS2025/human_understanding/learning_from_design_procedure_to_generate_cad_programs_for_data_augmentation.md)
-- [ViBES: A Conversational Agent with Behaviorally-Intelligent 3D Virtual Body](../../CVPR2026/human_understanding/vibes_a_conversational_agent_with_behaviorally_intelligent_3d_virtual_body.md)
-- [RapVerse: Coherent Vocals and Whole-Body Motion Generation from Text](../../ICCV2025/human_understanding/rapverse_coherent_vocals_and_whole-body_motion_generation_from_text.md)
+- [\[CVPR 2025\] Enhancing 3D Gaze Estimation in the Wild Using Weak Supervision with Gaze Following Labels](../../CVPR2025/human_understanding/enhancing_3d_gaze_estimation_in_the_wild_using_weak_supervision_with_gaze_follow.md)
+- [\[ICCV 2025\] Multi-view Gaze Target Estimation](../../ICCV2025/human_understanding/multi-view_gaze_target_estimation.md)
+- [\[NeurIPS 2025\] Learning From Design Procedure To Generate CAD Programs for Data Augmentation](../../NeurIPS2025/human_understanding/learning_from_design_procedure_to_generate_cad_programs_for_data_augmentation.md)
+- [\[CVPR 2026\] ViBES: A Conversational Agent with Behaviorally-Intelligent 3D Virtual Body](../../CVPR2026/human_understanding/vibes_a_conversational_agent_with_behaviorally_intelligent_3d_virtual_body.md)
+- [\[ICCV 2025\] RapVerse: Coherent Vocals and Whole-Body Motion Generation from Text](../../ICCV2025/human_understanding/rapverse_coherent_vocals_and_whole-body_motion_generation_from_text.md)
 
 <!-- RELATED:END -->

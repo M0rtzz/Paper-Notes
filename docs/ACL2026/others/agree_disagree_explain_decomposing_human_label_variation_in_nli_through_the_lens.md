@@ -119,10 +119,10 @@ tags:
 
 ## 相关论文
 
-- [Improving Decision Trees through the Lens of Parameterized Local Search](../../NeurIPS2025/others/improving_decision_trees_through_the_lens_of_parameterized_local_search.md)
-- [How Hard is it to Explain Preferences Using Few Boolean Attributes?](../../AAAI2026/others/how_hard_is_it_to_explain_preferences_using_few_boolean_attributes.md)
-- [Formal Abductive Latent Explanations for Prototype-Based Networks](../../AAAI2026/others/formal_abductive_latent_explanations_for_prototype-based_networks.md)
-- [LayerD: Decomposing Raster Graphic Designs into Layers](../../ICCV2025/others/layerd_decomposing_raster_graphic_designs_into_layers.md)
-- [Entailed Between the Lines: Incorporating Implication into NLI](../../ACL2025/others/entailed_between_the_lines_incorporating_implication_into_nli.md)
+- [\[NeurIPS 2025\] Improving Decision Trees through the Lens of Parameterized Local Search](../../NeurIPS2025/others/improving_decision_trees_through_the_lens_of_parameterized_local_search.md)
+- [\[AAAI 2026\] How Hard is it to Explain Preferences Using Few Boolean Attributes?](../../AAAI2026/others/how_hard_is_it_to_explain_preferences_using_few_boolean_attributes.md)
+- [\[AAAI 2026\] Formal Abductive Latent Explanations for Prototype-Based Networks](../../AAAI2026/others/formal_abductive_latent_explanations_for_prototype-based_networks.md)
+- [\[ICCV 2025\] LayerD: Decomposing Raster Graphic Designs into Layers](../../ICCV2025/others/layerd_decomposing_raster_graphic_designs_into_layers.md)
+- [\[ACL 2025\] Entailed Between the Lines: Incorporating Implication into NLI](../../ACL2025/others/entailed_between_the_lines_incorporating_implication_into_nli.md)
 
 <!-- RELATED:END -->

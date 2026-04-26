@@ -116,10 +116,10 @@ BAM 将注意力权重分解为 $p_{ij} = p(f_{\text{cont}}(\mathbf{q}_i, \mathb
 
 ## 相关论文
 
-- [Rethinking Addressing in Language Models via Contextualized Equivariant Positional Encoding](../../ICML2025/information_retrieval/rethinking_addressing_in_language_models_via_contexualized_equivariant_positiona.md)
-- [Beyond RAG vs. Long-Context: Learning Distraction-Aware Retrieval for Efficient Knowledge Grounding](beyond_rag_vs_long-context_learning_distraction-aware_retrieval_for_efficient_kn.md)
-- [Embedding-Based Context-Aware Reranker](embedding-based_context-aware_reranker.md)
-- [The Atlas of In-Context Learning: How Attention Heads Shape In-Context Retrieval Augmentation](../../NeurIPS2025/information_retrieval/the_atlas_of_in-context_learning_how_attention_heads_shape_in-context_retrieval_.md)
-- [SEAL: Scaling to Emphasize Attention for Long-Context Retrieval](../../ACL2025/information_retrieval/seal_scaling_to_emphasize_attention_for_long-context_retrieval.md)
+- [\[ICML 2025\] Rethinking Addressing in Language Models via Contextualized Equivariant Positional Encoding](../../ICML2025/information_retrieval/rethinking_addressing_in_language_models_via_contexualized_equivariant_positiona.md)
+- [\[ICLR 2026\] Beyond RAG vs. Long-Context: Learning Distraction-Aware Retrieval for Efficient Knowledge Grounding](beyond_rag_vs_long-context_learning_distraction-aware_retrieval_for_efficient_kn.md)
+- [\[ICLR 2026\] Embedding-Based Context-Aware Reranker](embedding-based_context-aware_reranker.md)
+- [\[NeurIPS 2025\] The Atlas of In-Context Learning: How Attention Heads Shape In-Context Retrieval Augmentation](../../NeurIPS2025/information_retrieval/the_atlas_of_in-context_learning_how_attention_heads_shape_in-context_retrieval_.md)
+- [\[ACL 2025\] SEAL: Scaling to Emphasize Attention for Long-Context Retrieval](../../ACL2025/information_retrieval/seal_scaling_to_emphasize_attention_for_long-context_retrieval.md)
 
 <!-- RELATED:END -->

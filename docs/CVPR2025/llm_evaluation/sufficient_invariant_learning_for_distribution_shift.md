@@ -137,10 +137,10 @@ Wilds基准（无预训练）：
 
 ## 相关论文
 
-- [Learning Distribution-Wise Control in Representation Space for Language Models](../../ICML2025/llm_evaluation/learning_distribution-wise_control_in_representation_space_for_language_models.md)
-- [OODD: Test-time Out-of-Distribution Detection with Dynamic Dictionary](oodd_test-time_out-of-distribution_detection_with_dynamic_dictionary.md)
-- [Potential Field Based Deep Metric Learning](potential_field_based_deep_metric_learning.md)
-- [DiCaP: Distribution-Calibrated Pseudo-labeling for Semi-Supervised Multi-Label Learning](../../AAAI2026/llm_evaluation/dicap_distribution-calibrated_pseudo-labeling_for_semi-supervised_multi-label_le.md)
-- [ODP-Bench: Benchmarking Out-of-Distribution Performance Prediction](../../ICCV2025/llm_evaluation/odp-bench_benchmarking_out-of-distribution_performance_prediction.md)
+- [\[ICML 2025\] Learning Distribution-Wise Control in Representation Space for Language Models](../../ICML2025/llm_evaluation/learning_distribution-wise_control_in_representation_space_for_language_models.md)
+- [\[CVPR 2025\] OODD: Test-time Out-of-Distribution Detection with Dynamic Dictionary](oodd_test-time_out-of-distribution_detection_with_dynamic_dictionary.md)
+- [\[CVPR 2025\] Potential Field Based Deep Metric Learning](potential_field_based_deep_metric_learning.md)
+- [\[AAAI 2026\] DiCaP: Distribution-Calibrated Pseudo-labeling for Semi-Supervised Multi-Label Learning](../../AAAI2026/llm_evaluation/dicap_distribution-calibrated_pseudo-labeling_for_semi-supervised_multi-label_le.md)
+- [\[ICCV 2025\] ODP-Bench: Benchmarking Out-of-Distribution Performance Prediction](../../ICCV2025/llm_evaluation/odp-bench_benchmarking_out-of-distribution_performance_prediction.md)
 
 <!-- RELATED:END -->

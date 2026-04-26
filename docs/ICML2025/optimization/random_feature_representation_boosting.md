@@ -159,10 +159,10 @@ $$\min_A \frac{1}{n}\sum_{i=1}^n \|\nabla_2\hat{\mathcal{R}}(W,\Phi)(x_i) - A f(
 
 ## 相关论文
 
-- [Provable Benefit of Random Permutations over Uniform Sampling in Stochastic Coordinate Descent](provable_benefit_of_random_permutations_over_uniform_sampling_in_stochastic_coor.md)
-- [Global Convergence and Rich Feature Learning in $L$-Layer Infinite-Width Neural Networks under $\mu$P Parametrization](global_convergence_and_rich_feature_learning_in_l-layer_infinite-width_neural_ne.md)
-- [From Linear to Nonlinear: Provable Weak-to-Strong Generalization through Feature Learning](../../NeurIPS2025/optimization/from_linear_to_nonlinear_provable_weak-to-strong_generalization_through_feature_.md)
-- [Neural Thermodynamics: Entropic Forces in Deep and Universal Representation Learning](../../NeurIPS2025/optimization/neural_thermodynamics_entropic_forces_in_deep_and_universal_representation_learn.md)
-- [Addressing Representation Collapse in Vector Quantized Models with One Linear Layer](../../ICCV2025/optimization/addressing_representation_collapse_in_vector_quantized_models_with_one_linear_la.md)
+- [\[ICML 2025\] Provable Benefit of Random Permutations over Uniform Sampling in Stochastic Coordinate Descent](provable_benefit_of_random_permutations_over_uniform_sampling_in_stochastic_coor.md)
+- [\[ICML 2025\] Global Convergence and Rich Feature Learning in $L$-Layer Infinite-Width Neural Networks under $\mu$P Parametrization](global_convergence_and_rich_feature_learning_in_l-layer_infinite-width_neural_ne.md)
+- [\[NeurIPS 2025\] From Linear to Nonlinear: Provable Weak-to-Strong Generalization through Feature Learning](../../NeurIPS2025/optimization/from_linear_to_nonlinear_provable_weak-to-strong_generalization_through_feature_.md)
+- [\[NeurIPS 2025\] Neural Thermodynamics: Entropic Forces in Deep and Universal Representation Learning](../../NeurIPS2025/optimization/neural_thermodynamics_entropic_forces_in_deep_and_universal_representation_learn.md)
+- [\[ICCV 2025\] Addressing Representation Collapse in Vector Quantized Models with One Linear Layer](../../ICCV2025/optimization/addressing_representation_collapse_in_vector_quantized_models_with_one_linear_la.md)
 
 <!-- RELATED:END -->

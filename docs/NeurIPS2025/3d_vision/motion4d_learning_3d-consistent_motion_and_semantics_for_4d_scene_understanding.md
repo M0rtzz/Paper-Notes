@@ -145,10 +145,10 @@ $$\mathcal{L} = \lambda_{\text{rgb}} L_{\text{rgb}} + \lambda_{\text{sem}} L_{\t
 
 ## 相关论文
 
-- [Open-Vocabulary Octree-Graph for 3D Scene Understanding](../../ICCV2025/3d_vision/open-vocabulary_octree-graph_for_3d_scene_understanding.md)
-- [Pixel-Perfect Depth with Semantics-Prompted Diffusion Transformers](pixel-perfect_depth_with_semantics-prompted_diffusion_transformers.md)
-- [Object-Centric Representation Learning for Enhanced 3D Semantic Scene Graph Prediction](object-centric_representation_learning_for_enhanced_3d_semantic_scene_graph_pred.md)
-- [ExtrinSplat: Decoupling Geometry and Semantics for Open-Vocabulary Understanding in 3D Gaussian Splatting](../../CVPR2026/3d_vision/extrinsplat_decoupling_geometry_and_semantics_for_open-vocabulary_understanding_.md)
-- [SceneVerse: Scaling 3D Vision-Language Learning for Grounded Scene Understanding](../../ECCV2024/3d_vision/sceneverse_scaling_3d_visionlanguage_learning_for_grounded_s.md)
+- [\[ICCV 2025\] Open-Vocabulary Octree-Graph for 3D Scene Understanding](../../ICCV2025/3d_vision/open-vocabulary_octree-graph_for_3d_scene_understanding.md)
+- [\[NeurIPS 2025\] Pixel-Perfect Depth with Semantics-Prompted Diffusion Transformers](pixel-perfect_depth_with_semantics-prompted_diffusion_transformers.md)
+- [\[NeurIPS 2025\] Object-Centric Representation Learning for Enhanced 3D Semantic Scene Graph Prediction](object-centric_representation_learning_for_enhanced_3d_semantic_scene_graph_pred.md)
+- [\[CVPR 2026\] ExtrinSplat: Decoupling Geometry and Semantics for Open-Vocabulary Understanding in 3D Gaussian Splatting](../../CVPR2026/3d_vision/extrinsplat_decoupling_geometry_and_semantics_for_open-vocabulary_understanding_.md)
+- [\[ECCV 2024\] SceneVerse: Scaling 3D Vision-Language Learning for Grounded Scene Understanding](../../ECCV2024/3d_vision/sceneverse_scaling_3d_visionlanguage_learning_for_grounded_s.md)
 
 <!-- RELATED:END -->

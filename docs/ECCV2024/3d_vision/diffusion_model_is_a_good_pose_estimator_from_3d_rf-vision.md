@@ -171,10 +171,10 @@ mmDiff相比P4Transformer：MPJPE降低12.8%，PA-MPJPE降低11.3%；恶劣环�
 
 ## 相关论文
 
-- [4Diff: 3D-Aware Diffusion Model for Third-to-First Viewpoint Translation](4diff_3d-aware_diffusion_model_for_third-to-first_viewpoint_translation.md)
-- [6DGS: 6D Pose Estimation from a Single Image and a 3D Gaussian Splatting Model](6dgs_6d_pose_estimation_from_a_single_image_and_a_3d_gaussia.md)
-- [FE2E: From Editor to Dense Geometry Estimator](../../CVPR2026/3d_vision/from_editor_to_dense_geometry_estimator.md)
-- [MALD-NeRF: Taming Latent Diffusion Model for Neural Radiance Field Inpainting](taming_latent_diffusion_model_for_neural_radiance_field_inpainting.md)
-- [GAPrompt: Geometry-Aware Point Cloud Prompt for 3D Vision Model](../../ICML2025/3d_vision/gaprompt_geometry-aware_point_cloud_prompt_for_3d_vision_model.md)
+- [\[ECCV 2024\] 4Diff: 3D-Aware Diffusion Model for Third-to-First Viewpoint Translation](4diff_3d-aware_diffusion_model_for_third-to-first_viewpoint_translation.md)
+- [\[ECCV 2024\] 6DGS: 6D Pose Estimation from a Single Image and a 3D Gaussian Splatting Model](6dgs_6d_pose_estimation_from_a_single_image_and_a_3d_gaussia.md)
+- [\[CVPR 2026\] FE2E: From Editor to Dense Geometry Estimator](../../CVPR2026/3d_vision/from_editor_to_dense_geometry_estimator.md)
+- [\[ECCV 2024\] MALD-NeRF: Taming Latent Diffusion Model for Neural Radiance Field Inpainting](taming_latent_diffusion_model_for_neural_radiance_field_inpainting.md)
+- [\[ICML 2025\] GAPrompt: Geometry-Aware Point Cloud Prompt for 3D Vision Model](../../ICML2025/3d_vision/gaprompt_geometry-aware_point_cloud_prompt_for_3d_vision_model.md)
 
 <!-- RELATED:END -->

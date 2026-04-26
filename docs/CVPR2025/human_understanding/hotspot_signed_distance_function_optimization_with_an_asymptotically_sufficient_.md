@@ -214,10 +214,10 @@ PDE 残差损失 + 表面拟合损失（点云约束）。理论分析证明 $\k
 
 ## 相关论文
 
-- [Condition Matters in Full-head 3D GANs](../../ICLR2026/human_understanding/condition_matters_in_full-head_3d_gans.md)
-- [Distributionally Robust Online Markov Game with Linear Function Approximation](../../AAAI2026/human_understanding/distributionally_robust_online_markov_game_with_linear_function_approximation.md)
-- [Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](../../ICLR2026/human_understanding/function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)
-- [Enhancing Parallelism in Decentralized Stochastic Convex Optimization](../../ICML2025/human_understanding/enhancing_parallelism_in_decentralized_stochastic_convex_optimization.md)
-- [PARCO: Parallel AutoRegressive Models for Multi-Agent Combinatorial Optimization](../../NeurIPS2025/human_understanding/parco_parallel_autoregressive_models_for_multi-agent_combinatorial_optimization.md)
+- [\[ICLR 2026\] Condition Matters in Full-head 3D GANs](../../ICLR2026/human_understanding/condition_matters_in_full-head_3d_gans.md)
+- [\[AAAI 2026\] Distributionally Robust Online Markov Game with Linear Function Approximation](../../AAAI2026/human_understanding/distributionally_robust_online_markov_game_with_linear_function_approximation.md)
+- [\[ICLR 2026\] Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](../../ICLR2026/human_understanding/function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)
+- [\[ICML 2025\] Enhancing Parallelism in Decentralized Stochastic Convex Optimization](../../ICML2025/human_understanding/enhancing_parallelism_in_decentralized_stochastic_convex_optimization.md)
+- [\[NeurIPS 2025\] PARCO: Parallel AutoRegressive Models for Multi-Agent Combinatorial Optimization](../../NeurIPS2025/human_understanding/parco_parallel_autoregressive_models_for_multi-agent_combinatorial_optimization.md)
 
 <!-- RELATED:END -->

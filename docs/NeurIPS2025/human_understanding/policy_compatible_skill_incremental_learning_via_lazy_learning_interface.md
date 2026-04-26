@@ -138,10 +138,10 @@ $$d_c(x) = \min_{k \leq K_c} \sqrt{(x - \mu_{c,k})^\top \Sigma_{c,k}^{-1} (x - \
 
 ## 相关论文
 
-- [Learning Skill-Attributes for Transferable Assessment in Video](learning_skill-attributes_for_transferable_assessment_in_video.md)
-- [External Knowledge Injection for CLIP-Based Class-Incremental Learning](../../ICCV2025/human_understanding/external_knowledge_injection_for_clip-based_class-incremental_learning.md)
-- [Succeed or Learn Slowly: Sample Efficient Off-Policy Reinforcement Learning for Mobile App Control](succeed_or_learn_slowly_sample_efficient_off-policy_reinforcement_learning_for_m.md)
-- [GROVE: A Generalized Reward for Learning Open-Vocabulary Physical Skill](../../CVPR2025/human_understanding/grove_a_generalized_reward_for_learning_open-vocabulary_physical_skill.md)
-- [Doubly Robust Fusion of Many Treatments for Policy Learning](../../ICML2025/human_understanding/doubly_robust_fusion_of_many_treatments_for_policy_learning.md)
+- [\[NeurIPS 2025\] Learning Skill-Attributes for Transferable Assessment in Video](learning_skill-attributes_for_transferable_assessment_in_video.md)
+- [\[ICCV 2025\] External Knowledge Injection for CLIP-Based Class-Incremental Learning](../../ICCV2025/human_understanding/external_knowledge_injection_for_clip-based_class-incremental_learning.md)
+- [\[NeurIPS 2025\] Succeed or Learn Slowly: Sample Efficient Off-Policy Reinforcement Learning for Mobile App Control](succeed_or_learn_slowly_sample_efficient_off-policy_reinforcement_learning_for_m.md)
+- [\[CVPR 2025\] GROVE: A Generalized Reward for Learning Open-Vocabulary Physical Skill](../../CVPR2025/human_understanding/grove_a_generalized_reward_for_learning_open-vocabulary_physical_skill.md)
+- [\[ICML 2025\] Doubly Robust Fusion of Many Treatments for Policy Learning](../../ICML2025/human_understanding/doubly_robust_fusion_of_many_treatments_for_policy_learning.md)
 
 <!-- RELATED:END -->

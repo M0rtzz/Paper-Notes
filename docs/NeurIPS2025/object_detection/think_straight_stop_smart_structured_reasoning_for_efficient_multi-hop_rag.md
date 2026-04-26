@@ -150,10 +150,10 @@ TSSS 是一个**训练无关 (training-free)** 的框架：
 
 ## 相关论文
 
-- [ViewSRD: 3D Visual Grounding via Structured Multi-View Decomposition](../../ICCV2025/object_detection/viewsrd_3d_visual_grounding_via_structured_multi-view_decomposition.md)
-- [Video-RAG: Visually-aligned Retrieval-Augmented Long Video Comprehension](video-rag_visually-aligned_retrieval-augmented_long_video_comprehension.md)
-- [DETree: DEtecting Human-AI Collaborative Texts via Tree-Structured Hierarchical Representation Learning](detree_detecting_human-ai_collaborative_texts_via_tree-structured_hierarchical_r.md)
-- [HeROD: Heuristic-inspired Reasoning Priors Facilitate Data-Efficient Referring Object Detection](../../CVPR2026/object_detection/herod_heuristic_inspired_reasoning_data_efficient_rod.md)
-- [Resource Efficient Sleep Staging via Multi-Level Masking and Prompt Learning](../../AAAI2026/object_detection/resource_efficient_sleep_staging_via_multi-level_masking_and_prompt_learning.md)
+- [\[ICCV 2025\] ViewSRD: 3D Visual Grounding via Structured Multi-View Decomposition](../../ICCV2025/object_detection/viewsrd_3d_visual_grounding_via_structured_multi-view_decomposition.md)
+- [\[NeurIPS 2025\] Video-RAG: Visually-aligned Retrieval-Augmented Long Video Comprehension](video-rag_visually-aligned_retrieval-augmented_long_video_comprehension.md)
+- [\[NeurIPS 2025\] DETree: DEtecting Human-AI Collaborative Texts via Tree-Structured Hierarchical Representation Learning](detree_detecting_human-ai_collaborative_texts_via_tree-structured_hierarchical_r.md)
+- [\[CVPR 2026\] HeROD: Heuristic-inspired Reasoning Priors Facilitate Data-Efficient Referring Object Detection](../../CVPR2026/object_detection/herod_heuristic_inspired_reasoning_data_efficient_rod.md)
+- [\[AAAI 2026\] Resource Efficient Sleep Staging via Multi-Level Masking and Prompt Learning](../../AAAI2026/object_detection/resource_efficient_sleep_staging_via_multi-level_masking_and_prompt_learning.md)
 
 <!-- RELATED:END -->

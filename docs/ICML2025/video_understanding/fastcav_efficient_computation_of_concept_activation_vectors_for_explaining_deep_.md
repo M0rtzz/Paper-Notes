@@ -158,10 +158,10 @@ FastCAV 只需要一次均值计算和归一化，无需迭代优化。
 
 ## 相关论文
 
-- [Revisiting Bi-Linear State Transitions in Recurrent Neural Networks](../../NeurIPS2025/video_understanding/revisiting_bi-linear_state_transitions_in_recurrent_neural_networks.md)
-- [Learning Topology-Driven Multi-Subspace Fusion for Grassmannian Deep Networks](../../AAAI2026/video_understanding/learning_topology-driven_multi-subspace_fusion_for_grassmannian_deep_network.md)
-- [HuMoCon: Concept Discovery for Human Motion Understanding](../../CVPR2025/video_understanding/humocon_concept_discovery_for_human_motion_understanding.md)
-- [VideoLucy: Deep Memory Backtracking for Long Video Understanding](../../NeurIPS2025/video_understanding/videolucy_deep_memory_backtracking_for_long_video_understanding.md)
-- [Neural Stochastic Flows: Solver-Free Modelling and Inference for SDE Solutions](../../NeurIPS2025/video_understanding/neural_stochastic_flows_solver-free_modelling_and_inference_for_sde_solutions.md)
+- [\[NeurIPS 2025\] Revisiting Bi-Linear State Transitions in Recurrent Neural Networks](../../NeurIPS2025/video_understanding/revisiting_bi-linear_state_transitions_in_recurrent_neural_networks.md)
+- [\[AAAI 2026\] Learning Topology-Driven Multi-Subspace Fusion for Grassmannian Deep Networks](../../AAAI2026/video_understanding/learning_topology-driven_multi-subspace_fusion_for_grassmannian_deep_network.md)
+- [\[CVPR 2025\] HuMoCon: Concept Discovery for Human Motion Understanding](../../CVPR2025/video_understanding/humocon_concept_discovery_for_human_motion_understanding.md)
+- [\[NeurIPS 2025\] VideoLucy: Deep Memory Backtracking for Long Video Understanding](../../NeurIPS2025/video_understanding/videolucy_deep_memory_backtracking_for_long_video_understanding.md)
+- [\[NeurIPS 2025\] Neural Stochastic Flows: Solver-Free Modelling and Inference for SDE Solutions](../../NeurIPS2025/video_understanding/neural_stochastic_flows_solver-free_modelling_and_inference_for_sde_solutions.md)
 
 <!-- RELATED:END -->

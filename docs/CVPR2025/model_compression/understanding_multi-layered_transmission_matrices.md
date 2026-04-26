@@ -115,10 +115,10 @@ tags:
 
 ## 相关论文
 
-- [Layered Image Vectorization via Semantic Simplification](layered_image_vectorization_via_semantic_simplification.md)
-- [mPLUG-DocOwl2: High-resolution Compressing for OCR-free Multi-page Document Understanding](../../ACL2025/model_compression/mplug_docowl2_doc_compress.md)
-- [Assigning Distinct Roles to Quantized and Low-Rank Matrices Toward Optimal Weight Decomposition](../../ACL2025/model_compression/assigning_distinct_roles_to_quantized_and_low-rank_matrices_toward_optimal_weigh.md)
-- [NADER: Neural Architecture Design via Multi-Agent Collaboration](nader_neural_architecture_design_via_multi-agent_collaboration.md)
-- [MobileMamba: Lightweight Multi-Receptive Visual Mamba Network](mobilemamba_lightweight_multi-receptive_visual_mamba_network.md)
+- [\[CVPR 2025\] Layered Image Vectorization via Semantic Simplification](layered_image_vectorization_via_semantic_simplification.md)
+- [\[ACL 2025\] mPLUG-DocOwl2: High-resolution Compressing for OCR-free Multi-page Document Understanding](../../ACL2025/model_compression/mplug_docowl2_doc_compress.md)
+- [\[ACL 2025\] Assigning Distinct Roles to Quantized and Low-Rank Matrices Toward Optimal Weight Decomposition](../../ACL2025/model_compression/assigning_distinct_roles_to_quantized_and_low-rank_matrices_toward_optimal_weigh.md)
+- [\[CVPR 2025\] NADER: Neural Architecture Design via Multi-Agent Collaboration](nader_neural_architecture_design_via_multi-agent_collaboration.md)
+- [\[CVPR 2025\] MobileMamba: Lightweight Multi-Receptive Visual Mamba Network](mobilemamba_lightweight_multi-receptive_visual_mamba_network.md)
 
 <!-- RELATED:END -->

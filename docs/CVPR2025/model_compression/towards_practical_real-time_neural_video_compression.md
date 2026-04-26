@@ -130,10 +130,10 @@ DCVC-RT采用条件编码范式：当前帧通过patch embedding直接变换到1
 
 ## 相关论文
 
-- [CoA: Towards Real Image Dehazing via Compression-and-Adaptation](coa_towards_real_image_dehazing_via_compression-and-adaptation.md)
-- [DyCoke: Dynamic Compression of Tokens for Fast Video Large Language Models](dycoke_dynamic_compression_of_tokens_for_fast_video_large_language_models.md)
-- [ECVC: Exploiting Non-Local Correlations in Multiple Frames for Contextual Video Compression](ecvc_exploiting_non-local_correlations_in_multiple_frames_for_contextual_video_c.md)
-- [Inference-Time Hyper-Scaling with KV Cache Compression](../../NeurIPS2025/model_compression/inference-time_hyper-scaling_with_kv_cache_compression.md)
-- [zip2zip: Inference-Time Adaptive Tokenization via Online Compression](../../NeurIPS2025/model_compression/zip2zip_inference-time_adaptive_tokenization_via_online_compression.md)
+- [\[CVPR 2025\] CoA: Towards Real Image Dehazing via Compression-and-Adaptation](coa_towards_real_image_dehazing_via_compression-and-adaptation.md)
+- [\[CVPR 2025\] DyCoke: Dynamic Compression of Tokens for Fast Video Large Language Models](dycoke_dynamic_compression_of_tokens_for_fast_video_large_language_models.md)
+- [\[CVPR 2025\] ECVC: Exploiting Non-Local Correlations in Multiple Frames for Contextual Video Compression](ecvc_exploiting_non-local_correlations_in_multiple_frames_for_contextual_video_c.md)
+- [\[NeurIPS 2025\] Inference-Time Hyper-Scaling with KV Cache Compression](../../NeurIPS2025/model_compression/inference-time_hyper-scaling_with_kv_cache_compression.md)
+- [\[NeurIPS 2025\] zip2zip: Inference-Time Adaptive Tokenization via Online Compression](../../NeurIPS2025/model_compression/zip2zip_inference-time_adaptive_tokenization_via_online_compression.md)
 
 <!-- RELATED:END -->

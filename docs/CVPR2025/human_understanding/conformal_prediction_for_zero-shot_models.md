@@ -119,10 +119,10 @@ tags:
 
 ## 相关论文
 
-- [Zero-Shot Head Swapping in Real-World Scenarios](zero-shot_head_swapping_in_real-world_scenarios.md)
-- [NegRefine: Refining Negative Label-Based Zero-Shot OOD Detection](../../ICCV2025/human_understanding/negrefine_refining_negative_label-based_zero-shot_ood_detection.md)
-- [Learning Visual Proxy for Compositional Zero-Shot Learning](../../ICCV2025/human_understanding/learning_visual_proxy_for_compositional_zero-shot_learning.md)
-- [Distilling and Adapting: A Topology-Aware Framework for Zero-Shot Interaction Prediction in Multiplex Biological Networks](../../ICLR2026/human_understanding/distilling_and_adapting_a_topology-aware_framework_for_zero-shot_interaction_pre.md)
-- [Provably Improving Generalization of Few-Shot Models with Synthetic Data](../../ICML2025/human_understanding/provably_improving_generalization_of_few-shot_models_with_synthetic_data.md)
+- [\[CVPR 2025\] Zero-Shot Head Swapping in Real-World Scenarios](zero-shot_head_swapping_in_real-world_scenarios.md)
+- [\[ICCV 2025\] NegRefine: Refining Negative Label-Based Zero-Shot OOD Detection](../../ICCV2025/human_understanding/negrefine_refining_negative_label-based_zero-shot_ood_detection.md)
+- [\[ICCV 2025\] Learning Visual Proxy for Compositional Zero-Shot Learning](../../ICCV2025/human_understanding/learning_visual_proxy_for_compositional_zero-shot_learning.md)
+- [\[ICLR 2026\] Distilling and Adapting: A Topology-Aware Framework for Zero-Shot Interaction Prediction in Multiplex Biological Networks](../../ICLR2026/human_understanding/distilling_and_adapting_a_topology-aware_framework_for_zero-shot_interaction_pre.md)
+- [\[ICML 2025\] Provably Improving Generalization of Few-Shot Models with Synthetic Data](../../ICML2025/human_understanding/provably_improving_generalization_of_few-shot_models_with_synthetic_data.md)
 
 <!-- RELATED:END -->

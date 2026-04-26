@@ -142,10 +142,10 @@ $$\hat{R}_{\text{LURE}} = \frac{1}{M}\sum_{m=1}^M v_m \ell(f(x_{i_m}), y_{i_m})$
 
 ## 相关论文
 
-- [Genetic Instruct: Scaling up Synthetic Generation of Coding Instructions for Large Language Models](../../ACL2025/llm_nlp/genetic_instruct_scaling_up_synthetic_generation_of_coding_instructions_for_larg.md)
-- [LESA: Learnable LLM Layer Scaling-Up](../../ACL2025/llm_nlp/lesa_learnable_llm_layer_scaling-up.md)
-- [PluralisticBehaviorSuite: Stress-Testing Multi-Turn Adherence to Custom Behavioral Policies](pluralistic_behavior_suite_stress-testing_multi-turn_adherence_to_custom_behavio.md)
-- [Solving Inequality Proofs with Large Language Models](solving_inequality_proofs_with_large_language_models.md)
-- [Reversal of Thought: Enhancing Large Language Models with Preference-Guided Reverse Reasoning Warm-up](../../ACL2025/llm_nlp/reversal_of_thought_enhancing_large_language.md)
+- [\[ACL 2025\] Genetic Instruct: Scaling up Synthetic Generation of Coding Instructions for Large Language Models](../../ACL2025/llm_nlp/genetic_instruct_scaling_up_synthetic_generation_of_coding_instructions_for_larg.md)
+- [\[ACL 2025\] LESA: Learnable LLM Layer Scaling-Up](../../ACL2025/llm_nlp/lesa_learnable_llm_layer_scaling-up.md)
+- [\[NeurIPS 2025\] PluralisticBehaviorSuite: Stress-Testing Multi-Turn Adherence to Custom Behavioral Policies](pluralistic_behavior_suite_stress-testing_multi-turn_adherence_to_custom_behavio.md)
+- [\[NeurIPS 2025\] Solving Inequality Proofs with Large Language Models](solving_inequality_proofs_with_large_language_models.md)
+- [\[ACL 2025\] Reversal of Thought: Enhancing Large Language Models with Preference-Guided Reverse Reasoning Warm-up](../../ACL2025/llm_nlp/reversal_of_thought_enhancing_large_language.md)
 
 <!-- RELATED:END -->

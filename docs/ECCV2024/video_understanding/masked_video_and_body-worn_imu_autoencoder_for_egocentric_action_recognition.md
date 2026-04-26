@@ -160,10 +160,10 @@ IMU 设备缺失鲁棒性 (遮掩 2/4 个 IMU)：
 
 ## 相关论文
 
-- [Text-Guided Video Masked Autoencoder](text-guided_video_masked_autoencoder.md)
-- [Data Collection-Free Masked Video Modeling](data_collection-free_masked_video_modeling.md)
-- [Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
-- [Leveraging Temporal Contextualization for Video Action Recognition](leveraging_temporal_contextualization_for_video_action_recognition.md)
-- [Occluded Gait Recognition with Mixture of Experts: An Action Detection Perspective](occluded_gait_recognition_with_mixture_of_experts_an_action_detection_perspectiv.md)
+- [\[ECCV 2024\] Text-Guided Video Masked Autoencoder](text-guided_video_masked_autoencoder.md)
+- [\[ECCV 2024\] Data Collection-Free Masked Video Modeling](data_collection-free_masked_video_modeling.md)
+- [\[ECCV 2024\] Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
+- [\[ECCV 2024\] Leveraging Temporal Contextualization for Video Action Recognition](leveraging_temporal_contextualization_for_video_action_recognition.md)
+- [\[ECCV 2024\] Occluded Gait Recognition with Mixture of Experts: An Action Detection Perspective](occluded_gait_recognition_with_mixture_of_experts_an_action_detection_perspectiv.md)
 
 <!-- RELATED:END -->

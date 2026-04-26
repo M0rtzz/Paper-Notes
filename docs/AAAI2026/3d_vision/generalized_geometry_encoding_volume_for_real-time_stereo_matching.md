@@ -203,10 +203,10 @@ vs RT-IGEV误差率降低：KITTI 2012 ↓29%, KITTI 2015 ↓16%, ETH3D ↓51%
 
 ## 相关论文
 
-- [Domain Generalized Stereo Matching with Uncertainty-guided Data Augmentation](domain_generalized_stereo_matching_with_uncertainty-guided_data_augmentation.md)
-- [Lite Any Stereo: Efficient Zero-Shot Stereo Matching](../../CVPR2026/3d_vision/lite_any_stereo_efficient_zero-shot_stereo_matching.md)
-- [Diving into the Fusion of Monocular Priors for Generalized Stereo Matching](../../ICCV2025/3d_vision/diving_into_the_fusion_of_monocular_priors_for_generalized_stereo_matching.md)
-- [RTGaze: Real-Time 3D-Aware Gaze Redirection from a Single Image](rtgaze_real-time_3d-aware_gaze_redirection_from_a_single_image.md)
-- [DEFOM-Stereo: Depth Foundation Model Based Stereo Matching](../../CVPR2025/3d_vision/defom-stereo_depth_foundation_model_based_stereo_matching.md)
+- [\[AAAI 2026\] Domain Generalized Stereo Matching with Uncertainty-guided Data Augmentation](domain_generalized_stereo_matching_with_uncertainty-guided_data_augmentation.md)
+- [\[CVPR 2026\] Lite Any Stereo: Efficient Zero-Shot Stereo Matching](../../CVPR2026/3d_vision/lite_any_stereo_efficient_zero-shot_stereo_matching.md)
+- [\[ICCV 2025\] Diving into the Fusion of Monocular Priors for Generalized Stereo Matching](../../ICCV2025/3d_vision/diving_into_the_fusion_of_monocular_priors_for_generalized_stereo_matching.md)
+- [\[AAAI 2026\] RTGaze: Real-Time 3D-Aware Gaze Redirection from a Single Image](rtgaze_real-time_3d-aware_gaze_redirection_from_a_single_image.md)
+- [\[CVPR 2025\] DEFOM-Stereo: Depth Foundation Model Based Stereo Matching](../../CVPR2025/3d_vision/defom-stereo_depth_foundation_model_based_stereo_matching.md)
 
 <!-- RELATED:END -->

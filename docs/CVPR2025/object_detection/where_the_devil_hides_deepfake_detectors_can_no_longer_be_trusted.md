@@ -134,10 +134,10 @@ tags:
 
 ## 相关论文
 
-- [Preference Learning with Lie Detectors can Induce Honesty or Evasion](../../NeurIPS2025/object_detection/preference_learning_with_lie_detectors_can_induce_honesty_or_evasion.md)
-- [Can OOD Object Detectors Learn from Foundation Models?](../../ECCV2024/object_detection/can_ood_object_detectors_learn_from_foundation_models.md)
-- [FakeRadar: Probing Forgery Outliers to Detect Unknown Deepfake Videos](../../ICCV2025/object_detection/fakeradar_probing_forgery_outliers_to_detect_unknown_deepfake_videos.md)
-- [The Devil is in the Spurious Correlations: Boosting Moment Retrieval with Dynamic Learning](../../ICCV2025/object_detection/the_devil_is_in_the_spurious_correlations_boosting_moment_retrieval_with_dynamic.md)
-- [ReGround: Improving Textual and Spatial Grounding at No Cost](../../ECCV2024/object_detection/reground_improving_textual_and_spatial_grounding_at_no_cost.md)
+- [\[NeurIPS 2025\] Preference Learning with Lie Detectors can Induce Honesty or Evasion](../../NeurIPS2025/object_detection/preference_learning_with_lie_detectors_can_induce_honesty_or_evasion.md)
+- [\[ECCV 2024\] Can OOD Object Detectors Learn from Foundation Models?](../../ECCV2024/object_detection/can_ood_object_detectors_learn_from_foundation_models.md)
+- [\[ICCV 2025\] FakeRadar: Probing Forgery Outliers to Detect Unknown Deepfake Videos](../../ICCV2025/object_detection/fakeradar_probing_forgery_outliers_to_detect_unknown_deepfake_videos.md)
+- [\[ICCV 2025\] The Devil is in the Spurious Correlations: Boosting Moment Retrieval with Dynamic Learning](../../ICCV2025/object_detection/the_devil_is_in_the_spurious_correlations_boosting_moment_retrieval_with_dynamic.md)
+- [\[ECCV 2024\] ReGround: Improving Textual and Spatial Grounding at No Cost](../../ECCV2024/object_detection/reground_improving_textual_and_spatial_grounding_at_no_cost.md)
 
 <!-- RELATED:END -->

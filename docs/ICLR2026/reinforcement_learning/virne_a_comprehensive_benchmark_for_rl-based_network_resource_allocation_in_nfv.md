@@ -133,10 +133,10 @@ $$\max \text{R2C}(S) = (\varkappa \cdot \text{REV}(S)) / \text{COST}(S)$$
 
 ## 相关论文
 
-- [Bi-Level Contextual Bandits for Individualized Resource Allocation under Delayed Feedback](../../AAAI2026/reinforcement_learning/bi-level_contextual_bandits_for_individualized_resource_allocation_under_delayed.md)
-- [GraphOmni: A Comprehensive and Extensible Benchmark Framework for Large Language Models on Graph-theoretic Tasks](graphomni_a_comprehensive_and_extensible_benchmark_framework_for_large_language_.md)
-- [Meta-World+: An Improved, Standardized, RL Benchmark](../../NeurIPS2025/reinforcement_learning/meta-world_an_improved_standardized_rl_benchmark.md)
-- [How LLMs Learn to Reason: A Complex Network Perspective](how_llms_learn_to_reason_a_complex_network_perspective.md)
-- [Discounted Cuts: A Stackelberg Approach to Network Disruption](../../AAAI2026/reinforcement_learning/discounted_cuts_a_stackelberg_approach_to_network_disruption.md)
+- [\[AAAI 2026\] Bi-Level Contextual Bandits for Individualized Resource Allocation under Delayed Feedback](../../AAAI2026/reinforcement_learning/bi-level_contextual_bandits_for_individualized_resource_allocation_under_delayed.md)
+- [\[ICLR 2026\] GraphOmni: A Comprehensive and Extensible Benchmark Framework for Large Language Models on Graph-theoretic Tasks](graphomni_a_comprehensive_and_extensible_benchmark_framework_for_large_language_.md)
+- [\[NeurIPS 2025\] Meta-World+: An Improved, Standardized, RL Benchmark](../../NeurIPS2025/reinforcement_learning/meta-world_an_improved_standardized_rl_benchmark.md)
+- [\[ICLR 2026\] How LLMs Learn to Reason: A Complex Network Perspective](how_llms_learn_to_reason_a_complex_network_perspective.md)
+- [\[AAAI 2026\] Discounted Cuts: A Stackelberg Approach to Network Disruption](../../AAAI2026/reinforcement_learning/discounted_cuts_a_stackelberg_approach_to_network_disruption.md)
 
 <!-- RELATED:END -->

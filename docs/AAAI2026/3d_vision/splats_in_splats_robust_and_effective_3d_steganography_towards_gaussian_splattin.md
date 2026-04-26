@@ -390,10 +390,10 @@ $$\alpha_\mathcal{I}' = \mathcal{D}_p(\mathcal{E}_p(1-\alpha_\mathcal{I}))$$
 
 ## 相关论文
 
-- [A Lesson in Splats: Teacher-Guided Diffusion for 3D Gaussian Splats Generation with 2D Supervision](../../ICCV2025/3d_vision/a_lesson_in_splats_teacherguided_diffusion_for_3d_gaussian_s.md)
-- [Using Gaussian Splats to Create High-Fidelity Facial Geometry and Texture](../../CVPR2026/3d_vision/using_gaussian_splats_to_create_high-fidelity_facial_geometry_and_texture.md)
-- [CL-Splats: Continual Learning of Gaussian Splatting with Local Optimization](../../ICCV2025/3d_vision/cl-splats_continual_learning_of_gaussian_splatting_with_local_optimization.md)
-- [SparseSurf: Sparse-View 3D Gaussian Splatting for Surface Reconstruction](sparsesurf_sparse-view_3d_gaussian_splatting_for_surface_reconstruction.md)
-- [SplatFields: Neural Gaussian Splats for Sparse 3D and 4D Reconstruction](../../ECCV2024/3d_vision/splatfields_neural_gaussian_splats_for_sparse_3d_and_4d_reconstruction.md)
+- [\[ICCV 2025\] A Lesson in Splats: Teacher-Guided Diffusion for 3D Gaussian Splats Generation with 2D Supervision](../../ICCV2025/3d_vision/a_lesson_in_splats_teacherguided_diffusion_for_3d_gaussian_s.md)
+- [\[CVPR 2026\] Using Gaussian Splats to Create High-Fidelity Facial Geometry and Texture](../../CVPR2026/3d_vision/using_gaussian_splats_to_create_high-fidelity_facial_geometry_and_texture.md)
+- [\[ICCV 2025\] CL-Splats: Continual Learning of Gaussian Splatting with Local Optimization](../../ICCV2025/3d_vision/cl-splats_continual_learning_of_gaussian_splatting_with_local_optimization.md)
+- [\[AAAI 2026\] SparseSurf: Sparse-View 3D Gaussian Splatting for Surface Reconstruction](sparsesurf_sparse-view_3d_gaussian_splatting_for_surface_reconstruction.md)
+- [\[ECCV 2024\] SplatFields: Neural Gaussian Splats for Sparse 3D and 4D Reconstruction](../../ECCV2024/3d_vision/splatfields_neural_gaussian_splats_for_sparse_3d_and_4d_reconstruction.md)
 
 <!-- RELATED:END -->

@@ -162,10 +162,10 @@ CoSp-PPGN 在所有子结构计数任务上匹配或超过 PPGN。
 
 ## 相关论文
 
-- [A Content-Preserving Secure Linguistic Steganography](a_content-preserving_secure_linguistic_steganography.md)
-- [Online Sparsification of Bipartite-Like Clusters in Graphs](../../ICML2025/llm_efficiency/online_sparsification_of_bipartite-like_clusters_in_graphs.md)
-- [Structure-Aware Spectral Sparsification via Uniform Edge Sampling](../../NeurIPS2025/llm_efficiency/structure-aware_spectral_sparsification_via_uniform_edge_sampling.md)
-- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](../../CVPR2025/llm_efficiency/language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
-- [Boosting Long-Context Information Seeking via Query-Guided Activation Refilling](../../ACL2025/llm_efficiency/boosting_long-context_information_seeking_via_query-guided_activation_refilling.md)
+- [\[AAAI 2026\] A Content-Preserving Secure Linguistic Steganography](a_content-preserving_secure_linguistic_steganography.md)
+- [\[ICML 2025\] Online Sparsification of Bipartite-Like Clusters in Graphs](../../ICML2025/llm_efficiency/online_sparsification_of_bipartite-like_clusters_in_graphs.md)
+- [\[NeurIPS 2025\] Structure-Aware Spectral Sparsification via Uniform Edge Sampling](../../NeurIPS2025/llm_efficiency/structure-aware_spectral_sparsification_via_uniform_edge_sampling.md)
+- [\[CVPR 2025\] Language Guided Concept Bottleneck Models for Interpretable Continual Learning](../../CVPR2025/llm_efficiency/language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
+- [\[ACL 2025\] Boosting Long-Context Information Seeking via Query-Guided Activation Refilling](../../ACL2025/llm_efficiency/boosting_long-context_information_seeking_via_query-guided_activation_refilling.md)
 
 <!-- RELATED:END -->

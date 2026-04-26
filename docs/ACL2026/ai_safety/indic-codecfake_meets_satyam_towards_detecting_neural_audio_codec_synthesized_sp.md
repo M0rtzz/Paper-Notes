@@ -125,10 +125,10 @@ SATYAM 将 CF 检测建模为条件生成任务。输入语音经两个冻结的
 
 ## 相关论文
 
-- [Yours or Mine? Overwriting Attacks Against Neural Audio Watermarking](../../AAAI2026/ai_safety/yours_or_mine_overwriting_attacks_against_neural_audio_watermarking.md)
-- [Not All Deepfakes Are Created Equal: Triaging Audio Forgeries for Robust Deepfake Singer Identification](../../NeurIPS2025/ai_safety/not_all_deepfakes_are_created_equal_triaging_audio_forgeries_for_robust_deepfake.md)
-- [Ghost in the Transformer: Detecting Model Reuse with Invariant Spectral Signatures](../../AAAI2026/ai_safety/ghost_in_the_transformer_detecting_model_reuse_with_invariant_spectral_signature.md)
-- [StyleBreak: Revealing Alignment Vulnerabilities in Large Audio-Language Models via Style-Aware Audio Jailbreak](../../AAAI2026/ai_safety/stylebreak_revealing_alignment_vulnerabilities_in_large_audio-language_models_vi.md)
-- [AudioTrust: Benchmarking the Multifaceted Trustworthiness of Audio Large Language Models](../../ICLR2026/ai_safety/audiotrust_benchmarking_the_multifaceted_trustworthiness_of_audio_large_language.md)
+- [\[AAAI 2026\] Yours or Mine? Overwriting Attacks Against Neural Audio Watermarking](../../AAAI2026/ai_safety/yours_or_mine_overwriting_attacks_against_neural_audio_watermarking.md)
+- [\[NeurIPS 2025\] Not All Deepfakes Are Created Equal: Triaging Audio Forgeries for Robust Deepfake Singer Identification](../../NeurIPS2025/ai_safety/not_all_deepfakes_are_created_equal_triaging_audio_forgeries_for_robust_deepfake.md)
+- [\[AAAI 2026\] Ghost in the Transformer: Detecting Model Reuse with Invariant Spectral Signatures](../../AAAI2026/ai_safety/ghost_in_the_transformer_detecting_model_reuse_with_invariant_spectral_signature.md)
+- [\[AAAI 2026\] StyleBreak: Revealing Alignment Vulnerabilities in Large Audio-Language Models via Style-Aware Audio Jailbreak](../../AAAI2026/ai_safety/stylebreak_revealing_alignment_vulnerabilities_in_large_audio-language_models_vi.md)
+- [\[ICLR 2026\] AudioTrust: Benchmarking the Multifaceted Trustworthiness of Audio Large Language Models](../../ICLR2026/ai_safety/audiotrust_benchmarking_the_multifaceted_trustworthiness_of_audio_large_language.md)
 
 <!-- RELATED:END -->

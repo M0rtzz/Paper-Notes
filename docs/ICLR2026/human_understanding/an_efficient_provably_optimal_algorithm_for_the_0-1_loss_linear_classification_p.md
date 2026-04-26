@@ -106,10 +106,10 @@ tags:
 
 ## 相关论文
 
-- [SubFLOT: Submodel Extraction for Efficient and Personalized Federated Learning via Optimal Transport](../../CVPR2026/human_understanding/subflot_submodel_extraction_for_efficient_and_personalized_federated_learning_vi.md)
-- [REINA: Regularized Entropy Information-Based Loss for Efficient Simultaneous Speech Translation](../../AAAI2026/human_understanding/reina_regularized_entropy_information-based_loss_for_efficient_simultaneous_spee.md)
-- [DGNet: Discrete Green Networks for Data-Efficient Learning of Spatiotemporal PDEs](dgnet_discrete_green_networks_for_data-efficient_learning_of_spatiotemporal_pdes.md)
-- [REA-RL: Reflection-Aware Online Reinforcement Learning for Efficient Reasoning](rea-rl_reflection-aware_online_reinforcement_learning_for_efficient_reasoning.md)
-- [Spectral Subsurface Scattering for Material Classification](../../ECCV2024/human_understanding/spectral_subsurface_scattering_for_material_classification.md)
+- [\[CVPR 2026\] SubFLOT: Submodel Extraction for Efficient and Personalized Federated Learning via Optimal Transport](../../CVPR2026/human_understanding/subflot_submodel_extraction_for_efficient_and_personalized_federated_learning_vi.md)
+- [\[AAAI 2026\] REINA: Regularized Entropy Information-Based Loss for Efficient Simultaneous Speech Translation](../../AAAI2026/human_understanding/reina_regularized_entropy_information-based_loss_for_efficient_simultaneous_spee.md)
+- [\[ICLR 2026\] DGNet: Discrete Green Networks for Data-Efficient Learning of Spatiotemporal PDEs](dgnet_discrete_green_networks_for_data-efficient_learning_of_spatiotemporal_pdes.md)
+- [\[ICLR 2026\] REA-RL: Reflection-Aware Online Reinforcement Learning for Efficient Reasoning](rea-rl_reflection-aware_online_reinforcement_learning_for_efficient_reasoning.md)
+- [\[ECCV 2024\] Spectral Subsurface Scattering for Material Classification](../../ECCV2024/human_understanding/spectral_subsurface_scattering_for_material_classification.md)
 
 <!-- RELATED:END -->

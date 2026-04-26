@@ -147,10 +147,10 @@ $$\tilde{z}_t = \alpha \cdot (z_t - \bar{z}_t) + \bar{z}_t$$
 
 ## 相关论文
 
-- [SparseDiT: Token Sparsification for Efficient Diffusion Transformer](sparsedit_token_sparsification_for_efficient_diffusion_transformer.md)
-- [Dense2MoE: Restructuring Diffusion Transformer to MoE for Efficient Text-to-Image Generation](../../ICCV2025/image_generation/dense2moe_restructuring_diffusion_transformer_to_moe_for_eff.md)
-- [Linear Differential Vision Transformer: Learning Visual Contrasts via Pairwise Differentials](linear_differential_vision_transformer_learning_visual_contrasts_via_pairwise_di.md)
-- [Towards Transformer-Based Aligned Generation with Self-Coherence Guidance](../../CVPR2025/image_generation/towards_transformer-based_aligned_generation_with_self-coherence_guidance.md)
-- [LaVin-DiT: Large Vision Diffusion Transformer](../../CVPR2025/image_generation/lavin-dit_large_vision_diffusion_transformer.md)
+- [\[NeurIPS 2025\] SparseDiT: Token Sparsification for Efficient Diffusion Transformer](sparsedit_token_sparsification_for_efficient_diffusion_transformer.md)
+- [\[ICCV 2025\] Dense2MoE: Restructuring Diffusion Transformer to MoE for Efficient Text-to-Image Generation](../../ICCV2025/image_generation/dense2moe_restructuring_diffusion_transformer_to_moe_for_eff.md)
+- [\[NeurIPS 2025\] Linear Differential Vision Transformer: Learning Visual Contrasts via Pairwise Differentials](linear_differential_vision_transformer_learning_visual_contrasts_via_pairwise_di.md)
+- [\[CVPR 2025\] Towards Transformer-Based Aligned Generation with Self-Coherence Guidance](../../CVPR2025/image_generation/towards_transformer-based_aligned_generation_with_self-coherence_guidance.md)
+- [\[CVPR 2025\] LaVin-DiT: Large Vision Diffusion Transformer](../../CVPR2025/image_generation/lavin-dit_large_vision_diffusion_transformer.md)
 
 <!-- RELATED:END -->

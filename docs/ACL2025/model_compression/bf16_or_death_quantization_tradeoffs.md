@@ -121,10 +121,10 @@ tags:
 
 ## 相关论文
 
-- [MoQAE: Mixed-Precision Quantization for Long-Context LLM Inference via Mixture of Quantization-Aware Experts](moqae_mixed_precision_kv_cache.md)
-- [MAESTRO: Meta-learning Adaptive Estimation of Scalarization Trade-offs for Reward Optimization](../../ACL2026/model_compression/maestro_meta-learning_adaptive_estimation_of_scalarization_trade-offs_for_reward.md)
-- [FlatQuant: Flatness Matters for LLM Quantization](../../ICML2025/model_compression/flatquant_flatness_matters_for_llm_quantization.md)
-- [Compression in Transformer Language Models Has a Surprising Relationship with Performance](compression_in_transformer_language_models_has_a_surprising_relationship_with_pe.md)
-- [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
+- [\[ACL 2025\] MoQAE: Mixed-Precision Quantization for Long-Context LLM Inference via Mixture of Quantization-Aware Experts](moqae_mixed_precision_kv_cache.md)
+- [\[ACL 2026\] MAESTRO: Meta-learning Adaptive Estimation of Scalarization Trade-offs for Reward Optimization](../../ACL2026/model_compression/maestro_meta-learning_adaptive_estimation_of_scalarization_trade-offs_for_reward.md)
+- [\[ICML 2025\] FlatQuant: Flatness Matters for LLM Quantization](../../ICML2025/model_compression/flatquant_flatness_matters_for_llm_quantization.md)
+- [\[ACL 2025\] Compression in Transformer Language Models Has a Surprising Relationship with Performance](compression_in_transformer_language_models_has_a_surprising_relationship_with_pe.md)
+- [\[ACL 2025\] EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
 
 <!-- RELATED:END -->

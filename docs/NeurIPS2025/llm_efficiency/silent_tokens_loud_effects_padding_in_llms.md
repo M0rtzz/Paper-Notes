@@ -121,10 +121,10 @@ tags:
 
 ## 相关论文
 
-- [Long-Context Modeling with Dynamic Hierarchical Sparse Attention for On-Device LLMs](long-context_modeling_with_dynamic_hierarchical_sparse_attention_for_on-device_l.md)
-- [Forget What Matters, Keep the Rest: Selective Unlearning of Informative Tokens](../../ACL2026/llm_efficiency/forget_what_matters_keep_the_rest_selective_unlearning_of_informative_tokens.md)
-- [LooGLE v2: Are LLMs Ready for Real World Long Dependency Challenges?](loogle_v2_are_llms_ready_for_real_world_long_dependency_challenges.md)
-- [Long-Short Alignment for Effective Long-Context Modeling in LLMs](../../ICML2025/llm_efficiency/long-short_alignment_for_effective_long-context_modeling_in_llms.md)
-- [Distance between Relevant Information Pieces Causes Bias in Long-Context LLMs](../../ACL2025/llm_efficiency/distance_between_relevant_information_pieces_causes_bias_in_long-context_llms.md)
+- [\[NeurIPS 2025\] Long-Context Modeling with Dynamic Hierarchical Sparse Attention for On-Device LLMs](long-context_modeling_with_dynamic_hierarchical_sparse_attention_for_on-device_l.md)
+- [\[ACL 2026\] Forget What Matters, Keep the Rest: Selective Unlearning of Informative Tokens](../../ACL2026/llm_efficiency/forget_what_matters_keep_the_rest_selective_unlearning_of_informative_tokens.md)
+- [\[NeurIPS 2025\] LooGLE v2: Are LLMs Ready for Real World Long Dependency Challenges?](loogle_v2_are_llms_ready_for_real_world_long_dependency_challenges.md)
+- [\[ICML 2025\] Long-Short Alignment for Effective Long-Context Modeling in LLMs](../../ICML2025/llm_efficiency/long-short_alignment_for_effective_long-context_modeling_in_llms.md)
+- [\[ACL 2025\] Distance between Relevant Information Pieces Causes Bias in Long-Context LLMs](../../ACL2025/llm_efficiency/distance_between_relevant_information_pieces_causes_bias_in_long-context_llms.md)
 
 <!-- RELATED:END -->

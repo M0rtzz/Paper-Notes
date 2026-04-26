@@ -119,10 +119,10 @@ tags:
 
 ## 相关论文
 
-- [Small Language Models as Compiler Experts: Auto-Parallelization for Heterogeneous Systems](small_language_models_as_compiler_experts_auto-parallelization_for_heterogeneous.md)
-- [Cooperation of Experts: Fusing Heterogeneous Information with Large Margin](../../ICML2025/llm_evaluation/cooperation_of_experts_fusing_heterogeneous_information_with_large_margin.md)
-- [Benchmarking is Broken — Don't Let AI be its Own Judge](benchmarking_is_broken_--_dont_let_ai_be_its_own_judge.md)
-- [Improving the Calibration of Confidence Scores in Text Generation Using the Output Distribution's Characteristics](../../ACL2025/llm_evaluation/calibration_confidence_text_gen.md)
-- [Streaming Generated Gaussian Process Experts for Online Learning and Control: Extended Version](../../AAAI2026/llm_evaluation/streaming_generated_gaussian_process_experts_for_online_learning_and_control_ext.md)
+- [\[NeurIPS 2025\] Small Language Models as Compiler Experts: Auto-Parallelization for Heterogeneous Systems](small_language_models_as_compiler_experts_auto-parallelization_for_heterogeneous.md)
+- [\[ICML 2025\] Cooperation of Experts: Fusing Heterogeneous Information with Large Margin](../../ICML2025/llm_evaluation/cooperation_of_experts_fusing_heterogeneous_information_with_large_margin.md)
+- [\[NeurIPS 2025\] Benchmarking is Broken — Don't Let AI be its Own Judge](benchmarking_is_broken_--_dont_let_ai_be_its_own_judge.md)
+- [\[ACL 2025\] Improving the Calibration of Confidence Scores in Text Generation Using the Output Distribution's Characteristics](../../ACL2025/llm_evaluation/calibration_confidence_text_gen.md)
+- [\[AAAI 2026\] Streaming Generated Gaussian Process Experts for Online Learning and Control: Extended Version](../../AAAI2026/llm_evaluation/streaming_generated_gaussian_process_experts_for_online_learning_and_control_ext.md)
 
 <!-- RELATED:END -->

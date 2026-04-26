@@ -153,10 +153,10 @@ SENSEI 在 KeyRoom-S15 上比 PPO 快约 **两个数量级**。
 
 ## 相关论文
 
-- [Foundation Models as World Models: A Foundational Study in Text-Based GridWorlds](../../NeurIPS2025/reinforcement_learning/foundation_models_as_world_models_a_foundational_study_in_text-based_gridworlds.md)
-- [PIGDreamer: Privileged Information Guided World Models for Safe Partially Observable RL](pigdreamer_privileged_information_guided_world_models_for_safe_partially_observa.md)
-- [Exploration with Foundation Models: Capabilities, Limitations, and Hybrid Approaches](../../NeurIPS2025/reinforcement_learning/exploration_with_foundation_models_capabilities_limitations_and_hybrid_approache.md)
-- [Reward-free World Models for Online Imitation Learning](reward-free_world_models_for_online_imitation_learning.md)
-- [Self-Improving Embodied Foundation Models](../../NeurIPS2025/reinforcement_learning/self-improving_embodied_foundation_models.md)
+- [\[NeurIPS 2025\] Foundation Models as World Models: A Foundational Study in Text-Based GridWorlds](../../NeurIPS2025/reinforcement_learning/foundation_models_as_world_models_a_foundational_study_in_text-based_gridworlds.md)
+- [\[ICML 2025\] PIGDreamer: Privileged Information Guided World Models for Safe Partially Observable RL](pigdreamer_privileged_information_guided_world_models_for_safe_partially_observa.md)
+- [\[NeurIPS 2025\] Exploration with Foundation Models: Capabilities, Limitations, and Hybrid Approaches](../../NeurIPS2025/reinforcement_learning/exploration_with_foundation_models_capabilities_limitations_and_hybrid_approache.md)
+- [\[ICML 2025\] Reward-free World Models for Online Imitation Learning](reward-free_world_models_for_online_imitation_learning.md)
+- [\[NeurIPS 2025\] Self-Improving Embodied Foundation Models](../../NeurIPS2025/reinforcement_learning/self-improving_embodied_foundation_models.md)
 
 <!-- RELATED:END -->

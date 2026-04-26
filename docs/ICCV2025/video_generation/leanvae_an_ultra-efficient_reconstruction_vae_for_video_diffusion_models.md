@@ -159,10 +159,10 @@ RGB + 频域 L1 重建损失 + VGG 感知损失 + PatchGAN 对抗损失 + KL 正
 
 ## 相关论文
 
-- [V.I.P.: Iterative Online Preference Distillation for Efficient Video Diffusion Models](vip_iterative_online_preference_distillation_for_efficient_video_diffusion_model.md)
-- [EfficientMT: Efficient Temporal Adaptation for Motion Transfer in Text-to-Video Diffusion Models](efficientmt_efficient_temporal_adaptation_for_motion_transfer_in_text-to-video_d.md)
-- [Improved Video VAE for Latent Video Diffusion Model](../../CVPR2025/video_generation/improved_video_vae_for_latent_video_diffusion_model.md)
-- [Adversarial Distribution Matching for Diffusion Distillation Towards Efficient Image and Video Synthesis](adversarial_distribution_matching_for_diffusion_distillation_towards_efficient_image_and_video_synthesis.md)
-- [VidTwin: Video VAE with Decoupled Structure and Dynamics](../../CVPR2025/video_generation/vidtwin_video_vae_with_decoupled_structure_and_dynamics.md)
+- [\[ICCV 2025\] V.I.P.: Iterative Online Preference Distillation for Efficient Video Diffusion Models](vip_iterative_online_preference_distillation_for_efficient_video_diffusion_model.md)
+- [\[ICCV 2025\] EfficientMT: Efficient Temporal Adaptation for Motion Transfer in Text-to-Video Diffusion Models](efficientmt_efficient_temporal_adaptation_for_motion_transfer_in_text-to-video_d.md)
+- [\[CVPR 2025\] Improved Video VAE for Latent Video Diffusion Model](../../CVPR2025/video_generation/improved_video_vae_for_latent_video_diffusion_model.md)
+- [\[ICCV 2025\] Adversarial Distribution Matching for Diffusion Distillation Towards Efficient Image and Video Synthesis](adversarial_distribution_matching_for_diffusion_distillation_towards_efficient_image_and_video_synthesis.md)
+- [\[CVPR 2025\] VidTwin: Video VAE with Decoupled Structure and Dynamics](../../CVPR2025/video_generation/vidtwin_video_vae_with_decoupled_structure_and_dynamics.md)
 
 <!-- RELATED:END -->

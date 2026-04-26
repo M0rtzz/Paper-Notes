@@ -121,10 +121,10 @@ Laplacian 金字塔级数分析（NUS-8 → Gehler）：
 
 ## 相关论文
 
-- [Color Alignment in Diffusion](color_alignment_in_diffusion.md)
-- [The Art of Deception: Color Visual Illusions and Diffusion Models](the_art_of_deception_color_visual_illusions_and_diffusion_models.md)
-- [ColorPeel: Color Prompt Learning with Diffusion Models via Color and Shape Disentanglement](../../ECCV2024/image_generation/colorpeel_color_prompt_learning_with_diffusion_models_via_color_and_shape_disent.md)
-- [Video Color Grading via Look-Up Table Generation](../../ICCV2025/image_generation/video_color_grading_via_look-up_table_generation.md)
-- [Too Vivid to Be Real? Benchmarking and Calibrating Generative Color Fidelity](../../CVPR2026/image_generation/too_vivid_to_be_real_benchmarking_and_calibrating_generative_color_fidelity.md)
+- [\[CVPR 2025\] Color Alignment in Diffusion](color_alignment_in_diffusion.md)
+- [\[CVPR 2025\] The Art of Deception: Color Visual Illusions and Diffusion Models](the_art_of_deception_color_visual_illusions_and_diffusion_models.md)
+- [\[ECCV 2024\] ColorPeel: Color Prompt Learning with Diffusion Models via Color and Shape Disentanglement](../../ECCV2024/image_generation/colorpeel_color_prompt_learning_with_diffusion_models_via_color_and_shape_disent.md)
+- [\[ICCV 2025\] Video Color Grading via Look-Up Table Generation](../../ICCV2025/image_generation/video_color_grading_via_look-up_table_generation.md)
+- [\[CVPR 2026\] Too Vivid to Be Real? Benchmarking and Calibrating Generative Color Fidelity](../../CVPR2026/image_generation/too_vivid_to_be_real_benchmarking_and_calibrating_generative_color_fidelity.md)
 
 <!-- RELATED:END -->

@@ -138,10 +138,10 @@ $$\bm{v}_t^{\text{dsg}} = \bm{v}_t + \eta(\bm{v}_t - \bm{v}_{\bm{\theta}+\Delta\
 
 ## 相关论文
 
-- [Does YOLO Really Need to See Every Training Image in Every Epoch?](../../CVPR2026/object_detection/does_yolo_really_need_to_see_every_training_image_in_every_epoch.md)
-- [How Many Experts Are Enough? Towards Optimal Semantic Specialization for Mixture-of-Experts](../../AAAI2026/object_detection/how_many_experts_are_enough_towards_optimal_semantic_specialization_for_mixture-.md)
-- [SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking](../../CVPR2026/object_detection/slice_semantic_latent_injection_via_compartmentali.md)
-- [Diverse Text-to-Image Generation via Contrastive Noise Optimization](diverse_text-to-image_generation_via_contrastive_noise_optimization.md)
-- [SERUM: Simple, Efficient, Robust, and Unifying Marking for Diffusion-based Image Generation](serum_simple_efficient_robust_and_unifying_marking_for_diffusion-based_image_gen.md)
+- [\[CVPR 2026\] Does YOLO Really Need to See Every Training Image in Every Epoch?](../../CVPR2026/object_detection/does_yolo_really_need_to_see_every_training_image_in_every_epoch.md)
+- [\[AAAI 2026\] How Many Experts Are Enough? Towards Optimal Semantic Specialization for Mixture-of-Experts](../../AAAI2026/object_detection/how_many_experts_are_enough_towards_optimal_semantic_specialization_for_mixture-.md)
+- [\[CVPR 2026\] SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking](../../CVPR2026/object_detection/slice_semantic_latent_injection_via_compartmentali.md)
+- [\[ICLR 2026\] Diverse Text-to-Image Generation via Contrastive Noise Optimization](diverse_text-to-image_generation_via_contrastive_noise_optimization.md)
+- [\[ICLR 2026\] SERUM: Simple, Efficient, Robust, and Unifying Marking for Diffusion-based Image Generation](serum_simple_efficient_robust_and_unifying_marking_for_diffusion-based_image_gen.md)
 
 <!-- RELATED:END -->

@@ -169,10 +169,10 @@ HiREC + DeepSeek-14B (38.76) 超越 Dense + GPT-4o (29.22) 达 9%+，说明高�
 
 ## 相关论文
 
-- [Beyond Prompting: An Efficient Embedding Framework for Open-Domain Question Answering](embqa_embedding_odqa.md)
-- [NeuSym-RAG: Hybrid Neural Symbolic Retrieval with Multiview Structuring for PDF Question Answering](neusym_rag_pdf_qa.md)
-- [Towards a More Generalized Approach in Open Relation Extraction](generalized_open_relation_extract.md)
-- [HCRE: LLM-based Hierarchical Classification for Cross-Document Relation Extraction](../../ACL2026/nlp_understanding/hcre_llm-based_hierarchical_classification_for_cross-document_relation_extractio.md)
-- [A Variational Approach for Mitigating Entity Bias in Relation Extraction](a_variational_approach_for_mitigating_entity_bias_in_relation_extraction.md)
+- [\[ACL 2025\] Beyond Prompting: An Efficient Embedding Framework for Open-Domain Question Answering](embqa_embedding_odqa.md)
+- [\[ACL 2025\] NeuSym-RAG: Hybrid Neural Symbolic Retrieval with Multiview Structuring for PDF Question Answering](neusym_rag_pdf_qa.md)
+- [\[ACL 2025\] Towards a More Generalized Approach in Open Relation Extraction](generalized_open_relation_extract.md)
+- [\[ACL 2026\] HCRE: LLM-based Hierarchical Classification for Cross-Document Relation Extraction](../../ACL2026/nlp_understanding/hcre_llm-based_hierarchical_classification_for_cross-document_relation_extractio.md)
+- [\[ACL 2025\] A Variational Approach for Mitigating Entity Bias in Relation Extraction](a_variational_approach_for_mitigating_entity_bias_in_relation_extraction.md)
 
 <!-- RELATED:END -->

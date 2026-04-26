@@ -134,10 +134,10 @@ tags:
 
 ## 相关论文
 
-- [Evaluation of Vision-LLMs in Surveillance Video](evaluation_of_vision-llms_in_surveillance_video.md)
-- [Gen3DEval: Using vLLMs for Automatic Evaluation of Generated 3D Objects](../../CVPR2025/3d_vision/gen3deval_using_vllms_for_automatic_evaluation_of_generated_3d_objects.md)
-- [3D-Agent: Tri-Modal Multi-Agent Collaboration for Scalable 3D Object Annotation](3d-agenttri-modal_multi-agent_collaboration_for_scalable_3d_object_annotation.md)
-- [How Far are AI-generated Videos from Simulating the 3D Visual World: A Learned 3D Evaluation Approach](../../ICCV2025/3d_vision/how_far_are_ai-generated_videos_from_simulating_the_3d_visual_world_a_learned_3d.md)
-- [U-CAN: Unsupervised Point Cloud Denoising with Consistency-Aware Noise2Noise Matching](u-can_unsupervised_point_cloud_denoising_with_consistency-aware_noise2noise_matc.md)
+- [\[NeurIPS 2025\] Evaluation of Vision-LLMs in Surveillance Video](evaluation_of_vision-llms_in_surveillance_video.md)
+- [\[CVPR 2025\] Gen3DEval: Using vLLMs for Automatic Evaluation of Generated 3D Objects](../../CVPR2025/3d_vision/gen3deval_using_vllms_for_automatic_evaluation_of_generated_3d_objects.md)
+- [\[NeurIPS 2025\] 3D-Agent: Tri-Modal Multi-Agent Collaboration for Scalable 3D Object Annotation](3d-agenttri-modal_multi-agent_collaboration_for_scalable_3d_object_annotation.md)
+- [\[ICCV 2025\] How Far are AI-generated Videos from Simulating the 3D Visual World: A Learned 3D Evaluation Approach](../../ICCV2025/3d_vision/how_far_are_ai-generated_videos_from_simulating_the_3d_visual_world_a_learned_3d.md)
+- [\[NeurIPS 2025\] U-CAN: Unsupervised Point Cloud Denoising with Consistency-Aware Noise2Noise Matching](u-can_unsupervised_point_cloud_denoising_with_consistency-aware_noise2noise_matc.md)
 
 <!-- RELATED:END -->

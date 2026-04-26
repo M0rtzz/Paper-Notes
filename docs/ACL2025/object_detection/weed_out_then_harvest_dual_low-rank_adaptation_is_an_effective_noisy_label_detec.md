@@ -111,10 +111,10 @@ tags:
 
 ## 相关论文
 
-- [GeoRA: Geometry-Aware Low-Rank Adaptation for RLVR](../../ACL2026/object_detection/geora_geometry-aware_low-rank_adaptation_for_rlvr.md)
-- [EW-DETR: Evolving World Object Detection via Incremental Low-Rank DEtection TRansformer](../../CVPR2026/object_detection/ew-detr_evolving_world_object_detection_via_incremental_low-rank_detection_trans.md)
-- [Dual Data Alignment Makes AI-Generated Image Detector Easier Generalizable](../../NeurIPS2025/object_detection/dual_data_alignment_makes_ai-generated_image_detector_easier_generalizable.md)
-- [Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](../../CVPR2025/object_detection/generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)
-- [Sample Complexity of Distributionally Robust Average-Reward Reinforcement Learning](../../NeurIPS2025/object_detection/sample_complexity_of_distributionally_robust_average-reward_reinforcement_learni.md)
+- [\[ACL 2026\] GeoRA: Geometry-Aware Low-Rank Adaptation for RLVR](../../ACL2026/object_detection/geora_geometry-aware_low-rank_adaptation_for_rlvr.md)
+- [\[CVPR 2026\] EW-DETR: Evolving World Object Detection via Incremental Low-Rank DEtection TRansformer](../../CVPR2026/object_detection/ew-detr_evolving_world_object_detection_via_incremental_low-rank_detection_trans.md)
+- [\[NeurIPS 2025\] Dual Data Alignment Makes AI-Generated Image Detector Easier Generalizable](../../NeurIPS2025/object_detection/dual_data_alignment_makes_ai-generated_image_detector_easier_generalizable.md)
+- [\[CVPR 2025\] Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](../../CVPR2025/object_detection/generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)
+- [\[NeurIPS 2025\] Sample Complexity of Distributionally Robust Average-Reward Reinforcement Learning](../../NeurIPS2025/object_detection/sample_complexity_of_distributionally_robust_average-reward_reinforcement_learni.md)
 
 <!-- RELATED:END -->

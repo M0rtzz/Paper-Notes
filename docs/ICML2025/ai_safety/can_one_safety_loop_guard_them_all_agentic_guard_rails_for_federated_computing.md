@@ -135,10 +135,10 @@ Guardian-FC 采用两层架构：上层为 **Agentic-AI 控制平面**（只处�
 
 ## 相关论文
 
-- [Poly-Guard: Massive Multi-Domain Safety Policy-Grounded Guardrail Dataset](../../NeurIPS2025/ai_safety/poly-guard_massive_multi-domain_safety_policy-grounded_guardrail_dataset.md)
-- [Learning Safety Constraints for Large Language Models](learning_safety_constraints_for_large_language_models.md)
-- [ALMGuard: Safety Shortcuts and Where to Find Them as Guardrails for Audio-Language Models](../../NeurIPS2025/ai_safety/almguard_safety_shortcuts_and_where_to_find_them_as_guardrails_for_audio-languag.md)
-- [Oasis: One Image is All You Need for Multimodal Instruction Data Synthesis](../../ICCV2025/ai_safety/oasis_one_image_is_all_you_need_for_multimodal_instruction_data_synthesis.md)
-- [Emergent Misalignment: Narrow Finetuning Can Produce Broadly Misaligned LLMs](emergent_misalignment_narrow_finetuning_can_produce_broadly_misaligned_llms.md)
+- [\[NeurIPS 2025\] Poly-Guard: Massive Multi-Domain Safety Policy-Grounded Guardrail Dataset](../../NeurIPS2025/ai_safety/poly-guard_massive_multi-domain_safety_policy-grounded_guardrail_dataset.md)
+- [\[ICML 2025\] Learning Safety Constraints for Large Language Models](learning_safety_constraints_for_large_language_models.md)
+- [\[NeurIPS 2025\] ALMGuard: Safety Shortcuts and Where to Find Them as Guardrails for Audio-Language Models](../../NeurIPS2025/ai_safety/almguard_safety_shortcuts_and_where_to_find_them_as_guardrails_for_audio-languag.md)
+- [\[ICCV 2025\] Oasis: One Image is All You Need for Multimodal Instruction Data Synthesis](../../ICCV2025/ai_safety/oasis_one_image_is_all_you_need_for_multimodal_instruction_data_synthesis.md)
+- [\[ICML 2025\] Emergent Misalignment: Narrow Finetuning Can Produce Broadly Misaligned LLMs](emergent_misalignment_narrow_finetuning_can_produce_broadly_misaligned_llms.md)
 
 <!-- RELATED:END -->

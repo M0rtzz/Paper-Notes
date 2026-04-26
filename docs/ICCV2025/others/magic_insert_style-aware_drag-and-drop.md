@@ -149,10 +149,10 @@ Magic Insert + ControlNet在主体保真度上全面领先。
 
 ## 相关论文
 
-- [Shoe Style-Invariant and Ground-Aware Learning for Dense Foot Contact Estimation](../../CVPR2026/others/shoe_style-invariant_and_ground-aware_learning_for_dense_foot_contact_estimation.md)
-- [Towards Style Alignment in Cross-Cultural Translation](../../ACL2025/others/towards_style_alignment_in_cross-cultural_translation.md)
-- [Substance over Style: Evaluating Proactive Conversational Coaching Agents](../../ACL2025/others/proactive_conversational_coaching.md)
-- [Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education](../../ACL2025/others/uni-retrieval_a_multi-style_retrieval_framework_for_stems_education.md)
-- [Symmetry-Aware GFlowNets](../../ICML2025/others/symmetry-aware_gflownets.md)
+- [\[CVPR 2026\] Shoe Style-Invariant and Ground-Aware Learning for Dense Foot Contact Estimation](../../CVPR2026/others/shoe_style-invariant_and_ground-aware_learning_for_dense_foot_contact_estimation.md)
+- [\[ACL 2025\] Towards Style Alignment in Cross-Cultural Translation](../../ACL2025/others/towards_style_alignment_in_cross-cultural_translation.md)
+- [\[ACL 2025\] Substance over Style: Evaluating Proactive Conversational Coaching Agents](../../ACL2025/others/proactive_conversational_coaching.md)
+- [\[ACL 2025\] Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education](../../ACL2025/others/uni-retrieval_a_multi-style_retrieval_framework_for_stems_education.md)
+- [\[ICML 2025\] Symmetry-Aware GFlowNets](../../ICML2025/others/symmetry-aware_gflownets.md)
 
 <!-- RELATED:END -->

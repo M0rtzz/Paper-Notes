@@ -160,10 +160,10 @@ LayerTracer 包含四个组件：
 
 ## 相关论文
 
-- [Approximately Aligned Decoding](../../NeurIPS2025/llm_efficiency/approximately_aligned_decoding.md)
-- [Associative Transformer](../../CVPR2025/llm_efficiency/associative_transformer.md)
-- [Spiking Transformer: Introducing Accurate Addition-Only Spiking Self-Attention for Transformer](../../CVPR2025/llm_efficiency/spiking_transformer_introducing_accurate_addition-only_spiking_self-attention_fo.md)
-- [CARE Transformer: Mobile-Friendly Linear Visual Transformer via Decoupled Dual Interaction](../../CVPR2025/llm_efficiency/care_transformer_linear_attention.md)
-- [CoPrUS: Consistency Preserving Utterance Synthesis Towards More Realistic Benchmark](../../ACL2025/llm_efficiency/coprus_consistency_preserving_utterance_synthesis_towards_more_realistic_benchma.md)
+- [\[NeurIPS 2025\] Approximately Aligned Decoding](../../NeurIPS2025/llm_efficiency/approximately_aligned_decoding.md)
+- [\[CVPR 2025\] Associative Transformer](../../CVPR2025/llm_efficiency/associative_transformer.md)
+- [\[CVPR 2025\] Spiking Transformer: Introducing Accurate Addition-Only Spiking Self-Attention for Transformer](../../CVPR2025/llm_efficiency/spiking_transformer_introducing_accurate_addition-only_spiking_self-attention_fo.md)
+- [\[CVPR 2025\] CARE Transformer: Mobile-Friendly Linear Visual Transformer via Decoupled Dual Interaction](../../CVPR2025/llm_efficiency/care_transformer_linear_attention.md)
+- [\[ACL 2025\] CoPrUS: Consistency Preserving Utterance Synthesis Towards More Realistic Benchmark](../../ACL2025/llm_efficiency/coprus_consistency_preserving_utterance_synthesis_towards_more_realistic_benchma.md)
 
 <!-- RELATED:END -->

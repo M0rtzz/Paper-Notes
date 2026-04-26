@@ -189,10 +189,10 @@ $$\mathcal{L} = \lambda_m \mathcal{L}_{mano} + \lambda_v \mathcal{L}_V + \lambda
 
 ## 相关论文
 
-- [Scalable In-Context Q-Learning](scalable_in-context_q-learning.md)
-- [3D Hand Pose Estimation in Everyday Egocentric Images](../../ECCV2024/human_understanding/3d_hand_pose_estimation_in_everyday_egocentric_images.md)
-- [A2P: From 2D Alignment to 3D Plausibility for Occlusion-Robust Two-Hand Reconstruction](../../CVPR2026/human_understanding/from_2d_alignment_to_3d_plausibility_unifying_hete.md)
-- [COLD-Steer: Steering Large Language Models via In-Context One-step Learning Dynamics](cold-steer_steering_large_language_models_via_in-context_one-step_learning_dynam.md)
-- [HandDreamer: Zero-Shot Text to 3D Hand Model Generation](../../CVPR2026/human_understanding/handdreamer_zero_shot_text_to_3d_hand_model_generation.md)
+- [\[ICLR 2026\] Scalable In-Context Q-Learning](scalable_in-context_q-learning.md)
+- [\[ECCV 2024\] 3D Hand Pose Estimation in Everyday Egocentric Images](../../ECCV2024/human_understanding/3d_hand_pose_estimation_in_everyday_egocentric_images.md)
+- [\[CVPR 2026\] A2P: From 2D Alignment to 3D Plausibility for Occlusion-Robust Two-Hand Reconstruction](../../CVPR2026/human_understanding/from_2d_alignment_to_3d_plausibility_unifying_hete.md)
+- [\[ICLR 2026\] COLD-Steer: Steering Large Language Models via In-Context One-step Learning Dynamics](cold-steer_steering_large_language_models_via_in-context_one-step_learning_dynam.md)
+- [\[CVPR 2026\] HandDreamer: Zero-Shot Text to 3D Hand Model Generation](../../CVPR2026/human_understanding/handdreamer_zero_shot_text_to_3d_hand_model_generation.md)
 
 <!-- RELATED:END -->

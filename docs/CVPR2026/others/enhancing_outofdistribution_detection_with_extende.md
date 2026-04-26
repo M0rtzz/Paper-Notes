@@ -120,10 +120,10 @@ ResNet-18 on CIFAR-10/100 100 epochs, SGD momentum=0.9, lr=0.1, weight decay 5e-
 
 ## 相关论文
 
-- [Enhancing Certified Robustness via Block Reflector Orthogonal Layers and Logit Annealing Loss](../../ICML2025/others/enhancing_certified_robustness_via_block_reflector_orthogonal_layers_and_logit_a.md)
-- [OOD-Chameleon: Is Algorithm Selection for OOD Generalization Learnable?](../../ICML2025/others/ood-chameleon_is_algorithm_selection_for_ood_generalization_learnable.md)
-- [Normalization in Attention Dynamics](../../NeurIPS2025/others/normalization_in_attention_dynamics.md)
-- [Certified Branch-and-Bound MaxSAT Solving (Extended Version)](../../AAAI2026/others/certified_branch-and-bound_maxsat_solving_extended_version.md)
-- [Integration of deep generative Anomaly Detection algorithm in high-speed industrial line](integration_of_deep_generative_anomaly_detection_a.md)
+- [\[ICML 2025\] Enhancing Certified Robustness via Block Reflector Orthogonal Layers and Logit Annealing Loss](../../ICML2025/others/enhancing_certified_robustness_via_block_reflector_orthogonal_layers_and_logit_a.md)
+- [\[ICML 2025\] OOD-Chameleon: Is Algorithm Selection for OOD Generalization Learnable?](../../ICML2025/others/ood-chameleon_is_algorithm_selection_for_ood_generalization_learnable.md)
+- [\[NeurIPS 2025\] Normalization in Attention Dynamics](../../NeurIPS2025/others/normalization_in_attention_dynamics.md)
+- [\[AAAI 2026\] Certified Branch-and-Bound MaxSAT Solving (Extended Version)](../../AAAI2026/others/certified_branch-and-bound_maxsat_solving_extended_version.md)
+- [\[CVPR 2026\] Integration of deep generative Anomaly Detection algorithm in high-speed industrial line](integration_of_deep_generative_anomaly_detection_a.md)
 
 <!-- RELATED:END -->

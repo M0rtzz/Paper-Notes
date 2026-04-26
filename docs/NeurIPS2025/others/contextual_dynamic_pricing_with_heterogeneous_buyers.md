@@ -124,10 +124,10 @@ $d=1$ 时，结合方差感知置信区间的自适应离散化：
 
 ## 相关论文
 
-- [Brain-Like Processing Pathways Form in Models With Heterogeneous Experts](brain-like_processing_pathways_form_in_models_with_heterogeneous_experts.md)
-- [Contextual Experience Replay for Self-Improvement of Language Agents](../../ACL2025/others/contextual_experience_replay_for_self-improvement_of_language_agents.md)
-- [A New Formulation of Zipf's Meaning-Frequency Law through Contextual Diversity](../../ACL2025/others/a_new_formulation_of_zipfs_meaning-frequency_law_through_contextual_diversity.md)
-- [Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](../../ACL2025/others/federated_lora_heterogeneous.md)
-- [You Share Beliefs, I Adapt: Progressive Heterogeneous Collaborative Perception](../../ICCV2025/others/you_share_beliefs_i_adapt_progressive_heterogeneous_collaborative_perception.md)
+- [\[NeurIPS 2025\] Brain-Like Processing Pathways Form in Models With Heterogeneous Experts](brain-like_processing_pathways_form_in_models_with_heterogeneous_experts.md)
+- [\[ACL 2025\] Contextual Experience Replay for Self-Improvement of Language Agents](../../ACL2025/others/contextual_experience_replay_for_self-improvement_of_language_agents.md)
+- [\[ACL 2025\] A New Formulation of Zipf's Meaning-Frequency Law through Contextual Diversity](../../ACL2025/others/a_new_formulation_of_zipfs_meaning-frequency_law_through_contextual_diversity.md)
+- [\[ACL 2025\] Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](../../ACL2025/others/federated_lora_heterogeneous.md)
+- [\[ICCV 2025\] You Share Beliefs, I Adapt: Progressive Heterogeneous Collaborative Perception](../../ICCV2025/others/you_share_beliefs_i_adapt_progressive_heterogeneous_collaborative_perception.md)
 
 <!-- RELATED:END -->

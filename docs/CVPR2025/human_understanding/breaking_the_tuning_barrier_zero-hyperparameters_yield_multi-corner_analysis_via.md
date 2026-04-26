@@ -130,10 +130,10 @@ tags:
 
 ## 相关论文
 
-- [Pose Priors from Language Models](pose_priors_from_language_models.md)
-- [Conformal Prediction for Zero-Shot Models](conformal_prediction_for_zero-shot_models.md)
-- [Human Motion Instruction Tuning](human_motion_instruction_tuning.md)
-- [Zero-Shot Head Swapping in Real-World Scenarios](zero-shot_head_swapping_in_real-world_scenarios.md)
-- [Dynamic Neural Surfaces for Elastic 4D Shape Representation and Analysis](dynamic_neural_surfaces_for_elastic_4d_shape_representation_and_analysis.md)
+- [\[CVPR 2025\] Pose Priors from Language Models](pose_priors_from_language_models.md)
+- [\[CVPR 2025\] Conformal Prediction for Zero-Shot Models](conformal_prediction_for_zero-shot_models.md)
+- [\[CVPR 2025\] Human Motion Instruction Tuning](human_motion_instruction_tuning.md)
+- [\[CVPR 2025\] Zero-Shot Head Swapping in Real-World Scenarios](zero-shot_head_swapping_in_real-world_scenarios.md)
+- [\[CVPR 2025\] Dynamic Neural Surfaces for Elastic 4D Shape Representation and Analysis](dynamic_neural_surfaces_for_elastic_4d_shape_representation_and_analysis.md)
 
 <!-- RELATED:END -->

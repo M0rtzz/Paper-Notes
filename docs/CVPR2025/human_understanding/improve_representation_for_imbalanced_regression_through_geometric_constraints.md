@@ -130,10 +130,10 @@ UCI-Airfoil数据集上（MAE）：
 
 ## 相关论文
 
-- [Learning Affine Correspondences by Integrating Geometric Constraints](learning_affine_correspondences_by_integrating_geometric_constraints.md)
-- [RUBIK: A Structured Benchmark for Image Matching across Geometric Challenges](rubik_a_structured_benchmark_for_image_matching_across_geometric_challenges.md)
-- [NN-Former: Rethinking Graph Structure in Neural Architecture Representation](nn-former_rethinking_graph_structure_in_neural_architecture_representation.md)
-- [Omni-ID: Holistic Identity Representation Designed for Generative Tasks](omni-id_holistic_identity_representation_designed_for_generative_tasks.md)
-- [Dynamic Neural Surfaces for Elastic 4D Shape Representation and Analysis](dynamic_neural_surfaces_for_elastic_4d_shape_representation_and_analysis.md)
+- [\[CVPR 2025\] Learning Affine Correspondences by Integrating Geometric Constraints](learning_affine_correspondences_by_integrating_geometric_constraints.md)
+- [\[CVPR 2025\] RUBIK: A Structured Benchmark for Image Matching across Geometric Challenges](rubik_a_structured_benchmark_for_image_matching_across_geometric_challenges.md)
+- [\[CVPR 2025\] NN-Former: Rethinking Graph Structure in Neural Architecture Representation](nn-former_rethinking_graph_structure_in_neural_architecture_representation.md)
+- [\[CVPR 2025\] Omni-ID: Holistic Identity Representation Designed for Generative Tasks](omni-id_holistic_identity_representation_designed_for_generative_tasks.md)
+- [\[CVPR 2025\] Dynamic Neural Surfaces for Elastic 4D Shape Representation and Analysis](dynamic_neural_surfaces_for_elastic_4d_shape_representation_and_analysis.md)
 
 <!-- RELATED:END -->

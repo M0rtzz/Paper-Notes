@@ -137,10 +137,10 @@ tags:
 
 ## 相关论文
 
-- [One-for-More: Continual Diffusion Model for Anomaly Detection](../../CVPR2025/image_generation/one-for-more_continual_diffusion_model_for_anomaly_detection.md)
-- [Flow Matching Neural Processes](flow_matching_neural_processes.md)
-- [OZSpeech: One-step Zero-shot Speech Synthesis with Learned-Prior-Conditioned Flow Matching](../../ACL2025/image_generation/ozspeech_one-step_zero-shot_speech_synthesis_with_learned-prior-conditioned_flow.md)
-- [Equivariant Flow Matching for Symmetry-Breaking Bifurcation Problems](equivariant_flow_matching_for_symmetry-breaking_bifurcation_problems.md)
-- [Curly Flow Matching for Learning Non-gradient Field Dynamics](curly_flow_matching_for_learning_non-gradient_field_dynamics.md)
+- [\[CVPR 2025\] One-for-More: Continual Diffusion Model for Anomaly Detection](../../CVPR2025/image_generation/one-for-more_continual_diffusion_model_for_anomaly_detection.md)
+- [\[NeurIPS 2025\] Flow Matching Neural Processes](flow_matching_neural_processes.md)
+- [\[ACL 2025\] OZSpeech: One-step Zero-shot Speech Synthesis with Learned-Prior-Conditioned Flow Matching](../../ACL2025/image_generation/ozspeech_one-step_zero-shot_speech_synthesis_with_learned-prior-conditioned_flow.md)
+- [\[NeurIPS 2025\] Equivariant Flow Matching for Symmetry-Breaking Bifurcation Problems](equivariant_flow_matching_for_symmetry-breaking_bifurcation_problems.md)
+- [\[NeurIPS 2025\] Curly Flow Matching for Learning Non-gradient Field Dynamics](curly_flow_matching_for_learning_non-gradient_field_dynamics.md)
 
 <!-- RELATED:END -->

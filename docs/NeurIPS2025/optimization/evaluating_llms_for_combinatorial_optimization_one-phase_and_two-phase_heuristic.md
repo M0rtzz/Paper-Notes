@@ -126,10 +126,10 @@ tags:
 
 ## 相关论文
 
-- [From Information to Generative Exponent: Learning Rate Induces Phase Transitions in SGD](from_information_to_generative_exponent_learning_rate_induces_phase_transitions_.md)
-- [Probing Neural Combinatorial Optimization Models](probing_neural_combinatorial_optimization_models.md)
-- [Online Two-Stage Submodular Maximization](online_two-stage_submodular_maximization.md)
-- [Autoformulation of Mathematical Optimization Models Using LLMs](../../ICML2025/optimization/autoformulation_of_mathematical_optimization_models_using_llms.md)
-- [Rethinking Neural Combinatorial Optimization for Vehicle Routing Problems with Different Constraint Tightness Degrees](rethinking_neural_combinatorial_optimization_for_vehicle_routing_problems_with_d.md)
+- [\[NeurIPS 2025\] From Information to Generative Exponent: Learning Rate Induces Phase Transitions in SGD](from_information_to_generative_exponent_learning_rate_induces_phase_transitions_.md)
+- [\[NeurIPS 2025\] Probing Neural Combinatorial Optimization Models](probing_neural_combinatorial_optimization_models.md)
+- [\[NeurIPS 2025\] Online Two-Stage Submodular Maximization](online_two-stage_submodular_maximization.md)
+- [\[ICML 2025\] Autoformulation of Mathematical Optimization Models Using LLMs](../../ICML2025/optimization/autoformulation_of_mathematical_optimization_models_using_llms.md)
+- [\[NeurIPS 2025\] Rethinking Neural Combinatorial Optimization for Vehicle Routing Problems with Different Constraint Tightness Degrees](rethinking_neural_combinatorial_optimization_for_vehicle_routing_problems_with_d.md)
 
 <!-- RELATED:END -->

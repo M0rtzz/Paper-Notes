@@ -150,10 +150,10 @@ $$p(\theta | F, \Omega^F) = N\!\left(\theta;\; (G^F)^{-1}[\Sigma_0^{-1}\theta_0 
 
 ## 相关论文
 
-- [Feature Selection for Latent Factor Models](../../CVPR2025/others/feature_selection_for_latent_factor_models.md)
-- [How Do Transformers Learn Variable Binding in Symbolic Programs?](how_do_transformers_learn_variable_binding_in_symbolic_programs.md)
-- [LaTIM: Measuring Latent Token-to-Token Interactions in Mamba Models](../../ACL2025/others/latim_measuring_latent_token-to-token_interactions_in_mamba_models.md)
-- [Prediction-Powered Adaptive Shrinkage Estimation](prediction-powered_adaptive_shrinkage_estimation.md)
-- [On Fine-Grained Distinct Element Estimation](on_fine-grained_distinct_element_estimation.md)
+- [\[CVPR 2025\] Feature Selection for Latent Factor Models](../../CVPR2025/others/feature_selection_for_latent_factor_models.md)
+- [\[ICML 2025\] How Do Transformers Learn Variable Binding in Symbolic Programs?](how_do_transformers_learn_variable_binding_in_symbolic_programs.md)
+- [\[ACL 2025\] LaTIM: Measuring Latent Token-to-Token Interactions in Mamba Models](../../ACL2025/others/latim_measuring_latent_token-to-token_interactions_in_mamba_models.md)
+- [\[ICML 2025\] Prediction-Powered Adaptive Shrinkage Estimation](prediction-powered_adaptive_shrinkage_estimation.md)
+- [\[ICML 2025\] On Fine-Grained Distinct Element Estimation](on_fine-grained_distinct_element_estimation.md)
 
 <!-- RELATED:END -->

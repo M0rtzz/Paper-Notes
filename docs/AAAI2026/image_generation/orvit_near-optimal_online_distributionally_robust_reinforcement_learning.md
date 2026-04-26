@@ -161,10 +161,10 @@ $$\text{Regret}(K) = \sum_{k=1}^K [V_1^{\star,\sigma}(s_1^k) - V_1^{\pi^k,\sigma
 
 ## 相关论文
 
-- [Sample Complexity of Distributionally Robust Off-Dynamics Reinforcement Learning with Online Interaction](../../ICML2025/image_generation/sample_complexity_of_distributionally_robust_off-dynamics_reinforcement_learning.md)
-- [Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](../../ICLR2026/image_generation/flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
-- [DiffusionNFT: Online Diffusion Reinforcement with Forward Process](../../ICLR2026/image_generation/diffusionnft_online_diffusion_reinforcement_with_forward_process.md)
-- [Towards Robust Zero-Shot Reinforcement Learning](../../NeurIPS2025/image_generation/towards_robust_zero-shot_reinforcement_learning.md)
-- [CAD-VAE: Leveraging Correlation-Aware Latents for Comprehensive Fair Disentanglement](cad-vae_leveraging_correlation-aware_latents_for_comprehensive_fair_disentanglem.md)
+- [\[ICML 2025\] Sample Complexity of Distributionally Robust Off-Dynamics Reinforcement Learning with Online Interaction](../../ICML2025/image_generation/sample_complexity_of_distributionally_robust_off-dynamics_reinforcement_learning.md)
+- [\[ICLR 2026\] Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](../../ICLR2026/image_generation/flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
+- [\[ICLR 2026\] DiffusionNFT: Online Diffusion Reinforcement with Forward Process](../../ICLR2026/image_generation/diffusionnft_online_diffusion_reinforcement_with_forward_process.md)
+- [\[NeurIPS 2025\] Towards Robust Zero-Shot Reinforcement Learning](../../NeurIPS2025/image_generation/towards_robust_zero-shot_reinforcement_learning.md)
+- [\[AAAI 2026\] CAD-VAE: Leveraging Correlation-Aware Latents for Comprehensive Fair Disentanglement](cad-vae_leveraging_correlation-aware_latents_for_comprehensive_fair_disentanglem.md)
 
 <!-- RELATED:END -->

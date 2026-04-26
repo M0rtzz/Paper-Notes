@@ -141,10 +141,10 @@ tags:
 
 ## 相关论文
 
-- [Understanding Co-speech Gestures in-the-wild](../../ICCV2025/human_understanding/understanding_co-speech_gestures_in-the-wild.md)
-- [Scaling Speech Tokenizers with Diffusion Autoencoders](../../ICLR2026/human_understanding/scaling_speech_tokenizers_with_diffusion_autoencoders.md)
-- [GestureHYDRA: Semantic Co-speech Gesture Synthesis via Hybrid Modality Diffusion Transformer and Cascaded-Synchronized Retrieval-Augmented Generation](../../ICCV2025/human_understanding/gesturehydra_semantic_co-speech_gesture_synthesis_via_hybrid_modality_diffusion_.md)
-- [FineXtrol: Controllable Motion Generation via Fine-Grained Text](finextrol_controllable_motion_generation_via_fine-grained_text.md)
-- [I See What You Mean: Co-Speech Gestures for Reference Resolution in Multimodal Dialogue](../../ACL2025/human_understanding/i_see_what_you_mean_co-speech_gestures_for_reference_resolution_in_multimodal_di.md)
+- [\[ICCV 2025\] Understanding Co-speech Gestures in-the-wild](../../ICCV2025/human_understanding/understanding_co-speech_gestures_in-the-wild.md)
+- [\[ICLR 2026\] Scaling Speech Tokenizers with Diffusion Autoencoders](../../ICLR2026/human_understanding/scaling_speech_tokenizers_with_diffusion_autoencoders.md)
+- [\[ICCV 2025\] GestureHYDRA: Semantic Co-speech Gesture Synthesis via Hybrid Modality Diffusion Transformer and Cascaded-Synchronized Retrieval-Augmented Generation](../../ICCV2025/human_understanding/gesturehydra_semantic_co-speech_gesture_synthesis_via_hybrid_modality_diffusion_.md)
+- [\[AAAI 2026\] FineXtrol: Controllable Motion Generation via Fine-Grained Text](finextrol_controllable_motion_generation_via_fine-grained_text.md)
+- [\[ACL 2025\] I See What You Mean: Co-Speech Gestures for Reference Resolution in Multimodal Dialogue](../../ACL2025/human_understanding/i_see_what_you_mean_co-speech_gestures_for_reference_resolution_in_multimodal_di.md)
 
 <!-- RELATED:END -->

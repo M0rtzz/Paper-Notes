@@ -119,10 +119,10 @@ SFT 使用标准交叉熵损失；RL 使用 PPO 算法，奖励函数结合评�
 
 ## 相关论文
 
-- [RM-R1: Reward Modeling as Reasoning](rm-r1_reward_modeling_as_reasoning.md)
-- [AutoQD: Automatic Discovery of Diverse Behaviors with Quality-Diversity Optimization](autoqd_diverse_behaviors.md)
-- [Post-training Large Language Models for Diverse High-Quality Responses](post-training_large_language_models_for_diverse_high-quality_responses.md)
-- [First-Order Representation Languages for Goal-Conditioned RL](../../AAAI2026/reinforcement_learning/first-order_representation_languages_for_goal-conditioned_rl.md)
-- [The Burden of Interactive Alignment with Inconsistent Preferences](../../NeurIPS2025/reinforcement_learning/the_burden_of_interactive_alignment_with_inconsistent_preferences.md)
+- [\[ICLR 2026\] RM-R1: Reward Modeling as Reasoning](rm-r1_reward_modeling_as_reasoning.md)
+- [\[ICLR 2026\] AutoQD: Automatic Discovery of Diverse Behaviors with Quality-Diversity Optimization](autoqd_diverse_behaviors.md)
+- [\[ICLR 2026\] Post-training Large Language Models for Diverse High-Quality Responses](post-training_large_language_models_for_diverse_high-quality_responses.md)
+- [\[AAAI 2026\] First-Order Representation Languages for Goal-Conditioned RL](../../AAAI2026/reinforcement_learning/first-order_representation_languages_for_goal-conditioned_rl.md)
+- [\[NeurIPS 2025\] The Burden of Interactive Alignment with Inconsistent Preferences](../../NeurIPS2025/reinforcement_learning/the_burden_of_interactive_alignment_with_inconsistent_preferences.md)
 
 <!-- RELATED:END -->

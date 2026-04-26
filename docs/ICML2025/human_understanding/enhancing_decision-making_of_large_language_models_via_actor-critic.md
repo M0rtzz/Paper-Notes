@@ -158,10 +158,10 @@ Q 值在成功轨迹中随时间步递增、失败轨迹中递减，验证了 Q 
 
 ## 相关论文
 
-- [Beyond CVaR: Leveraging Static Spectral Risk Measures for Enhanced Decision-Making in Distributional Reinforcement Learning](beyond_cvar_leveraging_static_spectral_risk_measures_for_enhanced_decision-makin.md)
-- [Uncovering Strategic Egoism Behaviors in Large Language Models](../../NeurIPS2025/human_understanding/uncovering_strategic_egoism_behaviors_in_large_language_models.md)
-- [GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](../../NeurIPS2025/human_understanding/graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
-- [BQA: Body Language Question Answering Dataset for Video Large Language Models](../../ACL2025/human_understanding/bqa_body_language_question_answering_dataset_for_video_large_language_models.md)
-- [Incentivizing Reasoning for Advanced Instruction-Following of Large Language Models](../../NeurIPS2025/human_understanding/incentivizing_reasoning_for_advanced_instruction-following_of_large_language_mod.md)
+- [\[ICML 2025\] Beyond CVaR: Leveraging Static Spectral Risk Measures for Enhanced Decision-Making in Distributional Reinforcement Learning](beyond_cvar_leveraging_static_spectral_risk_measures_for_enhanced_decision-makin.md)
+- [\[NeurIPS 2025\] Uncovering Strategic Egoism Behaviors in Large Language Models](../../NeurIPS2025/human_understanding/uncovering_strategic_egoism_behaviors_in_large_language_models.md)
+- [\[NeurIPS 2025\] GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](../../NeurIPS2025/human_understanding/graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
+- [\[ACL 2025\] BQA: Body Language Question Answering Dataset for Video Large Language Models](../../ACL2025/human_understanding/bqa_body_language_question_answering_dataset_for_video_large_language_models.md)
+- [\[NeurIPS 2025\] Incentivizing Reasoning for Advanced Instruction-Following of Large Language Models](../../NeurIPS2025/human_understanding/incentivizing_reasoning_for_advanced_instruction-following_of_large_language_mod.md)
 
 <!-- RELATED:END -->

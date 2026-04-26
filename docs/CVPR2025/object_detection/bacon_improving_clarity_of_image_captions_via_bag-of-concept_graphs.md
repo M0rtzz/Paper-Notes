@@ -125,10 +125,10 @@ LLaVA微调采用标准的自回归语言建模损失。GPT-4V标注阶段通过
 
 ## 相关论文
 
-- [AugDETR: Improving Multi-scale Learning for Detection Transformer](../../ECCV2024/object_detection/augdetr_improving_multi-scale_learning_for_detection_transformer.md)
-- [ReGround: Improving Textual and Spatial Grounding at No Cost](../../ECCV2024/object_detection/reground_improving_textual_and_spatial_grounding_at_no_cost.md)
-- [SSTAG: Structure-Aware Self-Supervised Learning Method for Text-Attributed Graphs](../../NeurIPS2025/object_detection/sstag_structure-aware_self-supervised_learning_method_for_text-attributed_graphs.md)
-- [Search and Detect: Training-Free Long Tail Object Detection via Web-Image Retrieval](search_and_detect_training-free_long_tail_object_detection_via_web-image_retriev.md)
-- [MoKus: Leveraging Cross-Modal Knowledge Transfer for Knowledge-Aware Concept Customization](mokus_leveraging_cross-modal_knowledge_transfer_for_knowledge-aware_concept_cust.md)
+- [\[ECCV 2024\] AugDETR: Improving Multi-scale Learning for Detection Transformer](../../ECCV2024/object_detection/augdetr_improving_multi-scale_learning_for_detection_transformer.md)
+- [\[ECCV 2024\] ReGround: Improving Textual and Spatial Grounding at No Cost](../../ECCV2024/object_detection/reground_improving_textual_and_spatial_grounding_at_no_cost.md)
+- [\[NeurIPS 2025\] SSTAG: Structure-Aware Self-Supervised Learning Method for Text-Attributed Graphs](../../NeurIPS2025/object_detection/sstag_structure-aware_self-supervised_learning_method_for_text-attributed_graphs.md)
+- [\[CVPR 2025\] Search and Detect: Training-Free Long Tail Object Detection via Web-Image Retrieval](search_and_detect_training-free_long_tail_object_detection_via_web-image_retriev.md)
+- [\[CVPR 2025\] MoKus: Leveraging Cross-Modal Knowledge Transfer for Knowledge-Aware Concept Customization](mokus_leveraging_cross-modal_knowledge_transfer_for_knowledge-aware_concept_cust.md)
 
 <!-- RELATED:END -->

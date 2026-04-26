@@ -110,10 +110,10 @@ tags:
 
 ## 相关论文
 
-- [Scaling Inference-Efficient Language Models](../../ICML2025/llm_efficiency/scaling_inference-efficient_language_models.md)
-- [SPARTA Alignment: Collectively Aligning Multiple Language Models through Combat](sparta_alignment_collectively_aligning_multiple_language_models_through_combat.md)
-- [Ranked Entropy Minimization for Continual Test-Time Adaptation](../../ICML2025/llm_efficiency/ranked_entropy_minimization_for_continual_test-time_adaptation.md)
-- [Improving Accuracy and Calibration via Differentiated Deep Mutual Learning](../../CVPR2025/llm_efficiency/improving_accuracy_and_calibration_via_differentiated_deep_mutual_learning.md)
-- [L-MTP: Leap Multi-Token Prediction Beyond Adjacent Context for Large Language Models](l-mtp_leap_multi-token_prediction_beyond_adjacent_context_for_large_language_mod.md)
+- [\[ICML 2025\] Scaling Inference-Efficient Language Models](../../ICML2025/llm_efficiency/scaling_inference-efficient_language_models.md)
+- [\[NeurIPS 2025\] SPARTA Alignment: Collectively Aligning Multiple Language Models through Combat](sparta_alignment_collectively_aligning_multiple_language_models_through_combat.md)
+- [\[ICML 2025\] Ranked Entropy Minimization for Continual Test-Time Adaptation](../../ICML2025/llm_efficiency/ranked_entropy_minimization_for_continual_test-time_adaptation.md)
+- [\[CVPR 2025\] Improving Accuracy and Calibration via Differentiated Deep Mutual Learning](../../CVPR2025/llm_efficiency/improving_accuracy_and_calibration_via_differentiated_deep_mutual_learning.md)
+- [\[NeurIPS 2025\] L-MTP: Leap Multi-Token Prediction Beyond Adjacent Context for Large Language Models](l-mtp_leap_multi-token_prediction_beyond_adjacent_context_for_large_language_mod.md)
 
 <!-- RELATED:END -->

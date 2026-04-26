@@ -135,10 +135,10 @@ wilda-s 标准差显著低于 ICL（如 RTE: 0.6 vs 6.5），stability 大幅提
 
 ## 相关论文
 
-- [Masking Meets Supervision: A Strong Learning Alliance](../../CVPR2025/model_compression/masking_meets_supervision_a_strong_learning_alliance.md)
-- [Sample Efficient Demonstration Selection for In-Context Learning](../../ICML2025/model_compression/sample_efficient_demonstration_selection_for_in-context_learning.md)
-- [Synergy between the Strong and the Weak: Spiking Neural Networks Are Inherently Superior in Temporal Processing](synergy_between_the_strong_and_the_weak_spiking_neural_networks_are_inherently_s.md)
-- [LittleBit: Ultra Low-Bit Quantization via Latent Factorization](littlebit_ultra_low-bit_quantization_via_latent_factorization.md)
-- [In-Context Learning for Pure Exploration](../../ICLR2026/model_compression/in-context_learning_for_pure_exploration.md)
+- [\[CVPR 2025\] Masking Meets Supervision: A Strong Learning Alliance](../../CVPR2025/model_compression/masking_meets_supervision_a_strong_learning_alliance.md)
+- [\[ICML 2025\] Sample Efficient Demonstration Selection for In-Context Learning](../../ICML2025/model_compression/sample_efficient_demonstration_selection_for_in-context_learning.md)
+- [\[NeurIPS 2025\] Synergy between the Strong and the Weak: Spiking Neural Networks Are Inherently Superior in Temporal Processing](synergy_between_the_strong_and_the_weak_spiking_neural_networks_are_inherently_s.md)
+- [\[NeurIPS 2025\] LittleBit: Ultra Low-Bit Quantization via Latent Factorization](littlebit_ultra_low-bit_quantization_via_latent_factorization.md)
+- [\[ICLR 2026\] In-Context Learning for Pure Exploration](../../ICLR2026/model_compression/in-context_learning_for_pure_exploration.md)
 
 <!-- RELATED:END -->

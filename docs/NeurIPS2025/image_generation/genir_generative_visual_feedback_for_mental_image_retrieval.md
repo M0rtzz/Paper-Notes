@@ -211,10 +211,10 @@ GenIR 的创新在于**首次将文本到图像生成整合到交互式检索循
 
 ## 相关论文
 
-- [ImageSentinel: Protecting Visual Datasets from Unauthorized Retrieval-Augmented Image Generation](imagesentinel_protecting_visual_datasets_from_unauthorized_retrieval-augmented_i.md)
-- [Instance-Level Composed Image Retrieval](instance-level_composed_image_retrieval.md)
-- [UniLumos: Fast and Unified Image and Video Relighting with Physics-Plausible Feedback](unilumos_fast_and_unified_image_and_video_relighting_with_physics-plausible_feed.md)
-- [Generative Image Layer Decomposition with Visual Effects](../../CVPR2025/image_generation/generative_image_layer_decomposition_with_visual_effects.md)
-- [Diffusion Mental Averages](../../CVPR2026/image_generation/diffusion_mental_averages.md)
+- [\[NeurIPS 2025\] ImageSentinel: Protecting Visual Datasets from Unauthorized Retrieval-Augmented Image Generation](imagesentinel_protecting_visual_datasets_from_unauthorized_retrieval-augmented_i.md)
+- [\[NeurIPS 2025\] Instance-Level Composed Image Retrieval](instance-level_composed_image_retrieval.md)
+- [\[NeurIPS 2025\] UniLumos: Fast and Unified Image and Video Relighting with Physics-Plausible Feedback](unilumos_fast_and_unified_image_and_video_relighting_with_physics-plausible_feed.md)
+- [\[CVPR 2025\] Generative Image Layer Decomposition with Visual Effects](../../CVPR2025/image_generation/generative_image_layer_decomposition_with_visual_effects.md)
+- [\[CVPR 2026\] Diffusion Mental Averages](../../CVPR2026/image_generation/diffusion_mental_averages.md)
 
 <!-- RELATED:END -->

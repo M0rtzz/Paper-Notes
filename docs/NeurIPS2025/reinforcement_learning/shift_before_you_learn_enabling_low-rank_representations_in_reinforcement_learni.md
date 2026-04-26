@@ -264,10 +264,10 @@ $$Q(s, a, g) \approx \phi_k(s, a)^\top \psi_k(g)$$
 
 ## 相关论文
 
-- [Reward-Aware Proto-Representations in Reinforcement Learning](reward-aware_proto-representations_in_reinforcement_learning.md)
-- [Online Minimization of Polarization and Disagreement via Low-Rank Matrix Bandits](../../ICLR2026/reinforcement_learning/online_minimization_of_polarization_and_disagreement_via_low-rank_matrix_bandits.md)
-- [Dual Goal Representations](../../ICLR2026/reinforcement_learning/dual_goal_representations.md)
-- [LineFlow: A Framework to Learn Active Control of Production Lines](../../ICML2025/reinforcement_learning/lineflow_a_framework_to_learn_active_control_of_production_lines.md)
-- [Certifying Stability of Reinforcement Learning Policies using Generalized Lyapunov Functions](certifying_stability_of_reinforcement_learning_policies_using_generalized_lyapun.md)
+- [\[NeurIPS 2025\] Reward-Aware Proto-Representations in Reinforcement Learning](reward-aware_proto-representations_in_reinforcement_learning.md)
+- [\[ICLR 2026\] Online Minimization of Polarization and Disagreement via Low-Rank Matrix Bandits](../../ICLR2026/reinforcement_learning/online_minimization_of_polarization_and_disagreement_via_low-rank_matrix_bandits.md)
+- [\[ICLR 2026\] Dual Goal Representations](../../ICLR2026/reinforcement_learning/dual_goal_representations.md)
+- [\[ICML 2025\] LineFlow: A Framework to Learn Active Control of Production Lines](../../ICML2025/reinforcement_learning/lineflow_a_framework_to_learn_active_control_of_production_lines.md)
+- [\[NeurIPS 2025\] Certifying Stability of Reinforcement Learning Policies using Generalized Lyapunov Functions](certifying_stability_of_reinforcement_learning_policies_using_generalized_lyapun.md)
 
 <!-- RELATED:END -->

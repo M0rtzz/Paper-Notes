@@ -104,10 +104,10 @@ tags:
 
 ## 相关论文
 
-- [A Unified Framework for Variable Selection in Model-Based Clustering with Missing Not at Random](../../NeurIPS2025/others/a_unified_framework_for_variable_selection_in_modelbased_clu.md)
-- [NeISF++: Neural Incident Stokes Field for Polarized Inverse Rendering of Conductors and Dielectrics](neisf_neural_incident_stokes_field_for_polarized_inverse_rendering_of_conductors.md)
-- [Learning to Align Multi-Faceted Evaluation: A Unified and Robust Framework](../../ACL2025/others/learning_to_align_multi-faceted_evaluation_a_unified_and_robust_framework.md)
-- [UniShape: A Unified Shape-Aware Foundation Model for Time Series Classification](../../AAAI2026/others/a_unified_shape-aware_foundation_model_for_time_series_class.md)
-- [Learning non-equilibrium diffusions with Schrödinger bridges: from exactly solvable to simulation-free](../../NeurIPS2025/others/learning_non-equilibrium_diffusions_with_schrödinger_bridges_from_exactly_solvab.md)
+- [\[NeurIPS 2025\] A Unified Framework for Variable Selection in Model-Based Clustering with Missing Not at Random](../../NeurIPS2025/others/a_unified_framework_for_variable_selection_in_modelbased_clu.md)
+- [\[CVPR 2025\] NeISF++: Neural Incident Stokes Field for Polarized Inverse Rendering of Conductors and Dielectrics](neisf_neural_incident_stokes_field_for_polarized_inverse_rendering_of_conductors.md)
+- [\[ACL 2025\] Learning to Align Multi-Faceted Evaluation: A Unified and Robust Framework](../../ACL2025/others/learning_to_align_multi-faceted_evaluation_a_unified_and_robust_framework.md)
+- [\[AAAI 2026\] UniShape: A Unified Shape-Aware Foundation Model for Time Series Classification](../../AAAI2026/others/a_unified_shape-aware_foundation_model_for_time_series_class.md)
+- [\[NeurIPS 2025\] Learning non-equilibrium diffusions with Schrödinger bridges: from exactly solvable to simulation-free](../../NeurIPS2025/others/learning_non-equilibrium_diffusions_with_schrödinger_bridges_from_exactly_solvab.md)
 
 <!-- RELATED:END -->

@@ -132,10 +132,10 @@ DSM Loss 在量化后 LID 估计偏差更小，因为不依赖梯度计算（量
 
 ## 相关论文
 
-- [Balanced Image Stylization with Style Matching Score](../../ICCV2025/image_generation/balanced_image_stylization_with_style_matching_score.md)
-- [On the Relation between Rectified Flows and Optimal Transport](on_the_relation_between_rectified_flows_and_optimal_transport.md)
-- [Score-informed Neural Operator for Enhancing Ordering-based Causal Discovery](score-informed_neural_operator_for_enhancing_ordering-based_causal_discovery.md)
-- [FerretNet: Efficient Synthetic Image Detection via Local Pixel Dependencies](ferretnet_efficient_synthetic_image_detection_via_local_pixel_dependencies.md)
-- [Expressive Score-Based Priors for Distribution Matching with Geometry-Preserving Regularization](../../ICML2025/image_generation/expressive_score-based_priors_for_distribution_matching_with_geometry-preserving.md)
+- [\[ICCV 2025\] Balanced Image Stylization with Style Matching Score](../../ICCV2025/image_generation/balanced_image_stylization_with_style_matching_score.md)
+- [\[NeurIPS 2025\] On the Relation between Rectified Flows and Optimal Transport](on_the_relation_between_rectified_flows_and_optimal_transport.md)
+- [\[NeurIPS 2025\] Score-informed Neural Operator for Enhancing Ordering-based Causal Discovery](score-informed_neural_operator_for_enhancing_ordering-based_causal_discovery.md)
+- [\[NeurIPS 2025\] FerretNet: Efficient Synthetic Image Detection via Local Pixel Dependencies](ferretnet_efficient_synthetic_image_detection_via_local_pixel_dependencies.md)
+- [\[ICML 2025\] Expressive Score-Based Priors for Distribution Matching with Geometry-Preserving Regularization](../../ICML2025/image_generation/expressive_score-based_priors_for_distribution_matching_with_geometry-preserving.md)
 
 <!-- RELATED:END -->

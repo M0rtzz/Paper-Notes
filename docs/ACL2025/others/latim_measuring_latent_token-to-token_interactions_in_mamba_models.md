@@ -144,10 +144,10 @@ LaTIM 的核心思想是：将 Mamba 的前向计算重新排列，使得输出 
 
 ## 相关论文
 
-- [The Hidden Attention of Mamba Models](the_hidden_attention_of_mamba_models.md)
-- [Cautious Next Token Prediction](cautious_next_token_prediction.md)
-- [MEXMA: Token-level Objectives Improve Sentence Representations](mexma_token-level_objectives_improve_sentence_representations.md)
-- [Using Shapley Interactions to Understand How Models Use Structure](using_shapley_interactions_to_understand_how_models_use_structure.md)
-- [Retrospective Learning from Interactions](retrospective_learning_from_interactions.md)
+- [\[ACL 2025\] The Hidden Attention of Mamba Models](the_hidden_attention_of_mamba_models.md)
+- [\[ACL 2025\] Cautious Next Token Prediction](cautious_next_token_prediction.md)
+- [\[ACL 2025\] MEXMA: Token-level Objectives Improve Sentence Representations](mexma_token-level_objectives_improve_sentence_representations.md)
+- [\[ACL 2025\] Using Shapley Interactions to Understand How Models Use Structure](using_shapley_interactions_to_understand_how_models_use_structure.md)
+- [\[ACL 2025\] Retrospective Learning from Interactions](retrospective_learning_from_interactions.md)
 
 <!-- RELATED:END -->

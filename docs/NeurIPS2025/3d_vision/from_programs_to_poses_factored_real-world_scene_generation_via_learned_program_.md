@@ -136,10 +136,10 @@ tags:
 
 ## 相关论文
 
-- [SceneFactor: Factored Latent 3D Diffusion for Controllable 3D Scene Generation](../../CVPR2025/3d_vision/scenefactor_factored_latent_3d_diffusion_for_controllable_3d_scene_generation.md)
-- [MetaGS: A Meta-Learned Gaussian-Phong Model for Out-of-Distribution 3D Scene Relighting](metags_a_meta-learned_gaussian-phong_model_for_out-of-distribution_3d_scene_reli.md)
-- [Open-Vocabulary Functional 3D Scene Graphs for Real-World Indoor Spaces](../../CVPR2025/3d_vision/open-vocabulary_functional_3d_scene_graphs_for_real-world_indoor_spaces.md)
-- [Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](../../CVPR2025/3d_vision/towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)
-- [Demeter: A Parametric Model of Crop Plant Morphology from the Real World](../../ICCV2025/3d_vision/demeter_a_parametric_model_of_crop_plant_morphology_from_the_real_world.md)
+- [\[CVPR 2025\] SceneFactor: Factored Latent 3D Diffusion for Controllable 3D Scene Generation](../../CVPR2025/3d_vision/scenefactor_factored_latent_3d_diffusion_for_controllable_3d_scene_generation.md)
+- [\[NeurIPS 2025\] MetaGS: A Meta-Learned Gaussian-Phong Model for Out-of-Distribution 3D Scene Relighting](metags_a_meta-learned_gaussian-phong_model_for_out-of-distribution_3d_scene_reli.md)
+- [\[CVPR 2025\] Open-Vocabulary Functional 3D Scene Graphs for Real-World Indoor Spaces](../../CVPR2025/3d_vision/open-vocabulary_functional_3d_scene_graphs_for_real-world_indoor_spaces.md)
+- [\[CVPR 2025\] Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](../../CVPR2025/3d_vision/towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)
+- [\[ICCV 2025\] Demeter: A Parametric Model of Crop Plant Morphology from the Real World](../../ICCV2025/3d_vision/demeter_a_parametric_model_of_crop_plant_morphology_from_the_real_world.md)
 
 <!-- RELATED:END -->

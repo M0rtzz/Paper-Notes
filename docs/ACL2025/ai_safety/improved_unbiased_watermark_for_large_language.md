@@ -166,10 +166,10 @@ MCmark 在无偏水印中 TPR@FPR=0.1% 提升超 14%（98.38% vs 81.79%），且
 
 ## 相关论文
 
-- [Ensemble Watermarks for Large Language Models](ensemble_watermarks_llm.md)
-- [De-mark: Watermark Removal in Large Language Models](../../ICML2025/ai_safety/de-mark_watermark_removal_in_large_language_models.md)
-- [MorphMark: Flexible Adaptive Watermarking for Large Language Models](morphmark_adaptive_watermarking.md)
-- [Improving Fairness of Large Language Models in Multi-document Summarization](improving_fairness_of_large_language_models_in_multi-document_summarization.md)
-- [ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)
+- [\[ACL 2025\] Ensemble Watermarks for Large Language Models](ensemble_watermarks_llm.md)
+- [\[ICML 2025\] De-mark: Watermark Removal in Large Language Models](../../ICML2025/ai_safety/de-mark_watermark_removal_in_large_language_models.md)
+- [\[ACL 2025\] MorphMark: Flexible Adaptive Watermarking for Large Language Models](morphmark_adaptive_watermarking.md)
+- [\[ACL 2025\] Improving Fairness of Large Language Models in Multi-document Summarization](improving_fairness_of_large_language_models_in_multi-document_summarization.md)
+- [\[ACL 2025\] ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)
 
 <!-- RELATED:END -->

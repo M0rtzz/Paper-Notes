@@ -124,10 +124,10 @@ tags:
 
 ## 相关论文
 
-- [DVLO: Deep Visual-LiDAR Odometry with Local-to-Global Feature Fusion](../../ECCV2024/autonomous_driving/dvlo_deep_visuallidar_odometry_with_localtoglobal_featu.md)
-- [DVLO: Deep Visual-LiDAR Odometry with Local-to-Global Feature Fusion and Bi-directional Structure Alignment](../../ECCV2024/autonomous_driving/dvlo_deep_visual-lidar_odometry_with_local-to-global_feature_fusion_and_bi-direc.md)
-- [Splat-LOAM: Gaussian Splatting LiDAR Odometry and Mapping](../../ICCV2025/autonomous_driving/splat-loam_gaussian_splatting_lidar_odometry_and_mapping.md)
-- [Towards In-the-Wild 3D Plane Reconstruction from a Single Image](towards_in-the-wild_3d_plane_reconstruction_from_a_single_image.md)
-- [Segment Anything, Even Occluded](segment_anything_even_occluded.md)
+- [\[ECCV 2024\] DVLO: Deep Visual-LiDAR Odometry with Local-to-Global Feature Fusion](../../ECCV2024/autonomous_driving/dvlo_deep_visuallidar_odometry_with_localtoglobal_featu.md)
+- [\[ECCV 2024\] DVLO: Deep Visual-LiDAR Odometry with Local-to-Global Feature Fusion and Bi-directional Structure Alignment](../../ECCV2024/autonomous_driving/dvlo_deep_visual-lidar_odometry_with_local-to-global_feature_fusion_and_bi-direc.md)
+- [\[ICCV 2025\] Splat-LOAM: Gaussian Splatting LiDAR Odometry and Mapping](../../ICCV2025/autonomous_driving/splat-loam_gaussian_splatting_lidar_odometry_and_mapping.md)
+- [\[CVPR 2025\] Towards In-the-Wild 3D Plane Reconstruction from a Single Image](towards_in-the-wild_3d_plane_reconstruction_from_a_single_image.md)
+- [\[CVPR 2025\] Segment Anything, Even Occluded](segment_anything_even_occluded.md)
 
 <!-- RELATED:END -->

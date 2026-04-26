@@ -130,10 +130,10 @@ NHA 在每层维护两种记忆：(1) 长期记忆 $K^{long}_t, V^{long}_t \in \
 
 ## 相关论文
 
-- [Motion Mamba: Efficient and Long Sequence Motion Generation](../../ECCV2024/human_understanding/motion_mamba_efficient_and_long_sequence_motion_generation.md)
-- [Aligning Agents via Planning: A Benchmark for Trajectory-Level Reward Modeling](aligning_agents_via_planning_a_benchmark_for_trajectory-level_reward_modeling.md)
-- [ToProVAR: Efficient Visual Autoregressive Modeling via Tri-Dimensional Entropy-Aware Semantic Analysis and Sparsity Optimization](../../ICLR2026/human_understanding/toprovar_efficient_visual_autoregressive_modeling_via_tri-dimensional_entropy-aw.md)
-- [Recurrent Attention-based Token Selection for Efficient Streaming Video-LLMs](../../NeurIPS2025/human_understanding/recurrent_attention-based_token_selection_for_efficient_streaming_video-llms.md)
-- [Cross-Domain Policy Optimization via Bellman Consistency and Hybrid Critics](../../ICLR2026/human_understanding/cross-domain_policy_optimization_via_bellman_consistency_and_hybrid_critics.md)
+- [\[ECCV 2024\] Motion Mamba: Efficient and Long Sequence Motion Generation](../../ECCV2024/human_understanding/motion_mamba_efficient_and_long_sequence_motion_generation.md)
+- [\[ACL 2026\] Aligning Agents via Planning: A Benchmark for Trajectory-Level Reward Modeling](aligning_agents_via_planning_a_benchmark_for_trajectory-level_reward_modeling.md)
+- [\[ICLR 2026\] ToProVAR: Efficient Visual Autoregressive Modeling via Tri-Dimensional Entropy-Aware Semantic Analysis and Sparsity Optimization](../../ICLR2026/human_understanding/toprovar_efficient_visual_autoregressive_modeling_via_tri-dimensional_entropy-aw.md)
+- [\[NeurIPS 2025\] Recurrent Attention-based Token Selection for Efficient Streaming Video-LLMs](../../NeurIPS2025/human_understanding/recurrent_attention-based_token_selection_for_efficient_streaming_video-llms.md)
+- [\[ICLR 2026\] Cross-Domain Policy Optimization via Bellman Consistency and Hybrid Critics](../../ICLR2026/human_understanding/cross-domain_policy_optimization_via_bellman_consistency_and_hybrid_critics.md)
 
 <!-- RELATED:END -->

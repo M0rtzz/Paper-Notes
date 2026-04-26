@@ -134,10 +134,10 @@ Auto-PRE 在所有三个任务上均超越现有方法，相比 PRE (Auto-Exam) 
 
 ## 相关论文
 
-- [Graph2Eval: Automatic Multimodal Task Generation for Agents via Knowledge Graphs](../../CVPR2026/human_understanding/graph2eval_multimodal_task_generation_agents.md)
-- [LLMs Encode Their Failures: Predicting Success from Pre-Generation Activations](../../ICLR2026/human_understanding/llms_encode_their_failures_predicting_success_from_pre-generation_activations.md)
-- [PathMind: A Retrieve-Prioritize-Reason Framework for Knowledge Graph Reasoning with Large Language Models](pathmind_a_retrieve-prioritize-reason_framework_for_knowledge_graph_reasoning_wi.md)
-- [Towards a Common Framework for Autoformalization](towards_a_common_framework_for_autoformalization.md)
-- [Small Language Models for Efficient Agentic Tool Calling: Outperforming Large Models with Targeted Fine-tuning](small_language_models_for_efficient_agentic_tool_calling_outperforming_large_mod.md)
+- [\[CVPR 2026\] Graph2Eval: Automatic Multimodal Task Generation for Agents via Knowledge Graphs](../../CVPR2026/human_understanding/graph2eval_multimodal_task_generation_agents.md)
+- [\[ICLR 2026\] LLMs Encode Their Failures: Predicting Success from Pre-Generation Activations](../../ICLR2026/human_understanding/llms_encode_their_failures_predicting_success_from_pre-generation_activations.md)
+- [\[AAAI 2026\] PathMind: A Retrieve-Prioritize-Reason Framework for Knowledge Graph Reasoning with Large Language Models](pathmind_a_retrieve-prioritize-reason_framework_for_knowledge_graph_reasoning_wi.md)
+- [\[AAAI 2026\] Towards a Common Framework for Autoformalization](towards_a_common_framework_for_autoformalization.md)
+- [\[AAAI 2026\] Small Language Models for Efficient Agentic Tool Calling: Outperforming Large Models with Targeted Fine-tuning](small_language_models_for_efficient_agentic_tool_calling_outperforming_large_mod.md)
 
 <!-- RELATED:END -->

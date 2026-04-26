@@ -117,10 +117,10 @@ GUIDE 的构建分为三个阶段：(1) 视频收集——54 名新手用户在 
 
 ## 相关论文
 
-- [MP-GUI: Modality Perception with MLLMs for GUI Understanding](../../CVPR2025/human_understanding/mp-gui_modality_perception_with_mllms_for_gui_understanding.md)
-- [Bias Association Discovery Framework for Open-Ended LLM Generations](../../AAAI2026/human_understanding/bias_association_discovery_framework_for_open-ended_llm_generations.md)
-- [IndoTabVQA: A Benchmark for Cross-Lingual Table Understanding in Bahasa Indonesia Documents](../../ACL2026/human_understanding/indotabvqa_a_benchmark_for_cross-lingual_table_understanding_in_bahasa_indonesia.md)
-- [See, Think, Act: Teaching Multimodal Agents to Effectively Interact with GUI by Identifying Toggles](see_think_act_teaching_multimodal_agents_to_effectively_interact_with_gui_by_ide.md)
-- [OMG-Bench: A New Challenging Benchmark for Skeleton-based Online Micro Hand Gesture Recognition](omg-bench_a_new_challenging_benchmark_for_skeleton-based_online_micro_hand_gestu.md)
+- [\[CVPR 2025\] MP-GUI: Modality Perception with MLLMs for GUI Understanding](../../CVPR2025/human_understanding/mp-gui_modality_perception_with_mllms_for_gui_understanding.md)
+- [\[AAAI 2026\] Bias Association Discovery Framework for Open-Ended LLM Generations](../../AAAI2026/human_understanding/bias_association_discovery_framework_for_open-ended_llm_generations.md)
+- [\[ACL 2026\] IndoTabVQA: A Benchmark for Cross-Lingual Table Understanding in Bahasa Indonesia Documents](../../ACL2026/human_understanding/indotabvqa_a_benchmark_for_cross-lingual_table_understanding_in_bahasa_indonesia.md)
+- [\[CVPR 2026\] See, Think, Act: Teaching Multimodal Agents to Effectively Interact with GUI by Identifying Toggles](see_think_act_teaching_multimodal_agents_to_effectively_interact_with_gui_by_ide.md)
+- [\[CVPR 2026\] OMG-Bench: A New Challenging Benchmark for Skeleton-based Online Micro Hand Gesture Recognition](omg-bench_a_new_challenging_benchmark_for_skeleton-based_online_micro_hand_gestu.md)
 
 <!-- RELATED:END -->

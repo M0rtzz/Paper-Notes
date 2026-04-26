@@ -124,10 +124,10 @@ tags:
 
 ## 相关论文
 
-- [Multi-Class Support Vector Machine with Differential Privacy](../../NeurIPS2025/ai_safety/multi-class_support_vector_machine_with_differential_privacy.md)
-- [Poly-Guard: Massive Multi-Domain Safety Policy-Grounded Guardrail Dataset](../../NeurIPS2025/ai_safety/poly-guard_massive_multi-domain_safety_policy-grounded_guardrail_dataset.md)
-- [Robust Multi-bit Text Watermark with LLM-based Paraphrasers](../../ICML2025/ai_safety/robust_multi-bit_text_watermark_with_llm-based_paraphrasers.md)
-- [Retraining with Predicted Hard Labels Provably Increases Model Accuracy](../../ICML2025/ai_safety/retraining_with_predicted_hard_labels_provably_increases_model_accuracy.md)
-- [MaskSQL: Safeguarding Privacy for LLM-Based Text-to-SQL via Abstraction](../../NeurIPS2025/ai_safety/masksql_safeguarding_privacy_for_llm-based_text-to-sql_via_abstraction.md)
+- [\[NeurIPS 2025\] Multi-Class Support Vector Machine with Differential Privacy](../../NeurIPS2025/ai_safety/multi-class_support_vector_machine_with_differential_privacy.md)
+- [\[NeurIPS 2025\] Poly-Guard: Massive Multi-Domain Safety Policy-Grounded Guardrail Dataset](../../NeurIPS2025/ai_safety/poly-guard_massive_multi-domain_safety_policy-grounded_guardrail_dataset.md)
+- [\[ICML 2025\] Robust Multi-bit Text Watermark with LLM-based Paraphrasers](../../ICML2025/ai_safety/robust_multi-bit_text_watermark_with_llm-based_paraphrasers.md)
+- [\[ICML 2025\] Retraining with Predicted Hard Labels Provably Increases Model Accuracy](../../ICML2025/ai_safety/retraining_with_predicted_hard_labels_provably_increases_model_accuracy.md)
+- [\[NeurIPS 2025\] MaskSQL: Safeguarding Privacy for LLM-Based Text-to-SQL via Abstraction](../../NeurIPS2025/ai_safety/masksql_safeguarding_privacy_for_llm-based_text-to-sql_via_abstraction.md)
 
 <!-- RELATED:END -->

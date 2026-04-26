@@ -129,10 +129,10 @@ $$\mathcal{L} = \mathbb{E}_{\mathbf{x}_0, t, \epsilon}\left[\|\epsilon - \epsilo
 
 ## 相关论文
 
-- [SRSR: Enhancing Semantic Accuracy in Real-World Image Super-Resolution with Spatially Re-Focused Text-Conditioning](../../NeurIPS2025/segmentation/srsr_enhancing_semantic_accuracy_in_real-world_image_super-resolution_with_spati.md)
-- [Paint by Inpaint: Learning to Add Image Objects by Removing Them First](paint_by_inpaint_learning_to_add_image_objects_by_removing_them_first.md)
-- [ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting](rocket-1_mastering_open-world_interaction_with_visual-temporal_context_prompting.md)
-- [SmartEraser: Remove Anything from Images using Masked-Region Guidance](smarteraser_remove_anything_from_images_using_masked-region_guidance.md)
-- [OverLoCK: An Overview-first-Look-Closely-next ConvNet with Context-Mixing Dynamic Kernels](overlock_an_overview-first-look-closely-next_convnet_with_context-mixing_dynamic.md)
+- [\[NeurIPS 2025\] SRSR: Enhancing Semantic Accuracy in Real-World Image Super-Resolution with Spatially Re-Focused Text-Conditioning](../../NeurIPS2025/segmentation/srsr_enhancing_semantic_accuracy_in_real-world_image_super-resolution_with_spati.md)
+- [\[CVPR 2025\] Paint by Inpaint: Learning to Add Image Objects by Removing Them First](paint_by_inpaint_learning_to_add_image_objects_by_removing_them_first.md)
+- [\[CVPR 2025\] ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting](rocket-1_mastering_open-world_interaction_with_visual-temporal_context_prompting.md)
+- [\[CVPR 2025\] SmartEraser: Remove Anything from Images using Masked-Region Guidance](smarteraser_remove_anything_from_images_using_masked-region_guidance.md)
+- [\[CVPR 2025\] OverLoCK: An Overview-first-Look-Closely-next ConvNet with Context-Mixing Dynamic Kernels](overlock_an_overview-first-look-closely-next_convnet_with_context-mixing_dynamic.md)
 
 <!-- RELATED:END -->

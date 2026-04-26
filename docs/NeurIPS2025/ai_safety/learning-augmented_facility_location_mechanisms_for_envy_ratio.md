@@ -175,10 +175,10 @@ $$\text{Envy Ratio} = \max_{i,j} \frac{u_i}{u_j}$$
 
 ## 相关论文
 
-- [Minimizing Inequity in Facility Location Games](../../AAAI2026/ai_safety/minimizing_inequity_in_facility_location_games.md)
-- [FairContrast: Enhancing Fairness through Contrastive Learning and Customized Augmentation](faircontrast_enhancing_fairness_through_contrastive_learning_and_customized_augm.md)
-- [Mitigating Disparate Impact of Differentially Private Learning through Bounded Adaptive Clipping](mitigating_disparate_impact_of_differentially_private_learning_through_bounded_a.md)
-- [Trans-EnV: A Framework for Evaluating the Linguistic Robustness of LLMs Against English Varieties](trans-env_a_framework_for_evaluating_the_linguistic_robustness_of_llms_against_e.md)
-- [Causally Reliable Concept Bottleneck Models](causally_reliable_concept_bottleneck_models.md)
+- [\[AAAI 2026\] Minimizing Inequity in Facility Location Games](../../AAAI2026/ai_safety/minimizing_inequity_in_facility_location_games.md)
+- [\[NeurIPS 2025\] FairContrast: Enhancing Fairness through Contrastive Learning and Customized Augmentation](faircontrast_enhancing_fairness_through_contrastive_learning_and_customized_augm.md)
+- [\[NeurIPS 2025\] Mitigating Disparate Impact of Differentially Private Learning through Bounded Adaptive Clipping](mitigating_disparate_impact_of_differentially_private_learning_through_bounded_a.md)
+- [\[NeurIPS 2025\] Trans-EnV: A Framework for Evaluating the Linguistic Robustness of LLMs Against English Varieties](trans-env_a_framework_for_evaluating_the_linguistic_robustness_of_llms_against_e.md)
+- [\[NeurIPS 2025\] Causally Reliable Concept Bottleneck Models](causally_reliable_concept_bottleneck_models.md)
 
 <!-- RELATED:END -->

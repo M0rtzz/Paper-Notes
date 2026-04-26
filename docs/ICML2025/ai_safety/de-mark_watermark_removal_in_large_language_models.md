@@ -129,10 +129,10 @@ tags:
 
 ## 相关论文
 
-- [Improved Unbiased Watermark for Large Language Models](../../ACL2025/ai_safety/improved_unbiased_watermark_for_large_language.md)
-- [Activation Space Interventions Can Be Transferred Between Large Language Models](activation_space_interventions_can_be_transferred_between_large_language_models.md)
-- [Ferret: Federated Full-Parameter Tuning at Scale for Large Language Models](ferret_federated_full-parameter_tuning_at_scale_for_large_language_models.md)
-- [Learning Safety Constraints for Large Language Models](learning_safety_constraints_for_large_language_models.md)
-- [CROW: Eliminating Backdoors from Large Language Models via Internal Consistency Regularization](crow_eliminating_backdoors_from_large_language_models_via_internal_consistency_r.md)
+- [\[ACL 2025\] Improved Unbiased Watermark for Large Language Models](../../ACL2025/ai_safety/improved_unbiased_watermark_for_large_language.md)
+- [\[ICML 2025\] Activation Space Interventions Can Be Transferred Between Large Language Models](activation_space_interventions_can_be_transferred_between_large_language_models.md)
+- [\[ICML 2025\] Ferret: Federated Full-Parameter Tuning at Scale for Large Language Models](ferret_federated_full-parameter_tuning_at_scale_for_large_language_models.md)
+- [\[ICML 2025\] Learning Safety Constraints for Large Language Models](learning_safety_constraints_for_large_language_models.md)
+- [\[ICML 2025\] CROW: Eliminating Backdoors from Large Language Models via Internal Consistency Regularization](crow_eliminating_backdoors_from_large_language_models_via_internal_consistency_r.md)
 
 <!-- RELATED:END -->

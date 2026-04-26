@@ -173,10 +173,10 @@ $$\mathcal{L} = \lambda_t \mathcal{L}_t + \lambda_{vec} \mathcal{L}_{vec} + \lam
 
 ## 相关论文
 
-- [SemGes: Semantics-aware Co-Speech Gesture Generation using Semantic Coherence and Relevance Learning](semges_semantics-aware_co-speech_gesture_generation_using_semantic_coherence_and.md)
-- [SyncDiff: Synchronized Motion Diffusion for Multi-Body Human-Object Interaction Synthesis](syncdiff_synchronized_motion_diffusion_for_multi-body_human-object_interaction_s.md)
-- [SemTalk: Holistic Co-speech Motion Generation with Frame-level Semantic Emphasis](semtalk_holistic_co-speech_motion_generation_with_frame-level_semantic_emphasis.md)
-- [Retrieving Semantics from the Deep: an RAG Solution for Gesture Synthesis](../../CVPR2025/human_understanding/retrieving_semantics_from_the_deep_an_rag_solution_for_gesture_synthesis.md)
-- [Understanding Co-speech Gestures in-the-wild](understanding_co-speech_gestures_in-the-wild.md)
+- [\[ICCV 2025\] SemGes: Semantics-aware Co-Speech Gesture Generation using Semantic Coherence and Relevance Learning](semges_semantics-aware_co-speech_gesture_generation_using_semantic_coherence_and.md)
+- [\[ICCV 2025\] SyncDiff: Synchronized Motion Diffusion for Multi-Body Human-Object Interaction Synthesis](syncdiff_synchronized_motion_diffusion_for_multi-body_human-object_interaction_s.md)
+- [\[ICCV 2025\] SemTalk: Holistic Co-speech Motion Generation with Frame-level Semantic Emphasis](semtalk_holistic_co-speech_motion_generation_with_frame-level_semantic_emphasis.md)
+- [\[CVPR 2025\] Retrieving Semantics from the Deep: an RAG Solution for Gesture Synthesis](../../CVPR2025/human_understanding/retrieving_semantics_from_the_deep_an_rag_solution_for_gesture_synthesis.md)
+- [\[ICCV 2025\] Understanding Co-speech Gestures in-the-wild](understanding_co-speech_gestures_in-the-wild.md)
 
 <!-- RELATED:END -->

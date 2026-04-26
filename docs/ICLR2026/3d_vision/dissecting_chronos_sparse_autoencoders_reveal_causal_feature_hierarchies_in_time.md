@@ -139,10 +139,10 @@ SAE 使用 MSE 重构损失训练 50,000 步，Adam 优化器（学习率 $3 \ti
 
 ## 相关论文
 
-- [FeDaL: Federated Dataset Learning for General Time Series Foundation Models](fedal_federated_dataset_learning_for_general_time_series_foundation_models.md)
-- [Multi-Scale Finetuning for Encoder-based Time Series Foundation Models](../../NeurIPS2025/3d_vision/multi-scale_finetuning_for_encoder-based_time_series_foundation_models.md)
-- [Uncovering Zero-Shot Generalization Gaps in Time-Series Foundation Models Using Real-World Videos](../../AAAI2026/3d_vision/uncovering_zero-shot_generalization_gaps_in_time-series_foundation_models_using_.md)
-- [ProbFM: Probabilistic Time Series Foundation Model with Uncertainty Decomposition](../../AAAI2026/3d_vision/probfm_probabilistic_time_series_foundation_model_with_uncertainty_decomposition.md)
-- [Less is More: Unlocking Specialization of Time Series Foundation Models via Structured Pruning](../../NeurIPS2025/3d_vision/less_is_more_unlocking_specialization_of_time_series_foundation_models_via_struc.md)
+- [\[ICLR 2026\] FeDaL: Federated Dataset Learning for General Time Series Foundation Models](fedal_federated_dataset_learning_for_general_time_series_foundation_models.md)
+- [\[NeurIPS 2025\] Multi-Scale Finetuning for Encoder-based Time Series Foundation Models](../../NeurIPS2025/3d_vision/multi-scale_finetuning_for_encoder-based_time_series_foundation_models.md)
+- [\[AAAI 2026\] Uncovering Zero-Shot Generalization Gaps in Time-Series Foundation Models Using Real-World Videos](../../AAAI2026/3d_vision/uncovering_zero-shot_generalization_gaps_in_time-series_foundation_models_using_.md)
+- [\[AAAI 2026\] ProbFM: Probabilistic Time Series Foundation Model with Uncertainty Decomposition](../../AAAI2026/3d_vision/probfm_probabilistic_time_series_foundation_model_with_uncertainty_decomposition.md)
+- [\[NeurIPS 2025\] Less is More: Unlocking Specialization of Time Series Foundation Models via Structured Pruning](../../NeurIPS2025/3d_vision/less_is_more_unlocking_specialization_of_time_series_foundation_models_via_struc.md)
 
 <!-- RELATED:END -->

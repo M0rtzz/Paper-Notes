@@ -121,10 +121,10 @@ CTNN 建立在三个层次之上：
 
 ## 相关论文
 
-- [CosmoBench: A Multiscale, Multiview, Multitask Cosmology Benchmark for Geometric Deep Learning](cosmobench_a_multiscale_multiview_multitask_cosmology_benchmark_for_geometric_de.md)
-- [Learning Neural Exposure Fields for View Synthesis](learning_neural_exposure_fields_for_view_synthesis.md)
-- [Thickness-aware E(3)-Equivariant 3D Mesh Neural Networks](../../ICML2025/3d_vision/thickness-aware_e3-equivariant_3d_mesh_neural_networks.md)
-- [Node-RF: Learning Generalized Continuous Space-Time Scene Dynamics with Neural ODE-based NeRFs](../../CVPR2025/3d_vision/node-rf_learning_generalized_continuous_space-time_scene_dynamics_with_neural_od.md)
-- [High Resolution UDF Meshing via Iterative Networks](high_resolution_udf_meshing_via_iterative_networks.md)
+- [\[NeurIPS 2025\] CosmoBench: A Multiscale, Multiview, Multitask Cosmology Benchmark for Geometric Deep Learning](cosmobench_a_multiscale_multiview_multitask_cosmology_benchmark_for_geometric_de.md)
+- [\[NeurIPS 2025\] Learning Neural Exposure Fields for View Synthesis](learning_neural_exposure_fields_for_view_synthesis.md)
+- [\[ICML 2025\] Thickness-aware E(3)-Equivariant 3D Mesh Neural Networks](../../ICML2025/3d_vision/thickness-aware_e3-equivariant_3d_mesh_neural_networks.md)
+- [\[CVPR 2025\] Node-RF: Learning Generalized Continuous Space-Time Scene Dynamics with Neural ODE-based NeRFs](../../CVPR2025/3d_vision/node-rf_learning_generalized_continuous_space-time_scene_dynamics_with_neural_od.md)
+- [\[NeurIPS 2025\] High Resolution UDF Meshing via Iterative Networks](high_resolution_udf_meshing_via_iterative_networks.md)
 
 <!-- RELATED:END -->

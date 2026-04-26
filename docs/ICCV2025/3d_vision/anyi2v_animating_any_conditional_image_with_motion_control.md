@@ -135,10 +135,10 @@ tags:
 
 ## 相关论文
 
-- [Image as an IMU: Estimating Camera Motion from a Single Motion-Blurred Image](image_as_an_imu_estimating_camera_motion_from_a_single_motion-blurred_image.md)
-- [Compass Control: Multi Object Orientation Control for Text-to-Image Generation](../../CVPR2025/3d_vision/compass_control_multi_object_orientation_control_for_text-to-image_generation.md)
-- [GAP: Gaussianize Any Point Clouds with Text Guidance](gap_gaussianize_any_point_clouds_with_text_guidance.md)
-- [SAS: Segment Any 3D Scene with Integrated 2D Priors](sas_segment_any_3d_scene_with_integrated_2d_priors.md)
-- [Find Any Part in 3D](find_any_part_in_3d.md)
+- [\[ICCV 2025\] Image as an IMU: Estimating Camera Motion from a Single Motion-Blurred Image](image_as_an_imu_estimating_camera_motion_from_a_single_motion-blurred_image.md)
+- [\[CVPR 2025\] Compass Control: Multi Object Orientation Control for Text-to-Image Generation](../../CVPR2025/3d_vision/compass_control_multi_object_orientation_control_for_text-to-image_generation.md)
+- [\[ICCV 2025\] GAP: Gaussianize Any Point Clouds with Text Guidance](gap_gaussianize_any_point_clouds_with_text_guidance.md)
+- [\[ICCV 2025\] SAS: Segment Any 3D Scene with Integrated 2D Priors](sas_segment_any_3d_scene_with_integrated_2d_priors.md)
+- [\[ICCV 2025\] Find Any Part in 3D](find_any_part_in_3d.md)
 
 <!-- RELATED:END -->

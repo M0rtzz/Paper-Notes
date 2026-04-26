@@ -118,10 +118,10 @@ tags:
 
 ## 相关论文
 
-- [Planning Beyond Text: Graph-based Reasoning for Complex Narrative Generation](../../ACL2026/human_understanding/planning_beyond_text_graph-based_reasoning_for_complex_narrative_generation.md)
-- [Learning Skill-Attributes for Transferable Assessment in Video](../../NeurIPS2025/human_understanding/learning_skill-attributes_for_transferable_assessment_in_video.md)
-- [SocialHarmBench: Revealing LLM Vulnerabilities to Socially Harmful Requests](../../ICLR2026/human_understanding/socialharmbench_revealing_llm_vulnerabilities_to_socially_harmful_requests.md)
-- [Inference-Time Backdoors via Hidden Instructions in LLM Chat Templates](../../ICLR2026/human_understanding/inference-time_backdoors_via_hidden_instructions_in_llm_chat_templates.md)
-- [Preference-based Reinforcement Learning beyond Pairwise Comparisons: Benefits of Multiple Options](../../NeurIPS2025/human_understanding/preference-based_reinforcement_learning_beyond_pairwise_comparisons_benefits_of_.md)
+- [\[ACL 2026\] Planning Beyond Text: Graph-based Reasoning for Complex Narrative Generation](../../ACL2026/human_understanding/planning_beyond_text_graph-based_reasoning_for_complex_narrative_generation.md)
+- [\[NeurIPS 2025\] Learning Skill-Attributes for Transferable Assessment in Video](../../NeurIPS2025/human_understanding/learning_skill-attributes_for_transferable_assessment_in_video.md)
+- [\[ICLR 2026\] SocialHarmBench: Revealing LLM Vulnerabilities to Socially Harmful Requests](../../ICLR2026/human_understanding/socialharmbench_revealing_llm_vulnerabilities_to_socially_harmful_requests.md)
+- [\[ICLR 2026\] Inference-Time Backdoors via Hidden Instructions in LLM Chat Templates](../../ICLR2026/human_understanding/inference-time_backdoors_via_hidden_instructions_in_llm_chat_templates.md)
+- [\[NeurIPS 2025\] Preference-based Reinforcement Learning beyond Pairwise Comparisons: Benefits of Multiple Options](../../NeurIPS2025/human_understanding/preference-based_reinforcement_learning_beyond_pairwise_comparisons_benefits_of_.md)
 
 <!-- RELATED:END -->

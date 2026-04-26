@@ -154,10 +154,10 @@ CuMoLoS-MAE（Curriculum-Guided Monte Carlo Stochastic Ensemble Masked Autoencod
 
 ## 相关论文
 
-- [L2RSI: Cross-View LiDAR-Based Place Recognition for Large-Scale Urban Scenes via Remote Sensing Imagery](l2rsi_cross-view_lidar-based_place_recognition_for_large-scale_urban_scenes_via_.md)
-- [HoloLLM: Multisensory Foundation Model for Language-Grounded Human Sensing and Reasoning](holollm_multisensory_foundation_model_for_language-grounded_human_sensing_and_re.md)
-- [PlanarSplatting: Accurate Planar Surface Reconstruction in 3 Minutes](../../CVPR2025/autonomous_driving/planarsplatting_accurate_planar_surface_reconstruction_in_3_minutes.md)
-- [Towards In-the-Wild 3D Plane Reconstruction from a Single Image](../../CVPR2025/autonomous_driving/towards_in-the-wild_3d_plane_reconstruction_from_a_single_image.md)
-- [MaskGWM: A Generalizable Driving World Model with Video Mask Reconstruction](../../CVPR2025/autonomous_driving/maskgwm_a_generalizable_driving_world_model_with_video_mask_reconstruction.md)
+- [\[NeurIPS 2025\] L2RSI: Cross-View LiDAR-Based Place Recognition for Large-Scale Urban Scenes via Remote Sensing Imagery](l2rsi_cross-view_lidar-based_place_recognition_for_large-scale_urban_scenes_via_.md)
+- [\[NeurIPS 2025\] HoloLLM: Multisensory Foundation Model for Language-Grounded Human Sensing and Reasoning](holollm_multisensory_foundation_model_for_language-grounded_human_sensing_and_re.md)
+- [\[CVPR 2025\] PlanarSplatting: Accurate Planar Surface Reconstruction in 3 Minutes](../../CVPR2025/autonomous_driving/planarsplatting_accurate_planar_surface_reconstruction_in_3_minutes.md)
+- [\[CVPR 2025\] Towards In-the-Wild 3D Plane Reconstruction from a Single Image](../../CVPR2025/autonomous_driving/towards_in-the-wild_3d_plane_reconstruction_from_a_single_image.md)
+- [\[CVPR 2025\] MaskGWM: A Generalizable Driving World Model with Video Mask Reconstruction](../../CVPR2025/autonomous_driving/maskgwm_a_generalizable_driving_world_model_with_video_mask_reconstruction.md)
 
 <!-- RELATED:END -->

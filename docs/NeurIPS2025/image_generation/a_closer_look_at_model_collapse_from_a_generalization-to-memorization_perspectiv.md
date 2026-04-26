@@ -139,10 +139,10 @@ tags:
 
 ## 相关论文
 
-- [A Closer Look at GAN Priors: Exploiting Intermediate Features for Enhanced Model Inversion Attacks](../../ECCV2024/image_generation/a_closer_look_at_gan_priors_exploiting_intermediate_features.md)
-- [Scaling Can Lead to Compositional Generalization](scaling_can_lead_to_compositional_generalization.md)
-- [GRAM: A Generative Foundation Reward Model for Reward Generalization](../../ICML2025/image_generation/gram_a_generative_foundation_reward_model_for_reward_generalization.md)
-- [UNSEEN: Enhancing Dataset Pruning from a Generalization Perspective](../../AAAI2026/image_generation/unseen_enhancing_dataset_pruning_from_a_generalization_perspective.md)
-- [Towards a Mechanistic Explanation of Diffusion Model Generalization](../../ICML2025/image_generation/towards_a_mechanistic_explanation_of_diffusion_model_generalization.md)
+- [\[ECCV 2024\] A Closer Look at GAN Priors: Exploiting Intermediate Features for Enhanced Model Inversion Attacks](../../ECCV2024/image_generation/a_closer_look_at_gan_priors_exploiting_intermediate_features.md)
+- [\[NeurIPS 2025\] Scaling Can Lead to Compositional Generalization](scaling_can_lead_to_compositional_generalization.md)
+- [\[ICML 2025\] GRAM: A Generative Foundation Reward Model for Reward Generalization](../../ICML2025/image_generation/gram_a_generative_foundation_reward_model_for_reward_generalization.md)
+- [\[AAAI 2026\] UNSEEN: Enhancing Dataset Pruning from a Generalization Perspective](../../AAAI2026/image_generation/unseen_enhancing_dataset_pruning_from_a_generalization_perspective.md)
+- [\[ICML 2025\] Towards a Mechanistic Explanation of Diffusion Model Generalization](../../ICML2025/image_generation/towards_a_mechanistic_explanation_of_diffusion_model_generalization.md)
 
 <!-- RELATED:END -->

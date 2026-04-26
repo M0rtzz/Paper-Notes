@@ -247,10 +247,10 @@ Lowe 等、Akata 等已关注多体行为建模。
 
 ## 相关论文
 
-- [LongSafety: Evaluating Long-Context Safety of Large Language Models](../../ACL2025/llm_efficiency/longsafety_evaluating_long-context_safety_of_large_language_models.md)
-- [Robust Utility-Preserving Text Anonymization Based on Large Language Models](../../ACL2025/llm_efficiency/robust_utility-preserving_text_anonymization_based_on_large_language_models.md)
-- [Scaling Inference-Efficient Language Models](scaling_inference-efficient_language_models.md)
-- [LongReward: Improving Long-context Large Language Models with AI Feedback](../../ACL2025/llm_efficiency/longreward_improving_long-context_large_language_models_with_ai_feedback.md)
-- [A Drop-In Solution for On-the-Fly Adaptation of Speculative Decoding in Large Language Models](../../ACL2025/llm_efficiency/a_drop-in_solution_for_on-the-fly_adaptation_of_speculative_decoding_in_large_la.md)
+- [\[ACL 2025\] LongSafety: Evaluating Long-Context Safety of Large Language Models](../../ACL2025/llm_efficiency/longsafety_evaluating_long-context_safety_of_large_language_models.md)
+- [\[ACL 2025\] Robust Utility-Preserving Text Anonymization Based on Large Language Models](../../ACL2025/llm_efficiency/robust_utility-preserving_text_anonymization_based_on_large_language_models.md)
+- [\[ICML 2025\] Scaling Inference-Efficient Language Models](scaling_inference-efficient_language_models.md)
+- [\[ACL 2025\] LongReward: Improving Long-context Large Language Models with AI Feedback](../../ACL2025/llm_efficiency/longreward_improving_long-context_large_language_models_with_ai_feedback.md)
+- [\[ACL 2025\] A Drop-In Solution for On-the-Fly Adaptation of Speculative Decoding in Large Language Models](../../ACL2025/llm_efficiency/a_drop-in_solution_for_on-the-fly_adaptation_of_speculative_decoding_in_large_la.md)
 
 <!-- RELATED:END -->

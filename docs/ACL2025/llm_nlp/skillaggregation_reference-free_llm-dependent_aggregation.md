@@ -152,10 +152,10 @@ SkillAggregation-X在HaluEval上获得4.9%、TruthfulQA上1.3%、Chatbot Arena�
 
 ## 相关论文
 
-- [Training-free LLM Merging for Multi-task Learning](training-free_llm_merging_for_multi-task_learning.md)
-- [Probabilistic Aggregation and Targeted Embedding Optimization for Collective Moral Reasoning](probabilistic_aggregation_and_targeted_embedding_optimization_for_collective_mor.md)
-- [A Training-free LLM-based Approach to General Chinese Character Error Correction](a_training-free_llm-based_approach_to_general_chinese_character_error_correction.md)
-- [Cuckoo: An IE Free Rider Hatched by Massive Nutrition in LLM's Nest](cuckoo_an_ie_free_rider_hatched_by_massive_nutrition_in_llms_nest.md)
-- [Leveraging Self-Attention for Input-Dependent Soft Prompting in LLMs](input_dependent_soft_prompting.md)
+- [\[ACL 2025\] Training-free LLM Merging for Multi-task Learning](training-free_llm_merging_for_multi-task_learning.md)
+- [\[ACL 2025\] Probabilistic Aggregation and Targeted Embedding Optimization for Collective Moral Reasoning](probabilistic_aggregation_and_targeted_embedding_optimization_for_collective_mor.md)
+- [\[ACL 2025\] A Training-free LLM-based Approach to General Chinese Character Error Correction](a_training-free_llm-based_approach_to_general_chinese_character_error_correction.md)
+- [\[ACL 2025\] Cuckoo: An IE Free Rider Hatched by Massive Nutrition in LLM's Nest](cuckoo_an_ie_free_rider_hatched_by_massive_nutrition_in_llms_nest.md)
+- [\[ACL 2025\] Leveraging Self-Attention for Input-Dependent Soft Prompting in LLMs](input_dependent_soft_prompting.md)
 
 <!-- RELATED:END -->

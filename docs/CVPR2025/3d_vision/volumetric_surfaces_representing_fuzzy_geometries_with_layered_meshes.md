@@ -140,10 +140,10 @@ tags:
 
 ## 相关论文
 
-- [LUCAS: Layered Universal Codec Avatars](lucas_layered_universal_codec_avatars.md)
-- [SimAvatar: Simulation-Ready Avatars with Layered Hair and Clothing](simavatar_simulation-ready_avatars_with_layered_hair_and_clothing.md)
-- [MeshArt: Generating Articulated Meshes with Structure-Guided Transformers](meshart_generating_articulated_meshes_with_structure-guided_transformers.md)
-- [Layered Motion Fusion: Lifting Motion Segmentation to 3D in Egocentric Videos](layered_motion_fusion_lifting_motion_segmentation_to_3d_in_egocentric_videos.md)
-- [SUM Parts: Benchmarking Part-Level Semantic Segmentation of Urban Meshes](sum_parts_benchmarking_part-level_semantic_segmentation_of_urban_meshes.md)
+- [\[CVPR 2025\] LUCAS: Layered Universal Codec Avatars](lucas_layered_universal_codec_avatars.md)
+- [\[CVPR 2025\] SimAvatar: Simulation-Ready Avatars with Layered Hair and Clothing](simavatar_simulation-ready_avatars_with_layered_hair_and_clothing.md)
+- [\[CVPR 2025\] MeshArt: Generating Articulated Meshes with Structure-Guided Transformers](meshart_generating_articulated_meshes_with_structure-guided_transformers.md)
+- [\[CVPR 2025\] Layered Motion Fusion: Lifting Motion Segmentation to 3D in Egocentric Videos](layered_motion_fusion_lifting_motion_segmentation_to_3d_in_egocentric_videos.md)
+- [\[CVPR 2025\] SUM Parts: Benchmarking Part-Level Semantic Segmentation of Urban Meshes](sum_parts_benchmarking_part-level_semantic_segmentation_of_urban_meshes.md)
 
 <!-- RELATED:END -->

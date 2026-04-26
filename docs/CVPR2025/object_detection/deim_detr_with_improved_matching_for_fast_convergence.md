@@ -116,10 +116,10 @@ Mosaic/MixUp 拼接图像（4→1）→ 增加单图内目标数 N → 保持一
 
 ## 相关论文
 
-- [Tensorial Template Matching for Fast Cross-Correlation with Rotations and Its Application for Tomography](../../ECCV2024/object_detection/tensorial_template_matching_for_fast_cross-correlation_with_rotations_and_its_ap.md)
-- [MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism](mi-detr_an_object_detection_model_with_multi-time_inquiries_mechanism.md)
-- [Mr. DETR++: Instructive Multi-Route Training for Detection Transformers with MoE](mr_detr_instructive_multi-route_training_for_detection_transformers.md)
-- [Sim-DETR: Unlock DETR for Temporal Sentence Grounding](../../ICCV2025/object_detection/sim-detr_unlock_detr_for_temporal_sentence_grounding.md)
-- [ReCon-GS: Continuum-Preserved Gaussian Streaming for Fast and Compact Reconstruction](../../NeurIPS2025/object_detection/recon-gs_continuum-preserved_gaussian_streaming_for_fast_and_compact_reconstruct.md)
+- [\[ECCV 2024\] Tensorial Template Matching for Fast Cross-Correlation with Rotations and Its Application for Tomography](../../ECCV2024/object_detection/tensorial_template_matching_for_fast_cross-correlation_with_rotations_and_its_ap.md)
+- [\[CVPR 2025\] MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism](mi-detr_an_object_detection_model_with_multi-time_inquiries_mechanism.md)
+- [\[CVPR 2025\] Mr. DETR++: Instructive Multi-Route Training for Detection Transformers with MoE](mr_detr_instructive_multi-route_training_for_detection_transformers.md)
+- [\[ICCV 2025\] Sim-DETR: Unlock DETR for Temporal Sentence Grounding](../../ICCV2025/object_detection/sim-detr_unlock_detr_for_temporal_sentence_grounding.md)
+- [\[NeurIPS 2025\] ReCon-GS: Continuum-Preserved Gaussian Streaming for Fast and Compact Reconstruction](../../NeurIPS2025/object_detection/recon-gs_continuum-preserved_gaussian_streaming_for_fast_and_compact_reconstruct.md)
 
 <!-- RELATED:END -->

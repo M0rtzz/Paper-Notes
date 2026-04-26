@@ -114,10 +114,10 @@ tags:
 
 ## 相关论文
 
-- [Graph2Eval: Automatic Multimodal Task Generation for Agents via Knowledge Graphs](graph2eval_multimodal_task_generation_agents.md)
-- [See, Think, Act: Teaching Multimodal Agents to Effectively Interact with GUI by Identifying Toggles](see_think_act_teaching_multimodal_agents_to_effectively_interact_with_gui_by_ide.md)
-- [Scaling Generalist Data-Analytic Agents](../../ICLR2026/human_understanding/scaling_generalist_data-analytic_agents.md)
-- [Occlusion Handling in 3D Human Pose Estimation with Perturbed Positional Encoding](../../ECCV2024/human_understanding/occlusion_handling_in_3d_human_pose_estimation_with_perturbed_positional_encodin.md)
-- [Counteractive RL: Rethinking Core Principles for Efficient and Scalable Deep Reinforcement Learning](../../NeurIPS2025/human_understanding/counteractive_rl_rethinking_core_principles_for_efficient_and_scalable_deep_rein.md)
+- [\[CVPR 2026\] Graph2Eval: Automatic Multimodal Task Generation for Agents via Knowledge Graphs](graph2eval_multimodal_task_generation_agents.md)
+- [\[CVPR 2026\] See, Think, Act: Teaching Multimodal Agents to Effectively Interact with GUI by Identifying Toggles](see_think_act_teaching_multimodal_agents_to_effectively_interact_with_gui_by_ide.md)
+- [\[ICLR 2026\] Scaling Generalist Data-Analytic Agents](../../ICLR2026/human_understanding/scaling_generalist_data-analytic_agents.md)
+- [\[ECCV 2024\] Occlusion Handling in 3D Human Pose Estimation with Perturbed Positional Encoding](../../ECCV2024/human_understanding/occlusion_handling_in_3d_human_pose_estimation_with_perturbed_positional_encodin.md)
+- [\[NeurIPS 2025\] Counteractive RL: Rethinking Core Principles for Efficient and Scalable Deep Reinforcement Learning](../../NeurIPS2025/human_understanding/counteractive_rl_rethinking_core_principles_for_efficient_and_scalable_deep_rein.md)
 
 <!-- RELATED:END -->

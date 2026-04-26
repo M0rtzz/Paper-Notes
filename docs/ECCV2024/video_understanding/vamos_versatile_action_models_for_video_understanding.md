@@ -146,10 +146,10 @@ $$\mathbf{z}_v = \mathcal{F}_{\text{proj}}(\mathcal{E}(v_1, \ldots, v_{N_v})) \i
 
 ## 相关论文
 
-- [Optimizing Factorized Encoder Models: Time and Memory Reduction for Scalable and Efficient Action Recognition](optimizing_factorized_encoder_models_time_and_memory_reduction_for_scalable_and_.md)
-- [Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
-- [Leveraging Temporal Contextualization for Video Action Recognition](leveraging_temporal_contextualization_for_video_action_recognition.md)
-- [Masked Video and Body-worn IMU Autoencoder for Egocentric Action Recognition](masked_video_and_body-worn_imu_autoencoder_for_egocentric_action_recognition.md)
-- [Adapt2Reward: Adapting Video-Language Models to Generalizable Robotic Rewards via Failure Prompts](adapt2reward_adapting_videolanguage_models_to_generalizable.md)
+- [\[ECCV 2024\] Optimizing Factorized Encoder Models: Time and Memory Reduction for Scalable and Efficient Action Recognition](optimizing_factorized_encoder_models_time_and_memory_reduction_for_scalable_and_.md)
+- [\[ECCV 2024\] Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
+- [\[ECCV 2024\] Leveraging Temporal Contextualization for Video Action Recognition](leveraging_temporal_contextualization_for_video_action_recognition.md)
+- [\[ECCV 2024\] Masked Video and Body-worn IMU Autoencoder for Egocentric Action Recognition](masked_video_and_body-worn_imu_autoencoder_for_egocentric_action_recognition.md)
+- [\[ECCV 2024\] Adapt2Reward: Adapting Video-Language Models to Generalizable Robotic Rewards via Failure Prompts](adapt2reward_adapting_videolanguage_models_to_generalizable.md)
 
 <!-- RELATED:END -->

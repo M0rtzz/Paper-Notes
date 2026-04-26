@@ -106,10 +106,10 @@ SEAG 由三个阶段组成，形成一个完整的推理 pipeline：
 
 ## 相关论文
 
-- [Fleet of Agents: Coordinated Problem Solving with Large Language Models](../../ICML2025/model_compression/fleet_of_agents_coordinated_problem_solving_with_large_language_models.md)
-- [Pre-training Distillation for Large Language Models: A Design Space Exploration](pre-training_distillation_for_large_language_models_a_design_space_exploration.md)
-- [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
-- [Spectra 1.1: Scaling Laws and Efficient Inference for Ternary Language Models](scaling_laws_and_efficient_inference_for_ternary_language_models.md)
-- [AdmTree: Compressing Lengthy Context with Adaptive Semantic Trees](../../NeurIPS2025/model_compression/admtree_compressing_lengthy_context_with_adaptive_semantic_trees.md)
+- [\[ICML 2025\] Fleet of Agents: Coordinated Problem Solving with Large Language Models](../../ICML2025/model_compression/fleet_of_agents_coordinated_problem_solving_with_large_language_models.md)
+- [\[ACL 2025\] Pre-training Distillation for Large Language Models: A Design Space Exploration](pre-training_distillation_for_large_language_models_a_design_space_exploration.md)
+- [\[ACL 2025\] EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
+- [\[ACL 2025\] Spectra 1.1: Scaling Laws and Efficient Inference for Ternary Language Models](scaling_laws_and_efficient_inference_for_ternary_language_models.md)
+- [\[NeurIPS 2025\] AdmTree: Compressing Lengthy Context with Adaptive Semantic Trees](../../NeurIPS2025/model_compression/admtree_compressing_lengthy_context_with_adaptive_semantic_trees.md)
 
 <!-- RELATED:END -->

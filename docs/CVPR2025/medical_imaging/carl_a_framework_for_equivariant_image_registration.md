@@ -139,10 +139,10 @@ CAM 层注入消融（HCP 数据集）：
 
 ## 相关论文
 
-- [SACB-Net: Spatial-Awareness Convolutions for Medical Image Registration](sacb-net_spatial-awareness_convolutions_for_medical_image_registration.md)
-- [EquivAnIA: A Spectral Method for Rotation-Equivariant Anisotropic Image Analysis](equivania_a_spectral_method_for_rotation-equivariant_anisotropic_image_analysis.md)
-- [WISE: A Framework for Gigapixel Whole-Slide-Image Lossless Compression](wise_a_framework_for_gigapixel_whole-slide-image_lossless_compression.md)
-- [Adaptive Correspondence Scoring for Unsupervised Medical Image Registration](../../ECCV2024/medical_imaging/adaptive_correspondence_scoring_for_unsupervised_medical_ima.md)
-- [Unsupervised Multi-modal Medical Image Registration via Invertible Translation](../../ECCV2024/medical_imaging/unsupervised_multi-modal_medical_image_registration_via_invertible_translation.md)
+- [\[CVPR 2025\] SACB-Net: Spatial-Awareness Convolutions for Medical Image Registration](sacb-net_spatial-awareness_convolutions_for_medical_image_registration.md)
+- [\[CVPR 2025\] EquivAnIA: A Spectral Method for Rotation-Equivariant Anisotropic Image Analysis](equivania_a_spectral_method_for_rotation-equivariant_anisotropic_image_analysis.md)
+- [\[CVPR 2025\] WISE: A Framework for Gigapixel Whole-Slide-Image Lossless Compression](wise_a_framework_for_gigapixel_whole-slide-image_lossless_compression.md)
+- [\[ECCV 2024\] Adaptive Correspondence Scoring for Unsupervised Medical Image Registration](../../ECCV2024/medical_imaging/adaptive_correspondence_scoring_for_unsupervised_medical_ima.md)
+- [\[ECCV 2024\] Unsupervised Multi-modal Medical Image Registration via Invertible Translation](../../ECCV2024/medical_imaging/unsupervised_multi-modal_medical_image_registration_via_invertible_translation.md)
 
 <!-- RELATED:END -->

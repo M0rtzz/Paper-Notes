@@ -190,10 +190,10 @@ $$\mathcal{L}_{cycle} = \sum_{i,j}^n (1 - \cos(\Pi_i^\top \widetilde{\Phi}_i \ma
 
 ## 相关论文
 
-- [Graph Out-of-Distribution Detection via Test-Time Calibration with Dual Dynamic Dictionaries](graph_out-of-distribution_detection_via_test-time_calibration_with_dual_dynamic_.md)
-- [MultiFileTest: A Multi-File-Level LLM Unit Test Generation Benchmark and Impact of Error Fixing Mechanisms](../../ACL2026/llm_evaluation/multifiletest_a_multi-file-level_llm_unit_test_generation_benchmark_and_impact_o.md)
-- [Eliminating Warping Shakes for Unsupervised Online Video Stitching](../../ECCV2024/llm_evaluation/eliminating_warping_shakes_for_unsupervised_online_video_stitching.md)
-- [Task-Aware LLM Routing with Multi-Level Task-Profile-Guided Data Synthesis for Cold-Start Scenarios](../../ACL2026/llm_evaluation/task-aware_llm_routing_with_multi-level_task-profile-guided_data_synthesis_for_c.md)
-- [Learning Generalizable Shape Completion with SIM(3) Equivariance](../../NeurIPS2025/llm_evaluation/learning_generalizable_shape_completion_with_sim3_equivariance.md)
+- [\[AAAI 2026\] Graph Out-of-Distribution Detection via Test-Time Calibration with Dual Dynamic Dictionaries](graph_out-of-distribution_detection_via_test-time_calibration_with_dual_dynamic_.md)
+- [\[ACL 2026\] MultiFileTest: A Multi-File-Level LLM Unit Test Generation Benchmark and Impact of Error Fixing Mechanisms](../../ACL2026/llm_evaluation/multifiletest_a_multi-file-level_llm_unit_test_generation_benchmark_and_impact_o.md)
+- [\[ECCV 2024\] Eliminating Warping Shakes for Unsupervised Online Video Stitching](../../ECCV2024/llm_evaluation/eliminating_warping_shakes_for_unsupervised_online_video_stitching.md)
+- [\[ACL 2026\] Task-Aware LLM Routing with Multi-Level Task-Profile-Guided Data Synthesis for Cold-Start Scenarios](../../ACL2026/llm_evaluation/task-aware_llm_routing_with_multi-level_task-profile-guided_data_synthesis_for_c.md)
+- [\[NeurIPS 2025\] Learning Generalizable Shape Completion with SIM(3) Equivariance](../../NeurIPS2025/llm_evaluation/learning_generalizable_shape_completion_with_sim3_equivariance.md)
 
 <!-- RELATED:END -->

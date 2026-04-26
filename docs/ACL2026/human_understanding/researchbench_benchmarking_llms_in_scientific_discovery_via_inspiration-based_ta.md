@@ -110,10 +110,10 @@ ResearchBench构建流程：（1）从Nature/Science等顶级期刊下载1386篇
 
 ## 相关论文
 
-- [CAP: Controllable Alignment Prompting for Unlearning in LLMs](cap_controllable_alignment_prompting_for_unlearning_in_llms.md)
-- [AutoFigure: Generating and Refining Publication-Ready Scientific Illustrations](../../ICLR2026/human_understanding/autofigure_generating_and_refining_publication-ready_scientific_illustrations.md)
-- [Vocab Diet: Reshaping the Vocabulary of LLMs via Vector Arithmetic](vocab_diet_reshaping_the_vocabulary_of_llms_via_vector_arithmetic.md)
-- [SAMoRA: Semantic-Aware Mixture of LoRA Experts for Task-Adaptive Learning](samora_semantic-aware_mixture_of_lora_experts_for_task-adaptive_learning.md)
-- [MCGA: A Multi-task Classical Chinese Literary Genre Audio Corpus](mcga_a_multi-task_classical_chinese_literary_genre_audio_corpus.md)
+- [\[ACL 2026\] CAP: Controllable Alignment Prompting for Unlearning in LLMs](cap_controllable_alignment_prompting_for_unlearning_in_llms.md)
+- [\[ICLR 2026\] AutoFigure: Generating and Refining Publication-Ready Scientific Illustrations](../../ICLR2026/human_understanding/autofigure_generating_and_refining_publication-ready_scientific_illustrations.md)
+- [\[ACL 2026\] Vocab Diet: Reshaping the Vocabulary of LLMs via Vector Arithmetic](vocab_diet_reshaping_the_vocabulary_of_llms_via_vector_arithmetic.md)
+- [\[ACL 2026\] SAMoRA: Semantic-Aware Mixture of LoRA Experts for Task-Adaptive Learning](samora_semantic-aware_mixture_of_lora_experts_for_task-adaptive_learning.md)
+- [\[ACL 2026\] MCGA: A Multi-task Classical Chinese Literary Genre Audio Corpus](mcga_a_multi-task_classical_chinese_literary_genre_audio_corpus.md)
 
 <!-- RELATED:END -->

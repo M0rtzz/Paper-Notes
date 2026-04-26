@@ -139,10 +139,10 @@ tags:
 
 ## 相关论文
 
-- [GraphVLM: Benchmarking Vision Language Models for Multimodal Graph Learning](graphvlm_benchmarking_vision_language_models_for_multimodal_graph_learning.md)
-- [Making MLLMs Blind: Adversarial Smuggling Attacks in MLLM Content Moderation](../../ACL2026/multimodal_vlm/making_mllms_blind_adversarial_smuggling_attacks_in_mllm_content_moderation.md)
-- [Do Vision-Language Models Leak What They Learn? Adaptive Token-Weighted Model Inversion Attacks](vlm_model_inversion_adaptive_token_weight.md)
-- [World-Env: Leveraging World Model as a Virtual Environment for VLA Post-Training](rehearsevla_simulated_posttraining_world_model.md)
-- [CLAP: Isolating Content from Style Through Contrastive Learning with Augmented Prompts](../../ECCV2024/multimodal_vlm/clap_isolating_content_from_style_through_contrastive_learni.md)
+- [\[CVPR 2026\] GraphVLM: Benchmarking Vision Language Models for Multimodal Graph Learning](graphvlm_benchmarking_vision_language_models_for_multimodal_graph_learning.md)
+- [\[ACL 2026\] Making MLLMs Blind: Adversarial Smuggling Attacks in MLLM Content Moderation](../../ACL2026/multimodal_vlm/making_mllms_blind_adversarial_smuggling_attacks_in_mllm_content_moderation.md)
+- [\[CVPR 2026\] Do Vision-Language Models Leak What They Learn? Adaptive Token-Weighted Model Inversion Attacks](vlm_model_inversion_adaptive_token_weight.md)
+- [\[CVPR 2026\] World-Env: Leveraging World Model as a Virtual Environment for VLA Post-Training](rehearsevla_simulated_posttraining_world_model.md)
+- [\[ECCV 2024\] CLAP: Isolating Content from Style Through Contrastive Learning with Augmented Prompts](../../ECCV2024/multimodal_vlm/clap_isolating_content_from_style_through_contrastive_learni.md)
 
 <!-- RELATED:END -->

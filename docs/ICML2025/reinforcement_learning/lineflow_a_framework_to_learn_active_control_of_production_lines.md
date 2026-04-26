@@ -185,10 +185,10 @@ $$R(s_t, \pi(s_{t-1})) = C_\pi(T_{\text{step}} \cdot (t+1)) - C_\pi(T_{\text{ste
 
 ## 相关论文
 
-- [Learning Mean Field Control on Sparse Graphs](learning_mean_field_control_on_sparse_graphs.md)
-- [Stochastic Encodings for Active Feature Acquisition](stochastic_encodings_for_active_feature_acquisition.md)
-- [SENSEI: Semantic Exploration Guided by Foundation Models to Learn Versatile World Models](sensei_semantic_exploration_guided_by_foundation_models_to_learn_versatile_world.md)
-- [Shift Before You Learn: Enabling Low-Rank Representations in Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/shift_before_you_learn_enabling_low-rank_representations_in_reinforcement_learni.md)
-- [APPLE: Toward General Active Perception via Reinforcement Learning](../../ICLR2026/reinforcement_learning/apple_toward_general_active_perception_via_reinforcement_learning.md)
+- [\[ICML 2025\] Learning Mean Field Control on Sparse Graphs](learning_mean_field_control_on_sparse_graphs.md)
+- [\[ICML 2025\] Stochastic Encodings for Active Feature Acquisition](stochastic_encodings_for_active_feature_acquisition.md)
+- [\[ICML 2025\] SENSEI: Semantic Exploration Guided by Foundation Models to Learn Versatile World Models](sensei_semantic_exploration_guided_by_foundation_models_to_learn_versatile_world.md)
+- [\[NeurIPS 2025\] Shift Before You Learn: Enabling Low-Rank Representations in Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/shift_before_you_learn_enabling_low-rank_representations_in_reinforcement_learni.md)
+- [\[ICLR 2026\] APPLE: Toward General Active Perception via Reinforcement Learning](../../ICLR2026/reinforcement_learning/apple_toward_general_active_perception_via_reinforcement_learning.md)
 
 <!-- RELATED:END -->

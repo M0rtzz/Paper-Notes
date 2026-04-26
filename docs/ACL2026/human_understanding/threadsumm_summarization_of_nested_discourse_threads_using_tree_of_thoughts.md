@@ -120,10 +120,10 @@ tags:
 
 ## 相关论文
 
-- [FACTS: Table Summarization via Offline Template Generation with Agentic Workflows](facts_table_summarization_via_offline_template_generation_with_agentic_workflows.md)
-- [Mixing Expert Knowledge: Bring Human Thoughts Back to the Game of Go](../../NeurIPS2025/human_understanding/mixing_expert_knowledge_bring_human_thoughts_back_to_the_game_of_go.md)
-- [GUI-Rise: Structured Reasoning and History Summarization for GUI Navigation](../../NeurIPS2025/human_understanding/gui-rise_structured_reasoning_and_history_summarization_for_gui_navigation.md)
-- [Erwin: A Tree-based Hierarchical Transformer for Large-scale Physical Systems](../../ICML2025/human_understanding/erwin_a_tree-based_hierarchical_transformer_for_large-scale_physical_systems.md)
-- [Collaborative Tree Search for Enhancing Embodied Multi-Agent Collaboration](../../CVPR2025/human_understanding/collaborative_tree_search_for_enhancing_embodied_multi-agent_collaboration.md)
+- [\[ACL 2026\] FACTS: Table Summarization via Offline Template Generation with Agentic Workflows](facts_table_summarization_via_offline_template_generation_with_agentic_workflows.md)
+- [\[NeurIPS 2025\] Mixing Expert Knowledge: Bring Human Thoughts Back to the Game of Go](../../NeurIPS2025/human_understanding/mixing_expert_knowledge_bring_human_thoughts_back_to_the_game_of_go.md)
+- [\[NeurIPS 2025\] GUI-Rise: Structured Reasoning and History Summarization for GUI Navigation](../../NeurIPS2025/human_understanding/gui-rise_structured_reasoning_and_history_summarization_for_gui_navigation.md)
+- [\[ICML 2025\] Erwin: A Tree-based Hierarchical Transformer for Large-scale Physical Systems](../../ICML2025/human_understanding/erwin_a_tree-based_hierarchical_transformer_for_large-scale_physical_systems.md)
+- [\[CVPR 2025\] Collaborative Tree Search for Enhancing Embodied Multi-Agent Collaboration](../../CVPR2025/human_understanding/collaborative_tree_search_for_enhancing_embodied_multi-agent_collaboration.md)
 
 <!-- RELATED:END -->

@@ -114,10 +114,10 @@ Gen3DEval分两个阶段：Stage 1训练一个能进行成对比较的vLLM，Sta
 
 ## 相关论文
 
-- [Eval3D: Interpretable and Fine-grained Evaluation for 3D Generation](eval3d_interpretable_and_fine-grained_evaluation_for_3d_generation.md)
-- [UnCommon Objects in 3D](uncommon_objects_in_3d.md)
-- [Can LLMs Write Faithfully? An Agent-Based Evaluation of LLM-generated Islamic Content](../../NeurIPS2025/3d_vision/can_llms_write_faithfully_an_agent-based_evaluation_of_llm-generated_islamic_con.md)
-- [How Far are AI-generated Videos from Simulating the 3D Visual World: A Learned 3D Evaluation Approach](../../ICCV2025/3d_vision/how_far_are_ai-generated_videos_from_simulating_the_3d_visual_world_a_learned_3d.md)
-- [ASHiTA: Automatic Scene-grounded Hierarchical Task Analysis](ashita_automatic_scene-grounded_hierarchical_task_analysis.md)
+- [\[CVPR 2025\] Eval3D: Interpretable and Fine-grained Evaluation for 3D Generation](eval3d_interpretable_and_fine-grained_evaluation_for_3d_generation.md)
+- [\[CVPR 2025\] UnCommon Objects in 3D](uncommon_objects_in_3d.md)
+- [\[NeurIPS 2025\] Can LLMs Write Faithfully? An Agent-Based Evaluation of LLM-generated Islamic Content](../../NeurIPS2025/3d_vision/can_llms_write_faithfully_an_agent-based_evaluation_of_llm-generated_islamic_con.md)
+- [\[ICCV 2025\] How Far are AI-generated Videos from Simulating the 3D Visual World: A Learned 3D Evaluation Approach](../../ICCV2025/3d_vision/how_far_are_ai-generated_videos_from_simulating_the_3d_visual_world_a_learned_3d.md)
+- [\[CVPR 2025\] ASHiTA: Automatic Scene-grounded Hierarchical Task Analysis](ashita_automatic_scene-grounded_hierarchical_task_analysis.md)
 
 <!-- RELATED:END -->

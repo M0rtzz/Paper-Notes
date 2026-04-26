@@ -130,10 +130,10 @@ tags:
 
 ## 相关论文
 
-- [FRET: Feature Redundancy Elimination for Test Time Adaptation](../../ICCV2025/ai_safety/fret_feature_redundancy_elimination_for_test_time_adaptation.md)
-- [Can Editing LLMs Inject Harm?](../../AAAI2026/ai_safety/can_editing_llms_inject_harm.md)
-- [Efficient Resource-Constrained Training of Transformers via Subspace Optimization](efficient_resource-constrained_training_of_transformers_via_subspace_optimizatio.md)
-- [Emergent Misalignment: Narrow Finetuning Can Produce Broadly Misaligned LLMs](../../ICML2025/ai_safety/emergent_misalignment_narrow_finetuning_can_produce_broadly_misaligned_llms.md)
-- [Bridging Fairness and Explainability: Can Input-Based Explanations Promote Fairness in Hate Speech Detection?](bridging_fairness_and_explainability_can_input-based_explanations_promote_fairne.md)
+- [\[ICCV 2025\] FRET: Feature Redundancy Elimination for Test Time Adaptation](../../ICCV2025/ai_safety/fret_feature_redundancy_elimination_for_test_time_adaptation.md)
+- [\[AAAI 2026\] Can Editing LLMs Inject Harm?](../../AAAI2026/ai_safety/can_editing_llms_inject_harm.md)
+- [\[ICLR 2026\] Efficient Resource-Constrained Training of Transformers via Subspace Optimization](efficient_resource-constrained_training_of_transformers_via_subspace_optimizatio.md)
+- [\[ICML 2025\] Emergent Misalignment: Narrow Finetuning Can Produce Broadly Misaligned LLMs](../../ICML2025/ai_safety/emergent_misalignment_narrow_finetuning_can_produce_broadly_misaligned_llms.md)
+- [\[ICLR 2026\] Bridging Fairness and Explainability: Can Input-Based Explanations Promote Fairness in Hate Speech Detection?](bridging_fairness_and_explainability_can_input-based_explanations_promote_fairne.md)
 
 <!-- RELATED:END -->

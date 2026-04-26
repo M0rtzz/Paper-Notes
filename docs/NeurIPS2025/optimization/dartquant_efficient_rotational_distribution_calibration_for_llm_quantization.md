@@ -141,10 +141,10 @@ DartQuant 流程：(1) 少量校准数据前向传播得到各层激活值；(2)
 
 ## 相关论文
 
-- [OrthoGrad Improves Neural Calibration](orthograd_improves_neural_calibration.md)
-- [Automatic Joint Structured Pruning and Quantization for Efficient Neural Network Training and Compression](../../CVPR2025/optimization/automatic_joint_structured_pruning_and_quantization_for_efficient_neural_network.md)
-- [Efficient Adaptive Federated Optimization](efficient_adaptive_federated_optimization.md)
-- [Oracle-Efficient Combinatorial Semi-Bandits](oracle-efficient_combinatorial_semi-bandits.md)
-- [MeCeFO: Enhancing LLM Training Robustness via Fault-Tolerant Optimization](mecefo_enhancing_llm_training_robustness_via_fault-tolerant_optimization.md)
+- [\[NeurIPS 2025\] OrthoGrad Improves Neural Calibration](orthograd_improves_neural_calibration.md)
+- [\[CVPR 2025\] Automatic Joint Structured Pruning and Quantization for Efficient Neural Network Training and Compression](../../CVPR2025/optimization/automatic_joint_structured_pruning_and_quantization_for_efficient_neural_network.md)
+- [\[NeurIPS 2025\] Efficient Adaptive Federated Optimization](efficient_adaptive_federated_optimization.md)
+- [\[NeurIPS 2025\] Oracle-Efficient Combinatorial Semi-Bandits](oracle-efficient_combinatorial_semi-bandits.md)
+- [\[NeurIPS 2025\] MeCeFO: Enhancing LLM Training Robustness via Fault-Tolerant Optimization](mecefo_enhancing_llm_training_robustness_via_fault-tolerant_optimization.md)
 
 <!-- RELATED:END -->

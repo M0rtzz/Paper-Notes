@@ -132,10 +132,10 @@ tags:
 
 ## 相关论文
 
-- [LaTIM: Measuring Latent Token-to-Token Interactions in Mamba Models](latim_measuring_latent_token-to-token_interactions_in_mamba_models.md)
-- [A Hidden Stumbling Block in Generalized Category Discovery: Distracted Attention](../../ICCV2025/others/a_hidden_stumbling_block_in_generalized_category_discovery_d.md)
-- [Inferring Functionality of Attention Heads from their Parameters](inferring_functionality_of_attention_heads_from_their_parameters.md)
-- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
-- [Segment-Based Attention Masking for GPTs](segment-based_attention_masking_for_gpts.md)
+- [\[ACL 2025\] LaTIM: Measuring Latent Token-to-Token Interactions in Mamba Models](latim_measuring_latent_token-to-token_interactions_in_mamba_models.md)
+- [\[ICCV 2025\] A Hidden Stumbling Block in Generalized Category Discovery: Distracted Attention](../../ICCV2025/others/a_hidden_stumbling_block_in_generalized_category_discovery_d.md)
+- [\[ACL 2025\] Inferring Functionality of Attention Heads from their Parameters](inferring_functionality_of_attention_heads_from_their_parameters.md)
+- [\[ACL 2025\] Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
+- [\[ACL 2025\] Segment-Based Attention Masking for GPTs](segment-based_attention_masking_for_gpts.md)
 
 <!-- RELATED:END -->

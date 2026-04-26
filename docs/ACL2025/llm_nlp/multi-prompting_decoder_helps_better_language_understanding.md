@@ -126,10 +126,10 @@ MPD 仅需 3 次查询（P=3 个提示）和 3.5 秒训练，比 BBT 快 462 倍
 
 ## 相关论文
 
-- [ProgCo: Program Helps Self-Correction of Large Language Models](progco_program_helps_self-correction_of_large_language_models.md)
-- [Training Language Model to Critique for Better Refinement](training_language_model_to_critique_for_better_refinement.md)
-- [Many Heads Are Better Than One: Improved Scientific Idea Generation by A LLM-Based Multi-Agent System](virsci_multi_agent_idea_gen.md)
-- [P3: Prompts Promote Prompting](p3_prompts_promote_prompting.md)
-- [ChronoSense: Exploring Temporal Understanding in Large Language Models with Time Intervals of Events](chronosense_exploring_temporal_understanding_in_large_language_models_with_time_.md)
+- [\[ACL 2025\] ProgCo: Program Helps Self-Correction of Large Language Models](progco_program_helps_self-correction_of_large_language_models.md)
+- [\[ACL 2025\] Training Language Model to Critique for Better Refinement](training_language_model_to_critique_for_better_refinement.md)
+- [\[ACL 2025\] Many Heads Are Better Than One: Improved Scientific Idea Generation by A LLM-Based Multi-Agent System](virsci_multi_agent_idea_gen.md)
+- [\[ACL 2025\] P3: Prompts Promote Prompting](p3_prompts_promote_prompting.md)
+- [\[ACL 2025\] ChronoSense: Exploring Temporal Understanding in Large Language Models with Time Intervals of Events](chronosense_exploring_temporal_understanding_in_large_language_models_with_time_.md)
 
 <!-- RELATED:END -->

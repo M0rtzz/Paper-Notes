@@ -145,10 +145,10 @@ $$\hat{v}_c = \arg\max_{v_c} \sum_i \text{IoU}(E(v_c \cdot v_i), m_i) + \alpha \
 
 ## 相关论文
 
-- [Multi-Object Sketch Animation by Scene Decomposition and Motion Planning](../../ICCV2025/model_compression/multi-object_sketch_animation_by_scene_decomposition_and_motion_planning.md)
-- [VESSA: Video-based objEct-centric Self-Supervised Adaptation for Visual Foundation Models](vessa_video-based_object-centric_self-supervised_adaptation_for_visual_foundatio.md)
-- [Incremental Object Keypoint Learning (KAMP)](../../CVPR2025/model_compression/incremental_object_keypoint_learning.md)
-- [Graph Your Own Prompt](graph_your_own_prompt.md)
-- [Unlocking ImageNet's Multi-Object Nature: Automated Large-Scale Multilabel Annotation](../../CVPR2026/model_compression/unlocking_imagenets_multi-object_nature_automated_large-scale_multilabel_annotat.md)
+- [\[ICCV 2025\] Multi-Object Sketch Animation by Scene Decomposition and Motion Planning](../../ICCV2025/model_compression/multi-object_sketch_animation_by_scene_decomposition_and_motion_planning.md)
+- [\[NeurIPS 2025\] VESSA: Video-based objEct-centric Self-Supervised Adaptation for Visual Foundation Models](vessa_video-based_object-centric_self-supervised_adaptation_for_visual_foundatio.md)
+- [\[CVPR 2025\] Incremental Object Keypoint Learning (KAMP)](../../CVPR2025/model_compression/incremental_object_keypoint_learning.md)
+- [\[NeurIPS 2025\] Graph Your Own Prompt](graph_your_own_prompt.md)
+- [\[CVPR 2026\] Unlocking ImageNet's Multi-Object Nature: Automated Large-Scale Multilabel Annotation](../../CVPR2026/model_compression/unlocking_imagenets_multi-object_nature_automated_large-scale_multilabel_annotat.md)
 
 <!-- RELATED:END -->

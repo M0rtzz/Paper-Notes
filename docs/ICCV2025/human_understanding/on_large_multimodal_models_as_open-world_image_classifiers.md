@@ -151,10 +151,10 @@ tags:
 
 ## 相关论文
 
-- [LVFace: Progressive Cluster Optimization for Large Vision Models in Face Recognition](lvface_progressive_cluster_optimization_for_large_vision_models_in_face_recognit.md)
-- [GeoWorld: Geometric World Models](../../CVPR2026/human_understanding/geoworld_geometric_world_models.md)
-- [LaMI: Augmenting Large Language Models via Late Multi-Image Fusion](../../ACL2026/human_understanding/lami_augmenting_large_language_models_via_late_multi-image_fusion.md)
-- [Node-Based Editing for Multimodal Generation of Text, Audio, Image, and Video](../../NeurIPS2025/human_understanding/node-based_editing_for_multimodal_generation_of_text_audio_image_and_video.md)
-- [UDC-VIT: A Real-World Video Dataset for Under-Display Cameras](udc-vit_a_real-world_video_dataset_for_under-display_cameras.md)
+- [\[ICCV 2025\] LVFace: Progressive Cluster Optimization for Large Vision Models in Face Recognition](lvface_progressive_cluster_optimization_for_large_vision_models_in_face_recognit.md)
+- [\[CVPR 2026\] GeoWorld: Geometric World Models](../../CVPR2026/human_understanding/geoworld_geometric_world_models.md)
+- [\[ACL 2026\] LaMI: Augmenting Large Language Models via Late Multi-Image Fusion](../../ACL2026/human_understanding/lami_augmenting_large_language_models_via_late_multi-image_fusion.md)
+- [\[NeurIPS 2025\] Node-Based Editing for Multimodal Generation of Text, Audio, Image, and Video](../../NeurIPS2025/human_understanding/node-based_editing_for_multimodal_generation_of_text_audio_image_and_video.md)
+- [\[ICCV 2025\] UDC-VIT: A Real-World Video Dataset for Under-Display Cameras](udc-vit_a_real-world_video_dataset_for_under-display_cameras.md)
 
 <!-- RELATED:END -->

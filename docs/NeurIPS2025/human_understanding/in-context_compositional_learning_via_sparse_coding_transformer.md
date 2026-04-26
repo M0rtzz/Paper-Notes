@@ -158,10 +158,10 @@ $$\phi(\mathbf{X}) = \text{ReLU}(\mathbf{W}_{qk}^{(h)} \mathbf{X}), \quad \psi(\
 
 ## 相关论文
 
-- [RAPTR: Radar-Based 3D Pose Estimation Using Transformer](raptr_radar-based_3d_pose_estimation_using_transformer.md)
-- [Enhancing Noise Resilience in Face Clustering via Sparse Differential Transformer](../../AAAI2026/human_understanding/enhancing_noise_resilience_in_face_clustering_via_sparse_differential_transforme.md)
-- [Learning Visual Proxy for Compositional Zero-Shot Learning](../../ICCV2025/human_understanding/learning_visual_proxy_for_compositional_zero-shot_learning.md)
-- [SpecAttn: Speculating Sparse Attention](specattn_speculating_sparse_attention.md)
-- [Scalable In-Context Q-Learning](../../ICLR2026/human_understanding/scalable_in-context_q-learning.md)
+- [\[NeurIPS 2025\] RAPTR: Radar-Based 3D Pose Estimation Using Transformer](raptr_radar-based_3d_pose_estimation_using_transformer.md)
+- [\[AAAI 2026\] Enhancing Noise Resilience in Face Clustering via Sparse Differential Transformer](../../AAAI2026/human_understanding/enhancing_noise_resilience_in_face_clustering_via_sparse_differential_transforme.md)
+- [\[ICCV 2025\] Learning Visual Proxy for Compositional Zero-Shot Learning](../../ICCV2025/human_understanding/learning_visual_proxy_for_compositional_zero-shot_learning.md)
+- [\[NeurIPS 2025\] SpecAttn: Speculating Sparse Attention](specattn_speculating_sparse_attention.md)
+- [\[ICLR 2026\] Scalable In-Context Q-Learning](../../ICLR2026/human_understanding/scalable_in-context_q-learning.md)
 
 <!-- RELATED:END -->

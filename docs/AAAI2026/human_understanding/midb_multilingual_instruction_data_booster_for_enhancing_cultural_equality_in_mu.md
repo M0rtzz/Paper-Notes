@@ -174,10 +174,10 @@ $$\theta_m = \arg\max_\theta \sum_{i \in [1,16]} \sum_{x_j \in C_i} \log P(y_j |
 
 ## 相关论文
 
-- [Human Motion Instruction Tuning](../../CVPR2025/human_understanding/human_motion_instruction_tuning.md)
-- [Multilingual Language Models Encode Script Over Linguistic Structure](../../ACL2026/human_understanding/multilingual_language_models_encode_script_over_linguistic_structure.md)
-- [Facial Affective Behavior Analysis with Instruction Tuning](../../ECCV2024/human_understanding/facial_affective_behavior_analysis_with_instruction_tuning.md)
-- [Enhancing Robustness of Offline RL Under Data Corruption via SAM](enhancing_robustness_of_offline_reinforcement_learning_under_data_corruption_via.md)
-- [The GaoYao Benchmark: A Comprehensive Framework for Evaluating Multilingual and Multicultural Abilities of Large Language Models](../../ACL2026/human_understanding/the_gaoyao_benchmark_a_comprehensive_framework_for_evaluating_multilingual_and_m.md)
+- [\[CVPR 2025\] Human Motion Instruction Tuning](../../CVPR2025/human_understanding/human_motion_instruction_tuning.md)
+- [\[ACL 2026\] Multilingual Language Models Encode Script Over Linguistic Structure](../../ACL2026/human_understanding/multilingual_language_models_encode_script_over_linguistic_structure.md)
+- [\[ECCV 2024\] Facial Affective Behavior Analysis with Instruction Tuning](../../ECCV2024/human_understanding/facial_affective_behavior_analysis_with_instruction_tuning.md)
+- [\[AAAI 2026\] Enhancing Robustness of Offline RL Under Data Corruption via SAM](enhancing_robustness_of_offline_reinforcement_learning_under_data_corruption_via.md)
+- [\[ACL 2026\] The GaoYao Benchmark: A Comprehensive Framework for Evaluating Multilingual and Multicultural Abilities of Large Language Models](../../ACL2026/human_understanding/the_gaoyao_benchmark_a_comprehensive_framework_for_evaluating_multilingual_and_m.md)
 
 <!-- RELATED:END -->

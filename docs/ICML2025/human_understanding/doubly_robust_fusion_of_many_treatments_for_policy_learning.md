@@ -140,10 +140,10 @@ $$\min_{\boldsymbol{\zeta}} \left\{ \frac{1}{2n} \sum_{a \in \mathcal{A}} \sum_{
 
 ## 相关论文
 
-- [Log-Sum-Exponential Estimator for Off-Policy Evaluation and Learning](log-sum-exponential_estimator_for_off-policy_evaluation_and_learning.md)
-- [Policy Compatible Skill Incremental Learning via Lazy Learning Interface](../../NeurIPS2025/human_understanding/policy_compatible_skill_incremental_learning_via_lazy_learning_interface.md)
-- [Bridging SFT and RL: Dynamic Policy Optimization for Robust Reasoning](../../ACL2026/human_understanding/bridging_sft_and_rl_dynamic_policy_optimization_for_robust_reasoning.md)
-- [Succeed or Learn Slowly: Sample Efficient Off-Policy Reinforcement Learning for Mobile App Control](../../NeurIPS2025/human_understanding/succeed_or_learn_slowly_sample_efficient_off-policy_reinforcement_learning_for_m.md)
-- [A Practical Guide for Incorporating Symmetry in Diffusion Policy](../../NeurIPS2025/human_understanding/a_practical_guide_for_incorporating_symmetry_in_diffusion_policy.md)
+- [\[ICML 2025\] Log-Sum-Exponential Estimator for Off-Policy Evaluation and Learning](log-sum-exponential_estimator_for_off-policy_evaluation_and_learning.md)
+- [\[NeurIPS 2025\] Policy Compatible Skill Incremental Learning via Lazy Learning Interface](../../NeurIPS2025/human_understanding/policy_compatible_skill_incremental_learning_via_lazy_learning_interface.md)
+- [\[ACL 2026\] Bridging SFT and RL: Dynamic Policy Optimization for Robust Reasoning](../../ACL2026/human_understanding/bridging_sft_and_rl_dynamic_policy_optimization_for_robust_reasoning.md)
+- [\[NeurIPS 2025\] Succeed or Learn Slowly: Sample Efficient Off-Policy Reinforcement Learning for Mobile App Control](../../NeurIPS2025/human_understanding/succeed_or_learn_slowly_sample_efficient_off-policy_reinforcement_learning_for_m.md)
+- [\[NeurIPS 2025\] A Practical Guide for Incorporating Symmetry in Diffusion Policy](../../NeurIPS2025/human_understanding/a_practical_guide_for_incorporating_symmetry_in_diffusion_policy.md)
 
 <!-- RELATED:END -->

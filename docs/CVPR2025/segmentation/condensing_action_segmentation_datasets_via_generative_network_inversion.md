@@ -121,10 +121,10 @@ $$z^* = \arg\min_{z} \| D(z, a, c) - x \|^2$$
 
 ## 相关论文
 
-- [ActionPiece: Contextually Tokenizing Action Sequences for Generative Recommendation](../../ICML2025/segmentation/actionpiece_contextually_tokenizing_action_sequences_generative_recommendation.md)
-- [Scale Efficient Training for Large Datasets](scale_efficient_training_for_large_datasets.md)
-- [Generative Video Propagation](generative_video_propagation.md)
-- [Golden Cudgel Network for Real-Time Semantic Segmentation](golden_cudgel_network_for_real-time_semantic_segmentation.md)
-- [RSONet: Region-guided Selective Optimization Network for RGB-T Salient Object Detection](rsonet_region-guided_selective_optimization_network_for_rgb-t_salient_object_det.md)
+- [\[ICML 2025\] ActionPiece: Contextually Tokenizing Action Sequences for Generative Recommendation](../../ICML2025/segmentation/actionpiece_contextually_tokenizing_action_sequences_generative_recommendation.md)
+- [\[CVPR 2025\] Scale Efficient Training for Large Datasets](scale_efficient_training_for_large_datasets.md)
+- [\[CVPR 2025\] Generative Video Propagation](generative_video_propagation.md)
+- [\[CVPR 2025\] Golden Cudgel Network for Real-Time Semantic Segmentation](golden_cudgel_network_for_real-time_semantic_segmentation.md)
+- [\[CVPR 2025\] RSONet: Region-guided Selective Optimization Network for RGB-T Salient Object Detection](rsonet_region-guided_selective_optimization_network_for_rgb-t_salient_object_det.md)
 
 <!-- RELATED:END -->

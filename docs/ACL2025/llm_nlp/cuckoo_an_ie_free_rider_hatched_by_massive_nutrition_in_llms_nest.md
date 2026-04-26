@@ -183,10 +183,10 @@ In-context tagging 能力的涌现也很有启发性：与 LLM 中 in-context le
 
 ## 相关论文
 
-- [SkillAggregation: Reference-free LLM-Dependent Aggregation](skillaggregation_reference-free_llm-dependent_aggregation.md)
-- [Training-free LLM Merging for Multi-task Learning](training-free_llm_merging_for_multi-task_learning.md)
-- [A Training-free LLM-based Approach to General Chinese Character Error Correction](a_training-free_llm-based_approach_to_general_chinese_character_error_correction.md)
-- [Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs](token_prepending_training_free.md)
-- [C²LEVA: Toward Comprehensive and Contamination-Free Language Model Evaluation](c2leva_toward_comprehensive_and_contamination-free_language_model_evaluation.md)
+- [\[ACL 2025\] SkillAggregation: Reference-free LLM-Dependent Aggregation](skillaggregation_reference-free_llm-dependent_aggregation.md)
+- [\[ACL 2025\] Training-free LLM Merging for Multi-task Learning](training-free_llm_merging_for_multi-task_learning.md)
+- [\[ACL 2025\] A Training-free LLM-based Approach to General Chinese Character Error Correction](a_training-free_llm-based_approach_to_general_chinese_character_error_correction.md)
+- [\[ACL 2025\] Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs](token_prepending_training_free.md)
+- [\[ACL 2025\] C²LEVA: Toward Comprehensive and Contamination-Free Language Model Evaluation](c2leva_toward_comprehensive_and_contamination-free_language_model_evaluation.md)
 
 <!-- RELATED:END -->

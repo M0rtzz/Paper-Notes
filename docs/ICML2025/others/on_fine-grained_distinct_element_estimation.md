@@ -133,10 +133,10 @@ $$\tilde{O}\!\left(\alpha \log n + \max\!\left(\frac{1}{F_0(S)},\, \varepsilon^2
 
 ## 相关论文
 
-- [DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](../../ACL2025/others/demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
-- [ChartLens: Fine-Grained Visual Attribution in Charts](../../ACL2025/others/chartlens_fine-grained_visual_attribution_in_charts.md)
-- [FRACTAL: Fine-Grained Scoring from Aggregate Text Labels](../../ACL2025/others/fractal_fine-grained_scoring_from_aggregate_text_labels.md)
-- [Symmetry-Robust 3D Orientation Estimation](symmetry-robust_3d_orientation_estimation.md)
-- [Prediction-Powered Adaptive Shrinkage Estimation](prediction-powered_adaptive_shrinkage_estimation.md)
+- [\[ACL 2025\] DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](../../ACL2025/others/demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
+- [\[ACL 2025\] ChartLens: Fine-Grained Visual Attribution in Charts](../../ACL2025/others/chartlens_fine-grained_visual_attribution_in_charts.md)
+- [\[ACL 2025\] FRACTAL: Fine-Grained Scoring from Aggregate Text Labels](../../ACL2025/others/fractal_fine-grained_scoring_from_aggregate_text_labels.md)
+- [\[ICML 2025\] Symmetry-Robust 3D Orientation Estimation](symmetry-robust_3d_orientation_estimation.md)
+- [\[ICML 2025\] Prediction-Powered Adaptive Shrinkage Estimation](prediction-powered_adaptive_shrinkage_estimation.md)
 
 <!-- RELATED:END -->

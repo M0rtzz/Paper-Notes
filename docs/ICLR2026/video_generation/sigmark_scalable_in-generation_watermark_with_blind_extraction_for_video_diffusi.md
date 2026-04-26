@@ -242,10 +242,10 @@ SIGMark是training-free方法，无需训练。嵌入阶段通过数学变换保
 
 ## 相关论文
 
-- [VFusion3D: Learning Scalable 3D Generative Models from Video Diffusion Models](../../ECCV2024/video_generation/vfusion3d_learning_scalable_3d_generative_models_from_video_diffusion_models.md)
-- [DynamicScaler: Seamless and Scalable Video Generation for Panoramic Scenes](../../CVPR2025/video_generation/dynamicscaler_seamless_and_scalable_video_generation_for_panoramic_scenes.md)
-- [STiV: Scalable Text and Image Conditioned Video Generation](../../ICCV2025/video_generation/stiv_scalable_text_and_image_conditioned_video_generation.md)
-- [Target-Aware Video Diffusion Models](target-aware_video_diffusion_models.md)
-- [BlazeBVD: Make Scale-Time Equalization Great Again for Blind Video Deflickering](../../ECCV2024/video_generation/blazebvd_make_scale-time_equalization_great_again_for_blind_video_deflickering.md)
+- [\[ECCV 2024\] VFusion3D: Learning Scalable 3D Generative Models from Video Diffusion Models](../../ECCV2024/video_generation/vfusion3d_learning_scalable_3d_generative_models_from_video_diffusion_models.md)
+- [\[CVPR 2025\] DynamicScaler: Seamless and Scalable Video Generation for Panoramic Scenes](../../CVPR2025/video_generation/dynamicscaler_seamless_and_scalable_video_generation_for_panoramic_scenes.md)
+- [\[ICCV 2025\] STiV: Scalable Text and Image Conditioned Video Generation](../../ICCV2025/video_generation/stiv_scalable_text_and_image_conditioned_video_generation.md)
+- [\[ICLR 2026\] Target-Aware Video Diffusion Models](target-aware_video_diffusion_models.md)
+- [\[ECCV 2024\] BlazeBVD: Make Scale-Time Equalization Great Again for Blind Video Deflickering](../../ECCV2024/video_generation/blazebvd_make_scale-time_equalization_great_again_for_blind_video_deflickering.md)
 
 <!-- RELATED:END -->

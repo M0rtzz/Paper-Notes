@@ -156,10 +156,10 @@ tags:
 
 ## 相关论文
 
-- [Enhancing Robustness of Offline RL Under Data Corruption via SAM](../../AAAI2026/human_understanding/enhancing_robustness_of_offline_reinforcement_learning_under_data_corruption_via.md)
-- [Cross-Domain Policy Optimization via Bellman Consistency and Hybrid Critics](cross-domain_policy_optimization_via_bellman_consistency_and_hybrid_critics.md)
-- [RuleReasoner: Reinforced Rule-based Reasoning via Domain-aware Dynamic Sampling](rulereasoner_reinforced_rule-based_reasoning_via_domain-aware_dynamic_sampling.md)
-- [FedDAP: Domain-Aware Prototype Learning for Federated Learning under Domain Shift](../../CVPR2026/human_understanding/feddap_domain-aware_prototype_learning_for_federated_learning_under_domain_shift.md)
-- [FACTS: Table Summarization via Offline Template Generation with Agentic Workflows](../../ACL2026/human_understanding/facts_table_summarization_via_offline_template_generation_with_agentic_workflows.md)
+- [\[AAAI 2026\] Enhancing Robustness of Offline RL Under Data Corruption via SAM](../../AAAI2026/human_understanding/enhancing_robustness_of_offline_reinforcement_learning_under_data_corruption_via.md)
+- [\[ICLR 2026\] Cross-Domain Policy Optimization via Bellman Consistency and Hybrid Critics](cross-domain_policy_optimization_via_bellman_consistency_and_hybrid_critics.md)
+- [\[ICLR 2026\] RuleReasoner: Reinforced Rule-based Reasoning via Domain-aware Dynamic Sampling](rulereasoner_reinforced_rule-based_reasoning_via_domain-aware_dynamic_sampling.md)
+- [\[CVPR 2026\] FedDAP: Domain-Aware Prototype Learning for Federated Learning under Domain Shift](../../CVPR2026/human_understanding/feddap_domain-aware_prototype_learning_for_federated_learning_under_domain_shift.md)
+- [\[ACL 2026\] FACTS: Table Summarization via Offline Template Generation with Agentic Workflows](../../ACL2026/human_understanding/facts_table_summarization_via_offline_template_generation_with_agentic_workflows.md)
 
 <!-- RELATED:END -->

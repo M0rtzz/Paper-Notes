@@ -164,10 +164,10 @@ CompositeHarm 是一个基于翻译的安全评估基准，旨在通过控制变
 
 ## 相关论文
 
-- [MoKus: Leveraging Cross-Modal Knowledge Transfer for Knowledge-Aware Concept Customization](../../CVPR2026/object_detection/mokus_leveraging_crossmodal_knowledge_transfer_for.md)
-- [CTPD: Cross Tokenizer Preference Distillation](ctpd_cross_tokenizer_preference_distillation.md)
-- [BlueGlass: A Framework for Composite AI Safety](../../ICML2025/object_detection/blueglass_a_framework_for_composite_ai_safety.md)
-- [CLCR: Cross-Level Semantic Collaborative Representation for Multimodal Learning](../../CVPR2026/object_detection/clcr_cross-level_semantic_collaborative_representation_for_multimodal_learning.md)
-- [Learning Multi-Modal Prototypes for Cross-Domain Few-Shot Object Detection](../../CVPR2026/object_detection/learning_multi-modal_prototypes_for_cross-domain_few-shot_object_detection.md)
+- [\[CVPR 2026\] MoKus: Leveraging Cross-Modal Knowledge Transfer for Knowledge-Aware Concept Customization](../../CVPR2026/object_detection/mokus_leveraging_crossmodal_knowledge_transfer_for.md)
+- [\[AAAI 2026\] CTPD: Cross Tokenizer Preference Distillation](ctpd_cross_tokenizer_preference_distillation.md)
+- [\[ICML 2025\] BlueGlass: A Framework for Composite AI Safety](../../ICML2025/object_detection/blueglass_a_framework_for_composite_ai_safety.md)
+- [\[CVPR 2026\] CLCR: Cross-Level Semantic Collaborative Representation for Multimodal Learning](../../CVPR2026/object_detection/clcr_cross-level_semantic_collaborative_representation_for_multimodal_learning.md)
+- [\[CVPR 2026\] Learning Multi-Modal Prototypes for Cross-Domain Few-Shot Object Detection](../../CVPR2026/object_detection/learning_multi-modal_prototypes_for_cross-domain_few-shot_object_detection.md)
 
 <!-- RELATED:END -->

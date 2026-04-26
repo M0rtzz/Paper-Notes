@@ -151,10 +151,10 @@ CBM-Suite 通过非线性层+蒸馏将 CBM 精度差距从 ~5.7% 缩小至 ~0.8%
 
 ## 相关论文
 
-- [Partially Shared Concept Bottleneck Models](../../AAAI2026/human_understanding/partially_shared_concept_bottleneck_models.md)
-- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
-- [GeoWorld: Geometric World Models](geoworld_geometric_world_models.md)
-- [One Language, Two Scripts: Probing Script-Invariance in LLM Concept Representations](../../ICLR2026/human_understanding/one_language_two_scripts_probing_script-invariance_in_llm_concept_representation.md)
-- [When Robots Obey the Patch: Universal Transferable Patch Attacks on Vision-Language-Action Models](when_robots_obey_the_patch_universal_transferable_patch_attacks_on_vision-langua.md)
+- [\[AAAI 2026\] Partially Shared Concept Bottleneck Models](../../AAAI2026/human_understanding/partially_shared_concept_bottleneck_models.md)
+- [\[CVPR 2026\] QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+- [\[CVPR 2026\] GeoWorld: Geometric World Models](geoworld_geometric_world_models.md)
+- [\[ICLR 2026\] One Language, Two Scripts: Probing Script-Invariance in LLM Concept Representations](../../ICLR2026/human_understanding/one_language_two_scripts_probing_script-invariance_in_llm_concept_representation.md)
+- [\[CVPR 2026\] When Robots Obey the Patch: Universal Transferable Patch Attacks on Vision-Language-Action Models](when_robots_obey_the_patch_universal_transferable_patch_attacks_on_vision-langua.md)
 
 <!-- RELATED:END -->

@@ -183,10 +183,10 @@ $$L_{\text{GRPO}}(\theta) = -\frac{1}{G}\sum_{i=1}^{G}\min(c_i A_i, \text{clip}(
 
 ## 相关论文
 
-- [InfiGUI-G1: Advancing GUI Grounding with Adaptive Exploration Policy Optimization](infigui-g1_advancing_gui_grounding_with_adaptive_exploration_policy_optimization.md)
-- [Empowering Small VLMs to Think with Dynamic Memorization and Exploration](../../ICLR2026/reinforcement_learning/empowering_small_vlms_to_think_with_dynamic_memorization_and_exploration.md)
-- [Realistic Curriculum Reinforcement Learning for Autonomous and Sustainable Marine Vessel Navigation](realistic_curriculum_reinforcement_learning_for_autonomous_and_sustainable_marin.md)
-- [Well Begun, Half Done: Reinforcement Learning with Prefix Optimization for LLM Reasoning](well_begun_half_done_reinforcement_learning_with_prefix_optimization_for_llm_rea.md)
-- [Visual Grounding for Object-Level Generalization in Reinforcement Learning](../../ECCV2024/reinforcement_learning/visual_grounding_for_object-level_generalization_in_reinforcement_learning.md)
+- [\[AAAI 2026\] InfiGUI-G1: Advancing GUI Grounding with Adaptive Exploration Policy Optimization](infigui-g1_advancing_gui_grounding_with_adaptive_exploration_policy_optimization.md)
+- [\[ICLR 2026\] Empowering Small VLMs to Think with Dynamic Memorization and Exploration](../../ICLR2026/reinforcement_learning/empowering_small_vlms_to_think_with_dynamic_memorization_and_exploration.md)
+- [\[AAAI 2026\] Realistic Curriculum Reinforcement Learning for Autonomous and Sustainable Marine Vessel Navigation](realistic_curriculum_reinforcement_learning_for_autonomous_and_sustainable_marin.md)
+- [\[AAAI 2026\] Well Begun, Half Done: Reinforcement Learning with Prefix Optimization for LLM Reasoning](well_begun_half_done_reinforcement_learning_with_prefix_optimization_for_llm_rea.md)
+- [\[ECCV 2024\] Visual Grounding for Object-Level Generalization in Reinforcement Learning](../../ECCV2024/reinforcement_learning/visual_grounding_for_object-level_generalization_in_reinforcement_learning.md)
 
 <!-- RELATED:END -->

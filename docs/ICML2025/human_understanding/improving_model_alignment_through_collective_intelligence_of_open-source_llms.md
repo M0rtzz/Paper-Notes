@@ -132,10 +132,10 @@ Pipeline:
 
 ## 相关论文
 
-- [If Open Source Is to Win, It Must Go Public](if_open_source_is_to_win_it_must_go_public.md)
-- [Why Do Open-Source LLMs Struggle with Data Analysis? A Systematic Empirical Study](../../AAAI2026/human_understanding/why_do_open-source_llms_struggle_with_data_analysis_a_systematic_empirical_study.md)
-- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
-- [Truly Self-Improving Agents Require Intrinsic Metacognitive Learning](truly_self-improving_agents_require_intrinsic_metacognitive_learning.md)
-- [CAP: Controllable Alignment Prompting for Unlearning in LLMs](../../ACL2026/human_understanding/cap_controllable_alignment_prompting_for_unlearning_in_llms.md)
+- [\[ICML 2025\] If Open Source Is to Win, It Must Go Public](if_open_source_is_to_win_it_must_go_public.md)
+- [\[AAAI 2026\] Why Do Open-Source LLMs Struggle with Data Analysis? A Systematic Empirical Study](../../AAAI2026/human_understanding/why_do_open-source_llms_struggle_with_data_analysis_a_systematic_empirical_study.md)
+- [\[ICML 2025\] Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+- [\[ICML 2025\] Truly Self-Improving Agents Require Intrinsic Metacognitive Learning](truly_self-improving_agents_require_intrinsic_metacognitive_learning.md)
+- [\[ACL 2026\] CAP: Controllable Alignment Prompting for Unlearning in LLMs](../../ACL2026/human_understanding/cap_controllable_alignment_prompting_for_unlearning_in_llms.md)
 
 <!-- RELATED:END -->

@@ -127,10 +127,10 @@ A²OS²A 的整体框架遵循标准 Vision Transformer 的架构设计，包含
 
 ## 相关论文
 
-- [Associative Transformer](associative_transformer.md)
-- [CARE Transformer: Mobile-Friendly Linear Visual Transformer via Decoupled Dual Interaction](care_transformer_linear_attention.md)
-- [Frequency-Aware Token Reduction for Efficient Vision Transformer](../../NeurIPS2025/llm_efficiency/frequency-aware_token_reduction_for_efficient_vision_transformer.md)
-- [LayerTracer: Cognitive-Aligned Layered SVG Synthesis via Diffusion Transformer](../../ICCV2025/llm_efficiency/layertracer_cognitive-aligned_layered_svg_synthesis_via_diffusion_transformer.md)
-- [Learning in Compact Spaces with Approximately Normalized Transformer](../../NeurIPS2025/llm_efficiency/learning_in_compact_spaces_with_approximately_normalized_transformer.md)
+- [\[CVPR 2025\] Associative Transformer](associative_transformer.md)
+- [\[CVPR 2025\] CARE Transformer: Mobile-Friendly Linear Visual Transformer via Decoupled Dual Interaction](care_transformer_linear_attention.md)
+- [\[NeurIPS 2025\] Frequency-Aware Token Reduction for Efficient Vision Transformer](../../NeurIPS2025/llm_efficiency/frequency-aware_token_reduction_for_efficient_vision_transformer.md)
+- [\[ICCV 2025\] LayerTracer: Cognitive-Aligned Layered SVG Synthesis via Diffusion Transformer](../../ICCV2025/llm_efficiency/layertracer_cognitive-aligned_layered_svg_synthesis_via_diffusion_transformer.md)
+- [\[NeurIPS 2025\] Learning in Compact Spaces with Approximately Normalized Transformer](../../NeurIPS2025/llm_efficiency/learning_in_compact_spaces_with_approximately_normalized_transformer.md)
 
 <!-- RELATED:END -->

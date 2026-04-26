@@ -189,10 +189,10 @@ SPG 的独特贡献在于将 LLM 代码生成、MCTS 搜索和神经视觉表征
 
 ## 相关论文
 
-- [Evolutionary Learning in Spatial Agent-Based Models for Physical Climate Risk Assessment](../../NeurIPS2025/human_understanding/evolutionary_learning_in_spatial_agent-based_models_for_physical_climate_risk_as.md)
-- [Mouse-Guided Gaze: Semi-Supervised Learning of Intention-Aware Representations for Reading Detection](../../NeurIPS2025/human_understanding/mouse-guided_gaze_semi-supervised_learning_of_intention-aware_representations_fo.md)
-- [Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](../../ICLR2026/human_understanding/function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)
-- [Design2GarmentCode: Turning Design Concepts to Tangible Garments Through Program Synthesis](../../CVPR2025/human_understanding/design2garmentcode_turning_design_concepts_to_tangible_garments_through_program_.md)
-- [SignRep: Enhancing Self-Supervised Sign Representations](../../ICCV2025/human_understanding/signrep_enhancing_self-supervised_sign_representations.md)
+- [\[NeurIPS 2025\] Evolutionary Learning in Spatial Agent-Based Models for Physical Climate Risk Assessment](../../NeurIPS2025/human_understanding/evolutionary_learning_in_spatial_agent-based_models_for_physical_climate_risk_as.md)
+- [\[NeurIPS 2025\] Mouse-Guided Gaze: Semi-Supervised Learning of Intention-Aware Representations for Reading Detection](../../NeurIPS2025/human_understanding/mouse-guided_gaze_semi-supervised_learning_of_intention-aware_representations_fo.md)
+- [\[ICLR 2026\] Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](../../ICLR2026/human_understanding/function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)
+- [\[CVPR 2025\] Design2GarmentCode: Turning Design Concepts to Tangible Garments Through Program Synthesis](../../CVPR2025/human_understanding/design2garmentcode_turning_design_concepts_to_tangible_garments_through_program_.md)
+- [\[ICCV 2025\] SignRep: Enhancing Self-Supervised Sign Representations](../../ICCV2025/human_understanding/signrep_enhancing_self-supervised_sign_representations.md)
 
 <!-- RELATED:END -->

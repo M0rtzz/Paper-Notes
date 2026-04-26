@@ -179,10 +179,10 @@ CIDEr +3.5, F1 +1.7, R@1₀.₅ +2.4。
 
 ## 相关论文
 
-- [VTimeCoT: Thinking by Drawing for Video Temporal Grounding and Reasoning](vtimecot_thinking_by_drawing_for_video_temporal_grounding_and_reasoning.md)
-- [Moment Quantization for Video Temporal Grounding](moment_quantization_for_video_temporal_grounding.md)
-- [Seq2Time: Sequential Knowledge Transfer for Video LLM Temporal Grounding](../../CVPR2025/video_understanding/seq2time_sequential_knowledge_transfer_for_video_llm_temporal_grounding.md)
-- [Hierarchical Event Memory for Accurate and Low-latency Online Video Temporal Grounding](hierarchical_event_memory_for_accurate_and_low-latency_online_video_temporal_gro.md)
-- [ExpertAF: Expert Actionable Feedback from Video](../../CVPR2025/video_understanding/expertaf_expert_actionable_feedback_from_video.md)
+- [\[ICCV 2025\] VTimeCoT: Thinking by Drawing for Video Temporal Grounding and Reasoning](vtimecot_thinking_by_drawing_for_video_temporal_grounding_and_reasoning.md)
+- [\[ICCV 2025\] Moment Quantization for Video Temporal Grounding](moment_quantization_for_video_temporal_grounding.md)
+- [\[CVPR 2025\] Seq2Time: Sequential Knowledge Transfer for Video LLM Temporal Grounding](../../CVPR2025/video_understanding/seq2time_sequential_knowledge_transfer_for_video_llm_temporal_grounding.md)
+- [\[ICCV 2025\] Hierarchical Event Memory for Accurate and Low-latency Online Video Temporal Grounding](hierarchical_event_memory_for_accurate_and_low-latency_online_video_temporal_gro.md)
+- [\[CVPR 2025\] ExpertAF: Expert Actionable Feedback from Video](../../CVPR2025/video_understanding/expertaf_expert_actionable_feedback_from_video.md)
 
 <!-- RELATED:END -->

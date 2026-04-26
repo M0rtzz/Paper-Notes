@@ -172,10 +172,10 @@ tags:
 
 ## 相关论文
 
-- [The Time Scale of Redundancy between Prosody and Linguistic Context](the_time_scale_of_redundancy_between_prosody_and_linguistic_context.md)
-- [Balancing the Budget: Understanding Trade-offs Between Supervised and Preference-Based Finetuning](balancing_the_budget_understanding_trade-offs_between_supervised_and_preference-.md)
-- [Bounds on Agreement between Subjective and Objective Measurements](../../CVPR2025/others/bounds_on_agreement_between_subjective_and_objective_measurements.md)
-- [Agree, Disagree, Explain: Decomposing Human Label Variation in NLI through the Lens of Explanations](../../ACL2026/others/agree_disagree_explain_decomposing_human_label_variation_in_nli_through_the_lens.md)
-- [What Is the Optimal Ranking Score Between Precision and Recall? We Can Always Find It and It Is Rarely F₁](../../CVPR2026/others/what_is_the_optimal_ranking_score_between_precision_and_recall_we_can_always_fin.md)
+- [\[ACL 2025\] The Time Scale of Redundancy between Prosody and Linguistic Context](the_time_scale_of_redundancy_between_prosody_and_linguistic_context.md)
+- [\[ACL 2025\] Balancing the Budget: Understanding Trade-offs Between Supervised and Preference-Based Finetuning](balancing_the_budget_understanding_trade-offs_between_supervised_and_preference-.md)
+- [\[CVPR 2025\] Bounds on Agreement between Subjective and Objective Measurements](../../CVPR2025/others/bounds_on_agreement_between_subjective_and_objective_measurements.md)
+- [\[ACL 2026\] Agree, Disagree, Explain: Decomposing Human Label Variation in NLI through the Lens of Explanations](../../ACL2026/others/agree_disagree_explain_decomposing_human_label_variation_in_nli_through_the_lens.md)
+- [\[CVPR 2026\] What Is the Optimal Ranking Score Between Precision and Recall? We Can Always Find It and It Is Rarely F₁](../../CVPR2026/others/what_is_the_optimal_ranking_score_between_precision_and_recall_we_can_always_fin.md)
 
 <!-- RELATED:END -->

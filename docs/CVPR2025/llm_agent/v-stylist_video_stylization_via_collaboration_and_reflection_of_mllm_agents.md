@@ -114,10 +114,10 @@ Style Artist 自反思贡献最大——**视频质量和风格对齐提升 25.1
 
 ## 相关论文
 
-- [OS Agents: A Survey on MLLM-based Agents for General Computing Devices Use](../../ACL2025/llm_agent/os_agents_survey_mllm.md)
-- [Reflection-Driven Control for Trustworthy Code Agents](../../AAAI2026/llm_agent/reflection-driven_control_for_trustworthy_code_agents.md)
-- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](../../ACL2025/llm_agent/multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
-- [OS-Kairos: Adaptive Interaction for MLLM-Powered GUI Agents](../../ACL2025/llm_agent/os-kairos_adaptive_interaction_for_mllm-powered_gui_agents.md)
-- [RL-RC-DoT: A Block-level RL Agent for Task-Aware Video Compression](rl-rc-dot_a_block-level_rl_agent_for_task-aware_video_compression.md)
+- [\[ACL 2025\] OS Agents: A Survey on MLLM-based Agents for General Computing Devices Use](../../ACL2025/llm_agent/os_agents_survey_mllm.md)
+- [\[AAAI 2026\] Reflection-Driven Control for Trustworthy Code Agents](../../AAAI2026/llm_agent/reflection-driven_control_for_trustworthy_code_agents.md)
+- [\[ACL 2025\] MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](../../ACL2025/llm_agent/multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
+- [\[ACL 2025\] OS-Kairos: Adaptive Interaction for MLLM-Powered GUI Agents](../../ACL2025/llm_agent/os-kairos_adaptive_interaction_for_mllm-powered_gui_agents.md)
+- [\[CVPR 2025\] RL-RC-DoT: A Block-level RL Agent for Task-Aware Video Compression](rl-rc-dot_a_block-level_rl_agent_for_task-aware_video_compression.md)
 
 <!-- RELATED:END -->

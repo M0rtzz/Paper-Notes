@@ -122,10 +122,10 @@ SEVIR数据集（美国雷达），8成员集合预测：
 
 ## 相关论文
 
-- [FlowCast: Trajectory Forecasting for Scalable Zero-Cost Speculative Flow Matching](flowcast_trajectory_forecasting_for_scalable_zero-cost_speculative_flow_matching.md)
-- [Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
-- [HazeMatching: Dehazing Light Microscopy Images with Guided Conditional Flow Matching](../../CVPR2026/image_generation/hazematching_dehazing_light_microscopy_images_with_guided_conditional_flow_match.md)
-- [Improving Posterior Inference of Galaxy Properties with Image-Based Conditional Flow Matching](../../NeurIPS2025/image_generation/improving_posterior_inference_of_galaxy_properties_with_image-based_conditional_.md)
-- [Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
+- [\[ICLR 2026\] FlowCast: Trajectory Forecasting for Scalable Zero-Cost Speculative Flow Matching](flowcast_trajectory_forecasting_for_scalable_zero-cost_speculative_flow_matching.md)
+- [\[ICLR 2026\] Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
+- [\[CVPR 2026\] HazeMatching: Dehazing Light Microscopy Images with Guided Conditional Flow Matching](../../CVPR2026/image_generation/hazematching_dehazing_light_microscopy_images_with_guided_conditional_flow_match.md)
+- [\[NeurIPS 2025\] Improving Posterior Inference of Galaxy Properties with Image-Based Conditional Flow Matching](../../NeurIPS2025/image_generation/improving_posterior_inference_of_galaxy_properties_with_image-based_conditional_.md)
+- [\[ICLR 2026\] Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
 
 <!-- RELATED:END -->

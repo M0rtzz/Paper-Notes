@@ -133,10 +133,10 @@ FakeRadar基于CLIP ViT-B/16冻结骨干网络，插入ST-Adapter进行参数高
 
 ## 相关论文
 
-- [ForgeLens: Data-Efficient Forgery Focus for Generalizable Forgery Image Detection](forgelens_data-efficient_forgery_focus_for_generalizable_forgery_image_detection.md)
-- [Semantic Discrepancy-aware Detector for Image Forgery Identification](semantic_discrepancy-aware_detector_for_image_forgery_identification.md)
-- [Synchronization of Multiple Videos](synchronization_of_multiple_videos.md)
-- [SFUOD: Source-Free Unknown Object Detection](sfuod_source-free_unknown_object_detection.md)
-- [Where the Devil Hides: Deepfake Detectors Can No Longer Be Trusted](../../CVPR2025/object_detection/where_the_devil_hides_deepfake_detectors_can_no_longer_be_trusted.md)
+- [\[ICCV 2025\] ForgeLens: Data-Efficient Forgery Focus for Generalizable Forgery Image Detection](forgelens_data-efficient_forgery_focus_for_generalizable_forgery_image_detection.md)
+- [\[ICCV 2025\] Semantic Discrepancy-aware Detector for Image Forgery Identification](semantic_discrepancy-aware_detector_for_image_forgery_identification.md)
+- [\[ICCV 2025\] Synchronization of Multiple Videos](synchronization_of_multiple_videos.md)
+- [\[ICCV 2025\] SFUOD: Source-Free Unknown Object Detection](sfuod_source-free_unknown_object_detection.md)
+- [\[CVPR 2025\] Where the Devil Hides: Deepfake Detectors Can No Longer Be Trusted](../../CVPR2025/object_detection/where_the_devil_hides_deepfake_detectors_can_no_longer_be_trusted.md)
 
 <!-- RELATED:END -->

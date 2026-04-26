@@ -141,10 +141,10 @@ $$\hat{z}_\theta(y|z^{tar}, \sigma, c) = \frac{1}{\sigma^2+1}y + \frac{\sigma}{\
 
 ## 相关论文
 
-- [Prior-Guided Flow Matching for Target-Aware Molecule Design with Learnable Atom Number](prior-guided_flow_matching_for_target-aware_molecule_design_with_learnable_atom_.md)
-- [FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields](../../CVPR2025/medical_imaging/ffacenerf_few-shot_face_editing_in_neural_radiance_fields.md)
-- [Geometric Representation Condition Improves Equivariant Molecule Generation](../../ICML2025/medical_imaging/geometric_representation_condition_improves_equivariant_molecule_generation.md)
-- [Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](../../ICML2025/medical_imaging/scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
-- [NePhi: Neural Deformation Fields for Approximately Diffeomorphic Medical Image Registration](../../ECCV2024/medical_imaging/textttnephi_neural_deformation_fields_for_approximately_diff.md)
+- [\[NeurIPS 2025\] Prior-Guided Flow Matching for Target-Aware Molecule Design with Learnable Atom Number](prior-guided_flow_matching_for_target-aware_molecule_design_with_learnable_atom_.md)
+- [\[CVPR 2025\] FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields](../../CVPR2025/medical_imaging/ffacenerf_few-shot_face_editing_in_neural_radiance_fields.md)
+- [\[ICML 2025\] Geometric Representation Condition Improves Equivariant Molecule Generation](../../ICML2025/medical_imaging/geometric_representation_condition_improves_equivariant_molecule_generation.md)
+- [\[ICML 2025\] Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](../../ICML2025/medical_imaging/scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
+- [\[ECCV 2024\] NePhi: Neural Deformation Fields for Approximately Diffeomorphic Medical Image Registration](../../ECCV2024/medical_imaging/textttnephi_neural_deformation_fields_for_approximately_diff.md)
 
 <!-- RELATED:END -->

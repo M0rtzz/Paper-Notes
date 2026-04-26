@@ -142,10 +142,10 @@ mIoU 提升 50+ 个百分点。
 
 ## 相关论文
 
-- [MotionScale: Reconstructing Appearance, Geometry, and Motion of Dynamic Scenes with Scalable 4D Gaussian Splatting](motionscale_reconstructing_appearance_geometry_and_motion_of_dynamic_scenes_with.md)
-- [Human Interaction-Aware 3D Reconstruction from a Single Image](human_interaction-aware_3d_reconstruction_from_a_single_image.md)
-- [Reconstructing Close Human Interaction with Appearance and Proxemics Reasoning](../../CVPR2025/3d_vision/reconstructing_close_human_interaction_with_appearance_and_proxemics_reasoning.md)
-- [DeepShapeMatchingKit: Accelerated Functional Map Solver and Shape Matching Pipelines Revisited](deepshapematchingkit_accelerated_functional_map_solver.md)
-- [CrowdGaussian: Reconstructing High-Fidelity 3D Gaussians for Human Crowd from a Single Image](crowdgaussian_reconstructing_high-fidelity_3d_gaussians_for_human_crowd_from_a_s.md)
+- [\[CVPR 2026\] MotionScale: Reconstructing Appearance, Geometry, and Motion of Dynamic Scenes with Scalable 4D Gaussian Splatting](motionscale_reconstructing_appearance_geometry_and_motion_of_dynamic_scenes_with.md)
+- [\[CVPR 2026\] Human Interaction-Aware 3D Reconstruction from a Single Image](human_interaction-aware_3d_reconstruction_from_a_single_image.md)
+- [\[CVPR 2025\] Reconstructing Close Human Interaction with Appearance and Proxemics Reasoning](../../CVPR2025/3d_vision/reconstructing_close_human_interaction_with_appearance_and_proxemics_reasoning.md)
+- [\[CVPR 2026\] DeepShapeMatchingKit: Accelerated Functional Map Solver and Shape Matching Pipelines Revisited](deepshapematchingkit_accelerated_functional_map_solver.md)
+- [\[CVPR 2026\] CrowdGaussian: Reconstructing High-Fidelity 3D Gaussians for Human Crowd from a Single Image](crowdgaussian_reconstructing_high-fidelity_3d_gaussians_for_human_crowd_from_a_s.md)
 
 <!-- RELATED:END -->

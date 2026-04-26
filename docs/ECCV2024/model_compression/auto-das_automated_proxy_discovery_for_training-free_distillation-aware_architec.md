@@ -131,10 +131,10 @@ Auto-DAS 的流程分为三个阶段：(1) **代理搜索空间构建**——定
 
 ## 相关论文
 
-- [Category Adaptation Meets Projected Distillation in Generalized Continual Category Discovery](category_adaptation_meets_projected_distillation_in_generalized_continual_catego.md)
-- [PaPr: Training-Free One-Step Patch Pruning with Lightweight ConvNets for Faster Inference](papr_training-free_one-step_patch_pruning_with_lightweight_convnets_for_faster_i.md)
-- [Jet-Nemotron: Efficient Language Model with Post Neural Architecture Search](../../NeurIPS2025/model_compression/jet-nemotron_efficient_language_model_with_post_neural_architecture_search.md)
-- [Cross-Architecture Distillation Made Simple with Redundancy Suppression](../../ICCV2025/model_compression/cross-architecture_distillation_made_simple_with_redundancy_suppression.md)
-- [Time-Aware Auto White Balance in Mobile Photography](../../ICCV2025/model_compression/time-aware_auto_white_balance_in_mobile_photography.md)
+- [\[ECCV 2024\] Category Adaptation Meets Projected Distillation in Generalized Continual Category Discovery](category_adaptation_meets_projected_distillation_in_generalized_continual_catego.md)
+- [\[ECCV 2024\] PaPr: Training-Free One-Step Patch Pruning with Lightweight ConvNets for Faster Inference](papr_training-free_one-step_patch_pruning_with_lightweight_convnets_for_faster_i.md)
+- [\[NeurIPS 2025\] Jet-Nemotron: Efficient Language Model with Post Neural Architecture Search](../../NeurIPS2025/model_compression/jet-nemotron_efficient_language_model_with_post_neural_architecture_search.md)
+- [\[ICCV 2025\] Cross-Architecture Distillation Made Simple with Redundancy Suppression](../../ICCV2025/model_compression/cross-architecture_distillation_made_simple_with_redundancy_suppression.md)
+- [\[ICCV 2025\] Time-Aware Auto White Balance in Mobile Photography](../../ICCV2025/model_compression/time-aware_auto_white_balance_in_mobile_photography.md)
 
 <!-- RELATED:END -->

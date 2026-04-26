@@ -145,10 +145,10 @@ GPS 预训练后直接在 ScanRefer 上已超过所有方法（47.1），fine-tu
 
 ## 相关论文
 
-- [WaSt-3D: Wasserstein-2 Distance for Scene-to-Scene Stylization on 3D Gaussians](wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)
-- [Zero-Shot Multi-Object Scene Completion](zero-shot_multi-object_scene_completion.md)
-- [SceneGraphLoc: Cross-Modal Coarse Visual Localization on 3D Scene Graphs](scenegraphloc_cross-modal_coarse_visual_localization_on_3d_scene_graphs.md)
-- [Learning to Generate Conditional Tri-Plane for 3D-Aware Expression Controllable Portrait Animation](learning_to_generate_conditional_tri-plane_for_3d-aware_expression_controllable_.md)
-- [Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
+- [\[ECCV 2024\] WaSt-3D: Wasserstein-2 Distance for Scene-to-Scene Stylization on 3D Gaussians](wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)
+- [\[ECCV 2024\] Zero-Shot Multi-Object Scene Completion](zero-shot_multi-object_scene_completion.md)
+- [\[ECCV 2024\] SceneGraphLoc: Cross-Modal Coarse Visual Localization on 3D Scene Graphs](scenegraphloc_cross-modal_coarse_visual_localization_on_3d_scene_graphs.md)
+- [\[ECCV 2024\] Learning to Generate Conditional Tri-Plane for 3D-Aware Expression Controllable Portrait Animation](learning_to_generate_conditional_tri-plane_for_3d-aware_expression_controllable_.md)
+- [\[ECCV 2024\] Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
 
 <!-- RELATED:END -->

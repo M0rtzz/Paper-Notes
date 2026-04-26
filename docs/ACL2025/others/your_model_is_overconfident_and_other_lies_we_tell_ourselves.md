@@ -121,10 +121,10 @@ tags:
 
 ## 相关论文
 
-- [FastDraft: How to Train Your Draft](fastdraft_how_to_train_your_draft.md)
-- [Model Extrapolation Expedites Alignment](expo_model_extrapolation.md)
-- [DeepRTL2: A Versatile Model for RTL-Related Tasks](deeprtl2_a_versatile_model_for_rtl-related_tasks.md)
-- [Achieving Certification-by-Design Through Model-Driven Development](achieving_certification-by-design_through_model-driven_development.md)
-- [From Lists to Emojis: How Format Bias Affects Model Alignment](from_lists_to_emojis_how_format_bias_affects_model_alignment.md)
+- [\[ACL 2025\] FastDraft: How to Train Your Draft](fastdraft_how_to_train_your_draft.md)
+- [\[ACL 2025\] Model Extrapolation Expedites Alignment](expo_model_extrapolation.md)
+- [\[ACL 2025\] DeepRTL2: A Versatile Model for RTL-Related Tasks](deeprtl2_a_versatile_model_for_rtl-related_tasks.md)
+- [\[ACL 2025\] Achieving Certification-by-Design Through Model-Driven Development](achieving_certification-by-design_through_model-driven_development.md)
+- [\[ACL 2025\] From Lists to Emojis: How Format Bias Affects Model Alignment](from_lists_to_emojis_how_format_bias_affects_model_alignment.md)
 
 <!-- RELATED:END -->

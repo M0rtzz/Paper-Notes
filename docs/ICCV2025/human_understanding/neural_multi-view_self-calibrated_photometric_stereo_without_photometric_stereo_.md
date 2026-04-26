@@ -182,10 +182,10 @@ $$s' = \mathcal{S}(\mathbf{b}(\mathbf{x}'), s, \mathbf{v}; \varphi)$$
 
 ## 相关论文
 
-- [PS-EIP: Robust Photometric Stereo Based on Event Interval Profile](../../CVPR2025/human_understanding/ps-eip_robust_photometric_stereo_based_on_event_interval_profile.md)
-- [MERLiN: Single-Shot Material Estimation and Relighting for Photometric Stereo](../../ECCV2024/human_understanding/merlin_single-shot_material_estimation_and_relighting_for_photometric_stereo.md)
-- [Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery](intra-view_and_inter-view_correlation_guided_multi-view_novel_class_discovery.md)
-- [Multi-view Gaze Target Estimation](multi-view_gaze_target_estimation.md)
-- [Switch-a-View: View Selection Learned from Unlabeled In-the-wild Videos](switch-a-view_view_selection_learned_from_unlabeled_in-the-wild_videos.md)
+- [\[CVPR 2025\] PS-EIP: Robust Photometric Stereo Based on Event Interval Profile](../../CVPR2025/human_understanding/ps-eip_robust_photometric_stereo_based_on_event_interval_profile.md)
+- [\[ECCV 2024\] MERLiN: Single-Shot Material Estimation and Relighting for Photometric Stereo](../../ECCV2024/human_understanding/merlin_single-shot_material_estimation_and_relighting_for_photometric_stereo.md)
+- [\[ICCV 2025\] Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery](intra-view_and_inter-view_correlation_guided_multi-view_novel_class_discovery.md)
+- [\[ICCV 2025\] Multi-view Gaze Target Estimation](multi-view_gaze_target_estimation.md)
+- [\[ICCV 2025\] Switch-a-View: View Selection Learned from Unlabeled In-the-wild Videos](switch-a-view_view_selection_learned_from_unlabeled_in-the-wild_videos.md)
 
 <!-- RELATED:END -->

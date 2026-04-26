@@ -130,10 +130,10 @@ PSNR提升约4.8dB，证明了方法的泛化能力。
 
 ## 相关论文
 
-- [GAS: Generative Avatar Synthesis from a Single Image](gas_generative_avatar_synthesis_from_a_single_image.md)
-- [GUAVA: Generalizable Upper Body 3D Gaussian Avatar](guava_generalizable_upper_body_3d_gaussian_avatar.md)
-- [Vid2Avatar-Pro: Authentic Avatar from Videos in the Wild via Universal Prior](../../CVPR2025/3d_vision/vid2avatar-pro_authentic_avatar_from_videos_in_the_wild_via_universal_prior.md)
-- [Synthetic Prior for Few-Shot Drivable Head Avatar Inversion](../../CVPR2025/3d_vision/synthetic_prior_for_few-shot_drivable_head_avatar_inversion.md)
-- [AniGS: Animatable Gaussian Avatar from a Single Image with Inconsistent Gaussian Reconstruction](../../CVPR2025/3d_vision/anigs_animatable_gaussian_avatar_from_a_single_image_with_inconsistent_gaussian_.md)
+- [\[ICCV 2025\] GAS: Generative Avatar Synthesis from a Single Image](gas_generative_avatar_synthesis_from_a_single_image.md)
+- [\[ICCV 2025\] GUAVA: Generalizable Upper Body 3D Gaussian Avatar](guava_generalizable_upper_body_3d_gaussian_avatar.md)
+- [\[CVPR 2025\] Vid2Avatar-Pro: Authentic Avatar from Videos in the Wild via Universal Prior](../../CVPR2025/3d_vision/vid2avatar-pro_authentic_avatar_from_videos_in_the_wild_via_universal_prior.md)
+- [\[CVPR 2025\] Synthetic Prior for Few-Shot Drivable Head Avatar Inversion](../../CVPR2025/3d_vision/synthetic_prior_for_few-shot_drivable_head_avatar_inversion.md)
+- [\[CVPR 2025\] AniGS: Animatable Gaussian Avatar from a Single Image with Inconsistent Gaussian Reconstruction](../../CVPR2025/3d_vision/anigs_animatable_gaussian_avatar_from_a_single_image_with_inconsistent_gaussian_.md)
 
 <!-- RELATED:END -->

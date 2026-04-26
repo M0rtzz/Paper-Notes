@@ -146,10 +146,10 @@ tags:
 
 ## 相关论文
 
-- [When Machine Learning Gets Personal: Evaluating Prediction and Explanation](../../ICLR2026/interpretability/when_machine_learning_gets_personal_evaluating_prediction_and_explanation.md)
-- [GenePheno: Interpretable Gene Knockout-Induced Phenotype Abnormality Prediction Framework](../../AAAI2026/interpretability/genepheno_interpretable_gene_knockout-induced_phenotype_abnormality_prediction_f.md)
-- [Why Is Spatial Reasoning Hard for VLMs? An Attention Mechanism Perspective on Focus Areas](why_is_spatial_reasoning_hard_for_vlms_an_attention_mechanism_perspective_on_foc.md)
-- [What Makes an Ensemble (Un)interpretable?](what_makes_an_ensemble_un_interpretable.md)
-- [Concept-Based Unsupervised Domain Adaptation](concept-based_unsupervised_domain_adaptation.md)
+- [\[ICLR 2026\] When Machine Learning Gets Personal: Evaluating Prediction and Explanation](../../ICLR2026/interpretability/when_machine_learning_gets_personal_evaluating_prediction_and_explanation.md)
+- [\[AAAI 2026\] GenePheno: Interpretable Gene Knockout-Induced Phenotype Abnormality Prediction Framework](../../AAAI2026/interpretability/genepheno_interpretable_gene_knockout-induced_phenotype_abnormality_prediction_f.md)
+- [\[ICML 2025\] Why Is Spatial Reasoning Hard for VLMs? An Attention Mechanism Perspective on Focus Areas](why_is_spatial_reasoning_hard_for_vlms_an_attention_mechanism_perspective_on_foc.md)
+- [\[ICML 2025\] What Makes an Ensemble (Un)interpretable?](what_makes_an_ensemble_un_interpretable.md)
+- [\[ICML 2025\] Concept-Based Unsupervised Domain Adaptation](concept-based_unsupervised_domain_adaptation.md)
 
 <!-- RELATED:END -->

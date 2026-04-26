@@ -121,10 +121,10 @@ Assumption 1.4 的条件 2（$\max_p \text{dist}(p, C^*)^z \leq 4k \cdot \text{a
 
 ## 相关论文
 
-- [Distributionally Robust Feature Selection](distributionally_robust_feature_selection.md)
-- [Robust Sampling for Active Statistical Inference](robust_sampling_for_active_statistical_inference.md)
-- [Hierarchical Bracketing Encodings for Dependency Parsing as Tagging](../../ACL2025/others/hierarchical_bracketing_dep_parsing.md)
-- [Softmax is not Enough (for Sharp Size Generalisation)](../../ICML2025/others/softmax_is_not_enough_for_sharp_size_generalisation.md)
-- [One Sample is Enough to Make Conformal Prediction Robust](one_sample_is_enough_to_make_conformal_prediction_robust.md)
+- [\[NeurIPS 2025\] Distributionally Robust Feature Selection](distributionally_robust_feature_selection.md)
+- [\[NeurIPS 2025\] Robust Sampling for Active Statistical Inference](robust_sampling_for_active_statistical_inference.md)
+- [\[ACL 2025\] Hierarchical Bracketing Encodings for Dependency Parsing as Tagging](../../ACL2025/others/hierarchical_bracketing_dep_parsing.md)
+- [\[ICML 2025\] Softmax is not Enough (for Sharp Size Generalisation)](../../ICML2025/others/softmax_is_not_enough_for_sharp_size_generalisation.md)
+- [\[NeurIPS 2025\] One Sample is Enough to Make Conformal Prediction Robust](one_sample_is_enough_to_make_conformal_prediction_robust.md)
 
 <!-- RELATED:END -->

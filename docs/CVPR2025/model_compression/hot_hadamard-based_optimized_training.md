@@ -117,10 +117,10 @@ tags:
 
 ## 相关论文
 
-- [Style Quantization for Data-Efficient GAN Training](style_quantization_for_data-efficient_gan_training.md)
-- [DELT: A Simple Diversity-driven EarlyLate Training for Dataset Distillation](delt_a_simple_diversity-driven_earlylate_training_for_dataset_distillation.md)
-- [FIMA-Q: Post-Training Quantization for Vision Transformers by Fisher Information Matrix Approximation](fima-q_post-training_quantization_for_vision_transformers_by_fisher_information_.md)
-- [Training a Generally Curious Agent (Paprika)](../../ICML2025/model_compression/training_a_generally_curious_agent.md)
-- [Towards an Optimal Control Perspective of ResNet Training](../../ICML2025/model_compression/towards_an_optimal_control_perspective_of_resnet_training.md)
+- [\[CVPR 2025\] Style Quantization for Data-Efficient GAN Training](style_quantization_for_data-efficient_gan_training.md)
+- [\[CVPR 2025\] DELT: A Simple Diversity-driven EarlyLate Training for Dataset Distillation](delt_a_simple_diversity-driven_earlylate_training_for_dataset_distillation.md)
+- [\[CVPR 2025\] FIMA-Q: Post-Training Quantization for Vision Transformers by Fisher Information Matrix Approximation](fima-q_post-training_quantization_for_vision_transformers_by_fisher_information_.md)
+- [\[ICML 2025\] Training a Generally Curious Agent (Paprika)](../../ICML2025/model_compression/training_a_generally_curious_agent.md)
+- [\[ICML 2025\] Towards an Optimal Control Perspective of ResNet Training](../../ICML2025/model_compression/towards_an_optimal_control_perspective_of_resnet_training.md)
 
 <!-- RELATED:END -->

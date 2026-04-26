@@ -158,10 +158,10 @@ DIGGED 在 FoM 优化上超越 CktGNN 9 倍以上（310.26 vs 33.44），甚至�
 
 ## 相关论文
 
-- [GSPN-2: Efficient Parallel Sequence Modeling](../../NeurIPS2025/image_generation/gspn-2_efficient_parallel_sequence_modeling.md)
-- [Graph Distance as Surprise: Free Energy Minimization in Knowledge Graph Reasoning](../../NeurIPS2025/image_generation/graph_distance_as_surprise_free_energy_minimization_in_knowledge_graph_reasoning.md)
-- [Parallel Sequence Modeling via Generalized Spatial Propagation Network](../../CVPR2025/image_generation/parallel_sequence_modeling_via_generalized_spatial_propagation_network.md)
-- [Graph Generative Pre-trained Transformer (G2PT)](graph_generative_pre-trained_transformer.md)
-- [Generating Directed Graphs with Dual Attention and Asymmetric Encoding](../../ICLR2026/image_generation/generating_directed_graphs_with_dual_attention_and_asymmetric_encoding.md)
+- [\[NeurIPS 2025\] GSPN-2: Efficient Parallel Sequence Modeling](../../NeurIPS2025/image_generation/gspn-2_efficient_parallel_sequence_modeling.md)
+- [\[NeurIPS 2025\] Graph Distance as Surprise: Free Energy Minimization in Knowledge Graph Reasoning](../../NeurIPS2025/image_generation/graph_distance_as_surprise_free_energy_minimization_in_knowledge_graph_reasoning.md)
+- [\[CVPR 2025\] Parallel Sequence Modeling via Generalized Spatial Propagation Network](../../CVPR2025/image_generation/parallel_sequence_modeling_via_generalized_spatial_propagation_network.md)
+- [\[ICML 2025\] Graph Generative Pre-trained Transformer (G2PT)](graph_generative_pre-trained_transformer.md)
+- [\[ICLR 2026\] Generating Directed Graphs with Dual Attention and Asymmetric Encoding](../../ICLR2026/image_generation/generating_directed_graphs_with_dual_attention_and_asymmetric_encoding.md)
 
 <!-- RELATED:END -->

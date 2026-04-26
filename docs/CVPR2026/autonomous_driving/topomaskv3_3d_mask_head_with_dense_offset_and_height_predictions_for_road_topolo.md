@@ -144,10 +144,10 @@ TopoMaskV3 的输入是多视角 RGB 图像，经过 backbone 提取透视视角
 
 ## 相关论文
 
-- [4D Contrastive Superflows are Dense 3D Representation Learners](../../ECCV2024/autonomous_driving/4d_contrastive_superflows_are_dense_3d_representation_learners.md)
-- [TOD³Cap: Towards 3D Dense Captioning in Outdoor Scenes](../../ECCV2024/autonomous_driving/tod3cap_towards_3d_dense_captioning_in_outdoor_scenes.md)
-- [Minimum-Cost Network Flow with Dual Predictions](../../AAAI2026/autonomous_driving/minimum-cost_network_flow_with_dual_predictions.md)
-- [Multi-Head Low-Rank Attention (MLRA)](../../ICLR2026/autonomous_driving/multi-head_low-rank_attention.md)
-- [T²SG: Traffic Topology Scene Graph for Topology Reasoning in Autonomous Driving](../../CVPR2025/autonomous_driving/t2sg_traffic_topology_scene_graph_for_topology_reasoning_in_autonomous_driving.md)
+- [\[ECCV 2024\] 4D Contrastive Superflows are Dense 3D Representation Learners](../../ECCV2024/autonomous_driving/4d_contrastive_superflows_are_dense_3d_representation_learners.md)
+- [\[ECCV 2024\] TOD³Cap: Towards 3D Dense Captioning in Outdoor Scenes](../../ECCV2024/autonomous_driving/tod3cap_towards_3d_dense_captioning_in_outdoor_scenes.md)
+- [\[AAAI 2026\] Minimum-Cost Network Flow with Dual Predictions](../../AAAI2026/autonomous_driving/minimum-cost_network_flow_with_dual_predictions.md)
+- [\[ICLR 2026\] Multi-Head Low-Rank Attention (MLRA)](../../ICLR2026/autonomous_driving/multi-head_low-rank_attention.md)
+- [\[CVPR 2025\] T²SG: Traffic Topology Scene Graph for Topology Reasoning in Autonomous Driving](../../CVPR2025/autonomous_driving/t2sg_traffic_topology_scene_graph_for_topology_reasoning_in_autonomous_driving.md)
 
 <!-- RELATED:END -->

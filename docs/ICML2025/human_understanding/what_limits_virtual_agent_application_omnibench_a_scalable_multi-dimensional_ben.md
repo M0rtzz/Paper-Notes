@@ -149,10 +149,10 @@ Pipeline:
 
 ## 相关论文
 
-- [ViBES: A Conversational Agent with Behaviorally-Intelligent 3D Virtual Body](../../CVPR2026/human_understanding/vibes_a_conversational_agent_with_behaviorally_intelligent_3d_virtual_body.md)
-- [PARCO: Parallel AutoRegressive Models for Multi-Agent Combinatorial Optimization](../../NeurIPS2025/human_understanding/parco_parallel_autoregressive_models_for_multi-agent_combinatorial_optimization.md)
-- [Collaborative Tree Search for Enhancing Embodied Multi-Agent Collaboration](../../CVPR2025/human_understanding/collaborative_tree_search_for_enhancing_embodied_multi-agent_collaboration.md)
-- [Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback](../../CVPR2025/human_understanding/reference-free_image_quality_assessment_for_virtual_try-on_via_human_feedback.md)
-- [EgoAgent: A Joint Predictive Agent Model in Egocentric Worlds](../../ICCV2025/human_understanding/egoagent_a_joint_predictive_agent_model_in_egocentric_worlds.md)
+- [\[CVPR 2026\] ViBES: A Conversational Agent with Behaviorally-Intelligent 3D Virtual Body](../../CVPR2026/human_understanding/vibes_a_conversational_agent_with_behaviorally_intelligent_3d_virtual_body.md)
+- [\[NeurIPS 2025\] PARCO: Parallel AutoRegressive Models for Multi-Agent Combinatorial Optimization](../../NeurIPS2025/human_understanding/parco_parallel_autoregressive_models_for_multi-agent_combinatorial_optimization.md)
+- [\[CVPR 2025\] Collaborative Tree Search for Enhancing Embodied Multi-Agent Collaboration](../../CVPR2025/human_understanding/collaborative_tree_search_for_enhancing_embodied_multi-agent_collaboration.md)
+- [\[CVPR 2025\] Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback](../../CVPR2025/human_understanding/reference-free_image_quality_assessment_for_virtual_try-on_via_human_feedback.md)
+- [\[ICCV 2025\] EgoAgent: A Joint Predictive Agent Model in Egocentric Worlds](../../ICCV2025/human_understanding/egoagent_a_joint_predictive_agent_model_in_egocentric_worlds.md)
 
 <!-- RELATED:END -->

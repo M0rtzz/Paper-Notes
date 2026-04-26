@@ -133,10 +133,10 @@ $$\alpha_i = \begin{cases} \frac{m s_i^2}{\eta_i}, & \eta_i > 0 \\ \infty, & \et
 
 ## 相关论文
 
-- [AutoMixer: Checkpoint Artifacts as Automatic Data Mixers](../../ACL2025/others/automixer_checkpoint_artifacts_as_automatic_data_mixers.md)
-- [Autonomous Concept Drift Threshold Determination](../../AAAI2026/others/autonomous_concept_drift_threshold_determination.md)
-- [Improve Rule Retrieval and Reasoning with Self-Induction and Relevance ReEstimate](../../ACL2025/others/improve_rule_retrieval_and_reasoning_with_self-induction_and_relevance_reestimat.md)
-- [Exploiting Similarity for Computation and Communication-Efficient Decentralized Optimization](exploiting_similarity_for_computation_and_communication-efficient_decentralized_.md)
-- [Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method](efficient_optimization_with_orthogonality_constraint_a_randomized_riemannian_sub.md)
+- [\[ACL 2025\] AutoMixer: Checkpoint Artifacts as Automatic Data Mixers](../../ACL2025/others/automixer_checkpoint_artifacts_as_automatic_data_mixers.md)
+- [\[AAAI 2026\] Autonomous Concept Drift Threshold Determination](../../AAAI2026/others/autonomous_concept_drift_threshold_determination.md)
+- [\[ACL 2025\] Improve Rule Retrieval and Reasoning with Self-Induction and Relevance ReEstimate](../../ACL2025/others/improve_rule_retrieval_and_reasoning_with_self-induction_and_relevance_reestimat.md)
+- [\[ICML 2025\] Exploiting Similarity for Computation and Communication-Efficient Decentralized Optimization](exploiting_similarity_for_computation_and_communication-efficient_decentralized_.md)
+- [\[ICML 2025\] Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method](efficient_optimization_with_orthogonality_constraint_a_randomized_riemannian_sub.md)
 
 <!-- RELATED:END -->

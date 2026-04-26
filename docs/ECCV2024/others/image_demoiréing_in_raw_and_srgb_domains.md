@@ -124,10 +124,10 @@ RRID的输入是配对的RAW图像 $\mathbf{I}_{raw} \in \mathbb{R}^{H/2 \times 
 
 ## 相关论文
 
-- [Active Generation for Image Classification](active_generation_for_image_classification.md)
-- [POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](../../CVPR2026/others/polishing_the_sky_widefield_and_highdynamic_range.md)
-- [Intrinsic Single-Image HDR Reconstruction](intrinsic_single-image_hdr_reconstruction.md)
-- [COIN-Matting: Confounder Intervention for Image Matting](coin-matting_confounder_intervention_for_image_matting.md)
-- [Predicting Kernel Regression Learning Curves from Only Raw Data Statistics](../../ICLR2026/others/predicting_kernel_regression_learning_curves_from_only_raw_data_statistics.md)
+- [\[ECCV 2024\] Active Generation for Image Classification](active_generation_for_image_classification.md)
+- [\[CVPR 2026\] POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](../../CVPR2026/others/polishing_the_sky_widefield_and_highdynamic_range.md)
+- [\[ECCV 2024\] Intrinsic Single-Image HDR Reconstruction](intrinsic_single-image_hdr_reconstruction.md)
+- [\[ECCV 2024\] COIN-Matting: Confounder Intervention for Image Matting](coin-matting_confounder_intervention_for_image_matting.md)
+- [\[ICLR 2026\] Predicting Kernel Regression Learning Curves from Only Raw Data Statistics](../../ICLR2026/others/predicting_kernel_regression_learning_curves_from_only_raw_data_statistics.md)
 
 <!-- RELATED:END -->

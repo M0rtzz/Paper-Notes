@@ -125,10 +125,10 @@ ER 图和 USG（城市街道图）上的表示对齐（Structure Gain = Sim(F) -
 
 ## 相关论文
 
-- [SemanticVLA: Semantic-Aligned Sparsification and Enhancement for Efficient Robotic Manipulation](../../AAAI2026/object_detection/semanticvla_semantic-aligned_sparsification_and_enhancement_for_efficient_roboti.md)
-- [SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking](../../CVPR2026/object_detection/slice_semantic_latent_injection_via_compartmentalized_embedding_for_image_waterm.md)
-- [Token Reduction via Local and Global Contexts Optimization for Efficient Video Large Language Models](../../CVPR2026/object_detection/token_reduction_via_local_and_global_contexts_optimization_for_efficient_video_l.md)
-- [TTF-VLA: Temporal Token Fusion via Pixel-Attention Integration for Vision-Language-Action Models](../../AAAI2026/object_detection/ttf-vla_temporal_token_fusion_via_pixel-attention_integratio.md)
-- [GeoBridge: A Semantic-Anchored Multi-View Foundation Model for Geo-Localization](../../CVPR2026/object_detection/geobridge_semantic-anchored_multi-view_foundation_model_for_geo-localization.md)
+- [\[AAAI 2026\] SemanticVLA: Semantic-Aligned Sparsification and Enhancement for Efficient Robotic Manipulation](../../AAAI2026/object_detection/semanticvla_semantic-aligned_sparsification_and_enhancement_for_efficient_roboti.md)
+- [\[CVPR 2026\] SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking](../../CVPR2026/object_detection/slice_semantic_latent_injection_via_compartmentalized_embedding_for_image_waterm.md)
+- [\[CVPR 2026\] Token Reduction via Local and Global Contexts Optimization for Efficient Video Large Language Models](../../CVPR2026/object_detection/token_reduction_via_local_and_global_contexts_optimization_for_efficient_video_l.md)
+- [\[AAAI 2026\] TTF-VLA: Temporal Token Fusion via Pixel-Attention Integration for Vision-Language-Action Models](../../AAAI2026/object_detection/ttf-vla_temporal_token_fusion_via_pixel-attention_integratio.md)
+- [\[CVPR 2026\] GeoBridge: A Semantic-Anchored Multi-View Foundation Model for Geo-Localization](../../CVPR2026/object_detection/geobridge_semantic-anchored_multi-view_foundation_model_for_geo-localization.md)
 
 <!-- RELATED:END -->

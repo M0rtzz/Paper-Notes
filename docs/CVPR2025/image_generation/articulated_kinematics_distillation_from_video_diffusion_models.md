@@ -118,10 +118,10 @@ $\mathcal{L} = \mathcal{L}_{SDS} + \lambda_1 \mathcal{L}_{smooth} + \lambda_2 \m
 
 ## 相关论文
 
-- [DKDM: Data-Free Knowledge Distillation for Diffusion Models with Any Architecture](dkdm_data-free_knowledge_distillation_for_diffusion_models_with_any_architecture.md)
-- [Random Conditioning for Diffusion Model Compression with Distillation](random_conditioning_for_diffusion_model_compression_with_distillation.md)
-- [Goku: Flow Based Video Generative Foundation Models](goku_flow_based_video_generative_foundation_models.md)
-- [Autoregressive Distillation of Diffusion Transformers](autoregressive_distillation_of_diffusion_transformers.md)
-- [Can Generative Video Models Help Pose Estimation?](can_generative_video_models_help_pose_estimation.md)
+- [\[CVPR 2025\] DKDM: Data-Free Knowledge Distillation for Diffusion Models with Any Architecture](dkdm_data-free_knowledge_distillation_for_diffusion_models_with_any_architecture.md)
+- [\[CVPR 2025\] Random Conditioning for Diffusion Model Compression with Distillation](random_conditioning_for_diffusion_model_compression_with_distillation.md)
+- [\[CVPR 2025\] Goku: Flow Based Video Generative Foundation Models](goku_flow_based_video_generative_foundation_models.md)
+- [\[CVPR 2025\] Autoregressive Distillation of Diffusion Transformers](autoregressive_distillation_of_diffusion_transformers.md)
+- [\[CVPR 2025\] Can Generative Video Models Help Pose Estimation?](can_generative_video_models_help_pose_estimation.md)
 
 <!-- RELATED:END -->

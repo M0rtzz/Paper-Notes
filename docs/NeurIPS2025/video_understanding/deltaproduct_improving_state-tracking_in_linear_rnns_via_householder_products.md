@@ -153,10 +153,10 @@ $$A(x_i) = g_i \prod_{j=1}^{n_h} (I - \beta_{i,j} k_{i,j} k_{i,j}^\top)$$
 
 ## 相关论文
 
-- [Revisiting Bi-Linear State Transitions in Recurrent Neural Networks](revisiting_bi-linear_state_transitions_in_recurrent_neural_networks.md)
-- [Structured Sparse Transition Matrices to Enable State Tracking in State-Space Models](structured_sparse_transition_matrices_to_enable_state_tracking_in_state-space_mo.md)
-- [Improving Dialogue State Tracking through Combinatorial Search for In-Context Examples](../../ACL2025/video_understanding/improving_dialogue_state_tracking_through_combinatorial_search_for_in-context_ex.md)
-- [Fixed-Point RNNs: Interpolating from Diagonal to Dense](fixed-point_rnns_interpolating_from_diagonal_to_dense.md)
-- [Agentic Persona Control and Task State Tracking for Realistic User Simulation](agentic_persona_control_and_task_state_tracking_for_realistic_user_simulation_in.md)
+- [\[NeurIPS 2025\] Revisiting Bi-Linear State Transitions in Recurrent Neural Networks](revisiting_bi-linear_state_transitions_in_recurrent_neural_networks.md)
+- [\[NeurIPS 2025\] Structured Sparse Transition Matrices to Enable State Tracking in State-Space Models](structured_sparse_transition_matrices_to_enable_state_tracking_in_state-space_mo.md)
+- [\[ACL 2025\] Improving Dialogue State Tracking through Combinatorial Search for In-Context Examples](../../ACL2025/video_understanding/improving_dialogue_state_tracking_through_combinatorial_search_for_in-context_ex.md)
+- [\[NeurIPS 2025\] Fixed-Point RNNs: Interpolating from Diagonal to Dense](fixed-point_rnns_interpolating_from_diagonal_to_dense.md)
+- [\[NeurIPS 2025\] Agentic Persona Control and Task State Tracking for Realistic User Simulation](agentic_persona_control_and_task_state_tracking_for_realistic_user_simulation_in.md)
 
 <!-- RELATED:END -->

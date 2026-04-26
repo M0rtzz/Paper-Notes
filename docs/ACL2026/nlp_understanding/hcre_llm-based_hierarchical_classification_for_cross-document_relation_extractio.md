@@ -121,10 +121,10 @@ CodRED 数据集上的结果：
 
 ## 相关论文
 
-- [Towards a More Generalized Approach in Open Relation Extraction](../../ACL2025/nlp_understanding/generalized_open_relation_extract.md)
-- [A Variational Approach for Mitigating Entity Bias in Relation Extraction](../../ACL2025/nlp_understanding/variational_approach_mitigating_entity_bias_relation_extraction.md)
-- [Generating Diverse Training Samples for Relation Extraction with Large Language Models](../../ACL2025/nlp_understanding/generating_diverse_training_samples_for_relation_extraction_with_large_language_.md)
-- [Hierarchical Retrieval with Evidence Curation for Open-Domain Financial QA](../../ACL2025/nlp_understanding/hierarchical_retrieval_with_evidence_curation_for_open-domain_financial_question.md)
-- [Analyzing Political Bias in LLMs via Target-Oriented Sentiment Classification](../../ACL2025/nlp_understanding/analyzing_political_bias_in_llms_via_target-oriented_sentiment_classification.md)
+- [\[ACL 2025\] Towards a More Generalized Approach in Open Relation Extraction](../../ACL2025/nlp_understanding/generalized_open_relation_extract.md)
+- [\[ACL 2025\] A Variational Approach for Mitigating Entity Bias in Relation Extraction](../../ACL2025/nlp_understanding/variational_approach_mitigating_entity_bias_relation_extraction.md)
+- [\[ACL 2025\] Generating Diverse Training Samples for Relation Extraction with Large Language Models](../../ACL2025/nlp_understanding/generating_diverse_training_samples_for_relation_extraction_with_large_language_.md)
+- [\[ACL 2025\] Hierarchical Retrieval with Evidence Curation for Open-Domain Financial QA](../../ACL2025/nlp_understanding/hierarchical_retrieval_with_evidence_curation_for_open-domain_financial_question.md)
+- [\[ACL 2025\] Analyzing Political Bias in LLMs via Target-Oriented Sentiment Classification](../../ACL2025/nlp_understanding/analyzing_political_bias_in_llms_via_target-oriented_sentiment_classification.md)
 
 <!-- RELATED:END -->

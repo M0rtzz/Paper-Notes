@@ -123,10 +123,10 @@ tags:
 
 ## 相关论文
 
-- [Bridging the Skills Gap: A Course Model for Modern Generative AI Education](bridging_the_skills_gap_a_course_model_for_modern_generative_ai_education.md)
-- [Higher-Order Responsibility](higher-order_responsibility.md)
-- [Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education](../../ACL2025/others/uni-retrieval_a_multi-style_retrieval_framework_for_stems_education.md)
-- [Beyond World Models: Rethinking Understanding in AI Models](beyond_world_models_rethinking_understanding_in_ai_models.md)
-- [Designing Incident Reporting Systems for Harms from General-Purpose AI](designing_incident_reporting_systems_for_harms_from_general-purpose_ai.md)
+- [\[AAAI 2026\] Bridging the Skills Gap: A Course Model for Modern Generative AI Education](bridging_the_skills_gap_a_course_model_for_modern_generative_ai_education.md)
+- [\[AAAI 2026\] Higher-Order Responsibility](higher-order_responsibility.md)
+- [\[ACL 2025\] Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education](../../ACL2025/others/uni-retrieval_a_multi-style_retrieval_framework_for_stems_education.md)
+- [\[AAAI 2026\] Beyond World Models: Rethinking Understanding in AI Models](beyond_world_models_rethinking_understanding_in_ai_models.md)
+- [\[AAAI 2026\] Designing Incident Reporting Systems for Harms from General-Purpose AI](designing_incident_reporting_systems_for_harms_from_general-purpose_ai.md)
 
 <!-- RELATED:END -->

@@ -128,10 +128,10 @@ RONAN和LatentTracer依赖单次重建损失的绝对值，在高质量自编码
 
 ## 相关论文
 
-- [Attribution as Retrieval: Model-Agnostic AI-Generated Image Attribution](../../CVPR2026/image_generation/attribution_as_retrieval_modelagnostic_aigenerated.md)
-- [Aggregating Diverse Cue Experts for AI-Generated Image Detection](aggregating_diverse_cue_experts_for_ai-generated_image_detec.md)
-- [Melodia: Training-Free Music Editing Guided by Attention Probing in Diffusion Models](melodia_training-free_music_editing_guided_by_attention_probing_in_diffusion_mod.md)
-- [Infinite-Story: A Training-Free Consistent Text-to-Image Generation](infinite-story_a_training-free_consistent_text-to-image_gene.md)
-- [IntroStyle: Training-Free Introspective Style Attribution using Diffusion Features](../../ICCV2025/image_generation/introstyle_training-free_introspective_style_attribution_using_diffusion_feature.md)
+- [\[CVPR 2026\] Attribution as Retrieval: Model-Agnostic AI-Generated Image Attribution](../../CVPR2026/image_generation/attribution_as_retrieval_modelagnostic_aigenerated.md)
+- [\[AAAI 2026\] Aggregating Diverse Cue Experts for AI-Generated Image Detection](aggregating_diverse_cue_experts_for_ai-generated_image_detec.md)
+- [\[AAAI 2026\] Melodia: Training-Free Music Editing Guided by Attention Probing in Diffusion Models](melodia_training-free_music_editing_guided_by_attention_probing_in_diffusion_mod.md)
+- [\[AAAI 2026\] Infinite-Story: A Training-Free Consistent Text-to-Image Generation](infinite-story_a_training-free_consistent_text-to-image_gene.md)
+- [\[ICCV 2025\] IntroStyle: Training-Free Introspective Style Attribution using Diffusion Features](../../ICCV2025/image_generation/introstyle_training-free_introspective_style_attribution_using_diffusion_feature.md)
 
 <!-- RELATED:END -->

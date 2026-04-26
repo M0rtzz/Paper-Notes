@@ -116,10 +116,10 @@ FPR95改善幅度巨大（XSUM降低23+个百分点）。
 
 ## 相关论文
 
-- [IMPARA-GED: Grammatical Error Detection is Boosting Reference-free Grammatical Error Quality Estimator](../../ACL2025/nlp_generation/impara-ged_grammatical_error_detection_is_boosting_reference-free_grammatical_er.md)
-- [FS-DFM: Fast and Accurate Long Text Generation with Few-Step Diffusion Language Model](fs-dfm_fast_and_accurate_long_text_generation_with_few-step_diffusion_language_m.md)
-- [AutoMalDesc: Large-Scale Script Analysis for Cyber Threat Research](../../AAAI2026/nlp_generation/automaldesc_large-scale_script_analysis_for_cyber_threat_research.md)
-- [AlphaContext: An Evolutionary Tree-based Psychometric Context Generator for Creativity Assessment](../../ACL2026/nlp_generation/alphacontext_an_evolutionary_tree-based_psychometric_context_generator_for_creat.md)
-- [C3TG: Conflict-aware, Composite, and Collaborative Controlled Text Generation](../../AAAI2026/nlp_generation/c3tg_conflict-aware_composite_and_collaborative_controlled_text_generation.md)
+- [\[ACL 2025\] IMPARA-GED: Grammatical Error Detection is Boosting Reference-free Grammatical Error Quality Estimator](../../ACL2025/nlp_generation/impara-ged_grammatical_error_detection_is_boosting_reference-free_grammatical_er.md)
+- [\[ICLR 2026\] FS-DFM: Fast and Accurate Long Text Generation with Few-Step Diffusion Language Model](fs-dfm_fast_and_accurate_long_text_generation_with_few-step_diffusion_language_m.md)
+- [\[AAAI 2026\] AutoMalDesc: Large-Scale Script Analysis for Cyber Threat Research](../../AAAI2026/nlp_generation/automaldesc_large-scale_script_analysis_for_cyber_threat_research.md)
+- [\[ACL 2026\] AlphaContext: An Evolutionary Tree-based Psychometric Context Generator for Creativity Assessment](../../ACL2026/nlp_generation/alphacontext_an_evolutionary_tree-based_psychometric_context_generator_for_creat.md)
+- [\[AAAI 2026\] C3TG: Conflict-aware, Composite, and Collaborative Controlled Text Generation](../../AAAI2026/nlp_generation/c3tg_conflict-aware_composite_and_collaborative_controlled_text_generation.md)
 
 <!-- RELATED:END -->

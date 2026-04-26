@@ -206,10 +206,10 @@ $$O\left(n \cdot \max\left\{1, (\alpha_0(1-\alpha_0))^2 (\log n)^3\right\}\right
 
 ## 相关论文
 
-- [Prediction via Shapley Value Regression (ViaSHAP)](../../ICML2025/others/prediction_via_shapley_value_regression.md)
-- [Equivariance by Contrast: Identifiable Equivariant Embeddings from Unlabeled Finite Group Actions](equivariance_by_contrast_identifiable_equivariant_embeddings_from_unlabeled_fini.md)
-- [Value Residual Learning](../../ACL2025/others/value_residual_learning.md)
-- [Using Shapley Interactions to Understand How Models Use Structure](../../ACL2025/others/using_shapley_interactions_to_understand_how_models_use_structure.md)
-- [Inducing Lexicons of In-Group Language with Socio-Temporal Context](../../ACL2025/others/inducing_lexicons_of_in-group_language_with_socio-temporal_context.md)
+- [\[ICML 2025\] Prediction via Shapley Value Regression (ViaSHAP)](../../ICML2025/others/prediction_via_shapley_value_regression.md)
+- [\[NeurIPS 2025\] Equivariance by Contrast: Identifiable Equivariant Embeddings from Unlabeled Finite Group Actions](equivariance_by_contrast_identifiable_equivariant_embeddings_from_unlabeled_fini.md)
+- [\[ACL 2025\] Value Residual Learning](../../ACL2025/others/value_residual_learning.md)
+- [\[ACL 2025\] Using Shapley Interactions to Understand How Models Use Structure](../../ACL2025/others/using_shapley_interactions_to_understand_how_models_use_structure.md)
+- [\[ACL 2025\] Inducing Lexicons of In-Group Language with Socio-Temporal Context](../../ACL2025/others/inducing_lexicons_of_in-group_language_with_socio-temporal_context.md)
 
 <!-- RELATED:END -->

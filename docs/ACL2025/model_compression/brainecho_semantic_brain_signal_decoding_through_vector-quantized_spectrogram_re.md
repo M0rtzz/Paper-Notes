@@ -171,10 +171,10 @@ $$L_2 = \|m - Dec(Q(z_\varepsilon))\|_2^2 + \gamma\|z_m - z_\varepsilon\|_2^2 + 
 
 ## 相关论文
 
-- [VQ-SGen: A Vector Quantized Stroke Representation for Creative Sketch Generation](../../ICCV2025/model_compression/vq-sgen_a_vector_quantized_stroke_representation_for_creative_sketch_generation.md)
-- [Lacuna Inc. at SemEval-2025 Task 4: LoRA-Enhanced Influence-Based Unlearning for LLMs](lacuna_inc_at_semeval-2025_task_4_lora-enhanced_influence-based_unlearning_for_l.md)
-- [IAM: Efficient Inference through Attention Mapping between Different-scale LLMs](iam_efficient_inference_through_attention_mapping_between_different-scale_llms.md)
-- [TaDA: Training-free recipe for Decoding with Adaptive KV Cache Compression and Mean-centering](tada_training-free_recipe_for_decoding_with_adaptive_kv_cache_compression_and_me.md)
-- [Beyond Text Compression: Evaluating Tokenizers Across Scales](beyond_text_compression_tokenizers.md)
+- [\[ICCV 2025\] VQ-SGen: A Vector Quantized Stroke Representation for Creative Sketch Generation](../../ICCV2025/model_compression/vq-sgen_a_vector_quantized_stroke_representation_for_creative_sketch_generation.md)
+- [\[ACL 2025\] Lacuna Inc. at SemEval-2025 Task 4: LoRA-Enhanced Influence-Based Unlearning for LLMs](lacuna_inc_at_semeval-2025_task_4_lora-enhanced_influence-based_unlearning_for_l.md)
+- [\[ACL 2025\] IAM: Efficient Inference through Attention Mapping between Different-scale LLMs](iam_efficient_inference_through_attention_mapping_between_different-scale_llms.md)
+- [\[ACL 2025\] TaDA: Training-free recipe for Decoding with Adaptive KV Cache Compression and Mean-centering](tada_training-free_recipe_for_decoding_with_adaptive_kv_cache_compression_and_me.md)
+- [\[ACL 2025\] Beyond Text Compression: Evaluating Tokenizers Across Scales](beyond_text_compression_tokenizers.md)
 
 <!-- RELATED:END -->

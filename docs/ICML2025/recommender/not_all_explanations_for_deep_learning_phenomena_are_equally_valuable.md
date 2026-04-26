@@ -115,10 +115,10 @@ tags:
 
 ## 相关论文
 
-- [LCRON: Learning Cascade Ranking as One Network](learning_cascade_ranking_as_one_network.md)
-- [SIMPLEMIX: Frustratingly Simple Mixing of Off- and On-policy Data in Language Model Preference Learning](simplemix_frustratingly_simple_mixing_of_off-_and_on-policy_data_in_language_mod.md)
-- [Transformer Copilot: Learning from The Mistake Log in LLM Fine-tuning](../../NeurIPS2025/recommender/transformer_copilot_learning_from_the_mistake_log_in_llm_fine-tuning.md)
-- [MultiTab: A Scalable Foundation for Multitask Learning on Tabular Data](../../AAAI2026/recommender/multitab_a_scalable_foundation_for_multitask_learning_on_tabular_data.md)
-- [Probabilistic Hash Embeddings for Online Learning of Categorical Features](../../AAAI2026/recommender/probabilistic_hash_embeddings_for_online_learning_of_categorical_features.md)
+- [\[ICML 2025\] LCRON: Learning Cascade Ranking as One Network](learning_cascade_ranking_as_one_network.md)
+- [\[ICML 2025\] SIMPLEMIX: Frustratingly Simple Mixing of Off- and On-policy Data in Language Model Preference Learning](simplemix_frustratingly_simple_mixing_of_off-_and_on-policy_data_in_language_mod.md)
+- [\[NeurIPS 2025\] Transformer Copilot: Learning from The Mistake Log in LLM Fine-tuning](../../NeurIPS2025/recommender/transformer_copilot_learning_from_the_mistake_log_in_llm_fine-tuning.md)
+- [\[AAAI 2026\] MultiTab: A Scalable Foundation for Multitask Learning on Tabular Data](../../AAAI2026/recommender/multitab_a_scalable_foundation_for_multitask_learning_on_tabular_data.md)
+- [\[AAAI 2026\] Probabilistic Hash Embeddings for Online Learning of Categorical Features](../../AAAI2026/recommender/probabilistic_hash_embeddings_for_online_learning_of_categorical_features.md)
 
 <!-- RELATED:END -->

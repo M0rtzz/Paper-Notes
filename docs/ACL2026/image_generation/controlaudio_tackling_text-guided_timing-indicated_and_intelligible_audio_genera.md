@@ -131,10 +131,10 @@ tags:
 
 ## 相关论文
 
-- [IMPACT: Iterative Mask-based Parallel Decoding for Text-to-Audio Generation with Diffusion Modeling](../../ICML2025/image_generation/impact_iterative_mask-based_parallel_decoding_for_text-to-audio_generation_with_.md)
-- [ETTA: Elucidating the Design Space of Text-to-Audio Models](../../ICML2025/image_generation/etta_elucidating_the_design_space_of_text-to-audio_models.md)
-- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](../../ICLR2026/image_generation/visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
-- [Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](../../ECCV2024/image_generation/local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
-- [CoLoGen: Progressive Learning of Concept-Localization Duality for Unified Image Generation](../../CVPR2026/image_generation/cologen_progressive_learning_of_concept-localization_duality_for_unified_image_g.md)
+- [\[ICML 2025\] IMPACT: Iterative Mask-based Parallel Decoding for Text-to-Audio Generation with Diffusion Modeling](../../ICML2025/image_generation/impact_iterative_mask-based_parallel_decoding_for_text-to-audio_generation_with_.md)
+- [\[ICML 2025\] ETTA: Elucidating the Design Space of Text-to-Audio Models](../../ICML2025/image_generation/etta_elucidating_the_design_space_of_text-to-audio_models.md)
+- [\[ICLR 2026\] Visual Autoregressive Modeling for Instruction-Guided Image Editing](../../ICLR2026/image_generation/visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
+- [\[ECCV 2024\] Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](../../ECCV2024/image_generation/local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
+- [\[CVPR 2026\] CoLoGen: Progressive Learning of Concept-Localization Duality for Unified Image Generation](../../CVPR2026/image_generation/cologen_progressive_learning_of_concept-localization_duality_for_unified_image_g.md)
 
 <!-- RELATED:END -->

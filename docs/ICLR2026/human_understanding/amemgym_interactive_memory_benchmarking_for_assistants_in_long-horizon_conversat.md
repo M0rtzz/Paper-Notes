@@ -135,10 +135,10 @@ AMemGym分四步：(1) 结构化数据生成（用户画像→状态schema→状
 
 ## 相关论文
 
-- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](../../ICML2025/human_understanding/towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
-- [Training High-Level Schedulers with Execution-Feedback Reinforcement Learning for Long-Horizon GUI Automation](../../CVPR2026/human_understanding/training_high-level_schedulers_with_execution-feedback_reinforcement_learning_fo.md)
-- [Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval](evoking_user_memory_personalizing_llm_via_recollection-familiarity_adaptive_retr.md)
-- [Think-While-Generating: On-the-Fly Reasoning for Personalized Long-Form Generation](think-while-generating_on-the-fly_reasoning_for_personalized_long-form_generatio.md)
-- [Miburi: Towards Expressive Interactive Gesture Synthesis](../../CVPR2026/human_understanding/miburi_towards_expressive_interactive_gesture_synthesis.md)
+- [\[ICML 2025\] Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](../../ICML2025/human_understanding/towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+- [\[CVPR 2026\] Training High-Level Schedulers with Execution-Feedback Reinforcement Learning for Long-Horizon GUI Automation](../../CVPR2026/human_understanding/training_high-level_schedulers_with_execution-feedback_reinforcement_learning_fo.md)
+- [\[ICLR 2026\] Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval](evoking_user_memory_personalizing_llm_via_recollection-familiarity_adaptive_retr.md)
+- [\[ICLR 2026\] Think-While-Generating: On-the-Fly Reasoning for Personalized Long-Form Generation](think-while-generating_on-the-fly_reasoning_for_personalized_long-form_generatio.md)
+- [\[CVPR 2026\] Miburi: Towards Expressive Interactive Gesture Synthesis](../../CVPR2026/human_understanding/miburi_towards_expressive_interactive_gesture_synthesis.md)
 
 <!-- RELATED:END -->

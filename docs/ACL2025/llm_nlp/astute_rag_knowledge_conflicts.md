@@ -128,10 +128,10 @@ Query + Retrieved Passages → **Step 1**: LLM 自适应生成内部知识 passa
 
 ## 相关论文
 
-- [Diversity-oriented Data Augmentation with Large Language Models](diversity_data_augmentation.md)
-- [Taming Knowledge Conflicts in Language Models](../../ICML2025/llm_nlp/taming_knowledge_conflicts_in_language_models.md)
-- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
-- [Acquisition and Application of Novel Knowledge in Large Language Models](acquisition_and_application_of_novel_knowledge_in_large_language_models.md)
-- [Can We Further Elicit Reasoning in LLMs? Critic-Guided Planning with Retrieval-Augmentation for Solving Challenging Tasks](can_we_further_elicit_reasoning_in_llms_critic-guided_planning_with_retrieval-au.md)
+- [\[ACL 2025\] Diversity-oriented Data Augmentation with Large Language Models](diversity_data_augmentation.md)
+- [\[ICML 2025\] Taming Knowledge Conflicts in Language Models](../../ICML2025/llm_nlp/taming_knowledge_conflicts_in_language_models.md)
+- [\[ACL 2025\] Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
+- [\[ACL 2025\] Acquisition and Application of Novel Knowledge in Large Language Models](acquisition_and_application_of_novel_knowledge_in_large_language_models.md)
+- [\[ACL 2025\] Can We Further Elicit Reasoning in LLMs? Critic-Guided Planning with Retrieval-Augmentation for Solving Challenging Tasks](can_we_further_elicit_reasoning_in_llms_critic-guided_planning_with_retrieval-au.md)
 
 <!-- RELATED:END -->

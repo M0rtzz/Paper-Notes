@@ -124,10 +124,10 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{ce} + \mathcal{L}_{\text{geometry}} 
 
 ## 相关论文
 
-- [NTK-Guided Implicit Neural Teaching](ntk-guided_implicit_neural_teaching.md)
-- [3D Visual Illusion Depth Estimation](../../NeurIPS2025/3d_vision/3d_visual_illusion_depth_estimation.md)
-- [No Calibration, No Depth, No Problem: Cross-Sensor View Synthesis with 3D Consistency](no_calibration_no_depth_no_problem_cross-sensor_view_synthesis_with_3d_consisten.md)
-- [LEIA: Latent View-Invariant Embeddings for Implicit 3D Articulation](../../ECCV2024/3d_vision/leia_latent_view-invariant_embeddings_for_implicit_3d_articulation.md)
-- [Implicit Filtering for Learning Neural Signed Distance Functions from 3D Point Clouds](../../ECCV2024/3d_vision/implicit_filtering_for_learning_neural_signed_distance_functions_from_3d_point_c.md)
+- [\[CVPR 2026\] NTK-Guided Implicit Neural Teaching](ntk-guided_implicit_neural_teaching.md)
+- [\[NeurIPS 2025\] 3D Visual Illusion Depth Estimation](../../NeurIPS2025/3d_vision/3d_visual_illusion_depth_estimation.md)
+- [\[CVPR 2026\] No Calibration, No Depth, No Problem: Cross-Sensor View Synthesis with 3D Consistency](no_calibration_no_depth_no_problem_cross-sensor_view_synthesis_with_3d_consisten.md)
+- [\[ECCV 2024\] LEIA: Latent View-Invariant Embeddings for Implicit 3D Articulation](../../ECCV2024/3d_vision/leia_latent_view-invariant_embeddings_for_implicit_3d_articulation.md)
+- [\[ECCV 2024\] Implicit Filtering for Learning Neural Signed Distance Functions from 3D Point Clouds](../../ECCV2024/3d_vision/implicit_filtering_for_learning_neural_signed_distance_functions_from_3d_point_c.md)
 
 <!-- RELATED:END -->

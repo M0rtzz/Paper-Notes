@@ -123,10 +123,10 @@ tags:
 
 ## 相关论文
 
-- [Auto-PRE: An Automatic and Cost-Efficient Peer-Review Framework for Language Generation Evaluation](../../AAAI2026/human_understanding/auto-pre_an_automatic_and_cost-efficient_peer-review_framework_for_language_gene.md)
-- [From Weights to Activations: Is Steering the Next Frontier of Adaptation?](../../ACL2026/human_understanding/from_weights_to_activations_is_steering_the_next_frontier_of_adaptation.md)
-- [Multilingual Language Models Encode Script Over Linguistic Structure](../../ACL2026/human_understanding/multilingual_language_models_encode_script_over_linguistic_structure.md)
-- [The Devil behind the Mask: An Emergent Safety Vulnerability of Diffusion LLMs](the_devil_behind_the_mask_an_emergent_safety_vulnerability_of_diffusion_llms.md)
-- [Failures to Surface Harmful Contents in Video Large Language Models](../../AAAI2026/human_understanding/failures_to_surface_harmful_contents_in_video_large_language_models.md)
+- [\[AAAI 2026\] Auto-PRE: An Automatic and Cost-Efficient Peer-Review Framework for Language Generation Evaluation](../../AAAI2026/human_understanding/auto-pre_an_automatic_and_cost-efficient_peer-review_framework_for_language_gene.md)
+- [\[ACL 2026\] From Weights to Activations: Is Steering the Next Frontier of Adaptation?](../../ACL2026/human_understanding/from_weights_to_activations_is_steering_the_next_frontier_of_adaptation.md)
+- [\[ACL 2026\] Multilingual Language Models Encode Script Over Linguistic Structure](../../ACL2026/human_understanding/multilingual_language_models_encode_script_over_linguistic_structure.md)
+- [\[ICLR 2026\] The Devil behind the Mask: An Emergent Safety Vulnerability of Diffusion LLMs](the_devil_behind_the_mask_an_emergent_safety_vulnerability_of_diffusion_llms.md)
+- [\[AAAI 2026\] Failures to Surface Harmful Contents in Video Large Language Models](../../AAAI2026/human_understanding/failures_to_surface_harmful_contents_in_video_large_language_models.md)
 
 <!-- RELATED:END -->

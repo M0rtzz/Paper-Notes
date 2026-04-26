@@ -119,10 +119,10 @@ tags:
 
 ## 相关论文
 
-- [Topic-Based Watermarks for Large Language Models](topic-based_watermarks_for_large_language_models.md)
-- [Merge Hijacking: Backdoor Attacks to Model Merging of Large Language Models](../../ACL2025/ai_safety/merge_hijacking_backdoor_attacks_to_model_merging_of_large_language_models.md)
-- [Exploring the Limits of Strong Membership Inference Attacks on Large Language Models](../../NeurIPS2025/ai_safety/exploring_the_limits_of_strong_membership_inference_attacks_on_large_language_mo.md)
-- [Gender Bias in Emotion Recognition by Large Language Models](../../AAAI2026/ai_safety/gender_bias_in_emotion_recognition_by_large_language_models.md)
-- [Ensemble Watermarks for Large Language Models](../../ACL2025/ai_safety/ensemble_watermarks_llm.md)
+- [\[ACL 2026\] Topic-Based Watermarks for Large Language Models](topic-based_watermarks_for_large_language_models.md)
+- [\[ACL 2025\] Merge Hijacking: Backdoor Attacks to Model Merging of Large Language Models](../../ACL2025/ai_safety/merge_hijacking_backdoor_attacks_to_model_merging_of_large_language_models.md)
+- [\[NeurIPS 2025\] Exploring the Limits of Strong Membership Inference Attacks on Large Language Models](../../NeurIPS2025/ai_safety/exploring_the_limits_of_strong_membership_inference_attacks_on_large_language_mo.md)
+- [\[AAAI 2026\] Gender Bias in Emotion Recognition by Large Language Models](../../AAAI2026/ai_safety/gender_bias_in_emotion_recognition_by_large_language_models.md)
+- [\[ACL 2025\] Ensemble Watermarks for Large Language Models](../../ACL2025/ai_safety/ensemble_watermarks_llm.md)
 
 <!-- RELATED:END -->

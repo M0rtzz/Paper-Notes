@@ -151,10 +151,10 @@ $$\mathcal{L} = -\log p_\theta(\mathbf{f}(\mathbf{q})|\mathcal{P}, \mathcal{I}) 
 
 ## 相关论文
 
-- [Enhancing Transformers Through Conditioned Embedded Tokens](enhancing_transformers_through_conditioned_embedded_tokens.md)
-- [Aligning Spoken Dialogue Models from User Interactions](../../ICML2025/segmentation/aligning_spoken_dialogue_models_from_user_interactions.md)
-- [MOVE: Motion-Guided Few-Shot Video Object Segmentation](move_motion-guided_few-shot_video_object_segmentation.md)
-- [Temporal Rate Reduction Clustering for Human Motion Segmentation](temporal_rate_reduction_clustering_for_human_motion_segmentation.md)
-- [Skeleton Motion Words for Unsupervised Skeleton-Based Temporal Action Segmentation](skeleton_motion_words_for_unsupervised_skeleton-based_temporal_action_segmentati.md)
+- [\[ICCV 2025\] Enhancing Transformers Through Conditioned Embedded Tokens](enhancing_transformers_through_conditioned_embedded_tokens.md)
+- [\[ICML 2025\] Aligning Spoken Dialogue Models from User Interactions](../../ICML2025/segmentation/aligning_spoken_dialogue_models_from_user_interactions.md)
+- [\[ICCV 2025\] MOVE: Motion-Guided Few-Shot Video Object Segmentation](move_motion-guided_few-shot_video_object_segmentation.md)
+- [\[ICCV 2025\] Temporal Rate Reduction Clustering for Human Motion Segmentation](temporal_rate_reduction_clustering_for_human_motion_segmentation.md)
+- [\[ICCV 2025\] Skeleton Motion Words for Unsupervised Skeleton-Based Temporal Action Segmentation](skeleton_motion_words_for_unsupervised_skeleton-based_temporal_action_segmentati.md)
 
 <!-- RELATED:END -->

@@ -121,10 +121,10 @@ tags:
 
 ## 相关论文
 
-- [What If: Understanding Motion Through Sparse Interactions](../../ICCV2025/segmentation/what_if_understanding_motion_through_sparse_interactions.md)
-- [From Attribution to Action: Jointly ALIGNing Predictions and Explanations](../../AAAI2026/segmentation/from_attribution_to_action_jointly_aligning_predictions_and_explanations.md)
-- [DEF-DTS: Deductive Reasoning for Open-domain Dialogue Topic Segmentation](../../ACL2025/segmentation/def-dts_deductive_reasoning_for_open-domain_dialogue_topic_segmentation.md)
-- [Can Generative Geospatial Diffusion Models Excel as Discriminative Geospatial Foundation Models?](../../ICCV2025/segmentation/can_generative_geospatial_diffusion_models_excel_as_discriminative_geospatial_fo.md)
-- [EditAR: Unified Conditional Generation with Autoregressive Models](../../CVPR2025/segmentation/editar_unified_conditional_generation_with_autoregressive_models.md)
+- [\[ICCV 2025\] What If: Understanding Motion Through Sparse Interactions](../../ICCV2025/segmentation/what_if_understanding_motion_through_sparse_interactions.md)
+- [\[AAAI 2026\] From Attribution to Action: Jointly ALIGNing Predictions and Explanations](../../AAAI2026/segmentation/from_attribution_to_action_jointly_aligning_predictions_and_explanations.md)
+- [\[ACL 2025\] DEF-DTS: Deductive Reasoning for Open-domain Dialogue Topic Segmentation](../../ACL2025/segmentation/def-dts_deductive_reasoning_for_open-domain_dialogue_topic_segmentation.md)
+- [\[ICCV 2025\] Can Generative Geospatial Diffusion Models Excel as Discriminative Geospatial Foundation Models?](../../ICCV2025/segmentation/can_generative_geospatial_diffusion_models_excel_as_discriminative_geospatial_fo.md)
+- [\[CVPR 2025\] EditAR: Unified Conditional Generation with Autoregressive Models](../../CVPR2025/segmentation/editar_unified_conditional_generation_with_autoregressive_models.md)
 
 <!-- RELATED:END -->

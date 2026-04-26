@@ -118,10 +118,10 @@ $\mathcal{L} = \mathcal{L}_{photo} + \lambda_{reg}\mathcal{L}_{continuity} + \la
 
 ## 相关论文
 
-- [ReCon: Region-Controllable Data Augmentation with Rectification and Alignment for Object Detection](recon_region-controllable_data_augmentation_with_rectification_and_alignment_for.md)
-- [DEIM: DETR with Improved Matching for Fast Convergence](../../CVPR2025/object_detection/deim_detr_with_improved_matching_for_fast_convergence.md)
-- [Image Reconstruction from Readout-Multiplexed Single-Photon Detector Arrays](../../CVPR2025/object_detection/image_reconstruction_from_readout-multiplexed_single-photon_detector_arrays.md)
-- [SketchSplat: 3D Edge Reconstruction via Differentiable Multi-view Sketch Splatting](../../ICCV2025/object_detection/sketchsplat_3d_edge_reconstruction_via_differentiable_multi-view_sketch_splattin.md)
-- [TRACE: A Generalizable Drift Detector for Streaming Data-Driven Optimization](../../AAAI2026/object_detection/trace_a_generalizable_drift_detector_for_streaming_data-driven_optimization.md)
+- [\[NeurIPS 2025\] ReCon: Region-Controllable Data Augmentation with Rectification and Alignment for Object Detection](recon_region-controllable_data_augmentation_with_rectification_and_alignment_for.md)
+- [\[CVPR 2025\] DEIM: DETR with Improved Matching for Fast Convergence](../../CVPR2025/object_detection/deim_detr_with_improved_matching_for_fast_convergence.md)
+- [\[CVPR 2025\] Image Reconstruction from Readout-Multiplexed Single-Photon Detector Arrays](../../CVPR2025/object_detection/image_reconstruction_from_readout-multiplexed_single-photon_detector_arrays.md)
+- [\[ICCV 2025\] SketchSplat: 3D Edge Reconstruction via Differentiable Multi-view Sketch Splatting](../../ICCV2025/object_detection/sketchsplat_3d_edge_reconstruction_via_differentiable_multi-view_sketch_splattin.md)
+- [\[AAAI 2026\] TRACE: A Generalizable Drift Detector for Streaming Data-Driven Optimization](../../AAAI2026/object_detection/trace_a_generalizable_drift_detector_for_streaming_data-driven_optimization.md)
 
 <!-- RELATED:END -->

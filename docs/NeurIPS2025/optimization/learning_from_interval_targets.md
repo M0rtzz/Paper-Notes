@@ -167,10 +167,10 @@ $$\min_{f \in \mathcal{F}} \max_{f' \in \widetilde{\mathcal{F}}_0} \mathbb{E}[\e
 
 ## 相关论文
 
-- [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
-- [Wasserstein Transfer Learning](wasserstein_transfer_learning.md)
-- [Learning Parameterized Skills from Demonstrations](learning_parameterized_skills_from_demonstrations.md)
-- [Streaming Federated Learning with Markovian Data](streaming_federated_learning_with_markovian_data.md)
-- [Learning Theory for Kernel Bilevel Optimization](learning_theory_for_kernel_bilevel_optimization.md)
+- [\[NeurIPS 2025\] Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
+- [\[NeurIPS 2025\] Wasserstein Transfer Learning](wasserstein_transfer_learning.md)
+- [\[NeurIPS 2025\] Learning Parameterized Skills from Demonstrations](learning_parameterized_skills_from_demonstrations.md)
+- [\[NeurIPS 2025\] Streaming Federated Learning with Markovian Data](streaming_federated_learning_with_markovian_data.md)
+- [\[NeurIPS 2025\] Learning Theory for Kernel Bilevel Optimization](learning_theory_for_kernel_bilevel_optimization.md)
 
 <!-- RELATED:END -->

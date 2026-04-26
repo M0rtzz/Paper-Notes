@@ -108,10 +108,10 @@ tags:
 
 ## 相关论文
 
-- [Exploring Guided Sampling of Conditional GANs](exploring_guided_sampling_of_conditional_gans.md)
-- [Multiple-Policy Evaluation via Density Estimation](../../ICML2025/others/multiple-policy_evaluation_via_density_estimation.md)
-- [Active Measurement: Efficient Estimation at Scale](../../NeurIPS2025/others/active_measurement_efficient_estimation_at_scale.md)
-- [De-confounded Gaze Estimation](de-confounded_gaze_estimation.md)
-- [AttnZero: Efficient Attention Discovery for Vision Transformers](attnzero_efficient_attention_discovery_for_vision_transformers.md)
+- [\[ECCV 2024\] Exploring Guided Sampling of Conditional GANs](exploring_guided_sampling_of_conditional_gans.md)
+- [\[ICML 2025\] Multiple-Policy Evaluation via Density Estimation](../../ICML2025/others/multiple-policy_evaluation_via_density_estimation.md)
+- [\[NeurIPS 2025\] Active Measurement: Efficient Estimation at Scale](../../NeurIPS2025/others/active_measurement_efficient_estimation_at_scale.md)
+- [\[ECCV 2024\] De-confounded Gaze Estimation](de-confounded_gaze_estimation.md)
+- [\[ECCV 2024\] AttnZero: Efficient Attention Discovery for Vision Transformers](attnzero_efficient_attention_discovery_for_vision_transformers.md)
 
 <!-- RELATED:END -->

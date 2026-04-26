@@ -133,10 +133,10 @@ DomainNet 共享标签空间（ResNet-50, 1x 大小）:
 
 ## 相关论文
 
-- [A Representer Theorem for Hawkes Processes via Penalized Least Squares Minimization](../../ICLR2026/others/a_representer_theorem_for_hawkes_processes_via_penalized_least_squares_minimizat.md)
-- [Weight Weaving: Parameter Pooling for Data-Free Model Merging](../../NeurIPS2025/others/weight_weaving_parameter_pooling_for_data-free_model_merging.md)
-- [Feature Selection for Latent Factor Models](feature_selection_for_latent_factor_models.md)
-- [Bone Soups: A Seek-and-Soup Model Merging Approach for Controllable Multi-Objective Generation](../../ACL2025/others/bone_soups_multi_objective_gen.md)
-- [Variational Regularized Unbalanced Optimal Transport: Single Network, Least Action](../../NeurIPS2025/others/variational_regularized_unbalanced_optimal_transport_single_network_least_action.md)
+- [\[ICLR 2026\] A Representer Theorem for Hawkes Processes via Penalized Least Squares Minimization](../../ICLR2026/others/a_representer_theorem_for_hawkes_processes_via_penalized_least_squares_minimizat.md)
+- [\[NeurIPS 2025\] Weight Weaving: Parameter Pooling for Data-Free Model Merging](../../NeurIPS2025/others/weight_weaving_parameter_pooling_for_data-free_model_merging.md)
+- [\[CVPR 2025\] Feature Selection for Latent Factor Models](feature_selection_for_latent_factor_models.md)
+- [\[ACL 2025\] Bone Soups: A Seek-and-Soup Model Merging Approach for Controllable Multi-Objective Generation](../../ACL2025/others/bone_soups_multi_objective_gen.md)
+- [\[NeurIPS 2025\] Variational Regularized Unbalanced Optimal Transport: Single Network, Least Action](../../NeurIPS2025/others/variational_regularized_unbalanced_optimal_transport_single_network_least_action.md)
 
 <!-- RELATED:END -->

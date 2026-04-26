@@ -119,10 +119,10 @@ tags:
 
 ## 相关论文
 
-- [Military AI Needs Technically-Informed Regulation to Safeguard AI Research and its Applications](military_ai_needs_technically-informed_regulation_to_safeguard_ai_research_and_i.md)
-- [Democratic AI is Possible. The Democracy Levels Framework Shows How It Might Work](../../ICML2025/others/democratic_ai_is_possible_the_democracy_levels_framework_shows_how_it_might_work.md)
-- [Scalable Equilibrium Sampling with Sequential Boltzmann Generators](../../ICML2025/others/scalable_equilibrium_sampling_with_sequential_boltzmann_generators.md)
-- [Adaptive Data Analysis for Growing Data](adaptive_data_analysis_for_growing_data.md)
-- [Emergency Response Measures for Catastrophic AI Risk](emergency_response_measures_for_catastrophic_ai_risk.md)
+- [\[NeurIPS 2025\] Military AI Needs Technically-Informed Regulation to Safeguard AI Research and its Applications](military_ai_needs_technically-informed_regulation_to_safeguard_ai_research_and_i.md)
+- [\[ICML 2025\] Democratic AI is Possible. The Democracy Levels Framework Shows How It Might Work](../../ICML2025/others/democratic_ai_is_possible_the_democracy_levels_framework_shows_how_it_might_work.md)
+- [\[ICML 2025\] Scalable Equilibrium Sampling with Sequential Boltzmann Generators](../../ICML2025/others/scalable_equilibrium_sampling_with_sequential_boltzmann_generators.md)
+- [\[NeurIPS 2025\] Adaptive Data Analysis for Growing Data](adaptive_data_analysis_for_growing_data.md)
+- [\[NeurIPS 2025\] Emergency Response Measures for Catastrophic AI Risk](emergency_response_measures_for_catastrophic_ai_risk.md)
 
 <!-- RELATED:END -->

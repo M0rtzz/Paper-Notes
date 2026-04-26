@@ -213,10 +213,10 @@ $$\mathcal{L}_{OP} = \underbrace{-\frac{1}{T}\sum_{t=1}^{T} \log \pi_\theta(o_t 
 
 ## 相关论文
 
-- [Echo: Towards Advanced Audio Comprehension via Audio-Interleaved Reasoning](../../ICLR2026/reinforcement_learning/echo_towards_advanced_audio_comprehension_via_audio-interleaved_reasoning.md)
-- [When Can Model-Free Reinforcement Learning be Enough for Thinking?](../../NeurIPS2025/reinforcement_learning/when_can_model-free_reinforcement_learning_be_enough_for_thinking.md)
-- [Linking Perception, Confidence and Accuracy in MLLMs](../../CVPR2026/reinforcement_learning/linking_perception_confidence_and_accuracy_in_mllms.md)
-- [Start Small, Think Big: Curriculum-based Relative Policy Optimization for Visual Grounding](start_small_think_big_curriculum-based_relative_policy_optimization_for_visual_g.md)
-- [Seeing is Improving: Visual Feedback for Iterative Text Layout Refinement](../../CVPR2026/reinforcement_learning/seeing_is_improving_visual_feedback_for_iterative_text_layout_refinement.md)
+- [\[ICLR 2026\] Echo: Towards Advanced Audio Comprehension via Audio-Interleaved Reasoning](../../ICLR2026/reinforcement_learning/echo_towards_advanced_audio_comprehension_via_audio-interleaved_reasoning.md)
+- [\[NeurIPS 2025\] When Can Model-Free Reinforcement Learning be Enough for Thinking?](../../NeurIPS2025/reinforcement_learning/when_can_model-free_reinforcement_learning_be_enough_for_thinking.md)
+- [\[CVPR 2026\] Linking Perception, Confidence and Accuracy in MLLMs](../../CVPR2026/reinforcement_learning/linking_perception_confidence_and_accuracy_in_mllms.md)
+- [\[AAAI 2026\] Start Small, Think Big: Curriculum-based Relative Policy Optimization for Visual Grounding](start_small_think_big_curriculum-based_relative_policy_optimization_for_visual_g.md)
+- [\[CVPR 2026\] Seeing is Improving: Visual Feedback for Iterative Text Layout Refinement](../../CVPR2026/reinforcement_learning/seeing_is_improving_visual_feedback_for_iterative_text_layout_refinement.md)
 
 <!-- RELATED:END -->

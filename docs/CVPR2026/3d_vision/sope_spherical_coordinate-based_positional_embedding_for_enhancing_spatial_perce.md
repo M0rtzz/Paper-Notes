@@ -173,10 +173,10 @@ SoPE 作为连接器级别的位置编码模块，以即插即用的方式替换
 
 ## 相关论文
 
-- [SphereUFormer: A U-Shaped Transformer for Spherical 360 Perception](../../CVPR2025/3d_vision/sphereuformer_a_u-shaped_transformer_for_spherical_360_perception.md)
-- [PE3R: Perception-Efficient 3D Reconstruction](pe3r_perception-efficient_3d_reconstruction.md)
-- [SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection](span_spatial-projection_alignment_for_monocular_3d_object_detection.md)
-- [DMAligner: Enhancing Image Alignment via Diffusion Model Based View Synthesis](dmaligner_enhancing_image_alignment_via_diffusion_model_based_view_synthesis.md)
-- [RoCo-Sim: Enhancing Roadside Collaborative Perception through Foreground Simulation](../../ICCV2025/3d_vision/roco-sim_enhancing_roadside_collaborative_perception_through_foreground_simulati.md)
+- [\[CVPR 2025\] SphereUFormer: A U-Shaped Transformer for Spherical 360 Perception](../../CVPR2025/3d_vision/sphereuformer_a_u-shaped_transformer_for_spherical_360_perception.md)
+- [\[CVPR 2026\] PE3R: Perception-Efficient 3D Reconstruction](pe3r_perception-efficient_3d_reconstruction.md)
+- [\[CVPR 2026\] SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection](span_spatial-projection_alignment_for_monocular_3d_object_detection.md)
+- [\[CVPR 2026\] DMAligner: Enhancing Image Alignment via Diffusion Model Based View Synthesis](dmaligner_enhancing_image_alignment_via_diffusion_model_based_view_synthesis.md)
+- [\[ICCV 2025\] RoCo-Sim: Enhancing Roadside Collaborative Perception through Foreground Simulation](../../ICCV2025/3d_vision/roco-sim_enhancing_roadside_collaborative_perception_through_foreground_simulati.md)
 
 <!-- RELATED:END -->

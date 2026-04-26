@@ -127,10 +127,10 @@ tags:
 
 ## 相关论文
 
-- [Improving Fairness of Large Language Models in Multi-document Summarization](../../ACL2025/ai_safety/improving_fairness_of_large_language_models_in_multi-document_summarization.md)
-- [Exploring the Limits of Strong Membership Inference Attacks on Large Language Models](exploring_the_limits_of_strong_membership_inference_attacks_on_large_language_mo.md)
-- [ReDial: Assessing Dialect Fairness and Robustness of Large Language Models in Reasoning Tasks](../../ACL2025/ai_safety/dialect_fairness_robustness.md)
-- [The Tug of War Within: Mitigating the Fairness-Privacy Conflicts in Large Language Models](../../ACL2025/ai_safety/tug_of_war_fairness_privacy.md)
-- [Ensemble Watermarks for Large Language Models](../../ACL2025/ai_safety/ensemble_watermarks_llm.md)
+- [\[ACL 2025\] Improving Fairness of Large Language Models in Multi-document Summarization](../../ACL2025/ai_safety/improving_fairness_of_large_language_models_in_multi-document_summarization.md)
+- [\[NeurIPS 2025\] Exploring the Limits of Strong Membership Inference Attacks on Large Language Models](exploring_the_limits_of_strong_membership_inference_attacks_on_large_language_mo.md)
+- [\[ACL 2025\] ReDial: Assessing Dialect Fairness and Robustness of Large Language Models in Reasoning Tasks](../../ACL2025/ai_safety/dialect_fairness_robustness.md)
+- [\[ACL 2025\] The Tug of War Within: Mitigating the Fairness-Privacy Conflicts in Large Language Models](../../ACL2025/ai_safety/tug_of_war_fairness_privacy.md)
+- [\[ACL 2025\] Ensemble Watermarks for Large Language Models](../../ACL2025/ai_safety/ensemble_watermarks_llm.md)
 
 <!-- RELATED:END -->

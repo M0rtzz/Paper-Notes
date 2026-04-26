@@ -118,10 +118,10 @@ HID基于PhotoMaker V2构建，分两阶段：(1) 左阶段——通过ID Fusion
 
 ## 相关论文
 
-- [Remote Photoplethysmography in Real-World and Extreme Lighting Scenarios](remote_photoplethysmography_in_real-world_and_extreme_lighting_scenarios.md)
-- [Controllable and Expressive One-Shot Video Head Swapping](../../ICCV2025/human_understanding/controllable_and_expressive_one-shot_video_head_swapping.md)
-- [Conformal Prediction for Zero-Shot Models](conformal_prediction_for_zero-shot_models.md)
-- [NegRefine: Refining Negative Label-Based Zero-Shot OOD Detection](../../ICCV2025/human_understanding/negrefine_refining_negative_label-based_zero-shot_ood_detection.md)
-- [Learning Visual Proxy for Compositional Zero-Shot Learning](../../ICCV2025/human_understanding/learning_visual_proxy_for_compositional_zero-shot_learning.md)
+- [\[CVPR 2025\] Remote Photoplethysmography in Real-World and Extreme Lighting Scenarios](remote_photoplethysmography_in_real-world_and_extreme_lighting_scenarios.md)
+- [\[ICCV 2025\] Controllable and Expressive One-Shot Video Head Swapping](../../ICCV2025/human_understanding/controllable_and_expressive_one-shot_video_head_swapping.md)
+- [\[CVPR 2025\] Conformal Prediction for Zero-Shot Models](conformal_prediction_for_zero-shot_models.md)
+- [\[ICCV 2025\] NegRefine: Refining Negative Label-Based Zero-Shot OOD Detection](../../ICCV2025/human_understanding/negrefine_refining_negative_label-based_zero-shot_ood_detection.md)
+- [\[ICCV 2025\] Learning Visual Proxy for Compositional Zero-Shot Learning](../../ICCV2025/human_understanding/learning_visual_proxy_for_compositional_zero-shot_learning.md)
 
 <!-- RELATED:END -->

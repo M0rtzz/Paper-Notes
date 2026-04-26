@@ -122,10 +122,10 @@ tags:
 
 ## 相关论文
 
-- [Compiling Activation Steering into Weights via Null-Space Constraints for Stealthy Backdoors](compiling_activation_steering_into_weights_via_null-space_constraints_for_stealt.md)
-- [Discovering a Shared Logical Subspace: Steering LLM Logical Reasoning via Alignment of Natural-Language and Symbolic Views](discovering_a_shared_logical_subspace_steering_llm_logical_reasoning_via_alignme.md)
-- [LLMs Encode Their Failures: Predicting Success from Pre-Generation Activations](../../ICLR2026/human_understanding/llms_encode_their_failures_predicting_success_from_pre-generation_activations.md)
-- [Tool4POI: A Tool-Augmented LLM Framework for Next POI Recommendation](../../AAAI2026/human_understanding/tool4poi_a_tool-augmented_llm_framework_for_next_poi_recommendation.md)
-- [Generative Social Choice: The Next Generation](../../ICML2025/human_understanding/generative_social_choice_the_next_generation.md)
+- [\[ACL 2026\] Compiling Activation Steering into Weights via Null-Space Constraints for Stealthy Backdoors](compiling_activation_steering_into_weights_via_null-space_constraints_for_stealt.md)
+- [\[ACL 2026\] Discovering a Shared Logical Subspace: Steering LLM Logical Reasoning via Alignment of Natural-Language and Symbolic Views](discovering_a_shared_logical_subspace_steering_llm_logical_reasoning_via_alignme.md)
+- [\[ICLR 2026\] LLMs Encode Their Failures: Predicting Success from Pre-Generation Activations](../../ICLR2026/human_understanding/llms_encode_their_failures_predicting_success_from_pre-generation_activations.md)
+- [\[AAAI 2026\] Tool4POI: A Tool-Augmented LLM Framework for Next POI Recommendation](../../AAAI2026/human_understanding/tool4poi_a_tool-augmented_llm_framework_for_next_poi_recommendation.md)
+- [\[ICML 2025\] Generative Social Choice: The Next Generation](../../ICML2025/human_understanding/generative_social_choice_the_next_generation.md)
 
 <!-- RELATED:END -->

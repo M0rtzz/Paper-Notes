@@ -160,10 +160,10 @@ PostDiff 完全是**训练无关**（training-free）的——不需要任何微
 
 ## 相关论文
 
-- [Inference-Time Diffusion Model Distillation](inference-time_diffusion_model_distillation.md)
-- [Two-Steps Diffusion Policy for Robotic Manipulation via Genetic Denoising](../../NeurIPS2025/image_generation/two-steps_diffusion_policy_for_robotic_manipulation_via_genetic_denoising.md)
-- [AccuQuant: Simulating Multiple Denoising Steps for Quantizing Diffusion Models](../../NeurIPS2025/image_generation/accuquant_simulating_multiple_denoising_steps_for_quantizing.md)
-- [Optimizing for the Shortest Path in Denoising Diffusion Model](../../CVPR2025/image_generation/optimizing_for_the_shortest_path_in_denoising_diffusion_model.md)
-- [Compression-Aware One-Step Diffusion Model for JPEG Artifact Removal](compression-aware_one-step_diffusion_model_for_jpeg_artifact_removal.md)
+- [\[ICCV 2025\] Inference-Time Diffusion Model Distillation](inference-time_diffusion_model_distillation.md)
+- [\[NeurIPS 2025\] Two-Steps Diffusion Policy for Robotic Manipulation via Genetic Denoising](../../NeurIPS2025/image_generation/two-steps_diffusion_policy_for_robotic_manipulation_via_genetic_denoising.md)
+- [\[NeurIPS 2025\] AccuQuant: Simulating Multiple Denoising Steps for Quantizing Diffusion Models](../../NeurIPS2025/image_generation/accuquant_simulating_multiple_denoising_steps_for_quantizing.md)
+- [\[CVPR 2025\] Optimizing for the Shortest Path in Denoising Diffusion Model](../../CVPR2025/image_generation/optimizing_for_the_shortest_path_in_denoising_diffusion_model.md)
+- [\[ICCV 2025\] Compression-Aware One-Step Diffusion Model for JPEG Artifact Removal](compression-aware_one-step_diffusion_model_for_jpeg_artifact_removal.md)
 
 <!-- RELATED:END -->

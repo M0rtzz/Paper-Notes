@@ -172,10 +172,10 @@ $$\mathcal{L}_{total} = \mathcal{L}_{data} + \lambda_1 \mathcal{L}_{state} + \la
 
 ## 相关论文
 
-- [Prompting Future Driven Diffusion Model for Hand Motion Prediction](../../ECCV2024/image_generation/prompting_future_driven_diffusion_model_for_hand_motion_prediction.md)
-- [Music-Aligned Holistic 3D Dance Generation via Hierarchical Motion Modeling](music-aligned_holistic_3d_dance_generation_via_hierarchical_motion_modeling.md)
-- [SMGDiff: Soccer Motion Generation using Diffusion Probabilistic Models](smgdiff_soccer_motion_generation_using_diffusion_probabilistic_models.md)
-- [Bitrate-Controlled Diffusion for Disentangling Motion and Content in Video](bitrate-controlled_diffusion_for_disentangling_motion_and_content_in_video.md)
-- [Lifting Motion to the 3D World via 2D Diffusion](../../CVPR2025/image_generation/lifting_motion_to_the_3d_world_via_2d_diffusion.md)
+- [\[ECCV 2024\] Prompting Future Driven Diffusion Model for Hand Motion Prediction](../../ECCV2024/image_generation/prompting_future_driven_diffusion_model_for_hand_motion_prediction.md)
+- [\[ICCV 2025\] Music-Aligned Holistic 3D Dance Generation via Hierarchical Motion Modeling](music-aligned_holistic_3d_dance_generation_via_hierarchical_motion_modeling.md)
+- [\[ICCV 2025\] SMGDiff: Soccer Motion Generation using Diffusion Probabilistic Models](smgdiff_soccer_motion_generation_using_diffusion_probabilistic_models.md)
+- [\[ICCV 2025\] Bitrate-Controlled Diffusion for Disentangling Motion and Content in Video](bitrate-controlled_diffusion_for_disentangling_motion_and_content_in_video.md)
+- [\[CVPR 2025\] Lifting Motion to the 3D World via 2D Diffusion](../../CVPR2025/image_generation/lifting_motion_to_the_3d_world_via_2d_diffusion.md)
 
 <!-- RELATED:END -->

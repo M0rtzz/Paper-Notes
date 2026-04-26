@@ -141,10 +141,10 @@ L3DE Fusion分数与人类判断的相关性远超现有指标。
 
 ## 相关论文
 
-- [Gen3DEval: Using vLLMs for Automatic Evaluation of Generated 3D Objects](../../CVPR2025/3d_vision/gen3deval_using_vllms_for_automatic_evaluation_of_generated_3d_objects.md)
-- [Stereo4D: Learning How Things Move in 3D from Internet Stereo Videos](../../CVPR2025/3d_vision/stereo4d_learning_how_things_move_in_3d_from_internet_stereo_videos.md)
-- [SimVS: Simulating World Inconsistencies for Robust View Synthesis](../../CVPR2025/3d_vision/simvs_simulating_world_inconsistencies_for_robust_view_synthesis.md)
-- [Noise2Score3D: Tweedie's Approach for Unsupervised Point Cloud Denoising](noise2score3d_tweedies_approach_for_unsupervised_point_cloud_denoising.md)
-- [Can LLMs Write Faithfully? An Agent-Based Evaluation of LLM-generated Islamic Content](../../NeurIPS2025/3d_vision/can_llms_write_faithfully_an_agent-based_evaluation_of_llm-generated_islamic_con.md)
+- [\[CVPR 2025\] Gen3DEval: Using vLLMs for Automatic Evaluation of Generated 3D Objects](../../CVPR2025/3d_vision/gen3deval_using_vllms_for_automatic_evaluation_of_generated_3d_objects.md)
+- [\[CVPR 2025\] Stereo4D: Learning How Things Move in 3D from Internet Stereo Videos](../../CVPR2025/3d_vision/stereo4d_learning_how_things_move_in_3d_from_internet_stereo_videos.md)
+- [\[CVPR 2025\] SimVS: Simulating World Inconsistencies for Robust View Synthesis](../../CVPR2025/3d_vision/simvs_simulating_world_inconsistencies_for_robust_view_synthesis.md)
+- [\[ICCV 2025\] Noise2Score3D: Tweedie's Approach for Unsupervised Point Cloud Denoising](noise2score3d_tweedies_approach_for_unsupervised_point_cloud_denoising.md)
+- [\[NeurIPS 2025\] Can LLMs Write Faithfully? An Agent-Based Evaluation of LLM-generated Islamic Content](../../NeurIPS2025/3d_vision/can_llms_write_faithfully_an_agent-based_evaluation_of_llm-generated_islamic_con.md)
 
 <!-- RELATED:END -->

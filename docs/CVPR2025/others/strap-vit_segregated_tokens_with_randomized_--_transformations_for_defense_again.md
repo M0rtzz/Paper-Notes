@@ -126,10 +126,10 @@ STRAP-ViT 嵌入 ViT 推理流程的 patch embedding 和位置编码之后、Tra
 
 ## 相关论文
 
-- [Byte Latent Transformer: Patches Scale Better Than Tokens](../../ACL2025/others/byte_latent_transformer.md)
-- [SDD: Self-Degraded Defense against Malicious Fine-tuning](../../ACL2025/others/sdd_self-degraded_defense_against_malicious_fine-tuning.md)
-- [Battling against Tough Resister: Strategy Planning with Adversarial Game for Non-collaborative Dialogues](../../ACL2025/others/battling_against_tough_resister_strategy_planning_with_adversarial_game_for_non-.md)
-- [Towards Million-Scale Adversarial Robustness Evaluation With Stronger Individual Attacks](towards_million-scale_adversarial_robustness_evaluation_with_stronger_individual.md)
-- [TAET: Two-Stage Adversarial Equalization Training on Long-Tailed Distributions](taet_two-stage_adversarial_equalization_training_on_long-tailed_distributions.md)
+- [\[ACL 2025\] Byte Latent Transformer: Patches Scale Better Than Tokens](../../ACL2025/others/byte_latent_transformer.md)
+- [\[ACL 2025\] SDD: Self-Degraded Defense against Malicious Fine-tuning](../../ACL2025/others/sdd_self-degraded_defense_against_malicious_fine-tuning.md)
+- [\[ACL 2025\] Battling against Tough Resister: Strategy Planning with Adversarial Game for Non-collaborative Dialogues](../../ACL2025/others/battling_against_tough_resister_strategy_planning_with_adversarial_game_for_non-.md)
+- [\[CVPR 2025\] Towards Million-Scale Adversarial Robustness Evaluation With Stronger Individual Attacks](towards_million-scale_adversarial_robustness_evaluation_with_stronger_individual.md)
+- [\[CVPR 2025\] TAET: Two-Stage Adversarial Equalization Training on Long-Tailed Distributions](taet_two-stage_adversarial_equalization_training_on_long-tailed_distributions.md)
 
 <!-- RELATED:END -->

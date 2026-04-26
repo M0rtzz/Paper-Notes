@@ -144,10 +144,10 @@ EDEN 的 pipeline 分为三步：(1) **知识发现**——先用有向拓扑结
 
 ## 相关论文
 
-- [Spatio-Temporal Directed Graph Learning for Account Takeover Fraud Detection](../../NeurIPS2025/graph_learning/spatio-temporal_directed_graph_learning_for_account_takeover_fraud_detection.md)
-- [Principled Data Augmentation for Learning to Solve Quadratic Programming Problems](../../NeurIPS2025/graph_learning/principled_data_augmentation_for_learning_to_solve_quadratic_programming_problem.md)
-- [Diss-l-ECT: Dissecting Graph Data with Local Euler Characteristic Transforms](diss-l-ect_dissecting_graph_data_with_local_euler_characteristic_transforms.md)
-- [Does Graph Prompt Work? A Data Operation Perspective with Theoretical Analysis](does_graph_prompt_work_a_data_operation_perspective_with_theoretical_analysis.md)
-- [Interaction-Centric Knowledge Infusion and Transfer for Open-Vocabulary Scene Graph Generation](../../NeurIPS2025/graph_learning/interaction-centric_knowledge_infusion_and_transfer_for_open-vocabulary_scene_gr.md)
+- [\[NeurIPS 2025\] Spatio-Temporal Directed Graph Learning for Account Takeover Fraud Detection](../../NeurIPS2025/graph_learning/spatio-temporal_directed_graph_learning_for_account_takeover_fraud_detection.md)
+- [\[NeurIPS 2025\] Principled Data Augmentation for Learning to Solve Quadratic Programming Problems](../../NeurIPS2025/graph_learning/principled_data_augmentation_for_learning_to_solve_quadratic_programming_problem.md)
+- [\[ICML 2025\] Diss-l-ECT: Dissecting Graph Data with Local Euler Characteristic Transforms](diss-l-ect_dissecting_graph_data_with_local_euler_characteristic_transforms.md)
+- [\[ICML 2025\] Does Graph Prompt Work? A Data Operation Perspective with Theoretical Analysis](does_graph_prompt_work_a_data_operation_perspective_with_theoretical_analysis.md)
+- [\[NeurIPS 2025\] Interaction-Centric Knowledge Infusion and Transfer for Open-Vocabulary Scene Graph Generation](../../NeurIPS2025/graph_learning/interaction-centric_knowledge_infusion_and_transfer_for_open-vocabulary_scene_gr.md)
 
 <!-- RELATED:END -->

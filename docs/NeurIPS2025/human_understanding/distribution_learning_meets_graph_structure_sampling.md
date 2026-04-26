@@ -111,10 +111,10 @@ tags:
 
 ## 相关论文
 
-- [Stealthy Yet Effective: Distribution-Preserving Backdoor Attacks on Graph Classification](stealthy_yet_effective_distribution-preserving_backdoor_attacks_on_graph_classif.md)
-- [NN-Former: Rethinking Graph Structure in Neural Architecture Representation](../../CVPR2025/human_understanding/nn-former_rethinking_graph_structure_in_neural_architecture_representation.md)
-- [Probabilistic Prompt Distribution Learning for Animal Pose Estimation](../../CVPR2025/human_understanding/probabilistic_prompt_distribution_learning_for_animal_pose_estimation.md)
-- [Stable Coresets via Posterior Sampling: Aligning Induced and Full Loss Landscapes](stable_coresets_via_posterior_sampling_aligning_induced_and_full_loss_landscapes.md)
-- [Structure-Aware Correspondence Learning for Relative Pose Estimation](../../CVPR2025/human_understanding/structure-aware_correspondence_learning_for_relative_pose_estimation.md)
+- [\[NeurIPS 2025\] Stealthy Yet Effective: Distribution-Preserving Backdoor Attacks on Graph Classification](stealthy_yet_effective_distribution-preserving_backdoor_attacks_on_graph_classif.md)
+- [\[CVPR 2025\] NN-Former: Rethinking Graph Structure in Neural Architecture Representation](../../CVPR2025/human_understanding/nn-former_rethinking_graph_structure_in_neural_architecture_representation.md)
+- [\[CVPR 2025\] Probabilistic Prompt Distribution Learning for Animal Pose Estimation](../../CVPR2025/human_understanding/probabilistic_prompt_distribution_learning_for_animal_pose_estimation.md)
+- [\[NeurIPS 2025\] Stable Coresets via Posterior Sampling: Aligning Induced and Full Loss Landscapes](stable_coresets_via_posterior_sampling_aligning_induced_and_full_loss_landscapes.md)
+- [\[CVPR 2025\] Structure-Aware Correspondence Learning for Relative Pose Estimation](../../CVPR2025/human_understanding/structure-aware_correspondence_learning_for_relative_pose_estimation.md)
 
 <!-- RELATED:END -->

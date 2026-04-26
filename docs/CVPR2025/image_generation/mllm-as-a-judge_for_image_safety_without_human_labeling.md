@@ -157,10 +157,10 @@ CLUE 在零样本设置下大幅超越所有微调基线，验证了微调方法
 
 ## 相关论文
 
-- [Calibrating MLLM-as-a-Judge via Multimodal Bayesian Prompt Ensembles](../../ICCV2025/image_generation/calibrating_mllm-as-a-judge_via_multimodal_bayesian_prompt_ensembles.md)
-- [CleanDIFT: Diffusion Features without Noise](cleandift_diffusion_features_without_noise.md)
-- [Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
-- [Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences](../../ICCV2025/image_generation/cycle_consistency_as_reward_learning_image-text_alignment_without_human_preferen.md)
-- [BootComp: Controllable Human Image Generation with Personalized Multi-Garments](controllable_human_image_generation_with_personalized_multi-garments.md)
+- [\[ICCV 2025\] Calibrating MLLM-as-a-Judge via Multimodal Bayesian Prompt Ensembles](../../ICCV2025/image_generation/calibrating_mllm-as-a-judge_via_multimodal_bayesian_prompt_ensembles.md)
+- [\[CVPR 2025\] CleanDIFT: Diffusion Features without Noise](cleandift_diffusion_features_without_noise.md)
+- [\[CVPR 2025\] Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
+- [\[ICCV 2025\] Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences](../../ICCV2025/image_generation/cycle_consistency_as_reward_learning_image-text_alignment_without_human_preferen.md)
+- [\[CVPR 2025\] BootComp: Controllable Human Image Generation with Personalized Multi-Garments](controllable_human_image_generation_with_personalized_multi-garments.md)
 
 <!-- RELATED:END -->

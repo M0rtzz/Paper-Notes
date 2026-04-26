@@ -130,10 +130,10 @@ JOSH 的工作流程为：(1) LLM Agent 在模拟环境中与 User Simulator 进
 
 ## 相关论文
 
-- [Contextual Experience Replay for Self-Improvement of Language Agents](contextual_experience_replay_for_self-improvement_of_language_agents.md)
-- [X-Turing: Towards an Enhanced and Efficient Turing Test for Long-Term Dialogue Agents](xturing_enhanced_turing_test.md)
-- [In Prospect and Retrospect: Reflective Memory Management for Long-term Personalized Dialogue Agents](in_prospect_and_retrospect_reflective_memory_management_for_long-term_personaliz.md)
-- [FastDraft: How to Train Your Draft](fastdraft_how_to_train_your_draft.md)
-- [Can Third-parties Read Our Emotions?](can_third_parties_read_our_emotions.md)
+- [\[ACL 2025\] Contextual Experience Replay for Self-Improvement of Language Agents](contextual_experience_replay_for_self-improvement_of_language_agents.md)
+- [\[ACL 2025\] X-Turing: Towards an Enhanced and Efficient Turing Test for Long-Term Dialogue Agents](xturing_enhanced_turing_test.md)
+- [\[ACL 2025\] In Prospect and Retrospect: Reflective Memory Management for Long-term Personalized Dialogue Agents](in_prospect_and_retrospect_reflective_memory_management_for_long-term_personaliz.md)
+- [\[ACL 2025\] FastDraft: How to Train Your Draft](fastdraft_how_to_train_your_draft.md)
+- [\[ACL 2025\] Can Third-parties Read Our Emotions?](can_third_parties_read_our_emotions.md)
 
 <!-- RELATED:END -->

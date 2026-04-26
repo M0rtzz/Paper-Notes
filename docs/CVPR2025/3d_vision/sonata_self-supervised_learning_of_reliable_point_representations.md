@@ -123,10 +123,10 @@ Sonata 采用点云自蒸馏框架，基于 Point Transformer V3（PTv3, 108M参
 
 ## 相关论文
 
-- [Concerto: Joint 2D-3D Self-Supervised Learning Emerges Spatial Representations](../../NeurIPS2025/3d_vision/concerto_joint_2d-3d_self-supervised_learning_emerges_spatial_representations.md)
-- [PointINS: Instance-Aware Self-Supervised Learning for Point Clouds](../../CVPR2026/3d_vision/pointins_instance-aware_self-supervised_learning_for_point_clouds.md)
-- [Self-supervised Learning of Hybrid Part-aware 3D Representations of 2D Gaussians and Superquadrics](../../ICCV2025/3d_vision/self-supervised_learning_of_hybrid_part-aware_3d_representations_of_2d_gaussians.md)
-- [FSFM: A Generalizable Face Security Foundation Model via Self-Supervised Facial Representation Learning](fsfm_a_generalizable_face_security_foundation_model_via_self-supervised_facial_r.md)
-- [StruMamba3D: Exploring Structural Mamba for Self-supervised Point Cloud Representation Learning](../../ICCV2025/3d_vision/strumamba3d_exploring_structural_mamba_for_self-supervised_point_cloud_represent.md)
+- [\[NeurIPS 2025\] Concerto: Joint 2D-3D Self-Supervised Learning Emerges Spatial Representations](../../NeurIPS2025/3d_vision/concerto_joint_2d-3d_self-supervised_learning_emerges_spatial_representations.md)
+- [\[CVPR 2026\] PointINS: Instance-Aware Self-Supervised Learning for Point Clouds](../../CVPR2026/3d_vision/pointins_instance-aware_self-supervised_learning_for_point_clouds.md)
+- [\[ICCV 2025\] Self-supervised Learning of Hybrid Part-aware 3D Representations of 2D Gaussians and Superquadrics](../../ICCV2025/3d_vision/self-supervised_learning_of_hybrid_part-aware_3d_representations_of_2d_gaussians.md)
+- [\[CVPR 2025\] FSFM: A Generalizable Face Security Foundation Model via Self-Supervised Facial Representation Learning](fsfm_a_generalizable_face_security_foundation_model_via_self-supervised_facial_r.md)
+- [\[ICCV 2025\] StruMamba3D: Exploring Structural Mamba for Self-supervised Point Cloud Representation Learning](../../ICCV2025/3d_vision/strumamba3d_exploring_structural_mamba_for_self-supervised_point_cloud_represent.md)
 
 <!-- RELATED:END -->

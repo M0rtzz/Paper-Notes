@@ -178,10 +178,10 @@ SparseOcc 在弱设置（R50, 8 frames, 704x256）下超越 FB-Occ（挑战赛�
 
 ## 相关论文
 
-- [GaussianFormer: Scene as Gaussians for Vision-Based 3D Semantic Occupancy Prediction](gaussianformer_scene_as_gaussians_for_vision-based_3d_semantic_occupancy_predict.md)
-- [OccWorld: Learning a 3D Occupancy World Model for Autonomous Driving](occworld_learning_a_3d_occupancy_world_model_for_autonomous_driving.md)
-- [OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving](occgen_generative_multimodal_3d_occupancy_prediction_for_aut.md)
-- [SparseAlign: A Fully Sparse Framework for Cooperative Object Detection](../../CVPR2025/autonomous_driving/sparsealign_a_fully_sparse_framework_for_cooperative_object_detection.md)
-- [Monocular Occupancy Prediction for Scalable Indoor Scenes](monocular_occupancy_prediction_for_scalable_indoor_scenes.md)
+- [\[ECCV 2024\] GaussianFormer: Scene as Gaussians for Vision-Based 3D Semantic Occupancy Prediction](gaussianformer_scene_as_gaussians_for_vision-based_3d_semantic_occupancy_predict.md)
+- [\[ECCV 2024\] OccWorld: Learning a 3D Occupancy World Model for Autonomous Driving](occworld_learning_a_3d_occupancy_world_model_for_autonomous_driving.md)
+- [\[ECCV 2024\] OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving](occgen_generative_multimodal_3d_occupancy_prediction_for_aut.md)
+- [\[CVPR 2025\] SparseAlign: A Fully Sparse Framework for Cooperative Object Detection](../../CVPR2025/autonomous_driving/sparsealign_a_fully_sparse_framework_for_cooperative_object_detection.md)
+- [\[ECCV 2024\] Monocular Occupancy Prediction for Scalable Indoor Scenes](monocular_occupancy_prediction_for_scalable_indoor_scenes.md)
 
 <!-- RELATED:END -->

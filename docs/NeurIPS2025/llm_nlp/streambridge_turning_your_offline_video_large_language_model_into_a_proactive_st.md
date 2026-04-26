@@ -154,10 +154,10 @@ StreamBridge由三个即插即用组件构成：
 
 ## 相关论文
 
-- [IPO: Your Language Model is Secretly a Preference Classifier](../../ACL2025/llm_nlp/ipo_your_language_model_is_secretly_a_preference_classifier.md)
-- [Towards Universal Offline Black-Box Optimization via Learning Language Model Embeddings](../../ICML2025/llm_nlp/towards_universal_offline_black-box_optimization_via_learning_language_model_emb.md)
-- [SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence](../../ACL2025/llm_nlp/selfelicit_evidence_highlighting.md)
-- [SYMPHONY: Synergistic Multi-agent Planning with Heterogeneous Language Model Assemblies](symphony_synergistic_multi-agent_planning_with_heterogeneous_language_model_asse.md)
-- [Representation Bending for Large Language Model Safety](../../ACL2025/llm_nlp/repbend_representation_bending_safety.md)
+- [\[ACL 2025\] IPO: Your Language Model is Secretly a Preference Classifier](../../ACL2025/llm_nlp/ipo_your_language_model_is_secretly_a_preference_classifier.md)
+- [\[ICML 2025\] Towards Universal Offline Black-Box Optimization via Learning Language Model Embeddings](../../ICML2025/llm_nlp/towards_universal_offline_black-box_optimization_via_learning_language_model_emb.md)
+- [\[ACL 2025\] SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence](../../ACL2025/llm_nlp/selfelicit_evidence_highlighting.md)
+- [\[NeurIPS 2025\] SYMPHONY: Synergistic Multi-agent Planning with Heterogeneous Language Model Assemblies](symphony_synergistic_multi-agent_planning_with_heterogeneous_language_model_asse.md)
+- [\[ACL 2025\] Representation Bending for Large Language Model Safety](../../ACL2025/llm_nlp/repbend_representation_bending_safety.md)
 
 <!-- RELATED:END -->

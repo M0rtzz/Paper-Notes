@@ -153,10 +153,10 @@ TPL 在以下任务上优于现有方法：
 
 ## 相关论文
 
-- [FakeRadar: Probing Forgery Outliers to Detect Unknown Deepfake Videos](fakeradar_probing_forgery_outliers_to_detect_unknown_deepfake_videos.md)
-- [Multiple Object Tracking as ID Prediction](../../CVPR2025/object_detection/multiple_object_tracking_as_id_prediction.md)
-- [Anchored Answers: Unravelling Positional Bias in GPT-2's Multiple-Choice Questions](../../ACL2025/object_detection/anchored_answers_unravelling_positional_bias_in_gpt-2s_multiple-choice_questions.md)
-- [HumanMM: Global Human Motion Recovery from Multi-shot Videos](../../CVPR2025/object_detection/humanmm_global_human_motion_recovery_from_multi-shot_videos.md)
-- [Show, Don't Tell: Detecting Novel Objects by Watching Human Videos](../../CVPR2025/object_detection/show_dont_tell_detecting_novel_objects_by_watching_human_videos.md)
+- [\[ICCV 2025\] FakeRadar: Probing Forgery Outliers to Detect Unknown Deepfake Videos](fakeradar_probing_forgery_outliers_to_detect_unknown_deepfake_videos.md)
+- [\[CVPR 2025\] Multiple Object Tracking as ID Prediction](../../CVPR2025/object_detection/multiple_object_tracking_as_id_prediction.md)
+- [\[ACL 2025\] Anchored Answers: Unravelling Positional Bias in GPT-2's Multiple-Choice Questions](../../ACL2025/object_detection/anchored_answers_unravelling_positional_bias_in_gpt-2s_multiple-choice_questions.md)
+- [\[CVPR 2025\] HumanMM: Global Human Motion Recovery from Multi-shot Videos](../../CVPR2025/object_detection/humanmm_global_human_motion_recovery_from_multi-shot_videos.md)
+- [\[CVPR 2025\] Show, Don't Tell: Detecting Novel Objects by Watching Human Videos](../../CVPR2025/object_detection/show_dont_tell_detecting_novel_objects_by_watching_human_videos.md)
 
 <!-- RELATED:END -->

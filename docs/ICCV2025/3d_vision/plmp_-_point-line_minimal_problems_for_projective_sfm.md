@@ -134,10 +134,10 @@ tags:
 
 ## 相关论文
 
-- [PRaDA: Projective Radial Distortion Averaging](../../CVPR2025/3d_vision/prada_projective_radial_distortion_averaging.md)
-- [Multi-view Reconstruction via SfM-guided Monocular Depth Estimation](../../CVPR2025/3d_vision/multi-view_reconstruction_via_sfm-guided_monocular_depth_estimation.md)
-- [Light3R-SfM: Towards Feed-forward Structure-from-Motion](../../CVPR2025/3d_vision/light3r-sfm_towards_feed-forward_structure-from-motion.md)
-- [Dense-SfM: Structure from Motion with Dense Consistent Matching](../../CVPR2025/3d_vision/dense-sfm_structure_from_motion_with_dense_consistent_matching.md)
-- [SfM-Free 3D Gaussian Splatting via Hierarchical Training](../../CVPR2025/3d_vision/sfm-free_3d_gaussian_splatting_via_hierarchical_training.md)
+- [\[CVPR 2025\] PRaDA: Projective Radial Distortion Averaging](../../CVPR2025/3d_vision/prada_projective_radial_distortion_averaging.md)
+- [\[CVPR 2025\] Multi-view Reconstruction via SfM-guided Monocular Depth Estimation](../../CVPR2025/3d_vision/multi-view_reconstruction_via_sfm-guided_monocular_depth_estimation.md)
+- [\[CVPR 2025\] Light3R-SfM: Towards Feed-forward Structure-from-Motion](../../CVPR2025/3d_vision/light3r-sfm_towards_feed-forward_structure-from-motion.md)
+- [\[CVPR 2025\] Dense-SfM: Structure from Motion with Dense Consistent Matching](../../CVPR2025/3d_vision/dense-sfm_structure_from_motion_with_dense_consistent_matching.md)
+- [\[CVPR 2025\] SfM-Free 3D Gaussian Splatting via Hierarchical Training](../../CVPR2025/3d_vision/sfm-free_3d_gaussian_splatting_via_hierarchical_training.md)
 
 <!-- RELATED:END -->

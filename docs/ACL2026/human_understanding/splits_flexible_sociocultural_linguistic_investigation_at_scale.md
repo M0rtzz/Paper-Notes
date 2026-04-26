@@ -118,10 +118,10 @@ tags:
 
 ## 相关论文
 
-- [Multilingual Language Models Encode Script Over Linguistic Structure](multilingual_language_models_encode_script_over_linguistic_structure.md)
-- [Towards General Visual-Linguistic Face Forgery Detection](../../CVPR2025/human_understanding/towards_general_visual-linguistic_face_forgery_detection.md)
-- [LCA: Large-scale Codec Avatars - The Unreasonable Effectiveness of Large-scale Avatar Pretraining](../../CVPR2026/human_understanding/lca_large-scale_codec_avatars_the_unreasonable_effectiveness_of_large-scale_avata.md)
-- [CraterBench-R: Instance-Level Crater Retrieval for Planetary Scale](../../CVPR2026/human_understanding/craterbench-r_instance-level_crater_retrieval_for_planetary_scale.md)
-- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](../../CVPR2026/human_understanding/quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+- [\[ACL 2026\] Multilingual Language Models Encode Script Over Linguistic Structure](multilingual_language_models_encode_script_over_linguistic_structure.md)
+- [\[CVPR 2025\] Towards General Visual-Linguistic Face Forgery Detection](../../CVPR2025/human_understanding/towards_general_visual-linguistic_face_forgery_detection.md)
+- [\[CVPR 2026\] LCA: Large-scale Codec Avatars - The Unreasonable Effectiveness of Large-scale Avatar Pretraining](../../CVPR2026/human_understanding/lca_large-scale_codec_avatars_the_unreasonable_effectiveness_of_large-scale_avata.md)
+- [\[CVPR 2026\] CraterBench-R: Instance-Level Crater Retrieval for Planetary Scale](../../CVPR2026/human_understanding/craterbench-r_instance-level_crater_retrieval_for_planetary_scale.md)
+- [\[CVPR 2026\] QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](../../CVPR2026/human_understanding/quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
 
 <!-- RELATED:END -->

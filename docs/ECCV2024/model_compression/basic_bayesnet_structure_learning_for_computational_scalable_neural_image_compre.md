@@ -129,10 +129,10 @@ BaSIC 将 NIC 的计算可扩展性问题分解为两个贝叶斯网络结构学
 
 ## 相关论文
 
-- [Einstein Fields: A Neural Perspective To Computational General Relativity](../../ICLR2026/model_compression/einstein_fields_a_neural_perspective_to_computational_general_relativity.md)
-- [Bidirectional Stereo Image Compression with Cross-Dimensional Entropy Model](bidirectional_stereo_image_compression_with_cross-dimensional_entropy_model.md)
-- [Basic Reading Distillation](../../ACL2025/model_compression/basic_reading_distillation.md)
-- [Rethinking Continual Learning with Progressive Neural Collapse](../../ICLR2026/model_compression/rethinking_continual_learning_with_progressive_neural_collapse.md)
-- [ELSE: Efficient Deep Neural Network Inference through Line-based Sparsity Exploration](else_efficient_deep_neural_network_inference_through_line-based_sparsity_explora.md)
+- [\[ICLR 2026\] Einstein Fields: A Neural Perspective To Computational General Relativity](../../ICLR2026/model_compression/einstein_fields_a_neural_perspective_to_computational_general_relativity.md)
+- [\[ECCV 2024\] Bidirectional Stereo Image Compression with Cross-Dimensional Entropy Model](bidirectional_stereo_image_compression_with_cross-dimensional_entropy_model.md)
+- [\[ACL 2025\] Basic Reading Distillation](../../ACL2025/model_compression/basic_reading_distillation.md)
+- [\[ICLR 2026\] Rethinking Continual Learning with Progressive Neural Collapse](../../ICLR2026/model_compression/rethinking_continual_learning_with_progressive_neural_collapse.md)
+- [\[ECCV 2024\] ELSE: Efficient Deep Neural Network Inference through Line-based Sparsity Exploration](else_efficient_deep_neural_network_inference_through_line-based_sparsity_explora.md)
 
 <!-- RELATED:END -->

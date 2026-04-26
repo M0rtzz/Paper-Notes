@@ -139,10 +139,10 @@ tags:
 
 ## 相关论文
 
-- [De-Anonymization at Scale via Tournament-Style Attribution](../../ACL2026/ai_safety/de-anonymization_at_scale_via_tournament-style_attribution.md)
-- [Beyond Last-Click: An Optimal Mechanism for Ad Attribution](../../NeurIPS2025/ai_safety/beyond_last-click_an_optimal_mechanism_for_ad_attribution.md)
-- [Watermark-based Detection and Attribution of AI-Generated Content](../../ICLR2026/ai_safety/watermark-based_attribution_of_ai-generated_content.md)
-- [ForgeryTalker: Generating Attribution Reports for Manipulated Facial Images](../../ACL2026/ai_safety/generating_attribution_reports_for_manipulated_facial_images_a_dataset_and_basel.md)
-- [Improving Fairness of Large Language Models in Multi-document Summarization](improving_fairness_of_large_language_models_in_multi-document_summarization.md)
+- [\[ACL 2026\] De-Anonymization at Scale via Tournament-Style Attribution](../../ACL2026/ai_safety/de-anonymization_at_scale_via_tournament-style_attribution.md)
+- [\[NeurIPS 2025\] Beyond Last-Click: An Optimal Mechanism for Ad Attribution](../../NeurIPS2025/ai_safety/beyond_last-click_an_optimal_mechanism_for_ad_attribution.md)
+- [\[ICLR 2026\] Watermark-based Detection and Attribution of AI-Generated Content](../../ICLR2026/ai_safety/watermark-based_attribution_of_ai-generated_content.md)
+- [\[ACL 2026\] ForgeryTalker: Generating Attribution Reports for Manipulated Facial Images](../../ACL2026/ai_safety/generating_attribution_reports_for_manipulated_facial_images_a_dataset_and_basel.md)
+- [\[ACL 2025\] Improving Fairness of Large Language Models in Multi-document Summarization](improving_fairness_of_large_language_models_in_multi-document_summarization.md)
 
 <!-- RELATED:END -->

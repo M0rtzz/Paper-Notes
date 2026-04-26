@@ -140,10 +140,10 @@ pass@50 改进（平均跨 Llama-3.2-3B, Qwen2.5-3B, Gemma-3-27B）：
 
 ## 相关论文
 
-- [Steering MoE LLMs via Expert (De)Activation](steering_moe_llms_via_expert_deactivation.md)
-- [Draft-based Approximate Inference for LLMs](draft-based_approximate_inference_for_llms.md)
-- [Calibrated Speculative Decoding: Frequency-Guided Candidate Selection for Efficient Inference](../../ACL2026/model_compression/calibrated_speculative_decoding_frequency-guided_candidate_selection_for_efficie.md)
-- [Compositional Steering of Large Language Models with Steering Tokens](../../ACL2026/model_compression/compositional_steering_of_large_language_models_with_steering_tokens.md)
-- [Reinforced Efficient Reasoning via Semantically Diverse Exploration](../../ACL2026/model_compression/reinforced_efficient_reasoning_via_semantically_diverse_exploration.md)
+- [\[ICLR 2026\] Steering MoE LLMs via Expert (De)Activation](steering_moe_llms_via_expert_deactivation.md)
+- [\[ICLR 2026\] Draft-based Approximate Inference for LLMs](draft-based_approximate_inference_for_llms.md)
+- [\[ACL 2026\] Calibrated Speculative Decoding: Frequency-Guided Candidate Selection for Efficient Inference](../../ACL2026/model_compression/calibrated_speculative_decoding_frequency-guided_candidate_selection_for_efficie.md)
+- [\[ACL 2026\] Compositional Steering of Large Language Models with Steering Tokens](../../ACL2026/model_compression/compositional_steering_of_large_language_models_with_steering_tokens.md)
+- [\[ACL 2026\] Reinforced Efficient Reasoning via Semantically Diverse Exploration](../../ACL2026/model_compression/reinforced_efficient_reasoning_via_semantically_diverse_exploration.md)
 
 <!-- RELATED:END -->

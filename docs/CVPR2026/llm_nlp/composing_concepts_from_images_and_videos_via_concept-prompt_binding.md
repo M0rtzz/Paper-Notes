@@ -129,10 +129,10 @@ BiCo在主观Overall Quality上比前作DualReal提升 **+54.67%**（3.00→4.64
 
 ## 相关论文
 
-- [Composing Linear Layers from Irreducibles](../../NeurIPS2025/llm_nlp/composing_linear_layers_from_irreducibles.md)
-- [CoPS: Conditional Prompt Synthesis for Zero-Shot Anomaly Detection](cops_conditional_prompt_synthesis_for_zero-shot_anomaly_detection.md)
-- [Why Prompt Design Matters and Works: A Complexity Analysis of Prompt Search Space in LLMs](../../ACL2025/llm_nlp/why_prompt_design_matters_and_works_a_complexity_analysis_of_prompt_search_space.md)
-- [Propose, Assess, Search: Harnessing LLMs for Goal-Oriented Planning in Instructional Videos](../../ECCV2024/llm_nlp/propose_assess_search_harnessing_llms_for_goal-oriented_planning_in_instructiona.md)
-- [Cross-model Transferability among Large Language Models on the Platonic Representations of Concepts](../../ACL2025/llm_nlp/cross_model_transferability_sv.md)
+- [\[NeurIPS 2025\] Composing Linear Layers from Irreducibles](../../NeurIPS2025/llm_nlp/composing_linear_layers_from_irreducibles.md)
+- [\[CVPR 2026\] CoPS: Conditional Prompt Synthesis for Zero-Shot Anomaly Detection](cops_conditional_prompt_synthesis_for_zero-shot_anomaly_detection.md)
+- [\[ACL 2025\] Why Prompt Design Matters and Works: A Complexity Analysis of Prompt Search Space in LLMs](../../ACL2025/llm_nlp/why_prompt_design_matters_and_works_a_complexity_analysis_of_prompt_search_space.md)
+- [\[ECCV 2024\] Propose, Assess, Search: Harnessing LLMs for Goal-Oriented Planning in Instructional Videos](../../ECCV2024/llm_nlp/propose_assess_search_harnessing_llms_for_goal-oriented_planning_in_instructiona.md)
+- [\[ACL 2025\] Cross-model Transferability among Large Language Models on the Platonic Representations of Concepts](../../ACL2025/llm_nlp/cross_model_transferability_sv.md)
 
 <!-- RELATED:END -->

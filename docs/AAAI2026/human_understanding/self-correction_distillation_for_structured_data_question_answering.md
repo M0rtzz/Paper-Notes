@@ -166,10 +166,10 @@ $$\mathcal{L}_2 = -\sum_{i=1}^{n}(\mathcal{S}(q_{cor}^s) - \mathcal{S}(q_{upd}^{
 
 ## 相关论文
 
-- [BQA: Body Language Question Answering Dataset for Video Large Language Models](../../ACL2025/human_understanding/bqa_body_language_question_answering_dataset_for_video_large_language_models.md)
-- [Few-Shot Precise Event Spotting via Unified Multi-Entity Graph and Distillation](few-shot_precise_event_spotting_via_unified_multi-entity_graph_and_distillation.md)
-- [Spatial Understanding from Videos: Structured Prompts Meet Simulation Data](../../NeurIPS2025/human_understanding/spatial_understanding_from_videos_structured_prompts_meet_simulation_data.md)
-- [MIDB: Multilingual Instruction Data Booster for Enhancing Cultural Equality in Multilingual Instruction Synthesis](midb_multilingual_instruction_data_booster_for_enhancing_cultural_equality_in_mu.md)
-- [Why Do Open-Source LLMs Struggle with Data Analysis? A Systematic Empirical Study](why_do_open-source_llms_struggle_with_data_analysis_a_systematic_empirical_study.md)
+- [\[ACL 2025\] BQA: Body Language Question Answering Dataset for Video Large Language Models](../../ACL2025/human_understanding/bqa_body_language_question_answering_dataset_for_video_large_language_models.md)
+- [\[AAAI 2026\] Few-Shot Precise Event Spotting via Unified Multi-Entity Graph and Distillation](few-shot_precise_event_spotting_via_unified_multi-entity_graph_and_distillation.md)
+- [\[NeurIPS 2025\] Spatial Understanding from Videos: Structured Prompts Meet Simulation Data](../../NeurIPS2025/human_understanding/spatial_understanding_from_videos_structured_prompts_meet_simulation_data.md)
+- [\[AAAI 2026\] MIDB: Multilingual Instruction Data Booster for Enhancing Cultural Equality in Multilingual Instruction Synthesis](midb_multilingual_instruction_data_booster_for_enhancing_cultural_equality_in_mu.md)
+- [\[AAAI 2026\] Why Do Open-Source LLMs Struggle with Data Analysis? A Systematic Empirical Study](why_do_open-source_llms_struggle_with_data_analysis_a_systematic_empirical_study.md)
 
 <!-- RELATED:END -->

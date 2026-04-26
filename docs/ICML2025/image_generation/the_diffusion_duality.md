@@ -172,10 +172,10 @@ Duo 在低 NFE 区间显著优于 MDLM——因为 USDM 的自纠错特性在少
 
 ## 相关论文
 
-- [CoLoGen: Progressive Learning of Concept-Localization Duality for Unified Image Generation](../../CVPR2026/image_generation/cologen_progressive_learning_of_concept-localization_duality_for_unified_image_g.md)
-- [Progressive Tempering Sampler with Diffusion](progressive_tempering_sampler_with_diffusion.md)
-- [Towards a Mechanistic Explanation of Diffusion Model Generalization](towards_a_mechanistic_explanation_of_diffusion_model_generalization.md)
-- [Efficient Diffusion Models for Symmetric Manifolds](efficient_diffusion_models_for_symmetric_manifolds.md)
-- [TCP-Diffusion: A Multi-modal Diffusion Model for Global Tropical Cyclone Precipitation Forecasting with Change Awareness](tcp-diffusion_a_multi-modal_diffusion_model_for_global_tropical_cyclone_precipit.md)
+- [\[CVPR 2026\] CoLoGen: Progressive Learning of Concept-Localization Duality for Unified Image Generation](../../CVPR2026/image_generation/cologen_progressive_learning_of_concept-localization_duality_for_unified_image_g.md)
+- [\[ICML 2025\] Progressive Tempering Sampler with Diffusion](progressive_tempering_sampler_with_diffusion.md)
+- [\[ICML 2025\] Towards a Mechanistic Explanation of Diffusion Model Generalization](towards_a_mechanistic_explanation_of_diffusion_model_generalization.md)
+- [\[ICML 2025\] Efficient Diffusion Models for Symmetric Manifolds](efficient_diffusion_models_for_symmetric_manifolds.md)
+- [\[ICML 2025\] TCP-Diffusion: A Multi-modal Diffusion Model for Global Tropical Cyclone Precipitation Forecasting with Change Awareness](tcp-diffusion_a_multi-modal_diffusion_model_for_global_tropical_cyclone_precipit.md)
 
 <!-- RELATED:END -->

@@ -175,10 +175,10 @@ tags:
 
 ## 相关论文
 
-- [Demystifying Language Model Forgetting with Low-Rank Example Associations](demystifying_language_model_forgetting_with_low-rank_example_associations.md)
-- [SIMU: Selective Influence Machine Unlearning](simu_selective_influence_machine_unlearning.md)
-- [Buffer Layers for Test-Time Adaptation](buffer_layers_for_test-time_adaptation.md)
-- [Procurement Auctions with Predictions: Improved Frugality for Facility Location](procurement_auctions_with_predictions_improved_frugality_for_facility_location.md)
-- [A Reliable Cryptographic Framework for Empirical Machine Unlearning Evaluation](a_reliable_cryptographic_framework_for_empirical_machine_unl.md)
+- [\[NeurIPS 2025\] Demystifying Language Model Forgetting with Low-Rank Example Associations](demystifying_language_model_forgetting_with_low-rank_example_associations.md)
+- [\[NeurIPS 2025\] SIMU: Selective Influence Machine Unlearning](simu_selective_influence_machine_unlearning.md)
+- [\[NeurIPS 2025\] Buffer Layers for Test-Time Adaptation](buffer_layers_for_test-time_adaptation.md)
+- [\[NeurIPS 2025\] Procurement Auctions with Predictions: Improved Frugality for Facility Location](procurement_auctions_with_predictions_improved_frugality_for_facility_location.md)
+- [\[NeurIPS 2025\] A Reliable Cryptographic Framework for Empirical Machine Unlearning Evaluation](a_reliable_cryptographic_framework_for_empirical_machine_unl.md)
 
 <!-- RELATED:END -->

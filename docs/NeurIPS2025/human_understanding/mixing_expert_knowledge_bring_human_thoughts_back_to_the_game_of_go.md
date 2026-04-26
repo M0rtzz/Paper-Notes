@@ -132,10 +132,10 @@ LoGos 在围棋基准上达到 88.6%，超越模拟顶级人类棋手的 KataGo-
 
 ## 相关论文
 
-- [K-DeCore: Facilitating Knowledge Transfer in Continual Structured Knowledge Reasoning](k-decore_facilitating_knowledge_transfer_in_continual_structured_knowledge_reaso.md)
-- [If Open Source Is to Win, It Must Go Public](../../ICML2025/human_understanding/if_open_source_is_to_win_it_must_go_public.md)
-- [ThreadSumm: Summarization of Nested Discourse Threads Using Tree of Thoughts](../../ACL2026/human_understanding/threadsumm_summarization_of_nested_discourse_threads_using_tree_of_thoughts.md)
-- [MixRI: Mixing Features of Reference Images for Novel Object Pose Estimation](../../ICCV2025/human_understanding/mixri_mixing_features_of_reference_images_for_novel_object_pose_estimation.md)
-- [Distributionally Robust Online Markov Game with Linear Function Approximation](../../AAAI2026/human_understanding/distributionally_robust_online_markov_game_with_linear_function_approximation.md)
+- [\[NeurIPS 2025\] K-DeCore: Facilitating Knowledge Transfer in Continual Structured Knowledge Reasoning](k-decore_facilitating_knowledge_transfer_in_continual_structured_knowledge_reaso.md)
+- [\[ICML 2025\] If Open Source Is to Win, It Must Go Public](../../ICML2025/human_understanding/if_open_source_is_to_win_it_must_go_public.md)
+- [\[ACL 2026\] ThreadSumm: Summarization of Nested Discourse Threads Using Tree of Thoughts](../../ACL2026/human_understanding/threadsumm_summarization_of_nested_discourse_threads_using_tree_of_thoughts.md)
+- [\[ICCV 2025\] MixRI: Mixing Features of Reference Images for Novel Object Pose Estimation](../../ICCV2025/human_understanding/mixri_mixing_features_of_reference_images_for_novel_object_pose_estimation.md)
+- [\[AAAI 2026\] Distributionally Robust Online Markov Game with Linear Function Approximation](../../AAAI2026/human_understanding/distributionally_robust_online_markov_game_with_linear_function_approximation.md)
 
 <!-- RELATED:END -->

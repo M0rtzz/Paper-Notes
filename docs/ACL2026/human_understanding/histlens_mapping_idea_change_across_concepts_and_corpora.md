@@ -119,10 +119,10 @@ tags:
 
 ## 相关论文
 
-- [How Video Meetings Change Your Expression](../../ECCV2024/human_understanding/how_video_meetings_change_your_expression.md)
-- [Mapping Faithful Reasoning in Language Models](../../NeurIPS2025/human_understanding/mapping_faithful_reasoning_in_language_models.md)
-- [MaRI: Material Retrieval Integration across Domains](../../CVPR2025/human_understanding/mari_material_retrieval_integration_across_domains.md)
-- [RUBIK: A Structured Benchmark for Image Matching across Geometric Challenges](../../CVPR2025/human_understanding/rubik_a_structured_benchmark_for_image_matching_across_geometric_challenges.md)
-- [FACE: A General Framework for Mapping Collaborative Filtering Embeddings into LLM Tokens](../../NeurIPS2025/human_understanding/face_a_general_framework_for_mapping_collaborative_filtering_embeddings_into_llm.md)
+- [\[ECCV 2024\] How Video Meetings Change Your Expression](../../ECCV2024/human_understanding/how_video_meetings_change_your_expression.md)
+- [\[NeurIPS 2025\] Mapping Faithful Reasoning in Language Models](../../NeurIPS2025/human_understanding/mapping_faithful_reasoning_in_language_models.md)
+- [\[CVPR 2025\] MaRI: Material Retrieval Integration across Domains](../../CVPR2025/human_understanding/mari_material_retrieval_integration_across_domains.md)
+- [\[CVPR 2025\] RUBIK: A Structured Benchmark for Image Matching across Geometric Challenges](../../CVPR2025/human_understanding/rubik_a_structured_benchmark_for_image_matching_across_geometric_challenges.md)
+- [\[NeurIPS 2025\] FACE: A General Framework for Mapping Collaborative Filtering Embeddings into LLM Tokens](../../NeurIPS2025/human_understanding/face_a_general_framework_for_mapping_collaborative_filtering_embeddings_into_llm.md)
 
 <!-- RELATED:END -->

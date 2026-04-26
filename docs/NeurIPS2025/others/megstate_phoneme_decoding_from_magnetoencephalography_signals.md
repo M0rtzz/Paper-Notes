@@ -125,10 +125,10 @@ MEGState 以 MEG 信号 $\mathbf{X} \in \mathbb{R}^{M \times T}$（$M$ 个传感
 
 ## 相关论文
 
-- [Decoding Reading Goals from Eye Movements](../../ACL2025/others/decoding_reading_goals_from_eye_movements.md)
-- [Brain Netflix: Scaling Data to Reconstruct Videos from Brain Signals](../../ECCV2024/others/brain_netflix_scaling_data_to_reconstruct_videos_from_brain_signals.md)
-- [Theoretical Guarantees for Minimum Bayes Risk Decoding](../../ACL2025/others/theoretical_guarantees_for_minimum_bayes_risk_decoding.md)
-- [Consultant Decoding: Yet Another Synergistic Mechanism](../../ACL2025/others/consultant_decoding_yet_another_synergistic_mechanism.md)
-- [When to Speak, When to Abstain: Contrastive Decoding with Abstention](../../ACL2025/others/when_to_speak_when_to_abstain.md)
+- [\[ACL 2025\] Decoding Reading Goals from Eye Movements](../../ACL2025/others/decoding_reading_goals_from_eye_movements.md)
+- [\[ECCV 2024\] Brain Netflix: Scaling Data to Reconstruct Videos from Brain Signals](../../ECCV2024/others/brain_netflix_scaling_data_to_reconstruct_videos_from_brain_signals.md)
+- [\[ACL 2025\] Theoretical Guarantees for Minimum Bayes Risk Decoding](../../ACL2025/others/theoretical_guarantees_for_minimum_bayes_risk_decoding.md)
+- [\[ACL 2025\] Consultant Decoding: Yet Another Synergistic Mechanism](../../ACL2025/others/consultant_decoding_yet_another_synergistic_mechanism.md)
+- [\[ACL 2025\] When to Speak, When to Abstain: Contrastive Decoding with Abstention](../../ACL2025/others/when_to_speak_when_to_abstain.md)
 
 <!-- RELATED:END -->

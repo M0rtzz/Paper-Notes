@@ -167,10 +167,10 @@ SPR 的提升随 IoU 阈值升高而显著增大——**在 0.9 阈值下 7B 模
 
 ## 相关论文
 
-- [ASCIIBench: Evaluating Language-Model-Based Understanding of Visually-Oriented Text](../../NeurIPS2025/aigc_detection/asciibench_evaluating_language-model-based_understanding_of_visually-oriented_te.md)
-- [An Empirical Study on Detecting AI-Generated Text in Financial Reports](../../ACL2025/aigc_detection/an_empirical_study_on_detecting_ai-generated_text_in_financial_reports.md)
-- [Learning to Rewrite: Generalized LLM-Generated Text Detection](../../ACL2025/aigc_detection/learning_to_rewrite_generalized_llm-generated_text_detection.md)
-- [HACo-Det: A Study Towards Fine-Grained Machine-Generated Text Detection under Human-AI Coauthoring](../../ACL2025/aigc_detection/haco-det-fine-grained-detection-under-human-ai-coauthoring.md)
-- [CLAWS: Creativity Detection for LLM-Generated Solutions Using Attention Window of Sections](../../NeurIPS2025/aigc_detection/clawscreativity_detection_for_llm-generated_solutions_using_attention_window_of_.md)
+- [\[NeurIPS 2025\] ASCIIBench: Evaluating Language-Model-Based Understanding of Visually-Oriented Text](../../NeurIPS2025/aigc_detection/asciibench_evaluating_language-model-based_understanding_of_visually-oriented_te.md)
+- [\[ACL 2025\] An Empirical Study on Detecting AI-Generated Text in Financial Reports](../../ACL2025/aigc_detection/an_empirical_study_on_detecting_ai-generated_text_in_financial_reports.md)
+- [\[ACL 2025\] Learning to Rewrite: Generalized LLM-Generated Text Detection](../../ACL2025/aigc_detection/learning_to_rewrite_generalized_llm-generated_text_detection.md)
+- [\[ACL 2025\] HACo-Det: A Study Towards Fine-Grained Machine-Generated Text Detection under Human-AI Coauthoring](../../ACL2025/aigc_detection/haco-det-fine-grained-detection-under-human-ai-coauthoring.md)
+- [\[NeurIPS 2025\] CLAWS: Creativity Detection for LLM-Generated Solutions Using Attention Window of Sections](../../NeurIPS2025/aigc_detection/clawscreativity_detection_for_llm-generated_solutions_using_attention_window_of_.md)
 
 <!-- RELATED:END -->

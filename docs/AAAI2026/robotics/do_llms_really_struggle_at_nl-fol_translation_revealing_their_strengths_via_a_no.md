@@ -129,10 +129,10 @@ tags:
 
 ## 相关论文
 
-- [Do Emotions Really Affect Argument Convincingness? A Dynamic Approach with LLM-based Manipulation Checks](../../ACL2025/robotics/do_emotions_really_affect_argument_convincingness_a_dynamic_approach_with_llm-ba.md)
-- [Toward Engineering AGI: Benchmarking the Engineering Design Capabilities of LLMs](../../NeurIPS2025/robotics/toward_engineering_agi_benchmarking_the_engineering_design_capabilities_of_llms.md)
-- [What's the Plan? Metrics for Implicit Planning in LLMs and Their Application to Rhyme Generation and Question Answering](../../ICLR2026/robotics/whats_the_plan_metrics_for_implicit_planning_in_llms_and_their_application_to_rh.md)
-- [RoboCasa365: A Large-Scale Simulation Framework for Training and Benchmarking Generalist Robots](../../ICLR2026/robotics/robocasa365_a_large-scale_simulation_framework_for_training_and_benchmarking_gen.md)
-- [Tracing and Reversing Edits in LLMs](../../ICLR2026/robotics/tracing_and_reversing_edits_in_llms.md)
+- [\[ACL 2025\] Do Emotions Really Affect Argument Convincingness? A Dynamic Approach with LLM-based Manipulation Checks](../../ACL2025/robotics/do_emotions_really_affect_argument_convincingness_a_dynamic_approach_with_llm-ba.md)
+- [\[NeurIPS 2025\] Toward Engineering AGI: Benchmarking the Engineering Design Capabilities of LLMs](../../NeurIPS2025/robotics/toward_engineering_agi_benchmarking_the_engineering_design_capabilities_of_llms.md)
+- [\[ICLR 2026\] What's the Plan? Metrics for Implicit Planning in LLMs and Their Application to Rhyme Generation and Question Answering](../../ICLR2026/robotics/whats_the_plan_metrics_for_implicit_planning_in_llms_and_their_application_to_rh.md)
+- [\[ICLR 2026\] RoboCasa365: A Large-Scale Simulation Framework for Training and Benchmarking Generalist Robots](../../ICLR2026/robotics/robocasa365_a_large-scale_simulation_framework_for_training_and_benchmarking_gen.md)
+- [\[ICLR 2026\] Tracing and Reversing Edits in LLMs](../../ICLR2026/robotics/tracing_and_reversing_edits_in_llms.md)
 
 <!-- RELATED:END -->

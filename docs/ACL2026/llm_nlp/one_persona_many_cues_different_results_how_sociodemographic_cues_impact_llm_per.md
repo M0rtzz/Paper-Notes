@@ -113,10 +113,10 @@ tags:
 
 ## 相关论文
 
-- [Enhancing Spoken Discourse Modeling in Language Models Using Gestural Cues](../../ACL2025/llm_nlp/enhancing_spoken_discourse_modeling_in_language_models_using_gestural_cues.md)
-- [Many Heads Are Better Than One: Improved Scientific Idea Generation by A LLM-Based Multi-Agent System](../../ACL2025/llm_nlp/virsci_multi_agent_idea_gen.md)
-- [FastDiSS: Few-step Match Many-step Diffusion Language Model on Sequence-to-Sequence Generation](fastdiss_few-step_match_many-step_diffusion_language_model_on_sequence-to-sequen.md)
-- [How Do Answer Tokens Read Reasoning Traces? Self-Reading Patterns in Thinking LLMs](how_do_answer_tokens_read_reasoning_traces_self-reading_patterns_in_thinking_llm.md)
-- [How Catastrophic is Your LLM? Certifying Risk in Conversation](../../ICLR2026/llm_nlp/how_catastrophic_is_your_llm_certifying_risk_in_conversation.md)
+- [\[ACL 2025\] Enhancing Spoken Discourse Modeling in Language Models Using Gestural Cues](../../ACL2025/llm_nlp/enhancing_spoken_discourse_modeling_in_language_models_using_gestural_cues.md)
+- [\[ACL 2025\] Many Heads Are Better Than One: Improved Scientific Idea Generation by A LLM-Based Multi-Agent System](../../ACL2025/llm_nlp/virsci_multi_agent_idea_gen.md)
+- [\[ACL 2026\] FastDiSS: Few-step Match Many-step Diffusion Language Model on Sequence-to-Sequence Generation](fastdiss_few-step_match_many-step_diffusion_language_model_on_sequence-to-sequen.md)
+- [\[ACL 2026\] How Do Answer Tokens Read Reasoning Traces? Self-Reading Patterns in Thinking LLMs](how_do_answer_tokens_read_reasoning_traces_self-reading_patterns_in_thinking_llm.md)
+- [\[ICLR 2026\] How Catastrophic is Your LLM? Certifying Risk in Conversation](../../ICLR2026/llm_nlp/how_catastrophic_is_your_llm_certifying_risk_in_conversation.md)
 
 <!-- RELATED:END -->

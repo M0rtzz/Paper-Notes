@@ -123,10 +123,10 @@ Affectron 以纯语言语音预训练的 VoiceCraft（330M 参数）为骨干，
 
 ## 相关论文
 
-- [EDTalk: Efficient Disentanglement for Emotional Talking Head Synthesis](../../ECCV2024/audio_speech/edtalk_efficient_disentanglement_for_emotional_talking_head_synthesis.md)
-- [LaScA: Language-Conditioned Scalable Modelling of Affective Dynamics](../../CVPR2026/audio_speech/lasca_language-conditioned_scalable_modelling_of_affective_dynamics.md)
-- [Autoregressive Speech Synthesis without Vector Quantization](../../ACL2025/audio_speech/autoregressive_speech_synthesis_without_vq.md)
-- [Incentive-Aligned Multi-Source LLM Summaries](../../ICLR2026/audio_speech/incentive-aligned_multi-source_llm_summaries.md)
-- [Do We Need Distinct Representations for Every Speech Token? Unveiling and Exploiting Redundancy in Large Speech Language Models](do_we_need_distinct_representations_for_every_speech_token_unveiling_and_exploit.md)
+- [\[ECCV 2024\] EDTalk: Efficient Disentanglement for Emotional Talking Head Synthesis](../../ECCV2024/audio_speech/edtalk_efficient_disentanglement_for_emotional_talking_head_synthesis.md)
+- [\[CVPR 2026\] LaScA: Language-Conditioned Scalable Modelling of Affective Dynamics](../../CVPR2026/audio_speech/lasca_language-conditioned_scalable_modelling_of_affective_dynamics.md)
+- [\[ACL 2025\] Autoregressive Speech Synthesis without Vector Quantization](../../ACL2025/audio_speech/autoregressive_speech_synthesis_without_vq.md)
+- [\[ICLR 2026\] Incentive-Aligned Multi-Source LLM Summaries](../../ICLR2026/audio_speech/incentive-aligned_multi-source_llm_summaries.md)
+- [\[ACL 2026\] Do We Need Distinct Representations for Every Speech Token? Unveiling and Exploiting Redundancy in Large Speech Language Models](do_we_need_distinct_representations_for_every_speech_token_unveiling_and_exploit.md)
 
 <!-- RELATED:END -->

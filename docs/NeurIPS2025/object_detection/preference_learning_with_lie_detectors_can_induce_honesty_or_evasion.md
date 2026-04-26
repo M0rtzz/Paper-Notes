@@ -149,10 +149,10 @@ tags:
 
 ## 相关论文
 
-- [Where the Devil Hides: Deepfake Detectors Can No Longer Be Trusted](../../CVPR2025/object_detection/where_the_devil_hides_deepfake_detectors_can_no_longer_be_trusted.md)
-- [Can OOD Object Detectors Learn from Foundation Models?](../../ECCV2024/object_detection/can_ood_object_detectors_learn_from_foundation_models.md)
-- [CTPD: Cross Tokenizer Preference Distillation](../../AAAI2026/object_detection/ctpd_cross_tokenizer_preference_distillation.md)
-- [Any Large Language Model Can Be a Reliable Judge: Debiasing with a Reasoning-based Bias Detector](any_large_language_model_can_be_a_reliable_judge_debiasing_w.md)
-- [You Can Trust Your Clustering Model: A Parameter-free Self-Boosting Plug-in for Deep Clustering](you_can_trust_your_clustering_model_a_parameter-free_self-boosting_plug-in_for_d.md)
+- [\[CVPR 2025\] Where the Devil Hides: Deepfake Detectors Can No Longer Be Trusted](../../CVPR2025/object_detection/where_the_devil_hides_deepfake_detectors_can_no_longer_be_trusted.md)
+- [\[ECCV 2024\] Can OOD Object Detectors Learn from Foundation Models?](../../ECCV2024/object_detection/can_ood_object_detectors_learn_from_foundation_models.md)
+- [\[AAAI 2026\] CTPD: Cross Tokenizer Preference Distillation](../../AAAI2026/object_detection/ctpd_cross_tokenizer_preference_distillation.md)
+- [\[NeurIPS 2025\] Any Large Language Model Can Be a Reliable Judge: Debiasing with a Reasoning-based Bias Detector](any_large_language_model_can_be_a_reliable_judge_debiasing_w.md)
+- [\[NeurIPS 2025\] You Can Trust Your Clustering Model: A Parameter-free Self-Boosting Plug-in for Deep Clustering](you_can_trust_your_clustering_model_a_parameter-free_self-boosting_plug-in_for_d.md)
 
 <!-- RELATED:END -->

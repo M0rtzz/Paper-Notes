@@ -140,10 +140,10 @@ tags:
 
 ## 相关论文
 
-- [The GaoYao Benchmark: A Comprehensive Framework for Evaluating Multilingual and Multicultural Abilities of Large Language Models](the_gaoyao_benchmark_a_comprehensive_framework_for_evaluating_multilingual_and_m.md)
-- [Splits! Flexible Sociocultural Linguistic Investigation at Scale](splits_flexible_sociocultural_linguistic_investigation_at_scale.md)
-- [Cross-Modal Taxonomic Generalization in (Vision-) Language Models](cross-modal_taxonomic_generalization_in_vision-_language_models.md)
-- [One Language, Two Scripts: Probing Script-Invariance in LLM Concept Representations](../../ICLR2026/human_understanding/one_language_two_scripts_probing_script-invariance_in_llm_concept_representation.md)
-- [LaMI: Augmenting Large Language Models via Late Multi-Image Fusion](lami_augmenting_large_language_models_via_late_multi-image_fusion.md)
+- [\[ACL 2026\] The GaoYao Benchmark: A Comprehensive Framework for Evaluating Multilingual and Multicultural Abilities of Large Language Models](the_gaoyao_benchmark_a_comprehensive_framework_for_evaluating_multilingual_and_m.md)
+- [\[ACL 2026\] Splits! Flexible Sociocultural Linguistic Investigation at Scale](splits_flexible_sociocultural_linguistic_investigation_at_scale.md)
+- [\[ACL 2026\] Cross-Modal Taxonomic Generalization in (Vision-) Language Models](cross-modal_taxonomic_generalization_in_vision-_language_models.md)
+- [\[ICLR 2026\] One Language, Two Scripts: Probing Script-Invariance in LLM Concept Representations](../../ICLR2026/human_understanding/one_language_two_scripts_probing_script-invariance_in_llm_concept_representation.md)
+- [\[ACL 2026\] LaMI: Augmenting Large Language Models via Late Multi-Image Fusion](lami_augmenting_large_language_models_via_late_multi-image_fusion.md)
 
 <!-- RELATED:END -->

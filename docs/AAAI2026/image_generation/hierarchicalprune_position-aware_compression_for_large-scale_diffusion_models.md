@@ -163,10 +163,10 @@ SGDistill 对每个块的参数更新按其敏感度的倒数 $\frac{1}{\Delta P
 
 ## 相关论文
 
-- [Compositional amortized inference for large-scale hierarchical Bayesian models](../../ICLR2026/image_generation/compositional_amortized_inference_for_large-scale_hierarchical_bayesian_models.md)
-- [DiffA: Large Language Diffusion Models Can Listen and Understand](diffa_large_language_diffusion_models_can_listen_and_understand.md)
-- [HACK: Head-Aware KV Cache Compression for Efficient Visual Autoregressive Modeling](head-aware_kv_cache_compression_for_efficient_visual_autoreg.md)
-- [Large Scale Diffusion Distillation via Score-Regularized Continuous-Time Consistency](../../ICLR2026/image_generation/large_scale_diffusion_distillation_via_score-regularized_continuous-time_consist.md)
-- [Large-Scale Training Data Attribution for Music Generative Models via Unlearning](../../NeurIPS2025/image_generation/large-scale_training_data_attribution_for_music_generative_models_via_unlearning.md)
+- [\[ICLR 2026\] Compositional amortized inference for large-scale hierarchical Bayesian models](../../ICLR2026/image_generation/compositional_amortized_inference_for_large-scale_hierarchical_bayesian_models.md)
+- [\[AAAI 2026\] DiffA: Large Language Diffusion Models Can Listen and Understand](diffa_large_language_diffusion_models_can_listen_and_understand.md)
+- [\[AAAI 2026\] HACK: Head-Aware KV Cache Compression for Efficient Visual Autoregressive Modeling](head-aware_kv_cache_compression_for_efficient_visual_autoreg.md)
+- [\[ICLR 2026\] Large Scale Diffusion Distillation via Score-Regularized Continuous-Time Consistency](../../ICLR2026/image_generation/large_scale_diffusion_distillation_via_score-regularized_continuous-time_consist.md)
+- [\[NeurIPS 2025\] Large-Scale Training Data Attribution for Music Generative Models via Unlearning](../../NeurIPS2025/image_generation/large-scale_training_data_attribution_for_music_generative_models_via_unlearning.md)
 
 <!-- RELATED:END -->

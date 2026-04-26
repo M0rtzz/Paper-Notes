@@ -128,10 +128,10 @@ DAFI 在 Network 数据集上节省约 55% 运行时间，同时在所有 FI 准
 
 ## 相关论文
 
-- [FlexEvent: Towards Flexible Event-Frame Object Detection at Varying Operational Frequencies](flexevent_towards_flexible_event-frame_object_detection_at_varying_operational_f.md)
-- [Is Less More? Exploring Token Condensation as Training-free Test-time Adaptation](../../ICCV2025/object_detection/is_less_more_exploring_token_condensation_as_training-free_test-time_adaptation.md)
-- [BurstDeflicker: A Benchmark Dataset for Flicker Removal in Dynamic Scenes](delving_into_cascaded_instability_a_lipschitz_continuity_view_on_image_restorati.md)
-- [Breaking Scale Anchoring: Frequency Representation Learning for Accurate High-Resolution Inference from Low-Resolution Training](../../ICLR2026/object_detection/breaking_scale_anchoring_frequency_representation_learning_for_accurate_high-res.md)
-- [Co-Spy: Combining Semantic and Pixel Features to Detect Synthetic Images by AI](../../CVPR2025/object_detection/co-spy_combining_semantic_and_pixel_features_to_detect_synthetic_images_by_ai.md)
+- [\[NeurIPS 2025\] FlexEvent: Towards Flexible Event-Frame Object Detection at Varying Operational Frequencies](flexevent_towards_flexible_event-frame_object_detection_at_varying_operational_f.md)
+- [\[ICCV 2025\] Is Less More? Exploring Token Condensation as Training-free Test-time Adaptation](../../ICCV2025/object_detection/is_less_more_exploring_token_condensation_as_training-free_test-time_adaptation.md)
+- [\[NeurIPS 2025\] BurstDeflicker: A Benchmark Dataset for Flicker Removal in Dynamic Scenes](delving_into_cascaded_instability_a_lipschitz_continuity_view_on_image_restorati.md)
+- [\[ICLR 2026\] Breaking Scale Anchoring: Frequency Representation Learning for Accurate High-Resolution Inference from Low-Resolution Training](../../ICLR2026/object_detection/breaking_scale_anchoring_frequency_representation_learning_for_accurate_high-res.md)
+- [\[CVPR 2025\] Co-Spy: Combining Semantic and Pixel Features to Detect Synthetic Images by AI](../../CVPR2025/object_detection/co-spy_combining_semantic_and_pixel_features_to_detect_synthetic_images_by_ai.md)
 
 <!-- RELATED:END -->

@@ -117,10 +117,10 @@ Stage 1: 标准SFT（交叉熵）。Stage 2: DPO + NLL 混合对比损失，$\be
 
 ## 相关论文
 
-- [VPI-Bench: Visual Prompt Injection Attacks for Computer-Use Agents](vpi-bench_visual_prompt_injection_attacks_for_computer-use_agents.md)
-- [Less is More: Towards Simple Graph Contrastive Learning](less_is_more_towards_simple_graph_contrastive_learning.md)
-- [IAG: Input-aware Backdoor Attack on VLM-based Visual Grounding](../../CVPR2026/ai_safety/iag_input-aware_backdoor_attack_on_vlm-based_visual_grounding.md)
-- [Beware Untrusted Simulators -- Reward-Free Backdoor Attacks in Reinforcement Learning](beware_untrusted_simulators_--_reward-free_backdoor_attacks_in_reinforcement_lea.md)
-- [An LLM-Based Simulation Framework for Embodied Conversational Agents in Psychological Counseling](../../AAAI2026/ai_safety/an_llm-based_simulation_framework_for_embodied_conversationa.md)
+- [\[ICLR 2026\] VPI-Bench: Visual Prompt Injection Attacks for Computer-Use Agents](vpi-bench_visual_prompt_injection_attacks_for_computer-use_agents.md)
+- [\[ICLR 2026\] Less is More: Towards Simple Graph Contrastive Learning](less_is_more_towards_simple_graph_contrastive_learning.md)
+- [\[CVPR 2026\] IAG: Input-aware Backdoor Attack on VLM-based Visual Grounding](../../CVPR2026/ai_safety/iag_input-aware_backdoor_attack_on_vlm-based_visual_grounding.md)
+- [\[ICLR 2026\] Beware Untrusted Simulators -- Reward-Free Backdoor Attacks in Reinforcement Learning](beware_untrusted_simulators_--_reward-free_backdoor_attacks_in_reinforcement_lea.md)
+- [\[AAAI 2026\] An LLM-Based Simulation Framework for Embodied Conversational Agents in Psychological Counseling](../../AAAI2026/ai_safety/an_llm-based_simulation_framework_for_embodied_conversationa.md)
 
 <!-- RELATED:END -->

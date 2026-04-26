@@ -173,10 +173,10 @@ KEA-RND-SAC 在 Walker Run 上提升 **119%**，Cheetah Run 提升 **51%**。
 
 ## 相关论文
 
-- [Adaptively Coordinating with Novel Partners via Learned Latent Strategies](../../NeurIPS2025/reinforcement_learning/adaptively_coordinating_with_novel_partners_via_learned_latent_strategies.md)
-- [EVOLvE: Evaluating and Optimizing LLMs For In-Context Exploration](evolve_evaluating_and_optimizing_llms_for_in-context_exploration.md)
-- [Leveraging Skills from Unlabeled Prior Data for Efficient Online Exploration](leveraging_skills_from_unlabeled_prior_data_for_efficient_online_exploration.md)
-- [SENSEI: Semantic Exploration Guided by Foundation Models to Learn Versatile World Models](sensei_semantic_exploration_guided_by_foundation_models_to_learn_versatile_world.md)
-- [Controlling Underestimation Bias in Constrained Reinforcement Learning for Safe Exploration](controlling_underestimation_bias_in_constrained_reinforcement_learning_for_safe_.md)
+- [\[NeurIPS 2025\] Adaptively Coordinating with Novel Partners via Learned Latent Strategies](../../NeurIPS2025/reinforcement_learning/adaptively_coordinating_with_novel_partners_via_learned_latent_strategies.md)
+- [\[ICML 2025\] EVOLvE: Evaluating and Optimizing LLMs For In-Context Exploration](evolve_evaluating_and_optimizing_llms_for_in-context_exploration.md)
+- [\[ICML 2025\] Leveraging Skills from Unlabeled Prior Data for Efficient Online Exploration](leveraging_skills_from_unlabeled_prior_data_for_efficient_online_exploration.md)
+- [\[ICML 2025\] SENSEI: Semantic Exploration Guided by Foundation Models to Learn Versatile World Models](sensei_semantic_exploration_guided_by_foundation_models_to_learn_versatile_world.md)
+- [\[ICML 2025\] Controlling Underestimation Bias in Constrained Reinforcement Learning for Safe Exploration](controlling_underestimation_bias_in_constrained_reinforcement_learning_for_safe_.md)
 
 <!-- RELATED:END -->

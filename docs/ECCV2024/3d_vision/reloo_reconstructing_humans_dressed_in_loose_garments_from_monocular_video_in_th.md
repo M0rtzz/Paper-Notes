@@ -126,10 +126,10 @@ tags:
 
 ## 相关论文
 
-- [TRAM: Global Trajectory and Motion of 3D Humans from in-the-wild Videos](tram_global_trajectory_and_motion_of_3d_humans_from_in-the-wild_videos.md)
-- [Reconstructing Animals and the Wild](../../CVPR2025/3d_vision/reconstructing_animals_and_the_wild.md)
-- [Reconstructing Humans with a Biomechanically Accurate Skeleton](../../CVPR2025/3d_vision/reconstructing_humans_with_a_biomechanically_accurate_skeleton.md)
-- [Dynamic Neural Radiance Field from Defocused Monocular Video](dynamic_neural_radiance_field_from_defocused_monocular_video.md)
-- [ODHSR: Online Dense 3D Reconstruction of Humans and Scenes from Monocular Videos](../../CVPR2025/3d_vision/odhsr_online_dense_3d_reconstruction_of_humans_and_scenes_from_monocular_videos.md)
+- [\[ECCV 2024\] TRAM: Global Trajectory and Motion of 3D Humans from in-the-wild Videos](tram_global_trajectory_and_motion_of_3d_humans_from_in-the-wild_videos.md)
+- [\[CVPR 2025\] Reconstructing Animals and the Wild](../../CVPR2025/3d_vision/reconstructing_animals_and_the_wild.md)
+- [\[CVPR 2025\] Reconstructing Humans with a Biomechanically Accurate Skeleton](../../CVPR2025/3d_vision/reconstructing_humans_with_a_biomechanically_accurate_skeleton.md)
+- [\[ECCV 2024\] Dynamic Neural Radiance Field from Defocused Monocular Video](dynamic_neural_radiance_field_from_defocused_monocular_video.md)
+- [\[CVPR 2025\] ODHSR: Online Dense 3D Reconstruction of Humans and Scenes from Monocular Videos](../../CVPR2025/3d_vision/odhsr_online_dense_3d_reconstruction_of_humans_and_scenes_from_monocular_videos.md)
 
 <!-- RELATED:END -->

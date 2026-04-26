@@ -168,10 +168,10 @@ $$b_i(h,w) = F_{\text{merge}}(\{b_i^n(h,w) \mid n \in 1, \ldots, M\})$$
 
 ## 相关论文
 
-- [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](../../CVPR2025/image_restoration/adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
-- [Audio Super-Resolution with Latent Bridge Models](audio_super-resolution_with_latent_bridge_models.md)
-- [PIDSR: Complementary Polarized Image Demosaicing and Super-Resolution](../../CVPR2025/image_restoration/pidsr_complementary_polarized_image_demosaicing_and_super-resolution.md)
-- [Progressive Focused Transformer for Single Image Super-Resolution](../../CVPR2025/image_restoration/progressive_focused_transformer_for_single_image_super-resolution.md)
-- [Augmenting Perceptual Super-Resolution via Image Quality Predictors](../../CVPR2025/image_restoration/augmenting_perceptual_super-resolution_via_image_quality_predictors.md)
+- [\[CVPR 2025\] AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](../../CVPR2025/image_restoration/adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
+- [\[NeurIPS 2025\] Audio Super-Resolution with Latent Bridge Models](audio_super-resolution_with_latent_bridge_models.md)
+- [\[CVPR 2025\] PIDSR: Complementary Polarized Image Demosaicing and Super-Resolution](../../CVPR2025/image_restoration/pidsr_complementary_polarized_image_demosaicing_and_super-resolution.md)
+- [\[CVPR 2025\] Progressive Focused Transformer for Single Image Super-Resolution](../../CVPR2025/image_restoration/progressive_focused_transformer_for_single_image_super-resolution.md)
+- [\[CVPR 2025\] Augmenting Perceptual Super-Resolution via Image Quality Predictors](../../CVPR2025/image_restoration/augmenting_perceptual_super-resolution_via_image_quality_predictors.md)
 
 <!-- RELATED:END -->

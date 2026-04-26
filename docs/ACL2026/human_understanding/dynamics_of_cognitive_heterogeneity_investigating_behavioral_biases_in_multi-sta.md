@@ -128,10 +128,10 @@ tags:
 
 ## 相关论文
 
-- [XMark: Reliable Multi-Bit Watermarking for LLM-Generated Texts](xmark_reliable_multi-bit_watermarking_for_llm-generated_texts.md)
-- [The Reasoning Trap: How Enhancing LLM Reasoning Amplifies Tool Hallucination](the_reasoning_trap_how_enhancing_llm_reasoning_amplifies_tool_hallucination.md)
-- [LLM Unlearning with LLM Beliefs](../../ICLR2026/human_understanding/llm_unlearning_with_llm_beliefs.md)
-- [Chatsparent: An Interactive System for Detecting and Mitigating Cognitive Fatigue in LLMs](../../AAAI2026/human_understanding/chatsparent_an_interactive_system_for_detecting_and_mitigating_cognitive_fatigue.md)
-- [One-stage Prompt-based Continual Learning](../../ECCV2024/human_understanding/one-stage_prompt-based_continual_learning.md)
+- [\[ACL 2026\] XMark: Reliable Multi-Bit Watermarking for LLM-Generated Texts](xmark_reliable_multi-bit_watermarking_for_llm-generated_texts.md)
+- [\[ACL 2026\] The Reasoning Trap: How Enhancing LLM Reasoning Amplifies Tool Hallucination](the_reasoning_trap_how_enhancing_llm_reasoning_amplifies_tool_hallucination.md)
+- [\[ICLR 2026\] LLM Unlearning with LLM Beliefs](../../ICLR2026/human_understanding/llm_unlearning_with_llm_beliefs.md)
+- [\[AAAI 2026\] Chatsparent: An Interactive System for Detecting and Mitigating Cognitive Fatigue in LLMs](../../AAAI2026/human_understanding/chatsparent_an_interactive_system_for_detecting_and_mitigating_cognitive_fatigue.md)
+- [\[ECCV 2024\] One-stage Prompt-based Continual Learning](../../ECCV2024/human_understanding/one-stage_prompt-based_continual_learning.md)
 
 <!-- RELATED:END -->

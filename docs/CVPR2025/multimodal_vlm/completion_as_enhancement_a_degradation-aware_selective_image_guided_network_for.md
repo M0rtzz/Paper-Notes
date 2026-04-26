@@ -118,10 +118,10 @@ tags:
 
 ## 相关论文
 
-- [Unifying Vision-Language Latents for Zero-Label Image Caption Enhancement](../../NeurIPS2025/multimodal_vlm/unifying_vision-language_latents_for_zero-label_image_caption_enhancement.md)
-- [RATE-Nav: Region-Aware Termination Enhancement for Zero-shot Object Navigation with Vision-Language Models](../../ACL2025/multimodal_vlm/rate-nav_region-aware_termination_enhancement_for_zero-shot_object_navigation_wi.md)
-- [GeoRanker: Distance-Aware Ranking for Worldwide Image Geolocalization](../../NeurIPS2025/multimodal_vlm/georanker_distance-aware_ranking_for_worldwide_image_geolocalization.md)
-- [Context-Aware Multimodal Pretraining](context-aware_multimodal_pretraining.md)
-- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](../../ACL2025/multimodal_vlm/cosyn_code_guided_synthetic_data.md)
+- [\[NeurIPS 2025\] Unifying Vision-Language Latents for Zero-Label Image Caption Enhancement](../../NeurIPS2025/multimodal_vlm/unifying_vision-language_latents_for_zero-label_image_caption_enhancement.md)
+- [\[ACL 2025\] RATE-Nav: Region-Aware Termination Enhancement for Zero-shot Object Navigation with Vision-Language Models](../../ACL2025/multimodal_vlm/rate-nav_region-aware_termination_enhancement_for_zero-shot_object_navigation_wi.md)
+- [\[NeurIPS 2025\] GeoRanker: Distance-Aware Ranking for Worldwide Image Geolocalization](../../NeurIPS2025/multimodal_vlm/georanker_distance-aware_ranking_for_worldwide_image_geolocalization.md)
+- [\[CVPR 2025\] Context-Aware Multimodal Pretraining](context-aware_multimodal_pretraining.md)
+- [\[ACL 2025\] CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](../../ACL2025/multimodal_vlm/cosyn_code_guided_synthetic_data.md)
 
 <!-- RELATED:END -->

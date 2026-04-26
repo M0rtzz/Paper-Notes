@@ -99,10 +99,10 @@ tags:
 
 ## 相关论文
 
-- [Policy-as-Prompt: Turning AI Governance Rules into Guardrails for AI Agents](../../NeurIPS2025/social_computing/policy-as-prompt_turning_ai_governance_rules_into_guardrails_for_ai_agents.md)
-- [Propaganda AI: An Analysis of Semantic Divergence in Large Language Models](../../ICLR2026/social_computing/propaganda_ai_an_analysis_of_semantic_divergence_in_large_language_models.md)
-- [Beyond Negative Stereotypes -- Non-Negative Abusive Utterances about Identity Groups and Their Semantic Variants](../../ACL2025/social_computing/beyond_negative_stereotypes_--_non-negative_abusive_utterances_about_identity_gr.md)
-- [Position Paper: If Innovation in AI Systematically Violates Fundamental Rights, Is It Innovation at All?](../../NeurIPS2025/social_computing/position_paper_if_innovation_in_ai_systematically_violates_fundamental_rights_is.md)
-- [Fact2Fiction: Targeted Poisoning Attack to Agentic Fact-checking System](fact2fiction_targeted_poisoning_attack_to_agentic_fact-check.md)
+- [\[NeurIPS 2025\] Policy-as-Prompt: Turning AI Governance Rules into Guardrails for AI Agents](../../NeurIPS2025/social_computing/policy-as-prompt_turning_ai_governance_rules_into_guardrails_for_ai_agents.md)
+- [\[ICLR 2026\] Propaganda AI: An Analysis of Semantic Divergence in Large Language Models](../../ICLR2026/social_computing/propaganda_ai_an_analysis_of_semantic_divergence_in_large_language_models.md)
+- [\[ACL 2025\] Beyond Negative Stereotypes -- Non-Negative Abusive Utterances about Identity Groups and Their Semantic Variants](../../ACL2025/social_computing/beyond_negative_stereotypes_--_non-negative_abusive_utterances_about_identity_gr.md)
+- [\[NeurIPS 2025\] Position Paper: If Innovation in AI Systematically Violates Fundamental Rights, Is It Innovation at All?](../../NeurIPS2025/social_computing/position_paper_if_innovation_in_ai_systematically_violates_fundamental_rights_is.md)
+- [\[AAAI 2026\] Fact2Fiction: Targeted Poisoning Attack to Agentic Fact-checking System](fact2fiction_targeted_poisoning_attack_to_agentic_fact-check.md)
 
 <!-- RELATED:END -->

@@ -141,10 +141,10 @@ DPLM-2.1将PDB测试集上的折叠RMSD从5.52大幅降至2.36，降幅达57%，
 
 ## 相关论文
 
-- [Elucidating the Design Space of Arbitrary-Noise-Based Diffusion Models](../../CVPR2026/medical_imaging/eda_arbitrary_noise_diffusion_design_space.md)
-- [Concept Bottleneck Language Models For Protein Design](../../ACL2025/medical_imaging/concept_bottleneck_language_models_for_protein_design.md)
-- [Elucidating the Design Space of Arbitrary-Noise-Based Diffusion Models (EDA)](../../CVPR2026/medical_imaging/elucidating_the_design_space_of_arbitrary-noise-based_diffusion_models.md)
-- [Steering Protein Language Models](steering_protein_language_models.md)
-- [Flexibility-conditioned Protein Structure Design with Flow Matching](flexibility-conditioned_protein_structure_design_with_flow_matching.md)
+- [\[CVPR 2026\] Elucidating the Design Space of Arbitrary-Noise-Based Diffusion Models](../../CVPR2026/medical_imaging/eda_arbitrary_noise_diffusion_design_space.md)
+- [\[ACL 2025\] Concept Bottleneck Language Models For Protein Design](../../ACL2025/medical_imaging/concept_bottleneck_language_models_for_protein_design.md)
+- [\[CVPR 2026\] Elucidating the Design Space of Arbitrary-Noise-Based Diffusion Models (EDA)](../../CVPR2026/medical_imaging/elucidating_the_design_space_of_arbitrary-noise-based_diffusion_models.md)
+- [\[ICML 2025\] Steering Protein Language Models](steering_protein_language_models.md)
+- [\[ICML 2025\] Flexibility-conditioned Protein Structure Design with Flow Matching](flexibility-conditioned_protein_structure_design_with_flow_matching.md)
 
 <!-- RELATED:END -->

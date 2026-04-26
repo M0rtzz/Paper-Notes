@@ -145,10 +145,10 @@ $$\mathcal{L}_{DE} = \left| \frac{f_{CO}}{\|f_{CO}\|_2} \cdot \frac{f_{ReID}}{\|
 
 ## 相关论文
 
-- [Color Matching Using Hypernetwork-Based Kolmogorov-Arnold Networks (cmKAN)](color_matching_using_hypernetwork-based_kolmogorov-arnold_networks.md)
-- [LSNet: See Large, Focus Small](../../CVPR2025/model_compression/lsnet_see_large_focus_small.md)
-- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
-- [Understanding and Enforcing Weight Disentanglement in Task Arithmetic](../../CVPR2026/model_compression/understanding_and_enforcing_weight_disentanglement_in_task_arithmetic.md)
-- [Distilling Cross-Modal Knowledge via Feature Disentanglement](../../AAAI2026/model_compression/distilling_cross-modal_knowledge_via_feature_disentanglement.md)
+- [\[ICCV 2025\] Color Matching Using Hypernetwork-Based Kolmogorov-Arnold Networks (cmKAN)](color_matching_using_hypernetwork-based_kolmogorov-arnold_networks.md)
+- [\[CVPR 2025\] LSNet: See Large, Focus Small](../../CVPR2025/model_compression/lsnet_see_large_focus_small.md)
+- [\[ACL 2025\] SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
+- [\[CVPR 2026\] Understanding and Enforcing Weight Disentanglement in Task Arithmetic](../../CVPR2026/model_compression/understanding_and_enforcing_weight_disentanglement_in_task_arithmetic.md)
+- [\[AAAI 2026\] Distilling Cross-Modal Knowledge via Feature Disentanglement](../../AAAI2026/model_compression/distilling_cross-modal_knowledge_via_feature_disentanglement.md)
 
 <!-- RELATED:END -->

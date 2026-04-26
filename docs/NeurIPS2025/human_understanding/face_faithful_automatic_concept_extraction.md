@@ -139,10 +139,10 @@ FACE 在所有类别上保持 100% 重建后 top-1 准确率，而 CRAFT 在 "Tr
 
 ## 相关论文
 
-- [Mapping Faithful Reasoning in Language Models](mapping_faithful_reasoning_in_language_models.md)
-- [Partially Shared Concept Bottleneck Models](../../AAAI2026/human_understanding/partially_shared_concept_bottleneck_models.md)
-- [Face-Human-Bench: A Comprehensive Benchmark of Face and Human Understanding for Multi-modal Assistants](face-human-bench_a_comprehensive_benchmark_of_face_and_human_understanding_for_m.md)
-- [Rethinking Concept Bottleneck Models: From Pitfalls to Solutions](../../CVPR2026/human_understanding/rethinking_concept_bottleneck_models_from_pitfalls_to_solutions.md)
-- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](../../ICML2025/human_understanding/towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+- [\[NeurIPS 2025\] Mapping Faithful Reasoning in Language Models](mapping_faithful_reasoning_in_language_models.md)
+- [\[AAAI 2026\] Partially Shared Concept Bottleneck Models](../../AAAI2026/human_understanding/partially_shared_concept_bottleneck_models.md)
+- [\[NeurIPS 2025\] Face-Human-Bench: A Comprehensive Benchmark of Face and Human Understanding for Multi-modal Assistants](face-human-bench_a_comprehensive_benchmark_of_face_and_human_understanding_for_m.md)
+- [\[CVPR 2026\] Rethinking Concept Bottleneck Models: From Pitfalls to Solutions](../../CVPR2026/human_understanding/rethinking_concept_bottleneck_models_from_pitfalls_to_solutions.md)
+- [\[ICML 2025\] Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](../../ICML2025/human_understanding/towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
 
 <!-- RELATED:END -->

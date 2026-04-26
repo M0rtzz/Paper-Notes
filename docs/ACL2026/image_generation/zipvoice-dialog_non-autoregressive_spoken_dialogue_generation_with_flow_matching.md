@@ -129,10 +129,10 @@ ZipVoice-Dialog 以仅 123M 参数实现了全面碾压：推理速度快 15 倍
 
 ## 相关论文
 
-- [CoDial: Interpretable Task-Oriented Dialogue Systems Through Dialogue Flow Alignment](codial_interpretable_task-oriented_dialogue_systems_through_dialogue_flow_alignm.md)
-- [Curly Flow Matching for Learning Non-gradient Field Dynamics](../../NeurIPS2025/image_generation/curly_flow_matching_for_learning_non-gradient_field_dynamics.md)
-- [Frequency-Aware Flow Matching for High-Quality Image Generation](../../CVPR2026/image_generation/freqflow_frequency_aware_flow_matching.md)
-- [SGMatch: Semantic-Guided Non-Rigid Shape Matching with Flow Regularization](../../CVPR2025/image_generation/sgmatch_semantic-guided_non-rigid_shape_matching_with_flow_regularization.md)
-- [RenderFlow: Single-Step Neural Rendering via Flow Matching](../../CVPR2026/image_generation/renderflow_single-step_neural_rendering_via_flow_matching.md)
+- [\[ACL 2026\] CoDial: Interpretable Task-Oriented Dialogue Systems Through Dialogue Flow Alignment](codial_interpretable_task-oriented_dialogue_systems_through_dialogue_flow_alignm.md)
+- [\[NeurIPS 2025\] Curly Flow Matching for Learning Non-gradient Field Dynamics](../../NeurIPS2025/image_generation/curly_flow_matching_for_learning_non-gradient_field_dynamics.md)
+- [\[CVPR 2026\] Frequency-Aware Flow Matching for High-Quality Image Generation](../../CVPR2026/image_generation/freqflow_frequency_aware_flow_matching.md)
+- [\[CVPR 2025\] SGMatch: Semantic-Guided Non-Rigid Shape Matching with Flow Regularization](../../CVPR2025/image_generation/sgmatch_semantic-guided_non-rigid_shape_matching_with_flow_regularization.md)
+- [\[CVPR 2026\] RenderFlow: Single-Step Neural Rendering via Flow Matching](../../CVPR2026/image_generation/renderflow_single-step_neural_rendering_via_flow_matching.md)
 
 <!-- RELATED:END -->

@@ -143,10 +143,10 @@ DynaAct 延迟仅比 rStar 多 5%，但精度高 6.8%。比 RAP 更快（RAP 实
 
 ## 相关论文
 
-- [Large Language Bayes](large_language_bayes.md)
-- [Doubly Robust Alignment for Large Language Models](doubly_robust_alignment_for_large_language_models.md)
-- [Constrained Network Slice Assignment via Large Language Models](constrained_network_slice_assignment_via_llms.md)
-- [VERA: Variational Inference Framework for Jailbreaking Large Language Models](vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
-- [Training-Free Bayesianization for Low-Rank Adapters of Large Language Models](training-free_bayesianization_for_low-rank_adapters_of_large_language_models.md)
+- [\[NeurIPS 2025\] Large Language Bayes](large_language_bayes.md)
+- [\[NeurIPS 2025\] Doubly Robust Alignment for Large Language Models](doubly_robust_alignment_for_large_language_models.md)
+- [\[NeurIPS 2025\] Constrained Network Slice Assignment via Large Language Models](constrained_network_slice_assignment_via_llms.md)
+- [\[NeurIPS 2025\] VERA: Variational Inference Framework for Jailbreaking Large Language Models](vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
+- [\[NeurIPS 2025\] Training-Free Bayesianization for Low-Rank Adapters of Large Language Models](training-free_bayesianization_for_low-rank_adapters_of_large_language_models.md)
 
 <!-- RELATED:END -->

@@ -133,10 +133,10 @@ Mip-NeRF360 + Tanks&Temples + Deep Blending综合结果：
 
 ## 相关论文
 
-- [Depth-Guided Bundle Sampling for Efficient Generalizable Neural Radiance Field Reconstruction](../../CVPR2025/3d_vision/depth-guided_bundle_sampling_for_efficient_generalizable_neural_radiance_field_r.md)
-- [Quantifying and Alleviating Co-Adaptation in Sparse-View 3D Gaussian Splatting](quantifying_and_alleviating_co-adaptation_in_sparse-view_3d_gaussian_splatting.md)
-- [MuGS: Multi-Baseline Generalizable Gaussian Splatting Reconstruction](../../ICCV2025/3d_vision/mugs_multi-baseline_generalizable_gaussian_splatting_reconstruction.md)
-- [Identity-preserving Distillation Sampling by Fixed-Point Iterator](../../CVPR2025/3d_vision/identity-preserving_distillation_sampling_by_fixed-point_iterator.md)
-- [Sampling-Aware 3D Spatial Analysis in Multiplexed Imaging](../../CVPR2026/3d_vision/sampling-aware_3d_spatial_analysis_in_multiplexed_imaging.md)
+- [\[CVPR 2025\] Depth-Guided Bundle Sampling for Efficient Generalizable Neural Radiance Field Reconstruction](../../CVPR2025/3d_vision/depth-guided_bundle_sampling_for_efficient_generalizable_neural_radiance_field_r.md)
+- [\[NeurIPS 2025\] Quantifying and Alleviating Co-Adaptation in Sparse-View 3D Gaussian Splatting](quantifying_and_alleviating_co-adaptation_in_sparse-view_3d_gaussian_splatting.md)
+- [\[ICCV 2025\] MuGS: Multi-Baseline Generalizable Gaussian Splatting Reconstruction](../../ICCV2025/3d_vision/mugs_multi-baseline_generalizable_gaussian_splatting_reconstruction.md)
+- [\[CVPR 2025\] Identity-preserving Distillation Sampling by Fixed-Point Iterator](../../CVPR2025/3d_vision/identity-preserving_distillation_sampling_by_fixed-point_iterator.md)
+- [\[CVPR 2026\] Sampling-Aware 3D Spatial Analysis in Multiplexed Imaging](../../CVPR2026/3d_vision/sampling-aware_3d_spatial_analysis_in_multiplexed_imaging.md)
 
 <!-- RELATED:END -->

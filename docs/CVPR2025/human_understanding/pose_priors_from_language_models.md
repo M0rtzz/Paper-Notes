@@ -148,10 +148,10 @@ ProsePose 框架分为三个阶段：
 
 ## 相关论文
 
-- [Mapping Faithful Reasoning in Language Models](../../NeurIPS2025/human_understanding/mapping_faithful_reasoning_in_language_models.md)
-- [Breaking the Tuning Barrier: Zero-Hyperparameters Yield Multi-Corner Analysis Via Learned Priors](breaking_the_tuning_barrier_zero-hyperparameters_yield_multi-corner_analysis_via.md)
-- [BQA: Body Language Question Answering Dataset for Video Large Language Models](../../ACL2025/human_understanding/bqa_body_language_question_answering_dataset_for_video_large_language_models.md)
-- [Uncovering Strategic Egoism Behaviors in Large Language Models](../../NeurIPS2025/human_understanding/uncovering_strategic_egoism_behaviors_in_large_language_models.md)
-- [ChatGarment: Garment Estimation, Generation and Editing via Large Language Models](chatgarment_garment_estimation_generation_and_editing_via_large_language_models.md)
+- [\[NeurIPS 2025\] Mapping Faithful Reasoning in Language Models](../../NeurIPS2025/human_understanding/mapping_faithful_reasoning_in_language_models.md)
+- [\[CVPR 2025\] Breaking the Tuning Barrier: Zero-Hyperparameters Yield Multi-Corner Analysis Via Learned Priors](breaking_the_tuning_barrier_zero-hyperparameters_yield_multi-corner_analysis_via.md)
+- [\[ACL 2025\] BQA: Body Language Question Answering Dataset for Video Large Language Models](../../ACL2025/human_understanding/bqa_body_language_question_answering_dataset_for_video_large_language_models.md)
+- [\[NeurIPS 2025\] Uncovering Strategic Egoism Behaviors in Large Language Models](../../NeurIPS2025/human_understanding/uncovering_strategic_egoism_behaviors_in_large_language_models.md)
+- [\[CVPR 2025\] ChatGarment: Garment Estimation, Generation and Editing via Large Language Models](chatgarment_garment_estimation_generation_and_editing_via_large_language_models.md)
 
 <!-- RELATED:END -->

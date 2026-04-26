@@ -132,10 +132,10 @@ EvoEngineer 将 LLM-based 代码演化分解为两个正交组件：**Traverse T
 
 ## 相关论文
 
-- [DND: Boosting Large Language Models with Dynamic Nested Depth](dnd_boosting_large_language_models_with_dynamic_nested_depth.md)
-- [Steering Language Models with Weight Arithmetic](steering_language_models_with_weight_arithmetic.md)
-- [Expert Divergence Learning for MoE-based Language Models](expert_divergence_learning_for_moe-based_language_models.md)
-- [Position: Theory of Mind Benchmarks are Broken for Large Language Models](../../ICML2025/llm_efficiency/position_theory_of_mind_benchmarks_are_broken_for_large_language_models.md)
-- [LongSafety: Evaluating Long-Context Safety of Large Language Models](../../ACL2025/llm_efficiency/longsafety_evaluating_long-context_safety_of_large_language_models.md)
+- [\[ICLR 2026\] DND: Boosting Large Language Models with Dynamic Nested Depth](dnd_boosting_large_language_models_with_dynamic_nested_depth.md)
+- [\[ICLR 2026\] Steering Language Models with Weight Arithmetic](steering_language_models_with_weight_arithmetic.md)
+- [\[ICLR 2026\] Expert Divergence Learning for MoE-based Language Models](expert_divergence_learning_for_moe-based_language_models.md)
+- [\[ICML 2025\] Position: Theory of Mind Benchmarks are Broken for Large Language Models](../../ICML2025/llm_efficiency/position_theory_of_mind_benchmarks_are_broken_for_large_language_models.md)
+- [\[ACL 2025\] LongSafety: Evaluating Long-Context Safety of Large Language Models](../../ACL2025/llm_efficiency/longsafety_evaluating_long-context_safety_of_large_language_models.md)
 
 <!-- RELATED:END -->

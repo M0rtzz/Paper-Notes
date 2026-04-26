@@ -123,10 +123,10 @@ tags:
 
 ## 相关论文
 
-- [Non-Clairvoyant Scheduling with Progress Bars](../../NeurIPS2025/others/non-clairvoyant_scheduling_with_progress_bars.md)
-- [Enhancing Control Policy Smoothness by Aligning Actions with Predictions from Preceding States](enhancing_control_policy_smoothness_by_aligning_actions_with_predictions_from_pr.md)
-- [Learning-Augmented Online Bipartite Fractional Matching](../../NeurIPS2025/others/learning-augmented_online_bipartite_fractional_matching.md)
-- [DeToNATION: Decoupled Torch Network-Aware Training on Interlinked Online Nodes](detonation_decoupled_torch_network-aware_training_on_interlinked_online_nodes.md)
-- [Minimal Pair-Based Evaluation of Code-Switching](../../ACL2025/others/minimal_pair-based_evaluation_of_code-switching.md)
+- [\[NeurIPS 2025\] Non-Clairvoyant Scheduling with Progress Bars](../../NeurIPS2025/others/non-clairvoyant_scheduling_with_progress_bars.md)
+- [\[AAAI 2026\] Enhancing Control Policy Smoothness by Aligning Actions with Predictions from Preceding States](enhancing_control_policy_smoothness_by_aligning_actions_with_predictions_from_pr.md)
+- [\[NeurIPS 2025\] Learning-Augmented Online Bipartite Fractional Matching](../../NeurIPS2025/others/learning-augmented_online_bipartite_fractional_matching.md)
+- [\[AAAI 2026\] DeToNATION: Decoupled Torch Network-Aware Training on Interlinked Online Nodes](detonation_decoupled_torch_network-aware_training_on_interlinked_online_nodes.md)
+- [\[ACL 2025\] Minimal Pair-Based Evaluation of Code-Switching](../../ACL2025/others/minimal_pair-based_evaluation_of_code-switching.md)
 
 <!-- RELATED:END -->

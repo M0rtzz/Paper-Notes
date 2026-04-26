@@ -129,10 +129,10 @@ tags:
 
 ## 相关论文
 
-- [MaRI: Material Retrieval Integration across Domains](../../CVPR2025/human_understanding/mari_material_retrieval_integration_across_domains.md)
-- [Hi3DGen: High-fidelity 3D Geometry Generation from Images via Normal Bridging](hi3dgen_high-fidelity_3d_geometry_generation_from_images_via_normal_bridging.md)
-- [Words That Unite The World: A Unified Framework for Deciphering Central Bank Communications Globally](../../NeurIPS2025/human_understanding/words_that_unite_the_world_a_unified_framework_for_deciphering_central_bank_comm.md)
-- [Seeing without Pixels: Perception from Camera Trajectories](../../CVPR2026/human_understanding/seeing_without_pixels_perception_from_camera_trajectories.md)
-- [DWIM: Towards Tool-aware Visual Reasoning via Discrepancy-aware Workflow Generation & Instruct-Masking Tuning](dwim_towards_tool-aware_visual_reasoning_via_discrepancy-aware_workflow_generati.md)
+- [\[CVPR 2025\] MaRI: Material Retrieval Integration across Domains](../../CVPR2025/human_understanding/mari_material_retrieval_integration_across_domains.md)
+- [\[ICCV 2025\] Hi3DGen: High-fidelity 3D Geometry Generation from Images via Normal Bridging](hi3dgen_high-fidelity_3d_geometry_generation_from_images_via_normal_bridging.md)
+- [\[NeurIPS 2025\] Words That Unite The World: A Unified Framework for Deciphering Central Bank Communications Globally](../../NeurIPS2025/human_understanding/words_that_unite_the_world_a_unified_framework_for_deciphering_central_bank_comm.md)
+- [\[CVPR 2026\] Seeing without Pixels: Perception from Camera Trajectories](../../CVPR2026/human_understanding/seeing_without_pixels_perception_from_camera_trajectories.md)
+- [\[ICCV 2025\] DWIM: Towards Tool-aware Visual Reasoning via Discrepancy-aware Workflow Generation & Instruct-Masking Tuning](dwim_towards_tool-aware_visual_reasoning_via_discrepancy-aware_workflow_generati.md)
 
 <!-- RELATED:END -->
