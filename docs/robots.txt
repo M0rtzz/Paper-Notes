@@ -2,5 +2,5 @@ User-agent: *
 Allow: /
 Crawl-delay: 1
 
-Sitemap: https://zhaoyang97.github.io/Paper-Notes/sitemap.xml
-Sitemap: https://zhaoyang97.github.io/Paper-Notes/sitemap-sections.xml
+Sitemap: https://papernotes.org/sitemap.xml
+Sitemap: https://papernotes.org/sitemap-sections.xml

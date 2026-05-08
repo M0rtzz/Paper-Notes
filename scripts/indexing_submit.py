@@ -41,8 +41,8 @@ from datetime import datetime
 from pathlib import Path
 
 NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
-SITE_URL = "https://zhaoyang97.github.io/Paper-Notes/"
-HOST = "zhaoyang97.github.io"
+SITE_URL = "https://papernotes.org/"
+HOST = "papernotes.org"
 DAILY_QUOTA = 200
 INDEXNOW_BATCH_SIZE = 10000  # IndexNow max 10,000 per request
 PROGRESS_FILE = "logs/indexing_progress.json"
@@ -290,7 +290,7 @@ def submit_urls_indexnow(urls: list[str], key: str,
 
     success = 0
     fail = 0
-    key_location = f"https://{HOST}/Paper-Notes/{key}.txt"
+    key_location = f"https://{HOST}/{key}.txt"
 
     # Submit in batches (max 10,000 per batch)
     for batch_start in range(0, len(urls), INDEXNOW_BATCH_SIZE):

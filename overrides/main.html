@@ -13,19 +13,28 @@
 <meta name="msvalidate.01" content="{{ config.extra.bing_site_verification }}" />
 {% endif %}
 
+{# Detect page type — frontmatter title already carries any '[论文解读]' prefix
+   from src/add_seo.py, so the template never adds another prefix. #}
+{% set _src = (page.file.src_uri if page and page.file else '') %}
+{% set _is_index = _src.endswith('index.md') %}
+{% set _is_paper = page and not page.is_homepage and not _is_index %}
+
+{# Prefer frontmatter `title:` (SEO-tuned) over nav entry / H1 (page.title). #}
+{% set _seo_title = ((page.meta.title if page and page.meta and page.meta.title else page.title) | e) %}
+
 <!-- OpenGraph & Twitter Card -->
 <meta property="og:site_name" content="{{ config.site_name }}" />
-<meta property="og:type" content="article" />
+<meta property="og:type" content="{% if _is_paper %}article{% else %}website{% endif %}" />
 <meta property="og:url" content="{{ page.canonical_url }}" />
 {% if page and page.meta and page.meta.description %}
-{% if page.is_homepage %}
-<meta property="og:title" content="{{ page.title | e }}" />
+<meta property="og:title" content="{{ _seo_title }}" />
 <meta property="og:description" content="{{ page.meta.description }}" />
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="{{ page.title | e }}" />
+<meta name="twitter:title" content="{{ _seo_title }}" />
 <meta name="twitter:description" content="{{ page.meta.description }}" />
 
-<!-- JSON-LD: WebSite -->
+{% if page.is_homepage %}
+<!-- JSON-LD: WebSite (homepage) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -40,20 +49,30 @@
   }
 }
 </script>
+{% elif _is_index %}
+<!-- JSON-LD: CollectionPage (conference / area index) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "{{ _seo_title }}",
+  "description": "{{ page.meta.description | e }}",
+  "url": "{{ page.canonical_url }}",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "{{ config.site_name }}",
+    "url": "{{ config.site_url }}"
+  }
+}
+</script>
 {% else %}
-<meta property="og:title" content="[论文解读] {{ page.title | e }}" />
-<meta property="og:description" content="{{ page.meta.description }}" />
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="[论文解读] {{ page.title | e }}" />
-<meta name="twitter:description" content="{{ page.meta.description }}" />
-
-<!-- JSON-LD: ScholarlyArticle -->
+<!-- JSON-LD: ScholarlyArticle (paper page) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ScholarlyArticle",
-  "name": "[论文解读] {{ page.title | e }}",
-  "headline": "[论文解读] {{ page.title | e }}",
+  "name": "{{ _seo_title }}",
+  "headline": "{{ _seo_title }}",
   "description": "{{ page.meta.description | e }}",
   "url": "{{ page.canonical_url }}",
   "datePublished": "{{ page.meta.date | default(config.extra.build_date | default('')) }}",
@@ -183,7 +202,7 @@
       e.preventDefault(); e.stopPropagation();
       var q = prompt('搜索论文笔记');
       if (q && q.trim()) {
-        window.open('https://www.bing.com/search?q=site:zhaoyang97.github.io/Paper-Notes/+' + encodeURIComponent(q.trim()), '_blank');
+        window.open('https://www.bing.com/search?q=site:papernotes.org+' + encodeURIComponent(q.trim()), '_blank');
       }
     }, true);
     return;
@@ -301,7 +320,7 @@
     }
 
     var encoded = encodeURIComponent(query);
-    var site = 'site:zhaoyang97.github.io/Paper-Notes/+';
+    var site = 'site:papernotes.org+';
     var html =
       '<a href="https://www.bing.com/search?q=' + site + encoded +
       '" target="_blank" rel="noopener" style="color:var(--md-accent-fg-color);font-size:0.85rem;">' +
