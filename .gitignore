@@ -2,6 +2,9 @@
 .search_index.json
 INDEX.md
 site/
+site_fast/
+docs_fast/
+mkdocs-fast.yml
 __pycache__/
 STATS_UPDATE.md
 **/TODO.md
