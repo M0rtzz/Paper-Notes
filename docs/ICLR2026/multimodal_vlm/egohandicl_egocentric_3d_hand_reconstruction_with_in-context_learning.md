@@ -193,7 +193,7 @@ $$\mathcal{L} = \lambda_m \mathcal{L}_{mano} + \lambda_v \mathcal{L}_V + \lambda
 
 - [\[ICLR 2026\] UniHM: Unified Dexterous Hand Manipulation with Vision Language Model](unihm_unified_dexterous_hand_manipulation_with_vision_language_model.md)
 - [\[CVPR 2026\] Parallel In-context Learning for Large Vision Language Models](../../CVPR2026/multimodal_vlm/parallel_in-context_learning_for_large_vision_language_models.md)
-- [\[ECCV 2024\] X-Former: Unifying Contrastive and Reconstruction Learning for MLLMs](../../ECCV2024/multimodal_vlm/xformer_unifying_contrastive_and_reconstruction_learning_for.md)
+- [\[ECCV 2024\] X-Former: Unifying Contrastive and Reconstruction Learning for MLLMs](../../ECCV2024/multimodal_vlm/x-former_unifying_contrastive_and_reconstruction_learning_for_mllms.md)
 - [\[ECCV 2024\] LEGO: Learning EGOcentric Action Frame Generation via Visual Instruction Tuning](../../ECCV2024/multimodal_vlm/lego_learning_egocentric_action_frame_generation_via_vi.md)
 - [\[NeurIPS 2025\] In-Context Compositional Learning via Sparse Coding Transformer](../../NeurIPS2025/multimodal_vlm/in-context_compositional_learning_via_sparse_coding_transformer.md)
 

@@ -149,7 +149,7 @@ tags:
 ## 相关论文
 
 - [\[CVPR 2026\] Towards Universal Computational Aberration Correction in Photographic Cameras: A Comprehensive Benchmark Analysis](../../CVPR2026/image_restoration/unicac_universal_computational_aberration_correction_benchmark.md)
-- [\[CVPR 2026\] UniCAC: Towards Universal Computational Aberration Correction in Photographic Cameras](../../CVPR2026/image_restoration/unicac_universal_computational_aberration_correction.md)
+- [\[CVPR 2026\] UniCAC: Towards Universal Computational Aberration Correction in Photographic Cameras](../../CVPR2026/image_restoration/unicac_universal_computational_aberration_correction_benchmark.md)
 - [\[CVPR 2025\] DiTFlow: Video Motion Transfer with Diffusion Transformers](video_motion_transfer_with_diffusion_transformers.md)
 - [\[CVPR 2025\] INFP: Audio-Driven Interactive Head Generation in Dyadic Conversations](infp_audio-driven_interactive_head_generation_in_dyadic_conversations.md)
 - [\[CVPR 2025\] Rotation-Equivariant Self-Supervised Method in Image Denoising](rotation-equivariant_self-supervised_method_in_image_denoising.md)

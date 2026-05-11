@@ -1,18 +1,18 @@
 ---
 title: >-
-  CVPR2026 图学习方向9篇论文解读
+  CVPR2026 图学习方向8篇论文解读
 description: >-
-  9篇CVPR2026的图学习方向论文解读，涵盖多模态、RAG、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  8篇CVPR2026的图学习方向论文解读，涵盖多模态、RAG、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🕸️ 图学习
 
-**📷 CVPR2026** · **9** 篇论文解读
+**📷 CVPR2026** · **8** 篇论文解读
 
 📌 **同领域跨会议浏览：** [💬 ACL2026 (8)](../../ACL2026/graph_learning/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/graph_learning/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/graph_learning/index.md) · [🧠 NeurIPS2025 (52)](../../NeurIPS2025/graph_learning/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/graph_learning/index.md) · [🧪 ICML2025 (31)](../../ICML2025/graph_learning/index.md)
 
-🔥 **高频主题：** 多模态 ×4 · RAG ×2 · 推理 ×2
+🔥 **高频主题：** 多模态 ×3 · RAG ×2 · 推理 ×2
 
 **[Adaptive Learned Image Compression with Graph Neural Networks](adaptive_learned_image_compression_with_graph_neural_networks.md)**
 
@@ -25,10 +25,6 @@ description: >-
 **[Graph2Eval: Automatic Multimodal Task Generation for Agents via Knowledge Graphs](graph2eval_automatic_multimodal_task_generation_for_agents_via_knowledge_graphs.md)**
 
 :   提出 Graph2Eval，一个知识图谱驱动的 agent 评估任务自动生成框架——通过从文档/网页构建结构化知识图谱、子图采样、LLM 条件生成和多阶段过滤，自动产出语义一致（+20%）且可解（+17%）的多模态 agent 任务，构建了包含 1319 个任务的 Graph2Eval-Bench。
-
-**[Graph2Eval: Automatic Multimodal Task Generation for Agents via Knowledge Graphs](graph2eval_multimodal_task_generation_agents.md)**
-
-:   提出 Graph2Eval，利用从异构数据源构建的知识图谱作为结构化任务空间，通过子图采样、任务模板和 meta-path 策略自动生成语义一致且可解的多模态 agent 评估任务，生成的任务在语义一致性和可解性上分别提升 20% 和 17%。
 
 **[Hyperbolic Busemann Neural Networks](hyperbolic_busemann_neural_networks.md)**
 

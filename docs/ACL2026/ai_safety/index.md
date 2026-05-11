@@ -10,7 +10,7 @@ description: >-
 
 **💬 ACL2026** · **2** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (24)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (22)](../../ICCV2025/ai_safety/index.md) · [🧪 ICML2025 (36)](../../ICML2025/ai_safety/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (22)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (26)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (72)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (21)](../../ICCV2025/ai_safety/index.md) · [🧪 ICML2025 (33)](../../ICML2025/ai_safety/index.md)
 
 **[When Bigger Isn't Better: A Comprehensive Fairness Evaluation of Political Bias in Multi-News Summarisation](when_bigger_isn39t_better_a_comprehensive_fairness_evaluation_of_political_bias_.md)**
 

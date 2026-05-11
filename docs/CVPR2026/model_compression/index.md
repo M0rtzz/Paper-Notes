@@ -1,18 +1,18 @@
 ---
 title: >-
-  CVPR2026 模型压缩方向57篇论文解读
+  CVPR2026 模型压缩方向51篇论文解读
 description: >-
-  57篇CVPR2026的模型压缩方向论文解读，涵盖压缩/编码、模型压缩、扩散模型、对抗鲁棒、个性化生成、图像恢复等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  51篇CVPR2026的模型压缩方向论文解读，涵盖压缩/编码、模型压缩、扩散模型、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**📷 CVPR2026** · **57** 篇论文解读
+**📷 CVPR2026** · **51** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (42)](../../ACL2026/model_compression/index.md) · [🔬 ICLR2026 (92)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (54)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (137)](../../NeurIPS2025/model_compression/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/model_compression/index.md) · [🧪 ICML2025 (71)](../../ICML2025/model_compression/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (42)](../../ACL2026/model_compression/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (54)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (137)](../../NeurIPS2025/model_compression/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/model_compression/index.md) · [🧪 ICML2025 (70)](../../ICML2025/model_compression/index.md)
 
-🔥 **高频主题：** 压缩/编码 ×8 · 模型压缩 ×8 · 扩散模型 ×7 · 对抗鲁棒 ×4 · 个性化生成 ×2
+🔥 **高频主题：** 压缩/编码 ×7 · 模型压缩 ×7 · 扩散模型 ×6 · 对抗鲁棒 ×3
 
 **[4D-RGPT: Toward Region-level 4D Understanding via Perceptual Distillation](4d_rgpt_toward_region_level_4d_understanding_via_perceptual_distillation.md)**
 
@@ -26,10 +26,6 @@ description: >-
 
 :   OPAD 首次解决单步扩散模型的个性化问题（1-SDP），通过教师-学生联合训练 + 对齐损失 + 对抗监督实现单步高质量概念生成，并引入协作学习阶段利用学生生成样本反馈增强双方。
 
-**[An FPGA Implementation of Displacement Vector Search for Intra Pattern Copy in JPEG XS](an_fpga_implementation_of_displacement_vector_sear.md)**
-
-:   本文首次为 JPEG XS 标准中的 Intra Pattern Copy (IPC) 工具设计了 FPGA 硬件加速架构，通过四级流水线 DV 比较引擎和按 IPC Group 对齐的存储组织，在 Artix-7 上实现 38.3 Mpixels/s 吞吐量和 277mW 功耗。
-
 **[An FPGA Implementation of Displacement Vector Search for Intra Pattern Copy in JPEG XS](an_fpga_implementation_of_displacement_vector_search_for_intra_pattern_copy_in_j.md)**
 
 :   针对 JPEG XS 屏幕内容编码中 Intra Pattern Copy（IPC）模块的位移向量（DV）搜索计算瓶颈，首次提出四级流水线 FPGA 架构并设计基于 IPC Group 对齐的内存组织方式，在 Xilinx Artix-7 上实现 38.3 Mpixels/s 吞吐量和 277 mW 功耗，为 IPC 的实际硬件部署提供了可行方案。
@@ -37,10 +33,6 @@ description: >-
 **[ARCHE: Autoregressive Residual Compression with Hyperprior and Excitation](arche_autoregressive_residual_compression_with_hyp.md)**
 
 :   在全卷积架构内统一层级超先验、Masked PixelCNN 空间自回归、通道条件建模和 SE 通道激励，不依赖 Transformer 或循环组件，以 95M 参数和 222ms 解码时间实现相对 Ballé 基线 48% BD-Rate 降低并超越 VVC Intra 5.6%。
-
-**[ARCHE: Autoregressive Residual Compression with Hyperprior and Excitation](arche_autoregressive_residual_compression_with_hyperprior_and_excitation.md)**
-
-:   提出 ARCHE 端到端图像压缩框架，在无 Transformer 和循环模块的纯卷积架构下，通过统一层级超先验、Masked PixelCNN 空间自回归上下文、通道条件化、SE 通道重标定和潜在残差预测五个互补组件，在 Kodak 上相对 Balle 基线降低 48% BD-Rate、相对 VVC Intra 降低 5.6%，同时仅需 95M 参数和 222ms 解码时间。
 
 **[Batch Loss Score for Dynamic Data Pruning](batch_loss_score_for_dynamic_data_pruning.md)**
 
@@ -53,10 +45,6 @@ description: >-
 **[Bilevel Layer-Positioning LoRA for Real Image Dehazing](bilevel_layer-positioning_lora_for_real_image_dehazing.md)**
 
 :   提出 BiLaLoRA，通过双层优化自动定位 LoRA 应插入的最优网络层，配合 H2C Loss（基于 CLIP 语义方向的无监督去雾损失），实现合成数据预训练的去雾模型向真实场景的高效适配——训练时间降低 77.7%，性能持平全量微调，跨模型跨域均有效。
-
-**[Bilevel Layer-Positioning LoRA for Real Image Dehazing](bilevel_lora_real_image_dehazing.md)**
-
-:   利用CLIP跨模态能力将去雾重构为语义对齐问题（H2C损失），并通过双层优化自动搜索最佳LoRA注入层（BiLaLoRA），实现即插即用的高效合成到真实域去雾适配。
 
 **[BinaryAttention: One-Bit QK-Attention for Vision and Diffusion Transformers](binaryattention_one-bit_qk-attention_for_vision_and_diffusion_transformers.md)**
 
@@ -122,17 +110,9 @@ description: >-
 
 :   HiAP 把 ViT 剪枝写成一个端到端的预算感知学习问题，同时对整头/整块和头内维度/FFN 神经元两种粒度做随机可微门控，在一次训练里自动长出满足算力预算的稠密子网络，省掉了常见的排序、阈值搜索和额外微调流程。
 
-**[HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers](hiap_a_multigranular_stochastic_autopruning_framew.md)**
-
-:   提出HiAP——统一宏观（整头/FFN块）和微观（头内维度/FFN神经元）的层级Gumbel-Sigmoid门控框架，在单次端到端训练中自动发现满足算力预算的高效ViT子网络，无需手动重要性排序或多阶段流程。
-
 **[HierAmp: Coarse-to-Fine Autoregressive Amplification for Generative Dataset Distillation](hieramp_coarse-to-fine_autoregressive_amplification_for_generative_dataset_disti.md)**
 
 :   提出 HierAmp，在视觉自回归（VAR）模型的粗到细生成过程中，向每个尺度注入可学习的类别 token 识别语义显著区域，并通过正 logit 偏置放大这些区域的注意力，使蒸馏数据在粗尺度获得更丰富多样的布局、在细尺度聚焦于类别相关细节，在多个数据集蒸馏基准上达到 SOTA。
-
-**[Towards Generalizable AI-Generated Image Detection via Image-Adaptive Prompt Learning](iapl_aigenerated_image_detection_adaptive_prompt.md)**
-
-:   提出IAPL（Image-Adaptive Prompt Learning），在CLIP编码器输入端引入动态prompt——由条件信息学习器（从纹理丰富区域提取伪造特异和通用线索）和测试时token调优（通过多视角一致性最小化熵）两条路径生成，使模型能在推理时根据每张测试图像自适应调整，在未见过的生成器上显著提升检测泛化性。
 
 **[Learning through Creation: A Hash-Free Framework for On-the-Fly Category Discovery](learning_through_creation_a_hash-free_framework_for_on-the-fly_category_discover.md)**
 
@@ -165,10 +145,6 @@ description: >-
 **[On the Robustness of Diffusion-Based Image Compression to Bit-Flip Errors](on_the_robustness_of_diffusion-based_image_compression_to_bit-flip_errors.md)**
 
 :   首次系统研究了扩散模型图像压缩在比特翻转错误下的鲁棒性，发现基于反向信道编码（RCC）的扩散压缩方法天然比传统和学习型编解码器更耐错，并提出 Robust Turbo-DDCM 变体通过独立编码原子索引进一步提升鲁棒性，在 BER 达 $10^{-3}$ 时仍保持良好重建质量。
-
-**[OPAD: Adversarial Concept Distillation for One-Step Diffusion Personalization](opad_adversarial_concept_distillation_for_one-step_diffusion_personalization.md)**
-
-:   OPAD 首次解决单步扩散模型的个性化问题（1-SDP），通过教师-学生联合训练 + 对齐损失 + 对抗监督实现可靠的单步个性化生成，并提出协作学习阶段利用学生高效生成反哺教师。
 
 **[Parallax to Align Them All: An OmniParallax Attention Mechanism for Distributed Multi-View Image Compression](parallax_to_align_them_all_an_omniparallax_attention_mechanism_for_distributed_m.md)**
 

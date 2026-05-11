@@ -169,7 +169,7 @@ OpenCLIP-ViT-H/14 结果：
 
 - [\[NeurIPS 2025\] T2SMark: Balancing Robustness and Diversity in Noise-as-Watermark for Diffusion Models](t2smark_balancing_robustness_and_diversity_in_noise-as-watermark_for_diffusion_m.md)
 - [\[NeurIPS 2025\] Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
-- [\[ECCV 2024\] LCM-Lookahead for Encoder-based Text-to-Image Personalization](../../ECCV2024/image_generation/lcm-lookahead_for_encoder-based_text-to-image_personalization.md)
+- [\[ECCV 2024\] LCM-Lookahead for Encoder-based Text-to-Image Personalization](../../ECCV2024/image_generation/lcmlookahead_for_encoderbased_texttoimage_personalization.md)
 - [\[CVPR 2025\] FineLIP: Extending CLIP's Reach via Fine-Grained Alignment with Longer Text Inputs](../../CVPR2025/image_generation/finelip_extending_clips_reach_via_fine-grained_alignment_with_longer_text_inputs.md)
 - [\[ICCV 2025\] Your Text Encoder Can Be An Object-Level Watermarking Controller](../../ICCV2025/image_generation/your_text_encoder_can_be_an_object-level_watermarking_controller.md)
 

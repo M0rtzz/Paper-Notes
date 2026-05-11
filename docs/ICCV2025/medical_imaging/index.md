@@ -1,18 +1,18 @@
 ---
 title: >-
-  ICCV2025 医学图像方向40篇论文解读
+  ICCV2025 医学图像方向38篇论文解读
 description: >-
-  40篇ICCV2025的医学图像方向论文解读，涵盖医学影像、语义分割、自监督学习、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  38篇ICCV2025的医学图像方向论文解读，涵盖医学影像、语义分割、少样本学习、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**📹 ICCV2025** · **40** 篇论文解读
+**📹 ICCV2025** · **38** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (153)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (72)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (105)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (141)](../../NeurIPS2025/medical_imaging/index.md) · [🧪 ICML2025 (63)](../../ICML2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (114)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (72)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (105)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (141)](../../NeurIPS2025/medical_imaging/index.md) · [🧪 ICML2025 (62)](../../ICML2025/medical_imaging/index.md)
 
-🔥 **高频主题：** 医学影像 ×15 · 语义分割 ×12 · 自监督学习 ×3 · 少样本学习 ×2
+🔥 **高频主题：** 医学影像 ×14 · 语义分割 ×12 · 少样本学习 ×2 · 自监督学习 ×2
 
 **[AcZeroTS: Active Learning for Zero-shot Tissue Segmentation in Pathology Images](aczerots_active_learning_for_zeroshot_tissue_segmentation_in.md)**
 
@@ -21,10 +21,6 @@ description: >-
 **[Alleviating Textual Reliance in Medical Language-guided Segmentation via Prototype-driven Semantic Approximation](alleviating_textual_reliance_in_medical_language-guided_segmentation_via_prototy.md)**
 
 :   提出ProLearn框架，首次通过原型驱动的语义近似（PSA）模块从根本上缓解医学语言引导分割对文本的依赖——仅需少量图文配对数据初始化原型空间，训练和推理均可无文本输入，在1%文本可用性下仍保持强劲性能（QaTa-COV19 Dice=0.857），且参数量比LLM方案减少1000倍，推理速度快100倍。
-
-**[An OpenMind for 3D Medical Vision Self-Supervised Learning](an_openmind_for_3d_medical_vision_self-supervised_learning.md)**
-
-:   发布了最大的公开 3D 医学影像预训练数据集 OpenMind（114k 脑部 MRI），并系统性地对比了多种 3D 自监督学习方法在 CNN（ResEnc-L）和 Transformer（Primus-M）上的表现，证明 MAE 预训练在分割任务上最优、对比学习在分类任务上最优，且首次展示预训练 Transformer 可在部分数据集上超越从头训练的 CNN。
 
 **[An OpenMind for 3D Medical Vision Self-supervised Learning](an_openmind_for_3d_medical_vision_selfsupervised_learning.md)**
 
@@ -49,10 +45,6 @@ description: >-
 **[Coordinate-based Speed of Sound Recovery for Aberration-Corrected Photoacoustic Computed Tomography](coordinate-based_speed_of_sound_recovery_for_aberration-corrected_photoacoustic_.md)**
 
 :   本文提出一种高效的自监督联合重建方法，通过将声速（SOS）参数化为像素网格或神经场，并通过可微成像前向模型反向传播梯度来恢复SOS和高质量光声图像，在精度上超越现有SOTA的同时实现35倍加速（40秒 vs 23分钟）。
-
-**[CryoFastAR: Fast Cryo-EM Ab initio Reconstruction Made Easy](cryofastar_fast_cryo-em_ab_initio_reconstruction_made_easy.md)**
-
-:   提出CryoFastAR，首个面向冷冻电镜（cryo-EM）的几何基础模型，通过ViT架构直接从多视图噪声粒子图像前馈式预测Fourier Planar Map实现位姿估计，在合成和真实数据集上达到可比质量的同时实现10倍以上加速。
 
 **[CryoFastAR: Fast Cryo-EM Ab initio Reconstruction Made Easy](cryofastar_fast_cryoem_ab_initio_reconstruction_made_easy.md)**
 

@@ -10,7 +10,7 @@ description: >-
 
 **🎞️ ECCV2024** · **3** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (9)](../../ACL2026/social_computing/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/social_computing/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/social_computing/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/social_computing/index.md) · [🧠 NeurIPS2025 (18)](../../NeurIPS2025/social_computing/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/social_computing/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (9)](../../ACL2026/social_computing/index.md) · [📷 CVPR2026 (4)](../../CVPR2026/social_computing/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/social_computing/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/social_computing/index.md) · [🧠 NeurIPS2025 (18)](../../NeurIPS2025/social_computing/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/social_computing/index.md)
 
 **[Distribution-Aware Robust Learning from Long-Tailed Data with Noisy Labels](distribution-aware_robust_learning_from_long-tailed_data_with_noisy_labels.md)**
 

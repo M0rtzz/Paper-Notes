@@ -1,22 +1,18 @@
 ---
 title: >-
-  ACL2025 预训练方向39篇论文解读
+  ACL2025 预训练方向38篇论文解读
 description: >-
-  39篇ACL2025的预训练方向论文解读，涵盖 LLM、对抗鲁棒、少样本学习、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  38篇ACL2025的预训练方向论文解读，涵盖 LLM、对抗鲁棒、少样本学习、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📚 预训练
 
-**💬 ACL2025** · **39** 篇论文解读
+**💬 ACL2025** · **38** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/llm_pretraining/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_pretraining/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/llm_pretraining/index.md) · [🤖 AAAI2026 (6)](../../AAAI2026/llm_pretraining/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_pretraining/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/llm_pretraining/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/llm_pretraining/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/llm_pretraining/index.md) · [🔬 ICLR2026 (26)](../../ICLR2026/llm_pretraining/index.md) · [🤖 AAAI2026 (6)](../../AAAI2026/llm_pretraining/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/llm_pretraining/index.md) · [📹 ICCV2025 (9)](../../ICCV2025/llm_pretraining/index.md)
 
-🔥 **高频主题：** LLM ×9 · 对抗鲁棒 ×3 · 少样本学习 ×2 · 语音 ×2
-
-**[Stealing Training Data from Large Language Models in Decentralized Training through Activation Inversion Attack](activation-inversion-attack-stealing-training-data-in-decentralized-training.md)**
-
-:   本文首次提出针对去中心化训练的激活反转攻击（AIA），通过构建影子数据集训练攻击模型，恶意阶段可以从传输的激活值中重建训练数据，在 GPT2-XL 上实现了 62% 的邮件地址窃取准确率。
+🔥 **高频主题：** LLM ×8 · 对抗鲁棒 ×2 · 少样本学习 ×2 · 语音 ×2
 
 **[Adversarial Tokenization](adversarial_tokenization.md)**
 

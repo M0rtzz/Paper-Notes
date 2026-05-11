@@ -10,7 +10,7 @@ description: >-
 
 **💬 ACL2026** · **9** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (5)](../../CVPR2026/social_computing/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/social_computing/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/social_computing/index.md) · [🧠 NeurIPS2025 (18)](../../NeurIPS2025/social_computing/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/social_computing/index.md) · [🧪 ICML2025 (7)](../../ICML2025/social_computing/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (4)](../../CVPR2026/social_computing/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/social_computing/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/social_computing/index.md) · [🧠 NeurIPS2025 (18)](../../NeurIPS2025/social_computing/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/social_computing/index.md) · [🧪 ICML2025 (7)](../../ICML2025/social_computing/index.md)
 
 🔥 **高频主题：** LLM ×2 · 推理 ×2
 

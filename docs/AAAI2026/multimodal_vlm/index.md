@@ -1,18 +1,18 @@
 ---
 title: >-
-  AAAI2026 多模态 VLM方向92篇论文解读
+  AAAI2026 多模态 VLM方向91篇论文解读
 description: >-
-  92篇AAAI2026的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对抗鲁棒、对齐/RLHF、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  91篇AAAI2026的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对抗鲁棒、对齐/RLHF、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**🤖 AAAI2026** · **92** 篇论文解读
+**🤖 AAAI2026** · **91** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (50)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (288)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (93)](../../ICLR2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (155)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (159)](../../ICCV2025/multimodal_vlm/index.md) · [🧪 ICML2025 (53)](../../ICML2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (50)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (241)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (154)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (151)](../../ICCV2025/multimodal_vlm/index.md) · [🧪 ICML2025 (52)](../../ICML2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×49 · 推理 ×10 · LLM ×8 · 对抗鲁棒 ×8 · 对齐/RLHF ×5
+🔥 **高频主题：** 多模态 ×48 · 推理 ×10 · LLM ×8 · 对抗鲁棒 ×8 · 对齐/RLHF ×5
 
 **[AbductiveMLLM: Boosting Visual Abductive Reasoning Within MLLMs](abductivemllm_boosting_visual_abductive_reasoning_within_mll.md)**
 
@@ -217,10 +217,6 @@ description: >-
 **[Panda: Test-Time Adaptation with Negative Data Augmentation](panda_test-time_adaptation_with_negative_data_augmentation.md)**
 
 :   提出 Panda，通过负数据增强（patch 打乱重组）生成保留 corruption 但破坏语义的图像，用其特征偏移原始嵌入以抑制 corruption 引起的预测偏差，以极低开销（<10%）即插即用提升各类 TTA 方法的鲁棒性。
-
-**[PatientVLM Meets DocVLM: Pre-Consultation Dialogue Between Vision-Language Models for Efficient Diagnosis](patientvlm_meets_docvlm_pre-consultation_dialogue_between_vision-language_models.md)**
-
-:   提出Pre-Consultation Dialogue Framework (PCDF)，通过两个VLM（DocVLM和PatientVLM）模拟医生-患者多轮对话，生成image-dialogue-diagnosis三元组用于微调DocVLM，在四个医学影像基准上平均F1提升11.48。
 
 **[PatientVLM Meets DocVLM: Pre-Consultation Dialogue Between Vision-Language Models for Efficient Diagnosis](patientvlm_meets_docvlm_pre-consultation_dialogue_between_vision_language_models.md)**
 

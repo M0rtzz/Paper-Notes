@@ -139,7 +139,7 @@ MindDriver 以六路环视相机图像、历史前视帧、驾驶指令和自车
 ## 相关论文
 
 - [\[CVPR 2026\] ColaVLA: Leveraging Cognitive Latent Reasoning for Hierarchical Parallel Trajectory Planning in Autonomous Driving](colavla_leveraging_cognitive_latent_reasoning_for_hierarchical_parallel_trajecto.md)
-- [\[ECCV 2024\] Reason2Drive: Towards Interpretable and Chain-based Reasoning for Autonomous Driving](../../ECCV2024/autonomous_driving/reason2drive_towards_interpretable_and_chain-based_reasoning_for_autonomous_driv.md)
+- [\[ECCV 2024\] Reason2Drive: Towards Interpretable and Chain-based Reasoning for Autonomous Driving](../../ECCV2024/autonomous_driving/reason2drive_towards_interpretable_and_chainbased_reasoning.md)
 - [\[CVPR 2026\] Learning Vision-Language-Action World Models for Autonomous Driving](vla_world_learning_vision_language_action_world_models_for_autonomous_driving.md)
 - [\[CVPR 2026\] SearchAD: Large-Scale Rare Image Retrieval Dataset for Autonomous Driving](searchad_large-scale_rare_image_retrieval_dataset_for_autonomous_driving.md)
 - [\[CVPR 2026\] An Instance-Centric Panoptic Occupancy Prediction Benchmark for Autonomous Driving](an_instance-centric_panoptic_occupancy_prediction_benchmark_for_autonomous_drivi.md)

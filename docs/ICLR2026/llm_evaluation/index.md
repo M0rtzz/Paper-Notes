@@ -1,18 +1,18 @@
 ---
 title: >-
-  ICLR2026 LLM 评测方向60篇论文解读
+  ICLR2026 LLM 评测方向56篇论文解读
 description: >-
-  60篇ICLR2026的 LLM 评测方向论文解读，涵盖 LLM、Agent、推理、对齐/RLHF、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  56篇ICLR2026的 LLM 评测方向论文解读，涵盖 LLM、Agent、推理、对齐/RLHF、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📊 LLM 评测
 
-**🔬 ICLR2026** · **60** 篇论文解读
+**🔬 ICLR2026** · **56** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/llm_evaluation/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (39)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (79)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (29)](../../ICCV2025/llm_evaluation/index.md) · [🧪 ICML2025 (49)](../../ICML2025/llm_evaluation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/llm_evaluation/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (39)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (79)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md) · [🧪 ICML2025 (49)](../../ICML2025/llm_evaluation/index.md)
 
-🔥 **高频主题：** LLM ×10 · Agent ×3 · 推理 ×2 · 对齐/RLHF ×2 · 对抗鲁棒 ×2
+🔥 **高频主题：** LLM ×9 · Agent ×3 · 推理 ×2 · 对齐/RLHF ×2 · 对抗鲁棒 ×2
 
 **[Accessible, Realistic, and Fair Evaluation of Positive-Unlabeled Learning Algorithms](accessible_realistic_and_fair_evaluation_of_positive-unlabeled_learning_algorith.md)**
 
@@ -158,10 +158,6 @@ description: >-
 
 :   首次定义并系统研究 LLM-as-a-Judge 中的 **偏好泄漏 (Preference Leakage)** 问题——当合成数据生成器 $M_G$ 与评估器 $M_J$ 存在关联（同模型/继承/同家族）时，评委会对"相关学生模型"产生系统性偏好，同模型场景下 PLS 高达 28.7%（Arena-Hard），且该偏差比自中心偏差更隐蔽、更难检测。
 
-**[Prompt and Parameter Co-Optimization for Large Language Model Task Adaptation](prompt_and_parameter_co-optimization_for_large_language_model_task_adaptation.md)**
-
-:   提出 MetaTuner 框架，通过共享元编码器同时生成查询特定的提示和 LoRA 参数，使提示优化与微调相互增强，并设计监督正则化损失解决离散-连续混合优化问题，在 MATH、GSM8K、HotpotQA、CosmosQA 上一致超越独立的提示优化和微调方法。
-
 **[Prompt and Parameter Co-Optimization for Large Language Models](prompt_and_parameter_co-optimization_for_large_language_models.md)**
 
 :   提出 MetaTuner 框架，通过共享 meta encoder 同时生成 prompt 和 LoRA 参数，将离散 prompt 优化与连续参数微调统一为端到端可优化的联合框架，在数学推理和问答任务上大幅超越单独优化的方法。
@@ -173,10 +169,6 @@ description: >-
 **[Rethinking Benign Relearning: Syntax as the Hidden Driver of Unlearning Failures](rethinking_benign_relearning_syntax_as_the_hidden_driver_of_the_safety_tax.md)**
 
 :   本文揭示了 LLM 机器遗忘中"良性重学习"（benign relearning）的真正驱动因素不是主题相关性而是**句法相似性**，并提出**句法多样化（syntactic diversification）**策略来提升遗忘的鲁棒性。
-
-**[Rethinking Benign Relearning: Syntax as the Hidden Driver of Unlearning Failures](rethinking_benign_relearning_syntax_as_the_hidden_driver_of_unlearning_failures.md)**
-
-:   揭示 LLM 机器遗忘中"良性重学习"现象的真正驱动因素是句法相似性而非主题相关性，并提出句法多样化策略（paraphrase forget set），有效抑制重学习、加速遗忘并缓解遗忘效果与模型效用之间的 trade-off。
 
 **[Revisiting the Past: Data Unlearning with Model State History](revisiting_the_past_data_unlearning_with_model_state_history.md)**
 
@@ -230,17 +222,9 @@ description: >-
 
 :   提出 HUMAINE 框架，通过 23,404 名人口统计分层参与者对 28 个 SOTA 模型进行多维度（5 维）、多轮对话的人类偏好评估，用层次贝叶斯 BTD 模型揭示年龄是偏好异质性的最大驱动因素（平均排名偏移 ±2.8），证明单一聚合排行榜不足以反映不同人群的真实偏好。
 
-**[Unpacking Human Preference for LLMs: Demographically Aware Evaluation with the HUMAINE Framework](unpacking_human_preference_for_llms_demographically_aware_evaluation_with_the_hu.md)**
-
-:   提出 HUMAINE 框架，通过 23,404 名人口统计学分层参与者对 28 个模型的多维度评估，揭示了人类偏好中年龄是最大分歧轴、单一排行榜掩盖关键差异的发现。
-
 **[vCache: Verified Semantic Prompt Caching](vcache_verified_semantic_prompt_caching.md)**
 
 :   提出 vCache——首个具有**用户定义错误率保证**的语义缓存系统，通过在线学习为每个缓存嵌入独立估计最优相似度阈值，无需预训练即可在满足正确性约束下实现最高 12.5× 缓存命中率提升和 26× 错误率降低。
-
-**[When Priors Backfire: On the Vulnerability of Unlearnable Examples to Pretraining](when_priors_backfire_on_the_vulnerability_of_unlearnable_examples_to_data_augmen.md)**
-
-:   揭示了 Unlearnable Examples (UE) 在面对预训练模型时的根本脆弱性——预训练先验使模型绕过 UE 注入的虚假快捷方式，并提出 BAIT 双层优化框架通过将扰动绑定到错误标签来对抗预训练先验。
 
 **[When Priors Backfire: On the Vulnerability of Unlearnable Examples to Pretraining](when_priors_backfire_on_the_vulnerability_of_unlearnable_examples_to_pretraining.md)**
 

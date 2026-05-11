@@ -130,7 +130,7 @@ Sophia的注意力FLOPs仅为InternVL2的**1/8.5**，为LongVU的**1/33**。
 - [\[CVPR 2025\] Video-XL: Extra-Long Vision Language Model for Hour-Scale Video Understanding](../../CVPR2025/multimodal_vlm/video-xl_extra-long_vision_language_model_for_hour-scale_video_understanding.md)
 - [\[CVPR 2025\] ReVisionLLM: Recursive Vision-Language Model for Temporal Grounding in Hour-Long Videos](../../CVPR2025/multimodal_vlm/revisionllm_recursive_vision-language_model_for_temporal_grounding_in_hour-long_.md)
 - [\[ACL 2025\] Inference Compute-Optimal Video Vision Language Models](inference_compute_optimal_video_vlm.md)
-- [\[ACL 2025\] MMMU-Pro: A More Robust Multi-discipline Multimodal Understanding Benchmark](mmmupro_a_more_robust_multidiscipline_multimodal.md)
+- [\[ACL 2025\] MMMU-Pro: A More Robust Multi-discipline Multimodal Understanding Benchmark](mmmu_pro_robust_benchmark.md)
 - [\[ACL 2025\] Transferring Textual Preferences to Vision-Language Understanding through Model Merging](transferring_textual_preferences_to_vision-language_understanding_through_model_.md)
 
 </div>

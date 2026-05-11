@@ -139,7 +139,7 @@ RLVR-World 将不同模态的世界模型统一到自回归序列建模框架下
 ## 相关论文
 
 - [\[ICCV 2025\] Long-Context State-Space Video World Models](../../ICCV2025/image_generation/long-context_state-space_video_world_models.md)
-- [\[ICCV 2025\] Aether: Geometric-Aware Unified World Modeling](../../ICCV2025/image_generation/aether_geometricaware_unified_world_modeling.md)
+- [\[ICCV 2025\] Aether: Geometric-Aware Unified World Modeling](../../ICCV2025/image_generation/aether_geometric-aware_unified_world_modeling.md)
 - [\[NeurIPS 2025\] Co-Reinforcement Learning for Unified Multimodal Understanding and Generation](coreinforcement_learning_for_unified_multimodal_understandin.md)
 - [\[NeurIPS 2025\] Towards Robust Zero-Shot Reinforcement Learning](towards_robust_zero-shot_reinforcement_learning.md)
 - [\[ECCV 2024\] Controlling the World by Sleight of Hand](../../ECCV2024/image_generation/controlling_the_world_by_sleight_of_hand.md)

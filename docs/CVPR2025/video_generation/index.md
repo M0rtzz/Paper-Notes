@@ -1,18 +1,18 @@
 ---
 title: >-
-  CVPR2025 视频生成方向85篇论文解读
+  CVPR2025 视频生成方向84篇论文解读
 description: >-
-  85篇CVPR2025的视频生成方向论文解读，涵盖视频生成、扩散模型、超分辨率、布局/合成、压缩/编码、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  84篇CVPR2025的视频生成方向论文解读，涵盖视频生成、扩散模型、布局/合成、超分辨率、压缩/编码、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎬 视频生成
 
-**📷 CVPR2025** · **85** 篇论文解读
+**📷 CVPR2025** · **84** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (3)](../../ACL2026/video_generation/index.md) · [📷 CVPR2026 (59)](../../CVPR2026/video_generation/index.md) · [🔬 ICLR2026 (19)](../../ICLR2026/video_generation/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/video_generation/index.md) · [🧠 NeurIPS2025 (23)](../../NeurIPS2025/video_generation/index.md) · [📹 ICCV2025 (51)](../../ICCV2025/video_generation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (3)](../../ACL2026/video_generation/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/video_generation/index.md) · [🔬 ICLR2026 (19)](../../ICLR2026/video_generation/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/video_generation/index.md) · [🧠 NeurIPS2025 (23)](../../NeurIPS2025/video_generation/index.md) · [📹 ICCV2025 (49)](../../ICCV2025/video_generation/index.md)
 
-🔥 **高频主题：** 视频生成 ×35 · 扩散模型 ×25 · 超分辨率 ×4 · 布局/合成 ×4 · 压缩/编码 ×3
+🔥 **高频主题：** 视频生成 ×35 · 扩散模型 ×25 · 布局/合成 ×4 · 超分辨率 ×3 · 压缩/编码 ×3
 
 **[4Real-Video: Learning Generalizable Photo-Realistic 4D Video Diffusion](4real-video_learning_generalizable_photo-realistic_4d_video_diffusion.md)**
 
@@ -29,10 +29,6 @@ description: >-
 **[BF-STVSR: B-Splines and Fourier—Best Friends for High Fidelity Spatial-Temporal Video Super-Resolution](bf-stvsr_b-splines_and_fourier---best_friends_for_high_fidelity_spatia.md)**
 
 :   提出 BF-STVSR 框架，用 B-spline Mapper 建模时间运动插值、Fourier Mapper 捕获空间高频细节，无需外部光流网络即可实现连续时空视频超分辨率的 SOTA 性能。
-
-**[BF-STVSR: B-Splines and Fourier—Best Friends for High Fidelity Spatial-Temporal Video Super-Resolution](bf-stvsr_b-splines_and_fourier---best_friends_for_high_fidelity_spatial-temporal.md)**
-
-:   提出 BF-STVSR，结合 B 样条映射器（时间平滑插值）和傅里叶映射器（空间高频捕获）实现连续时空视频超分辨率，完全无需预训练光流网络（RAFT），在 GoPro 数据集上 PSNR 达 30.22dB，FLOPs 在所有方法中最低。
 
 **[Can Text-to-Video Generation Help Video-Language Alignment?](can_text-to-video_generation_help_video-language_alignment.md)**
 

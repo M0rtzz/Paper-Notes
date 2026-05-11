@@ -1,26 +1,22 @@
 ---
 title: >-
-  ICCV2025 图像恢复方向30篇论文解读
+  ICCV2025 图像恢复方向29篇论文解读
 description: >-
-  30篇ICCV2025的图像恢复方向论文解读，涵盖图像恢复、超分辨率、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  29篇ICCV2025的图像恢复方向论文解读，涵盖图像恢复、超分辨率、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🖼️ 图像恢复
 
-**📹 ICCV2025** · **30** 篇论文解读
+**📹 ICCV2025** · **29** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/image_restoration/index.md) · [📷 CVPR2026 (47)](../../CVPR2026/image_restoration/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/image_restoration/index.md) · [🤖 AAAI2026 (13)](../../AAAI2026/image_restoration/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/image_restoration/index.md) · [🧪 ICML2025 (5)](../../ICML2025/image_restoration/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/image_restoration/index.md) · [📷 CVPR2026 (39)](../../CVPR2026/image_restoration/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/image_restoration/index.md) · [🤖 AAAI2026 (13)](../../AAAI2026/image_restoration/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/image_restoration/index.md) · [🧪 ICML2025 (5)](../../ICML2025/image_restoration/index.md)
 
-🔥 **高频主题：** 图像恢复 ×14 · 超分辨率 ×5 · 扩散模型 ×3
+🔥 **高频主题：** 图像恢复 ×14 · 超分辨率 ×4 · 扩散模型 ×3
 
 **[Benchmarking Burst Super-Resolution for Polarization Images: Noise Dataset and Analysis](benchmarking_burst_super-resolution_for_polarization_images_noise_dataset_and_an.md)**
 
 :   本文针对偏振图像 burst 超分辨率的缺乏数据集和噪声模型的问题，构建了两个专用数据集 PolarNS（噪声统计）和 PolarBurstSR（超分基准），提出了偏振噪声传播分析模型，并系统比较了现有 burst SR 方法在偏振场景下的表现，为偏振图像重建领域建立了标准化评测基准。
-
-**[Benchmarking Burst Super-Resolution for Polarization Images: Noise Dataset and Analysis](benchmarking_burst_superresolution_for_polarization_images_n.md)**
-
-:   针对偏振相机"光效低、分辨率低、噪声大"的硬件瓶颈，构建了两个专用数据集（PolarNS用于噪声统计分析，PolarBurstSR用于burst超分的训练/评测），提出偏振噪声传播分析模型，并将5种SOTA burst超分方法适配到偏振域，证明偏振专用训练在强度图(s0)和偏振角(AoLP)重建上显著优于RGB通用训练。
 
 **[Blind2Sound: Self-Supervised Image Denoising without Residual Noise](blind2sound_self-supervised_image_denoising_without_residual_noise.md)**
 

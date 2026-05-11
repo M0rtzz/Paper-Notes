@@ -1,18 +1,18 @@
 ---
 title: >-
-  ICML2025 多模态 VLM方向53篇论文解读
+  ICML2025 多模态 VLM方向52篇论文解读
 description: >-
-  53篇ICML2025的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对齐/RLHF、机器人、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  52篇ICML2025的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对齐/RLHF、机器人、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**🧪 ICML2025** · **53** 篇论文解读
+**🧪 ICML2025** · **52** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (50)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (288)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (93)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (92)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (155)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (159)](../../ICCV2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (50)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (241)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (91)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (154)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (151)](../../ICCV2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×34 · 推理 ×7 · LLM ×4 · 对齐/RLHF ×4 · 机器人 ×2
+🔥 **高频主题：** 多模态 ×33 · 推理 ×6 · LLM ×4 · 对齐/RLHF ×4 · 机器人 ×2
 
 **[Bring Reason to Vision: Understanding Perception and Reasoning through Model Merging](bring_reason_to_vision_understanding_perception_and_reasoning_through_model_merg.md)**
 
@@ -129,10 +129,6 @@ description: >-
 **[OmniBal: Towards Fast Instruction-Tuning for Vision-Language Models via Omniverse Computation Balance](omnibal_towards_fast_instruction-tuning_for_vision-language_models_via_omniverse.md)**
 
 :   针对大规模视觉语言模型 instruction-tuning 训练中因数据和模型异构性导致的计算不平衡问题，提出 OmniBal 框架从数据、模型、内存三个层面系统性平衡跨设备计算负载，在 InternVL-Chat 上实现约 1.8× 训练加速。
-
-**[Overcoming Multi-step Complexity in Multimodal Theory-of-Mind Reasoning: A Scalable Bayesian Planner](overcoming_multi-step_complexity_in_multimodal_theory-of-mind_reasoning.md)**
-
-:   提出可扩展的贝叶斯 ToM 规划器，通过将多步多模态心智推理分解为逐步贝叶斯更新来规避推理边界，并用弱到强控制机制将小模型（4B–8B）后训练获得的 ToM 似然估计能力迁移到大模型（70B–405B）的推理中，在 MMToM-QA 基准上达 81.3% 准确率，超越此前最优 BIPALM 4.6 个百分点。
 
 **[Overcoming Multi-step Complexity in Multimodal Theory-of-Mind Reasoning: A Scalable Bayesian Planner](overcoming_multi-step_complexity_in_multimodal_theory-of-mind_reasoning_a_scalab.md)**
 

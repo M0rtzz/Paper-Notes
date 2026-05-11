@@ -1,18 +1,18 @@
 ---
 title: >-
-  ECCV2024 图像生成方向126篇论文解读
+  ECCV2024 图像生成方向108篇论文解读
 description: >-
-  126篇ECCV2024的图像生成方向论文解读，涵盖扩散模型、文生图、个性化生成、图像编辑、少样本学习、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  108篇ECCV2024的图像生成方向论文解读，涵盖扩散模型、文生图、图像编辑、个性化生成、对抗鲁棒、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🎞️ ECCV2024** · **126** 篇论文解读
+**🎞️ ECCV2024** · **108** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (240)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (250)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (219)](../../ICCV2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (208)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (247)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×61 · 文生图 ×21 · 个性化生成 ×10 · 图像编辑 ×8 · 少样本学习 ×6
+🔥 **高频主题：** 扩散模型 ×55 · 文生图 ×13 · 图像编辑 ×7 · 个性化生成 ×6 · 对抗鲁棒 ×5
 
 **[2S-ODIS: Two-Stage Omni-Directional Image Synthesis by Geometric Distortion Correction](2s-odis_two-stage_omni-directional_image_synthesis_by_geometric_distortion_corre.md)**
 
@@ -54,10 +54,6 @@ description: >-
 
 :   提出 AnyControl，通过 Multi-Control Encoder（fusion + alignment 交替块结构）支持任意组合的多种空间控制信号（深度、边缘、分割、姿态），在 COCO 多控制基准上 FID 44.28 全面超越现有方法。
 
-**[Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](be_yourself_bounded_attention_for_multi-subject_text-to-image_generation.md)**
-
-:   提出 Bounded Attention，一种无需训练的注意力约束方法，通过在去噪过程中限制 cross-attention 和 self-attention 的信息流动来解决多主体文本到图像生成中的语义泄漏问题。
-
 **[Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](be_yourself_bounded_attention_for_multisubject_texttoimage_g.md)**
 
 :   Be Yourself深入分析了扩散模型中Cross-Attention和Self-Attention导致的多主体语义泄漏问题，提出Bounded Attention机制，通过在去噪过程中限制不同主体间的信息流动来生成语义独立的多主体图像，免训练即可生成5+个语义相似主体。
@@ -90,10 +86,6 @@ description: >-
 
 :   提出 Collaborative Control 范式，通过冻结预训练RGB扩散模型并训练一个并行PBR模型，利用双向跨网络通信层联合建模RGB与PBR图像分布，在有限数据下实现高质量的几何条件PBR材质图像生成。
 
-**[ColorPeel: Color Prompt Learning with Diffusion Models via Color and Shape Disentanglement](colorpeel_color_prompt_learning_with_diffusion_models_v.md)**
-
-:   提出 ColorPeel，通过在目标颜色的基础几何体上联合学习颜色和形状 token 来实现颜色与形状解耦，使 T2I 扩散模型能精确生成用户指定 RGB 颜色的物体。
-
 **[ColorPeel: Color Prompt Learning with Diffusion Models via Color and Shape Disentanglement](colorpeel_color_prompt_learning_with_diffusion_models_via_color_and_shape_disent.md)**
 
 :   提出ColorPeel方法，通过在目标颜色的基本几何形状上学习颜色提示token（解耦颜色与形状），并引入交叉注意力对齐损失，使T2I扩散模型能精确生成用户指定RGB颜色的物体。
@@ -113,10 +105,6 @@ description: >-
 **[DiffiT: Diffusion Vision Transformers for Image Generation](diffit_diffusion_vision_transformers_for_image_generation.md)**
 
 :   提出 DiffiT（Diffusion Vision Transformer），通过引入时间依赖多头自注意力（TMSA）机制，让自注意力在去噪过程的不同阶段动态调整行为，在ImageNet-256上以比DiT/MDT少16-20%的参数量达到了1.73的SOTA FID分数。
-
-**[Diff-Tracker: Text-to-Image Diffusion Models are Unsupervised Trackers](difftracker_texttoimage_diffusion_models_are_unsupervised_tr.md)**
-
-:   首次将预训练T2I扩散模型（Stable Diffusion）应用于无监督视觉跟踪，通过初始提示学习器在cross-attention图上激活目标区域、在线提示更新器融合长短期运动信息动态适应目标运动，在5个基准上全面超越此前最优无监督跟踪器（TrackingNet Success 0.675, VOT2018 EAO 0.365）。
 
 **[Diffusion-based Image-to-Image Translation by Noise Correction via Prompt Interpolation](diffusion-based_image-to-image_translation_by_noise_correction_via_prompt_interp.md)**
 
@@ -142,10 +130,6 @@ description: >-
 
 :   提出DreamDrone——一个零样本、无需训练的无限飞行场景生成管线，通过直接对预训练扩散模型的中间latent code进行warping（而非图像级warping），结合特征对应引导和高通滤波策略，实现高质量、几何一致的无界场景生成。
 
-**[DreamDrone: Text-to-Image Diffusion Models Are Zero-Shot Perpetual View Generators](dreamdrone_texttoimage_diffusion_models_are_zeroshot_perpetu.md)**
-
-:   DreamDrone提出零样本、免训练的无限场景飞越生成pipeline，核心创新是在扩散模型的latent空间进行视角变换（而非像素空间），并通过特征对应引导和高通滤波策略保证帧间的几何一致性和高频细节一致性。
-
 **[DreamMover: Leveraging the Prior of Diffusion Models for Image Interpolation with Large Motion](dreammover_leveraging_the_prior_of_diffusion_models_for_image_interpolation_with.md)**
 
 :   提出 DreamMover，基于预训练文本到图像扩散模型实现大运动图像对之间的插值，通过扩散感知光流估计、两级潜空间融合和自注意力拼接替换三个核心组件，生成语义一致的中间帧。
@@ -166,10 +150,6 @@ description: >-
 
 :   提出 EMDM，通过条件去噪扩散 GAN 捕获大步长下的复杂去噪分布，实现仅需不超过 10 步采样即可实时生成高质量人体动作，推理速度较 MDM 提升约 200 倍。
 
-**[EMDM: Efficient Motion Diffusion Model for Fast and High-Quality Motion Generation](emdm_efficient_motion_diffusion_model_for_fast_and_high.md)**
-
-:   提出 EMDM，通过条件去噪扩散 GAN 捕获大步长采样时的复杂多模态去噪分布，结合几何损失约束，实现 T≤10 步的实时人体运动生成，推理速度提升 60-240 倍，同时保持高质量。
-
 **[Enhancing Diffusion Models with Text-Encoder Reinforcement Learning](enhancing_diffusion_models_with_text-encoder_reinforcement_learning.md)**
 
 :   提出 TexForce，通过强化学习（DDPO）结合 LoRA 微调扩散模型的文本编码器以提升图文对齐和视觉质量，并可无缝与已有 U-Net 微调方法组合获得更优效果。
@@ -186,10 +166,6 @@ description: >-
 
 :   提出 FineMatch 基准，定义了基于方面（Aspect）的细粒度图文不匹配检测与纠正任务，包含 49,906 个高质量人工标注的图文对，并展示了现有 VLM 在细粒度组合性理解上的不足。
 
-**[FineMatch: Aspect-Based Fine-Grained Image and Text Mismatch Detection and Correction](finematch_aspectbased_finegrained_image_and_text_mismat.md)**
-
-:   提出 FineMatch benchmark，要求模型识别图文对中不匹配的方面短语（Entity/Relation/Attribute/Number）、确定类别并提出修正，构建了 49,906 个人工标注样本，并提出 ITM-IoU 评估指标和 AutoAlign 文生图幻觉检测校正系统。
-
 **[FouriScale: A Frequency Perspective on Training-Free High-Resolution Image Synthesis](fouriscale_a_frequency_perspective_on_training-free_high-resolution_image_synthe.md)**
 
 :   提出 FouriScale，从频域分析视角出发，通过膨胀卷积+低通滤波替换预训练扩散模型中的卷积层，实现免训练的任意尺寸高分辨率图像生成，理论上证明了膨胀卷积保持结构一致性的有效性。
@@ -197,10 +173,6 @@ description: >-
 **[FreeCompose: Generic Zero-Shot Image Composition with Diffusion Prior](freecompose_generic_zero-shot_image_composition_with_diffusion_prior.md)**
 
 :   提出 FreeCompose，利用预训练扩散模型的生成先验实现通用零样本图像合成，统一覆盖图像和谐化（外观编辑）和语义图像合成（语义编辑），无需额外训练。
-
-**[FreeDiff: Progressive Frequency Truncation for Image Editing with Diffusion Models](freediff_progressive_frequency_truncation_for_image_edi.md)**
-
-:   从频域视角重新审视扩散模型的去噪过程，发现引导信号中低频成分过强是编辑失真的根本原因，提出渐进式频率截断方法 FreeDiff，无需微调或注意力操作即可实现通用图像编辑。
 
 **[FreeDiff: Progressive Frequency Truncation for Image Editing with Diffusion Models](freediff_progressive_frequency_truncation_for_image_editing_with_diffusion_model.md)**
 
@@ -222,10 +194,6 @@ description: >-
 
 :   系统性调查文本到图像模型的空间关系生成缺陷，发现现有视觉-语言数据集严重缺乏空间描述，据此创建 SPRIGHT 数据集（~600 万张图像重标注空间关系），仅用 <500 张多物体图像微调即在 T2I-CompBench 空间得分上达到 SOTA（0.2133），相比基线提升 41%。
 
-**[Getting it Right: Improving Spatial Consistency in Text-to-Image Models](getting_it_right_improving_spatial_consistency_in_texttoimag.md)**
-
-:   发现现有VL数据集严重缺乏空间关系描述（如left/right/above/behind出现率极低），构建了首个空间聚焦的大规模数据集SPRIGHT（600万张图像重描述），仅用0.25%数据微调即可提升22%空间一致性得分，用<500张多物体图像微调达到T2I-CompBench空间SOTA 0.2133。
-
 **[Harnessing Text-to-Image Diffusion Models for Category-Agnostic Pose Estimation](harnessing_text-to-image_diffusion_models_for_category-agnostic_pose_estimation.md)**
 
 :   提出 Prompt Pose Matching（PPM）框架，利用预训练文本到图像扩散模型中的丰富知识来解决类别无关姿态估计（CAPE），通过学习与关键点对应的伪提示（pseudo prompts）实现零训练基础类别的少样本关键点检测。
@@ -233,10 +201,6 @@ description: >-
 **[HIMO: A New Benchmark for Full-Body Human Interacting with Multiple Objects](himo_a_new_benchmark_for_full-body_human_interacting_with_multiple_objects.md)**
 
 :   提出 HIMO，首个大规模全身人体与多物体交互的 4D MoCap 数据集（3.3K序列，4.08M帧），并附带详细的文本描述和时间段分割标注，提出双分支条件扩散模型及自回归管线，生成协调的多物体交互动作序列。
-
-**[HybridBooth: Hybrid Prompt Inversion for Efficient Subject-Driven Generation](hybridbooth_hybrid_prompt_inversion_for_efficient_subje.md)**
-
-:   提出 HybridBooth，融合优化方法和直接回归方法的优势——先用预训练编码器（Word Embedding Probe）生成初始 word embedding，再通过残差精细化（仅 3-5 步）快速适配特定主体，实现高效高保真的 subject-driven 生成。
 
 **[HybridBooth: Hybrid Prompt Inversion for Efficient Subject-Driven Generation](hybridbooth_hybrid_prompt_inversion_for_efficient_subject-driven_generation.md)**
 
@@ -254,10 +218,6 @@ description: >-
 
 :   提出 Infinite-ID，通过 ID-语义解耦范式将身份信息和文本语义信息分离处理——训练阶段停用文本交叉注意力以专注学习身份嵌入，推理阶段通过混合注意力机制和 AdaIN-mean 操作融合两路信息，在单张参考图下同时实现高保真身份保持和语义一致性。
 
-**[Infinite-ID: Identity-Preserved Personalization via ID-Semantics Decoupling Paradigm](infiniteid_identitypreserved_personalization_via_idsema.md)**
-
-:   提出 Infinite-ID，通过 ID-语义解耦范式将身份信息和文本语义信息分离训练，再通过混合注意力机制和 AdaIN-mean 操作在推理时融合，实现高保真身份保持与精确语义控制的平衡。
-
 **[∞-Brush: Controllable Large Image Synthesis with Diffusion Models in Infinite Dimensions](inftybrush_controllable_large_image_synthesis_with_diffusion.md)**
 
 :   提出首个在无限维函数空间中的条件扩散模型 ∞-Brush，通过交叉注意力神经算子实现可控条件生成，仅用 0.4% 像素训练即可在任意分辨率（最高 4096×4096）上生成保持全局结构的大图像。
@@ -270,10 +230,6 @@ description: >-
 
 :   提出 L-DiffER，一种语言引导的扩散模型，通过迭代条件精化策略解决控制条件不准确问题，结合多条件约束机制保证图像恢复的颜色和结构保真度，同时保留扩散模型的生成能力以处理低透射率反射。
 
-**[Latent Guard: a Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_text-to-image_generation.md)**
-
-:   提出 Latent Guard 框架，通过在文本编码器的潜在空间中学习黑名单概念与输入提示词的嵌入映射，实现高效、灵活且可抵御对抗攻击的文本到图像生成安全检测。
-
 **[Latent Guard: A Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_texttoimage_generation.md)**
 
 :   提出Latent Guard框架，在T2I模型文本编码器之上学习一个潜在空间，通过对比学习将黑名单概念与包含该概念的输入prompt映射到相近位置，实现高效的不安全prompt检测（ID Explicit AUC 0.985），支持黑名单测试时灵活更新且无需重训练。
@@ -281,10 +237,6 @@ description: >-
 **[Lazy Diffusion Transformer for Interactive Image Editing](lazy_diffusion_transformer_for_interactive_image_editing.md)**
 
 :   提出 LazyDiffusion，一种非对称编码器-解码器 Transformer 架构，通过上下文编码器压缩全局信息并仅在 mask 区域执行扩散去噪，实现了与全图生成方法质量相当但速度提升 10 倍的交互式图像编辑。
-
-**[LCM-Lookahead for Encoder-based Text-to-Image Personalization](lcm-lookahead_for_encoder-based_text-to-image_personalization.md)**
-
-:   提出 LCM-Lookahead 机制，利用 Latent Consistency Model 作为快捷路径在扩散训练中反向传播图像空间损失（如身份损失），结合注意力共享和一致性合成数据生成，显著提升基于编码器的人脸个性化中的身份保持和提示词对齐能力。
 
 **[LCM-Lookahead for Encoder-Based Text-to-Image Personalization](lcmlookahead_for_encoderbased_texttoimage_personalization.md)**
 
@@ -301,10 +253,6 @@ description: >-
 **[Learning Trimodal Relation for Audio-Visual Question Answering with Missing Modality](learning_trimodal_relation_for_audio-visual_question_answering_with_missing_moda.md)**
 
 :   提出基于三模态关系的缺失模态AVQA框架，通过关系感知缺失模态生成器（RMM）和音视觉关系感知扩散模型（AVR），在推理时缺少音频或视觉模态的情况下依然能准确回答问题。
-
-**[Learning Trimodal Relation for Audio-Visual Question Answering with Missing Modality](learning_trimodal_relation_for_audiovisual_question_answerin.md)**
-
-:   提出面向音视觉问答（AVQA）的缺失模态处理框架，通过Relation-aware Missing Modal生成器利用三模态关系召回缺失信息，再通过Audio-Visual Relation-aware扩散模型增强特征表示，即使缺少一个模态也能准确回答问题。
 
 **[Lego: Learning to Disentangle and Invert Personalized Concepts Beyond Object Appearance in Text-to-Image Diffusion Models](lego_learning_to_disentangle_and_invert_personalized_concepts_beyond_object_appe.md)**
 
@@ -337,10 +285,6 @@ description: >-
 **[Memory-Efficient Fine-Tuning for Quantized Diffusion Model](memory-efficient_fine-tuning_for_quantized_diffusion_model.md)**
 
 :   提出 TuneQDM，首个面向量化扩散模型的内存高效微调方法，通过多通道量化缩放更新和时间步感知缩放策略，在 4-bit 量化模型上实现了接近全精度模型的个性化生成效果。
-
-**[MixDQ: Memory-Efficient Few-Step Text-to-Image Diffusion Models with Metric-Decoupled Mixed Precision Quantization](mixdq_memory-efficient_few-step_text-to-image_diffusion_models_with_metric-decou.md)**
-
-:   针对少步扩散模型量化的特殊挑战，提出 MixDQ 混合精度量化方法，通过 BOS 感知量化处理文本嵌入中的异常值、度量解耦的敏感性分析分离质量与内容影响，在 1-step SDXL-turbo 上实现 W4A8 无损量化。
 
 **[MixDQ: Memory-Efficient Few-Step Text-to-Image Diffusion Models with Metric-Decoupled Mixed-Precision Quantization](mixdq_memoryefficient_fewstep_texttoimage_diffusion_models_w.md)**
 
@@ -385,14 +329,6 @@ description: >-
 **[Ponymation: Learning Articulated 3D Animal Motions from Unlabeled Online Videos](ponymation_learning_articulated_3d_animal_motions_from_.md)**
 
 :   本文提出一种从无标注互联网视频中学习关节式3D动物运动生成模型的方法，通过视频Photo-Geometric自编码框架将视频分解为静态形状、外观和运动隐编码，无需任何姿态标注或参数化形状模型即可在推理时从单张图像生成多样的4D动画。
-
-**[Ponymation: Learning Articulated 3D Animal Motions from Unlabeled Online Videos](ponymation_learning_articulated_3d_animal_motions_from_unlabeled_online_videos.md)**
-
-:   提出 Ponymation，首次从未标注的网络视频中学习铰接式 3D 动物运动的生成模型，无需姿态标注或参数化形状模板，通过视频光度-几何自编码框架和运动 VAE，能在数秒内从单张图像生成逼真的 4D 动画。
-
-**[Powerful and Flexible: Personalized Text-to-Image Generation via Reinforcement Learning](powerful_and_flexible_personalized_text-to-image_generation_via_reinforcement_le.md)**
-
-:   提出基于确定性策略梯度（DPG）的强化学习框架用于个性化文本到图像生成，通过"前瞻"机制和DINO奖励函数捕获长期视觉一致性，大幅提升生成图像的视觉保真度。
 
 **[Powerful and Flexible: Personalized Text-to-Image Generation via Reinforcement Learning](powerful_and_flexible_personalized_texttoimage_generation_vi.md)**
 
@@ -446,10 +382,6 @@ description: >-
 
 :   本文提出异步分数蒸馏（ASD），通过将扩散时间步前移（而非微调扩散模型）来降低噪声预测误差、对齐渲染图像分布，解决了VSD微调破坏文本理解能力的问题，实现了稳定训练且可扩展至10万条文本提示的prompt-amortized 3D生成器训练。
 
-**[ScaleDreamer: Scalable Text-to-3D Synthesis with Asynchronous Score Distillation](scaledreamer_scalable_textto3d_synthesis_with_asynchronous_s.md)**
-
-:   提出异步分数蒸馏(ASD)，通过将扩散时间步前移（而非微调扩散模型）来减小噪声预测误差，实现稳定的3D生成器训练并可扩展到100K文本提示，保持扩散模型的文本理解能力不受损。
-
 **[ShapeFusion: A 3D Diffusion Model for Localized Shape Editing](shapefusion_a_3d_diffusion_model_for_localized_shape_editing.md)**
 
 :   提出一种基于掩码扩散训练策略的3D网格局部编辑方法ShapeFusion，通过在顶点空间直接操作实现完全局部化、可解释的3D形状编辑，无需潜在空间优化。
@@ -481,10 +413,6 @@ description: >-
 **[Text2Place: Affordance-aware Text Guided Human Placement](text2place_affordance-aware_text_guided_human_placement.md)**
 
 :   提出Text2Place——首个通过文本引导实现真实感人物放置的方法，利用SDS损失优化基于高斯blob的语义掩码学习场景可供性（affordance），再通过主体条件修复实现身份保持的人物放置。
-
-**[Text2Place: Affordance-Aware Text Guided Human Placement](text2place_affordanceaware_text_guided_human_placement.md)**
-
-:   提出 Text2Place，通过 SDS 损失优化 Gaussian blob 参数化的语义掩码学习场景中的人体 affordance，再结合主体条件修复实现逼真的文本引导人物放置，无需大规模训练。
 
 **[Textual-Visual Logic Challenge: Understanding and Reasoning in Text-to-Image Generation](textual-visual_logic_challenge_understanding_and_reasoning_in_text-to-image_gene.md)**
 

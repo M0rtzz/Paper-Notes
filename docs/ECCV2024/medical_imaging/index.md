@@ -1,18 +1,18 @@
 ---
 title: >-
-  ECCV2024 医学图像方向31篇论文解读
+  ECCV2024 医学图像方向27篇论文解读
 description: >-
-  31篇ECCV2024的医学图像方向论文解读，涵盖医学影像、少样本学习、扩散模型、语义分割、自监督学习、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  27篇ECCV2024的医学图像方向论文解读，涵盖医学影像、扩散模型、语义分割、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**🎞️ ECCV2024** · **31** 篇论文解读
+**🎞️ ECCV2024** · **27** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (153)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (72)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (105)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (141)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (40)](../../ICCV2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (114)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (72)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (105)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (141)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (38)](../../ICCV2025/medical_imaging/index.md)
 
-🔥 **高频主题：** 医学影像 ×17 · 少样本学习 ×3 · 扩散模型 ×3 · 语义分割 ×3 · 自监督学习 ×2
+🔥 **高频主题：** 医学影像 ×14 · 扩散模型 ×3 · 语义分割 ×3 · 少样本学习 ×2
 
 **[A Cephalometric Landmark Regression Method Based on Dual-Encoder for High-Resolution X-Ray Image](a_cephalometric_landmark_regression_method_based_on_dual-encoder_for_high-resolu.md)**
 
@@ -74,10 +74,6 @@ description: >-
 
 :   提出基于异构图的全模态生物医学表征学习框架 GTP-4o，通过异构图嵌入显式建模跨模态关系，利用图提示机制补全缺失模态，并设计知识引导的层次化跨模态聚合，在胶质瘤分级和生存预测任务上取得SOTA。
 
-**[GTP-4o: Modality-prompted Heterogeneous Graph Learning for Omni-modal Biomedical Representation](gtp4o_modalityprompted_heterogeneous_graph_learning_for.md)**
-
-:   提出 GTP-4o，一种基于异构图的全模态生物医学学习框架，通过图提示机制补全缺失模态、知识引导的层次聚合融合基因组学/病理图像/细胞图/文本四种异构临床模态。
-
 **[I-MedSAM: Implicit Medical Image Segmentation with Segment Anything](i-medsam_implicit_medical_image_segmentation_with_segment_anything.md)**
 
 :   提出 I-MedSAM，将 SAM 的强泛化能力与隐式神经表示（INR）的连续空间预测优势结合，通过频率适配器增强边界高频信息、不确定性引导采样精细化分割，仅用 1.6M 可训练参数即超越现有离散和隐式方法。
@@ -85,10 +81,6 @@ description: >-
 **[Improving Medical Multi-modal Contrastive Learning with Expert Annotations](improving_medical_multi-modal_contrastive_learning_with_expert_annotations.md)**
 
 :   提出 eCLIP，通过整合放射科专家的眼动注视热力图作为额外监督信号，结合 mixup 增强和课程学习策略，在不修改 CLIP 核心架构的前提下增强医学多模态对比学习的表征质量。
-
-**[Improving Medical Multi-modal Contrastive Learning with Expert Annotations](improving_medical_multimodal_contrastive_learning_with_exper.md)**
-
-:   提出eCLIP，通过引入放射科医生的眼动热力图（eye-gaze heatmap）作为专家标注，利用热力图处理器和mixup增强策略扩充高质量正样本对，有效缓解医学CLIP中的"模态间隙"问题，在零样本推理、线性探测、跨模态检索和RAG报告生成等任务上取得一致性提升。
 
 **[Is User Feedback Always Informative? Retrieval Latent Defending for Semi-Supervised Domain Adaptation without Source Data](is_user_feedback_always_informative_retrieval_latent_defending_for_semi-supervis.md)**
 
@@ -101,10 +93,6 @@ description: >-
 **[Pathology-knowledge Enhanced Multi-instance Prompt Learning for Few-shot Whole Slide Image Classification](pathology-knowledge_enhanced_multi-instance_prompt_learning_for_few-shot_whole_s.md)**
 
 :   提出 PEMP 框架，将病理学先验知识（视觉样例 + 文本描述）融入 patch 级和 slide 级的 prompt 中，结合 CLIP 进行多实例 prompt learning，在少样本弱监督 WSI 分类任务上平均超越 SOTA 方法 4%。
-
-**[Pathology-knowledge Enhanced Multi-instance Prompt Learning for Few-shot Whole Slide Image Classification](pathologyknowledge_enhanced_multiinstance_prompt_learni.md)**
-
-:   提出 PEMP——病理知识增强的多实例提示学习框架，将视觉和文本病理先验（典型 patch/slide 示例 + 语言描述）注入 CLIP 的提示中，在 patch 和 slide 两个层级进行对比学习，显著提升少样本全切片图像（WSI）分类性能。
 
 **[RadEdit: Stress-Testing Biomedical Vision Models via Diffusion Image Editing](radedit_stress-testing_biomedical_vision_models_via_diffusion_image_editing.md)**
 
@@ -125,10 +113,6 @@ description: >-
 **[TIP: Tabular-Image Pre-training for Multimodal Classification with Incomplete Data](tip_tabular-image_pre-training_for_multimodal_classification_with_incomplete_dat.md)**
 
 :   提出 TIP 框架，通过掩码表格重建、图像-表格匹配和对比学习三种自监督任务，对表格数据和图像进行联合预训练，学习对不完整表格数据鲁棒的多模态表征，用于下游分类任务。
-
-**[TIP: Tabular-Image Pre-training for Multimodal Classification with Incomplete Data](tip_tabularimage_pretraining_for_multimodal_classification_w.md)**
-
-:   提出TIP框架，通过掩码表格重建、图像-表格匹配和对比学习三个自监督任务，在表格数据不完整的条件下学习鲁棒的多模态表示，在自然图像和医学图像分类任务上超越现有方法。
 
 **[Topology-Preserving Downsampling of Binary Images](topology-preserving_downsampling_of_binary_images.md)**
 

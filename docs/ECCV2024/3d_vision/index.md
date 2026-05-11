@@ -1,18 +1,18 @@
 ---
 title: >-
-  ECCV2024 3D 视觉方向172篇论文解读
+  ECCV2024 3D 视觉方向166篇论文解读
 description: >-
-  172篇ECCV2024的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、点云、扩散模型、NeRF、Text-to-3D、新视角合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  166篇ECCV2024的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、点云、NeRF、新视角合成、Text-to-3D等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**🎞️ ECCV2024** · **172** 篇论文解读
+**🎞️ ECCV2024** · **166** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (252)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (65)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (74)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (116)](../../NeurIPS2025/3d_vision/index.md) · [📹 ICCV2025 (268)](../../ICCV2025/3d_vision/index.md) · [🧪 ICML2025 (11)](../../ICML2025/3d_vision/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (230)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (63)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (74)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (116)](../../NeurIPS2025/3d_vision/index.md) · [📹 ICCV2025 (254)](../../ICCV2025/3d_vision/index.md) · [🧪 ICML2025 (11)](../../ICML2025/3d_vision/index.md)
 
-🔥 **高频主题：** 3D 高斯渲染 ×34 · 点云 ×20 · 扩散模型 ×20 · NeRF ×16 · Text-to-3D ×12
+🔥 **高频主题：** 3D 高斯渲染 ×34 · 扩散模型 ×20 · 点云 ×19 · NeRF ×16 · 新视角合成 ×11
 
 **[3D Congealing: 3D-Aware Image Alignment in the Wild](3d_congealing_3d-aware_image_alignment_in_the_wild.md)**
 
@@ -134,10 +134,6 @@ description: >-
 
 :   提出 Cross-Reference（CR）图像质量评估新范式，通过对比查询图像与多个不同视角参考图像，利用 cross-attention 神经网络预测与 SSIM 高度相关的像素级质量分数，无需 ground truth 参考图像即可评估新视角合成质量。
 
-**[CrossScore: Towards Multi-View Image Evaluation and Scoring](crossscore_towards_multiview_image_evaluation_and_scori.md)**
-
-:   提出 CrossScore——一种新型的交叉参考图像质量评估方法，利用多视角参考图像替代真实参考图，通过 cross-attention 机制预测 SSIM 分数图，在无需 ground truth 的条件下实现接近全参考指标的评估精度。
-
 **[D-SCo: Dual-Stream Conditional Diffusion for Monocular Hand-Held Object Reconstruction](d-sco_dual-stream_conditional_diffusion_for_monocular_hand-held_object_reconstru.md)**
 
 :   提出双流条件扩散模型 D-SCo 从单张 RGB 图像重建手持物体点云，通过统一手-物语义嵌入和手关节几何嵌入两个分支分别提供语义和几何先验，配合手约束质心固定策略稳定扩散过程，在 ObMan 上 F-5 达 0.61（超 DDF-HO 10.9%），真实数据集 HO3D/MOW 上也大幅领先。
@@ -161,10 +157,6 @@ description: >-
 **[DG-PIC: Domain Generalized Point-In-Context Learning for Point Cloud Understanding](dg-pic_domain_generalized_point-in-context_learning_for_point_cloud_understandin.md)**
 
 :   提出 DG-PIC，首个在统一模型中同时处理多领域多任务的点云理解框架，通过双层次源域原型估计和测试时特征平移机制，在不更新模型的情况下提升对未知域的泛化能力。
-
-**[DG-PIC: Domain Generalized Point-In-Context Learning for Point Cloud Understanding](dgpic_domain_generalized_pointincontext_learning_for_po.md)**
-
-:   提出 DG-PIC，首个在统一模型中同时处理多域多任务点云理解的方法，通过双层源域原型估计和双层测试时特征平移机制，在无需模型更新的情况下提升对未见域的泛化能力。
 
 **[Differentiable Convex Polyhedra Optimization from Multi-view Images](differentiable_convex_polyhedra_optimization_from_multi-view_images.md)**
 
@@ -194,10 +186,6 @@ description: >-
 
 :   提出DreamView，通过自适应文本引导注入模块，将视角特定的文本描述和全局文本描述协同注入扩散模型，实现可定制化且多视角一致的文本到3D生成。
 
-**[DreamView: Injecting View-Specific Text Guidance into Text-to-3D Generation](dreamview_injecting_viewspecific_text_guidance_into_textto3d.md)**
-
-:   提出DreamView，通过自适应引导注入模块在扩散模型每个U-Net block中动态选择全局文本或视角特定文本作为条件，实现视角级3D定制化生成（如T恤正反面不同图案），同时保持实例级一致性，用户偏好率74.5%。
-
 **[Dual-level Adaptive Self-Labeling for Novel Class Discovery in Point Cloud Segmentation](dual-level_adaptive_self-labeling_for_novel_class_discovery_in_point_cloud_segme.md)**
 
 :   提出双层自适应自标注方法，通过半松弛最优传输处理类别不平衡问题，并结合区域级表示增强点级分类器的学习，在点云分割中实现高效的新类发现。
@@ -221,10 +209,6 @@ description: >-
 **[External Knowledge Enhanced 3D Scene Generation from Sketch](external_knowledge_enhanced_3d_scene_generation_from_sketch.md)**
 
 :   提出SEK框架，结合手绘草图和外部物体关系知识库作为扩散模型的条件，通过知识增强图推理和频谱滤波器，端到端地同时生成3D室内场景的布局和物体几何形状。
-
-**[FALIP: Visual Prompt as Foveal Attention Boosts CLIP Zero-Shot Performance](falip_visual_prompt_as_foveal_attention_boosts_clip_zer.md)**
-
-:   提出 FALIP（Foveal-Attention CLIP），通过在 CLIP 的多头自注意力模块中插入类似人眼中央凹的注意力掩码，在不修改原始图像内容的前提下引导模型关注特定区域，显著提升指代表达理解、图像分类和 3D 点云识别等零样本任务的性能。
 
 **[FALIP: Visual Prompt as Foveal Attention Boosts CLIP Zero-Shot Performance](falip_visual_prompt_as_foveal_attention_boosts_clip_zero-shot_performance.md)**
 
@@ -566,17 +550,9 @@ description: >-
 
 :   提出 SceneGraphLoc，将查询图像在由多模态 3D 场景图组成的参考地图中进行粗定位，在不依赖大规模图像数据库的前提下，实现了接近 SOTA 图像级方法的定位精度，同时存储需求降低三个数量级。
 
-**[SceneGraphLoc: Cross-Modal Coarse Visual Localization on 3D Scene Graphs](scenegraphloc_crossmodal_coarse_visual_localization_on_3d_sc.md)**
-
-:   提出SceneGraphLoc，首次将queryimage在多模态3D场景图数据库中进行粗定位，通过学习场景图节点和图像patch的统一嵌入空间，在存储效率提升1000倍的同时接近图像检索方法的定位精度。
-
 **[SceneVerse: Scaling 3D Vision-Language Learning for Grounded Scene Understanding](sceneverse_scaling_3d_vision-language_learning_for_grounded_scene_understanding.md)**
 
 :   提出首个百万级 3D 视觉-语言数据集 SceneVerse（68K 室内场景 + 2.5M 场景-语言对），结合多层级对比预训练框架 GPS，在 3D visual grounding 和 QA 任务上取得 SOTA，并展现零样本迁移能力。
-
-**[SceneVerse: Scaling 3D Vision-Language Learning for Grounded Scene Understanding](sceneverse_scaling_3d_visionlanguage_learning_for_grounded_s.md)**
-
-:   提出SceneVerse——首个百万级3D视觉语言数据集（68K场景+250万语言描述），通过结合人工标注和基于场景图的自动生成pipeline构建多粒度描述，并设计GPS预训练框架实现多层次场景-文本对齐，在3D grounding和QA基准上达到SOTA。
 
 **[SEDiff: Structure Extraction for Domain Adaptive Depth Estimation via Denoising Diffusion Models](sediff_structure_extraction_for_domain_adaptive_depth_estimation_via_denoising_d.md)**
 

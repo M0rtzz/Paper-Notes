@@ -1,18 +1,18 @@
 ---
 title: >-
-  ICML2025 LLM 推理方向17篇论文解读
+  ICML2025 LLM 推理方向15篇论文解读
 description: >-
-  17篇ICML2025的 LLM 推理方向论文解读，涵盖推理、LLM、机器人、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  15篇ICML2025的 LLM 推理方向论文解读，涵盖推理、LLM、机器人、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💡 LLM 推理
 
-**🧪 ICML2025** · **17** 篇论文解读
+**🧪 ICML2025** · **15** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (37)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (71)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (67)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (37)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (12)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (65)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (66)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
 
-🔥 **高频主题：** 推理 ×11 · LLM ×4
+🔥 **高频主题：** 推理 ×9 · LLM ×4
 
 **[Ad-Hoc Human-AI Coordination Challenge (AH2AC2)](ad-hoc_human-ai_coordination_challenge.md)**
 
@@ -50,10 +50,6 @@ description: >-
 
 :   提出 PCoT（Persuasion-Augmented Chain of Thought），通过两阶段推理——先让 LLM 识别文本中的说服策略，再将说服分析结果注入虚假信息检测推理——在零样本设置下，跨 5 个 LLM 和 5 个数据集平均提升 F1 约 15%。
 
-**[PCoT: Persuasion-Augmented Chain of Thought for Detecting Fake News and Social Media Disinformation](pcot_persuasion_disinfo.md)**
-
-:   本文提出 PCoT（说服增强链式思维）方法，通过两阶段推理——先让 LLM 识别文本中的说服策略，再利用该分析进行虚假信息检测——在五个数据集和五个 LLM 上实现平均 15% 的 F1 提升，并发布了两个新的后知识截止期虚假信息数据集。
-
 **[PENCIL: Long Thoughts with Short Memory](pencil_long_thoughts_with_short_memory.md)**
 
 :   提出 **PENCIL**（PENCIL ENables Context-efficient Inference and Learning），在自回归生成过程中引入受函数调用栈启发的**归约规则（reduction rule）**，递归地清除不再需要的中间推理步骤，使LLM能以多项式级上下文长度解决本需指数级上下文的计算难题。
@@ -65,10 +61,6 @@ description: >-
 **[Putnam-AXIOM: A Functional & Static Benchmark for Measuring Higher Level Mathematical Reasoning in LLMs](putnam-axiom_a_functional_and_static_benchmark_for_measuring_higher_level_mathem.md)**
 
 :   提出 Putnam-AXIOM —— 522 道大学级 Putnam 竞赛数学题 + 100 道程序化功能变体，揭示 LLM 数学推理中的记忆依赖，并引入 Teacher-Forced Accuracy (TFA) 作为超越最终答案的推理质量评估指标。
-
-**[Towards Better Chain-of-Thought: A Reflection on Effectiveness and Faithfulness](quire_better_cot.md)**
-
-:   本文从有效性和忠实性两个角度系统分析影响 CoT 性能的关键因素，发现问题难度、信息增益和信息流是有效性的核心因素，并揭示 LLM 在预测答案时可从问题中直接召回 CoT 缺失的正确信息导致不忠实推理，进而提出 QUIRE 方法同时提升 CoT 的忠实性和有效性。
 
 **[Rethinking External Slow-Thinking: From Snowball Errors to Probability of Correct Reasoning](rethinking_external_slow-thinking_from_snowball_errors_to_probability_of_correct.md)**
 

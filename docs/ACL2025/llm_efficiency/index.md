@@ -1,18 +1,18 @@
 ---
 title: >-
-  ACL2025 LLM 效率方向37篇论文解读
+  ACL2025 LLM 效率方向36篇论文解读
 description: >-
-  37篇ACL2025的 LLM 效率方向论文解读，涵盖 LLM、文本摘要、对话系统、问答、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  36篇ACL2025的 LLM 效率方向论文解读，涵盖 LLM、文本摘要、对话系统、问答、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚡ LLM 效率
 
-**💬 ACL2025** · **37** 篇论文解读
+**💬 ACL2025** · **36** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (8)](../../ACL2026/llm_efficiency/index.md) · [📷 CVPR2026 (4)](../../CVPR2026/llm_efficiency/index.md) · [🔬 ICLR2026 (19)](../../ICLR2026/llm_efficiency/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/llm_efficiency/index.md) · [🧠 NeurIPS2025 (35)](../../NeurIPS2025/llm_efficiency/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/llm_efficiency/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (8)](../../ACL2026/llm_efficiency/index.md) · [📷 CVPR2026 (4)](../../CVPR2026/llm_efficiency/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/llm_efficiency/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/llm_efficiency/index.md) · [🧠 NeurIPS2025 (35)](../../NeurIPS2025/llm_efficiency/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/llm_efficiency/index.md)
 
-🔥 **高频主题：** LLM ×9
+🔥 **高频主题：** LLM ×8
 
 **[A Drop-In Solution for On-the-Fly Adaptation of Speculative Decoding in Large Language Models](a_drop-in_solution_for_on-the-fly_adaptation_of_speculative_decoding_in_large_la.md)**
 
@@ -65,10 +65,6 @@ description: >-
 **[FocusLLM: Precise Understanding of Long Context by Dynamic Condensing](focusllm_precise_understanding_of_long_context_by_dynamic_condensing.md)**
 
 :   提出FocusLLM框架，通过将长文本分块并为每块注入动态提示（dynamic prompt），用可训练的候选token浓缩各块的关键信息，再通过并行解码机制聚合到本地上下文中生成下一个token，仅用8K训练长度和0.5B训练预算即可扩展LLaMA-2到400K上下文，在LongBench和∞-Bench上超越所有基线。
-
-**[Unveiling Environmental Impacts of Large Language Model Serving: A Functional Unit View](fuel-unveiling-environmental-impacts-of-llm-serving.md)**
-
-:   本文引入生命周期评估中"功能单元"（Functional Unit）概念作为标准化比较基础，提出 FUEL 框架来评估 LLM 服务的环境影响，通过三个案例研究（模型大小、量化策略、硬件选择）揭示了降低碳排放的关键权衡。
 
 **[FUEL: Unveiling Environmental Impacts of Large Language Model Serving: A Functional Unit View](fuel_unveiling_environmental_impacts_of_llm_serving.md)**
 

@@ -1,18 +1,18 @@
 ---
 title: >-
-  CVPR2026 音频/语音方向17篇论文解读
+  CVPR2026 音频/语音方向15篇论文解读
 description: >-
-  17篇CVPR2026的音频/语音方向论文解读，涵盖语音、多模态、个性化生成、问答等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  15篇CVPR2026的音频/语音方向论文解读，涵盖语音、多模态、导航、情感分析、个性化生成、问答等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎵 音频/语音
 
-**📷 CVPR2026** · **17** 篇论文解读
+**📷 CVPR2026** · **15** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (29)](../../ACL2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (13)](../../ICCV2025/audio_speech/index.md) · [🧪 ICML2025 (7)](../../ICML2025/audio_speech/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (29)](../../ACL2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/audio_speech/index.md) · [🧪 ICML2025 (7)](../../ICML2025/audio_speech/index.md)
 
-🔥 **高频主题：** 语音 ×7 · 多模态 ×7 · 个性化生成 ×2 · 问答 ×2
+🔥 **高频主题：** 语音 ×6 · 多模态 ×5
 
 **[BabyVLM-V2: Toward Developmentally Grounded Pretraining and Benchmarking of Vision Foundation Models](babyvlm-v2_toward_developmentally_grounded_pretraining_and_benchmarking_of_visio.md)**
 
@@ -58,10 +58,6 @@ description: >-
 
 :   首次将 VLM（Qwen3-VL-4B-Instruct）提取的情感行为描述嵌入作为独立第三模态，与 GRADA 人脸编码器和 WavLM 音频特征通过 DCMMOE 和 RAAV 两种融合策略组合，在 Aff-Wild2 上达到连续 VA 估计 CCC 0.658（dev）/ 0.62（test），验证了 VLM 行为语义对连续情感识别的价值。
 
-**[Team RAS in 10th ABAW Competition: Multimodal Valence and Arousal Estimation Approach](team_ras_in_10th_abaw_competition_multimodal_valence_and_arousal_estimation_appr.md)**
-
-:   提出一种结合人脸视觉特征、VLM行为描述嵌入和音频特征的多模态方法用于连续效价-唤醒（VA）估计，通过两种融合策略（DCMMOE 和 RAAV）在 Aff-Wild2 数据集上取得了竞争力的结果。
-
 **[Tri-Subspaces Disentanglement for Multimodal Sentiment Analysis](tri-subspaces_disentanglement_for_multimodal_sentiment_analysis.md)**
 
 :   提出 TSD 框架，将多模态特征显式分解为全局共享/成对共享/模态专属三个互补子空间，并通过子空间感知跨注意力融合模块自适应整合三层信息，在 CMU-MOSI/MOSEI 上全面 SOTA。
@@ -73,10 +69,6 @@ description: >-
 **[Unlocking Strong Supervision: A Data-Centric Study of General-Purpose Audio Pre-Training Methods](unlocking_strong_supervision_a_data-centric_study_of_general-purpose_audio_pre-t.md)**
 
 :   本文通过系统的数据中心实验证明音频预训练性能主要由标签/监督质量驱动而非模型设计，提出 Unified Tag System (UTS) 将语音、音乐、环境音统一到 800-3k 标签的高粒度词表中，UTS 训练的模型用 5 倍更少的数据在语音（VoxCeleb2）和音乐（MusicCaps）等域外任务上超越 AudioSet 基线。
-
-**[ViDscribe: Multimodal AI for Customizing Audio Description and Question Answering in Online Videos](vidscribe_multimodal_ai_customizing_audio_description_videos.md)**
-
-:   提出 ViDscribe 网络平台，集成 AI 生成的音频描述（含 6 种用户定制选项）和会话式视觉问答接口，通过 8 名盲人低视力用户的纵向实地研究证明定制化音频描述显著提升有效性、愉悦感和沉浸感。
 
 **[ViDscribe: Multimodal AI for Customizing Audio Description and Question Answering in Online Videos](vidscribe_multimodal_ai_for_customizing_audio_description_and_question_answering.md)**
 

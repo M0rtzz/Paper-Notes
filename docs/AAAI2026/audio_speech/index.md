@@ -10,7 +10,7 @@ description: >-
 
 **🤖 AAAI2026** · **31** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (29)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (17)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (13)](../../ICCV2025/audio_speech/index.md) · [🧪 ICML2025 (7)](../../ICML2025/audio_speech/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (29)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/audio_speech/index.md) · [🧪 ICML2025 (7)](../../ICML2025/audio_speech/index.md)
 
 🔥 **高频主题：** 语音 ×9 · 情感分析 ×6 · 多模态 ×4 · 对话系统 ×2 · LLM ×2
 

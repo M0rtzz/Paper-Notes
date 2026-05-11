@@ -1,18 +1,18 @@
 ---
 title: >-
-  NeurIPS2025 自监督/表示学习方向36篇论文解读
+  NeurIPS2025 自监督/表示学习方向35篇论文解读
 description: >-
-  36篇NeurIPS2025的自监督/表示学习方向论文解读，涵盖自监督学习、持续学习、LLM、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  35篇NeurIPS2025的自监督/表示学习方向论文解读，涵盖自监督学习、持续学习、对抗鲁棒、推理、少样本学习、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔄 自监督/表示学习
 
-**🧠 NeurIPS2025** · **36** 篇论文解读
+**🧠 NeurIPS2025** · **35** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (2)](../../ACL2026/self_supervised/index.md) · [📷 CVPR2026 (38)](../../CVPR2026/self_supervised/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/self_supervised/index.md) · [🤖 AAAI2026 (14)](../../AAAI2026/self_supervised/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/self_supervised/index.md) · [🧪 ICML2025 (24)](../../ICML2025/self_supervised/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (2)](../../ACL2026/self_supervised/index.md) · [📷 CVPR2026 (31)](../../CVPR2026/self_supervised/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/self_supervised/index.md) · [🤖 AAAI2026 (14)](../../AAAI2026/self_supervised/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/self_supervised/index.md) · [🧪 ICML2025 (24)](../../ICML2025/self_supervised/index.md)
 
-🔥 **高频主题：** 自监督学习 ×6 · 持续学习 ×2 · LLM ×2 · 强化学习 ×2
+🔥 **高频主题：** 自监督学习 ×5 · 持续学习 ×2
 
 **[A Joint Learning Approach to Hardware Caching and Prefetching](a_joint_learning_approach_to_hardware_caching_and_prefetching.md)**
 
@@ -81,10 +81,6 @@ description: >-
 **[Long-Tailed Recognition via Information-Preservable Two-Stage Learning](long-tailed_recognition_via_information-preservable_two-stage_learning.md)**
 
 :   提出信息保持的两阶段学习框架：第一阶段用 Balanced Negative Sampling (BNS) 基于互信息最大化学习有效且可分的特征空间，第二阶段用 Information-Preservable DPP (IP-DPP) 采样数学上信息量最大的样本来纠正多数类偏向的决策边界，在多个长尾数据集上取得 SOTA。
-
-**[M-GRPO: Stabilizing Self-Supervised Reinforcement Learning for Large Language Models with Momentum-Anchored Policy Optimization](m-grpo_stabilizing_self-supervised_reinforcement_learning_for_large_language_mod.md)**
-
-:   针对自监督强化学习中 LLM 策略崩溃和熵崩溃问题，提出动量锚定的 GRPO（M-GRPO）框架和基于 IQR 的低熵轨迹过滤方法，实现稳定训练和 SOTA 性能。
 
 **[M-GRPO: Stabilizing Self-Supervised Reinforcement Learning for Large Language Models with Momentum-Anchored Policy Optimization](m-grpo_stabilizing_self-supervised_reinforcement_learning_for_multimodal_underst.md)**
 

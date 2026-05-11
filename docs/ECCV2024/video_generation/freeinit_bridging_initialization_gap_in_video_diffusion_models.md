@@ -214,7 +214,7 @@ FVD 全面改善，运动流畅度和动态程度更接近真实视频。
 
 ## 相关论文
 
-- [\[ECCV 2024\] Exploring Pre-trained Text-to-Video Diffusion Models for Referring Video Object Segmentation](exploring_pretrained_texttovideo_diffusion_models_for_referr.md)
+- [\[ECCV 2024\] Exploring Pre-trained Text-to-Video Diffusion Models for Referring Video Object Segmentation](exploring_pre-trained_text-to-video_diffusion_models_for_referring_video_object_.md)
 - [\[ECCV 2024\] SV3D: Novel Multi-view Synthesis and 3D Generation from a Single Image using Latent Video Diffusion](sv3d_novel_multi-view_synthesis_and_3d_generation_from_a_single_image_using_late.md)
 - [\[ECCV 2024\] Kalman-Inspired Feature Propagation for Video Face Super-Resolution](kalman-inspired_feature_propagation_for_video_face_super-resolution.md)
 - [\[ECCV 2024\] VFusion3D: Learning Scalable 3D Generative Models from Video Diffusion Models](vfusion3d_learning_scalable_3d_generative_models_from_video_diffusion_models.md)

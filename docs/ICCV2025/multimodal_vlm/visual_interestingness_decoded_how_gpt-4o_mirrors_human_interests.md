@@ -142,7 +142,7 @@ tags:
 - [\[ACL 2025\] Evaluating Visual and Cultural Interpretation: The K-Viscuit Benchmark with Human-VLM Collaboration](../../ACL2025/multimodal_vlm/evaluating_visual_and_cultural_interpretation_the_k-viscuit_benchmark_with_human.md)
 - [\[CVPR 2025\] RLAIF-V: Open-Source AI Feedback Leads to Super GPT-4V Trustworthiness](../../CVPR2025/multimodal_vlm/rlaif-v_open-source_ai_feedback_leads_to_super_gpt-4v_trustworthiness.md)
 - [\[ICLR 2026\] VLM-SubtleBench: How Far Are VLMs from Human-Level Subtle Comparative Reasoning?](../../ICLR2026/multimodal_vlm/vlm-subtlebench_how_far_are_vlms_from_human-level_subtle_comparative_reasoning.md)
-- [\[ACL 2025\] VLM2-Bench: A Closer Look at How Well VLMs Implicitly Link Explicit Matching Visual Cues](../../ACL2025/multimodal_vlm/vlm2-bench-visual-cue-linking.md)
+- [\[ACL 2025\] VLM2-Bench: A Closer Look at How Well VLMs Implicitly Link Explicit Matching Visual Cues](../../ACL2025/multimodal_vlm/vlm2-bench_a_closer_look_at_how_well_vlms_implicitly_link_explicit_matching_visu.md)
 
 </div>
 

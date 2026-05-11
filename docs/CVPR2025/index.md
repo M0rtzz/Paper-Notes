@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 1837篇论文解读
+  CVPR2025 1822篇论文解读
 description: >-
-  1837篇CVPR2025论文解读，涵盖 3D 视觉(359篇)、图像生成(306篇)、多模态 VLM(154篇)、语义分割(98篇)、自动驾驶(95篇)、视频生成(85篇)、医学图像(83篇)、视频理解(77篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1822篇CVPR2025论文解读，涵盖 3D 视觉(359篇)、图像生成(305篇)、多模态 VLM(154篇)、语义分割(98篇)、自动驾驶(94篇)、视频生成(84篇)、医学图像(83篇)、视频理解(77篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📷 CVPR2025 论文笔记
 
-1837篇CVPR2025论文解读，涵盖 3D 视觉(359篇)、图像生成(306篇)、多模态 VLM(154篇)、语义分割(98篇)、自动驾驶(95篇)、视频生成(85篇)、医学图像(83篇)、视频理解(77篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1822篇CVPR2025论文解读，涵盖 3D 视觉(359篇)、图像生成(305篇)、多模态 VLM(154篇)、语义分割(98篇)、自动驾驶(94篇)、视频生成(84篇)、医学图像(83篇)、视频理解(77篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -1914,10 +1914,6 @@ description: >-
 
 :   LayerDecomp 提出了一个基于 Diffusion Transformer 的图像图层分解框架，将输入图像分解为干净的 RGB 背景层和带有透明视觉效果（阴影、反射）的 RGBA 前景层，通过一致性损失在无标注数据上也能学到正确的前景表示，大幅超越现有物体移除和空间编辑方法。
 
-**[Generative Modeling of Class Probability for Multi-Modal Representation Learning](image_generation/generative_modeling_of_class_probability_for_multi-modal_representation_learning.md)**
-
-:   CALM 通过类锚点（class anchors）将视频和文本特征映射到统一的概率分布空间，再用跨模态 VAE 建模模态间不确定性，在域内检索（MSR-VTT R@1 50.8%）和跨域检索（MSR-VTT→DiDeMo R@1 41.2%）上均超越 SOTA，仅增加 0.5M 参数。
-
 **[Generative Modeling of Class Probability for Multi-Modal Representation Learning](image_generation/generative_modeling_of_class_probability_for_multi_modal_representation_learning.md)**
 
 :   CALM（Class-anchor-ALigned generative Modeling）提出用独立类别标签作为锚点，生成各模态与锚点的概率分布并通过跨模态概率 VAE 对齐，有效缓解视频文本之间的信息不平衡和模态差异问题，在四个benchmark上显著超越SOTA，尤其在跨域泛化性上表现突出。
@@ -3718,10 +3714,6 @@ description: >-
 
 :   构建了首个大规模攀岩运动多模态数据集 AscendMotion（412K帧，RGB+LiDAR+IMU），并提出 ClimbingCap 方法通过分离坐标解码、后处理优化和半监督训练，在世界坐标系中精确恢复攀岩者的3D运动。
 
-**[ClimbingCap: Multi-Modal Dataset and Method for Rock Climbing in World Coordinate](autonomous_driving/climbingcap_multi-modal_dataset_and_method_for_rock_climbing_in_world_coordinate.md)**
-
-:   提出首个攀岩运动多模态数据集 AscendMotion（412K 帧 RGB+LiDAR+IMU，22 名专业攀岩者，12 面攀岩墙），以及 ClimbingCap 方法通过分离坐标解码、三重后处理优化和半监督训练实现世界坐标系下的 3D 攀岩动作恢复，MPJPE 达 75.45mm。
-
 **[Closed-Loop Supervised Fine-Tuning of Tokenized Traffic Models](autonomous_driving/closed-loop_supervised_fine-tuning_of_tokenized_traffic_models.md)**
 
 **[CompoSIA: Composing Driving Worlds through Disentangled Control for Adversarial Scenario Generation](autonomous_driving/composing_driving_worlds_through_disentangled_control_for_adversarial_scenario_g.md)**
@@ -4083,10 +4075,6 @@ description: >-
 **[BF-STVSR: B-Splines and Fourier—Best Friends for High Fidelity Spatial-Temporal Video Super-Resolution](video_generation/bf-stvsr_b-splines_and_fourier---best_friends_for_high_fidelity_spatia.md)**
 
 :   提出 BF-STVSR 框架，用 B-spline Mapper 建模时间运动插值、Fourier Mapper 捕获空间高频细节，无需外部光流网络即可实现连续时空视频超分辨率的 SOTA 性能。
-
-**[BF-STVSR: B-Splines and Fourier—Best Friends for High Fidelity Spatial-Temporal Video Super-Resolution](video_generation/bf-stvsr_b-splines_and_fourier---best_friends_for_high_fidelity_spatial-temporal.md)**
-
-:   提出 BF-STVSR，结合 B 样条映射器（时间平滑插值）和傅里叶映射器（空间高频捕获）实现连续时空视频超分辨率，完全无需预训练光流网络（RAFT），在 GoPro 数据集上 PSNR 达 30.22dB，FLOPs 在所有方法中最低。
 
 **[Can Text-to-Video Generation Help Video-Language Alignment?](video_generation/can_text-to-video_generation_help_video-language_alignment.md)**
 
@@ -5772,10 +5760,6 @@ description: >-
 
 :   本文基于概率论和序理论建立了性能排名的严格数学基础，提出了包含6大支柱的通用框架和3条公理，定义了参数化的"排名分数"族，并在二分类任务中证明了 accuracy、TPR、TNR、PPV、F-score 等满足公理，而 MCC、几何均值等常用指标不适合用于排名。
 
-**[Foundations of the Theory of Performance-Based Ranking](robotics/foundations_of_the_theory_of_performance_based_ranking.md)**
-
-:   建立基于性能排名的通用数学理论基础，将性能定义为概率测度、引入满意度和重要性随机变量、提出三条公理化的性能序定义，并推导出参数化的排名分数族(ranking scores)，证明准确率、召回率、精度和F1等常用指标属于该族的特例。
-
 **[GigaHands: A Massive Annotated Dataset of Bimanual Hand Activities](robotics/gigahands_a_massive_annotated_dataset_of_bimanual_hand_activities.md)**
 
 :   GigaHands 是迄今为止最大的双手活动数据集，通过设计"指令-标注"程序化采集策略和 51 相机无标记捕捉系统，收集了 34 小时、56 名被试、417 个物体的双手活动数据，包含 1.83 亿帧 RGB 图像和 84K 条详细文本标注，在文本驱动手部动作生成和动作描述任务上展示了数据规模的价值。
@@ -6236,98 +6220,6 @@ description: >-
 
 ---
 
-## ⚖️ 对齐 / RLHF { #llm_alignment }
-
-**[Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization](llm_alignment/aesthetic_post-training_diffusion_models_from_generic_preferences_with_step-by-s.md)**
-
-:   本文提出 Step-by-step Preference Optimization（SPO），在每个去噪步中从同一噪声潜变量采样多个候选，用 step-aware 偏好模型选择 win/lose 对来指导扩散模型微调，从通用偏好数据中隐式蒸馏美学信息，在 SD-1.5 和 SDXL 上显著提升美学质量且收敛速度远快于 DPO。
-
-**[Bases of Steerable Kernels for Equivariant CNNs: From 2D Rotations to the Lorentz Group](llm_alignment/bases_of_steerable_kernels_for_equivariant_cnns_from_2d_rotations_to_the_lorentz.md)**
-
-:   提出一种求解可转向等变 CNN 核约束方程的替代方法，通过在不动点处求解更简单的不变性条件再"转向"到任意点，绕过了计算 Clebsch-Gordan 系数的需要，为 SO(2)、O(2)、SO(3)、O(3) 及 Lorentz 群给出了显式的核基底公式。
-
-**[Boost Your Human Image Generation Model via Direct Preference Optimization](llm_alignment/boost_your_human_image_generation_model_via_direct_preference_optimization.md)**
-
-:   提出 HG-DPO，以真实人像作为 DPO 的 winning image（而非生成图像对）+ 三阶段课程学习（Easy/Normal/Hard）渐进弥合生成-真实图像分布 gap + 统计匹配损失解决色偏，FID 从 37.34 降至 29.41（-21.4%），CI-Q 0.906→0.934，win-rate 超越 Diffusion-DPO 达 99.97%。
-
-**[CAD-Llama: Leveraging Large Language Models for Computer-Aided Design Parametric 3D Model Generation](llm_alignment/cad-llama_leveraging_large_language_models_for_computer-aided_design_parametric_.md)**
-
-:   本文提出 CAD-Llama 框架，通过层次化标注管线将 3D CAD 模型转化为富含语义描述的 Python 风格代码（SPCC），再用自适应预训练和指令微调将 LLaMA3-8B 转化为参数化 CAD 模型生成器，在 text-to-CAD 任务上精度超出先前方法约 14%，并支持补全、添加、删除等多种 CAD 编辑任务。
-
-**[CAD-Llama: Leveraging Large Language Models for Computer-Aided Design Parametric 3D Model Generation](llm_alignment/cad_llama_parametric.md)**
-
-:   本文提出CAD-Llama，通过分层标注流水线将参数化CAD序列转化为带语义描述的结构化代码（SPCC），并使用自适应预训练和指令微调使LLM具备从文本生成复杂参数化3D CAD模型的能力，在多个CAD任务上显著超越现有方法。
-
-**[Calibrated Multi-Preference Optimization for Aligning Diffusion Models](llm_alignment/calibrated_multi-preference_optimization_for_aligning_diffusion_models.md)**
-
-:   本文提出 Calibrated Preference Optimization（CaPO），通过 win-rate 校准将不同奖励模型的分数统一为期望胜率，并设计基于 Pareto 前沿的配对采样策略（FRS）来处理多奖励信号间的冲突，在 SDXL 和 SD3-Medium 上一致地超越 DPO 和 IPO 方法。
-
-**[Calibrated Multi-Preference Optimization for Aligning Diffusion Models](llm_alignment/capo_multi_preference.md)**
-
-:   本文提出CaPO（校准偏好优化），通过奖励校准（近似期望胜率）和基于Pareto前沿的样本对选择策略，在无需人类标注数据的情况下有效整合多个奖励模型信号来对齐文本到图像扩散模型，在GenEval和T2I-Compbench上持续超越DPO等方法。
-
-**[Continual SFT Matches Multimodal RLHF with Negative Supervision](llm_alignment/continual_sft_matches_multimodal_rlhf_with_negative_supervision.md)**
-
-:   通过梯度分析发现多模态 RLHF 相比持续 SFT 的核心优势在于 rejected response 中的负监督信号，据此提出 nSFT 方法，用 LLM 从拒绝回复中提取错误信息并构造纠正性对话数据，仅用 SFT loss 就能匹配甚至超越 DPO/PPO 等 RLHF 方法，且只需 1 个模型，显存效率大幅提升。
-
-**[Curriculum Direct Preference Optimization for Diffusion and Consistency Models](llm_alignment/curriculum_direct_preference_optimization_for_diffusion_and_consistency_models.md)**
-
-:   首次将课程学习引入 DPO 并首次将 DPO 适配到一致性模型，通过从"容易区分的偏好对"到"难以区分的偏好对"渐进训练，在文本对齐、美学和人类偏好上全面超越标准 DPO 和 DDPO，且仅需 1/10 训练数据量。
-
-**[Debiasing Multimodal Large Language Models via Noise-Aware Preference Optimization](llm_alignment/debiasing_multimodal_large_language_models_via_noise-aware_preference_optimizati.md)**
-
-:   NaPO 针对MLLM的模态偏差问题（过度依赖语言先验或视觉细节），通过mask模态信息构造偏差数据集RLAIF-V-Bias，并提出基于负Box-Cox变换的噪声感知偏好优化算法，在自动构造的含噪数据上实现鲁棒训练，在去偏和减幻觉上均取得显著效果。
-
-**[Do We Really Need Curated Malicious Data for Safety Alignment in Multi-Modal LLMs?](llm_alignment/do_we_really_need_curated_malicious_data_for_safety_alignment_in_multi-modal_lar.md)**
-
-:   探讨多模态大语言模型安全对齐是否真正需要精心策划的恶意数据，发现利用现有良性数据并结合简单的安全微调策略即可实现有效的安全对齐，大幅降低了安全对齐的数据成本。
-
-**[Enhancing SAM with Efficient Prompting and Preference Optimization for Semi-Supervised Medical Image Segmentation](llm_alignment/enhancing_sam_with_efficient_prompting_and_preference_optimization_for_semi-supe.md)**
-
-:   提出一种增强 SAM 的半监督医学图像分割框架：通过 CLIP 和 VQA 无监督生成包含语义、位置和形状信息的高效提示（无需专家标注），再用 DPO 偏好优化技术配合虚拟标注器（代替人类标注者提供排名/评分）训练最优分割策略，在肺分割、乳腺肿瘤分割、器官分割等多模态任务上达到 SOTA。
-
-**[InPO: Inversion Preference Optimization with Reparametrized DDIM for Efficient Diffusion Model Alignment](llm_alignment/inpo_inversion_preference_optimization_diffusion_alignment.md)**
-
-:   本文提出 DDIM-InPO，通过将扩散模型视为单步生成模型并利用 DDIM 反演技术找到与偏好数据高度相关的潜变量，实现仅需 400 步微调即可达到 SOTA 的高效扩散模型偏好对齐。
-
-**[InPO: Inversion Preference Optimization with Reparametrized DDIM for Efficient Diffusion Model Alignment](llm_alignment/inpo_inversion_preference_optimization_with_reparametrized_ddim_for_efficient_di.md)**
-
-:   提出 InPO（Inversion Preference Optimization），通过 DDIM 反演的重参数化技巧将偏好优化从需要完整去噪链的长马尔可夫过程简化为单步优化，在训练效率和生成质量上同时优于现有 Diffusion-DPO 方法。
-
-**[Jailbreaking the Non-Transferable Barrier via Test-Time Data Disguising](llm_alignment/jailbreaking_the_non-transferable_barrier_via_test-time_data_disguising.md)**
-
-:   提出 JailNTL，首个针对 Non-Transferable Learning (NTL) 模型的黑盒攻击方法，通过测试时数据伪装将未授权域的数据"变装"为授权域的数据，仅用 1% 授权样本即可将未授权域准确率提升最高 55.7%，无需修改模型。
-
-**[PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization](llm_alignment/physmodpo_physically-plausible_humanoid_motion_with_preference_optimization.md)**
-
-:   提出 PhysMoDPO，将 Direct Preference Optimization 应用于文本驱动的人体运动生成，通过将全身控制器（WBC）集成到训练 pipeline 中计算基于物理的奖励来构造偏好数据，使生成运动同时满足物理约束和文本指令，并在 Unitree G1 机器人上实现零样本部署。
-
-**[Enhancing SAM with Efficient Prompting and Preference Optimization for Semi-supervised Medical Image Segmentation](llm_alignment/sam_dpo_semi_supervised.md)**
-
-:   本文提出一种增强的SAM框架，通过BiomedCLIP、VQA和GPT-4生成无监督语义/位置/形状提示，并引入DPO启发的偏好对齐损失模拟人类反馈，在仅10%标注数据的半监督设置下实现了肺部、乳腺肿瘤和腹部器官分割的优异性能。
-
-**[Enhancing SAM with Efficient Prompting and Preference Optimization for Semi-supervised Medical Image Segmentation](llm_alignment/sam_dpo_semi_supervised_medical_segmentation.md)**
-
-:   本文提出一种增强 SAM 的半监督医学图像分割框架，通过 BiomedCLIP、VQA 和 GPT-4 生成无监督提示替代专家标注，并引入 DPO 启发的偏好对齐策略在无标注数据上进一步优化模型，在低标注场景下显著超越 SOTA。
-
-**[Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization](llm_alignment/spo_aesthetic_post_training.md)**
-
-:   本文提出逐步偏好优化（SPO），通过在每个去噪步骤独立地从共享噪声中采样候选池并用步感知偏好模型选出胜负对，使扩散模型聚焦于细粒度的美学细节而非布局差异，在使用通用偏好数据的情况下显著提升了生成图像的美学质量。
-
-**[SymDPO: Boosting In-Context Learning of Large Multimodal Models with Symbol Demonstration Direct Preference Optimization](llm_alignment/symdpo_boosting_in-context_learning_of_large_multimodal_models_with_symbol_demon.md)**
-
-:   SymDPO 发现LMM在多模态ICL中存在"视觉上下文忽视"问题（用空白图替换示例图不影响性能），提出将示例中的文本答案替换为无语义随机符号，迫使模型必须理解视觉内容才能正确匹配符号与答案，通过DPO训练在OpenFlamingo和IDEFICS上一致提升了多模态ICL效果。
-
-**[SymDPO: Boosting In-Context Learning of Large Multimodal Models with Symbol Demonstration Direct Preference Optimization](llm_alignment/symdpo_symbol_icl.md)**
-
-:   本文提出SymDPO，通过将多模态上下文示例中的文本答案替换为无语义关联的随机符号，迫使大多模态模型必须真正理解视觉信息才能正确回答，从而解决了LMM在上下文学习中忽视视觉信息、过度依赖文本模式的问题。
-
-**[Task Preference Optimization: Improving Multimodal Large Language Models with Vision Task Alignment](llm_alignment/task_preference_optimization_improving_multimodal_large_language_models_with_vis.md)**
-
-:   提出 Task Preference Optimization（TPO），通过可学习的任务 token 将视觉任务专用头（区域定位/时序定位/分割）接入 MLLM，利用视觉任务标注作为"任务偏好"反向优化 MLLM，在不损害对话能力的前提下大幅提升细粒度视觉理解，VideoChat 基线上平均提升 14.6%。
-
----
-
 ## 🔄 自监督/表示学习 { #self_supervised }
 
 **[AutoSSVH: Automated Frame Sampling for Self-Supervised Video Hashing](self_supervised/autossvh_exploring_automated_frame_sampling_for_efficient_self-supervised_video_.md)**
@@ -6484,10 +6376,6 @@ description: >-
 
 :   本文提出TIDE，一种针对单源域泛化的新型训练方案，利用扩散模型和LLM自动生成类别级概念标注（如"鸟类=尖嘴+翅膀+爪子"），通过概念显著性对齐损失训练模型关注域不变的局部概念而非全局背景特征，使模型在测试时能通过概念显著图自动矫正域偏移导致的错误预测。
 
-**[TIDE: Training Locally Interpretable Domain Generalization Models Enables Test-time Correction](interpretability/tide_training_locally_interpretable_domain_generalization_models_enables_test_time_correction.md)**
-
-:   提出TIDE框架，通过LLM和扩散模型自动生成概念级显著性标注，训练模型关注局部领域不变概念而非全局特征，并在测试时利用概念签名迭代修正错误预测，在四个SSDG基准上平均超越SOTA 12%。
-
 **[Towards Faithful Multimodal Concept Bottleneck Models](interpretability/towards_faithful_multimodal_concept_bottleneck_models.md)**
 
 :   提出 f-CBM，一个基于 CLIP 的忠实多模态 Concept Bottleneck Model 框架，通过可微分的 leakage 损失和 Kolmogorov-Arnold Network 预测头联合解决概念检测准确性和信息泄漏问题，在任务精度、概念检测和 leakage 三者间达到最优权衡。
@@ -6523,10 +6411,6 @@ description: >-
 **[ComRoPE: Scalable and Robust Rotary Position Embedding Parameterized by Trainable Commuting Angle Matrices](llm_nlp/comrope_rotary_position.md)**
 
 :   本文提出ComRoPE，通过将RoPE推广为由可训练交换角矩阵参数化的旋转位置编码，理论证明了角矩阵的成对交换性是RoPE满足相对位置依赖性的充要条件，在ImageNet-1K上比SOTA方法LieRE提升1.6%（训练分辨率）和2.9%（更高分辨率）。
-
-**[ComRoPE: Scalable and Robust Rotary Position Embedding Parameterized by Trainable Commuting Angle Matrices](llm_nlp/comrope_scalable_and_robust_rotary_position_embedding_parameterized_by_trainable.md)**
-
-:   ComRoPE将RoPE从固定的2D旋转矩阵推广到SO(n)群的更大子群，证明交换性是保持相对位置鲁棒性的充要条件，提出AP和LD两种可训练参数化方案，在ImageNet分类（+1.6%）、COCO检测（+0.2 AP）上均优于LieRE。
 
 **[Dense Match Summarization for Faster Two-view Estimation](llm_nlp/dense_match_summarization_for_faster_two-view_estimation.md)**
 
@@ -6739,6 +6623,78 @@ description: >-
 **[VDocRAG: Retrieval-Augmented Generation over Visually-Rich Documents](information_retrieval/vdocrag_retrieval-augmented_generation_over_visually-rich_documents.md)**
 
 :   构建首个直接以文档图像（而非解析文本）为输入的 RAG 框架，用 LVLM 作为双编码器检索器 + 两种自监督预训练任务（对比+生成）实现文档图像检索，在 ChartQA 上比文本 RAG 高 24 个点。
+
+---
+
+## ⚖️ 对齐 / RLHF { #llm_alignment }
+
+**[Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization](llm_alignment/aesthetic_post-training_diffusion_models_from_generic_preferences_with_step-by-s.md)**
+
+:   本文提出 Step-by-step Preference Optimization（SPO），在每个去噪步中从同一噪声潜变量采样多个候选，用 step-aware 偏好模型选择 win/lose 对来指导扩散模型微调，从通用偏好数据中隐式蒸馏美学信息，在 SD-1.5 和 SDXL 上显著提升美学质量且收敛速度远快于 DPO。
+
+**[Bases of Steerable Kernels for Equivariant CNNs: From 2D Rotations to the Lorentz Group](llm_alignment/bases_of_steerable_kernels_for_equivariant_cnns_from_2d_rotations_to_the_lorentz.md)**
+
+:   提出一种求解可转向等变 CNN 核约束方程的替代方法，通过在不动点处求解更简单的不变性条件再"转向"到任意点，绕过了计算 Clebsch-Gordan 系数的需要，为 SO(2)、O(2)、SO(3)、O(3) 及 Lorentz 群给出了显式的核基底公式。
+
+**[Boost Your Human Image Generation Model via Direct Preference Optimization](llm_alignment/boost_your_human_image_generation_model_via_direct_preference_optimization.md)**
+
+:   提出 HG-DPO，以真实人像作为 DPO 的 winning image（而非生成图像对）+ 三阶段课程学习（Easy/Normal/Hard）渐进弥合生成-真实图像分布 gap + 统计匹配损失解决色偏，FID 从 37.34 降至 29.41（-21.4%），CI-Q 0.906→0.934，win-rate 超越 Diffusion-DPO 达 99.97%。
+
+**[CAD-Llama: Leveraging Large Language Models for Computer-Aided Design Parametric 3D Model Generation](llm_alignment/cad-llama_leveraging_large_language_models_for_computer-aided_design_parametric_.md)**
+
+:   本文提出 CAD-Llama 框架，通过层次化标注管线将 3D CAD 模型转化为富含语义描述的 Python 风格代码（SPCC），再用自适应预训练和指令微调将 LLaMA3-8B 转化为参数化 CAD 模型生成器，在 text-to-CAD 任务上精度超出先前方法约 14%，并支持补全、添加、删除等多种 CAD 编辑任务。
+
+**[Calibrated Multi-Preference Optimization for Aligning Diffusion Models](llm_alignment/calibrated_multi-preference_optimization_for_aligning_diffusion_models.md)**
+
+:   本文提出 Calibrated Preference Optimization（CaPO），通过 win-rate 校准将不同奖励模型的分数统一为期望胜率，并设计基于 Pareto 前沿的配对采样策略（FRS）来处理多奖励信号间的冲突，在 SDXL 和 SD3-Medium 上一致地超越 DPO 和 IPO 方法。
+
+**[Continual SFT Matches Multimodal RLHF with Negative Supervision](llm_alignment/continual_sft_matches_multimodal_rlhf_with_negative_supervision.md)**
+
+:   通过梯度分析发现多模态 RLHF 相比持续 SFT 的核心优势在于 rejected response 中的负监督信号，据此提出 nSFT 方法，用 LLM 从拒绝回复中提取错误信息并构造纠正性对话数据，仅用 SFT loss 就能匹配甚至超越 DPO/PPO 等 RLHF 方法，且只需 1 个模型，显存效率大幅提升。
+
+**[Curriculum Direct Preference Optimization for Diffusion and Consistency Models](llm_alignment/curriculum_direct_preference_optimization_for_diffusion_and_consistency_models.md)**
+
+:   首次将课程学习引入 DPO 并首次将 DPO 适配到一致性模型，通过从"容易区分的偏好对"到"难以区分的偏好对"渐进训练，在文本对齐、美学和人类偏好上全面超越标准 DPO 和 DDPO，且仅需 1/10 训练数据量。
+
+**[Debiasing Multimodal Large Language Models via Noise-Aware Preference Optimization](llm_alignment/debiasing_multimodal_large_language_models_via_noise-aware_preference_optimizati.md)**
+
+:   NaPO 针对MLLM的模态偏差问题（过度依赖语言先验或视觉细节），通过mask模态信息构造偏差数据集RLAIF-V-Bias，并提出基于负Box-Cox变换的噪声感知偏好优化算法，在自动构造的含噪数据上实现鲁棒训练，在去偏和减幻觉上均取得显著效果。
+
+**[Do We Really Need Curated Malicious Data for Safety Alignment in Multi-Modal LLMs?](llm_alignment/do_we_really_need_curated_malicious_data_for_safety_alignment_in_multi-modal_lar.md)**
+
+:   探讨多模态大语言模型安全对齐是否真正需要精心策划的恶意数据，发现利用现有良性数据并结合简单的安全微调策略即可实现有效的安全对齐，大幅降低了安全对齐的数据成本。
+
+**[Enhancing SAM with Efficient Prompting and Preference Optimization for Semi-Supervised Medical Image Segmentation](llm_alignment/enhancing_sam_with_efficient_prompting_and_preference_optimization_for_semi-supe.md)**
+
+:   提出一种增强 SAM 的半监督医学图像分割框架：通过 CLIP 和 VQA 无监督生成包含语义、位置和形状信息的高效提示（无需专家标注），再用 DPO 偏好优化技术配合虚拟标注器（代替人类标注者提供排名/评分）训练最优分割策略，在肺分割、乳腺肿瘤分割、器官分割等多模态任务上达到 SOTA。
+
+**[InPO: Inversion Preference Optimization with Reparametrized DDIM for Efficient Diffusion Model Alignment](llm_alignment/inpo_inversion_preference_optimization_diffusion_alignment.md)**
+
+:   本文提出 DDIM-InPO，通过将扩散模型视为单步生成模型并利用 DDIM 反演技术找到与偏好数据高度相关的潜变量，实现仅需 400 步微调即可达到 SOTA 的高效扩散模型偏好对齐。
+
+**[InPO: Inversion Preference Optimization with Reparametrized DDIM for Efficient Diffusion Model Alignment](llm_alignment/inpo_inversion_preference_optimization_with_reparametrized_ddim_for_efficient_di.md)**
+
+:   提出 InPO（Inversion Preference Optimization），通过 DDIM 反演的重参数化技巧将偏好优化从需要完整去噪链的长马尔可夫过程简化为单步优化，在训练效率和生成质量上同时优于现有 Diffusion-DPO 方法。
+
+**[Jailbreaking the Non-Transferable Barrier via Test-Time Data Disguising](llm_alignment/jailbreaking_the_non-transferable_barrier_via_test-time_data_disguising.md)**
+
+:   提出 JailNTL，首个针对 Non-Transferable Learning (NTL) 模型的黑盒攻击方法，通过测试时数据伪装将未授权域的数据"变装"为授权域的数据，仅用 1% 授权样本即可将未授权域准确率提升最高 55.7%，无需修改模型。
+
+**[PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization](llm_alignment/physmodpo_physically-plausible_humanoid_motion_with_preference_optimization.md)**
+
+:   提出 PhysMoDPO，将 Direct Preference Optimization 应用于文本驱动的人体运动生成，通过将全身控制器（WBC）集成到训练 pipeline 中计算基于物理的奖励来构造偏好数据，使生成运动同时满足物理约束和文本指令，并在 Unitree G1 机器人上实现零样本部署。
+
+**[Enhancing SAM with Efficient Prompting and Preference Optimization for Semi-supervised Medical Image Segmentation](llm_alignment/sam_dpo_semi_supervised.md)**
+
+:   本文提出一种增强的SAM框架，通过BiomedCLIP、VQA和GPT-4生成无监督语义/位置/形状提示，并引入DPO启发的偏好对齐损失模拟人类反馈，在仅10%标注数据的半监督设置下实现了肺部、乳腺肿瘤和腹部器官分割的优异性能。
+
+**[SymDPO: Boosting In-Context Learning of Large Multimodal Models with Symbol Demonstration Direct Preference Optimization](llm_alignment/symdpo_boosting_in-context_learning_of_large_multimodal_models_with_symbol_demon.md)**
+
+:   SymDPO 发现LMM在多模态ICL中存在"视觉上下文忽视"问题（用空白图替换示例图不影响性能），提出将示例中的文本答案替换为无语义随机符号，迫使模型必须理解视觉内容才能正确匹配符号与答案，通过DPO训练在OpenFlamingo和IDEFICS上一致提升了多模态ICL效果。
+
+**[Task Preference Optimization: Improving Multimodal Large Language Models with Vision Task Alignment](llm_alignment/task_preference_optimization_improving_multimodal_large_language_models_with_vis.md)**
+
+:   提出 Task Preference Optimization（TPO），通过可学习的任务 token 将视觉任务专用头（区域定位/时序定位/分割）接入 MLLM，利用视觉任务标注作为"任务偏好"反向优化 MLLM，在不损害对话能力的前提下大幅提升细粒度视觉理解，VideoChat 基线上平均提升 14.6%。
 
 ---
 
@@ -6956,42 +6912,6 @@ description: >-
 
 ---
 
-## 💡 LLM 推理 { #llm_reasoning }
-
-**[Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought](llm_reasoning/argus_vision-centric_reasoning_with_grounded_chain-of-thought.md)**
-
-:   Argus 提出了一种grounded visual CoT机制，通过让MLLM先预测与问题相关的bounding box（RoI），然后重新采样/编码该区域的视觉token作为推理上下文，实现了显式的目标导向视觉注意力，在7B/8B级MLLM中取得视觉推理和目标grounding双料SOTA。
-
-**[CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models](llm_reasoning/cot-vla_visual_chain-of-thought_reasoning_for_vision-language-action_models.md)**
-
-:   提出 CoT-VLA，将视觉思维链推理引入视觉-语言-动作模型，通过两阶段推理——先预测子目标图像再生成动作序列——结合混合注意力和动作分块策略，在 LIBERO 基准上实现 81.13% 平均成功率，显著超越现有方法。
-
-**[Interleaved-Modal Chain-of-Thought](llm_reasoning/interleaved-modal_chain-of-thought.md)**
-
-:   提出交错模态思维链（ICoT），在推理步骤中穿插图像区域 crop 作为视觉 rationale，通过无参数的 Attention-driven Selection（ADS）从输入图像中智能选取关键区域插入生成序列，在 Chameleon 和 Qwen2-VL 上相比现有多模态 CoT 提升高达 14%。
-
-**[Reason-before-Retrieve: One-Stage Reflective Chain-of-Thoughts for Training-Free Zero-Shot Composed Image Retrieval](llm_reasoning/osrcir_reflective_cot.md)**
-
-:   本文提出OSrCIR，一种免训练的单阶段零样本组合图像检索方法，利用多模态大语言模型直接处理参考图像和修改文本，并通过反思式链式思维推理准确理解用户隐含意图，在多个基准上比现有免训练方法提升1.80%~6.44%。
-
-**[Reason-before-Retrieve: One-Stage Reflective Chain-of-Thoughts for Training-Free Zero-Shot Composed Image Retrieval](llm_reasoning/reason-before-retrieve_one-stage_reflective_chain-of-thoughts_for_training-free_.md)**
-
-:   OSrCIR提出单阶段反思性链式思维推理，让MLLM同时处理参考图像和修改文本（避免两阶段caption→推理的信息丢失），通过"描述→思考→反思→目标描述"四步CoT生成准确的目标图像描述，在CIRCO上mAP@5达23.87%超越CIReVL 26.2%，且完全免训练。
-
-**[Style Evolving along Chain-of-Thought for Unknown-Domain Object Detection](llm_reasoning/style_evolving_along_chain-of-thought_for_unknown-domain_object_detection.md)**
-
-:   提出 Chain-of-Thought 引导的风格演化方法（CGSE），通过词→短语→句子三级渐进式风格描述生成，结合特征解耦和类别原型聚类，在五种恶劣天气场景和 Real-to-Art 基准上实现了显著的域泛化检测性能提升。
-
-**[VideoEspresso: A Large-Scale Chain-of-Thought Dataset for Fine-Grained Video Reasoning via Core Frame Selection](llm_reasoning/videoespresso_a_large-scale_chain-of-thought_dataset_for_fine-grained_video_reas.md)**
-
-:   VideoEspresso 构建了一个20万+的大规模视频CoT推理数据集（包含空间bounding box和时间grounding标注），并提出VideoQA-SC混合框架——用1.5B轻量级模型选择平均2.36个核心帧，再用8B推理模型进行两阶段证据提取+答案生成，以仅1.8%的帧数和14.7%的计算量超越了GPT-4o和所有开源LVLM。
-
-**[VideoEspresso: A Large-Scale Chain-of-Thought Dataset for Fine-Grained Video Reasoning via Core Frame Selection](llm_reasoning/videoespresso_cot_reasoning.md)**
-
-:   本文提出VideoEspresso数据集及混合LVLM协作框架，通过语义感知的冗余去除构建高质量视频QA对，并引入多模态链式思维（CoT）标注，结合轻量帧选择器和两阶段推理模型实现高效精准的视频推理。
-
----
-
 ## 📡 信号/通信 { #signal_comm }
 
 **[ABC-Former: Auxiliary Bimodal Cross-domain Transformer with Interactive Channel Attention](signal_comm/abc-former_auxiliary_bimodal_cross-domain_transformer_with_interactive_channel_a.md)**
@@ -7112,31 +7032,31 @@ description: >-
 
 ---
 
-## 👥 社会计算 { #social_computing }
+## 💡 LLM 推理 { #llm_reasoning }
 
-**[As Language Models Scale, Low-order Linear Depth Dynamics Emerge](social_computing/as_language_models_scale_low-order_linear_depth_dynamics_emerge.md)**
+**[Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought](llm_reasoning/argus_vision-centric_reasoning_with_grounded_chain-of-thought.md)**
 
-:   将 Transformer 的深度方向视为离散时间动力系统，发现在给定上下文内可以用仅 32 维的线性状态空间代理模型高精度预测层间灵敏度曲线（Spearman 达 0.99），而且令人惊讶的是：**模型越大，低阶线性代理越准确**——这是一条新的 scaling law。
+:   Argus 提出了一种grounded visual CoT机制，通过让MLLM先预测与问题相关的bounding box（RoI），然后重新采样/编码该区域的视觉token作为推理上下文，实现了显式的目标导向视觉注意力，在7B/8B级MLLM中取得视觉推理和目标grounding双料SOTA。
 
-**[As Language Models Scale, Low-order Linear Depth Dynamics Emerge](social_computing/as_language_models_scale_low-order_linear_depth_dynamics_emerge_v2.md)**
+**[CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models](llm_reasoning/cot-vla_visual_chain-of-thought_reasoning_for_vision-language-action_models.md)**
 
-:   将 Transformer 的深度方向视为离散时间动力系统，发现在给定上下文内可以用仅 32 维的线性状态空间代理模型高精度预测层间灵敏度曲线（Spearman 达 0.99），而且令人惊讶的是：**模型越大，低阶线性代理越准确**——这是一条新的 scaling law。
+:   提出 CoT-VLA，将视觉思维链推理引入视觉-语言-动作模型，通过两阶段推理——先预测子目标图像再生成动作序列——结合混合注意力和动作分块策略，在 LIBERO 基准上实现 81.13% 平均成功率，显著超越现有方法。
 
-**[Classifier-guided CLIP Distillation for Unsupervised Multi-label Classification](social_computing/classifier-guided_clip_distillation_for_unsupervised_multi-label_classification.md)**
+**[Interleaved-Modal Chain-of-Thought](llm_reasoning/interleaved-modal_chain-of-thought.md)**
 
-:   提出 Classifier-guided CLIP Distillation（CCD），通过 CAM 引导的局部视图标签聚合和 CLIP 预测去偏两项核心技术，在完全无标注的条件下达到与全监督方法持平的多标签分类性能（VOC12 上 90.1% mAP）。
+:   提出交错模态思维链（ICoT），在推理步骤中穿插图像区域 crop 作为视觉 rationale，通过无参数的 Attention-driven Selection（ADS）从输入图像中智能选取关键区域插入生成序列，在 Chameleon 和 Qwen2-VL 上相比现有多模态 CoT 提升高达 14%。
 
-**[Classifier-to-Bias: Toward Unsupervised Automatic Bias Detection for Visual Classifiers](social_computing/classifier-to-bias_toward_unsupervised_automatic_bias_detection_for_visual_class.md)**
+**[Reason-before-Retrieve: One-Stage Reflective Chain-of-Thoughts for Training-Free Zero-Shot Composed Image Retrieval](llm_reasoning/osrcir_reflective_cot.md)**
 
-:   提出 C2B（Classifier-to-Bias），首个仅依靠分类任务的文本描述（无需任何标注数据）即可自动发现预训练视觉分类器偏差的框架，通过 LLM 生成类特定偏差候选、生成检索标题收集图像数据集、最后计算偏差分数，在 CelebA 和 ImageNet-X 上超越需要监督的 SOTA 偏差检测方法。
+:   本文提出OSrCIR，一种免训练的单阶段零样本组合图像检索方法，利用多模态大语言模型直接处理参考图像和修改文本，并通过反思式链式思维推理准确理解用户隐含意图，在多个基准上比现有免训练方法提升1.80%~6.44%。
 
-**[Learning from Neighbors: Category Extrapolation for Long-Tail Learning](social_computing/learning_from_neighbors_category_extrapolation_for_long-tail_learning.md)**
+**[Style Evolving along Chain-of-Thought for Unknown-Domain Object Detection](llm_reasoning/style_evolving_along_chain-of-thought_for_unknown-domain_object_detection.md)**
 
-:   发现更细粒度的类别划分天然减轻长尾不平衡的影响，提出用 LLM 发现与现有类别相关的细粒度辅助类 + 网络爬虫收集图像 + 邻近静默损失防止辅助类喧宾夺主，在 ImageNet-LT 上 Few 类提升 16 个百分点（41.4→57.4）。
+:   提出 Chain-of-Thought 引导的风格演化方法（CGSE），通过词→短语→句子三级渐进式风格描述生成，结合特征解耦和类别原型聚类，在五种恶劣天气场景和 Real-to-Art 基准上实现了显著的域泛化检测性能提升。
 
-**[Project-Probe-Aggregate: Efficient Fine-Tuning for Group Robustness](social_computing/project-probe-aggregate_efficient_fine-tuning_for_group_robustness.md)**
+**[VideoEspresso: A Large-Scale Chain-of-Thought Dataset for Fine-Grained Video Reasoning via Core Frame Selection](llm_reasoning/videoespresso_a_large-scale_chain-of-thought_dataset_for_fine-grained_video_reas.md)**
 
-:   提出 PPA（Project-Probe-Aggregate）三步方法，通过投影去除类代理信息放大偏差、以组先验校正探测组标签、聚合组权重，仅需不到 0.01% 可训练参数即可在无组标注情况下提升基础模型的群组鲁棒性。
+:   VideoEspresso 构建了一个20万+的大规模视频CoT推理数据集（包含空间bounding box和时间grounding标注），并提出VideoQA-SC混合框架——用1.5B轻量级模型选择平均2.36个核心帧，再用8B推理模型进行两阶段证据提取+答案生成，以仅1.8%的帧数和14.7%的计算量超越了GPT-4o和所有开源LVLM。
 
 ---
 
@@ -7161,6 +7081,30 @@ description: >-
 **[FG-VCE: Towards Fine-Grained Interpretability — Counterfactual Explanations for Misclassification with Saliency Partition](causal_inference/towards_fine-grained_interpretability_counterfactual_explanations_for_misclassif.md)**
 
 :   提出 FG-VCE（Fine-Grained Visual Contrastive Explanation）框架，通过 Shapley 值计算特征点贡献度、显著性分区模块隔离局部特征、以及迭代反事实生成策略，首次实现了对象级和部件级的细粒度反事实解释，揭示模型误分类的具体原因——"哪些细粒度特征导致了错误"以及"哪些局部区域主导了预测改变"。
+
+---
+
+## 👥 社会计算 { #social_computing }
+
+**[As Language Models Scale, Low-order Linear Depth Dynamics Emerge](social_computing/as_language_models_scale_low-order_linear_depth_dynamics_emerge.md)**
+
+:   将 Transformer 的深度方向视为离散时间动力系统，发现在给定上下文内可以用仅 32 维的线性状态空间代理模型高精度预测层间灵敏度曲线（Spearman 达 0.99），而且令人惊讶的是：**模型越大，低阶线性代理越准确**——这是一条新的 scaling law。
+
+**[Classifier-guided CLIP Distillation for Unsupervised Multi-label Classification](social_computing/classifier-guided_clip_distillation_for_unsupervised_multi-label_classification.md)**
+
+:   提出 Classifier-guided CLIP Distillation（CCD），通过 CAM 引导的局部视图标签聚合和 CLIP 预测去偏两项核心技术，在完全无标注的条件下达到与全监督方法持平的多标签分类性能（VOC12 上 90.1% mAP）。
+
+**[Classifier-to-Bias: Toward Unsupervised Automatic Bias Detection for Visual Classifiers](social_computing/classifier-to-bias_toward_unsupervised_automatic_bias_detection_for_visual_class.md)**
+
+:   提出 C2B（Classifier-to-Bias），首个仅依靠分类任务的文本描述（无需任何标注数据）即可自动发现预训练视觉分类器偏差的框架，通过 LLM 生成类特定偏差候选、生成检索标题收集图像数据集、最后计算偏差分数，在 CelebA 和 ImageNet-X 上超越需要监督的 SOTA 偏差检测方法。
+
+**[Learning from Neighbors: Category Extrapolation for Long-Tail Learning](social_computing/learning_from_neighbors_category_extrapolation_for_long-tail_learning.md)**
+
+:   发现更细粒度的类别划分天然减轻长尾不平衡的影响，提出用 LLM 发现与现有类别相关的细粒度辅助类 + 网络爬虫收集图像 + 邻近静默损失防止辅助类喧宾夺主，在 ImageNet-LT 上 Few 类提升 16 个百分点（41.4→57.4）。
+
+**[Project-Probe-Aggregate: Efficient Fine-Tuning for Group Robustness](social_computing/project-probe-aggregate_efficient_fine-tuning_for_group_robustness.md)**
+
+:   提出 PPA（Project-Probe-Aggregate）三步方法，通过投影去除类代理信息放大偏差、以组先验校正探测组标签、聚合组权重，仅需不到 0.01% 可训练参数即可在无组标注情况下提升基础模型的群组鲁棒性。
 
 ---
 
@@ -7275,10 +7219,6 @@ description: >-
 **[CARE Transformer: Mobile-Friendly Linear Visual Transformer via Decoupled Dual Interaction](others/care_transformer_linear_attention.md)**
 
 :   本文提出CARE Transformer，通过非对称特征解耦将局部归纳偏置和长距离依赖的学习分离，并设计动态记忆单元和双交互模块充分利用特征互补性，实现了移动端友好的线性复杂度视觉Transformer，在ImageNet上以仅0.7 GMACs达到78.4% top-1精度。
-
-**[CARE Transformer: Mobile-Friendly Linear Visual Transformer via Decoupled Dual Interaction](others/care_transformer_mobile-friendly_linear_visual_transformer_via_decoupled_dual_in.md)**
-
-:   本文提出CARE（deCoupled duAl-interactive lineaR attEntion）机制，通过非对称特征解耦策略将局部归纳偏置和长程依赖的学习过程分而治之，配合动态记忆单元和双交互模块充分利用跨特征互补性，在ImageNet-1K上以0.7/1.9 GMACs达到78.4/82.1% top-1精度，在移动端实现极低延迟。
 
 **[Deconstructing the Failure of Ideal Noise Correction: A Three-Pillar Diagnosis](others/deconstructing_the_failure_of_ideal_noise_correction_a_three-pillar_diagnosis.md)**
 

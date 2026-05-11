@@ -131,7 +131,7 @@ tags:
 - [\[ACL 2025\] Sparse Rewards Can Self-Train Dialogue Agents](sparse_rewards_can_self-train_dialogue_agents.md)
 - [\[ACL 2025\] Training Turn-by-Turn Verifiers for Dialogue Tutoring Agents: The Curious Case of LLMs as Your Coding Tutors](training_turn-by-turn_verifiers_for_dialogue_tutoring_agents_the_curious_case_of.md)
 - [\[ACL 2025\] Single- vs. Dual-Prompt Dialogue Generation with LLMs for Job Interviews in Human Resources](single-_vs_dual-prompt_dialogue_generation_with_llms_for_job_interviews_in_human.md)
-- [\[ACL 2025\] Beyond Dialogue: A Profile-Dialogue Alignment Framework Towards General Role-Playing Language Model](beyond_dialogue_roleplay.md)
+- [\[ACL 2025\] Beyond Dialogue: A Profile-Dialogue Alignment Framework Towards General Role-Playing Language Model](beyond_dialogue_a_profile-dialogue_alignment_framework_towards_general_role-play.md)
 - [\[ACL 2025\] Detecting Referring Expressions in Visually Grounded Dialogue with Autoregressive Language Models](detecting_referring_expressions_in_visually_grounded_dialogue_with_autoregressiv.md)
 
 </div>

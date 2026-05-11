@@ -131,7 +131,7 @@ SP3D 采用两阶段训练策略：第一阶段利用 LMMs 生成的伪标签预
 - [\[ECCV 2024\] Interactive 3D Object Detection with Prompts](../../ECCV2024/object_detection/interactive_3d_object_detection_with_prompts.md)
 - [\[CVPR 2025\] Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection](learning_class_prototypes_for_unified_sparse-supervised_3d_object_detection.md)
 - [\[CVPR 2025\] FSHNet: Fully Sparse Hybrid Network for 3D Object Detection](fshnet_fully_sparse_hybrid_network_for_3d_object_detection.md)
-- [\[ICCV 2025\] Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction](../../ICCV2025/object_detection/boosting_multi-view_indoor_3d_object_detection_via_adaptive_3d_volume.md)
+- [\[ICCV 2025\] Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction](../../ICCV2025/object_detection/boosting_multiview_indoor_3d_object_detection_via_adaptive_3.md)
 - [\[CVPR 2025\] SimLTD: Simple Supervised and Semi-Supervised Long-Tailed Object Detection](simltd_simple_supervised_and_semi-supervised_long-tailed_object_detection.md)
 
 </div>

@@ -1,16 +1,16 @@
 ---
 title: >-
-  ICLR2026 3D 视觉方向65篇论文解读
+  ICLR2026 3D 视觉方向63篇论文解读
 description: >-
-  65篇ICLR2026的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、机器人、动态场景、三维重建、新视角合成、NeRF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  63篇ICLR2026的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、机器人、动态场景、三维重建、新视角合成、NeRF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**🔬 ICLR2026** · **65** 篇论文解读
+**🔬 ICLR2026** · **63** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (252)](../../CVPR2026/3d_vision/index.md) · [🤖 AAAI2026 (74)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (116)](../../NeurIPS2025/3d_vision/index.md) · [📹 ICCV2025 (268)](../../ICCV2025/3d_vision/index.md) · [🧪 ICML2025 (11)](../../ICML2025/3d_vision/index.md) · [💬 ACL2025 (1)](../../ACL2025/3d_vision/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (230)](../../CVPR2026/3d_vision/index.md) · [🤖 AAAI2026 (74)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (116)](../../NeurIPS2025/3d_vision/index.md) · [📹 ICCV2025 (254)](../../ICCV2025/3d_vision/index.md) · [🧪 ICML2025 (11)](../../ICML2025/3d_vision/index.md) · [💬 ACL2025 (1)](../../ACL2025/3d_vision/index.md)
 
 🔥 **高频主题：** 3D 高斯渲染 ×10 · 机器人 ×4 · 动态场景 ×4 · 三维重建 ×4 · 新视角合成 ×3
 
@@ -118,10 +118,6 @@ description: >-
 
 :   提出 Information-preserving Graph Neural Simulators (IGNS)，利用 port-Hamiltonian 动力学结构在图上保持信息不耗散，结合 warmup 初始化、几何编码和多步训练目标，在 6 个物理仿真基准上全面超越现有图神经仿真器。
 
-**[Into the Rabbit Hull: From Task-Relevant Concepts in DINO to Minkowski Geometry](into_the_rabbit_hull_from_task-relevant_concepts.md)**
-
-:   本文通过稀疏自编码器（SAE）从 DINOv2 中提取 32,000 个视觉概念字典，系统研究了不同下游任务（分类/分割/深度估计）如何选择性地使用这些概念，揭示了表示空间的几何结构超越了线性稀疏编码假说（LRH），并提出了基于 Minkowski 和的新表示假说（MRH），认为 token 是多个凸混合的叠加。
-
 **[Into the Rabbit Hull: From Task-Relevant Concepts in DINO to Minkowski Geometry](into_the_rabbit_hull_from_task-relevant_concepts_in_dino_to_minkowski_geometry.md)**
 
 :   通过在 DINOv2 上训练 32,000 单元的 Sparse Autoencoder 字典，系统分析了下游任务如何招募不同概念，发现表征几何偏离线性稀疏假说（LRH），进而提出 Minkowski Representation Hypothesis（MRH），认为 token 表征是多个凸多面体的 Minkowski 和，概念由原型点的邻近性而非线性方向定义。
@@ -169,10 +165,6 @@ description: >-
 **[Omni-View: Unlocking How Generation Facilitates Understanding in Unified 3D Model based on Multiview images](omni-view_unlocking_how_generation_facilitates_understanding_in_unified_3d_model.md)**
 
 :   构建统一的3D场景理解与生成模型 Omni-View，通过纹理模块（新视角合成）和几何模块（深度/位姿估计）的生成能力增强理解性能，在 VSI-Bench 上达到 55.4 分超越所有现有专用3D理解模型。
-
-**[One2Scene: Geometric Consistent Explorable 3D Scene Generation from a Single Image](one2scene_geometric_consistent_explorable_3d_scene_generation_from_a_single_ima.md)**
-
-:   提出 One2Scene 三阶段框架，将单图生成可探索 3D 场景分解为全景生成→前馈 3D 高斯溅射构建几何支架→支架引导的新视角合成，通过将全景深度估计重新表述为多视图立体匹配问题，实现几何一致且可自由探索的 3D 场景生成。
 
 **[One2Scene: Geometric Consistent Explorable 3D Scene Generation from a Single Image](one2scene_geometric_consistent_explorable_3d_scene_generation_from_a_single_imag.md)**
 

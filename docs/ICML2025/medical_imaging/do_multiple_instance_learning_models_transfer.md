@@ -163,7 +163,7 @@ PC-108 仅用 CHIEF 6.5%、GigaPath 2.3% 的预训练数据，在大多数任务
 - [\[CVPR 2025\] MIL-PF: Multiple Instance Learning on Precomputed Features for Mammography Classification](../../CVPR2025/medical_imaging/mil-pf_multiple_instance_learning_on_precomputed_features_for_mammography_classi.md)
 - [\[CVPR 2026\] Every Error has Its Magnitude: Asymmetric Mistake Severity Training for Multiclass Multiple Instance Learning](../../CVPR2026/medical_imaging/every_error_has_its_magnitude_asymmetric_mistake_severity_training_for_multiclas.md)
 - [\[ACL 2026\] Multi-View Attention Multiple-Instance Learning Enhanced by LLM Reasoning for Cognitive Distortion Detection](../../ACL2026/medical_imaging/multi-view_attention_multiple-instance_learning_enhanced_by_llm_reasoning_for_co.md)
-- [\[CVPR 2026\] Fair Lung Disease Diagnosis from Chest CT via Gender-Adversarial Attention Multiple Instance Learning](../../CVPR2026/medical_imaging/fair_lung_disease_diagnosis_from_chest_ct_via_gender-adversarial_attention_multi.md)
+- [\[CVPR 2026\] Fair Lung Disease Diagnosis from Chest CT via Gender-Adversarial Attention Multiple Instance Learning](../../CVPR2026/medical_imaging/fair_lung_disease_diagnosis_from_chest_ct_via_gend.md)
 - [\[ACL 2025\] CSTRL: Context-Driven Sequential Transfer Learning for Abstractive Radiology Report Summarization](../../ACL2025/medical_imaging/cstrl_context-driven_sequential_transfer_learning_for_abstractive_radiology_repo.md)
 
 </div>

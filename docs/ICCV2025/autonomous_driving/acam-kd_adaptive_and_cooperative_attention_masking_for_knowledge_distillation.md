@@ -210,7 +210,7 @@ $$L = L_{task} + \alpha (L^c_{distill} + L^s_{distill}) + \lambda L_{div}$$
 
 - [\[ICCV 2025\] SDKD: Frequency-Aligned Knowledge Distillation for Lightweight Spatiotemporal Forecasting](frequency-aligned_knowledge_distillation_for_lightweight_spatiotemporal_forecast.md)
 - [\[ICCV 2025\] PBCAT: Patch-Based Composite Adversarial Training against Physically Realizable Attacks on Object Detection](pbcat_patch-based_composite_adversarial_training_against_physically_realizable_a.md)
-- [\[ICCV 2025\] 3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multi-view_robust_physical_adversarial_camouflage_g.md)
+- [\[ICCV 2025\] 3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multiview_robust_physical_adver.md)
 - [\[ICCV 2025\] Where, What, Why: Towards Explainable Driver Attention Prediction](where_what_why_towards_explainable_driver_attention_prediction.md)
 - [\[ICCV 2025\] Passing the Driving Knowledge Test](passing_the_driving_knowledge_test.md)
 

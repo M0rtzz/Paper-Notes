@@ -10,7 +10,7 @@ description: >-
 
 **🤖 AAAI2026** · **8** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (4)](../../CVPR2026/scientific_computing/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/scientific_computing/index.md) · [🧠 NeurIPS2025 (24)](../../NeurIPS2025/scientific_computing/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/scientific_computing/index.md) · [🧪 ICML2025 (8)](../../ICML2025/scientific_computing/index.md) · [📷 CVPR2025 (3)](../../CVPR2025/scientific_computing/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (4)](../../CVPR2026/scientific_computing/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/scientific_computing/index.md) · [🧠 NeurIPS2025 (23)](../../NeurIPS2025/scientific_computing/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/scientific_computing/index.md) · [🧪 ICML2025 (8)](../../ICML2025/scientific_computing/index.md) · [📷 CVPR2025 (3)](../../CVPR2025/scientific_computing/index.md)
 
 **[Just Few States are Enough: Randomized Sparse Feedback for Stability of Dynamical Systems](just_few_states_are_enough_randomized_sparse_feedback_for_stability_of_dynamical.md)**
 

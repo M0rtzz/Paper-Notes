@@ -137,7 +137,7 @@ $$\mathcal{L}_{\text{box}}^{\text{GA}} = \lambda_{3D} \mathcal{L}_{\text{box}}^{
 ## 相关论文
 
 - [\[ICCV 2025\] Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction](../../ICCV2025/object_detection/boosting_multiview_indoor_3d_object_detection_via_adaptive_3.md)
-- [\[ICCV 2025\] SGCDet: Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction](../../ICCV2025/object_detection/boosting_multi-view_indoor_3d_object_detection_via_adaptive_3d_volume_constructi.md)
+- [\[ICCV 2025\] SGCDet: Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction](../../ICCV2025/object_detection/boosting_multiview_indoor_3d_object_detection_via_adaptive_3.md)
 - [\[ECCV 2024\] Adaptive Bounding Box Uncertainties via Two-Step Conformal Prediction](../../ECCV2024/object_detection/adaptive_bounding_box_uncertainties_via_twostep_conformal_pr.md)
 - [\[AAAI 2026\] AerialMind: Towards Referring Multi-Object Tracking in UAV Scenarios](aerialmind_towards_referring_multi-object_tracking_in_uav_sc.md)
 - [\[CVPR 2026\] Few-Shot Incremental 3D Object Detection in Dynamic Indoor Environments](../../CVPR2026/object_detection/few-shot_incremental_3d_object_detection_in_dynamic_indoor_environments.md)

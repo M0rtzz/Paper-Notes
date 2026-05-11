@@ -133,7 +133,7 @@ $$\mathcal{L} = \mathcal{L}_p + \mathcal{L}_a + \mathcal{L}_o$$
 - [\[ECCV 2024\] Human Hair Reconstruction with Strand-Aligned 3D Gaussians](../../ECCV2024/3d_vision/human_hair_reconstruction_with_strand-aligned_3d_gaussians.md)
 - [\[NeurIPS 2025\] DGH: Dynamic Gaussian Hair](../../NeurIPS2025/3d_vision/dgh_dynamic_gaussian_hair.md)
 - [\[CVPR 2026\] E2EGS: Event-to-Edge Gaussian Splatting for Pose-Free 3D Reconstruction](e2egs_event-to-edge_gaussian_splatting_for_pose-free_3d_reconstruction.md)
-- [\[CVPR 2026\] SGI: Structured 2D Gaussians for Efficient and Compact Large Image Representation](sgi_structured_2d_gaussians_large_image_representation.md)
+- [\[CVPR 2026\] SGI: Structured 2D Gaussians for Efficient and Compact Large Image Representation](sgi_structured_2d_gaussians_for_efficient_and_compact_large_image_representation.md)
 
 </div>
 

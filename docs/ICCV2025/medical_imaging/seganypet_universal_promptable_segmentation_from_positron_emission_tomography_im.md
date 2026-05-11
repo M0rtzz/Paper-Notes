@@ -130,10 +130,10 @@ SegAnyPET的pipeline：输入为3D PET体积图像和位置提示（点或框）
 
 ## 相关论文
 
-- [\[CVPR 2026\] Developing Foundation Models for Universal Segmentation from 3D Whole-Body Positron Emission Tomography](../../CVPR2026/medical_imaging/developing_foundation_models_for_universal_segment.md)
+- [\[CVPR 2026\] Developing Foundation Models for Universal Segmentation from 3D Whole-Body Positron Emission Tomography](../../CVPR2026/medical_imaging/developing_foundation_models_for_universal_segmentation_from_3d_whole-body_posit.md)
 - [\[ICCV 2025\] Coordinate-based Speed of Sound Recovery for Aberration-Corrected Photoacoustic Computed Tomography](coordinate-based_speed_of_sound_recovery_for_aberration-corrected_photoacoustic_.md)
 - [\[CVPR 2025\] vesselFM: A Foundation Model for Universal 3D Blood Vessel Segmentation](../../CVPR2025/medical_imaging/vesselfm_a_foundation_model_for_universal_3d_blood_vessel_segmentation.md)
-- [\[ICCV 2025\] An OpenMind for 3D Medical Vision Self-Supervised Learning](an_openmind_for_3d_medical_vision_self-supervised_learning.md)
+- [\[ICCV 2025\] An OpenMind for 3D Medical Vision Self-Supervised Learning](an_openmind_for_3d_medical_vision_selfsupervised_learning.md)
 - [\[ICCV 2025\] Controllable Latent Space Augmentation for Digital Pathology](controllable_latent_space_augmentation_for_digital_pathology.md)
 
 </div>

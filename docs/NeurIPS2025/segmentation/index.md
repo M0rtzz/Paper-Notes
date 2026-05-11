@@ -1,16 +1,16 @@
 ---
 title: >-
-  NeurIPS2025 语义分割方向48篇论文解读
+  NeurIPS2025 语义分割方向47篇论文解读
 description: >-
-  48篇NeurIPS2025的语义分割方向论文解读，涵盖语义分割、扩散模型、对抗鲁棒、推理、自监督学习、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  47篇NeurIPS2025的语义分割方向论文解读，涵盖语义分割、扩散模型、对抗鲁棒、推理、自监督学习、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**🧠 NeurIPS2025** · **48** 篇论文解读
+**🧠 NeurIPS2025** · **47** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (103)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [📹 ICCV2025 (78)](../../ICCV2025/segmentation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/segmentation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (85)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [📹 ICCV2025 (74)](../../ICCV2025/segmentation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/segmentation/index.md)
 
 🔥 **高频主题：** 语义分割 ×21 · 扩散模型 ×7 · 对抗鲁棒 ×5 · 推理 ×3 · 自监督学习 ×2
 
@@ -89,10 +89,6 @@ description: >-
 **[Mechanistic Interpretability of RNNs Emulating Hidden Markov Models](mechanistic_interpretability_of_rnns_emulating_hidden_mar.md)**
 
 :   训练 vanilla RNN 复现 HMM 的发射统计，然后通过反向工程揭示 RNN 实现离散随机状态转换的机制：噪声驱动的轨道动力学 + "kick 神经元"触发的快速转换，本质是自诱导随机共振（SISR），该动力学基元可组合复用以模拟更复杂的离散潜在结构。
-
-**[Mechanistic Interpretability of RNNs Emulating Hidden Markov Models](mechanistic_interpretability_of_rnns_emulating_hidden_markov_models.md)**
-
-:   通过训练 RNN 模拟 HMM 的发射统计，然后反向工程揭示 RNN 如何利用噪声驱动的轨道动力学、结构化连接（噪声积分群体 + kick 神经元）和自诱导随机共振机制来实现离散随机状态转换。
 
 **[MultiHuman-Testbench: Benchmarking Image Generation for Multiple Humans](multihuman-testbench_benchmarking_image_generation_for_multiple_humans.md)**
 

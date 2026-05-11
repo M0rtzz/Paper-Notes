@@ -1,16 +1,16 @@
 ---
 title: >-
-  ECCV2024 目标检测方向39篇论文解读
+  ECCV2024 目标检测方向37篇论文解读
 description: >-
-  39篇ECCV2024的目标检测方向论文解读，涵盖目标检测、少样本学习、3D 目标检测、自监督学习、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  37篇ECCV2024的目标检测方向论文解读，涵盖目标检测、少样本学习、3D 目标检测、自监督学习、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎯 目标检测
 
-**🎞️ ECCV2024** · **39** 篇论文解读
+**🎞️ ECCV2024** · **37** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/object_detection/index.md) · [📷 CVPR2026 (45)](../../CVPR2026/object_detection/index.md) · [🔬 ICLR2026 (9)](../../ICLR2026/object_detection/index.md) · [🤖 AAAI2026 (17)](../../AAAI2026/object_detection/index.md) · [🧠 NeurIPS2025 (18)](../../NeurIPS2025/object_detection/index.md) · [📹 ICCV2025 (30)](../../ICCV2025/object_detection/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/object_detection/index.md) · [📷 CVPR2026 (39)](../../CVPR2026/object_detection/index.md) · [🔬 ICLR2026 (9)](../../ICLR2026/object_detection/index.md) · [🤖 AAAI2026 (17)](../../AAAI2026/object_detection/index.md) · [🧠 NeurIPS2025 (17)](../../NeurIPS2025/object_detection/index.md) · [📹 ICCV2025 (28)](../../ICCV2025/object_detection/index.md)
 
 🔥 **高频主题：** 目标检测 ×7 · 少样本学习 ×4 · 3D 目标检测 ×3 · 自监督学习 ×2 · 布局/合成 ×2
 
@@ -33,10 +33,6 @@ description: >-
 **[AFreeCA: Annotation-Free Counting for All](afreeca_annotation-free_counting_for_all.md)**
 
 :   利用 Stable Diffusion 生成合成排序/计数数据，通过先学排序再学计数的两阶段策略 + 密度引导的图像分块，实现了首个适用于任意类别物体的无标注计数方法，在人群计数上超越已有无监督方法。
-
-**[AFreeCA: Annotation-Free Counting for All](afreeca_annotationfree_counting_for_all.md)**
-
-:   利用潜在扩散模型（LDM）生成合成计数和排序数据，提出首个可适用于任意物体类别的无监督计数方法，无需任何人工标注即可实现准确计数。
 
 **[Approaching Outside: Scaling Unsupervised 3D Object Detection from 2D Scene](approaching_outside_scaling_unsupervised_3d_object_detection_from_2d_scene.md)**
 
@@ -141,10 +137,6 @@ description: >-
 **[Towards Natural Language-Guided Drones: GeoText-1652 Benchmark with Spatial Relation Matching](towards_natural_language-guided_drones_geotext-1652_benchmark_with_spatial_relat.md)**
 
 :   构建了首个自然语言引导的无人机地理定位基准 GeoText-1652（276K bbox-text 对，316K 描述），并提出 blending spatial matching 方法通过 grounding loss + spatial relation loss 实现区域级空间关系匹配，文本检索 Recall@10 达到 31.2%。
-
-**[Towards Natural Language-Guided Drones: GeoText-1652 Benchmark with Spatial Relation Matching](towards_natural_languageguided_drones_geotext1652_bench.md)**
-
-:   构建 GeoText-1652 多视角自然语言引导地理定位基准数据集（276K text-bbox 对），提出利用区域级空间关系匹配（grounding loss + spatial loss）进行精细化文本-图像跨模态检索的方法，实现自然语言控制无人机导航。
 
 **[Visible and Clear: Finding Tiny Objects in Difference Map](visible_and_clear_finding_tiny_objects_in_difference_map.md)**
 

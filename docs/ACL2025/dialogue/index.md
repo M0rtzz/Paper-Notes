@@ -1,26 +1,22 @@
 ---
 title: >-
-  ACL2025 对话系统方向23篇论文解读
+  ACL2025 对话系统方向22篇论文解读
 description: >-
-  23篇ACL2025的对话系统方向论文解读，涵盖对话系统、情感分析、对齐/RLHF、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  22篇ACL2025的对话系统方向论文解读，涵盖对话系统、情感分析、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🗣️ 对话系统
 
-**💬 ACL2025** · **23** 篇论文解读
+**💬 ACL2025** · **22** 篇论文解读
 
 📌 **同领域跨会议浏览：** [💬 ACL2026 (9)](../../ACL2026/dialogue/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/dialogue/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/dialogue/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/dialogue/index.md) · [🧠 NeurIPS2025 (5)](../../NeurIPS2025/dialogue/index.md) · [🧪 ICML2025 (3)](../../ICML2025/dialogue/index.md)
 
-🔥 **高频主题：** 对话系统 ×21 · 情感分析 ×3 · 对齐/RLHF ×2 · 个性化生成 ×2
+🔥 **高频主题：** 对话系统 ×20 · 情感分析 ×3 · 个性化生成 ×2
 
 **[Beyond Dialogue: A Profile-Dialogue Alignment Framework Towards General Role-Playing Language Model](beyond_dialogue_a_profile-dialogue_alignment_framework_towards_general_role-play.md)**
 
 :   提出 Beyond Dialogue 框架，通过 Profile-Dialogue 对齐消除角色扮演训练中 profile 与对话之间的偏差，并引入句子级细粒度对齐任务，使模型更好地理解和表现角色特质。
-
-**[Beyond Dialogue: A Profile-Dialogue Alignment Framework Towards General Role-Playing Language Model](beyond_dialogue_roleplay.md)**
-
-:   本文提出Beyond Dialogue框架，通过引入"超越对话"任务实现角色轮廓与场景对话的句级细粒度对齐，解决了角色扮演训练中预定义角色轮廓与具体场景对话之间的偏差问题，在角色忠实度上超越GPT-4o和专用角色扮演基线。
 
 **[Can LLMs Simulate L2-English Dialogue? An Information-Theoretic Analysis of L1-Dependent Biases](can_llms_simulate_l2-english_dialogue_an_information-theoretic_analysis_of_l1-de.md)**
 

@@ -144,7 +144,7 @@ tags:
 - [\[ACL 2025\] COSMIC: Generalized Refusal Direction Identification in LLM Activations](cosmic_generalized_refusal_direction_identification_in_llm_activations.md)
 - [\[ACL 2025\] ECLM: Entity Level Language Model for Spoken Language Understanding with Chain of Intent](eclm_entity_level_language_model_spoken_language_understanding.md)
 - [\[ACL 2025\] A Variational Approach for Mitigating Entity Bias in Relation Extraction](variational_approach_mitigating_entity_bias_relation_extraction.md)
-- [\[ACL 2025\] Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models](salience_sparse_fine_tuning.md)
+- [\[ACL 2025\] Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models](refining_salience-aware_sparse_fine-tuning_strategies_for_language_models.md)
 
 </div>
 

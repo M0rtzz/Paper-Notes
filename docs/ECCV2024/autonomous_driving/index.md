@@ -1,18 +1,18 @@
 ---
 title: >-
-  ECCV2024 自动驾驶方向60篇论文解读
+  ECCV2024 自动驾驶方向53篇论文解读
 description: >-
-  60篇ECCV2024的自动驾驶方向论文解读，涵盖自动驾驶、语义分割、3D 目标检测、对抗鲁棒、扩散模型、目标检测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  53篇ECCV2024的自动驾驶方向论文解读，涵盖自动驾驶、语义分割、3D 目标检测、对抗鲁棒、扩散模型、目标检测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🚗 自动驾驶
 
-**🎞️ ECCV2024** · **60** 篇论文解读
+**🎞️ ECCV2024** · **53** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (105)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (58)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (98)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (11)](../../ICML2025/autonomous_driving/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (88)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (58)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (11)](../../ICML2025/autonomous_driving/index.md)
 
-🔥 **高频主题：** 自动驾驶 ×12 · 语义分割 ×7 · 3D 目标检测 ×6 · 对抗鲁棒 ×6 · 扩散模型 ×5
+🔥 **高频主题：** 自动驾驶 ×10 · 语义分割 ×7 · 3D 目标检测 ×6 · 对抗鲁棒 ×6 · 扩散模型 ×4
 
 **[4D Contrastive Superflows are Dense 3D Representation Learners](4d_contrastive_superflows_are_dense_3d_representation_learners.md)**
 
@@ -45,10 +45,6 @@ description: >-
 **[DVLO: Deep Visual-LiDAR Odometry with Local-to-Global Feature Fusion and Bi-directional Structure Alignment](dvlo_deep_visual-lidar_odometry_with_local-to-global_feature_fusion_and_bi-direc.md)**
 
 :   提出基于聚类的 Local-to-Global 融合网络 DVLO，通过双向结构对齐（图像→伪点云 + 点云→伪图像）解决视觉与 LiDAR 的数据结构不一致问题，在 KITTI 里程计和 FlyingThings3D 场景流任务上均取得 SOTA。
-
-**[DVLO: Deep Visual-LiDAR Odometry with Local-to-Global Feature Fusion](dvlo_deep_visuallidar_odometry_with_localtoglobal_featu.md)**
-
-:   提出 DVLO，一种基于局部到全局融合与双向结构对齐的视觉-LiDAR 里程计网络，通过将图像视为伪点云（局部融合）和将点云投影为伪图像（全局融合）来解决两种模态的固有数据结构不一致问题。
 
 **[DySeT: A Dynamic Masked Self-distillation Approach for Robust Trajectory Prediction](dyset_a_dynamic_masked_self-distillation_approach_for_robust_trajectory_predicti.md)**
 
@@ -98,10 +94,6 @@ description: >-
 
 :   提出将LiDAR稀疏深度点与事件立体相机融合的首个框架，通过在事件堆叠表示（VSH）或原始事件流（BTH）中"幻觉"（插入虚构事件）来弥补事件相机在无运动/无纹理区域的信息缺失，大幅提升事件立体匹配精度。
 
-**[LiDAR-Event Stereo Fusion with Hallucinations](lidarevent_stereo_fusion_with_hallucinations.md)**
-
-:   首次探索 LiDAR 与事件立体相机的融合，提出虚拟堆叠幻觉（VSH）和回溯时间幻觉（BTH）两种策略，通过在事件流/堆叠中注入虚拟事件来增强匹配可辨别性，大幅提升事件立体匹配精度。
-
 **[LiveHPS++: Robust and Coherent Motion Capture in Dynamic Free Environment](livehps_robust_and_coherent_motion_capture_in_dynamic_free_environment.md)**
 
 :   提出 LiveHPS++，一种基于单 LiDAR 的鲁棒人体动作捕捉方法，通过轨迹引导身体追踪器、噪声不敏感速度预测器和运动学感知姿态优化器三个模块，隐式和显式建模人体运动的动力学和运动学特征，在复杂噪声环境下实现精确且连贯的全局人体运动捕捉。
@@ -122,10 +114,6 @@ description: >-
 
 :   提出 MonoWAD，通过天气码本学习晴天知识作为参考，结合天气自适应扩散模型将雾效建模为噪声进行特征增强，实现在各种天气条件下鲁棒的单目3D目标检测。
 
-**[Navigation Instruction Generation with BEV Perception and Large Language Models](navigation_instruction_generation_with_bev.md)**
-
-:   提出 BEVInstructor，将鸟瞰图 (BEV) 特征融入多模态大语言模型 (MLLM) 用于导航指令生成，通过 Perspective-BEV 视觉编码、参数高效 prompt tuning 和实例引导的迭代精化，在室内外多个数据集上全面超越 SOTA。
-
 **[Navigation Instruction Generation with BEV Perception and Large Language Models](navigation_instruction_generation_with_bev_perception_and_large_language_models.md)**
 
 :   提出 BEVInstructor，将鸟瞰图 (BEV) 特征融合到多模态大语言模型中，通过 Perspective-BEV 融合编码器、参数高效的 Prompt Tuning 以及实例引导的迭代优化策略，在室内外导航指令生成任务上取得 SOTA。
@@ -141,10 +129,6 @@ description: >-
 **[OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving](occgen_generative_multi-modal_3d_occupancy_prediction_for_autonomous_driving.md)**
 
 :   OccGen 将 3D 语义占用预测重新定义为"noise-to-occupancy"的生成式范式，通过条件编码器提取多模态特征、渐进式精炼解码器执行扩散去噪，以由粗到精的方式逐步生成占用图，在 nuScenes-Occupancy 上多模态/纯LiDAR/纯相机设置下分别相对提升 9.5%/6.3%/13.3% 的 mIoU。
-
-**[OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving](occgen_generative_multimodal_3d_occupancy_prediction_for_aut.md)**
-
-:   提出OccGen，首次将扩散模型的"噪声到占据"生成范式引入3D语义占据预测任务，通过条件编码器+渐进式精炼解码器实现由粗到精的占据图生成，在nuScenes-Occupancy上多模态/纯LiDAR/纯相机设置下分别提升mIoU 9.5%/6.3%/13.3%。
 
 **[OccWorld: Learning a 3D Occupancy World Model for Autonomous Driving](occworld_learning_a_3d_occupancy_world_model_for_autonomous_driving.md)**
 
@@ -174,10 +158,6 @@ description: >-
 
 :   本文提出 RAPiD 特征（Range-Aware Pointwise Distance Distribution），一种对刚体变换不变且适应点密度变化的 LiDAR 点云局部几何特征，配合双层嵌套自编码器和通道注意力融合，在 SemanticKITTI（76.1 mIoU）和 nuScenes（83.6 mIoU）上达到 SOTA 分割性能。
 
-**[Reason2Drive: Towards Interpretable and Chain-based Reasoning for Autonomous Driving](reason2drive_towards_interpretable_and_chain-based_reasoning_for_autonomous_driv.md)**
-
-:   Reason2Drive 构建了一个包含 60 万+视频-文本对的大规模自动驾驶推理数据集，将驾驶决策拆解为感知→预测→推理的链式过程，并提出 ADRScore 评估指标和带 prior tokenizer + instructed vision decoder 的 VLM 框架，显著提升了驾驶场景的链式推理准确性。
-
 **[Reason2Drive: Towards Interpretable and Chain-Based Reasoning for Autonomous Driving](reason2drive_towards_interpretable_and_chainbased_reasoning.md)**
 
 :   构建 Reason2Drive 基准数据集（600K+ 视频-文本对，覆盖感知-预测-推理链式任务），提出 ADRScore 评估链式推理正确性的新指标，并设计 Prior Tokenizer + Instructed Vision Decoder 框架增强 VLM 的目标级感知和推理能力，在自动驾驶推理任务上显著超越所有基线。
@@ -205,10 +185,6 @@ description: >-
 **[Safe-Sim: Safety-Critical Closed-Loop Traffic Simulation with Diffusion-Controllable Adversaries](safe-sim_safety-critical_closed-loop_traffic_simulation_with_diffusion-cont.md)**
 
 :   Safe-Sim 提出了一个基于扩散模型的闭环安全关键仿真框架，通过在扩散去噪过程中引入对抗项和部分扩散（Partial Diffusion）机制，实现了对抗车辆行为类型（碰撞角度、相对速度、碰撞类型）的细粒度控制，在 nuScenes 和 nuPlan 上验证了对多种 planner 的有效评估能力。
-
-**[Safe-Sim: Safety-Critical Closed-Loop Traffic Simulation with Diffusion-Controllable Adversaries](safe-sim_safety-critical_closed-loop_traffic_simulation_with_diffusion-controlla.md)**
-
-:   Safe-Sim 提出了一种基于扩散模型的闭环安全关键仿真框架，通过在去噪过程中注入对抗性引导目标和部分扩散（Partial Diffusion）机制，生成真实且可控的对抗场景来评估自动驾驶规划算法，支持控制碰撞类型、相对速度和 TTC 等关键参数。
 
 **[SeFlow: A Self-Supervised Scene Flow Method in Autonomous Driving](seflow_a_self-supervised_scene_flow_method_in_autonomous_driving.md)**
 
@@ -249,7 +225,3 @@ description: >-
 **[VisionTrap: Vision-Augmented Trajectory Prediction Guided by Textual Descriptions](visiontrap_vision-augmented_trajectory_prediction_guided_by_textual_descriptions.md)**
 
 :   提出 VisionTrap，将环视相机图像和文本描述引入轨迹预测任务，通过 BEV 视觉语义编码器和文本驱动的去偏对比学习引导模型学习视觉语义线索（如行人姿态、转向灯等），在保持 53ms 实时推理的同时显著提升预测精度并发布 nuScenes-Text 数据集。
-
-**[VisionTrap: Vision-Augmented Trajectory Prediction Guided by Textual Descriptions](visiontrap_visionaugmented_trajectory_prediction_guided.md)**
-
-:   提出 VisionTrap，利用环视相机视觉输入和 VLM/LLM 生成的文本描述作为训练监督，增强自动驾驶场景下的多智能体轨迹预测，同时保持 53ms 实时推理速度。

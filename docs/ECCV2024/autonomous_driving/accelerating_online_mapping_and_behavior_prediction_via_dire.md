@@ -128,7 +128,7 @@ tags:
 - [\[ECCV 2024\] H-V2X: A Large Scale Highway Dataset for BEV Perception](h-v2x_a_large_scale_highway_dataset_for_bev_perception.md)
 - [\[CVPR 2026\] Failure Modes for Deep Learning-Based Online Mapping: How to Measure and Address Them](../../CVPR2026/autonomous_driving/failure_modes_for_deep_learning-based_online_mapping_how_to_measure_and_address_.md)
 - [\[ECCV 2024\] MapTracker: Tracking with Strided Memory Fusion for Consistent Vector HD Mapping](maptracker_tracking_with_strided_memory_fusion_for_consistent_vector_hd_mapping.md)
-- [\[ECCV 2024\] DVLO: Deep Visual-LiDAR Odometry with Local-to-Global Feature Fusion](dvlo_deep_visuallidar_odometry_with_localtoglobal_featu.md)
+- [\[ECCV 2024\] DVLO: Deep Visual-LiDAR Odometry with Local-to-Global Feature Fusion](dvlo_deep_visual-lidar_odometry_with_local-to-global_feature_fusion_and_bi-direc.md)
 
 </div>
 

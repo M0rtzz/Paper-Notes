@@ -152,7 +152,7 @@ $$\mathcal{L} = 0.9\mathcal{L}_{\text{noise}} + 0.1\mathcal{L}_{\text{negative}}
 - [\[ECCV 2024\] GaussCtrl: Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing](gaussctrl_multi-view_consistent_text-driven_3d_gaussian_splatting_editing.md)
 - [\[ICCV 2025\] Egocentric Action-aware Inertial Localization in Point Clouds with Vision-Language Guidance](../../ICCV2025/3d_vision/egocentric_action-aware_inertial_localization_in_point_clouds_with_vision-langua.md)
 - [\[ECCV 2024\] ComboVerse: Compositional 3D Assets Creation Using Spatially-Aware Diffusion Guidance](comboverse_compositional_3d_assets_creation_using_spatially-aware_diffusion_guid.md)
-- [\[ECCV 2024\] FALIP: Visual Prompt as Foveal Attention Boosts CLIP Zero-Shot Performance](falip_visual_prompt_as_foveal_attention_boosts_clip_zer.md)
+- [\[ECCV 2024\] FALIP: Visual Prompt as Foveal Attention Boosts CLIP Zero-Shot Performance](falip_visual_prompt_as_foveal_attention_boosts_clip_zero-shot_performance.md)
 
 </div>
 

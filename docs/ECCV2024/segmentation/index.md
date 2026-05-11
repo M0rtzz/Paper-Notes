@@ -1,18 +1,18 @@
 ---
 title: >-
-  ECCV2024 语义分割方向56篇论文解读
+  ECCV2024 语义分割方向53篇论文解读
 description: >-
-  56篇ECCV2024的语义分割方向论文解读，涵盖语义分割、目标检测、多模态、少样本学习、扩散模型、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  53篇ECCV2024的语义分割方向论文解读，涵盖语义分割、目标检测、少样本学习、扩散模型、对抗鲁棒、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**🎞️ ECCV2024** · **56** 篇论文解读
+**🎞️ ECCV2024** · **53** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (103)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/segmentation/index.md) · [📹 ICCV2025 (78)](../../ICCV2025/segmentation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (85)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/segmentation/index.md) · [📹 ICCV2025 (74)](../../ICCV2025/segmentation/index.md)
 
-🔥 **高频主题：** 语义分割 ×33 · 目标检测 ×4 · 多模态 ×4 · 少样本学习 ×3 · 扩散模型 ×2
+🔥 **高频主题：** 语义分割 ×33 · 目标检测 ×4 · 少样本学习 ×3 · 扩散模型 ×2 · 对抗鲁棒 ×2
 
 **[A Semantic Space is Worth 256 Language Descriptions: Make Stronger Segmentation Models with Descriptive Properties](a_semantic_space_is_worth_256_language_descriptions_make_str.md)**
 
@@ -45,10 +45,6 @@ description: >-
 **[ColorMAE: Exploring Data-Independent Masking Strategies in Masked AutoEncoders](colormae_exploring_data-independent_masking_strategies_in_masked_autoencoders.md)**
 
 :   提出 ColorMAE，通过对随机噪声施加不同频域滤波器生成具有空间与语义先验的数据无关遮罩模式，在不增加任何参数和计算开销的前提下，显著提升 MAE 的下游任务表现，尤其在语义分割任务上相比随机遮罩提升 2.72 mIoU。
-
-**[ControlNet++: Improving Conditional Controls with Efficient Consistency Feedback](controlnet_improving_conditional_controls_with_efficien.md)**
-
-:   提出 ControlNet++，通过预训练判别模型提取生成图像的条件并优化像素级循环一致性损失来显式提升可控生成的精度，同时提出高效单步去噪奖励策略避免多步采样的巨大开销。
 
 **[ControlNet++: Improving Conditional Controls with Efficient Consistency Feedback](controlnet_improving_conditional_controls_with_efficient_consistency_feedback.md)**
 
@@ -146,10 +142,6 @@ description: >-
 
 :   首次定义开放集全景场景图生成（OpenPSG）任务，利用 BLIP-2 作为多模态关系解码器，结合关系查询 Transformer（RelQ-Former）实现开放集关系预测，在 PSG 数据集 PredCls R@100 达到 79.3%，闭集场景超越先前 SOTA 26.6%。
 
-**[OpenPSG: Open-set Panoptic Scene Graph Generation via Large Multimodal Models](openpsg_openset_panoptic_scene_graph_generation_via_large_mu.md)**
-
-:   本文首次提出开放集全景场景图生成任务（OpenPSG），利用大型多模态模型（BLIP-2）以自回归方式预测物体间的开放集关系，通过关系查询Transformer高效提取物体对特征并过滤无关对，在闭集和开放集设置下均取得SOTA。
-
 **[Part2Object: Hierarchical Unsupervised 3D Instance Segmentation](part2object_hierarchical_unsupervised_3d_instance_segmentation.md)**
 
 :   提出 Part2Object 层次聚类框架，利用自监督特征和3D物体性先验（objectness prior），从零件级过分割逐层合并到物体级实例，生成高质量伪标签用于自训练 Hi-Mask3D，实现无需人工标注的3D实例分割。
@@ -177,10 +169,6 @@ description: >-
 **[SCLIP: Rethinking Self-Attention for Dense Vision-Language Inference](sclip_rethinking_self-attention_for_dense_vision-language_inference.md)**
 
 :   发现 CLIP 的密集预测失败源于自注意力导致的空间位置错位问题，提出 Correlative Self-Attention (CSA) 机制——仅修改最后一层自注意力的计算方式（无需训练），将 CLIP 的零样本语义分割从 14.1% 平均 mIoU 提升至 38.2%，超越所有已有方法。
-
-**[SCLIP: Rethinking Self-Attention for Dense Vision-Language Inference](sclip_rethinking_selfattention_for_dense_visionlanguage_infe.md)**
-
-:   发现CLIP在密集预测中失败的根因是自注意力机制导致的空间位置错配（spatial-invariant features），提出Correlative Self-Attention(CSA)机制——仅用一个投影矩阵计算token间相关性作为注意力分数，无需任何训练/额外参数即可将CLIP的零样本语义分割mIoU从14.1%提升至38.2%（8个基准平均），大幅超越现有SOTA的33.9%。
 
 **[SegGen: Supercharging Segmentation Models with Text2Mask and Mask2Img Synthesis](seggen_supercharging_segmentation_models_with_text2mask_and_mask2img_synthesis.md)**
 

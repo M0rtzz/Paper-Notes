@@ -221,7 +221,7 @@ HF-Fuser 和 SA-Coupler 消融：
 
 ## 相关论文
 
-- [\[ECCV 2024\] SemGrasp: Semantic Grasp Generation via Language Aligned Discretization](../../ECCV2024/robotics/semgrasp_semantic_grasp_generation_via_language_aligned.md)
+- [\[ECCV 2024\] SemGrasp: Semantic Grasp Generation via Language Aligned Discretization](../../ECCV2024/robotics/semgrasp_semantic_grasp_generation_via_language_aligned_discretization.md)
 - [\[NeurIPS 2025\] CogVLA: Cognition-Aligned Vision-Language-Action Model via Instruction-Driven Routing & Sparsification](../../NeurIPS2025/robotics/cogvla_cognition-aligned_vision-language-action_model_via_instruction-driven_rou.md)
 - [\[AAAI 2026\] SpatialActor: Exploring Disentangled Spatial Representations for Robust Robotic Manipulation](spatialactor_exploring_disentangled_spatial_representations_for_robust_robotic_m.md)
 - [\[CVPR 2025\] ASAP: Advancing Semantic Alignment for Multi-Modal Manipulation Detection](../../CVPR2025/robotics/asap_advancing_semantic_alignment_promotes_multi-modal_manipulation_detecting_an.md)

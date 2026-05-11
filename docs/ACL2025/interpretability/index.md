@@ -1,18 +1,18 @@
 ---
 title: >-
-  ACL2025 可解释性方向24篇论文解读
+  ACL2025 可解释性方向22篇论文解读
 description: >-
-  24篇ACL2025的可解释性方向论文解读，涵盖 LLM、推理、情感分析、生物分子等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  22篇ACL2025的可解释性方向论文解读，涵盖 LLM、推理、情感分析、生物分子等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**💬 ACL2025** · **24** 篇论文解读
+**💬 ACL2025** · **22** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (31)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (59)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (86)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (56)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (86)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
 
-🔥 **高频主题：** LLM ×8 · 推理 ×3
+🔥 **高频主题：** LLM ×7 · 推理 ×3
 
 **[A Dual-Perspective NLG Meta-Evaluation Framework with Automatic Benchmark and Better Interpretability](a_dual-perspective_nlg_meta-evaluation_framework_with_automatic_benchmark_and_be.md)**
 
@@ -34,10 +34,6 @@ description: >-
 
 :   本文提出 CLEME2.0，一种可解释的 GEC 参考评估指标，通过将编辑解耦为四类（正确纠正 TP、错误纠正 FPne、欠纠正 FN、过纠正 FPun）并结合编辑加权技术，在 GJG15 和 SEEDA 两个人工评判数据集上达到了与人工判断最高相关性的 SOTA 结果。
 
-**[Cracking Factual Knowledge: A Comprehensive Analysis of Degenerate Knowledge Neurons in Large Language Models](cracking_factual_knowledge_a_comprehensive_analysis_of_degenerate_knowledge_neur.md)**
-
-:   > 本文从结构和功能两个角度全面定义了退化知识神经元 (DKN)，提出基于持久同调的神经拓扑聚类方法 (NTC) 获取 DKN，并通过 34 个实验揭示了 DKN 与 LLM 鲁棒性、可进化性和复杂性之间的关系。
-
 **[Cracking Factual Knowledge: A Comprehensive Analysis of Degenerate Knowledge Neurons in Large Language Models](degenerate_knowledge_neurons.md)**
 
 :   本文从结构和功能双重角度重新定义了LLM中的退化知识神经元（DKN），提出神经拓扑聚类方法获取任意数量和结构的DKN，并通过34个实验揭示了DKN与LLM鲁棒性、可进化性和复杂性的内在关联。
@@ -49,10 +45,6 @@ description: >-
 **[IRT-Router: Effective and Interpretable Multi-LLM Routing via Item Response Theory](irt_router_multi_llm.md)**
 
 :   IRT-Router 借鉴心理测量学的项目反应理论（IRT），将 LLM 视为"考生"、query 视为"考题"，学习多维能力向量和难度/区分度参数实现可解释的多 LLM 路由，在 OOD 场景下达 87%+ 准确率且成本仅为 GPT-4o 的 1/30。
-
-**[Separating Tongue from Thought: Activation Patching Reveals Language-Agnostic Concept Representations in Transformers](language_agnostic_concepts.md)**
-
-:   本文通过激活修补（activation patching）方法对翻译任务中的LLM潜在表示进行因果分析，发现输出语言在早期层编码而概念在后期层编码，证明LLM内部存在语言无关的概念表示——跨语言平均概念表示不仅可用且能提升翻译性能。
 
 **[Llama See, Llama Do: A Mechanistic Perspective on Contextual Entrainment and Distraction in LLMs](llama_see_llama_do_entrainment.md)**
 

@@ -1,16 +1,16 @@
 ---
 title: >-
-  NeurIPS2025 AI 安全方向73篇论文解读
+  NeurIPS2025 AI 安全方向72篇论文解读
 description: >-
-  73篇NeurIPS2025的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、对齐/RLHF、图神经网络、语音、域适应等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  72篇NeurIPS2025的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、对齐/RLHF、图神经网络、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI 安全
 
-**🧠 NeurIPS2025** · **73** 篇论文解读
+**🧠 NeurIPS2025** · **72** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (2)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (24)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/ai_safety/index.md) · [📹 ICCV2025 (22)](../../ICCV2025/ai_safety/index.md) · [🧪 ICML2025 (36)](../../ICML2025/ai_safety/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (2)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (26)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/ai_safety/index.md) · [📹 ICCV2025 (21)](../../ICCV2025/ai_safety/index.md) · [🧪 ICML2025 (33)](../../ICML2025/ai_safety/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×16 · 联邦学习 ×7 · 对齐/RLHF ×2 · 图神经网络 ×2 · 语音 ×2
 
@@ -141,10 +141,6 @@ description: >-
 **[ForensicHub: A Unified Benchmark & Codebase for All-Domain Fake Image Detection and Localization](forensichub_a_unified_benchmark_codebase_for_all-domain_fake_image_detection_and.md)**
 
 :   ForensicHub 提出首个统一所有域（Deepfake/IMDL/AIGC/文档篡改）的假图检测与定位基准平台，包含 4 个任务、23 个数据集、42 个模型、6 个骨干网络和 11 个 GPU 加速评估指标，通过模块化架构和适配器设计打破领域孤岛，并进行了 16 种跨域评估得出 8 条关键洞察。
-
-**[Impact of Dataset Properties on Membership Inference Vulnerability of Deep Transfer Learning](impact_of_dataset_properties_on_membership_inference.md)**
-
-:   本文理论推导并实验验证了深度迁移学习中成员推理攻击（MIA）脆弱性与每类样本数之间的幂律关系 $\log(\text{tpr}-\text{fpr}) = -\beta_S \log(S) - \beta_0$，发现增加数据量可降低平均和最坏情况脆弱性，但保护最脆弱样本需要极大量数据。
 
 **[Impact of Dataset Properties on Membership Inference Vulnerability of Deep Transfer Learning](impact_of_dataset_properties_on_membership_inference_vulnerability_of_deep_trans.md)**
 

@@ -1,16 +1,16 @@
 ---
 title: >-
-  CVPR2025 机器人/具身智能方向38篇论文解读
+  CVPR2025 机器人/具身智能方向37篇论文解读
 description: >-
-  38篇CVPR2025的机器人/具身智能方向论文解读，涵盖机器人、多模态、导航、对齐/RLHF、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  37篇CVPR2025的机器人/具身智能方向论文解读，涵盖机器人、多模态、导航、对齐/RLHF、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🤖 机器人/具身智能
 
-**📷 CVPR2025** · **38** 篇论文解读
+**📷 CVPR2025** · **37** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (7)](../../ACL2026/robotics/index.md) · [📷 CVPR2026 (49)](../../CVPR2026/robotics/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/robotics/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/robotics/index.md) · [🧠 NeurIPS2025 (59)](../../NeurIPS2025/robotics/index.md) · [📹 ICCV2025 (26)](../../ICCV2025/robotics/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (7)](../../ACL2026/robotics/index.md) · [📷 CVPR2026 (38)](../../CVPR2026/robotics/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/robotics/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/robotics/index.md) · [🧠 NeurIPS2025 (57)](../../NeurIPS2025/robotics/index.md) · [📹 ICCV2025 (26)](../../ICCV2025/robotics/index.md)
 
 🔥 **高频主题：** 机器人 ×18 · 多模态 ×7 · 导航 ×3 · 对齐/RLHF ×2 · Agent ×2
 
@@ -49,10 +49,6 @@ description: >-
 **[Foundations of the Theory of Performance-Based Ranking](foundations_of_the_theory_of_performance-based_ranking.md)**
 
 :   本文基于概率论和序理论建立了性能排名的严格数学基础，提出了包含6大支柱的通用框架和3条公理，定义了参数化的"排名分数"族，并在二分类任务中证明了 accuracy、TPR、TNR、PPV、F-score 等满足公理，而 MCC、几何均值等常用指标不适合用于排名。
-
-**[Foundations of the Theory of Performance-Based Ranking](foundations_of_the_theory_of_performance_based_ranking.md)**
-
-:   建立基于性能排名的通用数学理论基础，将性能定义为概率测度、引入满意度和重要性随机变量、提出三条公理化的性能序定义，并推导出参数化的排名分数族(ranking scores)，证明准确率、召回率、精度和F1等常用指标属于该族的特例。
 
 **[GigaHands: A Massive Annotated Dataset of Bimanual Hand Activities](gigahands_a_massive_annotated_dataset_of_bimanual_hand_activities.md)**
 

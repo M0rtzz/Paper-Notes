@@ -1,22 +1,18 @@
 ---
 title: >-
-  ICCV2025 多模态 VLM方向159篇论文解读
+  ICCV2025 多模态 VLM方向151篇论文解读
 description: >-
-  159篇ICCV2025的多模态 VLM 方向论文解读，涵盖多模态、LLM、推理、少样本学习、对齐/RLHF、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  151篇ICCV2025的多模态 VLM 方向论文解读，涵盖多模态、LLM、推理、少样本学习、对齐/RLHF、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**📹 ICCV2025** · **159** 篇论文解读
+**📹 ICCV2025** · **151** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (50)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (288)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (93)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (92)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (155)](../../NeurIPS2025/multimodal_vlm/index.md) · [🧪 ICML2025 (53)](../../ICML2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (50)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (241)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (91)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (154)](../../NeurIPS2025/multimodal_vlm/index.md) · [🧪 ICML2025 (52)](../../ICML2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×83 · LLM ×16 · 推理 ×15 · 少样本学习 ×5 · 对齐/RLHF ×4
-
-**[A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](a_quality-guided_mixture_of_score-fusion_experts_framework_for_human_recognition.md)**
-
-:   本文提出 QME（Quality-guided Mixture of score-fusion Experts）框架，通过可学习的分数融合策略和基于模态质量的 MoE 路由机制，动态整合人脸、步态和行人重识别等多模态生物特征的相似度分数，在多个全身识别基准上实现了 SOTA 性能。
+🔥 **高频主题：** 多模态 ×77 · LLM ×16 · 推理 ×14 · 少样本学习 ×5 · 对齐/RLHF ×4
 
 **[A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](a_qualityguided_mixture_of_scorefusion_experts_framework_for.md)**
 
@@ -130,10 +126,6 @@ description: >-
 
 :   提出 CLIPSym，首次利用预训练 CLIP 模型的多模态理解能力进行反射和旋转对称性检测，设计语义感知提示分组 (SAPG) 策略整合文本语义线索，并引入具有旋转等变保证的解码器，在 DENDI、SDRW、LDRS 三个基准上达到 SOTA。
 
-**[CoA-VLA: Improving Vision-Language-Action Models via Visual-Textual Chain-of-Affordance](coa-vla_improving_vision-language-action_models_via_visual-text_chain-of-afforda.md)**
-
-:   提出 CoA-VLA，将四类机器人可供性（物体、抓取、空间、运动）组织为链式推理，通过视觉-文本协同注入模块融合到扩散策略网络中，显著提升 VLA 模型在多任务操作中的精度和泛化能力。
-
 **[CoA-VLA: Improving Vision-Language-Action Models via Visual-Textual Chain-of-Affordance](coavla_improving_visionlanguageaction_models_via_visualtext.md)**
 
 :   提出Chain-of-Affordance（CoA-VLA）框架，将四类机器人affordance（物体、抓取、空间、运动）以文本和视觉双模态形式注入VLA模型的策略网络，在真实机器人7任务多任务学习中达到85.54%成功率，比OpenVLA高30.65%，并展现出对未见物体姿态和障碍物的泛化能力。
@@ -141,10 +133,6 @@ description: >-
 **[CompCap: Improving Multimodal Large Language Models with Composite Captions](compcap_improving_multimodal_large_language_models_with_composite_captions.md)**
 
 :   提出 CompCap 框架，自动合成6类复合图像（拼贴、图文混合、图表、表格、代码、流程图）及其高质量描述文本，构建 CompCap-118K 数据集，通过在 SFT 阶段引入该数据集显著提升 MLLM 对复合图像的理解能力。
-
-**[Controlling Multimodal LLMs via Reward-guided Decoding](controlling_multimodal_llms_via_reward-guided_decoding.md)**
-
-:   提出多模态奖励引导解码 (MRGD)，通过构建两个奖励模型分别控制物体精度和召回率，在推理时实现对 MLLM 输出的细粒度可控性，同时显著降低物体幻觉。
 
 **[Controlling Multimodal LLMs via Reward-guided Decoding](controlling_multimodal_llms_via_rewardguided_decoding.md)**
 
@@ -310,10 +298,6 @@ description: >-
 
 :   提出 HRScene 基准，涵盖 25 个真实场景和 2 个诊断数据集（分辨率 1K-35K），评估 28 个 VLM 后发现：当前最强模型在真实高分辨率任务上平均准确率仅约 50%，且存在显著的区域差异和 lost-in-middle 问题。
 
-**[IDEATOR: Jailbreaking and Benchmarking Large Vision-Language Models Using Themselves](ideator_jailbreaking_and_benchmarking_large_vision-language_models_using_themsel.md)**
-
-:   提出IDEATOR，利用VLM自身作为红队模型自主生成多模态越狱图文对，以94%成功率突破MiniGPT-4的安全机制，并基于此构建了包含3654个样本的VLJailbreakBench安全评估基准。
-
 **[IDEATOR: Jailbreaking and Benchmarking Large Vision-Language Models Using Themselves](ideator_jailbreaking_and_benchmarking_large_visionlanguage_m.md)**
 
 :   提出IDEATOR，首个用VLM自身做红队攻击VLM的黑盒越狱框架——利用一个弱安全对齐的VLM（MiniGPT-4）作为攻击者，结合Stable Diffusion生成语义丰富的图文越狱对，通过breadth-depth探索策略迭代优化，在MiniGPT-4上达94%攻击成功率（平均5.34次查询），迁移到LLaVA/InstructBLIP/Chameleon达75-88%，并构建VLJailbreakBench（3654样本）揭示11个VLM的安全漏洞。
@@ -365,14 +349,6 @@ description: >-
 **[LLaVA-PruMerge: Adaptive Token Reduction for Efficient Large Multimodal Models](llava-prumerge_adaptive_token_reduction_for_efficient_large_multimodal_models.md)**
 
 :   利用视觉编码器中CLS token与空间token之间注意力分数的稀疏性，自适应地剪枝和合并视觉token，在仅保留5.5%视觉token的情况下维持LMM的可比性能。
-
-**[LLaVA-CoT: Let Vision Language Models Reason Step-by-Step](llavacot_let_vision_language_models_reason_stepbystep.md)**
-
-:   通过构建包含结构化推理标注的LLaVA-CoT-100k数据集，训练VLM自主执行"总结→视觉解读→逻辑推理→结论"四阶段推理，配合测试时SWIRES搜索策略，11B模型超越GPT-4o-mini和Gemini-1.5-pro等大模型。
-
-**[LLaVA-PruMerge: Adaptive Token Reduction for Efficient Large Multimodal Models](llavaprumerge_adaptive_token_reduction_for_efficient_large_m.md)**
-
-:   利用CLIP-ViT中[CLS] token与视觉token之间注意力分数的稀疏特性，通过IQR异常值检测自适应选择重要视觉token，再用k-近邻聚类将被剪除token的信息合并回保留token，实现视觉token 14倍压缩且性能几乎不降。
 
 **[Mastering Collaborative Multi-modal Data Selection: A Focus on Informativeness, Uniqueness, and Representativeness](mastering_collaborative_multi-modal_data_selection_a_focus_on_informativeness_un.md)**
 
@@ -433,10 +409,6 @@ description: >-
 **[MultiVerse: A Multi-Turn Conversation Benchmark for Evaluating Large Vision and Language Models](multiverse_a_multi-turn_conversation_benchmark_for_evaluating_large_vision_and_l.md)**
 
 :   提出 MultiVerse 多轮对话评估基准，从 12 个 VLM 评估数据集中收集 647 段对话，覆盖 484 种任务和 484 种交互目标，采用 checklist 评估方法发现即使最强的 GPT-4o 在复杂多轮对话中仅达 50% 的成功率。
-
-**[MUSE-VL: Modeling Unified VLM through Semantic Discrete Encoding](muse-vl_modeling_unified_vlm_through_semantic_discrete_encoding.md)**
-
-:   提出语义离散编码 (SDE)，通过在视觉 tokenizer 的量化过程中融入预训练 CLIP 语义特征，使离散视觉 token 与语言 token 天然对齐，在仅用 24M 图文对的情况下实现了统一理解与生成的 SOTA 性能。
 
 **[MUSE-VL: Modeling Unified VLM through Semantic Discrete Encoding](musevl_modeling_unified_vlm_through_semantic_discrete_encodi.md)**
 
@@ -577,10 +549,6 @@ description: >-
 **[The Inter-Intra Modal Measure: A Predictive Lens on Fine-Tuning Outcomes in Vision-Language Models](the_inter-intra_modal_measure_a_predictive_lens_on_fine-tuning_outcomes_in_visio.md)**
 
 :   提出 Inter-Intra Modal Measure（IIMM）——一个仅需单次前向推理即可预测视觉-语言双编码器模型微调后性能增益和灾难性遗忘程度的指标，通过量化模态内图像嵌入相似性和模态间错误标签对齐程度，在 4 个基础模型和 5 种微调策略下展现出强线性预测能力（$R^2 > 0.85$）。
-
-**[ToolVQA: A Dataset for Multi-step Reasoning VQA with External Tools](toolvqa_a_dataset_for_multi-step_reasoning_vqa_with_external_tools.md)**
-
-:   提出 ToolVQA——一个包含 23K 样本的大规模多模态工具增强 VQA 数据集，通过 ToolEngine 管道（结合图像引导的 DFS 和 LCS 示例匹配）自动生成真实场景下的多步推理数据，在其上微调的 LLaVA-7B 在 5 个 OOD 基准上超越 GPT-3.5-Turbo。
 
 **[ToolVQA: A Dataset for Multi-step Reasoning VQA with External Tools](toolvqa_a_dataset_for_multistep_reasoning_vqa_with_external.md)**
 

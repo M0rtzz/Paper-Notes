@@ -121,7 +121,7 @@ tags:
 
 ## 相关论文
 
-- [\[ACL 2025\] Supervised Fine-Tuning Achieves Rapid Task Adaption Via Alternating Attention Head Activation Patterns](sft_attention_activation.md)
+- [\[ACL 2025\] Supervised Fine-Tuning Achieves Rapid Task Adaption Via Alternating Attention Head Activation Patterns](analyzing_the_rapid_generalization_of_sft_via_the_perspective_of_attention_head_.md)
 - [\[ACL 2025\] MHA2MLA: Towards Economical Inference by Enabling DeepSeek's Multi-Head Latent Attention in Any Transformer-based LLMs](mha2mla_deepseek_latent_attention.md)
 - [\[ACL 2025\] Ranking Unraveled: Recipes for LLM Rankings in Head-to-Head AI Combat](ranking_unraveled_recipes_for_llm_rankings_in_head-to-head_ai_combat.md)
 - [\[ACL 2025\] Computation Mechanism Behind LLM Position Generalization](computation_mechanism_behind_llm_position_generalization.md)

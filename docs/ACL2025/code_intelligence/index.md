@@ -1,16 +1,16 @@
 ---
 title: >-
-  ACL2025 代码智能方向31篇论文解读
+  ACL2025 代码智能方向30篇论文解读
 description: >-
-  31篇ACL2025的代码智能方向论文解读，涵盖代码智能、LLM、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  30篇ACL2025的代码智能方向论文解读，涵盖代码智能、LLM、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💻 代码智能
 
-**💬 ACL2025** · **31** 篇论文解读
+**💬 ACL2025** · **30** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (20)](../../ACL2026/code_intelligence/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/code_intelligence/index.md) · [🔬 ICLR2026 (23)](../../ICLR2026/code_intelligence/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/code_intelligence/index.md) · [🧠 NeurIPS2025 (22)](../../NeurIPS2025/code_intelligence/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/code_intelligence/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (20)](../../ACL2026/code_intelligence/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/code_intelligence/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/code_intelligence/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/code_intelligence/index.md) · [🧠 NeurIPS2025 (22)](../../NeurIPS2025/code_intelligence/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/code_intelligence/index.md)
 
 🔥 **高频主题：** 代码智能 ×14 · LLM ×8 · Agent ×4
 
@@ -109,10 +109,6 @@ description: >-
 **[SceneGenAgent: Precise Industrial Scene Generation with Coding Agent](scenegenagent_precise_industrial_scene_generation_with_coding_agent.md)**
 
 :   提出 SceneGenAgent，一个基于 LLM 的代码生成 Agent，通过结构化布局规划、布局验证和迭代优化流程，利用 C# 代码精确生成工业场景，在真实工业任务上达到 81% 成功率，并构建 SceneInstruct 数据集使开源 LLM 接近 GPT-4o 水平。
-
-**[SHARE: An SLM-based Hierarchical Action CorREction Assistant for Text-to-SQL](share_an_slm-based_hierarchical_action_correction_assistant_for_text-to-sql.md)**
-
-:   提出 SHARE 框架，通过三个专门化小语言模型 (SLM, <8B) 的顺序管道协作，将声明式 SQL 转换为步骤化动作轨迹以暴露推理路径，再从 Schema 和逻辑两个维度分阶段纠正错误，实现高效低成本的 Text-to-SQL 自纠错。
 
 **[SHARE: An SLM-based Hierarchical Action CorREction Assistant for Text-to-SQL](share_text_to_sql_correction.md)**
 

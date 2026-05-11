@@ -143,7 +143,7 @@ $$\mathbf{Adv}^{\mathsf{AMI}}_{\text{LDP}}(\mathcal{A}^{\mathcal{D}}_{\mathsf{FC
 
 ## 相关论文
 
-- [\[ICML 2025\] Theoretically Unmasking Inference Attacks Against LDP-Protected Client Data in Federated Vision Models](theoretically_unmasking_inference_attacks_against_ldp-protected_client_data_in_.md)
+- [\[ICML 2025\] Theoretically Unmasking Inference Attacks Against LDP-Protected Client Data in Federated Vision Models](theoretically_unmasking_inference_attacks_against_ldp-protected_clients_in_feder.md)
 - [\[ICML 2025\] Clients Collaborate: Flexible Differentially Private Federated Learning with Guaranteed Improvement of Utility-Privacy Trade-off](clients_collaborate_flexible_differentially_private_federated_learning_with_guar.md)
 - [\[ICML 2025\] Privacy-Shielded Image Compression: Defending Against Exploitation from Vision-Language Pretrained Models](privacy-shielded_image_compression_defending_against_exploitation_from_vision-la.md)
 - [\[ICML 2025\] Towards Trustworthy Federated Learning with Untrusted Participants](towards_trustworthy_federated_learning_with_untrusted_participants.md)

@@ -1,18 +1,18 @@
 ---
 title: >-
-  AAAI2026 优化/理论方向24篇论文解读
+  AAAI2026 优化/理论方向23篇论文解读
 description: >-
-  24篇AAAI2026的优化/理论方向论文解读，涵盖联邦学习、LLM、对抗鲁棒、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  23篇AAAI2026的优化/理论方向论文解读，涵盖联邦学习、LLM、对抗鲁棒、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**🤖 AAAI2026** · **24** 篇论文解读
+**🤖 AAAI2026** · **23** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/optimization/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (45)](../../ICLR2026/optimization/index.md) · [🧠 NeurIPS2025 (117)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (58)](../../ICML2025/optimization/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/optimization/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (45)](../../ICLR2026/optimization/index.md) · [🧠 NeurIPS2025 (116)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (58)](../../ICML2025/optimization/index.md)
 
-🔥 **高频主题：** 联邦学习 ×5 · LLM ×4 · 对抗鲁棒 ×3 · 个性化生成 ×2
+🔥 **高频主题：** 联邦学习 ×5 · LLM ×4 · 对抗鲁棒 ×2 · 个性化生成 ×2
 
 **[A Distributed Asynchronous Generalized Momentum Algorithm Without Delay Bounds](a_distributed_asynchronous_generalized_momentum_algorithm_wi.md)**
 
@@ -41,10 +41,6 @@ description: >-
 **[Convex Clustering Redefined: Robust Learning with the Median of Means Estimator](convex_clustering_redefined_robust_learning_with_higher_order_norms_and_beyond.md)**
 
 :   本文将 Median of Means (MoM) 估计器融入凸聚类框架，提出 COMET 算法，通过随机分箱与中位数聚合实现对噪声和离群点的鲁棒性，同时无需预知簇数 $k$，理论上证明了弱一致性，实验在多个真实数据集上显著超越 k-means、MoM k-means、凸聚类等六种基线方法。
-
-**[Convex Clustering Redefined: Robust Learning with the Median of Means Estimator](convex_clustering_redefined_robust_learning_with_the_median_of_means_estimator.md)**
-
-:   提出 COMET（Convex Clustering with Median of Means Estimator），将中位数均值（MoM）估计器整合到凸聚类框架中，通过随机分箱、截断距离和 ADAM 优化实现对噪声和异常值的鲁棒聚类，无需预设聚类数量，在理论上证明了弱一致性，在合成和真实数据集上全面超越现有方法。
 
 **[Cost-Minimized Label-Flipping Poisoning Attack to LLM Alignment](cost-minimized_label-flipping_poisoning_attack_to_llm_alignment.md)**
 

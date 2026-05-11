@@ -190,7 +190,7 @@ HP 优化后的 SD3.5-Turbo 在美学分数上甚至超越了更大的 SD3.5-Lar
 
 ## 相关论文
 
-- [\[ICCV 2025\] Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences](cycle_consistency_as_reward_learning_image-text_alignment_without_human_preferen.md)
+- [\[ICCV 2025\] Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences](cycle_consistency_as_reward_learning_imagetext_alignment_wit.md)
 - [\[ICCV 2025\] CoMPaSS: Enhancing Spatial Understanding in Text-to-Image Diffusion Models](compass_enhancing_spatial_understanding_in_text-to-image_diffusion_models.md)
 - [\[CVPR 2026\] Enhancing Spatial Understanding in Image Generation via Reward Modeling](../../CVPR2026/image_generation/enhancing_spatial_understanding_in_image_generation_via_reward_modeling.md)
 - [\[ICCV 2025\] Semantic Watermarking Reinvented: Enhancing Robustness and Generation Quality with Fourier Integrity](semantic_watermarking_reinvented_enhancing_robustness_and_generation_quality_wit.md)

@@ -154,7 +154,7 @@ SymDPO + RICES（检索式示例选择）叠加效果：
 - [\[CVPR 2025\] Continual SFT Matches Multimodal RLHF with Negative Supervision](continual_sft_matches_multimodal_rlhf_with_negative_supervision.md)
 - [\[CVPR 2025\] Boost Your Human Image Generation Model via Direct Preference Optimization](boost_your_human_image_generation_model_via_direct_preference_optimization.md)
 - [\[CVPR 2025\] Debiasing Multimodal Large Language Models via Noise-Aware Preference Optimization](debiasing_multimodal_large_language_models_via_noise-aware_preference_optimizati.md)
-- [\[CVPR 2025\] Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization](spo_aesthetic_post_training.md)
+- [\[CVPR 2025\] Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization](aesthetic_post-training_diffusion_models_from_generic_preferences_with_step-by-s.md)
 
 </div>
 

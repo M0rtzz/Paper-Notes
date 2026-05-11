@@ -1,18 +1,18 @@
 ---
 title: >-
-  NeurIPS2025 图像生成方向250篇论文解读
+  NeurIPS2025 图像生成方向247篇论文解读
 description: >-
-  250篇NeurIPS2025的图像生成方向论文解读，涵盖扩散模型、文生图、对抗鲁棒、多模态、布局/合成、水印/隐写等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  247篇NeurIPS2025的图像生成方向论文解读，涵盖扩散模型、文生图、对抗鲁棒、多模态、布局/合成、水印/隐写等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🧠 NeurIPS2025** · **250** 篇论文解读
+**🧠 NeurIPS2025** · **247** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (240)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [📹 ICCV2025 (219)](../../ICCV2025/image_generation/index.md) · [🧪 ICML2025 (115)](../../ICML2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (208)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md) · [🧪 ICML2025 (112)](../../ICML2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×93 · 文生图 ×13 · 对抗鲁棒 ×9 · 多模态 ×8 · 布局/合成 ×7
+🔥 **高频主题：** 扩散模型 ×91 · 文生图 ×13 · 对抗鲁棒 ×9 · 多模态 ×8 · 布局/合成 ×7
 
 **[70% Size, 100% Accuracy: Lossless LLM Compression for Efficient GPU Inference via Dynamic-Length Float (DFloat11)](70_size_100_accuracy_lossless_llm_compression_for_efficient.md)**
 
@@ -166,10 +166,6 @@ description: >-
 
 :   深入诊断长尾数据下扩散模型尾类生成退化的根因为 U-Net 瓶颈层的"表示纠缠"（representation entanglement），提出 CORAL 通过在瓶颈层施加监督对比损失来解耦类别表示，在 CIFAR10/100-LT、CelebA-5、ImageNet-LT 上全面超越 DDPM/CBDM/T2H 等基线。
 
-**[CORAL: Disentangling Latent Representations in Long-Tailed Diffusion](coral_longtail_diffusion.md)**
-
-:   本文发现扩散模型在长尾数据上训练时，U-Net 瓶颈层的潜在表征出现"表征纠缠"——尾部类别与头部类别特征空间严重重叠，并提出 CORAL 方法通过在瓶颈层添加投影头和监督对比损失，促进类别间潜在表征分离，显著提升尾部类别生成质量和多样性。
-
 **[Co-Reinforcement Learning for Unified Multimodal Understanding and Generation](coreinforcement_learning_for_unified_multimodal_understandin.md)**
 
 :   提出 CoRL（Co-Reinforcement Learning）框架，通过"统一RL→精细化RL"两阶段策略对统一多模态模型（ULM）同时进行理解和生成能力的强化学习优化，实现理解生成双能力的协同进化，在 1.5B 参数量下生成提升 7%、理解提升 23%。
@@ -189,10 +185,6 @@ description: >-
 **[Curly Flow Matching for Learning Non-gradient Field Dynamics](curly_flow_matching_for_learning_non-gradient_field_dynamics.md)**
 
 :   提出 Curly Flow Matching (Curly-FM)，通过设计带有非零参考漂移的 Schrödinger Bridge 问题，使 flow matching 能够学习周期性、旋转性等非梯度场动力学，突破了传统方法只能建模梯度场的限制。
-
-**[Distilled Decoding 2: One-step Sampling of Image Auto-regressive Models with Conditional Score Distillation](dd2_onestep_ar_distill.md)**
-
-:   本文提出 DD2，将自回归图像模型重新解释为条件分数模型，通过条件分数蒸馏（CSD）损失训练单步生成器匹配原始 AR 模型的输出分布，在 ImageNet-256 上实现 FID 仅增加约 2-3.5 的单步生成，获得 8-238 倍加速，相比 DD1 将单步性能差距缩小 67%。
 
 **[DeCaFlow: A Deconfounding Causal Generative Model](decaflow_a_deconfounding_causal_generative_model.md)**
 
@@ -1001,10 +993,6 @@ description: >-
 **[Why Diffusion Models Don't Memorize: The Role of Implicit Dynamical Regularization in Training](why_diffusion_models_dont_memorize_the_role_of_implicit_dynamical_regularization.md)**
 
 :   通过数值实验和理论分析揭示扩散模型训练中存在两个关键时间尺度——泛化时间 $\tau_{\text{gen}}$ 和记忆化时间 $\tau_{\text{mem}}$，后者随训练集大小 $n$ 线性增长而前者保持恒定，由此产生的隐式动力学正则化使模型即使在高度过参数化情况下也能通过早停避免记忆化。
-
-**[Why Diffusion Models Don't Memorize: The Role of Implicit Regularization](why_diffusion_models_dont_memorize_the_role_of_implicit_regularization.md)**
-
-:   本文从数值实验和理论分析两个层面揭示扩散模型训练中存在**隐式动态正则化**机制：生成高质量样本的时间尺度 τ_gen 与出现记忆化的时间尺度 τ_mem 之间的间隔随训练集大小 n 线性增长，为"早停"提供了理论支撑。
 
 **[Why Knowledge Distillation Works in Generative Models: A Minimal Working Explanation](why_knowledge_distillation_works_in_generative_models_a_minimal_working_explanat.md)**
 

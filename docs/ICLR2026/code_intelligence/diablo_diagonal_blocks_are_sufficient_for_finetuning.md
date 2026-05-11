@@ -164,7 +164,7 @@ $$\mathbf{Y} = \mathbf{X}\mathbf{W}_0 + \mathbf{X}\mathbf{D}, \quad \mathbf{D} =
 
 ## 相关论文
 
-- [\[ICLR 2026\] Training Large Language Models to Reason in Parallel with Global Forking Tokens](training_large_language_models_to_reason_in_parallel_with_global_reflection.md)
+- [\[ICLR 2026\] Training Large Language Models to Reason in Parallel with Global Forking Tokens](training_large_language_models_to_reason_in_parallel_with_global_forking_tokens.md)
 - [\[ICLR 2026\] MathFimer: Enhancing Mathematical Reasoning by Expanding Reasoning Steps through Fill-in-the-Middle Task](mathfimer_enhancing_mathematical_reasoning_by_expanding_reasoning_steps_through_.md)
 - [\[ICLR 2026\] Improving Code Localization with Repository Memory](improving_code_localization_with_repository_memory.md)
 - [\[ICLR 2026\] CARD: Towards Conditional Design of Multi-agent Topological Structures](card_towards_conditional_design_of_multi-agent_topological_structures.md)

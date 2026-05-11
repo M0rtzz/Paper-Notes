@@ -1,18 +1,18 @@
 ---
 title: >-
-  NeurIPS2025 机器人/具身智能方向59篇论文解读
+  NeurIPS2025 机器人/具身智能方向57篇论文解读
 description: >-
-  59篇NeurIPS2025的机器人/具身智能方向论文解读，涵盖机器人、推理、Agent、多模态、导航、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  57篇NeurIPS2025的机器人/具身智能方向论文解读，涵盖机器人、Agent、推理、多模态、LLM、导航等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🤖 机器人/具身智能
 
-**🧠 NeurIPS2025** · **59** 篇论文解读
+**🧠 NeurIPS2025** · **57** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (7)](../../ACL2026/robotics/index.md) · [📷 CVPR2026 (49)](../../CVPR2026/robotics/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/robotics/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/robotics/index.md) · [📹 ICCV2025 (26)](../../ICCV2025/robotics/index.md) · [🧪 ICML2025 (16)](../../ICML2025/robotics/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (7)](../../ACL2026/robotics/index.md) · [📷 CVPR2026 (38)](../../CVPR2026/robotics/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/robotics/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/robotics/index.md) · [📹 ICCV2025 (26)](../../ICCV2025/robotics/index.md) · [🧪 ICML2025 (16)](../../ICML2025/robotics/index.md)
 
-🔥 **高频主题：** 机器人 ×10 · 推理 ×8 · Agent ×7 · 多模态 ×5 · 导航 ×5
+🔥 **高频主题：** 机器人 ×10 · Agent ×7 · 推理 ×7 · 多模态 ×5 · LLM ×4
 
 **[A Snapshot of Influence: A Local Data Attribution Framework for Online Reinforcement Learning](a_snapshot_of_influence_a_local_data_attribution_framework_f.md)**
 
@@ -50,10 +50,6 @@ description: >-
 
 :   CogVLA 提出模仿人类多模态认知的三阶段VLA架构（EFA-Routing视觉聚合压缩至25% + LFP-Routing LLM内指令感知剪枝50% + V-L-A耦合注意力），在LIBERO上以97.4%成功率和2.5×训练/2.8×推理加速超越OpenVLA-OFT等SOTA方法，真实机器人任务达70.0%成功率。
 
-**[C-NAV: Towards Self-Evolving Continual Object Navigation in Open World](coopera_continual_open-ended_human-robot_assistance.md)**
-
-:   提出 C-Nav 持续目标导航框架，通过**双路径抗遗忘机制**（特征蒸馏 + 特征回放）和**基于 LOF 的自适应经验选择**，使导航智能体在增量学习新物体类别时有效避免灾难性遗忘，在 4 种主流架构和 2 个数据集上均超越全量数据回放基线。
-
 **[COOPERA: Continual Open-Ended Human-Robot Assistance](coopera_continual_open_ended_human_robot_assistance.md)**
 
 :   提出 COOPERA 框架，首次实现持续、开放式的人机协作研究，通过LLM驱动具有心理特征和长期意图的模拟人类与机器人在3D环境中多天交互，机器人通过学习人类特征和上下文意图逐步提升个性化协作能力。
@@ -69,10 +65,6 @@ description: >-
 **[EfficientNav: Towards On-Device Object-Goal Navigation with Navigation Map Caching and Retrieval](efficientnav_towards_on-device_object-goal_navigation_with_navigation_map_cachin.md)**
 
 :   通过离散内存缓存（KV cache分组独立计算+选择性加载）、注意力驱动聚类（LLM浅层attention指导分组）和语义感知检索（CLIP+背包问题适配不同内存预算），首次在Jetson Orin上用LLaMA-3.2-11b实现零样本ObjNav，比GPT-4基线提升11.1% SR且实时延迟降低6.7×。
-
-**[EgoThinker: Unveiling Egocentric Reasoning with Spatio-Temporal CoT](egothinker_egocentric_reasoning.md)**
-
-:   本文提出 EgoThinker，通过构建 EgoRe-5M 大规模第一人称视频推理数据集（含因果 CoT 标注和手物定位标注）和两阶段训练（SFT + GRPO 强化微调），赋予 MLLM 鲁棒的第一人称推理、手物定位和时间定位能力，在多个 egocentric 基准上实现 SOTA。
 
 **[EgoThinker: Unveiling Egocentric Reasoning with Spatio-Temporal CoT](egothinker_unveiling_egocentric_reasoning_with_spatiotempora.md)**
 

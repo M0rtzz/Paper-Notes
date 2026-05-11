@@ -131,7 +131,7 @@ Docling 实现线性处理流水线：PDF 后端 → 页面渲染 + 文本提取
 
 - [\[ECCV 2024\] 3DFG-PIFu: 3D Feature Grids for Human Digitization from Sparse Views](3dfg-pifu_3d_feature_grids_for_human_digitization_from_sparse_views.md)
 - [\[ECCV 2024\] Shifted Autoencoders for Point Annotation Restoration in Object Counting](shifted_autoencoders_for_point_annotation_restoration_in_object_counting.md)
-- [\[ECCV 2024\] Teaching Tailored to Talent: Adverse Weather Restoration via Prompt Pool and Depth-Anything Constraint](teaching_tailored_to_talent_adverse_weather_restoration.md)
+- [\[ECCV 2024\] Teaching Tailored to Talent: Adverse Weather Restoration via Prompt Pool and Depth-Anything Constraint](teaching_tailored_to_talent_adverse_weather_restoration_via_prompt_pool_and_dept.md)
 - [\[ECCV 2024\] ADMap: Anti-disturbance Framework for Vectorized HD Map Construction](admap_anti-disturbance_framework_for_vectorized_hd_map_construction.md)
 - [\[ECCV 2024\] SpatialFormer: Towards Generalizable Vision Transformers with Explicit Spatial Understanding](spatialformer_towards_generalizable_vision_transformers_with_explicit_spatial_un.md)
 

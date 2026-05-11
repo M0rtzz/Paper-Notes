@@ -1,18 +1,18 @@
 ---
 title: >-
-  CVPR2025 可解释性方向21篇论文解读
+  CVPR2025 可解释性方向20篇论文解读
 description: >-
-  21篇CVPR2025的可解释性方向论文解读，涵盖域适应、少样本学习、布局/合成、水印/隐写、自监督学习、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  20篇CVPR2025的可解释性方向论文解读，涵盖少样本学习、域适应、布局/合成、水印/隐写、自监督学习、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**📷 CVPR2025** · **21** 篇论文解读
+**📷 CVPR2025** · **20** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (31)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (59)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (86)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (56)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (86)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
 
-🔥 **高频主题：** 域适应 ×3 · 少样本学习 ×2
+🔥 **高频主题：** 少样本学习 ×2 · 域适应 ×2
 
 **[Attribute-formed Class-specific Concept Space: Endowing Language Bottleneck Model with Better Interpretability and Scalability](albm_attribute_concept_space.md)**
 
@@ -81,10 +81,6 @@ description: >-
 **[TIDE: Training Locally Interpretable Domain Generalization Models Enables Test-time Correction](tide_training_locally_interpretable_domain_generalization_models_enables_test-ti.md)**
 
 :   本文提出TIDE，一种针对单源域泛化的新型训练方案，利用扩散模型和LLM自动生成类别级概念标注（如"鸟类=尖嘴+翅膀+爪子"），通过概念显著性对齐损失训练模型关注域不变的局部概念而非全局背景特征，使模型在测试时能通过概念显著图自动矫正域偏移导致的错误预测。
-
-**[TIDE: Training Locally Interpretable Domain Generalization Models Enables Test-time Correction](tide_training_locally_interpretable_domain_generalization_models_enables_test_time_correction.md)**
-
-:   提出TIDE框架，通过LLM和扩散模型自动生成概念级显著性标注，训练模型关注局部领域不变概念而非全局特征，并在测试时利用概念签名迭代修正错误预测，在四个SSDG基准上平均超越SOTA 12%。
 
 **[Towards Faithful Multimodal Concept Bottleneck Models](towards_faithful_multimodal_concept_bottleneck_models.md)**
 

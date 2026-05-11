@@ -10,7 +10,7 @@ description: >-
 
 **📷 CVPR2025** · **10** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/remote_sensing/index.md) · [📷 CVPR2026 (19)](../../CVPR2026/remote_sensing/index.md) · [🔬 ICLR2026 (6)](../../ICLR2026/remote_sensing/index.md) · [🤖 AAAI2026 (8)](../../AAAI2026/remote_sensing/index.md) · [🧠 NeurIPS2025 (11)](../../NeurIPS2025/remote_sensing/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/remote_sensing/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/remote_sensing/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/remote_sensing/index.md) · [🔬 ICLR2026 (6)](../../ICLR2026/remote_sensing/index.md) · [🤖 AAAI2026 (8)](../../AAAI2026/remote_sensing/index.md) · [🧠 NeurIPS2025 (11)](../../NeurIPS2025/remote_sensing/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/remote_sensing/index.md)
 
 🔥 **高频主题：** 遥感 ×4
 

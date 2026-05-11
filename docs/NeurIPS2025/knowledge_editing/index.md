@@ -10,7 +10,7 @@ description: >-
 
 **🧠 NeurIPS2025** · **6** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/knowledge_editing/index.md) · [📷 CVPR2026 (3)](../../CVPR2026/knowledge_editing/index.md) · [🔬 ICLR2026 (9)](../../ICLR2026/knowledge_editing/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/knowledge_editing/index.md) · [🧪 ICML2025 (2)](../../ICML2025/knowledge_editing/index.md) · [💬 ACL2025 (20)](../../ACL2025/knowledge_editing/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/knowledge_editing/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/knowledge_editing/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/knowledge_editing/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/knowledge_editing/index.md) · [🧪 ICML2025 (2)](../../ICML2025/knowledge_editing/index.md) · [💬 ACL2025 (20)](../../ACL2025/knowledge_editing/index.md)
 
 **[Edit Less, Achieve More: Dynamic Sparse Neuron Masking for Lifelong Knowledge Editing in LLMs](edit_less_achieve_more_dynamic_sparse_neuron_masking_for_lifelong_knowledge_edit.md)**
 

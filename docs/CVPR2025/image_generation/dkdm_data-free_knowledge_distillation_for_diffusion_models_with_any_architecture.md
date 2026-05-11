@@ -153,7 +153,7 @@ DKDM 框架包含一个预训练教师模型 $\theta_T$ 和一个随机初始化
 
 ## 相关论文
 
-- [\[ICML 2025\] DDIS: When Model Knowledge Meets Diffusion Model — Diffusion-assisted Data-free Image Synthesis](../../ICML2025/image_generation/when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_sy.md)
+- [\[ICML 2025\] DDIS: When Model Knowledge Meets Diffusion Model — Diffusion-assisted Data-free Image Synthesis](../../ICML2025/image_generation/when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_synthesis.md)
 - [\[NeurIPS 2025\] Knowledge Distillation Detection for Open-weights Models](../../NeurIPS2025/image_generation/knowledge_distillation_detection_for_open-weights_models.md)
 - [\[CVPR 2025\] Symbolic Representation for Any-to-Any Generative Tasks](symbolic_representation_for_any-to-any_generative_tasks.md)
 - [\[CVPR 2025\] Random Conditioning for Diffusion Model Compression with Distillation](random_conditioning_for_diffusion_model_compression_with_distillation.md)

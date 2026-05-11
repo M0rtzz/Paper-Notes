@@ -208,7 +208,7 @@ tags:
 
 ## 相关论文
 
-- [\[ACL 2025\] How LLMs Comprehend Temporal Meaning in Narratives: A Case Study in Cognitive Evaluation of LLMs](../../ACL2025/llm_nlp/llms-comprehend-temporal-meaning-in-narratives.md)
+- [\[ACL 2025\] How LLMs Comprehend Temporal Meaning in Narratives: A Case Study in Cognitive Evaluation of LLMs](../../ACL2025/llm_nlp/how_llms_comprehend_temporal_meaning_in_narratives_a_case_study_in_cognitive_eva.md)
 - [\[ACL 2025\] A Large-Scale Real-World Evaluation of an LLM-Based Virtual Teaching Assistant](../../ACL2025/llm_nlp/a_large-scale_real-world_evaluation_of_llm-based_virtual_teaching_assistant.md)
 - [\[ACL 2025\] If Eleanor Rigby Had Met ChatGPT: A Study on Loneliness in a Post-LLM World](../../ACL2025/llm_nlp/if_eleanor_rigby_had_met_chatgpt_a_study_on_loneliness_in_a_post-llm_world.md)
 - [\[ACL 2025\] Transforming Podcast Preview Generation: From Expert Models to LLM-Based Systems](../../ACL2025/llm_nlp/transforming_podcast_preview_generation_from_expert_models_to_llm-based_systems.md)

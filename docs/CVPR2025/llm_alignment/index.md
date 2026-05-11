@@ -1,18 +1,18 @@
 ---
 title: >-
-  CVPR2025 对齐 / RLHF方向22篇论文解读
+  CVPR2025 对齐 / RLHF方向17篇论文解读
 description: >-
-  22篇CVPR2025的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、扩散模型、多模态、LLM、语义分割、医学影像等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  17篇CVPR2025的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、扩散模型、多模态、LLM、语义分割、医学影像等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐 / RLHF
 
-**📷 CVPR2025** · **22** 篇论文解读
+**📷 CVPR2025** · **17** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (12)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (42)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (20)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (53)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (42)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (20)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (53)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md)
 
-🔥 **高频主题：** 对齐/RLHF ×18 · 扩散模型 ×7 · 多模态 ×5 · LLM ×4 · 语义分割 ×3
+🔥 **高频主题：** 对齐/RLHF ×14 · 扩散模型 ×5 · 多模态 ×4 · LLM ×3 · 语义分割 ×2
 
 **[Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization](aesthetic_post-training_diffusion_models_from_generic_preferences_with_step-by-s.md)**
 
@@ -30,17 +30,9 @@ description: >-
 
 :   本文提出 CAD-Llama 框架，通过层次化标注管线将 3D CAD 模型转化为富含语义描述的 Python 风格代码（SPCC），再用自适应预训练和指令微调将 LLaMA3-8B 转化为参数化 CAD 模型生成器，在 text-to-CAD 任务上精度超出先前方法约 14%，并支持补全、添加、删除等多种 CAD 编辑任务。
 
-**[CAD-Llama: Leveraging Large Language Models for Computer-Aided Design Parametric 3D Model Generation](cad_llama_parametric.md)**
-
-:   本文提出CAD-Llama，通过分层标注流水线将参数化CAD序列转化为带语义描述的结构化代码（SPCC），并使用自适应预训练和指令微调使LLM具备从文本生成复杂参数化3D CAD模型的能力，在多个CAD任务上显著超越现有方法。
-
 **[Calibrated Multi-Preference Optimization for Aligning Diffusion Models](calibrated_multi-preference_optimization_for_aligning_diffusion_models.md)**
 
 :   本文提出 Calibrated Preference Optimization（CaPO），通过 win-rate 校准将不同奖励模型的分数统一为期望胜率，并设计基于 Pareto 前沿的配对采样策略（FRS）来处理多奖励信号间的冲突，在 SDXL 和 SD3-Medium 上一致地超越 DPO 和 IPO 方法。
-
-**[Calibrated Multi-Preference Optimization for Aligning Diffusion Models](capo_multi_preference.md)**
-
-:   本文提出CaPO（校准偏好优化），通过奖励校准（近似期望胜率）和基于Pareto前沿的样本对选择策略，在无需人类标注数据的情况下有效整合多个奖励模型信号来对齐文本到图像扩散模型，在GenEval和T2I-Compbench上持续超越DPO等方法。
 
 **[Continual SFT Matches Multimodal RLHF with Negative Supervision](continual_sft_matches_multimodal_rlhf_with_negative_supervision.md)**
 
@@ -82,21 +74,9 @@ description: >-
 
 :   本文提出一种增强的SAM框架，通过BiomedCLIP、VQA和GPT-4生成无监督语义/位置/形状提示，并引入DPO启发的偏好对齐损失模拟人类反馈，在仅10%标注数据的半监督设置下实现了肺部、乳腺肿瘤和腹部器官分割的优异性能。
 
-**[Enhancing SAM with Efficient Prompting and Preference Optimization for Semi-supervised Medical Image Segmentation](sam_dpo_semi_supervised_medical_segmentation.md)**
-
-:   本文提出一种增强 SAM 的半监督医学图像分割框架，通过 BiomedCLIP、VQA 和 GPT-4 生成无监督提示替代专家标注，并引入 DPO 启发的偏好对齐策略在无标注数据上进一步优化模型，在低标注场景下显著超越 SOTA。
-
-**[Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization](spo_aesthetic_post_training.md)**
-
-:   本文提出逐步偏好优化（SPO），通过在每个去噪步骤独立地从共享噪声中采样候选池并用步感知偏好模型选出胜负对，使扩散模型聚焦于细粒度的美学细节而非布局差异，在使用通用偏好数据的情况下显著提升了生成图像的美学质量。
-
 **[SymDPO: Boosting In-Context Learning of Large Multimodal Models with Symbol Demonstration Direct Preference Optimization](symdpo_boosting_in-context_learning_of_large_multimodal_models_with_symbol_demon.md)**
 
 :   SymDPO 发现LMM在多模态ICL中存在"视觉上下文忽视"问题（用空白图替换示例图不影响性能），提出将示例中的文本答案替换为无语义随机符号，迫使模型必须理解视觉内容才能正确匹配符号与答案，通过DPO训练在OpenFlamingo和IDEFICS上一致提升了多模态ICL效果。
-
-**[SymDPO: Boosting In-Context Learning of Large Multimodal Models with Symbol Demonstration Direct Preference Optimization](symdpo_symbol_icl.md)**
-
-:   本文提出SymDPO，通过将多模态上下文示例中的文本答案替换为无语义关联的随机符号，迫使大多模态模型必须真正理解视觉信息才能正确回答，从而解决了LMM在上下文学习中忽视视觉信息、过度依赖文本模式的问题。
 
 **[Task Preference Optimization: Improving Multimodal Large Language Models with Vision Task Alignment](task_preference_optimization_improving_multimodal_large_language_models_with_vis.md)**
 

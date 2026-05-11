@@ -157,7 +157,7 @@ CORDIAL评估MLLM在三个话语领域的连贯关系预测和验证能力：
 
 ## 相关论文
 
-- [\[ACL 2025\] CORDIAL: Can Multimodal Large Language Models Effectively Understand Coherence Relationships?](cordial-multimodal-llm-coherence-relationships.md)
+- [\[ACL 2025\] CORDIAL: Can Multimodal Large Language Models Effectively Understand Coherence Relationships?](cordial_can_multimodal_large_language_models_effectively_understand_coherence_re.md)
 - [\[ACL 2025\] Can Multimodal Large Language Models Understand Spatial Relations?](spatialmqa_mllm_spatial_relations.md)
 - [\[ACL 2025\] NegVQA: Can Vision Language Models Understand Negation?](negvqa_can_vision_language_models_understand_negation.md)
 - [\[ACL 2025\] Can MLLMs Understand the Deep Implication Behind Chinese Images?](can_mllms_understand_the_deep_implication_behind_chinese_images.md)

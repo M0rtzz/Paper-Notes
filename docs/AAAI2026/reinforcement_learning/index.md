@@ -10,7 +10,7 @@ description: >-
 
 **🤖 AAAI2026** · **71** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/reinforcement_learning/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/reinforcement_learning/index.md) · [🔬 ICLR2026 (142)](../../ICLR2026/reinforcement_learning/index.md) · [🧠 NeurIPS2025 (173)](../../NeurIPS2025/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md) · [🧪 ICML2025 (82)](../../ICML2025/reinforcement_learning/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/reinforcement_learning/index.md) · [📷 CVPR2026 (19)](../../CVPR2026/reinforcement_learning/index.md) · [🔬 ICLR2026 (139)](../../ICLR2026/reinforcement_learning/index.md) · [🧠 NeurIPS2025 (172)](../../NeurIPS2025/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md) · [🧪 ICML2025 (81)](../../ICML2025/reinforcement_learning/index.md)
 
 🔥 **高频主题：** 强化学习 ×22 · Agent ×11 · 推理 ×11 · LLM ×6 · 对抗鲁棒 ×5
 

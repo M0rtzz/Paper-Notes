@@ -1,26 +1,22 @@
 ---
 title: >-
-  ICCV2025 语义分割方向78篇论文解读
+  ICCV2025 语义分割方向74篇论文解读
 description: >-
-  78篇ICCV2025的语义分割方向论文解读，涵盖语义分割、扩散模型、遥感、语音、推理、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  74篇ICCV2025的语义分割方向论文解读，涵盖语义分割、扩散模型、语音、推理、遥感、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**📹 ICCV2025** · **78** 篇论文解读
+**📹 ICCV2025** · **74** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (103)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/segmentation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/segmentation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (85)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/segmentation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/segmentation/index.md)
 
-🔥 **高频主题：** 语义分割 ×43 · 扩散模型 ×4 · 遥感 ×4 · 语音 ×4 · 推理 ×4
+🔥 **高频主题：** 语义分割 ×40 · 扩散模型 ×4 · 语音 ×4 · 推理 ×4 · 遥感 ×3
 
 **[2HandedAfforder: Learning Precise Actionable Bimanual Affordances from Human Videos](2handedafforder_learning_precise_actionable_bimanual_affordances_from_human_vide.md)**
 
 :   本文提出从人类活动视频中自动提取精确的双手可操作区域(affordance)数据集 2HANDS，并训练基于 VLM 的 2HandedAfforder 模型，实现根据文本提示预测双手抓握的精确物体区域分割，在新提出的 ActAffordance 基准上显著优于现有方法。
-
-**[A Plug-and-Play Physical Motion Restoration Approach for In-the-Wild High-Difficulty Motions](a_plug-and-play_physical_motion_restoration_approach_for_in-the-wild_high-diffic.md)**
-
-:   提出即插即用的物理动作恢复方法，通过Mask条件运动修正模块（MCM）修复视频动捕中的瑕疵帧，以及基于预训练+测试时适应的物理运动迁移模块（PTM）实现高难度野外动作的物理仿真，显著提升动作的物理真实性。
 
 **[A Plug-and-Play Physical Motion Restoration Approach for In-the-Wild High-Difficulty Motions](a_plugandplay_physical_motion_restoration_approach_for_inthe.md)**
 
@@ -65,10 +61,6 @@ description: >-
 **[Correspondence as Video: Test-Time Adaption on SAM2 for Reference Segmentation in the Wild](correspondence_as_video_test-time_adaption_on_sam2_for_reference_segmentation_in.md)**
 
 :   CAV-SAM 将参考-目标图像对之间的对应关系表示为伪视频序列，通过基于扩散模型的语义过渡模块（DBST）桥接语义差异，以及测试时几何对齐模块（TTGA）对齐几何变化，使SAM2的视频分割能力零训练地适配参考分割任务，在跨域少样本分割基准上超越SOTA约5% mIoU。
-
-**[Correspondence as Video: Test-Time Adaption on SAM2 for Reference Segmentation in the Wild](correspondence_as_video_testtime_adaption_on_sam2_for_refere.md)**
-
-:   将reference-target图像对之间的对应关系表示为用扩散模型生成的伪视频序列，利用SAM2的iVOS能力进行分割，结合test-time轻量微调对齐几何变化，在跨域few-shot分割上比SOTA方法提升约5% mIoU，且无需meta-training。
 
 **[DDB: Diffusion Driven Balancing to Address Spurious Correlations](ddb_diffusion_driven_balancing_to_address_spurious_correlations.md)**
 
@@ -149,10 +141,6 @@ description: >-
 **[Latent Expression Generation for Referring Image Segmentation and Grounding](latent_expression_generation_for_referring_image_segmentation_and_grounding.md)**
 
 :   提出 Latent-VG 框架，通过从单个文本描述生成多个潜在表达式（共享同一主语、但具有不同视觉属性），利用互补的视觉细节弥补稀疏文本与丰富视觉信息之间的语义差距，在指代图像分割和指代表达理解任务上同时达到 SOTA。
-
-**[LawDIS: Language-Window-based Controllable Dichotomous Image Segmentation](lawdis_language-window-based_controllable_dichotomous_image_segmentati.md)**
-
-:   提出LawDIS，一种基于Stable Diffusion的语言-窗口双控可控二分图像分割框架，在宏观模式下通过语言提示指导目标分割，在微观模式下通过可变尺寸窗口精细化局部细节，在DIS5K上全面超越11种SOTA方法。
 
 **[LawDIS: Language-Window-based Controllable Dichotomous Image Segmentation](lawdis_language-window-based_controllable_dichotomous_image_segmentation.md)**
 
@@ -249,10 +237,6 @@ description: >-
 **[SAM2Long: Enhancing SAM 2 for Long Video Segmentation with a Training-Free Memory Tree](sam2long_enhancing_sam_2_for_long_video_segmentation_with_a.md)**
 
 :   针对SAM 2在长视频中因贪心选择策略导致的错误累积问题，提出一种training-free的约束树搜索记忆策略，维护多条分割路径并在视频级别选择最优结果，在9个VOS和3个VOT benchmark上平均提升3.7 J&F，长视频场景最高提升5.3。
-
-**[SCORE: Scene Context Matters in Open-Vocabulary Remote Sensing Instance Segmentation](score_scene_context_matters_in_open-vocabulary_remote_sensing_instance_segmentat.md)**
-
-:   提出 SCORE 框架，利用多粒度场景上下文（区域上下文+全局上下文）增强开放词汇遥感实例分割，通过 Region-Aware Integration 和 Global Context Adaptation 两个模块分别强化视觉和文本表示。
 
 **[SCORE: Scene Context Matters in Open-Vocabulary Remote Sensing Instance Segmentation](score_scene_context_matters_in_openvocabulary_remote_sensing.md)**
 

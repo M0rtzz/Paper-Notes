@@ -1,18 +1,18 @@
 ---
 title: >-
-  CVPR2026 时间序列方向8篇论文解读
+  CVPR2026 时间序列方向6篇论文解读
 description: >-
-  8篇CVPR2026的时间序列方向论文解读，涵盖时序预测、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  6篇CVPR2026的时间序列方向论文解读，涵盖时序预测、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📈 时间序列
 
-**📷 CVPR2026** · **8** 篇论文解读
+**📷 CVPR2026** · **6** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/time_series/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/time_series/index.md) · [🤖 AAAI2026 (35)](../../AAAI2026/time_series/index.md) · [🧠 NeurIPS2025 (59)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md) · [🧪 ICML2025 (27)](../../ICML2025/time_series/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/time_series/index.md) · [🔬 ICLR2026 (37)](../../ICLR2026/time_series/index.md) · [🤖 AAAI2026 (35)](../../AAAI2026/time_series/index.md) · [🧠 NeurIPS2025 (58)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md) · [🧪 ICML2025 (26)](../../ICML2025/time_series/index.md)
 
-🔥 **高频主题：** 时序预测 ×5
+🔥 **高频主题：** 时序预测 ×3
 
 **[A Frame is Worth One Token: Efficient Generative World Modeling with Delta Tokens](a_frame_is_worth_one_token_efficient_generative_world_modeling_with_delta_tokens.md)**
 
@@ -21,14 +21,6 @@ description: >-
 **[Competition-Aware CPC Forecasting with Near-Market Coverage](competition-aware_cpc_forecasting_with_near-market_coverage.md)**
 
 :   这篇论文把搜索广告中的 CPC 预测重新表述为“竞争状态部分不可观测”下的时间序列预测问题，用语义相似性、CPC 轨迹对齐和地理意图三个可观测代理去近似隐含竞争，再分别以协变量和图先验两种形式注入预测器，在中长期预测上显著优于纯自回归基线。
-
-**[Competition-Aware CPC Forecasting with Near-Market Coverage](competitionaware_cpc_forecasting_with_nearmarket_c.md)**
-
-:   将付费搜索广告中的 CPC（每次点击成本）预测重新定义为**部分竞争可观测性**问题，通过语义邻域、DTW 行为邻域和地理意图三类竞争代理信号，结合时序基础模型（Chronos-2/TimeGPT/Moirai）和时空 GNN，在 1,811 条关键词序列上实现了中长期预测精度的显著提升。
-
-**[L2GTX: From Local to Global Time Series Explanations](l2gtx_from_local_to_global_time_series_explanation.md)**
-
-:   提出 L2GTX——完全模型无关的局部到全局时间序列解释方法，以参数化事件原语(递增/递减趋势、局部极值)为解释单元，经层次聚类合并、贪心预算选择和属性统计聚合，在 6 个 UCR 数据集上生成紧凑忠实的类级全局解释(FCN上ECG200 GF=0.792)。
 
 **[L2GTX: From Local to Global Time Series Explanations](l2gtx_from_local_to_global_time_series_explanations.md)**
 

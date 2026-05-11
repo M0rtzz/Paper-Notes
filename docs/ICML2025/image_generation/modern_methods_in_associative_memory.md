@@ -129,7 +129,7 @@ AM框架下的"训练"对应能量景观的塑造过程。典型方法包括：H
 - [\[CVPR 2025\] Improving Editability in Image Generation with Layer-wise Memory](../../CVPR2025/image_generation/improving_editability_in_image_generation_with_layer-wise_memory.md)
 - [\[ECCV 2024\] Memory-Efficient Fine-Tuning for Quantized Diffusion Model](../../ECCV2024/image_generation/memory-efficient_fine-tuning_for_quantized_diffusion_model.md)
 - [\[CVPR 2026\] Memory-Efficient Fine-Tuning Diffusion Transformers via Dynamic Patch Sampling and Block Skipping](../../CVPR2026/image_generation/memory-efficient_fine-tuning_diffusion_transformers_via_dynamic_patch_sampling_a.md)
-- [\[ECCV 2024\] MixDQ: Memory-Efficient Few-Step Text-to-Image Diffusion Models with Metric-Decoupled Mixed Precision Quantization](../../ECCV2024/image_generation/mixdq_memory-efficient_few-step_text-to-image_diffusion_models_with_metric-decou.md)
+- [\[ECCV 2024\] MixDQ: Memory-Efficient Few-Step Text-to-Image Diffusion Models with Metric-Decoupled Mixed Precision Quantization](../../ECCV2024/image_generation/mixdq_memoryefficient_fewstep_texttoimage_diffusion_models_w.md)
 
 </div>
 

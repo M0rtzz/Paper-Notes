@@ -131,7 +131,7 @@ tags:
 
 ## 相关论文
 
-- [\[ICML 2025\] FGFP: A Fractional Gaussian Filter and Pruning for DNN Compression](fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compression.md)
+- [\[ICML 2025\] FGFP: A Fractional Gaussian Filter and Pruning for DNN Compression](fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compressi.md)
 - [\[ICML 2025\] Efficient Logit-based Knowledge Distillation of Deep Spiking Neural Networks for Full-Range Timestep Deployment](efficient_logit-based_knowledge_distillation_of_deep_spiking_neural_networks_for.md)
 - [\[ICML 2025\] An Efficient Matrix Multiplication Algorithm for Accelerating Inference in Binary and Ternary Neural Networks](an_efficient_matrix_multiplication_algorithm_for_accelerating_inference_in_binar.md)
 - [\[ICML 2025\] LoRA Fine-Tuning without GPUs: A CPU-Efficient Meta-Generation Framework for LLMs](lora_fine-tuning_without_gpus_a_cpu-efficient_meta-generation_framework_for_llms.md)

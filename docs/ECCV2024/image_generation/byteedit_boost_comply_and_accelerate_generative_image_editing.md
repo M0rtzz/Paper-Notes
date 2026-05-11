@@ -157,7 +157,7 @@ $$\mathcal{L}_{\text{reward}}(\phi) = -\mathbb{E}\sum_{\theta \in \{\alpha, \bet
 
 - [\[ECCV 2024\] Lazy Diffusion Transformer for Interactive Image Editing](lazy_diffusion_transformer_for_interactive_image_editing.md)
 - [\[ECCV 2024\] RegionDrag: Fast Region-Based Image Editing with Diffusion Models](regiondrag_fast_region-based_image_editing_with_diffusion_models.md)
-- [\[ECCV 2024\] FreeDiff: Progressive Frequency Truncation for Image Editing with Diffusion Models](freediff_progressive_frequency_truncation_for_image_edi.md)
+- [\[ECCV 2024\] FreeDiff: Progressive Frequency Truncation for Image Editing with Diffusion Models](freediff_progressive_frequency_truncation_for_image_editing_with_diffusion_model.md)
 - [\[ECCV 2024\] Robust-Wide: Robust Watermarking against Instruction-driven Image Editing](robust-wide_robust_watermarking_against_instruction-driven_image_editing.md)
 - [\[ECCV 2024\] Eta Inversion: Designing an Optimal Eta Function for Diffusion-based Real Image Editing](eta_inversion_designing_an_optimal_eta_function_for_diffusion-based_real_image_e.md)
 

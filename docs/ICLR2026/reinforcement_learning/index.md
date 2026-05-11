@@ -1,18 +1,18 @@
 ---
 title: >-
-  ICLR2026 强化学习方向142篇论文解读
+  ICLR2026 强化学习方向139篇论文解读
 description: >-
-  142篇ICLR2026的强化学习方向论文解读，涵盖强化学习、推理、LLM、对抗鲁棒、Agent、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  139篇ICLR2026的强化学习方向论文解读，涵盖强化学习、推理、LLM、对抗鲁棒、Agent、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎮 强化学习
 
-**🔬 ICLR2026** · **142** 篇论文解读
+**🔬 ICLR2026** · **139** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/reinforcement_learning/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/reinforcement_learning/index.md) · [🤖 AAAI2026 (71)](../../AAAI2026/reinforcement_learning/index.md) · [🧠 NeurIPS2025 (173)](../../NeurIPS2025/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md) · [🧪 ICML2025 (82)](../../ICML2025/reinforcement_learning/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/reinforcement_learning/index.md) · [📷 CVPR2026 (19)](../../CVPR2026/reinforcement_learning/index.md) · [🤖 AAAI2026 (71)](../../AAAI2026/reinforcement_learning/index.md) · [🧠 NeurIPS2025 (172)](../../NeurIPS2025/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md) · [🧪 ICML2025 (81)](../../ICML2025/reinforcement_learning/index.md)
 
-🔥 **高频主题：** 强化学习 ×44 · 推理 ×23 · LLM ×15 · 对抗鲁棒 ×14 · Agent ×13
+🔥 **高频主题：** 强化学习 ×44 · 推理 ×23 · LLM ×14 · 对抗鲁棒 ×14 · Agent ×12
 
 **[A Unifying View of Coverage in Linear Off-Policy Evaluation](a_unifying_view_of_coverage_in_linear_off-policy_evaluation.md)**
 
@@ -38,17 +38,9 @@ description: >-
 
 :   提出 AutoQD，通过随机傅里叶特征（RFF）将策略的占据度量嵌入有限维空间，再用加权 PCA 降维得到行为描述符，实现无需人工设计 BD 的 QD 优化，在 6 个连续控制任务上全面超越手工 BD 和现有无监督 QD 方法。
 
-**[AutoQD: Automatic Discovery of Diverse Behaviors with Quality-Diversity Optimization](autoqd_diverse_behaviors.md)**
-
-:   本文提出 AutoQD，利用策略占据测度（occupancy measure）的随机傅里叶特征嵌入自动生成行为描述符，无需手工设计即可在连续控制任务中发现多样化高质量策略，并在 6 个标准环境中证明了有效性。
-
 **[AutoTool: Automatic Scaling of Tool-Use Capabilities in RL via Decoupled Entropy Constraints](autotool_automatic_scaling_of_tool-use_capabilities_in_rl_via_decoupled_entropy_.md)**
 
 :   提出解耦自适应熵约束 (Decoupled Adaptive Entropy Constraints) 的强化学习策略，使 LLM 在工具调用任务中根据问题难度自动切换长/短推理模式，在提升 9.8% 准确率的同时减少约 81% 的推理 token 开销。
-
-**[AutoTool: Automatic Scaling of Tool-Use Capabilities in RL via Decoupled Entropy Constraints](autotool_scaling_tool_use.md)**
-
-:   本文提出 AutoTool，通过解耦自适应熵约束策略解决 LLM 工具使用中直接 RL 训练的推理坍缩问题和缩放后模型的过度思考问题，实现自动根据问题难度切换长短推理模式，在准确率提升 9.8% 的同时减少 ~81% 的推理 token 开销。
 
 **[AWM: Accurate Weight-Matrix Fingerprint for Large Language Models](awm_accurate_weight-matrix_fingerprint_for_large_language_models.md)**
 
@@ -333,10 +325,6 @@ description: >-
 **[Principled Fast and Meta Knowledge Learners for Continual Reinforcement Learning](principled_fast_and_meta_knowledge_learners_for_continual_reinforcement_learning.md)**
 
 :   受人脑海马体-大脑皮层交互机制启发，提出 FAME 双学习器框架，通过快速学习器进行知识迁移、元学习器进行知识整合，在原则性地最小化灾难性遗忘的前提下实现高效的持续强化学习。
-
-**[Pruning as a Cooperative Game: Surrogate-Assisted Layer Contribution Estimation for Large Language Models](pruning_as_a_cooperative_game_surrogate-assisted_layer_contribution_estimation_f.md)**
-
-:   将LLM层剪枝建模为合作博弈，利用轻量代理网络近似Shapley值来捕获层间依赖关系，实现比静态启发式方法更优的深度剪枝效果。
 
 **[QuRL: Efficient Reinforcement Learning with Quantized Rollout](qurl_efficient_reinforcement_learning_with_quantized_rollout.md)**
 

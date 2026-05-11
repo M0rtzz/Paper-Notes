@@ -131,7 +131,7 @@ tags:
 - [\[AAAI 2026\] MCTSr-Zero: Self-Reflective Psychological Counseling Dialogues Generation via Principles and Adaptive Exploration](../../AAAI2026/medical_imaging/mctsr-zero_self-reflective_psychological_counseling_dialogues_generation_via_pri.md)
 - [\[AAAI 2026\] An LLM-Based Simulation Framework for Embodied Conversational Agents in Psychological Counseling](../../AAAI2026/medical_imaging/an_llm-based_simulation_framework_for_embodied_conversationa.md)
 - [\[ACL 2025\] Enhancing Medical Dialogue Generation through Knowledge Refinement and Dynamic Prompt Adjustment](enhancing_medical_dialogue_generation_through_knowledge_refinement_and_dynamic_p.md)
-- [\[ACL 2025\] Are LLMs Effective Psychological Assessors? Leveraging Adaptive RAG for Interpretable Mental Health Screening](llm_psychological_assessor.md)
+- [\[ACL 2025\] Are LLMs Effective Psychological Assessors? Leveraging Adaptive RAG for Interpretable Mental Health Screening](are_llms_effective_psychological_assessors_leveraging_adaptive_rag_for_interpret.md)
 
 </div>
 

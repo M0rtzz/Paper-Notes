@@ -104,7 +104,7 @@ tags:
 ## 相关论文
 
 - [\[ICCV 2025\] EC-Flow: Enabling Versatile Robotic Manipulation from Action-Unlabeled Videos via Equivariant Flow Matching](ec-flow_enabling_versatile_robotic_manipulation_from_action-unlabeled_videos_via.md)
-- [\[ICCV 2025\] CHORDS: Diffusion Sampling Accelerator with Multi-Core Hierarchical ODE Solvers](chords_diffusion_sampling_accelerator_with_multi_core_hierarchical_ode_solvers.md)
+- [\[ICCV 2025\] CHORDS: Diffusion Sampling Accelerator with Multi-Core Hierarchical ODE Solvers](chords_diffusion_sampling_accelerator_with_multi-core_hierarchical_ode_solvers.md)
 - [\[ICCV 2025\] Aether: Geometric-Aware Unified World Modeling](aether_geometric-aware_unified_world_modeling.md)
 - [\[ICCV 2025\] Learning Deblurring Texture Prior from Unpaired Data with Diffusion Model](learning_deblurring_texture_prior_from_unpaired_data_with_diffusion_model.md)
 - [\[ICCV 2025\] ImageGem: In-the-wild Generative Image Interaction Dataset for Generative Model Personalization](imagegem_in-the-wild_generative_image_interaction_dataset_for_generative_model_p.md)

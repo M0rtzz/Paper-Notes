@@ -173,9 +173,9 @@ HPDv2 测试集 median score。SmPO-SDXL 对 DPO-SDXL 在 HPSv2.1 上 win-rate �
 
 - [\[ICML 2025\] ADHMR: Aligning Diffusion-based Human Mesh Recovery via Direct Preference Optimization](adhmr_aligning_diffusion-based_human_mesh_recovery_via_direct_preference_optimiz.md)
 - [\[ICML 2025\] D-Fusion: Direct Preference Optimization for Aligning Diffusion Models with Visually Consistent Samples](d-fusion_direct_preference_optimization_for_aligning_diffusion_models_with_visua.md)
-- [\[CVPR 2025\] Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization](../../CVPR2025/llm_alignment/spo_aesthetic_post_training.md)
+- [\[CVPR 2025\] Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization](../../CVPR2025/llm_alignment/aesthetic_post-training_diffusion_models_from_generic_preferences_with_step-by-s.md)
 - [\[CVPR 2025\] InPO: Inversion Preference Optimization with Reparametrized DDIM for Efficient Diffusion Model Alignment](../../CVPR2025/llm_alignment/inpo_inversion_preference_optimization_diffusion_alignment.md)
-- [\[CVPR 2025\] Calibrated Multi-Preference Optimization for Aligning Diffusion Models](../../CVPR2025/llm_alignment/capo_multi_preference.md)
+- [\[CVPR 2025\] Calibrated Multi-Preference Optimization for Aligning Diffusion Models](../../CVPR2025/llm_alignment/calibrated_multi-preference_optimization_for_aligning_diffusion_models.md)
 
 </div>
 

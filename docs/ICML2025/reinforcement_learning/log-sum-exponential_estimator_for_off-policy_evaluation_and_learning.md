@@ -134,7 +134,7 @@ $$\mathbb{E}\left[(w_\theta(A,X) R)^{1+\epsilon}\right] \leq \nu$$
 - [\[ICML 2025\] Demystifying the Paradox of Importance Sampling with an Estimated History-Dependent Behavior Policy in Off-Policy Evaluation](demystifying_the_paradox_of_importance_sampling_with_an_estimated_history-depend.md)
 - [\[ICLR 2026\] A Unifying View of Coverage in Linear Off-Policy Evaluation](../../ICLR2026/reinforcement_learning/a_unifying_view_of_coverage_in_linear_off-policy_evaluation.md)
 - [\[NeurIPS 2025\] Finite-Sample Analysis of Policy Evaluation for Robust Average Reward Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/finite-sample_analysis_of_policy_evaluation_for_robust_average_reward_reinforcem.md)
-- [\[NeurIPS 2025\] Bootstrap Off-policy with World Model](../../NeurIPS2025/reinforcement_learning/boundary-to-region_supervision_for_offline_safe_reinforcement_learning.md)
+- [\[NeurIPS 2025\] Bootstrap Off-policy with World Model](../../NeurIPS2025/reinforcement_learning/bootstrap_off-policy_with_world_model.md)
 - [\[NeurIPS 2025\] Bootstrap Off-policy with World Model (BOOM)](../../NeurIPS2025/reinforcement_learning/bootstrap_off-policy_with_world_model.md)
 
 </div>

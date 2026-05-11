@@ -194,7 +194,7 @@ $$\mathcal{L}_{proto} = \mathbb{E}_{(f(p), u)} P(f_{roi}(p_i), u)$$
 
 ## 相关论文
 
-- [\[CVPR 2026\] ABRA: Teleporting Fine-Tuned Knowledge Across Domains for Open-Vocabulary Object Detection](../../CVPR2026/object_detection/abra_teleporting_finetuned_knowledge_across_domain.md)
+- [\[CVPR 2026\] ABRA: Teleporting Fine-Tuned Knowledge Across Domains for Open-Vocabulary Object Detection](../../CVPR2026/object_detection/abra_teleporting_fine-tuned_knowledge_across_domains_for_open-vocabulary_object_.md)
 - [\[ICML 2025\] Open-Det: An Efficient Learning Framework for Open-Ended Detection](../../ICML2025/object_detection/open-det_an_efficient_learning_framework_for_open-ended_detection.md)
 - [\[AAAI 2026\] YOLO-IOD: Towards Real Time Incremental Object Detection](yolo-iod_towards_real_time_incremental_object_detection.md)
 - [\[CVPR 2026\] Beyond Prompt Degradation: Prototype-Guided Dual-Pool Prompting for Incremental Object Detection](../../CVPR2026/object_detection/beyond_prompt_degradation_prototype-guided_dual-pool_prompting_for_incremental_o.md)

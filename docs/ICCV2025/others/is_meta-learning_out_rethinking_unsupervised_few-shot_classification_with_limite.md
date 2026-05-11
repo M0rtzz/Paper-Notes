@@ -169,7 +169,7 @@ MINO 平均精度比次优方法 PsCo 高 2.85%，且接近有监督 MAML 上界
 - [\[CVPR 2025\] TailedCore: Few-Shot Sampling for Unsupervised Long-Tail Noisy Anomaly Detection](../../CVPR2025/others/tailedcore_few-shot_sampling_for_unsupervised_long-tail_noisy_anomaly_detection.md)
 - [\[ACL 2025\] Detecting Sockpuppetry on Wikipedia Using Meta-Learning](../../ACL2025/others/detecting_sockpuppetry_on_wikipedia_using_meta-learning.md)
 - [\[ICCV 2025\] EDFFDNet: Towards Accurate and Efficient Unsupervised Multi-Grid Image Registration](edffdnet_towards_accurate_and_efficient_unsupervised_multi-grid_image_registrati.md)
-- [\[CVPR 2026\] DirPA: Addressing Prior Shift in Imbalanced Few-shot Crop-type Classification](../../CVPR2026/others/dirpa_addressing_prior_shift_in_imbalanced_few-shot_crop-type_classification.md)
+- [\[CVPR 2026\] DirPA: Addressing Prior Shift in Imbalanced Few-shot Crop-type Classification](../../CVPR2026/others/dirpa_addressing_prior_shift_in_imbalanced_fewshot.md)
 
 </div>
 

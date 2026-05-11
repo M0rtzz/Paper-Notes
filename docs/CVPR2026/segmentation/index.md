@@ -1,18 +1,18 @@
 ---
 title: >-
-  CVPR2026 语义分割方向103篇论文解读
+  CVPR2026 语义分割方向85篇论文解读
 description: >-
-  103篇CVPR2026的语义分割方向论文解读，涵盖语义分割、目标检测、遥感、扩散模型、域适应、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  85篇CVPR2026的语义分割方向论文解读，涵盖语义分割、扩散模型、推理、域适应、目标检测、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**📷 CVPR2026** · **103** 篇论文解读
+**📷 CVPR2026** · **85** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/segmentation/index.md) · [📹 ICCV2025 (78)](../../ICCV2025/segmentation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/segmentation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/segmentation/index.md) · [📹 ICCV2025 (74)](../../ICCV2025/segmentation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/segmentation/index.md)
 
-🔥 **高频主题：** 语义分割 ×53 · 目标检测 ×6 · 遥感 ×6 · 扩散模型 ×5 · 域适应 ×5
+🔥 **高频主题：** 语义分割 ×43 · 扩散模型 ×5 · 推理 ×5 · 域适应 ×4 · 目标检测 ×4
 
 **[3M-TI: High-Quality Mobile Thermal Imaging via Calibration-free Multi-Camera Cross-Modal Diffusion](3m-ti_high-quality_mobile_thermal_imaging_via_calibration-free_multi-camera_cros.md)**
 
@@ -21,10 +21,6 @@ description: >-
 **[MEDISEG: 药物图像实例分割数据集——预防不良药物事件](a_dataset_of_medication_images_with_instance_segme.md)**
 
 :   构建了MEDISEG药物图像实例分割数据集（8262张图像，32类药片，含遮挡/重叠的真实场景），YOLOv8/v9验证3类达99.5% mAP@0.5、32类达80.1%，FsDet few-shot证明MEDISEG预训练在遮挡场景比CURE显著提升（1-shot 0.406 vs 0.131）。
-
-**[MEDISEG: A Dataset of Medication Images with Instance Segmentation Masks for Preventing Adverse Drug Events](a_dataset_of_medication_images_with_instance_segmentation_masks_for_preventing_a.md)**
-
-:   提出MEDISEG数据集——32种药片类型共8262张真实多药丸场景图像（含dosette box中重叠/遮挡/不同光照），提供实例分割标注，YOLOv8/v9在3-Pills子集mAP@50达99.5%、32-Pills达80.1%，few-shot实验证明MEDISEG作为base训练集显著优于CURE数据集。
 
 **[A Mixed Diet Makes DINO An Omnivorous Vision Encoder](a_mixed_diet_makes_dino_an_omnivorous_vision_encoder.md)**
 
@@ -46,17 +42,9 @@ description: >-
 
 :   提出Concept-Aware LoRA (CA-LoRA)，通过自动识别T2I模型中与特定概念（如视角、风格）相关的权重层，仅对这些层施加LoRA微调，实现对目标域的选择性对齐，同时保留预训练模型的多样化生成能力，用于生成高质量的城市场景分割数据集。
 
-**[CLIP Is Shortsighted: Paying Attention Beyond the First Sentence](clip_is_shortsighted_paying_attention_beyond_the_first_sentence.md)**
-
-:   揭示 CLIP 系列模型对长文本中首句摘要和早期 token 的系统性偏差，提出 DeBias-CLIP 通过去除摘要句、句子子采样和 token 填充三种文本增强策略消除该偏差，在不引入额外参数的条件下实现长/短文本检索 SOTA。
-
 **[DeBias-CLIP: CLIP Is Shortsighted — Paying Attention Beyond the First Sentence](clip_shortsighted_beyond_first_sentence.md)**
 
 :   发现CLIP和Long-CLIP模型存在严重的early-token偏向和首句摘要shortcut问题，提出DeBias-CLIP通过去除摘要句、句子子采样和前缀token填充三种简单增强策略，不增加任何额外参数即实现了多个长文本检索基准的SOTA。
-
-**[Comparative Evaluation of Traditional Methods and Deep Learning for Brain Glioma Imaging. Review Paper](comparative_evaluation_of_traditional_methods_and.md)**
-
-:   系统综述脑胶质瘤 MRI 分割与分类的两大技术路线——传统方法（阈值、区域生长、聚类等）与深度学习方法（CNN 系列架构），通过方法分类学和性能对比得出 CNN 架构全面优于传统技术的结论，同时指出半自动方法因可控性在临床场景中更受放射科医生青睐。
 
 **[Comparative Evaluation of Traditional Methods and Deep Learning for Brain Glioma Imaging](comparative_evaluation_of_traditional_methods_and_deep_learning_for_brain_glioma.md)**
 
@@ -69,10 +57,6 @@ description: >-
 **[ConceptPrism: Concept Disentanglement in Personalized Diffusion Models via Residual Token Optimization](conceptprism_concept_disentanglement_in_personalized_diffusion_models_via_residu.md)**
 
 :   提出 ConceptPrism，通过引入图像级残余 token 和跨图像排斥损失，在个性化 T2I 扩散模型中自动将共享目标概念与图像特有的残余信息解耦，在 DreamBench 上 CLIP-T/DINO/CLIP-I 全面最优。
-
-**[CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation](crossearth-sar_a_sar-centric_and_billion-scale_geospatial_foundation_model_for_d.md)**
-
-:   提出首个十亿参数级SAR视觉基础模型CrossEarth-SAR，通过物理引导的稀疏MoE架构结合SAR物理描述子，在22个跨域语义分割基准中的20个取得SOTA，部分multi-gap场景超越已有方法10%+ mIoU。
 
 **[CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation](crossearthsar_a_sarcentric_and_billionscale_geospa.md)**
 
@@ -106,33 +90,17 @@ description: >-
 
 :   针对推理分割(RS)中RL+GRPO训练的geometric reward无法约束reasoning chain是否聚焦目标unique attributes的问题，提出DPAD方法：MLLM生成reasoning chain+geometric localization+anchored description，引入基于CLIP的Discriminative Perception Reward比较description与ROI/AOI的相似度差异，迫使caption更具判别性从而间接约束推理链聚焦目标，ReasonSeg上cIoU提升3.09%且推理链长度减少42%。
 
-**[DSFlash: Comprehensive Panoptic Scene Graph Generation in Realtime](dsflash_comprehensive_panoptic_scene_graph_generation_in_realtime.md)**
-
-:   提出 DSFlash，一个低延迟全景场景图生成模型，通过统一 backbone、双向关系预测和 mask 动态剪枝等设计，在 RTX 3090 上实现 56 FPS 的实时推理，同时保持 SOTA 性能（mR@50=30.9）。
-
 **[DSFlash: Comprehensive Panoptic Scene Graph Generation in Realtime](dsflash_panoptic_scene_graph_realtime.md)**
 
 :   DSFlash 通过合并分割与关系预测 backbone、门控双向关系预测头和 mask-based 动态 patch 剪枝，在 PSG 数据集上以 18ms 延迟（56 FPS）实现 mR@50=30.9 的 SOTA 全景场景图生成。
-
-**[DSS: Discover, Segment, and Select - A Progressive Mechanism for Zero-shot Camouflaged Object Segmentation](dss_discover_segment_select_zero_shot_cos.md)**
-
-:   提出三阶段零样本伪装目标分割框架DSS：先用DINOv2特征聚类+部件组合发现候选区域（Discover），再用SAM分割（Segment），最后用MLLM逐对比较选最优mask（Select），无需任何训练即在四个COD基准上全面超越先前零样本方法，尤其在多实例场景中优势显著。
 
 **[Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance](efficient_rgb-d_scene_understanding_via_multi-task_adaptive_learning_and_cross-d.md)**
 
 :   提出一种高效 RGB-D 多任务场景理解网络，通过改进的融合编码器利用通道冗余加速特征提取，设计归一化聚焦通道层（NFCL）和上下文特征交互层（CFIL）进行跨维度特征引导，并引入批级别多任务自适应损失函数动态调整各任务学习权重，在 NYUv2/SUN RGB-D/Cityscapes 上同时完成语义分割、实例分割、朝向估计、全景分割和场景分类五项任务，取得精度与速度的双重优势。
 
-**[Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance](efficient_rgbd_scene_understanding_via_multitask_a.md)**
-
-:   提出高效RGB-D多任务场景理解网络，通过部分通道卷积融合编码器将FLOPs降至常规卷积的1/16、归一化焦点通道层(NFCL)和上下文特征交互层(CFIL)实现跨维度特征引导、batch级多任务自适应损失动态平衡五个任务，在NYUv2上以20.33 FPS（比EMSAFormer快24%）达到49.82 mIoU。
-
 **[ELVIS: Enhance Low-Light for Video Instance Segmentation in the Dark](elvis_enhance_low-light_for_video_instance_segmentation_in_the_dark.md)**
 
 :   ELVIS 提出了首个低光视频实例分割（VIS）框架，通过物理驱动的合成低光视频管线（含运动模糊建模）、无标定退化参数估计网络 VDP-Net、以及将增强解码器集成到 VIS 架构中实现退化与内容解耦，在合成和真实低光视频上分别实现 +3.7AP 和 +2.8AP 的提升。
-
-**[EReCu: Pseudo-label Evolution Fusion and Refinement with Multi-Cue Learning for Unsupervised Camouflage Detection](erecu_pseudo-label_evolution_fusion_and_refinement_with_multi-cue_learning_for_u.md)**
-
-:   提出统一的无监督伪装目标检测框架 EReCu，通过多线索原生感知(MNP)、伪标签进化融合(PEF)和局部伪标签精炼(LPR)三个协同模块，在不依赖人工标注的情况下实现了边界精确、细节丰富的伪装目标分割。
 
 **[EReCu: Pseudo-label Evolution Fusion and Refinement with Multi-Cue Learning for Unsupervised Camouflage Detection](erecu_pseudolabel_evolution_unsupervised_camouflage.md)**
 
@@ -153,10 +121,6 @@ description: >-
 **[From 2D Alignment to 3D Plausibility: Unifying Heterogeneous 2D Priors and Penetration-Free Diffusion for Occlusion-Robust Two-Hand Reconstruction](from_2d_alignment_to_3d_plausibility_unifying_heterogeneous_2d_priors_and_penetr.md)**
 
 :   将双手重建解耦为 2D 结构对齐（融合关键点/分割/深度先验）和 3D 空间交互对齐（穿透消除扩散模型），在 InterHand2.6M 上 MPJPE 达到 5.36mm，大幅超越 SOTA。
-
-**[Generalizable Knowledge Distillation from Vision Foundation Models for Semantic Segmentation](generalizable_knowledge_distillation_from_vision_foundation_models_for_semantic_.md)**
-
-:   提出 Generalizable Knowledge Distillation (GKD)，通过解耦表示学习与任务学习的多阶段蒸馏，以及基于 query 的软蒸馏机制，将 VFM 的跨域泛化能力有效转移到轻量学生模型，F2L 设置下平均提升 +10.6% mIoU。
 
 **[GenMask: Adapting DiT for Segmentation via Direct Mask Generation](genmask_adapting_dit_for_segmentation_via_direct_mask_generation.md)**
 
@@ -226,17 +190,9 @@ description: >-
 
 :   揭示现有无训练扩散分割方法无法随生成模型能力增强而提升的根本原因——交叉注意力图到语义相关性之间存在两个gap（聚合gap和分数不平衡gap），提出自动聚合（auto aggregation）和逐像素重缩放（per-pixel rescaling）两项技术组成GoCA框架，首次使更强的扩散模型（SDXL、PixArt-Sigma、Flux）在无训练语义分割中显著超越旧模型。
 
-**[Masked Representation Modeling for Domain-Adaptive Segmentation](masked_representation_modeling_for_domain-adaptive_segmentation.md)**
-
-:   提出 Masked Representation Modeling (MRM)，在潜在空间而非像素空间进行掩码与重建，作为 UDA 分割的即插即用辅助任务，在 GTA→Cityscapes 上平均为 4 种 baseline 带来 +2.3 mIoU 提升。
-
 **[MatAnyone 2: Scaling Video Matting via a Learned Quality Evaluator](matanyone_2_scaling_video_matting_via_a_learned_quality_evaluator.md)**
 
 :   提出学习型 Matting Quality Evaluator (MQE)，在无 ground-truth 条件下逐像素评估 alpha 质量，既作为在线训练引导又作为离线数据筛选器，构建了 28K 片段 / 240 万帧的真实世界视频抠图数据集 VMReal，配合参考帧训练策略，显著超越所有现有方法。
-
-**[A Mixed Diet Makes DINO An Omnivorous Vision Encoder](mixed_diet_dino_omnivorous_encoder.md)**
-
-:   发现DINOv2等预训练视觉编码器在不同模态（RGB/深度/分割）间的特征对齐极差，提出Omnivorous框架通过在冻结backbone的最后几层上训练轻量适配器（对齐损失+锚定损失+模态混合增强），构建统一的模态无关特征空间，在跨模态检索上大幅超越baseline同时保持或提升下游任务性能。
 
 **[MixerCSeg: An Efficient Mixer Architecture for Crack Segmentation via Decoupled Mamba Attention](mixercseg_an_efficient_mixer_architecture_for_crack_segmentation_via_decoupled_m.md)**
 
@@ -258,14 +214,6 @@ description: >-
 
 :   PCA-Seg 提出并行代价聚合(Parallel Cost Aggregation)范式替代传统的串行空间-类别聚合架构，通过专家驱动感知学习(EPL)模块高效整合语义和空间上下文流，并用特征正交解耦(FOD)策略消除两种知识流的冗余，每个并行块仅增加 0.35M 参数即在 8 个开放词汇语义和部件分割基准上达到 SOTA。
 
-**[PCA-Seg: Revisiting Cost Aggregation for Open-Vocabulary Semantic and Part Segmentation](pca_seg_cost_aggregation_open_vocabulary_segmentation.md)**
-
-:   重新审视代价聚合策略，提出 PCA-Seg 并行架构替代现有串行结构，通过专家驱动感知学习模块整合类语义和空间上下文两路信息，配合特征正交化解耦策略减少冗余，在 8 个基准上以每个块仅 0.35M 额外参数达到 SOTA。
-
-**[PCA-Seg: Revisiting Cost Aggregation for Open-Vocabulary Semantic and Part Segmentation](pca_seg_parallel_cost_aggregation_open_vocabulary_segmentation.md)**
-
-:   PCA-Seg 重新审视开放词汇语义和部件分割中的成本聚合机制，提出并行成本聚合范式替代现有的串行架构，通过专家驱动感知学习(EPL)模块高效整合语义和上下文流，并用特征正交解耦(FOD)策略降低两种知识流的冗余，每个并行块仅增加0.35M参数即在8个基准上达到SOTA。
-
 **[PEARL: Geometry Aligns Semantics for Training-Free Open-Vocabulary Semantic Segmentation](pearl_geometry_aligns_semantics_for_training-free_open-vocabulary_semantic_segme.md)**
 
 :   PEARL 提出了一种基于 Procrustes 对齐和文本感知拉普拉斯传播的两步推理方法，在不引入额外训练或辅助骨干网络的前提下，通过修正 CLIP 最后一层自注意力中 key-query 的几何失配并利用文本语义引导标签传播，在训练免开放词汇语义分割上达到了新的 SOTA。
@@ -282,10 +230,6 @@ description: >-
 
 :   提出基于指针 (Pointer) 机制的命令序列表示，将 B-Rep 几何实体（边/面）显式引入自回归 CAD 生成，首次在命令序列方法中支持 chamfer/fillet 操作，同时大幅降低量化误差导致的拓扑错误。
 
-**[Prompt-Driven Lightweight Foundation Model for Instance Segmentation-Based Fault Detection in Freight Trains](prompt-driven_lightweight_foundation_model_for_instance_segmentation-based_fault.md)**
-
-:   提出 SAM FTI-FDet，通过自动提示生成模块和自适应特征调度器将 SAM 的通用分割能力迁移至货运列车故障检测领域，以 TinyViT 轻量骨干实现 74.6 AP^box / 74.2 AP^mask，在精度和效率上均超越现有方法。
-
 **[Prompt-Driven Lightweight Foundation Model for Instance Segmentation-Based Fault Detection in Freight Trains](promptdriven_lightweight_foundation_model_for_inst.md)**
 
 :   提出SAM FTI-FDet，通过设计一个基于Transformer decoder的自提示生成器（Prompt Generator），让轻量化的TinyViT-SAM自动生成任务相关的query prompt，无需人工交互即可完成货运列车部件的实例级故障检测，在自建数据集上达到74.6 AP_box / 74.2 AP_mask。
@@ -297,10 +241,6 @@ description: >-
 **[RDNet: Region Proportion-Aware Dynamic Adaptive Salient Object Detection Network in Optical Remote Sensing Images](rdnet_region_proportion-aware_dynamic_adaptive_salient_object_detection_network_.md)**
 
 :   针对遥感图像中目标尺度变化大的难题，提出区域比例感知的动态自适应显著性目标检测网络 RDNet，通过 Proportion Guidance 动态选择不同大小卷积核组合，结合小波频域交互与交叉注意力定位模块，在三个 ORSI-SOD 数据集上全面超越 SOTA。
-
-**[RDNet: Region Proportion-Aware Dynamic Adaptive Salient Object Detection Network in Optical Remote Sensing Images](rdnet_region_proportionaware_dynamic_adaptive_sali.md)**
-
-:   提出 RDNet，通过区域比例感知的 Proportion Guidance 块预测目标面积占比，动态选择 3/4/5 种不同大小卷积核组合提取细节，结合小波域频率匹配上下文增强（计算量降为1/4）和跨注意力定位模块，在 EORSSD/ORSSD/ORSI-4199 三个遥感 SOD 数据集上全面超越 21 个 SOTA 方法。
 
 **[RealVLG-R1: A Large-Scale Real-World Visual-Language Grounding Benchmark for Robotic Perception and Manipulation](realvlg-r1_a_large-scale_real-world_visual-language_grounding_benchmark_for_robo.md)**
 
@@ -329,10 +269,6 @@ description: >-
 **[RSONet: Region-guided Selective Optimization Network for RGB-T Salient Object Detection](rsonet_region-guided_selective_optimization_network_for_rgb-t_salient_object_det.md)**
 
 :   提出两阶段 RGB-T 显著性检测网络 RSONet：先通过区域引导阶段计算 RGB/热红外引导图与联合引导图的相似度，选出更可靠的模态；再在显著性生成阶段利用选择性优化融合双模态特征，配合密集细节增强和互信息语义模块生成高质量显著图，在三个 RGB-T 基准上取得 SOTA 性能。
-
-**[RSONet: Region-guided Selective Optimization Network for RGB-T Salient Object Detection](rsonet_regionguided_selective_optimization_network.md)**
-
-:   提出 RSONet 两阶段 RGB-T 显著性检测框架：先通过三支并行编码器-解码器生成区域引导图并基于相似度选择主导模态，再通过选择性优化模块融合双模态特征，在 VT5000/VT1000/VT821 上 MAE 达 0.020/0.014/0.021，超越 27 个 SOTA 方法。
 
 **[SAP: Segment Any 4K Panorama](sap_segment_any_4k_panorama.md)**
 
@@ -365,10 +301,6 @@ description: >-
 **[SGMA: Semantic-Guided Modality-Aware Segmentation for Remote Sensing with Incomplete Multimodal Data](sgma_semantic-guided_modality-aware_segmentation_for_remote_sensing_with_incompl.md)**
 
 :   提出 SGMA 框架，通过语义引导融合（SGF）模块构建全局语义原型实现自适应跨模态融合，并通过模态感知采样（MAS）模块动态提升脆弱模态的训练频率，解决遥感场景下不完整多模态语义分割中的模态不平衡、类内方差大和跨模态异质性三大挑战。
-
-**[SGMA: Semantic-Guided Modality-Aware Segmentation for Remote Sensing with Incomplete Multimodal Data](sgma_semanticguided_modalityaware_segmentation_for.md)**
-
-:   提出SGMA——语义引导模态感知分割框架，通过语义引导融合(SGF)降低类内变异并协调跨模态冲突，模态感知采样(MAS)平衡脆弱模态训练频率，在ISPRS上Average mIoU +9.20%且弱模态Last-1 mIoU +18.26%(vs SOTA IMLT)。
 
 **[SouPLe: Enhancing Audio-Visual Localization and Segmentation with Learnable Prompt Contexts](souple_enhancing_audio-visual_localization_and_segmentation_with_learnable_promp.md)**
 
@@ -409,10 +341,6 @@ description: >-
 **[UnrealPose: Leveraging Game Engine Kinematics for Large-Scale Synthetic Human Pose Data](unrealpose_leveraging_game_engine_kinematics_for_large-scale_synthetic_human_pos.md)**
 
 :   提出 UnrealPose-Gen，一个基于 Unreal Engine 5 的合成人体姿态数据生成管线，利用游戏引擎原生骨骼运动学（而非 SMPL）生成百万级标注数据集 UnrealPose-1M，提供 3D 关节、2D 关键点、遮挡标志、实例分割掩码和相机参数等完整标注。
-
-**[VidEoMT: Your ViT is Secretly Also a Video Segmentation Model](videomt_encoder_only_video_segmentation.md)**
-
-:   提出encoder-only视频分割模型VidEoMT，通过查询传播和查询融合将分割与时序关联统一在单个ViT编码器中，消除所有专用追踪模块，在YouTube-VIS 2019上达到160 FPS（比CAVIS快10×+），同时AP仅差0.3。
 
 **[VidEoMT: Your ViT is Secretly Also a Video Segmentation Model](videomt_your_vit_is_secretly_also_a_video_segmentation_model.md)**
 

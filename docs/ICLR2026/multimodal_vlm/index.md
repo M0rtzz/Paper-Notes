@@ -1,18 +1,18 @@
 ---
 title: >-
-  ICLR2026 多模态 VLM方向93篇论文解读
+  ICLR2026 多模态 VLM方向91篇论文解读
 description: >-
-  93篇ICLR2026的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、Agent、机器人、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  91篇ICLR2026的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、机器人、Agent、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**🔬 ICLR2026** · **93** 篇论文解读
+**🔬 ICLR2026** · **91** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (50)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (288)](../../CVPR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (92)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (155)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (159)](../../ICCV2025/multimodal_vlm/index.md) · [🧪 ICML2025 (53)](../../ICML2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (50)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (241)](../../CVPR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (91)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (154)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (151)](../../ICCV2025/multimodal_vlm/index.md) · [🧪 ICML2025 (52)](../../ICML2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×45 · 推理 ×22 · LLM ×5 · Agent ×4 · 机器人 ×4
+🔥 **高频主题：** 多模态 ×45 · 推理 ×22 · LLM ×5 · 机器人 ×4 · Agent ×3
 
 **[A-TPT: Angular Diversity Calibration Properties for Test-Time Prompt Tuning of Vision-Language Models](a-tpt_angular_diversity_calibration_properties_for_test-time_prompt_tuning_of_vi.md)**
 
@@ -290,10 +290,6 @@ description: >-
 
 :   提出SpatiaLab，一个包含1400个视觉QA对的真实场景空间推理基准，涵盖6大类30子类空间任务，支持多选和开放式双格式评估，揭示当前最强VLM（InternVL3.5-72B MCQ 54.93%）与人类（87.57%）之间存在巨大空间推理鸿沟，且开放式设置下差距更大。
 
-**[SpectralGCD: Spectral Concept Selection and Cross-modal Representation Learning for Generalized Category Discovery](spectralgcd_spectral_concept_selection_and_cross-modal_representation_learni.md)**
-
-:   提出 SpectralGCD，通过将图像表示为 CLIP 跨模态图像-文本相似度向量（语义概念混合），并用谱滤波自动筛选任务相关概念 + 正反向知识蒸馏保持语义质量，在六个基准上以接近单模态方法的训练开销取得多模态 GCD 新 SOTA。
-
 **[SpectralGCD: Spectral Concept Selection and Cross-modal Representation Learning for Generalized Category Discovery](spectralgcd_spectral_concept_selection_and_cross-modal_representation_learning_f.md)**
 
 :   提出SpectralGCD，将图像表示为CLIP概念字典上的语义混合（跨模态相似度向量），通过谱过滤自动选择任务相关概念，配合正反知识蒸馏保持语义质量，在6个基准上以与单模态方法可比的计算代价达到多模态SOTA。
@@ -373,10 +369,6 @@ description: >-
 **[Why Keep Your Doubts to Yourself? Trading Visual Uncertainties in Multi-Agent Bandit Systems](why_keep_your_doubts_to_yourself_trading_visual_uncertainties_in_multi-agent_ban.md)**
 
 :   提出 Agora 框架，将多智能体 VLM 协调问题重构为去中心化的不确定性交易市场——将认知不确定性铸造为可量化的三维可交易资产（感知/语义/推理），通过利润驱动的交易协议和市场感知的 Thompson Sampling Broker 实现成本高效的均衡分配，在 5 个多模态基准上一致超越启发式方法（如 MMMU 上 +8.5% 准确率同时成本降低 3 倍以上）。
-
-**[Why Keep Your Doubts to Yourself? Trading Visual Uncertainties in Multi-Agent Bandit Systems](why_keep_your_doubts_to_yourself_trading_visual_uncertainty.md)**
-
-:   提出 Agora 框架，将多智能体 VLM 协调问题重新建模为去中心化的不确定性交易市场，通过将认知不确定性拆分为可交易资产（感知/语义/推理三维），并用基于盈利性驱动的交易协议和 Thompson Sampling 代理人实现成本感知的最优分配，在五个多模态基准上以超 3 倍成本节省获得至多 +8.5% 准确率提升。
 
 **[Why Reinforcement Fine-Tuning Preserves Prior Knowledge Better: A Data Perspective](why_reinforcement_fine-tuning_enables_mllms_preserve_prior_knowledge_better_a_da.md)**
 

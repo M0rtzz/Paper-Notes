@@ -192,8 +192,8 @@ $$\mathcal{L} = \text{BCE}(R(\mathbf{o}_{1:t}, \mathbf{g}), y_t)$$
 
 - [\[CVPR 2026\] Joint-Aligned Latent Action: Towards Scalable VLA Pretraining in the Wild](joint-aligned_latent_action_towards_scalable_vla_pretraining_in_the_wild.md)
 - [\[CVPR 2026\] DUET-VLM: Dual Stage Unified Efficient Token Reduction for VLM Training and Inference](duet-vlm_dual_stage_unified_efficient_token_reduction_for_vlm_training_and_infer.md)
-- [\[CVPR 2026\] Revisiting Model Stitching In the Foundation Model Era](revisiting_model_stitching_in_the_foundation_model_era.md)
-- [\[CVPR 2026\] Do Vision-Language Models Leak What They Learn? Adaptive Token-Weighted Model Inversion Attacks](do_vision-language_models_leak_what_they_learn_adaptive_token-weighted_model_inv.md)
+- [\[CVPR 2026\] Revisiting Model Stitching In the Foundation Model Era](revisiting_model_stitching_in_the_foundation_model.md)
+- [\[CVPR 2026\] Do Vision-Language Models Leak What They Learn? Adaptive Token-Weighted Model Inversion Attacks](vlm_model_inversion_adaptive_token_weight.md)
 - [\[CVPR 2026\] BUSSARD: Normalizing Flows for Bijective Universal Scene-Specific Anomalous Relationship Detection](bussard_normalizing_flows_for_bijective_universal_scene-specific_anomalous_relat.md)
 
 </div>

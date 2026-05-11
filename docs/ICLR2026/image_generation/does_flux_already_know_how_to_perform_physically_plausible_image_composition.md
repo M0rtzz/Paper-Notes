@@ -144,7 +144,7 @@ $$\bm{v}_t^{\text{dsg}} = \bm{v}_t + \eta(\bm{v}_t - \bm{v}_{\bm{\theta}+\Delta\
 - [\[ICLR 2026\] Concept-TRAK: Understanding how diffusion models learn concepts through concept-level attribution](concept-trak_understanding_how_diffusion_models_learn_concepts_through_concept-l.md)
 - [\[ICLR 2026\] Does Semantic Noise Initialization Transfer from Images to Videos? A Paired Diagnostic Study](does_semantic_noise_initialization_transfer_from_images_to_videos_a_paired_diagn.md)
 - [\[CVPR 2025\] Pattern Analogies: Learning to Perform Programmatic Image Edits by Analogy](../../CVPR2025/image_generation/pattern_analogies_learning_to_perform_programmatic_image_edits_by_analogy.md)
-- [\[CVPR 2026\] ConsistCompose: Unified Multimodal Layout Control for Image Composition](../../CVPR2026/image_generation/consistcompose_unified_multimodal_layout_control_for_image_composition.md)
+- [\[CVPR 2026\] ConsistCompose: Unified Multimodal Layout Control for Image Composition](../../CVPR2026/image_generation/consistcompose_multimodal_layout_control.md)
 
 </div>
 

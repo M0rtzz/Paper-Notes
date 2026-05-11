@@ -1,18 +1,18 @@
 ---
 title: >-
-  NeurIPS2025 LLM 推理方向67篇论文解读
+  NeurIPS2025 LLM 推理方向66篇论文解读
 description: >-
-  67篇NeurIPS2025的 LLM 推理方向论文解读，涵盖推理、LLM、多模态、强化学习、模型压缩、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  66篇NeurIPS2025的 LLM 推理方向论文解读，涵盖推理、LLM、多模态、强化学习、模型压缩、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💡 LLM 推理
 
-**🧠 NeurIPS2025** · **67** 篇论文解读
+**🧠 NeurIPS2025** · **66** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (37)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (71)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md) · [🧪 ICML2025 (17)](../../ICML2025/llm_reasoning/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (37)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (12)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (65)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md) · [🧪 ICML2025 (15)](../../ICML2025/llm_reasoning/index.md)
 
-🔥 **高频主题：** 推理 ×44 · LLM ×12 · 多模态 ×4 · 强化学习 ×4 · 模型压缩 ×2
+🔥 **高频主题：** 推理 ×43 · LLM ×12 · 多模态 ×4 · 强化学习 ×4 · 模型压缩 ×2
 
 **[AbbIE: Autoregressive Block-Based Iterative Encoder for Efficient Sequence Modeling](abbie_autoregressive_block-based_iterative_encoder_for_efficient_sequence_modeli.md)**
 
@@ -241,10 +241,6 @@ description: >-
 **[TimE: A Multi-level Benchmark for Temporal Reasoning of LLMs in Real-World Scenarios](time_a_multilevel_benchmark_for_temporal_reasoning_of_llms_i.md)**
 
 :   提出 TimE，一个包含 38,522 个 QA 对的多层级时间推理基准，覆盖知识密集（Wiki）、动态新闻（News）、长对话（Dial）三种真实场景和三级渐进式 11 子任务，全面评估 24 个 LLM 后发现即便最强推理模型在时间线构建和反事实推理等复杂任务上仍有显著短板。
-
-**[TimE: A Multi-level Benchmark for Temporal Reasoning of LLMs in Real-World Scenarios](time_temporal_reasoning.md)**
-
-:   本文提出 TimE，一个包含 38,522 个 QA 对的多层级时间推理基准，覆盖知识密集（Wiki）、动态事件（News）和多轮对话（Dial）三类真实场景，设计 11 个细粒度子任务系统评估 LLM 的时间推理能力，并发布人工标注子集 TimE-Lite。
 
 **[Topology of Reasoning: Understanding Large Reasoning Models through Reasoning Graph Properties](topology_of_reasoning_understanding_large_reasoning_models_through_reasoning_gra.md)**
 

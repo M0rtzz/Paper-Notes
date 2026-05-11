@@ -1,18 +1,18 @@
 ---
 title: >-
-  NeurIPS2025 优化/理论方向117篇论文解读
+  NeurIPS2025 优化/理论方向116篇论文解读
 description: >-
-  117篇NeurIPS2025的优化/理论方向论文解读，涵盖联邦学习、LLM、对抗鲁棒、推理、对齐/RLHF、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  116篇NeurIPS2025的优化/理论方向论文解读，涵盖联邦学习、LLM、对抗鲁棒、推理、对齐/RLHF、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**🧠 NeurIPS2025** · **117** 篇论文解读
+**🧠 NeurIPS2025** · **116** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/optimization/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (45)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (24)](../../AAAI2026/optimization/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (58)](../../ICML2025/optimization/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/optimization/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (45)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (23)](../../AAAI2026/optimization/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (58)](../../ICML2025/optimization/index.md)
 
-🔥 **高频主题：** 联邦学习 ×12 · LLM ×11 · 对抗鲁棒 ×9 · 推理 ×7 · 对齐/RLHF ×3
+🔥 **高频主题：** 联邦学习 ×12 · LLM ×11 · 对抗鲁棒 ×9 · 推理 ×6 · 对齐/RLHF ×3
 
 **[A Single-Loop First-Order Algorithm for Linearly Constrained Bilevel Optimization](a_single-loop_first-order_algorithm_for_linearly_constrained_bilevel_optimizatio.md)**
 
@@ -73,10 +73,6 @@ description: >-
 **[Composing Global Solutions to Reasoning Tasks via Algebraic Objects in Neural Nets](composing_global_solutions_to_reasoning_tasks_via_algebraic_objects_in_neural_ne.md)**
 
 :   提出 CoGS 框架，证明二层二次激活网络在 Abelian 群乘法推理任务上的权重空间具有半环代数结构，损失函数中的 Sum Potential 是环同态映射，由此可从仅满足部分损失的局部解通过环加法和环乘法代数地组合出全局最优解，约 95% 的梯度下降解与理论构造精确匹配。
-
-**[Composing Global Solutions to Reasoning Tasks via Algebraic Objects in Neural Nets](constrained_network_slice_assignment_via_large_language_models.md)**
-
-:   揭示两层二次激活网络在 Abelian 群推理任务上训练时权重空间具有半环代数结构，提出 CoGS 框架通过环运算将部分解组合为全局最优解，约 95% 梯度下降解与理论构造精确匹配。
 
 **[Constrained Network Slice Assignment via Large Language Models](constrained_network_slice_assignment_via_llms.md)**
 

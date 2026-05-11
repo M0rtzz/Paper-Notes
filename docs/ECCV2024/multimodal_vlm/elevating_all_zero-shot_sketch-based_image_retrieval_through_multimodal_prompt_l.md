@@ -214,11 +214,11 @@ CLIP-AT 使用视觉 prompt + patch shuffling 三元组目标。SpLIP 在三方�
 
 ## 相关论文
 
-- [\[ECCV 2024\] SpLIP: Elevating All Zero-Shot Sketch-Based Image Retrieval Through Multimodal Prompt Learning](elevating_all_zeroshot_sketchbased_image_retrieval_through_m.md)
+- [\[ECCV 2024\] SpLIP: Elevating All Zero-Shot Sketch-Based Image Retrieval Through Multimodal Prompt Learning](elevating_all_zero-shot_sketch-based_image_retrieval_through_multimodal_prompt_l.md)
 - [\[ECCV 2024\] CLAP: Isolating Content from Style through Contrastive Learning with Augmented Prompts](clap_isolating_content_from_style_through_contrastive_learning_with_augmented_pr.md)
 - [\[ECCV 2024\] MarvelOVD: 融合目标检测器与视觉语言模型实现鲁棒开放词汇目标检测](marvelovd_marrying_object_recognition_and_vision-language_models_for_robust_open.md)
 - [\[ECCV 2024\] MMBench: Is Your Multi-modal Model an All-Around Player?](mmbench_is_your_multi-modal_model_an_all-around_player.md)
-- [\[ECCV 2024\] The Hard Positive Truth about Vision-Language Compositionality](the_hard_positive_truth_about_vision-language_compositionality.md)
+- [\[ECCV 2024\] The Hard Positive Truth about Vision-Language Compositionality](the_hard_positive_truth_about_visionlanguage_compositionalit.md)
 
 </div>
 

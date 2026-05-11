@@ -125,7 +125,7 @@ $$\mathbf{D} = \begin{bmatrix} D^{\text{img}_1} & D^{\text{img}_2} & D^{\text{im
 - [\[AAAI 2026\] MP1: MeanFlow Tames Policy Learning in 1-step for Robotic Manipulation](../../AAAI2026/image_generation/mp1_meanflow_tames_policy_learning_in_1-step_for_robotic_manipulation.md)
 - [\[ICLR 2026\] Self-Improving Loops for Visual Robotic Planning](../../ICLR2026/image_generation/self-improving_loops_for_visual_robotic_planning.md)
 - [\[CVPR 2026\] Exploring Conditions for Diffusion Models in Robotic Control](exploring_conditions_for_diffusion_models_in_robotic_control.md)
-- [\[CVPR 2026\] Editing Away the Evidence: Diffusion-Based Image Manipulation and the Failure Modes of Robust Watermarking](editing_away_the_evidence_diffusionbased_image_man.md)
+- [\[CVPR 2026\] Editing Away the Evidence: Diffusion-Based Image Manipulation and the Failure Modes of Robust Watermarking](editing_away_the_evidence_diffusion-based_image_manipulation_and_the_failure_mod.md)
 
 </div>
 

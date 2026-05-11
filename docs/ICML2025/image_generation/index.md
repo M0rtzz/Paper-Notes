@@ -1,22 +1,18 @@
 ---
 title: >-
-  ICML2025 图像生成方向115篇论文解读
+  ICML2025 图像生成方向112篇论文解读
 description: >-
-  115篇ICML2025的图像生成方向论文解读，涵盖扩散模型、语音、对齐/RLHF、时序预测、对抗鲁棒、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  112篇ICML2025的图像生成方向论文解读，涵盖扩散模型、语音、对齐/RLHF、时序预测、对抗鲁棒、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🧪 ICML2025** · **115** 篇论文解读
+**🧪 ICML2025** · **112** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (240)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (250)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (219)](../../ICCV2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (208)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (247)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×47 · 语音 ×7 · 对齐/RLHF ×3 · 时序预测 ×3 · 对抗鲁棒 ×3
-
-**[Action-Minimization Meets Generative Modeling: Efficient Transition Path Sampling with the Onsager-Machlup Functional](action-minimization_meets_generative_modeling_efficient_transition_pat.md)**
-
-:   将预训练扩散/flow matching模型的score函数解释为随机动力学的漂移项，通过最小化Onsager-Machlup (OM)作用量泛函实现零样本转移路径采样，无需任务特定训练即可在分子系统上高效生成多样且物理真实的转移路径。
+🔥 **高频主题：** 扩散模型 ×45 · 语音 ×6 · 对齐/RLHF ×3 · 时序预测 ×3 · 对抗鲁棒 ×3
 
 **[Action-Minimization Meets Generative Modeling: Efficient Transition Path Sampling with the Onsager-Machlup Functional](action-minimization_meets_generative_modeling_efficient_transition_path_sampling.md)**
 
@@ -181,10 +177,6 @@ description: >-
 **[How to Move Your Dragon: Text-to-Motion Synthesis for Large-Vocabulary Objects](how_to_move_your_dragon_text-to-motion_synthesis_for_large-vocabulary_objects.md)**
 
 :   本文首次提出一个统一框架，通过为 Truebones Zoo 数据集（70+ 物种）标注文本描述、引入 rig augmentation 技术以及在 Motion Diffusion Model 中融入 TreePE 和 RestPE 编码，实现了面向大词汇量异构骨骼对象的文本驱动动作生成，可为动物、恐龙乃至虚构生物合成高质量 3D 动作。
-
-**[IMPACT: Iterative Mask-based Parallel Decoding for Text-to-Audio Generation with Diffusion Modeling](impact_iterative_mask-based_parallel_decoding_for_text-to-audio_generation.md)**
-
-:   IMPACT 将迭代掩码并行解码与潜在扩散模型结合，在连续潜在空间中操作并用轻量 MLP 扩散头替代传统重型注意力骨干，同时达成音频生成质量 SOTA（AudioCaps 上 FD=20.3, FAD=1.45）和接近最快模型 MAGNET-S 的推理速度。
 
 **[IMPACT: Iterative Mask-based Parallel Decoding for Text-to-Audio Generation with Diffusion Modeling](impact_iterative_mask-based_parallel_decoding_for_text-to-audio_generation_with_.md)**
 
@@ -461,10 +453,6 @@ description: >-
 **[When Diffusion Models Memorize: Inductive Biases in Probability Flow of Minimum-Norm Shallow Neural Nets](when_diffusion_models_memorize_inductive_biases_in_probability_flow_of_minimum-n.md)**
 
 :   从理论上分析了最小 $\ell^2$ 范数浅层 ReLU 去噪器驱动的扩散模型概率流的收敛行为，证明概率流可以收敛到训练样本（记忆化）、训练样本之和（"虚拟点"）或超盒边界上的流形点（泛化），且扩散时间调度器的"早停"效应决定了收敛目标。
-
-**[DDIS: When Model Knowledge Meets Diffusion Model — Diffusion-assisted Data-free Image Synthesis](when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_sy.md)**
-
-:   提出 DDIS，首次将 T2I 扩散模型作为强图像先验用于无数据图像合成，通过域对齐引导（DAG）和类对齐 Token（CAT）使生成图像在域和类两个层面精准对齐预训练模型的训练数据分布，在 PACS 和 ImageNet 的无数据 KD/剪枝中达到 SOTA。
 
 **[DDIS: When Model Knowledge Meets Diffusion Model](when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_synthesis.md)**
 

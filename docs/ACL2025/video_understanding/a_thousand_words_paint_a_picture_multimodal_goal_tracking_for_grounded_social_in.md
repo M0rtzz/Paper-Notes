@@ -121,7 +121,7 @@ tags:
 ## 相关论文
 
 - [\[NeurIPS 2025\] Open-World Drone Active Tracking with Goal-Centered Rewards](../../NeurIPS2025/video_understanding/open-world_drone_active_tracking_with_goal-centered_rewards.md)
-- [\[NeurIPS 2025\] Empower Words: DualGround for Structured Phrase and Sentence-Level Temporal Grounding](../../NeurIPS2025/video_understanding/empower_words_dualground_for_structured_phrase_and_sentencel.md)
+- [\[NeurIPS 2025\] Empower Words: DualGround for Structured Phrase and Sentence-Level Temporal Grounding](../../NeurIPS2025/video_understanding/dualground_phrase_temporal.md)
 - [\[ICCV 2025\] Factorized Learning for Temporally Grounded Video-Language Models](../../ICCV2025/video_understanding/factorized_learning_for_temporally_grounded_video-language_models.md)
 - [\[ICCV 2025\] What You Have is What You Track: Adaptive and Robust Multimodal Tracking](../../ICCV2025/video_understanding/what_you_have_is_what_you_track_adaptive_and_robust_multimodal_tracking.md)
 - [\[CVPR 2025\] MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](../../CVPR2025/video_understanding/mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)

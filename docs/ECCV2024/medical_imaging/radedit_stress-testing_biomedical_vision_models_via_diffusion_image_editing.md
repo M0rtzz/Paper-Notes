@@ -144,7 +144,7 @@ RadEdit 基于 DDPM 反演（inversion）和文本引导的扩散模型编辑。
 - [\[ECCV 2024\] Adaptive Compressed Sensing with Diffusion-Based Posterior Sampling](adaptive_compressed_sensing_with_diffusionbased_posterior_sa.md)
 - [\[CVPR 2025\] MoEdit: On Learning Quantity Perception for Multi-Object Image Editing](../../CVPR2025/medical_imaging/moedit_on_learning_quantity_perception_for_multi-object_image_editing.md)
 - [\[ECCV 2024\] Co-synthesis of Histopathology Nuclei Image-Label Pairs using a Context-Conditioned Joint Diffusion Model](co-synthesis_of_histopathology_nuclei_image-label_pairs_using_a_context-conditio.md)
-- [\[ECCV 2024\] GTP-4o: Modality-prompted Heterogeneous Graph Learning for Omni-modal Biomedical Representation](gtp4o_modalityprompted_heterogeneous_graph_learning_for.md)
+- [\[ECCV 2024\] GTP-4o: Modality-prompted Heterogeneous Graph Learning for Omni-modal Biomedical Representation](gtp-4o_modality-prompted_heterogeneous_graph_learning_for_omni-modal_biomedical_.md)
 
 </div>
 

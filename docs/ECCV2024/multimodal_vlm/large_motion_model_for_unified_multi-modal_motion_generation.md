@@ -168,8 +168,8 @@ LMM 基于 Transformer-based Diffusion Model（扩散模型），整体流程分
 
 - [\[ECCV 2024\] MotionChain: Conversational Motion Controllers via Multimodal Prompts](motionchain_conversational_motion_controllers_via_multimodal_prompts.md)
 - [\[ECCV 2024\] Nymeria: A Massive Collection of Multimodal Egocentric Daily Motion in the Wild](nymeria_a_massive_collection_of_multimodal_egocentric_daily_motion_in_the_wild.md)
-- [\[ECCV 2024\] MMBench: Is Your Multi-modal Model an All-Around Player?](mmbench_is_your_multimodal_model_an_allaround_player.md)
-- [\[ECCV 2024\] ShareGPT4V: Improving Large Multi-modal Models with Better Captions](sharegpt4v_improving_large_multimodal_models_with_better_cap.md)
+- [\[ECCV 2024\] MMBench: Is Your Multi-modal Model an All-Around Player?](mmbench_is_your_multi-modal_model_an_all-around_player.md)
+- [\[ECCV 2024\] ShareGPT4V: Improving Large Multi-modal Models with Better Captions](sharegpt4v_improving_large_multi-modal_models_with_better_captions.md)
 - [\[ECCV 2024\] Uni3DL: Unified Model for 3D and Language Understanding](uni3dl_a_unified_model_for_3d_vision-language_understanding.md)
 
 </div>

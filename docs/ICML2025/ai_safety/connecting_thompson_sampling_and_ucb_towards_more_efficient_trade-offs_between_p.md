@@ -134,7 +134,7 @@ DP-TS-UCB 是一个两阶段算法：
 ## 相关论文
 
 - [\[ICML 2025\] Clients Collaborate: Flexible Differentially Private Federated Learning with Guaranteed Improvement of Utility-Privacy Trade-off](clients_collaborate_flexible_differentially_private_federated_learning_with_guar.md)
-- [\[ICML 2025\] On Differential Privacy for Adaptively Solving Search Problems via Sketching](on_differential_privacy_for_adaptively_solving_search_problems_via_sketching.md)
+- [\[ICML 2025\] On Differential Privacy for Adaptively Solving Search Problems via Sketching](on_differential_privacy_for_adaptively_solving_search_problems.md)
 - [\[ICML 2025\] Towards Trustworthy Federated Learning with Untrusted Participants](towards_trustworthy_federated_learning_with_untrusted_participants.md)
 - [\[ICML 2025\] A Certified Unlearning Approach without Access to Source Data](a_certified_unlearning_approach_without_access_to_source_data.md)
 - [\[ICML 2025\] Faster Rates for Private Adversarial Bandits](faster_rates_for_private_adversarial_bandits.md)

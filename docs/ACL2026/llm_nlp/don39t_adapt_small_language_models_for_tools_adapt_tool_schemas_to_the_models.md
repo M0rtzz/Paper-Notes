@@ -149,7 +149,7 @@ PA-Tool 完全无训练。仅需一次性的 Schema 映射：使用 32 个候选
 
 ## 相关论文
 
-- [\[ECCV 2024\] ControlLLM: Augment Language Models with Tools by Searching on Graphs](../../ECCV2024/llm_nlp/controlllm_augment_language_models_with_tools.md)
+- [\[ECCV 2024\] ControlLLM: Augment Language Models with Tools by Searching on Graphs](../../ECCV2024/llm_nlp/controlllm_augment_language_models_with_tools_by_searching_on_graphs.md)
 - [\[ACL 2025\] PiFi: Plug-in and Fine-tuning: Bridging the Gap between Small Language Models and Large Language Models](../../ACL2025/llm_nlp/plugin_finetuning_bridge.md)
 - [\[ICLR 2026\] Predicting LLM Reasoning Performance with Small Proxy Models](../../ICLR2026/llm_nlp/predicting_llm_reasoning_performance_with_small_proxy_models.md)
 - [\[CVPR 2026\] Perception Programs: Unlocking Visual Tool Reasoning in Language Models](../../CVPR2026/llm_nlp/perception_programs_visual_tool_reasoning.md)

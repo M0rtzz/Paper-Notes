@@ -1,18 +1,18 @@
 ---
 title: >-
-  AAAI2026 代码智能方向10篇论文解读
+  AAAI2026 代码智能方向9篇论文解读
 description: >-
-  10篇AAAI2026的代码智能方向论文解读，涵盖 LLM、代码智能、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  9篇AAAI2026的代码智能方向论文解读，涵盖 LLM、代码智能、扩散模型、Agent、少样本学习、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💻 代码智能
 
-**🤖 AAAI2026** · **10** 篇论文解读
+**🤖 AAAI2026** · **9** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (20)](../../ACL2026/code_intelligence/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/code_intelligence/index.md) · [🔬 ICLR2026 (23)](../../ICLR2026/code_intelligence/index.md) · [🧠 NeurIPS2025 (22)](../../NeurIPS2025/code_intelligence/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/code_intelligence/index.md) · [🧪 ICML2025 (11)](../../ICML2025/code_intelligence/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (20)](../../ACL2026/code_intelligence/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/code_intelligence/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/code_intelligence/index.md) · [🧠 NeurIPS2025 (22)](../../NeurIPS2025/code_intelligence/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/code_intelligence/index.md) · [🧪 ICML2025 (11)](../../ICML2025/code_intelligence/index.md)
 
-🔥 **高频主题：** LLM ×4 · 代码智能 ×2 · 自监督学习 ×2
+🔥 **高频主题：** LLM ×4 · 代码智能 ×2
 
 **[DiffBench Meets DiffAgent: End-to-End LLM-Driven Diffusion Acceleration Code Generation](diffbench_meets_diffagent_end-to-end_llm-driven_diffusion_ac.md)**
 
@@ -45,10 +45,6 @@ description: >-
 **[Towards Better Code Understanding in Decoder-Only Models with Contrastive Learning](towards_better_code_understanding_in_decoder-only_large_language_models_via_hie.md)**
 
 :   提出CL4D对比学习框架，通过继续预训练将decoder-only代码生成模型适配到代码理解任务（代码搜索、克隆检测），在不重新训练encoder模型的前提下实现了与同等规模encoder-only模型相当甚至更优的性能。
-
-**[Towards Better Code Understanding in Decoder-Only Models with Contrastive Learning](towards_better_code_understanding_in_decoder-only_models_with_contrastive_learni.md)**
-
-:   本文提出CL4D框架，通过对比学习对预训练的decoder-only代码生成模型进行继续预训练，使其能够有效提取代码表示并在代码搜索和克隆检测等理解任务上达到甚至超越同规模encoder-only模型的性能。
 
 **[Why Do Open-Source LLMs Struggle with Data Analysis? A Systematic Empirical Study](why_do_open-source_llms_struggle_with_data_analysis_a_systematic_empirical_study.md)**
 

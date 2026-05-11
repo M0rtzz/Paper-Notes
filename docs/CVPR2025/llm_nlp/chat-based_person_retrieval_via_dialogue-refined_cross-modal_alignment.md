@@ -135,7 +135,7 @@ DiaNA（Dialogue-refined Cross-modal Alignment）框架接收多轮对话作为�
 - [\[ACL 2025\] From Neurons to Semantics: Evaluating Cross-Linguistic Alignment Capabilities of Large Language Models via Neurons Alignment](../../ACL2025/llm_nlp/from_neurons_to_semantics_evaluating_cross-linguistic_alignment_capabilities_of_.md)
 - [\[CVPR 2025\] Imagine and Seek: Improving Composed Image Retrieval with an Imagined Proxy](imagine_and_seek_improving_composed_image_retrieval_with_an_imagined_proxy.md)
 - [\[CVPR 2026\] Bi-CMPStereo: Bidirectional Cross-Modal Prompting for Event-Frame Asymmetric Stereo](../../CVPR2026/llm_nlp/bi_cmpstereo_bidirectional_cross_modal_prompting_for_event_frame_asymmetric_stereo.md)
-- [\[ACL 2025\] Can We Retrieve Everything All at Once? ARM: An Alignment-Oriented LLM-based Retrieval Method](../../ACL2025/llm_nlp/arm_alignment_retrieval.md)
+- [\[ACL 2025\] Can We Retrieve Everything All at Once? ARM: An Alignment-Oriented LLM-based Retrieval Method](../../ACL2025/llm_nlp/can_we_retrieve_everything_all_at_once_arm_an_alignment-oriented_llm-based_retri.md)
 
 </div>
 

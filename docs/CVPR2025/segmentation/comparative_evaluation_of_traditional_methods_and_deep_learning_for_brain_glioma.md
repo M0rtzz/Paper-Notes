@@ -129,7 +129,7 @@ tags:
 
 ## 相关论文
 
-- [\[CVPR 2026\] Comparative Evaluation of Traditional Methods and Deep Learning for Brain Glioma Imaging. Review Paper](../../CVPR2026/segmentation/comparative_evaluation_of_traditional_methods_and.md)
+- [\[CVPR 2026\] Comparative Evaluation of Traditional Methods and Deep Learning for Brain Glioma Imaging. Review Paper](../../CVPR2026/segmentation/comparative_evaluation_of_traditional_methods_and_deep_learning_for_brain_glioma.md)
 - [\[CVPR 2025\] Show and Tell: Visually Explainable Deep Neural Nets via Spatially-Aware Concept Bottleneck Models](show_and_tell_visually_explainable_deep_neural_nets_via_spatially-aware_concept_.md)
 - [\[CVPR 2025\] DeCLIP: Decoupled Learning for Open-Vocabulary Dense Perception](declip_decoupled_learning_for_open-vocabulary_dense_perception.md)
 - [\[CVPR 2025\] V-CLR: View-Consistent Learning for Open-World Instance Segmentation](v-clr_view-consistent_learning_for_open-world_instance_segmentation.md)

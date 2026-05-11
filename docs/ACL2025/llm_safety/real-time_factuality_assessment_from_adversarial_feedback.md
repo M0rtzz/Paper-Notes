@@ -134,7 +134,7 @@ tags:
 - [\[ACL 2025\] Chinese SimpleQA: A Chinese Factuality Evaluation for Large Language Models](chinese_simpleqa_a_chinese_factuality_evaluation_for_large_language_models.md)
 - [\[ACL 2025\] Ewe: Improving Factuality with Explicit Working Memory](improving_factuality_with_explicit_working_memory.md)
 - [\[NeurIPS 2025\] Reinforcement Learning with Backtracking Feedback](../../NeurIPS2025/llm_safety/reinforcement_learning_with_backtracking_feedback.md)
-- [\[ACL 2025\] Are the Hidden States Hiding Something? Testing the Limits of Factuality-Encoding Capabilities in LLMs](hidden-states-factuality-encoding-limits.md)
+- [\[ACL 2025\] Are the Hidden States Hiding Something? Testing the Limits of Factuality-Encoding Capabilities in LLMs](are_the_hidden_states_hiding_something_testing_the_limits_of_factuality-encoding.md)
 
 </div>
 

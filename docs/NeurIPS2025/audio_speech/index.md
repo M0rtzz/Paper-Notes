@@ -10,7 +10,7 @@ description: >-
 
 **🧠 NeurIPS2025** · **50** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (29)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (17)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/audio_speech/index.md) · [📹 ICCV2025 (13)](../../ICCV2025/audio_speech/index.md) · [🧪 ICML2025 (7)](../../ICML2025/audio_speech/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (29)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/audio_speech/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/audio_speech/index.md) · [🧪 ICML2025 (7)](../../ICML2025/audio_speech/index.md)
 
 🔥 **高频主题：** 语音 ×12 · 对抗鲁棒 ×4 · 多模态 ×3 · 对齐/RLHF ×3 · 推荐系统 ×2
 

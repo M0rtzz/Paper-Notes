@@ -1,18 +1,18 @@
 ---
 title: >-
-  ICLR2026 LLM 效率方向19篇论文解读
+  ICLR2026 LLM 效率方向18篇论文解读
 description: >-
-  19篇ICLR2026的 LLM 效率方向论文解读，涵盖 LLM、持续学习、对抗鲁棒、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  18篇ICLR2026的 LLM 效率方向论文解读，涵盖 LLM、持续学习、对抗鲁棒、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚡ LLM 效率
 
-**🔬 ICLR2026** · **19** 篇论文解读
+**🔬 ICLR2026** · **18** 篇论文解读
 
 📌 **同领域跨会议浏览：** [💬 ACL2026 (8)](../../ACL2026/llm_efficiency/index.md) · [📷 CVPR2026 (4)](../../CVPR2026/llm_efficiency/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/llm_efficiency/index.md) · [🧠 NeurIPS2025 (35)](../../NeurIPS2025/llm_efficiency/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/llm_efficiency/index.md) · [🧪 ICML2025 (13)](../../ICML2025/llm_efficiency/index.md)
 
-🔥 **高频主题：** LLM ×5
+🔥 **高频主题：** LLM ×4
 
 **[Did You Check the Right Pocket? Cost-Sensitive Store Routing for Memory-Augmented Agents](did_you_check_the_right_pocket_cost-sensitive_store_routing_for_memory-augmented.md)**
 
@@ -41,10 +41,6 @@ description: >-
 **[LycheeDecode: Accelerating Long-Context LLM Inference via Hybrid-Head Sparse Decoding](lycheedecode_accelerating_long-context_llm_inference_via_hybrid-head_sparse_deco.md)**
 
 :   提出 LycheeDecode，通过将注意力头细粒度分为少量 retrieval heads（负责全注意力选关键 token）和大量 sparse heads（复用选出的 token 做稀疏计算），并用 HardKuma 分布端到端学习头类型，在 128K 上下文下实现 2.7× 加速且性能不降。
-
-**[LycheeDecode: Accelerating Long-Context LLM Inference via Hybrid-Head Sparse Decoding](lycheedecode_accelerating_long-context_llm_inference_via_hybrid_speculative_deco.md)**
-
-:   提出 LycheeDecode，一种细粒度的混合头稀疏解码方法，通过将注意力头分为少量"检索头"和大量"稀疏头"，并用 HardKuma 分布进行可微头类型识别，在 128K 上下文下实现 2.7× 加速且性能持平甚至超越全注意力基线。
 
 **[MVAR: Visual Autoregressive Modeling with Scale and Spatial Markovian Conditioning](mvar_visual_autoregressive_modeling_with_scale_and_spatial_markovian_conditionin.md)**
 

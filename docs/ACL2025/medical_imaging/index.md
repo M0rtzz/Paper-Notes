@@ -1,18 +1,18 @@
 ---
 title: >-
-  ACL2025 医学图像方向32篇论文解读
+  ACL2025 医学图像方向31篇论文解读
 description: >-
-  32篇ACL2025的医学图像方向论文解读，涵盖医学影像、RAG、LLM、问答、对话系统、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  31篇ACL2025的医学图像方向论文解读，涵盖医学影像、RAG、LLM、问答、对话系统、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**💬 ACL2025** · **32** 篇论文解读
+**💬 ACL2025** · **31** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (153)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (72)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (105)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (141)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (40)](../../ICCV2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (114)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (72)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (105)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (141)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (38)](../../ICCV2025/medical_imaging/index.md)
 
-🔥 **高频主题：** 医学影像 ×26 · RAG ×5 · LLM ×4 · 问答 ×3 · 对话系统 ×3
+🔥 **高频主题：** 医学影像 ×26 · RAG ×4 · LLM ×4 · 问答 ×3 · 对话系统 ×3
 
 **[A Modular Approach for Clinical SLMs Driven by Synthetic Data with Pre-Instruction Tuning, Model Merging, and Clinical-Tasks Alignment](a_modular_approach_for_clinical_slms_driven_by_synthetic_data_with_pre-instructi.md)**
 
@@ -85,10 +85,6 @@ description: >-
 **[ANGEL: Learning from Negative Samples in Biomedical Generative Entity Linking](learning_from_negative_samples_in_biomedical_generative_entity_linking.md)**
 
 :   提出 ANGEL 框架，首次在生成式生物医学实体链接（BioEL）中引入负样本训练，通过两阶段策略（正样本训练 + 负样本感知的偏好优化）显著提升模型区分表面形式相似但语义不同的实体的能力，在五个基准数据集上平均 top-1 准确率提升 1.7%。
-
-**[Are LLMs Effective Psychological Assessors? Leveraging Adaptive RAG for Interpretable Mental Health Screening](llm_psychological_assessor.md)**
-
-:   本文提出基于自适应RAG的心理问卷引导筛查框架，通过检索用户Reddit帖子并让LLM代替用户填写标准化心理问卷（BDI-II等），在无需训练数据的情况下匹配或超越SOTA监督方法的抑郁筛查性能，并扩展到其他心理健康状况。
 
 **[MedBioRAG: Semantic Search and Retrieval-Augmented Generation with Large Language Models for Medical and Biological QA](medbiorag_semantic_search_and_retrieval-augmented_generation_for_biomedical_lite.md)**
 

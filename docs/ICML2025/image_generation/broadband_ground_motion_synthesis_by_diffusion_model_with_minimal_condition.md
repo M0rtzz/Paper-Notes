@@ -140,7 +140,7 @@ $$\mathcal{L}_{ours} = \mathbb{E}_{(X^{src}, X^{tgt}, \vec{c}_{tgt}), \epsilon, 
 
 - [\[ICML 2025\] How to Move Your Dragon: Text-to-Motion Synthesis for Large-Vocabulary Objects](how_to_move_your_dragon_text-to-motion_synthesis_for_large-vocabulary_objects.md)
 - [\[ICML 2025\] Model Immunization from a Condition Number Perspective](model_immunization_from_a_condition_number_perspective.md)
-- [\[ICML 2025\] DDIS: When Model Knowledge Meets Diffusion Model — Diffusion-assisted Data-free Image Synthesis](when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_sy.md)
+- [\[ICML 2025\] DDIS: When Model Knowledge Meets Diffusion Model — Diffusion-assisted Data-free Image Synthesis](when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_synthesis.md)
 - [\[ICML 2025\] DDIS: When Model Knowledge Meets Diffusion Model](when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_synthesis.md)
 - [\[ICCV 2025\] OminiControl: Minimal and Universal Control for Diffusion Transformer](../../ICCV2025/image_generation/ominicontrol_minimal_and_universal_control_for_diffusion_transformer.md)
 

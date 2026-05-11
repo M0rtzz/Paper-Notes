@@ -197,7 +197,7 @@ $$\mathcal{L}_{\boldsymbol{M}} = \frac{1}{n}\sum_{i=1}^{n}\text{mean}(\boldsymbo
 - [\[ECCV 2024\] Source Prompt Disentangled Inversion for Boosting Image Editability with Diffusion Models](source_prompt_disentangled_inversion_for_boosting_image_editability_with_diffusi.md)
 - [\[ECCV 2024\] Soft Prompt Generation for Domain Generalization](soft_prompt_generation_for_domain_generalization.md)
 - [\[ECCV 2024\] Lego: Learning to Disentangle and Invert Personalized Concepts Beyond Object Appearance in Text-to-Image Diffusion Models](lego_learning_to_disentangle_and_invert_personalized_concepts_beyond_object_appe.md)
-- [\[ECCV 2024\] ScaleDreamer: Scalable Text-to-3D Synthesis with Asynchronous Score Distillation](scaledreamer_scalable_textto3d_synthesis_with_asynchronous_s.md)
+- [\[ECCV 2024\] ScaleDreamer: Scalable Text-to-3D Synthesis with Asynchronous Score Distillation](scaledreamer_scalable_text-to-3d_synthesis_with_asynchronous_score_distillation.md)
 
 </div>
 

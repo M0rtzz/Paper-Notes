@@ -1,20 +1,16 @@
 ---
 title: >-
-  ICCV2025 预训练方向10篇论文解读
+  ICCV2025 预训练方向9篇论文解读
 description: >-
-  10篇ICCV2025的预训练方向论文解读，涵盖域适应、对抗鲁棒、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  9篇ICCV2025的预训练方向论文解读，涵盖域适应、对抗鲁棒、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📚 预训练
 
-**📹 ICCV2025** · **10** 篇论文解读
+**📹 ICCV2025** · **9** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/llm_pretraining/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_pretraining/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/llm_pretraining/index.md) · [🤖 AAAI2026 (6)](../../AAAI2026/llm_pretraining/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_pretraining/index.md) · [🧪 ICML2025 (30)](../../ICML2025/llm_pretraining/index.md)
-
-**[ACE-G: Improving Generalization of Scene Coordinate Regression Through Query Pre-Training](ace-g_improving_generalization_of_scene_coordinate_regression_through_query_pre-.md)**
-
-:   ACE-G 将场景坐标回归器（SCR）拆分为通用 Transformer 和场景专属 map code 两部分，通过在数万个场景上预训练 Transformer 使其学会从建图图像泛化到未见查询图像，在保持高效计算的同时显著提升了光照和视角变化下的重定位鲁棒性。
+📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/llm_pretraining/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/llm_pretraining/index.md) · [🔬 ICLR2026 (26)](../../ICLR2026/llm_pretraining/index.md) · [🤖 AAAI2026 (6)](../../AAAI2026/llm_pretraining/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/llm_pretraining/index.md) · [🧪 ICML2025 (30)](../../ICML2025/llm_pretraining/index.md)
 
 **[ACE-G: Improving Generalization of Scene Coordinate Regression Through Query Pre-Training](aceg_improving_generalization_of_scene_coordinate_regression.md)**
 

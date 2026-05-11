@@ -1,22 +1,18 @@
 ---
 title: >-
-  CVPR2026 对齐 / RLHF方向12篇论文解读
+  CVPR2026 对齐 / RLHF方向10篇论文解读
 description: >-
-  12篇CVPR2026的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、多模态、扩散模型、对抗鲁棒、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  10篇CVPR2026的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、多模态、扩散模型、对抗鲁棒、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐 / RLHF
 
-**📷 CVPR2026** · **12** 篇论文解读
+**📷 CVPR2026** · **10** 篇论文解读
 
 📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/llm_alignment/index.md) · [🔬 ICLR2026 (42)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (20)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (53)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md) · [🧪 ICML2025 (27)](../../ICML2025/llm_alignment/index.md)
 
-🔥 **高频主题：** 对齐/RLHF ×8 · 多模态 ×2
-
-**[Bases of Steerable Kernels for Equivariant CNNs: From 2D Rotations to the Lorentz Group](bases_of_steerable_kernels_for_equivariant_cnns_fr.md)**
-
-:   提出一种绕过 Clebsch-Gordan 系数计算、直接从群表示矩阵元素构造可操纵核显式基的方法，通过"稳定子约束 + Schur 引理 + Steering"三步策略统一覆盖 SO(2)、O(2)、SO(3)、O(3) 和非紧致 Lorentz 群，大幅简化等变 CNN 的核设计流程。
+🔥 **高频主题：** 对齐/RLHF ×7 · 多模态 ×2
 
 **[Bases of Steerable Kernels for Equivariant CNNs: From 2D Rotations to the Lorentz Group](bases_of_steerable_kernels_for_equivariant_cnns_from_2d_rotations_to_the_lorentz.md)**
 
@@ -45,10 +41,6 @@ description: >-
 **[MoD-DPO: Towards Mitigating Cross-modal Hallucinations in Omni LLMs using Modality Decoupled Preference Optimization](mod-dpo_towards_mitigating_cross-modal_hallucinations_in_omni_llms_using_modalit.md)**
 
 :   提出 MoD-DPO（Modality-Decoupled DPO），通过不变性正则化、敏感性正则化和语言先验去偏三个机制解耦多模态 LLM 中各模态的贡献，有效缓解跨模态幻觉（如用听觉信息回答视觉问题），并推导出闭式最优策略。
-
-**[PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization](physmodpo_physically-plausible_humanoid_motion_with_preference_optimization.md)**
-
-:   将 DPO 偏好优化引入扩散运动生成模型的后训练阶段，通过物理仿真控制器自动构造偏好数据对，使生成的人体运动既符合文本/空间控制指令又满足物理约束，并成功零样本迁移到 Unitree G1 真实机器人。
 
 **[PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization](physmodpo_physicallyplausible_humanoid_motion_with.md)**
 

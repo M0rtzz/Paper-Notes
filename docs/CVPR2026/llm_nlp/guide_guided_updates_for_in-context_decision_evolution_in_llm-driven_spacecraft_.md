@@ -118,7 +118,7 @@ tags:
 
 - [\[ACL 2025\] LLM Braces: Straightening Out LLM Predictions with Relevant Sub-Updates](../../ACL2025/llm_nlp/llm_braces_straightening.md)
 - [\[AAAI 2026\] CoEvo: Continual Evolution of Symbolic Solutions Using Large Language Models](../../AAAI2026/llm_nlp/coevo_continual_evolution_of_symbolic_solutions_using_large_language_models.md)
-- [\[ICLR 2026\] ELLMob: Event-Driven Human Mobility Generation with Self-Aligned LLM Framework](../../ICLR2026/llm_nlp/ellmob_event-driven_human_mobility_generation_with_self-aligned_llm_framework.md)
+- [\[ICLR 2026\] ELLMob: Event-Driven Human Mobility Generation with Self-Aligned LLM Framework](../../ICLR2026/llm_nlp/ellmob_event-driven_human_mobility_generation_with_self-aligned_language_models.md)
 - [\[ACL 2025\] Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning](../../ACL2025/llm_nlp/problem-solving_logic_guided_curriculum_in-context_learning_for_llms_complex_rea.md)
 - [\[AAAI 2026\] ICL-Router: In-Context Learned Model Representations for LLM Routing](../../AAAI2026/llm_nlp/icl-router_in-context_learned_model_representations_for_llm_routing.md)
 

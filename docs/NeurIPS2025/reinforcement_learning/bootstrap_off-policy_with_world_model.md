@@ -147,7 +147,7 @@ BOOM 由三个紧密耦合的组件组成：**策略网络 π**、**在线规划
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Bootstrap Off-policy with World Model](boundary-to-region_supervision_for_offline_safe_reinforcement_learning.md)
+- [\[NeurIPS 2025\] Bootstrap Off-policy with World Model](bootstrap_off-policy_with_world_model.md)
 - [\[NeurIPS 2025\] Succeed or Learn Slowly: Sample Efficient Off-Policy Reinforcement Learning for Mobile App Control](succeed_or_learn_slowly_sample_efficient_off-policy_reinforcement_learning_for_m.md)
 - [\[NeurIPS 2025\] Foundation Models as World Models: A Foundational Study in Text-Based GridWorlds](foundation_models_as_world_models_a_foundational_study_in_text-based_gridworlds.md)
 - [\[NeurIPS 2025\] Learning Interactive World Model for Object-Centric Reinforcement Learning](learning_interactive_world_model_for_object-centric_reinforcement_learning.md)

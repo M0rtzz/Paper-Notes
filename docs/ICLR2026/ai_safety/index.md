@@ -1,16 +1,16 @@
 ---
 title: >-
-  ICLR2026 AI 安全方向27篇论文解读
+  ICLR2026 AI 安全方向26篇论文解读
 description: >-
-  27篇ICLR2026的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、强化学习、Agent、水印/隐写等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  26篇ICLR2026的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、强化学习、Agent、水印/隐写等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI 安全
 
-**🔬 ICLR2026** · **27** 篇论文解读
+**🔬 ICLR2026** · **26** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (2)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (24)](../../CVPR2026/ai_safety/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (22)](../../ICCV2025/ai_safety/index.md) · [🧪 ICML2025 (36)](../../ICML2025/ai_safety/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (2)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/ai_safety/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (72)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (21)](../../ICCV2025/ai_safety/index.md) · [🧪 ICML2025 (33)](../../ICML2025/ai_safety/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×7 · 联邦学习 ×3 · 强化学习 ×2 · Agent ×2 · 水印/隐写 ×2
 
@@ -85,10 +85,6 @@ description: >-
 **[Sample-Efficient Distributionally Robust Multi-Agent Reinforcement Learning via Online Interaction](sample-efficient_distributionally_robust_multi-agent_reinforcement_learning_via_.md)**
 
 :   本文首次研究了分布鲁棒马尔可夫博弈（DRMGs）的在线学习问题，提出 MORNAVI 算法，在无需模拟器或离线数据的情况下，通过在线交互高效学习最优鲁棒策略，并提供了 TV 散度和 KL 散度不确定性集下的首个可证明遗憾界。
-
-**[Skirting Additive Error Barriers for Private Turnstile Streams](skirting_additive_error_barriers_for_private_turnstile_streaming.md)**
-
-:   本文证明了在差分隐私的 turnstile 流模型中，通过允许乘性误差（multiplicative error）可以绕过已知的多项式加性误差下界，将 distinct elements 和 F₂ 矩估计的加性误差从多项式级别降至 polylog(T)。
 
 **[Skirting Additive Error Barriers for Private Turnstile Streams](skirting_additive_error_barriers_for_private_turnstile_streams.md)**
 

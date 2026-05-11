@@ -149,7 +149,7 @@ SLED 是唯一同时实现单次采样、无后处理和流式推理的连续语
 
 - [\[NeurIPS 2025\] Latent Space Factorization in LoRA](latent_space_factorization_in_lora.md)
 - [\[ICML 2025\] FLAM: Frame-Wise Language-Audio Modeling](../../ICML2025/audio_speech/flam_frame-wise_language-audio_modeling.md)
-- [\[ICCV 2025\] Lyra: An Efficient and Speech-Centric Framework for Omni-Cognition](../../ICCV2025/audio_speech/lyra_an_efficient_and_speech-centric_framework_for_omni-cognition.md)
+- [\[ICCV 2025\] Lyra: An Efficient and Speech-Centric Framework for Omni-Cognition](../../ICCV2025/audio_speech/lyra_an_efficient_and_speechcentric_framework_for_omnicognit.md)
 - [\[AAAI 2026\] DualSpeechLM: Towards Unified Speech Understanding and Generation via Dual Speech Token Modeling](../../AAAI2026/audio_speech/dualspeechlm_towards_unified_speech_understanding_and_generation_via_dual_speech.md)
 - [\[ICML 2025\] Bridging the Language Gap: Synthetic Voice Diversity via Latent Mixup for Equitable Speech Recognition](../../ICML2025/audio_speech/bridging_the_language_gap_synthetic_voice_diversity_via_latent_mixup_for_equitab.md)
 

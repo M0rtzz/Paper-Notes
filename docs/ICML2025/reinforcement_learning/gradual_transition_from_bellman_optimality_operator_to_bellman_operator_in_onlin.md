@@ -180,7 +180,7 @@ AQ-L 在所有测试任务上均显著优于对应基线方法，尤其在训练
 
 ## 相关论文
 
-- [\[ICML 2025\] Gradual Transition from Bellman Optimality Operator to Bellman Operator in Online RL](gradual_transition_from_bellman_optimality_operator_to_bellman_operator_in.md)
+- [\[ICML 2025\] Gradual Transition from Bellman Optimality Operator to Bellman Operator in Online RL](gradual_transition_from_bellman_optimality_operator_to_bellman_operator_in_onlin.md)
 - [\[ICML 2025\] Wasserstein Policy Optimization](wasserstein_policy_optimization.md)
 - [\[ICML 2025\] Online Pre-Training for Offline-to-Online Reinforcement Learning](online_pre-training_for_offline-to-online_reinforcement_learning.md)
 - [\[ICML 2025\] Enhancing Decision-Making of Large Language Models via Actor-Critic](enhancing_decision-making_of_large_language_models_via_actor-critic.md)

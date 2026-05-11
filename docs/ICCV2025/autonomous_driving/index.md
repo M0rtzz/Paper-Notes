@@ -1,22 +1,18 @@
 ---
 title: >-
-  ICCV2025 自动驾驶方向98篇论文解读
+  ICCV2025 自动驾驶方向93篇论文解读
 description: >-
-  98篇ICCV2025的自动驾驶方向论文解读，涵盖 3D 高斯渲染、自动驾驶、扩散模型、3D 目标检测、对抗鲁棒、动态场景等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  93篇ICCV2025的自动驾驶方向论文解读，涵盖自动驾驶、3D 高斯渲染、扩散模型、3D 目标检测、动态场景、点云等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🚗 自动驾驶
 
-**📹 ICCV2025** · **98** 篇论文解读
+**📹 ICCV2025** · **93** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (105)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (58)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/autonomous_driving/index.md) · [🧪 ICML2025 (11)](../../ICML2025/autonomous_driving/index.md) · [💬 ACL2025 (1)](../../ACL2025/autonomous_driving/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (88)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (58)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/autonomous_driving/index.md) · [🧪 ICML2025 (11)](../../ICML2025/autonomous_driving/index.md) · [💬 ACL2025 (1)](../../ACL2025/autonomous_driving/index.md)
 
-🔥 **高频主题：** 3D 高斯渲染 ×14 · 自动驾驶 ×13 · 扩散模型 ×8 · 3D 目标检测 ×5 · 对抗鲁棒 ×4
-
-**[3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multi-view_robust_physical_adversarial_camouflage_g.md)**
-
-:   提出PGA，首个基于3DGS的物理对抗攻击框架，通过快速准确重建目标+解决Gaussians互/自遮挡问题+min-max背景对抗优化策略，生成跨视角鲁棒的物理对抗迷彩，在数字和物理域均超越SOTA方法。
+🔥 **高频主题：** 自动驾驶 ×13 · 3D 高斯渲染 ×12 · 扩散模型 ×8 · 3D 目标检测 ×5 · 动态场景 ×4
 
 **[3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multiview_robust_physical_adver.md)**
 
@@ -26,17 +22,9 @@ description: >-
 
 :   本文提出首个大规模真实3D车辆数据集3DRealCar，包含2500辆来自100+品牌的真实车辆，每辆车约200张高分辨率360度RGB-D视图，覆盖反光/标准/暗光三种光照条件，并提供13类车辆解析标注，支持3D重建、检测、生成等多种任务。
 
-**[3DRealCar: An In-the-wild RGB-D Car Dataset with 360-degree Views](3drealcar_an_inthewild_rgbd_car_dataset_with_360degree_views.md)**
-
-:   提出首个大规模3D真实汽车数据集3DRealCar，包含2,500辆真实汽车的高分辨率（1920×1440）360度RGB-D扫描（平均每辆200张视角），覆盖100+品牌和三种光照条件（标准/高反光/暗光），提供点云、解析图等丰富标注，并基准测试了多种3D重建方法，揭示了反光和暗光条件下的重建挑战。
-
 **[4DSegStreamer: Streaming 4D Panoptic Segmentation via Dual Threads](4dsegstreamer_streaming_4d_panoptic_segmentation_via_dual_threads.md)**
 
 :   提出4DSegStreamer，一种基于双线程系统（预测线程+推理线程）的流式4D全景分割框架，通过几何与运动记忆维护、自车位姿预测和逆向前向光流迭代实现实时高质量4D全景分割。
-
-**[6DOPE-GS: Online 6D Object Pose Estimation using Gaussian Splatting](6dope-gs_online_6d_object_pose_estimation_using_gaussian_splatting.md)**
-
-:   提出6DOPE-GS，一种利用2D高斯溅射（2DGS）联合优化6D物体位姿和3D重建的model-free在线追踪方法，通过动态关键帧选择和基于透明度百分位的密度控制实现5倍加速，同时保持SOTA精度。
 
 **[6DOPE-GS: Online 6D Object Pose Estimation using Gaussian Splatting](6dopegs_online_6d_object_pose_estimation_using_gaussian_spla.md)**
 
@@ -77,10 +65,6 @@ description: >-
 **[ALOcc: Adaptive Lifting-Based 3D Semantic Occupancy and Cost Volume-Based Flow Predictions](alocc_adaptive_lifting-based_3d_semantic_occupancy_and_cost_volume-based_flow_pr.md)**
 
 :   提出ALOcc框架，通过遮挡感知自适应提升机制、语义原型占用头和BEV代价体积流预测三项创新，在多个3D语义占用和占用流预测基准上取得SOTA，同时提供实时到高精度的多种模型变体。
-
-**[ALOcc: Adaptive Lifting-Based 3D Semantic Occupancy and Cost Volume-Based Flow Predictions](alocc_adaptive_liftingbased_3d_semantic_occupancy_and_cost_v.md)**
-
-:   提出ALOcc框架，通过遮挡感知的自适应提升机制、语义原型对齐和BEV代价体flow预测三个改进，在多个占据预测基准上取得SOTA，同时保持较高推理速度。
 
 **[Beyond One Shot, Beyond One Perspective: Cross-View and Long-Horizon Distillation for Better LiDAR Representations](beyond_one_shot_beyond_one_perspective_cross-view_and_long-horizon_distillation_.md)**
 
@@ -305,10 +289,6 @@ description: >-
 **[Resonance: Learning to Predict Social-Aware Pedestrian Trajectories as Co-Vibrations](resonance_learning_to_predict_social-aware_pedestrian_trajectories_as_co-vibrati.md)**
 
 :   本文提出 Resonance (Re) 模型，将行人轨迹预测分解为多个"振动"的叠加——线性基底、自偏置（self-bias）和共振偏置（resonance-bias），利用轨迹频谱的相似性模拟社会交互中的"共振"现象，在 ETH-UCY、SDD、NBA、nuScenes 等数据集上验证了方法的有效性。
-
-**[Resonance: Learning to Predict Social-Aware Pedestrian Trajectories as Co-Vibrations](resonance_learning_to_predict_social_aware_pedestrian_trajectories_as_co_vibrations.md)**
-
-:   提出Resonance模型，受物理共振系统启发，将行人轨迹分解为多个独立"振动"分量以模拟智能体对各单一原因的反应，通过振动叠加预测轨迹，并利用共振现象学习社会交互表示，增强可解释性。
 
 **[RoboTron-Sim: Improving Real-World Driving via Simulated Hard-Case](robotron-sim_improving_real-world_driving_via_simulated_hard-case.md)**
 

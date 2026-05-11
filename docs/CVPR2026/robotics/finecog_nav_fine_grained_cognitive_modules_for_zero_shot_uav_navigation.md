@@ -116,7 +116,7 @@ tags:
 ## 相关论文
 
 - [\[CVPR 2025\] UniGoal: Towards Universal Zero-shot Goal-oriented Navigation](../../CVPR2025/robotics/unigoal_towards_universal_zero-shot_goal-oriented_navigation.md)
-- [\[ECCV 2024\] Prioritized Semantic Learning for Zero-Shot Instance Navigation](../../ECCV2024/robotics/prioritized_semantic_learning_for_zeroshot_instance_navigation.md)
+- [\[ECCV 2024\] Prioritized Semantic Learning for Zero-Shot Instance Navigation](../../ECCV2024/robotics/prioritized_semantic_learning_for_zero-shot_instance_navigation.md)
 - [\[AAAI 2026\] PanoNav: Mapless Zero-Shot Object Navigation with Panoramic Scene Parsing and Dynamic Memory](../../AAAI2026/robotics/panonav_mapless_zero-shot_object_navigation_with_panoramic_scene_parsing_and_dyn.md)
 - [\[CVPR 2026\] DeepSketcher: Internalizing Visual Manipulation for Multimodal Reasoning](deepsketcher_internalizing_visual_manipulation_for_multimodal_reasoning.md)
 - [\[CVPR 2026\] Towards Open Environments and Instructions: General Vision-Language Navigation via Fast-Slow Interactive Reasoning](towards_open_environments_and_instructions_general_vision-language_navigation_vi.md)

@@ -185,7 +185,7 @@ tags:
 - [\[NeurIPS 2025\] Empowering Decision Trees via Shape Function Branching](../../NeurIPS2025/interpretability/empowering_decision_trees_via_shape_function_branching.md)
 - [\[CVPR 2026\] Towards Faithful Multimodal Concept Bottleneck Models](../../CVPR2026/interpretability/towards_faithful_multimodal_concept_bottleneck_models.md)
 - [\[ACL 2026\] From Signal Degradation to Computation Collapse: Uncovering the Two Failure Modes of LLM Quantization](../../ACL2026/interpretability/from_signal_degradation_to_computation_collapse_uncovering_the_two_failure_modes.md)
-- [\[CVPR 2026\] Reallocating Attention Across Layers to Reduce Multimodal Hallucination](../../CVPR2026/interpretability/reallocating_attention_reduce_hallucination.md)
+- [\[CVPR 2026\] Reallocating Attention Across Layers to Reduce Multimodal Hallucination](../../CVPR2026/interpretability/reallocating_attention_across_layers_to_reduce_multimodal_hallucination.md)
 
 </div>
 

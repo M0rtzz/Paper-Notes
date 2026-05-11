@@ -1,18 +1,18 @@
 ---
 title: >-
-  CVPR2026 AI 安全方向24篇论文解读
+  CVPR2026 AI 安全方向22篇论文解读
 description: >-
-  24篇CVPR2026的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、水印/隐写、机器人、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  22篇CVPR2026的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、水印/隐写、机器人、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI 安全
 
-**📷 CVPR2026** · **24** 篇论文解读
+**📷 CVPR2026** · **22** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (2)](../../ACL2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (22)](../../ICCV2025/ai_safety/index.md) · [🧪 ICML2025 (36)](../../ICML2025/ai_safety/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (2)](../../ACL2026/ai_safety/index.md) · [🔬 ICLR2026 (26)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (72)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (21)](../../ICCV2025/ai_safety/index.md) · [🧪 ICML2025 (33)](../../ICML2025/ai_safety/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×12 · 联邦学习 ×10 · 水印/隐写 ×5 · 机器人 ×3 · 多模态 ×3
+🔥 **高频主题：** 对抗鲁棒 ×11 · 联邦学习 ×9 · 水印/隐写 ×4 · 机器人 ×3 · 多模态 ×3
 
 **[A Unified Perspective on Adversarial Membership Manipulation in Vision Models](a_unified_perspective_on_adversarial_membership_manipulation_in_vision_models.md)**
 
@@ -21,10 +21,6 @@ description: >-
 **[All Vehicles Can Lie: Efficient Adversarial Defense in Fully Untrusted-Vehicle Collaborative Perception via Pseudo-Random Bayesian Inference](all_vehicles_can_lie_efficient_adversarial_defense_in_fully_untrusted-vehicle_co.md)**
 
 :   提出 Pseudo-Random Bayesian Inference (PRBI) 框架，在**所有车辆均不可信**的协同感知场景中，利用帧间时序一致性作为自参考信号，通过伪随机分组 + 贝叶斯推断，仅需平均 2.5 次验证/帧即可高效识别并排除恶意车辆，检测精度恢复至攻击前的 79.4%–86.9%。
-
-**[ClusterMark: Towards Robust Watermarking for Autoregressive Image Generators with Visual Token Clustering](clustermark_robust_watermarking_autoregressive_image_generators.md)**
-
-:   提出基于视觉 Token 聚类的水印方法 ClusterMark，通过将相似 Token 分配到同一颜色集（红/绿），大幅提升自回归图像生成模型水印在图像扰动下的鲁棒性，同时保持图像质量和快速验证。
 
 **[ClusterMark: Towards Robust Watermarking for Autoregressive Image Generators with Visual Token Clustering](clustermark_towards_robust_watermarking_for_autoregressive_image_generators_with.md)**
 
@@ -57,10 +53,6 @@ description: >-
 **[Federated Active Learning Under Extreme Non-IID and Global Class Imbalance](federated_active_learning_extreme_noniid.md)**
 
 :   系统分析全局类不平衡与客户端异构性对联邦主动学习中 query model 选择的影响，归纳出3个核心 Observation，据此提出 FairFAL——自适应选择 query model + 原型引导伪标签 + 两阶段不确定性-多样性平衡采样的类公平 FAL 框架，在5个基准数据集上一致超越所有基线。
-
-**[Federated Active Learning Under Extreme Non-IID and Global Class Imbalance](federated_active_learning_under_extreme_non-iid_and_global_class_imbalance.md)**
-
-:   系统研究了联邦主动学习中查询模型选择问题，发现类别平衡采样是性能关键因素，并提出 FairFAL 框架，通过自适应模型选择、原型引导伪标签和不确定性-多样性平衡采样实现公平高效的联邦主动学习。
 
 **[FedRE: A Representation Entanglement Framework for Model-Heterogeneous Federated Learning](fedre_a_representation_entanglement_framework_for_model-heterogeneous_federated_.md)**
 

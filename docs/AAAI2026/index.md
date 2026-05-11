@@ -1,14 +1,14 @@
 ---
 title: >-
-  AAAI2026 1386篇论文解读
+  AAAI2026 1383篇论文解读
 description: >-
-  1386篇AAAI2026论文解读，涵盖医学图像(105篇)、多模态 VLM(92篇)、图像生成(78篇)、3D 视觉(74篇)、强化学习(71篇)、自动驾驶(58篇)、模型压缩(54篇)、AI 安全(44篇)等 44个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1383篇AAAI2026论文解读，涵盖医学图像(105篇)、多模态 VLM(91篇)、图像生成(78篇)、3D 视觉(74篇)、强化学习(71篇)、自动驾驶(58篇)、模型压缩(54篇)、AI 安全(44篇)等 44个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🤖 AAAI2026 论文笔记
 
-1386篇AAAI2026论文解读，涵盖医学图像(105篇)、多模态 VLM(92篇)、图像生成(78篇)、3D 视觉(74篇)、强化学习(71篇)、自动驾驶(58篇)、模型压缩(54篇)、AI 安全(44篇)等 44个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1383篇AAAI2026论文解读，涵盖医学图像(105篇)、多模态 VLM(91篇)、图像生成(78篇)、3D 视觉(74篇)、强化学习(71篇)、自动驾驶(58篇)、模型压缩(54篇)、AI 安全(44篇)等 44个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -643,10 +643,6 @@ description: >-
 **[Panda: Test-Time Adaptation with Negative Data Augmentation](multimodal_vlm/panda_test-time_adaptation_with_negative_data_augmentation.md)**
 
 :   提出 Panda，通过负数据增强（patch 打乱重组）生成保留 corruption 但破坏语义的图像，用其特征偏移原始嵌入以抑制 corruption 引起的预测偏差，以极低开销（<10%）即插即用提升各类 TTA 方法的鲁棒性。
-
-**[PatientVLM Meets DocVLM: Pre-Consultation Dialogue Between Vision-Language Models for Efficient Diagnosis](multimodal_vlm/patientvlm_meets_docvlm_pre-consultation_dialogue_between_vision-language_models.md)**
-
-:   提出Pre-Consultation Dialogue Framework (PCDF)，通过两个VLM（DocVLM和PatientVLM）模拟医生-患者多轮对话，生成image-dialogue-diagnosis三元组用于微调DocVLM，在四个医学影像基准上平均F1提升11.48。
 
 **[PatientVLM Meets DocVLM: Pre-Consultation Dialogue Between Vision-Language Models for Efficient Diagnosis](multimodal_vlm/patientvlm_meets_docvlm_pre-consultation_dialogue_between_vision_language_models.md)**
 
@@ -4344,10 +4340,6 @@ description: >-
 
 :   本文将 Median of Means (MoM) 估计器融入凸聚类框架，提出 COMET 算法，通过随机分箱与中位数聚合实现对噪声和离群点的鲁棒性，同时无需预知簇数 $k$，理论上证明了弱一致性，实验在多个真实数据集上显著超越 k-means、MoM k-means、凸聚类等六种基线方法。
 
-**[Convex Clustering Redefined: Robust Learning with the Median of Means Estimator](optimization/convex_clustering_redefined_robust_learning_with_the_median_of_means_estimator.md)**
-
-:   提出 COMET（Convex Clustering with Median of Means Estimator），将中位数均值（MoM）估计器整合到凸聚类框架中，通过随机分箱、截断距离和 ADAM 优化实现对噪声和异常值的鲁棒聚类，无需预设聚类数量，在理论上证明了弱一致性，在合成和真实数据集上全面超越现有方法。
-
 **[Cost-Minimized Label-Flipping Poisoning Attack to LLM Alignment](optimization/cost-minimized_label-flipping_poisoning_attack_to_llm_alignment.md)**
 
 :   首次从理论上分析了在 RLHF/DPO 对齐过程中，通过翻转偏好标签来引导 LLM 策略走向攻击者目标所需的最小成本，将其形式化为凸优化问题并推导了成本的上下界，进而提出 PCM（Poisoning Cost Minimization）后处理方法，可在保持投毒效果的同时显著减少标签翻转数量。
@@ -4975,10 +4967,6 @@ description: >-
 **[Towards Better Code Understanding in Decoder-Only Models with Contrastive Learning](code_intelligence/towards_better_code_understanding_in_decoder-only_large_language_models_via_hie.md)**
 
 :   提出CL4D对比学习框架，通过继续预训练将decoder-only代码生成模型适配到代码理解任务（代码搜索、克隆检测），在不重新训练encoder模型的前提下实现了与同等规模encoder-only模型相当甚至更优的性能。
-
-**[Towards Better Code Understanding in Decoder-Only Models with Contrastive Learning](code_intelligence/towards_better_code_understanding_in_decoder-only_models_with_contrastive_learni.md)**
-
-:   本文提出CL4D框架，通过对比学习对预训练的decoder-only代码生成模型进行继续预训练，使其能够有效提取代码表示并在代码搜索和克隆检测等理解任务上达到甚至超越同规模encoder-only模型的性能。
 
 **[Why Do Open-Source LLMs Struggle with Data Analysis? A Systematic Empirical Study](code_intelligence/why_do_open-source_llms_struggle_with_data_analysis_a_systematic_empirical_study.md)**
 

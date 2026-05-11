@@ -1,16 +1,16 @@
 ---
 title: >-
-  NeurIPS2025 强化学习方向173篇论文解读
+  NeurIPS2025 强化学习方向172篇论文解读
 description: >-
-  173篇NeurIPS2025的强化学习方向论文解读，涵盖强化学习、Agent、推理、对抗鲁棒、LLM、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  172篇NeurIPS2025的强化学习方向论文解读，涵盖强化学习、Agent、推理、对抗鲁棒、LLM、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎮 强化学习
 
-**🧠 NeurIPS2025** · **173** 篇论文解读
+**🧠 NeurIPS2025** · **172** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/reinforcement_learning/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/reinforcement_learning/index.md) · [🔬 ICLR2026 (142)](../../ICLR2026/reinforcement_learning/index.md) · [🤖 AAAI2026 (71)](../../AAAI2026/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md) · [🧪 ICML2025 (82)](../../ICML2025/reinforcement_learning/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/reinforcement_learning/index.md) · [📷 CVPR2026 (19)](../../CVPR2026/reinforcement_learning/index.md) · [🔬 ICLR2026 (139)](../../ICLR2026/reinforcement_learning/index.md) · [🤖 AAAI2026 (71)](../../AAAI2026/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md) · [🧪 ICML2025 (81)](../../ICML2025/reinforcement_learning/index.md)
 
 🔥 **高频主题：** 强化学习 ×63 · Agent ×16 · 推理 ×12 · 对抗鲁棒 ×11 · LLM ×5
 
@@ -89,10 +89,6 @@ description: >-
 **[Bootstrap Off-policy with World Model (BOOM)](bootstrap_off-policy_with_world_model.md)**
 
 :   提出 BOOM 框架，通过 bootstrap 循环将在线规划器（MPPI）与 off-policy 策略学习紧密结合：策略初始化规划器，规划器反过来通过无似然对齐损失（likelihood-free alignment）引导策略改进，配合 soft Q-weighted 机制优先学习高回报行为，在高维连续控制任务上取得 SOTA。
-
-**[Bootstrap Off-policy with World Model](boundary-to-region_supervision_for_offline_safe_reinforcement_learning.md)**
-
-:   提出 BOOM 框架，通过 bootstrap 对齐回路将在线规划器的高质量动作蒸馏到策略网络，使用 likelihood-free 的前向 KL 散度和软 Q 加权机制，有效缓解规划器与策略之间的 actor divergence 问题，在高维连续控制任务上取得 SOTA。
 
 **[Boundary-to-Region Supervision for Offline Safe Reinforcement Learning](boundary_to_region_supervision_for_offline_safe_rl.md)**
 

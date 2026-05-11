@@ -1,18 +1,18 @@
 ---
 title: >-
-  ACL2025 AIGC 检测方向17篇论文解读
+  ACL2025 AIGC 检测方向15篇论文解读
 description: >-
-  17篇ACL2025的 AIGC 检测方向论文解读，涵盖 LLM、对抗鲁棒、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  15篇ACL2025的 AIGC 检测方向论文解读，涵盖 LLM、对抗鲁棒、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔎 AIGC 检测
 
-**💬 ACL2025** · **17** 篇论文解读
+**💬 ACL2025** · **15** 篇论文解读
 
 📌 **同领域跨会议浏览：** [💬 ACL2026 (9)](../../ACL2026/aigc_detection/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/aigc_detection/index.md) · [🔬 ICLR2026 (6)](../../ICLR2026/aigc_detection/index.md) · [🤖 AAAI2026 (3)](../../AAAI2026/aigc_detection/index.md) · [🧠 NeurIPS2025 (8)](../../NeurIPS2025/aigc_detection/index.md) · [📷 CVPR2025 (3)](../../CVPR2025/aigc_detection/index.md)
 
-🔥 **高频主题：** LLM ×6 · 对抗鲁棒 ×2 · 少样本学习 ×2
+🔥 **高频主题：** LLM ×6 · 对抗鲁棒 ×2
 
 **[A Rose by Any Other Name: LLM-Generated Explanations Are Good Proxies for Human Explanations to Collect Label Distributions on NLI](a_rose_by_any_other_name_llm-generated_explanations_are_good_proxies_for_human_e.md)**
 
@@ -42,10 +42,6 @@ description: >-
 
 :   提出 GREATER 对抗训练框架，同步训练对抗攻击器（Greater-A）和 MGT 检测器（Greater-D），对抗器通过代理模型梯度识别关键 token 并在嵌入空间扰动生成对抗样本，检测器从课程式对抗样本中学习泛化防御，在 16 种攻击下 ASR 降至 5.53%（SOTA 为 6.20%），攻击效率比 SOTA 快 4 倍。
 
-**[HACo-Det: A Study Towards Fine-Grained Machine-Generated Text Detection under Human-AI Coauthoring](haco-det-fine-grained-detection-under-human-ai-coauthoring.md)**
-
-:   本文探索人机协作文本的细粒度检测问题，提出词级标注的 HACo-Det 数据集（通过多轮 LLM 部分释义生成），改造 7 种主流文档级检测器到词/句级别检测，发现基于度量的方法效果差（平均F1仅0.462），微调模型表现更优但仍有大量改进空间。
-
 **[HACo-Det: A Study Towards Fine-Grained Machine-Generated Text Detection under Human-AI Coauthoring](haco-det_a_study_towards_fine-grained_machine-generated_text_detection_under_hum.md)**
 
 :   提出面向人机协作写作场景的细粒度机器生成文本（MGT）检测基准 HACo-Det，通过多轮局部改写流水线自动构建带词级归属标注的 11,200 篇人机共创文本，并将七种主流检测器改造为词级序列标注模式进行系统评估，揭示当前方法在细粒度检测上的巨大改进空间。
@@ -65,10 +61,6 @@ description: >-
 **[Low-Perplexity LLM-Generated Sequences and Where To Find Them](low-perplexity_llm-generated_sequences_and_where_to_find_them.md)**
 
 :   提出系统化 pipeline 分析 LLM 生成的低困惑度序列（token 预测概率 ≥0.9）并追溯到训练数据来源，发现 30-60% 的低困惑度片段无法匹配训练数据，将可匹配片段分为四种记忆行为类别。
-
-**[Reliably Bounding False Positives: A Zero-Shot Machine-Generated Text Detection Framework via Multiscaled Conformal Prediction](mcp-zero-shot-mgt-detection-via-conformal-prediction.md)**
-
-:   本文提出 MCP 框架，首次将保形预测（Conformal Prediction）引入机器生成文本检测，通过多尺度分位数阈值在约束假阳性率上界的同时提升检测性能，并构建了覆盖15个领域22个LLM的大规模双语基准 RealDet。
 
 **[MultiSocial: Multilingual Benchmark of Machine-Generated Text Detection of Social-Media Texts](multisocial_mgt_detection.md)**
 

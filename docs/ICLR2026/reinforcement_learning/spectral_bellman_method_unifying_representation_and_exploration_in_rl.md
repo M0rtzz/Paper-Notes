@@ -162,7 +162,7 @@ $\tilde{\theta}(\theta)$ 实现为残差网络：$\tilde{\theta}(\theta) = \thet
 ## 相关论文
 
 - [\[ICLR 2026\] A Unifying View of Coverage in Linear Off-Policy Evaluation](a_unifying_view_of_coverage_in_linear_off-policy_evaluation.md)
-- [\[ICML 2025\] Gradual Transition from Bellman Optimality Operator to Bellman Operator in Online RL](../../ICML2025/reinforcement_learning/gradual_transition_from_bellman_optimality_operator_to_bellman_operator_in.md)
+- [\[ICML 2025\] Gradual Transition from Bellman Optimality Operator to Bellman Operator in Online RL](../../ICML2025/reinforcement_learning/gradual_transition_from_bellman_optimality_operator_to_bellman_operator_in_onlin.md)
 - [\[ICLR 2026\] Sample-efficient and Scalable Exploration in Continuous-Time RL](sample-efficient_and_scalable_exploration_in_continuous-time_rl.md)
 - [\[ICLR 2026\] Controllable Exploration in Hybrid-Policy RLVR for Multi-Modal Reasoning](controllable_exploration_in_hybrid-policy_rlvr_for_multi-modal_reasoning.md)
 - [\[AAAI 2026\] First-Order Representation Languages for Goal-Conditioned RL](../../AAAI2026/reinforcement_learning/first-order_representation_languages_for_goal-conditioned_rl.md)

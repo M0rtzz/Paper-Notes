@@ -178,7 +178,7 @@ $$\hat{\mathbf{A}} = \text{Softmax}\left(\frac{\mathbf{QK}^T}{\sqrt{d}} + \mathb
 ## 相关论文
 
 - [\[AAAI 2026\] Heterogeneous Uncertainty-Guided Composed Image Retrieval with Fine-Grained Probabilistic Learning](heterogeneous_uncertainty-guided_composed_image_retrieval_with_fine-grained_prob.md)
-- [\[CVPR 2026\] ReasonMap: Towards Fine-Grained Visual Reasoning from Transit Maps](../../CVPR2026/multimodal_vlm/reasonmap_towards_finegrained_visual_reasoning_fro.md)
+- [\[CVPR 2026\] ReasonMap: Towards Fine-Grained Visual Reasoning from Transit Maps](../../CVPR2026/multimodal_vlm/reasonmap_towards_fine-grained_visual_reasoning_from_transit_maps.md)
 - [\[CVPR 2026\] MA-Bench: Towards Fine-grained Micro-Action Understanding](../../CVPR2026/multimodal_vlm/ma-bench_towards_fine-grained_micro-action_understanding.md)
 - [\[CVPR 2026\] FINER: MLLMs Hallucinate under Fine-grained Negative Queries](../../CVPR2026/multimodal_vlm/finer_mllms_hallucinate_under_fine-grained_negative_queries.md)
 - [\[CVPR 2026\] CropVLM: Learning to Zoom for Fine-Grained Vision-Language Perception](../../CVPR2026/multimodal_vlm/cropvlm_learning_to_zoom_for_fine_grained_vision_language_perception.md)

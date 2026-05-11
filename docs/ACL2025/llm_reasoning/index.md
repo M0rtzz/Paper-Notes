@@ -1,18 +1,18 @@
 ---
 title: >-
-  ACL2025 LLM 推理方向57篇论文解读
+  ACL2025 LLM 推理方向54篇论文解读
 description: >-
-  57篇ACL2025的 LLM 推理方向论文解读，涵盖推理、LLM、问答、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  54篇ACL2025的 LLM 推理方向论文解读，涵盖推理、LLM、问答、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💡 LLM 推理
 
-**💬 ACL2025** · **57** 篇论文解读
+**💬 ACL2025** · **54** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (37)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (71)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (67)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (37)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (12)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (65)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (66)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
 
-🔥 **高频主题：** 推理 ×44 · LLM ×12 · 问答 ×2 · 多模态 ×2
+🔥 **高频主题：** 推理 ×41 · LLM ×11 · 问答 ×2 · 多模态 ×2
 
 **[An Efficient and Precise Training Data Construction Framework for Process-Supervised Reward Model in Mathematical Reasoning](an_efficient_and_precise_training_data_construction_framework_for_process-superv.md)**
 
@@ -33,10 +33,6 @@ description: >-
 **[Can Large Language Models Detect Errors in Long Chain-of-Thought Reasoning?](can_large_language_models_detect_errors_in_long_chain-of-thought_reasoning.md)**
 
 :   本文提出DeltaBench——首个系统评估o1类模型长CoT推理质量和现有LLM/PRM错误检测能力的基准数据集，通过对1,236个样本的精细人工标注，揭示了o1类模型约27%推理冗余、67.8%反思无效，以及最强critic模型GPT-4-turbo-128k也仅达F1=40.8%的令人警醒的现状。
-
-**[Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models](chain-of-reasoning_towards_unified_mathematical_reasoning_in_large_language_mode.md)**
-
-:   提出Chain-of-Reasoning（CoR）统一框架，将自然语言推理(NLR)、算法推理(AR)和符号推理(SR)三种范式整合在同一推理链中协同工作，配合渐进式范式训练(PPT)策略，使7B模型在定理证明上零样本超越GPT-4o 41%，在MATH上超越RL方法15%。
 
 **[Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models via a Multi-Paradigm Perspective](chain_of_reasoning_unified_math.md)**
 
@@ -110,10 +106,6 @@ description: >-
 
 :   提出 Entro-duction 方法，通过监控 LLM 推理过程中输出的熵和方差熵变化来动态调整探索深度，使用 $\epsilon$-greedy 策略选择加深、扩展或停止三种探索行为，在避免冗余推理的同时提升推理准确率。
 
-**[EpicPRM: An Efficient and Precise Training Data Construction Framework for Process-supervised Reward Model in Mathematical Reasoning](epicprm-efficient-precise-training-data-for-process-reward-model.md)**
-
-:   本文提出 EpicPRM 框架，通过基于困惑度的贡献量化和自适应二分搜索算法，高效精确地构建高质量过程监督训练数据集 Epic50k，其训练的 PRM 以不到 PRM800k 10% 的数据量达到了相当甚至更好的监督性能。
-
 **[FineReason: Evaluating and Improving LLMs' Deliberate Reasoning through Reflective Puzzle Solving](finereason_evaluating_and_improving_llms_deliberate_reasoning_through_reflective.md)**
 
 :   提出 FineReason——一个基于逻辑谜题的推理基准，通过"状态检查"（判断当前状态是否可解）和"状态转换"（决定下一步操作）两个任务，对LLM的审慎推理能力（反思、回溯、纠错）进行原子级粒度评估，并证明在谜题数据上的训练可迁移提升数学推理能力（GSM8K 提升 5.1%）。
@@ -165,10 +157,6 @@ description: >-
 **[PCoT: Persuasion-Augmented Chain of Thought for Detecting Fake News and Social Media Disinformation](pcot_persuasion-augmented_chain_of_thought_for_detecting_fake_news_and_social_me.md)**
 
 :   将心理学中"学会识别说服技巧可提升真伪判断力"的发现迁移到 LLM，提出两阶段零样本 PCoT 方法：第一阶段识别并分析六类说服策略，第二阶段将分析上下文融入虚假信息检测，在 5 个 LLM × 5 数据集上 F1 平均提升 15%。
-
-**[PCoT: Persuasion-Augmented Chain of Thought for Detecting Fake News and Social Media Disinformation](pcot_persuasion_chain_of_thought_fake_news.md)**
-
-:   提出 PCoT（说服增强的思维链）方法，通过两阶段推理——先让 LLM 分析文本中的说服策略，再结合说服分析结果判断是否为虚假信息——在零样本设置下，5 个 LLM 和 5 个数据集上平均提升 15% 的检测 F1。
 
 **[ProcessBench: Identifying Process Errors in Mathematical Reasoning](processbench_identifying_process_errors_in_mathematical_reasoning.md)**
 

@@ -126,7 +126,7 @@ DoPL 在六个视觉识别基准上均超越了此前最好的参数高效微调
 
 ## 相关论文
 
-- [\[ECCV 2024\] Quantized Prompt for Efficient Generalization of Vision-Language Models](../../ECCV2024/multimodal_vlm/quantized_prompt_for_efficient_generalization_of_visionlangu.md)
+- [\[ECCV 2024\] Quantized Prompt for Efficient Generalization of Vision-Language Models](../../ECCV2024/multimodal_vlm/quantized_prompt_for_efficient_generalization_of_vision-language_models.md)
 - [\[ACL 2025\] FIHA: Autonomous Fine-grained Hallucination Evaluation in Vision-Language Models with Davidson Scene Graphs](fiha_autonomous_hallucination_evaluation_in_vision-language_models_with_davidson.md)
 - [\[CVPR 2026\] FairLLaVA: Fairness-Aware Parameter-Efficient Fine-Tuning for Large Vision-Language Models](../../CVPR2026/multimodal_vlm/fairllava_fairness-aware_parameter-efficient_fine-tuning_for_large_vision-langua.md)
 - [\[ICCV 2025\] Fine-Grained Evaluation of Large Vision-Language Models in Autonomous Driving](../../ICCV2025/multimodal_vlm/fine-grained_evaluation_of_large_vision-language_models_in_autonomous_driving.md)

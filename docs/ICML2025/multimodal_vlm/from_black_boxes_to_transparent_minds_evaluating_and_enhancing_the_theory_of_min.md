@@ -169,7 +169,7 @@ $$T_{l+1} = T_l + \sum_{h=1}^{H} \left(Attn_l^h(P_l^h T_l) + \alpha \sigma_l^h \
 ## 相关论文
 
 - [\[CVPR 2026\] Video-Only ToM: Enhancing Theory of Mind in Multimodal Large Language Models](../../CVPR2026/multimodal_vlm/video-only_tom_enhancing_theory_of_mind_in_multimodal_large_language_models.md)
-- [\[ICML 2025\] Overcoming Multi-step Complexity in Multimodal Theory-of-Mind Reasoning: A Scalable Bayesian Planner](overcoming_multi-step_complexity_in_multimodal_theory-of-mind_reasoning.md)
+- [\[ICML 2025\] Overcoming Multi-step Complexity in Multimodal Theory-of-Mind Reasoning: A Scalable Bayesian Planner](overcoming_multi-step_complexity_in_multimodal_theory-of-mind_reasoning_a_scalab.md)
 - [\[ICML 2025\] ERL-VLM: Enhancing Rating-Based RL to Leverage Feedback from Large VLMs](enhancing_rating-based_reinforcement_learning_to_effectively_leverage_feedback_f.md)
 - [\[ICML 2025\] Look Twice Before You Answer: Memory-Space Visual Retracing for Hallucination Mitigation in Multimodal Large Language Models](look_twice_before_you_answer_memory-space_visual_retracing_for_hallucination_mit.md)
 - [\[ICML 2025\] Parrot: Multilingual Visual Instruction Tuning](parrot_multilingual_visual_instruction_tuning.md)

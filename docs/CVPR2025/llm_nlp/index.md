@@ -1,18 +1,18 @@
 ---
 title: >-
-  CVPR2025 LLM / NLP方向21篇论文解读
+  CVPR2025 LLM / NLP方向20篇论文解读
 description: >-
-  21篇CVPR2025的 LLM / NLP 方向论文解读，涵盖对抗鲁棒、对齐/RLHF、对话系统、文本摘要、水印/隐写、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  20篇CVPR2025的 LLM / NLP 方向论文解读，涵盖对抗鲁棒、对齐/RLHF、对话系统、文本摘要、水印/隐写、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 LLM / NLP
 
-**📷 CVPR2025** · **21** 篇论文解读
+**📷 CVPR2025** · **20** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (36)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (46)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (53)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (36)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (53)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/llm_nlp/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×3
+🔥 **高频主题：** 对抗鲁棒 ×2
 
 **[ArtFormer: Controllable Generation of Diverse 3D Articulated Objects](artformer_controllable_generation_of_diverse_3d_articulated_objects.md)**
 
@@ -33,10 +33,6 @@ description: >-
 **[ComRoPE: Scalable and Robust Rotary Position Embedding Parameterized by Trainable Commuting Angle Matrices](comrope_rotary_position.md)**
 
 :   本文提出ComRoPE，通过将RoPE推广为由可训练交换角矩阵参数化的旋转位置编码，理论证明了角矩阵的成对交换性是RoPE满足相对位置依赖性的充要条件，在ImageNet-1K上比SOTA方法LieRE提升1.6%（训练分辨率）和2.9%（更高分辨率）。
-
-**[ComRoPE: Scalable and Robust Rotary Position Embedding Parameterized by Trainable Commuting Angle Matrices](comrope_scalable_and_robust_rotary_position_embedding_parameterized_by_trainable.md)**
-
-:   ComRoPE将RoPE从固定的2D旋转矩阵推广到SO(n)群的更大子群，证明交换性是保持相对位置鲁棒性的充要条件，提出AP和LD两种可训练参数化方案，在ImageNet分类（+1.6%）、COCO检测（+0.2 AP）上均优于LieRE。
 
 **[Dense Match Summarization for Faster Two-view Estimation](dense_match_summarization_for_faster_two-view_estimation.md)**
 

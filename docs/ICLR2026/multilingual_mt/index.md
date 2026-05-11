@@ -1,24 +1,20 @@
 ---
 title: >-
-  ICLR2026 多语言/翻译方向7篇论文解读
+  ICLR2026 多语言/翻译方向5篇论文解读
 description: >-
-  7篇ICLR2026的多语言/翻译方向论文解读，收录 ASSESS、ASSESS、ATLAS等。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  5篇ICLR2026的多语言/翻译方向论文解读，收录 ASSESS、ATLAS、Multilingual Routing in Mixtur等。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🌐 多语言/翻译
 
-**🔬 ICLR2026** · **7** 篇论文解读
+**🔬 ICLR2026** · **5** 篇论文解读
 
 📌 **同领域跨会议浏览：** [💬 ACL2026 (23)](../../ACL2026/multilingual_mt/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/multilingual_mt/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/multilingual_mt/index.md) · [🧠 NeurIPS2025 (13)](../../NeurIPS2025/multilingual_mt/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/multilingual_mt/index.md) · [🧪 ICML2025 (1)](../../ICML2025/multilingual_mt/index.md)
 
 **[ASSESS: A Semantic and Structural Evaluation Framework for Statement Similarity](assess_a_semantic_and_structural_evaluation_framework_for_statement_similarity.md)**
 
 :   提出 ASSESS 框架，其核心是 TransTED Similarity 指标——通过将形式化数学命题解析为算子树 (Operator Tree)，并在标准树编辑距离 (TED) 基础上融入 Lean 证明策略驱动的语义变换，实现了在 EPLA 基准上 70.16% 准确率和 0.35 Kappa 分数的 SOTA 性能，同时仅需 CPU 资源即可复现。
-
-**[ASSESS: A Semantic and Structural Evaluation Framework for Statement Similarity](assess_autoformalization_eval.md)**
-
-:   本文提出 ASSESS 框架和 TransTED Similarity 指标，通过将形式语句解析为操作符树并在树编辑距离中融入语义变换，实现了自动形式化语句相似度的 SOTA 评估（70.16% 准确率、0.35 Kappa），并发布了包含 1247 对专家标注的 EPLA 基准。
 
 **[ATLAS: Adaptive Transfer Scaling Laws for Multilingual Pretraining, Finetuning, and Decoding the Curse of Multilinguality](atlas_adaptive_transfer_scaling_laws_for_multilingual_pretraining_finetuning_and.md)**
 
@@ -27,10 +23,6 @@ description: >-
 **[Multilingual Routing in Mixture-of-Experts](multilingual_routing_in_mixture-of-experts.md)**
 
 :   系统分析了MoE大语言模型中多语言路由模式，发现中间层存在跨语言共享专家且语言性能与英语路由对齐度强相关，进而提出推理时路由干预方法，通过在中间层激活英语任务专家，在3个模型×2个任务×15+语言上一致性地提升多语言性能1-2%。
-
-**[Prior-based Noisy Text Data Filtering: Fast and Strong Alternative For Perplexity](prior-based_noisy_text_data_filtering_fast_and_strong_alternative_for_perplexity.md)**
-
-:   提出基于 token 词频先验（term frequency）的文本数据过滤方法，通过计算文档中 token 先验的均值和标准差来检测异常文档，实现了比 PPL 过滤快 1000× 以上且下游性能更优的数据清洗效果。
 
 **[Prior-based Noisy Text Data Filtering: Fast and Strong Alternative for Perplexity](prior-based_noisy_text_data_filtering_fast_and_strong_alternative_to_perplexity.md)**
 

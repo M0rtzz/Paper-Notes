@@ -1,18 +1,18 @@
 ---
 title: >-
-  ICLR2026 LLM 安全方向39篇论文解读
+  ICLR2026 LLM 安全方向36篇论文解读
 description: >-
-  39篇ICLR2026的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、联邦学习、推理、水印/隐写等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  36篇ICLR2026的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、联邦学习、推理、水印/隐写等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # � LLM 安全
 
-**🔬 ICLR2026** · **39** 篇论文解读
+**🔬 ICLR2026** · **36** 篇论文解读
 
 📌 **同领域跨会议浏览：** [💬 ACL2026 (21)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/llm_safety/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (60)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/llm_safety/index.md) · [🧪 ICML2025 (32)](../../ICML2025/llm_safety/index.md)
 
-🔥 **高频主题：** LLM ×9 · 对抗鲁棒 ×8 · 联邦学习 ×4 · 推理 ×2 · 水印/隐写 ×2
+🔥 **高频主题：** LLM ×8 · 对抗鲁棒 ×7 · 联邦学习 ×4 · 推理 ×2 · 水印/隐写 ×2
 
 **[Attention Smoothing Is All You Need For Unlearning](attention_smoothing_is_all_you_need_for_unlearning.md)**
 
@@ -118,10 +118,6 @@ description: >-
 
 :   提出首个基于安全多方计算（MPC）的隐私保护提示调优框架 SecP-Tuning，通过前向调优消除反向传播开销、通过隐私保护随机特征注意力（RFA）替代 softmax 降低通信复杂度，实现约 12-16 倍加速和 17-20 倍通信量缩减。
 
-**[SecP-Tuning: Efficient Privacy-Preserving Prompt Tuning for Large Language Models via MPC](secp-tuning_efficient_privacy-preserving_prompt_tuning_for_large_language_models.md)**
-
-:   提出SecP-Tuning，首个基于安全多方计算（MPC）的LLM隐私保护提示调优框架，通过前向调优消除反向传播开销，并设计隐私保护随机特征注意力替代softmax注意力，实现12-16倍加速和17-20倍通信量降低。
-
 **[Self-Destructive Language Model](self-destructive_language_model.md)**
 
 :   提出 Seam，通过耦合良性和有害数据的优化轨迹（使梯度方向相反），将 LLM 转变为"自毁模型"——在有害微调时自动触发灾难性性能崩溃，创造攻击者的两难困境：低强度攻击无效，高强度攻击导致模型报废。
@@ -146,10 +142,6 @@ description: >-
 
 :   首次从对抗鲁棒性角度分析 Differential Attention（DA）机制，揭示其减法结构在抑制噪声的同时会通过负梯度对齐放大对抗扰动敏感度，发现"脆弱性原理"——DA 在干净样本上提升判别力但在对抗攻击下更脆弱，且存在深度依赖的鲁棒性交叉效应。
 
-**[Understanding Sensitivity of Differential Attention through the Lens of Adversarial Robustness](understanding_sensitivity_of_differential_attention_through_the_lens_of_softmax_.md)**
-
-:   首次从对抗鲁棒性角度分析 Differential Attention (DA) 的结构性脆弱：DA 的减法结构在抑制噪声的同时，由于负梯度对齐会放大对抗扰动敏感性，揭示了选择性与鲁棒性之间的根本权衡。
-
 **[Unlearning Evaluation through Subset Statistical Independence](unlearning_evaluation_through_subset_statistical_independence.md)**
 
 :   提出 Split-half Dependence Evaluation (SDE)，利用 HSIC 统计独立性检验在子集级别评估机器遗忘效果，无需重训模型或辅助分类器。
@@ -161,10 +153,6 @@ description: >-
 **[Veritas: Generalizable Deepfake Detection via Pattern-Aware Reasoning](veritas_generalizable_deepfake_detection_via_pattern-aware_reasoning.md)**
 
 :   提出 Veritas，一个基于多模态大语言模型 (MLLM) 的 deepfake 检测器，通过模式感知推理 (pattern-aware reasoning) 模拟人类鉴伪思维过程（快速判断→推理→计划→自我反思→结论），设计两阶段训练流程（SFT+MiPO 冷启动 + P-GRPO 强化学习），同时构建包含四级 OOD 评估的 HydraFake 数据集，在跨伪造类型和跨域场景平均达到 90.7% 准确率，超越此前 SOTA 6.0%。
-
-**[VeriTrail: Closed-Domain Hallucination Detection with Traceability](veritrail_closed-domain_hallucination_detection_with_traceability.md)**
-
-:   提出 VeriTrail，首个面向多步生成（MGS）过程的闭域幻觉检测方法，通过将生成过程建模为 DAG 并沿图逐层验证 claim，实现了幻觉检测+溯源（provenance）+错误定位（error localization）的完整可追溯性，在两个新数据集上显著优于所有基线。
 
 **[VeriTrail: Closed-Domain Hallucination Detection with Traceability](veritrail_closed-domain_hallucination_detection_with_traceable_evidence_synthes.md)**
 

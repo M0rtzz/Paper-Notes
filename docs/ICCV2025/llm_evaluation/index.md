@@ -1,26 +1,22 @@
 ---
 title: >-
-  ICCV2025 LLM 评测方向29篇论文解读
+  ICCV2025 LLM 评测方向27篇论文解读
 description: >-
-  29篇ICCV2025的 LLM 评测方向论文解读，涵盖少样本学习、布局/合成、推理、扩散模型、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  27篇ICCV2025的 LLM 评测方向论文解读，涵盖少样本学习、推理、布局/合成、扩散模型、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📊 LLM 评测
 
-**📹 ICCV2025** · **29** 篇论文解读
+**📹 ICCV2025** · **27** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/llm_evaluation/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/llm_evaluation/index.md) · [🔬 ICLR2026 (60)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (39)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (79)](../../NeurIPS2025/llm_evaluation/index.md) · [🧪 ICML2025 (49)](../../ICML2025/llm_evaluation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/llm_evaluation/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_evaluation/index.md) · [🔬 ICLR2026 (56)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (39)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (79)](../../NeurIPS2025/llm_evaluation/index.md) · [🧪 ICML2025 (49)](../../ICML2025/llm_evaluation/index.md)
 
-🔥 **高频主题：** 少样本学习 ×4 · 布局/合成 ×3 · 推理 ×2 · 扩散模型 ×2 · 对抗鲁棒 ×2
+🔥 **高频主题：** 少样本学习 ×3 · 推理 ×2 · 布局/合成 ×2 · 扩散模型 ×2 · 对抗鲁棒 ×2
 
 **[3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark](3dsrbench_a_comprehensive_3d_spatial_reasoning_benchmark.md)**
 
 :   提出首个全面的3D空间推理基准3DSRBench，包含2,772个人工标注的VQA对（12种问题类型），通过平衡数据分布和新型FlipEval策略实现鲁棒评估，揭示SOTA LMM（包括GPT-4o、Gemini）在3D空间推理上远落后于人类水平（≈52% vs 95.7%），且在非常规视角下性能显著退化。
-
-**[A Conditional Probability Framework for Compositional Zero-shot Learning](a_conditional_probability_framework_for_compositional_zero-shot_learning.md)**
-
-:   本文提出条件概率框架CPF，将组合零样本学习中的组合似然分解为物体似然和条件属性似然，通过文本增强的物体学习和物体引导的属性学习模块显式建模属性-物体的语义约束和上下文依赖，在UT-Zappos50K上AUC提升17.9%，在MIT-States上Unseen Accuracy提升5.5%。
 
 **[A Conditional Probability Framework for Compositional Zero-shot Learning](a_conditional_probability_framework_for_compositional_zerosh.md)**
 
@@ -29,10 +25,6 @@ description: >-
 **[A Real-world Display Inverse Rendering Dataset](a_real-world_display_inverse_rendering_dataset.md)**
 
 :   本文构建了首个基于LCD显示器-相机系统的真实世界逆渲染数据集，包含16个不同材质物体在OLAT照明模式下的立体偏振图像及高精度几何真值，并提出了一个简单有效的显示器逆渲染基线方法，超越了现有逆渲染方法。
-
-**[A Real-world Display Inverse Rendering Dataset](a_realworld_display_inverse_rendering_dataset.md)**
-
-:   本文构建了首个基于LCD显示器-偏振相机系统的真实世界逆渲染数据集（DIR），包含多种反射特性物体在OLAT照明下的偏振立体图像、标定的显示器背光/非线性和高质量GT几何，并提出了显示器逆渲染的简单有效基线方法。
 
 **[BATCLIP: Bimodal Online Test-Time Adaptation for CLIP](batclip_bimodal_online_test-time_adaptation_for_clip.md)**
 

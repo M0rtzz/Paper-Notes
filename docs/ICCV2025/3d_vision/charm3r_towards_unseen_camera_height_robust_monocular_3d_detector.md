@@ -140,7 +140,7 @@ DEVIANT骨干同样有效：ΔH=+0.76m时AP3D_70从6.25升至26.24。
 
 ## 相关论文
 
-- [\[ICCV 2025\] Boost 3D Reconstruction using Diffusion-based Monocular Camera Calibration](boost_3d_reconstruction_using_diffusionbased_monocular_camer.md)
+- [\[ICCV 2025\] Boost 3D Reconstruction using Diffusion-based Monocular Camera Calibration](boost_3d_reconstruction_using_diffusion-based_monocular_camera_calibration.md)
 - [\[CVPR 2025\] RDD: Robust Feature Detector and Descriptor Using Deformable Transformer](../../CVPR2025/3d_vision/rdd_robust_feature_detector_and_descriptor_using_deformable_transformer.md)
 - [\[ECCV 2024\] Camera Height Doesn't Change: Unsupervised Training for Metric Monocular Road-Scene Depth Estimation](../../ECCV2024/3d_vision/camera_height_doesnapost_change_unsupervised_training_for_metric_monocular_road-.md)
 - [\[CVPR 2025\] UniK3D: Universal Camera Monocular 3D Estimation](../../CVPR2025/3d_vision/unik3d_universal_camera_monocular_3d_estimation.md)

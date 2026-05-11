@@ -10,7 +10,7 @@ description: >-
 
 **🔬 ICLR2026** · **6** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (9)](../../ACL2026/aigc_detection/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/aigc_detection/index.md) · [🤖 AAAI2026 (3)](../../AAAI2026/aigc_detection/index.md) · [🧠 NeurIPS2025 (8)](../../NeurIPS2025/aigc_detection/index.md) · [💬 ACL2025 (17)](../../ACL2025/aigc_detection/index.md) · [📷 CVPR2025 (3)](../../CVPR2025/aigc_detection/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (9)](../../ACL2026/aigc_detection/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/aigc_detection/index.md) · [🤖 AAAI2026 (3)](../../AAAI2026/aigc_detection/index.md) · [🧠 NeurIPS2025 (8)](../../NeurIPS2025/aigc_detection/index.md) · [💬 ACL2025 (15)](../../ACL2025/aigc_detection/index.md) · [📷 CVPR2025 (3)](../../CVPR2025/aigc_detection/index.md)
 
 **[Calibrating Verbalized Confidence with Self-Generated Distractors](calibrating_verbalized_confidence_with_self-generated_distractors.md)**
 

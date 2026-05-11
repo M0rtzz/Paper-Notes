@@ -1,18 +1,18 @@
 ---
 title: >-
-  NeurIPS2025 视频理解方向61篇论文解读
+  NeurIPS2025 视频理解方向58篇论文解读
 description: >-
-  61篇NeurIPS2025的视频理解方向论文解读，涵盖目标跟踪、推理、问答、对抗鲁棒、LLM、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  58篇NeurIPS2025的视频理解方向论文解读，涵盖目标跟踪、推理、对抗鲁棒、问答、LLM、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📹 视频理解
 
-**🧠 NeurIPS2025** · **61** 篇论文解读
+**🧠 NeurIPS2025** · **58** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/video_understanding/index.md) · [📷 CVPR2026 (92)](../../CVPR2026/video_understanding/index.md) · [🔬 ICLR2026 (24)](../../ICLR2026/video_understanding/index.md) · [🤖 AAAI2026 (33)](../../AAAI2026/video_understanding/index.md) · [📹 ICCV2025 (58)](../../ICCV2025/video_understanding/index.md) · [🧪 ICML2025 (7)](../../ICML2025/video_understanding/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/video_understanding/index.md) · [📷 CVPR2026 (77)](../../CVPR2026/video_understanding/index.md) · [🔬 ICLR2026 (24)](../../ICLR2026/video_understanding/index.md) · [🤖 AAAI2026 (33)](../../AAAI2026/video_understanding/index.md) · [📹 ICCV2025 (57)](../../ICCV2025/video_understanding/index.md) · [🧪 ICML2025 (7)](../../ICML2025/video_understanding/index.md)
 
-🔥 **高频主题：** 目标跟踪 ×11 · 推理 ×6 · 问答 ×4 · 对抗鲁棒 ×3 · LLM ×3
+🔥 **高频主题：** 目标跟踪 ×11 · 推理 ×5 · 对抗鲁棒 ×3 · 问答 ×3 · LLM ×3
 
 **[A Little Depth Goes a Long Way: The Expressive Power of Log-Depth Transformers](a_little_depth_goes_a_long_way_the_expressive_power_of_logde.md)**
 
@@ -69,10 +69,6 @@ description: >-
 **[EgoGazeVQA: Egocentric Gaze-Guided Video Question Answering Benchmark](egogazevqa_egocentric_gaze_guided_video_question_answering.md)**
 
 :   提出 EgoGazeVQA，首个融合用户眼动注视数据的第一人称视频问答基准，通过注视引导的提示策略（文本/视觉/显著性图）显著提升 MLLM 对用户意图的理解能力，Gaze Salience Map 策略最高可将 MiniCPM-o 的准确率从35.9%提升至53.7%。
-
-**[Empower Words: DualGround for Structured Phrase and Sentence-Level Temporal Grounding](empower_words_dualground_for_structured_phrase_and_sentencel.md)**
-
-:   DualGround揭示现有VTG模型过度依赖[EOS] token的全局语义而忽略词级信号的问题，提出句子级+短语级双路径架构，通过自适应交叉注意力和循环短语生成器分别建模全局和局部语义，在QVHighlights和Charades-STA上达到SOTA。
 
 **[Enhancing Temporal Understanding in Video-LLMs through Stacked Temporal Attention in Vision Encoders](enhancing_temporal_understanding_in_videollms_through_stacke.md)**
 
@@ -178,10 +174,6 @@ description: >-
 
 :   发布首个同步多模态野生动物监测数据集SmartWilds，整合无人机影像、相机陷阱和生物声学三种模态共101GB数据，通过GPS/时间戳实现跨模态对齐，建立可重复的保护监测标准协议，填补综合性生态系统多传感器融合数据集的空白。
 
-**[Tool-Augmented Spatiotemporal Reasoning for Streamlining Video Question Answering Task](star_tool_video_qa.md)**
-
-:   本文提出 STAR 框架，通过构建包含 22 个工具的视频分析工具箱，让 LLM 交替调用时间和空间工具渐进式定位视频中的 3D 关注区域（3D RoI），在 VideoMME 上提升 8.2%、LongVideoBench 上提升 4.6%。
-
 **[Steering When Necessary: Flexible Steering Large Language Models with Backtracking](steering_when_necessary_flexible_steering_large_language_models_with_backtrackin.md)**
 
 :   提出 FASB（Flexible Activation Steering with Backtracking）框架，通过跟踪 LLM 生成过程中的内部状态动态判断干预必要性和强度，并引入回溯机制纠正已偏离的 token，在 TruthfulQA 上 True*Info 达 80.56%、6 个多选任务平均准确率 78.8%，显著优于所有基线。
@@ -193,10 +185,6 @@ description: >-
 **[TAPVid-360: Tracking Any Point in 360 from Narrow Field of View Video](tapvid-360_tracking_any_point_in_360_from_narrow_field_of_view_video.md)**
 
 :   本文提出TAPVid-360任务和数据集，要求模型在窄视野视频中跟踪查询点的3D方向（包括视野外的点），通过利用360度视频生成训练数据并微调CoTracker3实现方向预测，在视野外跟踪上远超现有方法。
-
-**[TempSamp-R1: Effective Temporal Sampling with Reinforcement Fine-Tuning for Video LLMs](tempsamp_r1_temporal_grounding.md)**
-
-:   本文提出 TempSamp-R1，一个混合策略强化微调框架，通过将高质量离策略（ground truth）引导融入 GRPO 的在策略采样，并设计非线性软优势估计稳定训练，在视频时间定位任务上实现 SOTA（Charades-STA R1@0.7: 52.9%，ActivityNet R1@0.5: 56.0%）。
 
 **[TempSamp-R1: Effective Temporal Sampling with Reinforcement Fine-Tuning for Video LLMs](tempsampr1_effective_temporal_sampling_with_reinforcement_fi.md)**
 

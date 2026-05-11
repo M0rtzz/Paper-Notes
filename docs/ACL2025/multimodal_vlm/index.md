@@ -1,18 +1,18 @@
 ---
 title: >-
-  ACL2025 多模态 VLM方向140篇论文解读
+  ACL2025 多模态 VLM方向132篇论文解读
 description: >-
-  140篇ACL2025的多模态 VLM 方向论文解读，涵盖多模态、LLM、推理、对抗鲁棒、对齐/RLHF、对话系统等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  132篇ACL2025的多模态 VLM 方向论文解读，涵盖多模态、LLM、推理、对抗鲁棒、对齐/RLHF、对话系统等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**💬 ACL2025** · **140** 篇论文解读
+**💬 ACL2025** · **132** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (50)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (288)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (93)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (92)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (155)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (159)](../../ICCV2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (50)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (241)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (91)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (154)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (151)](../../ICCV2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×115 · LLM ×19 · 推理 ×19 · 对抗鲁棒 ×6 · 对齐/RLHF ×5
+🔥 **高频主题：** 多模态 ×109 · LLM ×18 · 推理 ×17 · 对抗鲁棒 ×5 · 对齐/RLHF ×5
 
 **[A Parameter-Efficient and Fine-Grained Prompt Learning for Vision-Language Models](a_parameter-efficient_and_fine-grained_prompt_learning_for_vision-language_model.md)**
 
@@ -130,10 +130,6 @@ description: >-
 
 :   首次系统探索 MLLM 中常识级别的视觉-知识冲突问题，提出自动化框架构建 ConflictVis 基准（374 图 + 1122 QA），发现 MLLM 在约 20% 的冲突场景中过度依赖参数化知识（尤其是 Yes-No 和动作类问题），并提出 Focus-on-Vision 提示策略进行缓解。
 
-**[CORDIAL: Can Multimodal Large Language Models Effectively Understand Coherence Relationships?](cordial-multimodal-llm-coherence-relationships.md)**
-
-:   本文提出 CORDIAL 基准，评估多模态大语言模型在多模态话语分析中理解连贯关系（Coherence Relations）的能力，发现即使顶级模型如 Gemini 1.5 Pro 和 GPT-4o 也无法匹配简单 CLIP 分类器的表现，尤其在语用类关系上差距显著。
-
 **[CORDIAL: Can Multimodal Large Language Models Effectively Understand Coherence Relations?](cordial_can_multimodal_large_language_models_effectively_understand_coherence_re.md)**
 
 :   本文提出CORDIAL，首个用连贯关系（Coherence Relations）评估MLLM多模态话语分析能力的基准，涵盖灾难管理、社交媒体和在线文章3个话语领域的不同粒度连贯关系，实验发现即使Gemini 1.5 Pro和GPT-4o也无法匹配简单的CLIP分类器基线，揭示了MLLM在语用理解方面的根本不足。
@@ -141,10 +137,6 @@ description: >-
 **[Coreference as an Indicator of Context Scope in Multimodal Narrative](coreference_as_an_indicator_of_context_scope_in_multimodal_narrative.md)**
 
 :   本文揭示了大型多模态语言模型在视觉叙事（visual storytelling）任务中的共指表达（coreferential expressions）分布与人类存在显著差异——人类能变化丰富地交错引用不同实体并保持跨文本-图像的一致性，而机器在追踪混合引用方面能力不足，并提出了一系列量化共指模式特征的指标。
-
-**[CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](cosyn_code_guided_synthetic_data.md)**
-
-:   提出 CoSyn 框架，利用纯文本 LLM 的代码生成能力自动合成多样化的文本丰富型图像及对应指令微调数据，构建 400K 图像 + 2.7M 指令数据集，在 7 个 benchmark 上达到开源 SOTA 并超越 GPT-4V。
 
 **[CrafText Benchmark: Advancing Instruction Following in Complex Multimodal Open-Ended World](craftext_benchmark_advancing_instruction_following_in_complex_multimodal_open-en.md)**
 
@@ -169,10 +161,6 @@ description: >-
 **[Don't Miss the Forest for the Trees: Attentional Vision Calibration for Large Vision Language Models](dont_miss_the_forest_for_the_trees_attentional_vision_calibration_for_large_visi.md)**
 
 :   发现 LVLM 中存在"blind token"现象——少量语义无关的图像 token 吸引了不成比例的注意力权重，并提出 AvisC 方法通过测试时对比解码重新校准 blind token 影响，有效减轻视觉幻觉。
-
-**[EffiVLM-Bench: A Comprehensive Benchmark for Evaluating Training-Free Acceleration in Large Vision-Language Models](effivlm_bench_acceleration.md)**
-
-:   提出 EffiVLM-Bench，首个系统评估大型视觉语言模型（LVLM）训练免加速方法的统一框架，覆盖 17 个 benchmark、3 个前沿模型，引入泛化性和忠诚度等新指标，揭示了 token 压缩与参数压缩在不同场景下的性能-效率权衡。
 
 **[EffiVLM-Bench: A Comprehensive Benchmark for Evaluating Training-Free Acceleration in Large Vision-Language Models](effivlm_bench_vlm_acceleration.md)**
 
@@ -330,10 +318,6 @@ description: >-
 
 :   提出了 Mixture of Decoding (MoD)，通过 JS 散度衡量模型对图像 token 注意力的正确性，在注意力正确时采用互补解码放大关键信息，注意力错误时采用对比解码抑制误导信息，从而自适应地缓解多模态大模型的幻觉问题。
 
-**[MMBoundary: Advancing MLLM Knowledge Boundary Awareness through Reasoning Step Confidence Calibration](mmboundary_advancing_mllm_knowledge_boundary_awareness_through_reasoning_step_co.md)**
-
-:   提出 MMBoundary 框架，通过对 MLLM 推理链中每一步进行置信度校准（而非仅对整体回答），结合文本+跨模态自奖励信号与强化学习，显著降低多模态置信度校准误差（平均 7.5%）并提升任务性能（最高 8.3%）。
-
 **[MMBoundary: Advancing MLLM Knowledge Boundary Awareness through Reasoning Step Confidence Calibration](mmboundary_reasoning_step_confidence.md)**
 
 :   提出 MMBoundary 框架，通过在推理链的每一步插入自然语言置信度表述（而非只在最终回答后给置信度），结合文本+跨模态的自奖励信号估计置信度，并用 SFT+RL 两阶段训练实现步级置信度校准，平均降低 7.5% 校准误差并提升 8.3% 任务准确率。
@@ -345,10 +329,6 @@ description: >-
 **[MMMU-Pro: A More Robust Multi-discipline Multimodal Understanding Benchmark](mmmu_pro_robust_benchmark.md)**
 
 :   在 MMMU 基础上通过三步加固（过滤纯文本可解题目、扩展选项至 10 个、引入 Vision-only 输入）构建更鲁棒的 MMMU-Pro 基准，所有模型性能下降 16.8%~26.9%，揭示当前多模态模型远未实现真正的跨模态理解。
-
-**[MMMU-Pro: A More Robust Multi-discipline Multimodal Understanding Benchmark](mmmupro_a_more_robust_multidiscipline_multimodal.md)**
-
-:   本文引入MMMU-Pro，通过过滤纯文本可解的题目、将选项从4个增加到10个、引入"纯视觉输入"设置三步增强了MMMU基准的鲁棒性，导致模型性能下降16.8%~26.9%，更准确地反映了多模态模型的真实理解能力。
 
 **[MMSciBench: Benchmarking Language Models on Chinese Multimodal Scientific Problems](mmscibench_benchmarking_language_models_on_chinese_multimodal_scientific_problem.md)**
 
@@ -522,10 +502,6 @@ description: >-
 
 :   提出 ViGiL3D——一个语言多样性诊断数据集和自动化分析框架，用于评估 3D 视觉定位（3DVG）方法在否定、粗粒度指代、共指消解等多种语言现象上的表现，揭示现有方法在分布外提示上性能显著下降（最高达 20+ 点）。
 
-**[Weaving Context Across Images: Improving Vision-Language Models through Focus-Centric Visual Chains](visc-focus-centric-visual-chains-for-multi-image-reasoning.md)**
-
-:   本文提出 Focus-Centric Visual Chain 推理范式，将多图复杂任务分解为聚焦子集图像的逐步推理序列，并提出 FCDS 数据合成框架构建 VISC-150K 数据集，在 7 个多图基准上平均提升 3.16% 和 2.24%。
-
 **[Vision-Language Models Struggle to Align Entities across Modalities](vision-language_models_struggle_to_align_entities_across_modalities.md)**
 
 :   提出 MATE 基准（5,500 个问答实例），通过合成 3D 场景的跨模态属性检索任务系统评估 VLM 的实体链接能力，发现即使最强闭源模型仍落后人类约 15 个百分点，且性能随场景物体数量增加急剧下降——根源在于跨模态特征绑定而非单模态感知。
@@ -537,10 +513,6 @@ description: >-
 **[VisuoThink: Empowering LVLM Reasoning with Multimodal Tree Search](visuothink_empowering_lvlm_reasoning_with_multimodal_tree_search.md)**
 
 :   本文提出VisuoThink框架，通过视觉-文本交织推理和预测性前瞻树搜索，在推理过程中动态整合视觉辅助信息并探索多条推理路径，无需微调即可在几何和空间推理任务上实现SOTA性能（Geomverse-109上Accuracy@1最高达48.5%，相比最优基线提升21.8%）。
-
-**[VLM2-Bench: A Closer Look at How Well VLMs Implicitly Link Explicit Matching Visual Cues](vlm2-bench-visual-cue-linking.md)**
-
-:   本文提出 VLM2-Bench，评估 VLM 在多图/视频中隐式关联匹配视觉线索的能力，涵盖通用线索、物体线索和人物线索三大类9个子任务，发现即使最强模型也落后人类30%以上。
 
 **[VLM2-Bench: A Closer Look at How Well VLMs Implicitly Link Explicit Matching Visual Cues](vlm2-bench_a_closer_look_at_how_well_vlms_implicitly_link_explicit_matching_visu.md)**
 
@@ -557,10 +529,6 @@ description: >-
 **[VReST: Enhancing Reasoning in Large Vision-Language Models through Tree Search and Self-Reward Mechanism](vrest_tree_search_vlm_reasoning.md)**
 
 :   首次将蒙特卡洛树搜索(MCTS)引入多模态CoT推理，配合无需额外模型的多模态自奖励机制系统性探索推理空间，在三个视觉数学推理基准上实现SOTA并验证了多模态测试时缩放定律。
-
-**[We-Math: Does Your Large Multimodal Model Achieve Human-like Mathematical Reasoning?](we-math_does_your_large_multimodal_model_achieve_human-like_mathematical_reasoni.md)**
-
-:   本文提出We-Math基准，首次通过将复合数学问题按知识概念分解为子问题，引入IK/IG/CM/RM四维指标来层次化评估LMM的推理过程（而非仅看最终结果），揭示了LMM普遍存在知识不足（IK）问题，且GPT-4o是首个从IK阶段迈入知识泛化（IG）阶段的模型。
 
 **[Weaving Context Across Images: Improving Vision-Language Models through Focus-Centric Visual Chains](weaving_context_across_images_improving_vision-language_models_through_focus-cen.md)**
 

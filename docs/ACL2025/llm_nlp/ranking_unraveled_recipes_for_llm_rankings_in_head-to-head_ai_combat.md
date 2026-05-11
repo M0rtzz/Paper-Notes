@@ -162,7 +162,7 @@ SLAM上所有算法与胜率的相关性都很高（≥0.91），说明均匀分
 ## 相关论文
 
 - [\[ACL 2025\] Analyzing the Rapid Generalization of SFT via the Perspective of Attention Head Activation Patterns](analyzing_the_rapid_generalization_of_sft_via_the_perspective_of_attention_head_.md)
-- [\[ACL 2025\] Supervised Fine-Tuning Achieves Rapid Task Adaption Via Alternating Attention Head Activation Patterns](sft_attention_activation.md)
+- [\[ACL 2025\] Supervised Fine-Tuning Achieves Rapid Task Adaption Via Alternating Attention Head Activation Patterns](analyzing_the_rapid_generalization_of_sft_via_the_perspective_of_attention_head_.md)
 - [\[ACL 2025\] MHA2MLA: Towards Economical Inference by Enabling DeepSeek's Multi-Head Latent Attention in Any Transformer-based LLMs](mha2mla_deepseek_latent_attention.md)
 - [\[ACL 2025\] Are Optimal Algorithms Still Optimal? Rethinking Sorting in LLM-Based Pairwise Ranking with Batching and Caching](are_optimal_algorithms_still_optimal_rethinking_sorting_in_llm-based_pairwise_ra.md)
 - [\[NeurIPS 2025\] Post Hoc Regression Refinement via Pairwise Rankings](../../NeurIPS2025/llm_nlp/post_hoc_regression_refinement_via_pairwise_rankings.md)

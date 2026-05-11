@@ -1,16 +1,16 @@
 ---
 title: >-
-  ACL2025 信息检索/RAG方向87篇论文解读
+  ACL2025 信息检索/RAG方向86篇论文解读
 description: >-
-  87篇ACL2025的信息检索/RAG 方向论文解读，涵盖 RAG、LLM、对抗鲁棒、问答、对齐/RLHF、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  86篇ACL2025的信息检索/RAG 方向论文解读，涵盖 RAG、LLM、对抗鲁棒、问答、对齐/RLHF、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔍 信息检索/RAG
 
-**💬 ACL2025** · **87** 篇论文解读
+**💬 ACL2025** · **86** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (43)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (28)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/information_retrieval/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (43)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (7)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (28)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/information_retrieval/index.md)
 
 🔥 **高频主题：** RAG ×56 · LLM ×13 · 对抗鲁棒 ×6 · 问答 ×5 · 对齐/RLHF ×4
 
@@ -339,10 +339,6 @@ description: >-
 **[Unanswerability Evaluation for Retrieval Augmented Generation](unanswerability_evaluation_for_retrieval_augmented_generation.md)**
 
 :   UAEval4RAG 提出了一个针对 RAG 系统处理不可回答查询的全面评估框架，定义了六类不可回答类别，能够基于任意知识库自动合成测试数据并评估系统的拒绝能力，实验揭示没有单一配置能在所有数据集上同时最优化可回答和不可回答查询的表现。
-
-**[Any Information Is Just Worth One Single Screenshot: Unifying Search With Visualized Information Retrieval](unise-visualized-information-retrieval-with-screenshots.md)**
-
-:   本文定义了可视化信息检索（Vis-IR）新范式，将多模态信息统一表示为截图（Screenshot）进行检索，贡献了大规模数据集 VIRA（1300万截图）、通用检索模型 UniSE 和综合基准 MVRB。
 
 **[VISA: Retrieval Augmented Generation with Visual Source Attribution](visa_retrieval_augmented_generation_with_visual_source_attribution.md)**
 

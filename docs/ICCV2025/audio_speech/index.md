@@ -1,22 +1,18 @@
 ---
 title: >-
-  ICCV2025 音频/语音方向13篇论文解读
+  ICCV2025 音频/语音方向11篇论文解读
 description: >-
-  13篇ICCV2025的音频/语音方向论文解读，涵盖语音、多模态、扩散模型、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  11篇ICCV2025的音频/语音方向论文解读，涵盖语音、多模态、扩散模型、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎵 音频/语音
 
-**📹 ICCV2025** · **13** 篇论文解读
+**📹 ICCV2025** · **11** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (29)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (17)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/audio_speech/index.md) · [🧪 ICML2025 (7)](../../ICML2025/audio_speech/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (29)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/audio_speech/index.md) · [🧪 ICML2025 (7)](../../ICML2025/audio_speech/index.md)
 
-🔥 **高频主题：** 语音 ×6 · 多模态 ×3
-
-**[2.5 Years in Class: A Multimodal Textbook for Vision-Language Pretraining](25_years_in_class_a_multimodal_textbook_for_vision-language_pretraining.md)**
-
-:   从YouTube教学视频中提取关键帧和文本（ASR+OCR），构建高质量交错图文格式的"多模态教材"数据集，用于VLM预训练，在知识密集型和推理任务上大幅领先网页爬取的交错数据集。
+🔥 **高频主题：** 语音 ×5 · 多模态 ×2
 
 **[2.5 Years in Class: A Multimodal Textbook for Vision-Language Pretraining](25_years_in_class_a_multimodal_textbook_for_visionlanguage_p.md)**
 
@@ -41,10 +37,6 @@ description: >-
 **[Learning to See Inside Opaque Liquid Containers using Speckle Vibrometry](learning_to_see_inside_opaque_liquid_containers_using_speckle_vibrometry.md)**
 
 :   本文提出了一种基于激光散斑振动测量的非接触式系统，通过 2D 网格同时感知多个不透明容器表面的微小振动，再用 Vibration Transformer 从振动频谱中推断容器类型和隐藏液位，开创了"透视不透明容器内部液位"这一全新计算机视觉任务。
-
-**[Lyra: An Efficient and Speech-Centric Framework for Omni-Cognition](lyra_an_efficient_and_speech-centric_framework_for_omni-cognition.md)**
-
-:   提出 Lyra，一个以语音为中心的高效全模态 MLLM 框架，通过多模态 LoRA、潜在跨模态正则化器和潜在多模态提取器三大策略，使用更少的训练数据实现视觉-语言-语音多模态的 SOTA 性能，并首次支持长达数小时的语音输入。
 
 **[Lyra: An Efficient and Speech-Centric Framework for Omni-Cognition](lyra_an_efficient_and_speechcentric_framework_for_omnicognit.md)**
 

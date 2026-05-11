@@ -1,16 +1,16 @@
 ---
 title: >-
-  CVPR2025 图像生成方向306篇论文解读
+  CVPR2025 图像生成方向305篇论文解读
 description: >-
-  306篇CVPR2025的图像生成方向论文解读，涵盖扩散模型、文生图、个性化生成、对抗鲁棒、布局/合成、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  305篇CVPR2025的图像生成方向论文解读，涵盖扩散模型、文生图、个性化生成、对抗鲁棒、布局/合成、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**📷 CVPR2025** · **306** 篇论文解读
+**📷 CVPR2025** · **305** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (240)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (250)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (219)](../../ICCV2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (208)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (247)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md)
 
 🔥 **高频主题：** 扩散模型 ×111 · 文生图 ×21 · 个性化生成 ×19 · 对抗鲁棒 ×13 · 布局/合成 ×11
 
@@ -473,10 +473,6 @@ description: >-
 **[Generative Image Layer Decomposition with Visual Effects](generative_image_layer_decomposition_with_visual_effects.md)**
 
 :   LayerDecomp 提出了一个基于 Diffusion Transformer 的图像图层分解框架，将输入图像分解为干净的 RGB 背景层和带有透明视觉效果（阴影、反射）的 RGBA 前景层，通过一致性损失在无标注数据上也能学到正确的前景表示，大幅超越现有物体移除和空间编辑方法。
-
-**[Generative Modeling of Class Probability for Multi-Modal Representation Learning](generative_modeling_of_class_probability_for_multi-modal_representation_learning.md)**
-
-:   CALM 通过类锚点（class anchors）将视频和文本特征映射到统一的概率分布空间，再用跨模态 VAE 建模模态间不确定性，在域内检索（MSR-VTT R@1 50.8%）和跨域检索（MSR-VTT→DiDeMo R@1 41.2%）上均超越 SOTA，仅增加 0.5M 参数。
 
 **[Generative Modeling of Class Probability for Multi-Modal Representation Learning](generative_modeling_of_class_probability_for_multi_modal_representation_learning.md)**
 

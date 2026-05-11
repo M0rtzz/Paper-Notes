@@ -10,7 +10,7 @@ description: >-
 
 **🧠 NeurIPS2025** · **50** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (105)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (58)](../../AAAI2026/autonomous_driving/index.md) · [📹 ICCV2025 (98)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (11)](../../ICML2025/autonomous_driving/index.md) · [💬 ACL2025 (1)](../../ACL2025/autonomous_driving/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (88)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (58)](../../AAAI2026/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (11)](../../ICML2025/autonomous_driving/index.md) · [💬 ACL2025 (1)](../../ACL2025/autonomous_driving/index.md)
 
 🔥 **高频主题：** 自动驾驶 ×9 · Agent ×5 · 多模态 ×4 · 时序预测 ×3 · 遥感 ×3
 

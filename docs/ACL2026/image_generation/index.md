@@ -10,7 +10,7 @@ description: >-
 
 **💬 ACL2026** · **11** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (240)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (250)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (219)](../../ICCV2025/image_generation/index.md) · [🧪 ICML2025 (115)](../../ICML2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (208)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (247)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md) · [🧪 ICML2025 (112)](../../ICML2025/image_generation/index.md)
 
 🔥 **高频主题：** 对话系统 ×2 · 语音 ×2 · 文生图 ×2
 

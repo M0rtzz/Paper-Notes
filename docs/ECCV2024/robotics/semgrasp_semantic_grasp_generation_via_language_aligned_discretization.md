@@ -185,8 +185,8 @@ SemGrasp在语义一致性指标GPT-4评分上达到74.5分（满分100），显
 
 - [\[ECCV 2024\] Decomposed Vector-Quantized Variational Autoencoder for Human Grasp Generation](decomposed_vector-quantized_variational_autoencoder_for_human_grasp_generation.md)
 - [\[ECCV 2024\] An Economic Framework for 6-DoF Grasp Detection](an_economic_framework_for_6-dof_grasp_detection.md)
-- [\[ECCV 2024\] Prioritized Semantic Learning for Zero-Shot Instance Navigation](prioritized_semantic_learning_for_zeroshot_instance_navigation.md)
-- [\[ECCV 2024\] Octopus: Embodied Vision-Language Programmer from Environmental Feedback](octopus_embodied_visionlanguage_programmer_from_environmental_feedback.md)
+- [\[ECCV 2024\] Prioritized Semantic Learning for Zero-Shot Instance Navigation](prioritized_semantic_learning_for_zero-shot_instance_navigation.md)
+- [\[ECCV 2024\] Octopus: Embodied Vision-Language Programmer from Environmental Feedback](octopus_embodied_vision-language_programmer_from_environmental_feedback.md)
 - [\[ECCV 2024\] LLM as Copilot for Coarse-Grained Vision-and-Language Navigation](llm_as_copilot_for_coarse-grained_vision-and-language_navigation.md)
 
 </div>

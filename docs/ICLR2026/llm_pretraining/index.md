@@ -1,16 +1,16 @@
 ---
 title: >-
-  ICLR2026 预训练方向27篇论文解读
+  ICLR2026 预训练方向26篇论文解读
 description: >-
-  27篇ICLR2026的预训练方向论文解读，涵盖 LLM、对齐/RLHF、对抗鲁棒、Agent、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  26篇ICLR2026的预训练方向论文解读，涵盖 LLM、对齐/RLHF、对抗鲁棒、Agent、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📚 预训练
 
-**🔬 ICLR2026** · **27** 篇论文解读
+**🔬 ICLR2026** · **26** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/llm_pretraining/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_pretraining/index.md) · [🤖 AAAI2026 (6)](../../AAAI2026/llm_pretraining/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_pretraining/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/llm_pretraining/index.md) · [🧪 ICML2025 (30)](../../ICML2025/llm_pretraining/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/llm_pretraining/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/llm_pretraining/index.md) · [🤖 AAAI2026 (6)](../../AAAI2026/llm_pretraining/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/llm_pretraining/index.md) · [📹 ICCV2025 (9)](../../ICCV2025/llm_pretraining/index.md) · [🧪 ICML2025 (30)](../../ICML2025/llm_pretraining/index.md)
 
 🔥 **高频主题：** LLM ×3
 
@@ -113,10 +113,6 @@ description: >-
 **[Understanding and Improving Shampoo and SOAP via Kullback-Leibler Minimization](understanding_and_improving_shampoo_and_soap_via_kullback-leibler_minimization.md)**
 
 :   从 KL 散度最小化角度重新解释 Shampoo 和 SOAP 的结构化二阶矩估计，揭示其固有局限，并提出 KL-Shampoo 和 KL-SOAP 两种实用方案，在无需 Adam grafting 的情况下匹配或超越原始方法。
-
-**[Understanding the Emergence of Seemingly Useless Features in Next-Token Predictors](understanding_the_emergence_of_seemingly_useless_features_in_deep_learning.md)**
-
-:   从梯度信号的角度解释了为什么用下一 token 预测(NTP)训练的 Transformer 会学习到对预测当前下一 token "无用"的特征，提出三种梯度路径分解（直接学习、预缓存、电路共享）并在玩具任务、OthelloGPT 和语言模型中验证。
 
 **[Understanding the Emergence of Seemingly Useless Features in Next-Token Predictors](understanding_the_emergence_of_seemingly_useless_features_in_next-token_predicto.md)**
 

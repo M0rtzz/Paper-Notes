@@ -169,7 +169,7 @@ $$\mathcal{L}_{\text{contact}} = \frac{1}{|V_{h,c}|}\sum_{v_h \in V_{h,c}} d(v_h
 ## 相关论文
 
 - [\[CVPR 2026\] HumanOrbit: 3D Human Reconstruction as 360° Orbit Generation](humanorbit_3d_human_reconstruction_as_360_orbit_generation.md)
-- [\[ECCV 2024\] WordRobe: Text-Guided Generation of Textured 3D Garments](../../ECCV2024/human_understanding/wordrobe_textguided_generation_of_textured_3d_garments.md)
+- [\[ECCV 2024\] WordRobe: Text-Guided Generation of Textured 3D Garments](../../ECCV2024/human_understanding/wordrobe_text-guided_generation_of_textured_3d_garments.md)
 - [\[ECCV 2024\] TRAM: Global Trajectory and Motion of 3D Humans from in-the-wild Videos](../../ECCV2024/human_understanding/tram_global_trajectory_and_motion_of_3d_humans_from_in-the-wild_videos.md)
 - [\[CVPR 2026\] HandDreamer: Zero-Shot Text to 3D Hand Model Generation](handdreamer_zero_shot_text_to_3d_hand_model_generation.md)
 - [\[CVPR 2026\] A2P: From 2D Alignment to 3D Plausibility for Occlusion-Robust Two-Hand Reconstruction](from_2d_alignment_to_3d_plausibility_unifying_hete.md)

@@ -10,7 +10,7 @@ description: >-
 
 **📹 ICCV2025** · **1** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (23)](../../ACL2026/multilingual_mt/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/multilingual_mt/index.md) · [🔬 ICLR2026 (7)](../../ICLR2026/multilingual_mt/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/multilingual_mt/index.md) · [🧠 NeurIPS2025 (13)](../../NeurIPS2025/multilingual_mt/index.md) · [🧪 ICML2025 (1)](../../ICML2025/multilingual_mt/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (23)](../../ACL2026/multilingual_mt/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/multilingual_mt/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/multilingual_mt/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/multilingual_mt/index.md) · [🧠 NeurIPS2025 (13)](../../NeurIPS2025/multilingual_mt/index.md) · [🧪 ICML2025 (1)](../../ICML2025/multilingual_mt/index.md)
 
 **[SignRep: Enhancing Self-Supervised Sign Representations](signrep_enhancing_self-supervised_sign_representations.md)**
 

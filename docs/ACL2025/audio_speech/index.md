@@ -1,18 +1,18 @@
 ---
 title: >-
-  ACL2025 音频/语音方向41篇论文解读
+  ACL2025 音频/语音方向40篇论文解读
 description: >-
-  41篇ACL2025的音频/语音方向论文解读，涵盖语音、对话系统、少样本学习、LLM、对抗鲁棒、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  40篇ACL2025的音频/语音方向论文解读，涵盖语音、对话系统、少样本学习、LLM、对抗鲁棒、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎵 音频/语音
 
-**💬 ACL2025** · **41** 篇论文解读
+**💬 ACL2025** · **40** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (29)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (17)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (13)](../../ICCV2025/audio_speech/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (29)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/audio_speech/index.md)
 
-🔥 **高频主题：** 语音 ×37 · 对话系统 ×6 · 少样本学习 ×4 · LLM ×4 · 对抗鲁棒 ×3
+🔥 **高频主题：** 语音 ×36 · 对话系统 ×6 · 少样本学习 ×4 · LLM ×4 · 对抗鲁棒 ×3
 
 **[Finding A Voice: Exploring the Potential of African American Dialect and Voice Generation for Chatbots](aae_voice_chatbot.md)**
 
@@ -33,10 +33,6 @@ description: >-
 **[Amplifying Trans and Nonbinary Voices: A Community-Centred Harm Taxonomy for LLMs](amplifying_trans_and_nonbinary_voices_a_community-centred_harm_taxonomy_for_llms.md)**
 
 :   本文采用社区导向（community-centred）的研究方法，通过与跨性别和非二元性别（Trans and Nonbinary, TNB）群体的深入合作，构建了一套专门针对LLM输出中对TNB群体伤害的分类体系（harm taxonomy），揭示了现有LLM安全评估未覆盖的TNB特有伤害类型。
-
-**[ATRI: Mitigating Multilingual Audio Text Retrieval Inconsistencies by Reducing Data Distribution Errors](atri-mitigating-multilingual-audio-text-retrieval-inconsistencies.md)**
-
-:   本文分析了多语言音频文本检索（ML-ATR）中跨语言检索不一致的根本原因是训练数据分布误差，并提出 KCL（1-to-K对比学习）和 CACL（音频-英语共锚对比学习）两种策略来减少该误差，在 8 种语言上达到了 SOTA 性能。
 
 **[ATRI: Mitigating Multilingual Audio Text Retrieval Inconsistencies by Reducing Data Distribution Errors](atri_mitigating_multilingual_audio_text_retrieval_inconsistencies_by_reducing_da.md)**
 

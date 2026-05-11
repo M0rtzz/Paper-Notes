@@ -10,7 +10,7 @@ description: >-
 
 **🧠 NeurIPS2025** · **52** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (8)](../../ACL2026/graph_learning/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/graph_learning/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/graph_learning/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/graph_learning/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/graph_learning/index.md) · [🧪 ICML2025 (31)](../../ICML2025/graph_learning/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (8)](../../ACL2026/graph_learning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/graph_learning/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/graph_learning/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/graph_learning/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/graph_learning/index.md) · [🧪 ICML2025 (31)](../../ICML2025/graph_learning/index.md)
 
 🔥 **高频主题：** 图神经网络 ×10 · LLM ×5 · 推理 ×5 · RAG ×3 · 少样本学习 ×3
 

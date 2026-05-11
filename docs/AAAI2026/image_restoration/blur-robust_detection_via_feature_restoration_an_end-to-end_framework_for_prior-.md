@@ -130,7 +130,7 @@ FDD 贡献最大 (+10.0% AP)，FSGM 进一步提升 AP +3.0%，两者互补。
 
 - [\[ICCV 2025\] Generic Event Boundary Detection via Denoising Diffusion (DiffGEBD)](../../ICCV2025/image_restoration/generic_event_boundary_detection_via_denoising_diffusion.md)
 - [\[CVPR 2026\] DRFusion: Degradation-Robust Fusion via Degradation-Aware Diffusion Framework](../../CVPR2026/image_restoration/drfusion_degradation_robust_fusion_via_degradation_aware_diffusion_framework.md)
-- [\[CVPR 2026\] Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](../../CVPR2026/image_restoration/toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
+- [\[CVPR 2026\] Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](../../CVPR2026/image_restoration/real_iisr_infrared_image_super_resolution_autoregressive.md)
 - [\[AAAI 2026\] TMDC: A Two-Stage Modality Denoising and Complementation Framework for Multimodal Sentiment Analysis](tmdc_a_two-stage_modality_denoising_and_complementation_framework_for_multimodal.md)
 - [\[AAAI 2026\] Large Language Models Meet Extreme Multi-label Classification: Scaling and Multi-modal Framework](large_language_models_meet_extreme_multi-label_classification_scaling_and_multi-.md)
 

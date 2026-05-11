@@ -1,18 +1,18 @@
 ---
 title: >-
-  ICCV2025 视频生成方向51篇论文解读
+  ICCV2025 视频生成方向49篇论文解读
 description: >-
-  51篇ICCV2025的视频生成方向论文解读，涵盖视频生成、扩散模型、对抗鲁棒、个性化生成、动态场景、人脸/视线等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  49篇ICCV2025的视频生成方向论文解读，涵盖视频生成、扩散模型、对抗鲁棒、个性化生成、动态场景、人脸/视线等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎬 视频生成
 
-**📹 ICCV2025** · **51** 篇论文解读
+**📹 ICCV2025** · **49** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (3)](../../ACL2026/video_generation/index.md) · [📷 CVPR2026 (59)](../../CVPR2026/video_generation/index.md) · [🔬 ICLR2026 (19)](../../ICLR2026/video_generation/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/video_generation/index.md) · [🧠 NeurIPS2025 (23)](../../NeurIPS2025/video_generation/index.md) · [🧪 ICML2025 (7)](../../ICML2025/video_generation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (3)](../../ACL2026/video_generation/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/video_generation/index.md) · [🔬 ICLR2026 (19)](../../ICLR2026/video_generation/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/video_generation/index.md) · [🧠 NeurIPS2025 (23)](../../NeurIPS2025/video_generation/index.md) · [🧪 ICML2025 (7)](../../ICML2025/video_generation/index.md)
 
-🔥 **高频主题：** 视频生成 ×22 · 扩散模型 ×12 · 对抗鲁棒 ×5 · 个性化生成 ×3 · 动态场景 ×3
+🔥 **高频主题：** 视频生成 ×21 · 扩散模型 ×12 · 对抗鲁棒 ×5 · 个性化生成 ×3 · 动态场景 ×3
 
 **[Adversarial Distribution Matching for Diffusion Distillation Towards Efficient Image and Video Synthesis](adversarial_distribution_matching_for_diffusion_distillation_towards_efficient_i.md)**
 
@@ -57,10 +57,6 @@ description: >-
 **[DIVE: Taming DINO for Subject-Driven Video Editing](dive_taming_dino_for_subject-driven_video_editing.md)**
 
 :   提出DIVE框架，利用预训练DINOv2模型的语义特征作为隐式对应关系来引导主体驱动的视频编辑，通过DINO特征进行时序运动建模和目标主体身份注册，实现高质量的主体替换同时保持运动一致性。
-
-**[DOLLAR: Few-Step Video Generation via Distillation and Latent Reward Optimization](dollar_few-step_video_generation_via_distillation_and_latent_reward_optimization.md)**
-
-:   提出 DOLLAR，结合变分分数蒸馏（VSD）和一致性蒸馏（CD）实现少步视频生成，并引入潜在奖励模型微调策略进一步提升质量，4 步学生模型在 VBench 上达到 82.57 分超越教师模型和 Gen-3、Kling 等基线，单步蒸馏实现 278.6 倍加速。
 
 **[DOLLAR: Few-Step Video Generation via Distillation and Latent Reward Optimization](dollar_fewstep_video_generation_via_distillation_and_latent.md)**
 
@@ -185,10 +181,6 @@ description: >-
 **[VACE: All-in-One Video Creation and Editing](vace_all-in-one_video_creation_and_editing.md)**
 
 :   本文提出VACE，一个基于Diffusion Transformer的视频生成与编辑一体化框架，通过统一的Video Condition Unit (VCU)接口和可插拔的Context Adapter结构，用单一模型覆盖参考生成、视频编辑、mask编辑等12+种视频任务，性能与任务专用模型持平。
-
-**[VACE: All-in-One Video Creation and Editing](vace_allinone_video_creation_and_editing.md)**
-
-:   提出VACE统一视频创建和编辑框架，通过Video Condition Unit(VCU)将文本/图像/视频/掩码统一为条件输入，结合Context Adapter注入任务概念到DiT模型，首次在单一视频DiT中同时支持参考生成、视频编辑、掩码编辑及其自由组合。
 
 **[Versatile Transition Generation with Image-to-Video Diffusion](versatile_transition_generation_with_image-to-video_diffusion.md)**
 

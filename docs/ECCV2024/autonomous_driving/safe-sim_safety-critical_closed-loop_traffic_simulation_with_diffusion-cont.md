@@ -189,7 +189,7 @@ Partial Diffusion 显著提升碰撞点多样性（方差从 1.62 到 5.44），
 - [\[ECCV 2024\] NeuroNCAP: Photorealistic Closed-Loop Safety Testing for Autonomous Driving](neuroncap_photorealistic_closed-loop_safety_testing_for_autonomous_driving.md)
 - [\[ECCV 2024\] RoofDiffusion: Constructing Roofs from Severely Corrupted Point Data via Diffusion](roofdiffusion_constructing_roofs_from_severely_corrupted_point_data_via_diffusio.md)
 - [\[ECCV 2024\] MonoWAD: Weather-Adaptive Diffusion Model for Robust Monocular 3D Object Detection](monowad_weather-adaptive_diffusion_model_for_robust_monocular_3d_object_detectio.md)
-- [\[ECCV 2024\] OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving](occgen_generative_multimodal_3d_occupancy_prediction_for_aut.md)
+- [\[ECCV 2024\] OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving](occgen_generative_multi-modal_3d_occupancy_prediction_for_autonomous_driving.md)
 
 </div>
 

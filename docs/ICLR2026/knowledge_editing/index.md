@@ -1,16 +1,16 @@
 ---
 title: >-
-  ICLR2026 知识编辑方向9篇论文解读
+  ICLR2026 知识编辑方向8篇论文解读
 description: >-
-  9篇ICLR2026的知识编辑方向论文解读，涵盖对齐/RLHF、对抗鲁棒、目标跟踪、布局/合成、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  8篇ICLR2026的知识编辑方向论文解读，涵盖对齐/RLHF、对抗鲁棒、目标跟踪、布局/合成、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✏️ 知识编辑
 
-**🔬 ICLR2026** · **9** 篇论文解读
+**🔬 ICLR2026** · **8** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/knowledge_editing/index.md) · [📷 CVPR2026 (3)](../../CVPR2026/knowledge_editing/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/knowledge_editing/index.md) · [🧠 NeurIPS2025 (6)](../../NeurIPS2025/knowledge_editing/index.md) · [🧪 ICML2025 (2)](../../ICML2025/knowledge_editing/index.md) · [💬 ACL2025 (20)](../../ACL2025/knowledge_editing/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/knowledge_editing/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/knowledge_editing/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/knowledge_editing/index.md) · [🧠 NeurIPS2025 (6)](../../NeurIPS2025/knowledge_editing/index.md) · [🧪 ICML2025 (2)](../../ICML2025/knowledge_editing/index.md) · [💬 ACL2025 (20)](../../ACL2025/knowledge_editing/index.md)
 
 **[Bilinear Representation Mitigates Reversal Curse and Enables Consistent Model Editing](bilinear_representation_mitigates_reversal_curse_and_enables_consistent_model_ed.md)**
 
@@ -35,10 +35,6 @@ description: >-
 **[PICS: Pairwise Image Compositing with Spatial Interactions](pics_pairwise_image_compositing_with_spatial_interactions.md)**
 
 :   提出 PICS——一种并行成对图像合成方法，通过 Interaction Transformer 中的掩码引导 MoE 和自适应 α-blending 策略，在单次推理中同时合成两个对象并显式建模遮挡、接触等空间交互关系，全面超越现有序列合成方法。
-
-**[Rote Learning Considered Useful: Generalizing over Memorized Data in LLMs](rote_learning_considered_useful_generalizing_over_memorized_data_in_llms.md)**
-
-:   提出"记忆-再泛化"（memorize-then-generalize）框架，通过先用无语义合成 token 死记硬背事实关联、再用少量语义提示微调的两阶段策略，揭示 LLM 能从死记硬背数据中泛化，且记忆越深泛化越好，同时指出该机制可被恶意利用的安全隐患。
 
 **[Rote Learning Considered Useful: Generalizing over Memorized Training Examples](rote_learning_considered_useful_generalizing_over_memorized_training_examples.md)**
 

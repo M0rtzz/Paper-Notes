@@ -205,7 +205,7 @@ tags:
 ## 相关论文
 
 - [\[ICCV 2025\] Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
-- [\[ICCV 2025\] Lyra: An Efficient and Speech-Centric Framework for Omni-Cognition](lyra_an_efficient_and_speech-centric_framework_for_omni-cognition.md)
+- [\[ICCV 2025\] Lyra: An Efficient and Speech-Centric Framework for Omni-Cognition](lyra_an_efficient_and_speechcentric_framework_for_omnicognit.md)
 - [\[ICCV 2025\] Learning to See Inside Opaque Liquid Containers using Speckle Vibrometry](learning_to_see_inside_opaque_liquid_containers_using_speckle_vibrometry.md)
 - [\[ICCV 2025\] Everything is a Video: Unifying Modalities through Next-Frame Prediction](everything_is_a_video_unifying_modalities_through_next-frame_prediction.md)
 - [\[ICCV 2025\] VGGSounder: Audio-Visual Evaluations for Foundation Models](vggsounder_audio-visual_evaluations_for_foundation_models.md)

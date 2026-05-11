@@ -155,7 +155,7 @@ $$L_{point}(\theta) = \frac{1}{2}\sum_{k=1}^{K}\sum_{i=0}^{1}(e_k^i - p_k^i - \D
 - [\[ECCV 2024\] An Economic Framework for 6-DoF Grasp Detection](an_economic_framework_for_6-dof_grasp_detection.md)
 - [\[CVPR 2025\] Learning Physics-Based Full-Body Human Reaching and Grasping from Brief Walking References](../../CVPR2025/robotics/learning_physics-based_full-body_human_reaching_and_grasping_from_brief_walking_.md)
 - [\[ECCV 2024\] GraspXL: Generating Grasping Motions for Diverse Objects at Scale](graspxl_generating_grasping_motions_for_diverse_objects_at_scale.md)
-- [\[ECCV 2024\] Prioritized Semantic Learning for Zero-Shot Instance Navigation](prioritized_semantic_learning_for_zeroshot_instance_navigation.md)
+- [\[ECCV 2024\] Prioritized Semantic Learning for Zero-Shot Instance Navigation](prioritized_semantic_learning_for_zero-shot_instance_navigation.md)
 - [\[CVPR 2025\] GigaHands: A Massive Annotated Dataset of Bimanual Hand Activities](../../CVPR2025/robotics/gigahands_a_massive_annotated_dataset_of_bimanual_hand_activities.md)
 
 </div>

@@ -1,18 +1,18 @@
 ---
 title: >-
-  NeurIPS2025 预训练方向50篇论文解读
+  NeurIPS2025 预训练方向48篇论文解读
 description: >-
-  50篇NeurIPS2025的预训练方向论文解读，涵盖 LLM、对齐/RLHF、扩散模型、人脸/视线等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  48篇NeurIPS2025的预训练方向论文解读，涵盖 LLM、对齐/RLHF、扩散模型、人脸/视线等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📚 预训练
 
-**🧠 NeurIPS2025** · **50** 篇论文解读
+**🧠 NeurIPS2025** · **48** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/llm_pretraining/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_pretraining/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/llm_pretraining/index.md) · [🤖 AAAI2026 (6)](../../AAAI2026/llm_pretraining/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/llm_pretraining/index.md) · [🧪 ICML2025 (30)](../../ICML2025/llm_pretraining/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/llm_pretraining/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/llm_pretraining/index.md) · [🔬 ICLR2026 (26)](../../ICLR2026/llm_pretraining/index.md) · [🤖 AAAI2026 (6)](../../AAAI2026/llm_pretraining/index.md) · [📹 ICCV2025 (9)](../../ICCV2025/llm_pretraining/index.md) · [🧪 ICML2025 (30)](../../ICML2025/llm_pretraining/index.md)
 
-🔥 **高频主题：** LLM ×8 · 对齐/RLHF ×4 · 扩散模型 ×2 · 人脸/视线 ×2
+🔥 **高频主题：** LLM ×7 · 对齐/RLHF ×4 · 扩散模型 ×2 · 人脸/视线 ×2
 
 **[A Practical Guide for Incorporating Symmetry in Diffusion Policy](a_practical_guide_for_incorporating_symmetry_in_diffusion_policy.md)**
 
@@ -126,10 +126,6 @@ description: >-
 
 :   提出 Residual Alignment Model (RAM)，将 LLM 对齐过程形式化为重要性采样，将大模型分解为冻结的 Proposal Module 和可训练的小型 Residual Aligner，以不到 1/8 参数实现可比甚至超越全参数 SFT/DPO 的对齐效果，同时解决了首 token 延迟问题。
 
-**[Language Model Behavioral Phases are Consistent Across Architecture, Training Data, and Scale](lm_behavioral_phases.md)**
-
-:   本文通过分析 1,400+ 个模型检查点在 110,000+ token 上的行为，发现自回归语言模型在训练过程中展现高度一致的行为阶段——预测概率依次过拟合到递增 n 的 n-gram 概率，且三个简单启发式（词频、n-gram 概率、语义相似度）可解释高达 98% 的模型行为方差，此规律跨架构（Transformer/Mamba/RWKV）、数据集和规模保持一致。
-
 **[Memory Mosaics at Scale](memory_mosaics_at_scale.md)**
 
 :   Memory Mosaics v2 将关联存储网络扩展至 10B 参数、1T token 训练规模，在新任务学习和上下文学习上显著超越同规模甚至 8T token 训练的 Transformer。
@@ -169,10 +165,6 @@ description: >-
 **[Quantifying Task-Relevant Representational Similarity Using Decision Variable Correlation](quantifying_task-relevant_representational_similarity_using_decision_variable_co.md)**
 
 :   本文提出基于决策变量相关（DVC）的新方法来衡量两个神经表征在分类任务上的逐试次一致性，发现深度网络在 ImageNet 上准确率越高反而与猴脑 V4/IT 的 DVC 越低，对抗训练和大规模数据集预训练也无法缩小这一差距。
-
-**[Retrospective In-Context Learning for Temporal Credit Assignment with Large Language Models](retrospective_incontext_learning_for_temporal_credit_assignm.md)**
-
-:   提出 RICL（Retrospective In-Context Learning），利用 LLM 的预训练知识通过回顾式上下文学习将稀疏环境反馈转化为密集优势函数信号，实现比传统 Monte Carlo 方法高 100 倍的样本效率，并在此基础上构建 RICOL 在线学习框架。
 
 **[Retrospective In-Context Learning for Temporal Credit Assignment with Large Language Models](ricl_temporal_credit.md)**
 

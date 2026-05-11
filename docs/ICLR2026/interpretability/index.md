@@ -1,18 +1,18 @@
 ---
 title: >-
-  ICLR2026 可解释性方向59篇论文解读
+  ICLR2026 可解释性方向56篇论文解读
 description: >-
-  59篇ICLR2026的可解释性方向论文解读，涵盖推理、LLM、Agent、多模态、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  56篇ICLR2026的可解释性方向论文解读，涵盖推理、LLM、Agent、多模态、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**🔬 ICLR2026** · **59** 篇论文解读
+**🔬 ICLR2026** · **56** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (31)](../../CVPR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (86)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/interpretability/index.md) · [🧪 ICML2025 (33)](../../ICML2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (86)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md) · [🧪 ICML2025 (33)](../../ICML2025/interpretability/index.md)
 
-🔥 **高频主题：** 推理 ×8 · LLM ×6 · Agent ×3 · 多模态 ×2 · 对齐/RLHF ×2
+🔥 **高频主题：** 推理 ×6 · LLM ×5 · Agent ×3 · 多模态 ×2 · 对齐/RLHF ×2
 
 **[A Cortically Inspired Architecture for Modular Perceptual AI](a_cortically_inspired_architecture_for_modular_perceptual_ai.md)**
 
@@ -57,10 +57,6 @@ description: >-
 **[Dynamic Reflections: Probing Video Representations with Text Alignment](dynamic_reflections_probing_video_representations_with_text_alignment.md)**
 
 :   本文首次将柏拉图表示假说 (PRH) 从静态图像-文本扩展到时序视频-文本领域，通过对 121 个视觉与语言模型的系统评估，揭示了测试时增加帧数与描述数可将对齐分数提升近一倍的现象，并提出 $R^2 > 0.98$ 的饱和式缩放律来量化这一行为。
-
-**[Dynamic Reflections: Probing Video Representations with Text-Driven Reasoning](dynamic_reflections_probing_video_representations_with_text_driven_reasoning.md)**
-
-:   首次将柏拉图表示假说（PRH）扩展到时序领域，系统研究视频-文本表示对齐，发现通过增加测试时的帧数和描述数量可以显著提升对齐分数（翻倍），并提出了精确的参数化测试时缩放定律。
 
 **[Evolution of Concepts in Language Model Pre-Training](evolution_of_concepts_in_language_model_pre-training.md)**
 
@@ -172,10 +168,6 @@ description: >-
 
 :   提出 SEED-SET 框架，将自主系统的伦理评估建模为层次化贝叶斯实验设计问题，同时整合客观指标和主观价值判断，在有限预算下高效生成高伦理对齐度的测试用例。
 
-**[Semantic Regexes: Auto-Interpreting LLM Features with a Structured Language](semantic_regexes_auto-interpreting_llm_features_with_a_structured_language.md)**
-
-:   提出 semantic regexes——一种用于自动描述 LLM 特征的结构化语言，通过 symbol/lexeme/field 三种原语及 context/composition/quantification 修饰符，在保持与自然语言同等准确度的同时，实现了更简洁、更一致的特征描述，并可量化特征复杂度随层的变化趋势。
-
 **[Semantic Regexes: Auto-Interpreting LLM Features with a Structured Language](semantic_regexes_auto-interpreting_llm_features_with_a_structured_language_of_re.md)**
 
 :   本文提出 **Semantic Regexes（语义正则表达式）**，一种用于自动描述 LLM 特征的结构化语言，通过原语（symbol/lexeme/field）+ 修饰符（context/composition/quantification）组合，实现与自然语言同等准确但更简洁、一致且可分析的特征描述。
@@ -195,10 +187,6 @@ description: >-
 **[The Geometry of Reasoning: Flowing Logics in Representation Space](the_geometry_of_reasoning_flowing_logics_in_representation_space.md)**
 
 :   本文提出一个几何框架将 LLM 的推理过程建模为表示空间中的"流"（embedding 轨迹），通过解耦逻辑结构与语义内容的受控实验证明 LLM 内化了超越表面形式的逻辑不变量，并发现跨模型家族的可能普适表示规律。
-
-**[Position: The Reasoning Trap — Logical Reasoning as a Mechanistic Pathway to Advanced AI Self-Awareness](the_reasoning_trap_--_logical_reasoning_as_a_mechanistic_pathway_to_advanced_jai.md)**
-
-:   提出 RAISE 框架，论证逻辑推理能力（演绎、归纳、溯因）的改进是 AI 情境意识（situational awareness）的机制性路径，改善推理不可避免地放大了情境意识的危险前提条件。
 
 **[The Reasoning Trap — Logical Reasoning as a Mechanistic Pathway to Situational Awareness](the_reasoning_trap_--_logical_reasoning_as_a_mechanistic_pathway_to_situational_.md)**
 

@@ -166,7 +166,7 @@ TAPPA 基于 q-similarity 的简单指标一致优于所有基线方法。
 - [\[ICLR 2026\] TurboBoA: Faster and Exact Attention-aware Quantization without Backpropagation](turboboa_faster_and_exact_attention-aware_quantization_without_backpropagation.md)
 - [\[ICML 2025\] Towards an Optimal Control Perspective of ResNet Training](../../ICML2025/model_compression/towards_an_optimal_control_perspective_of_resnet_training.md)
 - [\[ICLR 2026\] FASA: Frequency-aware Sparse Attention](fasa_frequency-aware_sparse_attention.md)
-- [\[ICLR 2026\] FlyPrompt: Brain-Inspired Random-Expanded Routing with Temporal-Ensemble Experts for General Continual Learning](flyprompt_brain-inspired_random-expanded_routing_with_temporal-ensemble_experts_.md)
+- [\[ICLR 2026\] FlyPrompt: Brain-Inspired Random-Expanded Routing with Temporal-Ensemble Experts for General Continual Learning](flyprompt_brain-inspired_random-expanded_routing.md)
 
 </div>
 

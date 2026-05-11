@@ -1,16 +1,16 @@
 ---
 title: >-
-  NeurIPS2025 多模态 VLM方向155篇论文解读
+  NeurIPS2025 多模态 VLM方向154篇论文解读
 description: >-
-  155篇NeurIPS2025的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对齐/RLHF、机器人、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  154篇NeurIPS2025的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对齐/RLHF、机器人、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**🧠 NeurIPS2025** · **155** 篇论文解读
+**🧠 NeurIPS2025** · **154** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (50)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (288)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (93)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (92)](../../AAAI2026/multimodal_vlm/index.md) · [📹 ICCV2025 (159)](../../ICCV2025/multimodal_vlm/index.md) · [🧪 ICML2025 (53)](../../ICML2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (50)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (241)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (91)](../../AAAI2026/multimodal_vlm/index.md) · [📹 ICCV2025 (151)](../../ICCV2025/multimodal_vlm/index.md) · [🧪 ICML2025 (52)](../../ICML2025/multimodal_vlm/index.md)
 
 🔥 **高频主题：** 多模态 ×87 · 推理 ×27 · LLM ×18 · 对齐/RLHF ×9 · 机器人 ×8
 
@@ -141,10 +141,6 @@ description: >-
 **[CyIN: Cyclic Informative Latent Space for Bridging Complete and Incomplete Multimodal Learning](cyin_cyclic_informative_latent_space_for_bridging_complete_and_incomplete_multim.md)**
 
 :   提出 CyIN 框架，通过 token 级和 label 级信息瓶颈（IB）构建信息化潜空间，结合循环跨模态翻译重建缺失信息，在单一统一模型中同时优化完整和不完整多模态学习。
-
-**[DanmakuTPPBench: A Multi-modal Benchmark for Temporal Point Process Modeling and Understanding](danmaku_tpp_bench.md)**
-
-:   本文提出 DanmakuTPPBench，首个融合时间、文本和视觉的多模态时间点过程（TPP）基准，包含从 B 站弹幕系统收集的 DanmakuTPP-Events（7,250 个视频序列，1080 万弹幕事件）和基于多 Agent 流水线构建的 DanmakuTPP-QA（10 种评估任务），揭示了当前 LLM/MLLM 在 TPP 理解上的显著差距。
 
 **[DanmakuTPPBench: A Multi-modal Benchmark for Temporal Point Process Modeling and Understanding](danmakutppbench_a_multimodal_benchmark_for_temporal_point_pr.md)**
 

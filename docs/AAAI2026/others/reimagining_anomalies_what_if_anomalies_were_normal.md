@@ -158,7 +158,7 @@ BCE 和 HSC 的反事实在多数数据集上与异常样本同样逼真，在 M
 - [\[ECCV 2024\] Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection](../../ECCV2024/others/learning_anomalies_with_normality_prior_for_unsupervised_video_anomaly_detection.md)
 - [\[ACL 2025\] If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?](../../ACL2025/others/if_attention_serves_as_a_cognitive_model_of_human_memory_retrieval_what_is_the_p.md)
 - [\[CVPR 2026\] Novel Anomaly Detection Scenarios and Evaluation Metrics to Address the Ambiguity in the Definition of Normal Samples](../../CVPR2026/others/novel_anomaly_detection_scenarios_and_evaluation_metrics_to_address_the_ambiguit.md)
-- [\[CVPR 2026\] Integration of deep generative Anomaly Detection algorithm in high-speed industrial line](../../CVPR2026/others/integration_of_deep_generative_anomaly_detection_a.md)
+- [\[CVPR 2026\] Integration of deep generative Anomaly Detection algorithm in high-speed industrial line](../../CVPR2026/others/integration_of_deep_generative_anomaly_detection_algorithm_in_high-speed_industr.md)
 - [\[CVPR 2026\] What Is the Optimal Ranking Score Between Precision and Recall? We Can Always Find It and It Is Rarely F₁](../../CVPR2026/others/what_is_the_optimal_ranking_score_between_precision_and_recall_we_can_always_fin.md)
 
 </div>

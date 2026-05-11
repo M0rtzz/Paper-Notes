@@ -1,18 +1,18 @@
 ---
 title: >-
-  ECCV2024 视频理解方向51篇论文解读
+  ECCV2024 视频理解方向49篇论文解读
 description: >-
-  51篇ECCV2024的视频理解方向论文解读，涵盖目标跟踪、人体姿态、对齐/RLHF、自监督学习、推理、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  49篇ECCV2024的视频理解方向论文解读，涵盖目标跟踪、人体姿态、自监督学习、推理、少样本学习、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📹 视频理解
 
-**🎞️ ECCV2024** · **51** 篇论文解读
+**🎞️ ECCV2024** · **49** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/video_understanding/index.md) · [📷 CVPR2026 (92)](../../CVPR2026/video_understanding/index.md) · [🔬 ICLR2026 (24)](../../ICLR2026/video_understanding/index.md) · [🤖 AAAI2026 (33)](../../AAAI2026/video_understanding/index.md) · [🧠 NeurIPS2025 (61)](../../NeurIPS2025/video_understanding/index.md) · [📹 ICCV2025 (58)](../../ICCV2025/video_understanding/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/video_understanding/index.md) · [📷 CVPR2026 (77)](../../CVPR2026/video_understanding/index.md) · [🔬 ICLR2026 (24)](../../ICLR2026/video_understanding/index.md) · [🤖 AAAI2026 (33)](../../AAAI2026/video_understanding/index.md) · [🧠 NeurIPS2025 (58)](../../NeurIPS2025/video_understanding/index.md) · [📹 ICCV2025 (57)](../../ICCV2025/video_understanding/index.md)
 
-🔥 **高频主题：** 目标跟踪 ×12 · 人体姿态 ×4 · 对齐/RLHF ×3 · 自监督学习 ×2 · 推理 ×2
+🔥 **高频主题：** 目标跟踪 ×11 · 人体姿态 ×4 · 自监督学习 ×2 · 推理 ×2 · 少样本学习 ×2
 
 **[ActionSwitch: Class-agnostic Detection of Simultaneous Actions in Streaming Videos](actionswitch_class-agnostic_detection_of_simultaneous_actions_in_streaming_video.md)**
 
@@ -130,10 +130,6 @@ description: >-
 
 :   提出 PiTe 模型，通过物体运动轨迹在像素级别实现视频与语言的时空对齐，构建 PiTe-143k 数据集，在零样本 QA、时序定位和密集描述任务上大幅超越现有方法。
 
-**[PiTe: Pixel-Temporal Alignment for Large Video-Language Model](pite_pixeltemporal_alignment_for_large_videolanguage_mo.md)**
-
-:   提出 PiTe，一种通过物体轨迹引导的像素-时序对齐方法，利用自动构建的 PiTe-143K 数据集在空间和时间维度上实现视频与语言的精细对齐，显著提升视频理解能力。
-
 **[R²-Tuning: Efficient Image-to-Video Transfer Learning for Video Temporal Grounding](r2tuning_efficient_imagetovideo_transfer_learning_for_video.md)**
 
 :   提出 R²-Tuning，通过在冻结 CLIP 的后几层反向递归附加轻量 R² Block（仅 1.5% 总参数），实现查询调制的空间池化和粗到细的时序精炼，在 6 个 VTG 基准 3 个任务上以 2.7M 参数超越了需要额外时序骨干网络的 SOTA 方法。
@@ -193,10 +189,6 @@ description: >-
 **[Towards Model-Agnostic Dataset Condensation by Heterogeneous Models](towards_model-agnostic_dataset_condensation_by_heterogeneous_models.md)**
 
 :   提出异构模型数据集压缩（HMDC）方法，通过同时使用两个结构不同的模型（如 ConvNet 和 ViT）进行数据集压缩，并设计梯度平衡模块和互蒸馏机制，生成对各种模型普遍适用的压缩图像，解决传统方法过度适配单一模型的问题。
-
-**[Tracking Meets LoRA: Faster Training, Larger Model, Stronger Performance](tracking_meets_lora_faster_training_larger_model_strong.md)**
-
-:   首次将 LoRA 引入视觉目标跟踪领域，通过解耦位置编码和设计 MLP-only 头网络，使大规模 ViT 模型（最大 ViT-g）在实验室级资源下实现高效训练和 SOTA 跟踪性能。
 
 **[Tracking Meets LoRA: Faster Training, Larger Model, Stronger Performance](tracking_meets_lora_faster_training_larger_model_stronger_performance.md)**
 

@@ -1,16 +1,16 @@
 ---
 title: >-
-  CVPR2025 其他方向58篇论文解读
+  CVPR2025 其他方向57篇论文解读
 description: >-
-  58篇CVPR2025的其他方向论文解读，涵盖对抗鲁棒、异常检测、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  57篇CVPR2025的其他方向论文解读，涵盖对抗鲁棒、异常检测、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**📷 CVPR2025** · **58** 篇论文解读
+**📷 CVPR2025** · **57** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/others/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (76)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (126)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (154)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/others/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/others/index.md) · [📷 CVPR2026 (44)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (76)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (126)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (154)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/others/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×6 · 异常检测 ×4 · 少样本学习 ×2
 
@@ -35,10 +35,6 @@ description: >-
 **[CARE Transformer: Mobile-Friendly Linear Visual Transformer via Decoupled Dual Interaction](care_transformer_linear_attention.md)**
 
 :   本文提出CARE Transformer，通过非对称特征解耦将局部归纳偏置和长距离依赖的学习分离，并设计动态记忆单元和双交互模块充分利用特征互补性，实现了移动端友好的线性复杂度视觉Transformer，在ImageNet上以仅0.7 GMACs达到78.4% top-1精度。
-
-**[CARE Transformer: Mobile-Friendly Linear Visual Transformer via Decoupled Dual Interaction](care_transformer_mobile-friendly_linear_visual_transformer_via_decoupled_dual_in.md)**
-
-:   本文提出CARE（deCoupled duAl-interactive lineaR attEntion）机制，通过非对称特征解耦策略将局部归纳偏置和长程依赖的学习过程分而治之，配合动态记忆单元和双交互模块充分利用跨特征互补性，在ImageNet-1K上以0.7/1.9 GMACs达到78.4/82.1% top-1精度，在移动端实现极低延迟。
 
 **[Deconstructing the Failure of Ideal Noise Correction: A Three-Pillar Diagnosis](deconstructing_the_failure_of_ideal_noise_correction_a_three-pillar_diagnosis.md)**
 

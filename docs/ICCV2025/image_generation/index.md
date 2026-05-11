@@ -1,18 +1,18 @@
 ---
 title: >-
-  ICCV2025 图像生成方向219篇论文解读
+  ICCV2025 图像生成方向213篇论文解读
 description: >-
-  219篇ICCV2025的图像生成方向论文解读，涵盖扩散模型、文生图、图像编辑、对抗鲁棒、少样本学习、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  213篇ICCV2025的图像生成方向论文解读，涵盖扩散模型、文生图、图像编辑、对抗鲁棒、少样本学习、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**📹 ICCV2025** · **219** 篇论文解读
+**📹 ICCV2025** · **213** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (240)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (250)](../../NeurIPS2025/image_generation/index.md) · [🧪 ICML2025 (115)](../../ICML2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (208)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (247)](../../NeurIPS2025/image_generation/index.md) · [🧪 ICML2025 (112)](../../ICML2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×90 · 文生图 ×17 · 图像编辑 ×15 · 对抗鲁棒 ×12 · 少样本学习 ×9
+🔥 **高频主题：** 扩散模型 ×86 · 文生图 ×17 · 图像编辑 ×15 · 对抗鲁棒 ×12 · 少样本学习 ×8
 
 **[A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation](a0_affordance_aware_hierarchical_model_robotic_manipulation.md)**
 
@@ -57,10 +57,6 @@ description: >-
 **[Aether: Geometric-Aware Unified World Modeling](aether_geometric-aware_unified_world_modeling.md)**
 
 :   Aether 提出一个几何感知的统一世界模型框架，通过在合成 4D 数据上联合训练重建、预测和规划三大能力，基于 CogVideoX 后训练实现零样本泛化到真实场景。
-
-**[Aether: Geometric-Aware Unified World Modeling](aether_geometricaware_unified_world_modeling.md)**
-
-:   提出Aether统一世界模型，在合成RGB-D数据上后训练CogVideoX视频扩散模型，通过随机组合输入/输出模态的多任务训练策略，同时实现4D重建、动作条件视频预测和目标条件视觉规划，且零样本迁移到真实世界数据达到与领域专用模型可比的性能。
 
 **[AIComposer: Any Style and Content Image Composition via Feature Integration](aicomposer_any_style_and_content_image_composition_via_feature_integration.md)**
 
@@ -110,10 +106,6 @@ description: >-
 
 :   提出3DSR——将扩散超分模型与3DGS表示交替迭代实现3D一致超分：每步去噪后将SR图像训练到3DGS中获得3D一致渲染→重编码回潜在空间引导下一步去噪，无需微调任何模型即显式保证跨视角一致性，在LLFF上PSNR提升1.16dB+FID降低50%(vs StableSR)。
 
-**[Bridging the Skeleton-Text Modality Gap: Diffusion-Powered Modality Alignment for Zero-shot Skeleton-based Action Recognition](bridging_the_skeleton-text_modality_gap_diffusion-powered_modality_alignment_for.md)**
-
-:   提出TDSM（Triplet Diffusion for Skeleton-Text Matching），首次将扩散模型应用于零样本骨骼动作识别，通过反向扩散过程实现骨骼特征与文本prompt的隐式对齐，并引入triplet diffusion损失增强判别力，在NTU-60/120和PKU-MMD上大幅超越SOTA（2.36%到13.05%的提升幅度）。
-
 **[Bridging the Skeleton-Text Modality Gap: Diffusion-Powered Modality Alignment for Zero-shot Skeleton-based Action Recognition](bridging_the_skeleton_text_modality_gap_diffusion_powered_modality_alignment_for.md)**
 
 :   提出TDSM（Triplet Diffusion for Skeleton-Text Matching），首次将扩散模型应用于零样本骨骼动作识别，通过反向扩散过程实现骨骼特征与文本prompt的隐式对齐，并引入triplet diffusion损失增强判别力，在NTU-60/120和PKU-MMD上大幅超越SOTA（2.36%到13.05%的提升幅度）。
@@ -137,10 +129,6 @@ description: >-
 **[CHORDS: Diffusion Sampling Accelerator with Multi-Core Hierarchical ODE Solvers](chords_diffusion_sampling_accelerator_with_multi-core_hierarchical_ode_solvers.md)**
 
 :   提出 Chords，一种基于多核层次 ODE 求解器的扩散采样加速框架，通过慢到快的核间纠正机制（inter-core rectification），在 4-8 个 GPU 上实现 2.1×~2.9× 加速，且不牺牲生成质量。
-
-**[CHORDS: Diffusion Sampling Accelerator with Multi-Core Hierarchical ODE Solvers](chords_diffusion_sampling_accelerator_with_multi_core_hierarchical_ode_solvers.md)**
-
-:   提出 Chords，一种基于多核层级 ODE 求解器的无训练、模型无关扩散采样加速框架，通过慢到快的求解器层级和核间纠偏机制，在 4~8 个 GPU 核上实现最高 2.9× 加速而不损失生成质量。
 
 **[CNS-Bench: Benchmarking Image Classifier Robustness Under Continuous Nuisance Shifts](cns-bench_benchmarking_image_classifier_robustness_under_continuous_nuisance_shi.md)**
 
@@ -173,10 +161,6 @@ description: >-
 **[CURE: Cultural Gaps in the Long Tail of Text-to-Image Systems](cure_cultural_gaps_in_the_long_tail_of_text-to-image_systems.md)**
 
 :   提出 CURE 基准与评分套件，利用**属性规范的边际效用**（Marginal Information Attribution）作为人类判断的代理指标，系统评估 T2I 系统在全球文化长尾分布上的代表性能力。
-
-**[Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences](cycle_consistency_as_reward_learning_image-text_alignment_without_human_preferen.md)**
-
-:   利用循环一致性（图→文→图或文→图→文的重建相似度）作为替代人类偏好的监督信号，构建866K偏好数据集CyclePrefDB，训练的CycleReward模型在详细描述生成评估上超越所有现有方法，并可通过DPO提升VLM和扩散模型。
 
 **[Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences](cycle_consistency_as_reward_learning_imagetext_alignment_wit.md)**
 
@@ -690,10 +674,6 @@ description: >-
 
 :   本文提出 REPA-E，通过表示对齐（REPA）损失实现 VAE 和潜在扩散 Transformer 的端到端联合训练，训练速度分别比 REPA 和普通训练快 17× 和 45×，在 ImageNet 256×256 上达到 FID 1.12 的新SOTA。
 
-**[REPA-E: Unlocking VAE for End-to-End Tuning with Latent Diffusion Transformers](repae_unlocking_vae_for_endtoend_tuning_of_latent_diffusion.md)**
-
-:   提出 REPA-E，首个成功实现 VAE 与潜在扩散模型端到端联调的训练方案，通过表征对齐(REPA)损失而非扩散损失来更新 VAE，训练速度提升 17-45 倍并达到 ImageNet 256 新 SOTA（FID 1.12）。
-
 **[Rethink Sparse Signals for Pose-guided Text-to-Image Generation](rethink_sparse_signals_for_pose-guided_text-to-image_generation.md)**
 
 :   提出 SP-Ctrl（Spatial-Pose ControlNet），通过可学习空间姿态表示（SPR）替换 OpenPose 的固定 RGB 编码，并引入关键点概念学习（KCL）策略利用交叉注意力热力图约束增强关键点对齐，使稀疏姿态信号达到与密集信号（深度图/DensePose）相当的姿态控制精度，同时保持图像多样性和跨物种生成能力。
@@ -721,10 +701,6 @@ description: >-
 **[SANA-Sprint: One-Step Diffusion with Continuous-Time Consistency Distillation](sana-sprint_one-step_diffusion_with_continuous-time_consistency_distillation.md)**
 
 :   SANA-Sprint 提出混合蒸馏框架（连续时间一致性模型 + 潜空间对抗蒸馏），将预训练 Flow Matching 模型无损转换为 TrigFlow 并通过 sCM+LADD 联合训练，实现 1-4 步统一自适应高质量文本到图像生成，H100 上单步仅需 0.1 秒。
-
-**[SANA-Sprint: One-Step Diffusion with Continuous-Time Consistency Distillation](sanasprint_onestep_diffusion_with_continuoustime_consistency.md)**
-
-:   将预训练的SANA flow matching模型通过无损数学变换转化为TrigFlow，结合连续时间一致性蒸馏（sCM）和潜空间对抗蒸馏（LADD）的混合策略，实现统一的1-4步自适应高质量图像生成，1步生成1024×1024图像仅需0.1s（H100），以7.59 FID和0.74 GenEval超越FLUX-schnell且速度快10倍。
 
 **[SCFlow: Implicitly Learning Style and Content Disentanglement with Flow Models](scflow_implicitly_learning_style_and_content_disentanglement_with_flow_models.md)**
 

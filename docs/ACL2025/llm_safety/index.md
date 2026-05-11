@@ -1,16 +1,16 @@
 ---
 title: >-
-  ACL2025 LLM 安全方向67篇论文解读
+  ACL2025 LLM 安全方向65篇论文解读
 description: >-
-  67篇ACL2025的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、水印/隐写、对齐/RLHF、问答、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  65篇ACL2025的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、水印/隐写、对齐/RLHF、问答、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # � LLM 安全
 
-**💬 ACL2025** · **67** 篇论文解读
+**💬 ACL2025** · **65** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (21)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (60)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/llm_safety/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (21)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (60)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/llm_safety/index.md)
 
 🔥 **高频主题：** LLM ×28 · 对抗鲁棒 ×17 · 水印/隐写 ×6 · 对齐/RLHF ×3 · 问答 ×2
 
@@ -126,10 +126,6 @@ description: >-
 
 :   本文首次将神经微分方程（Neural DEs）应用于LLM幻觉检测，通过对隐空间中token激活的连续轨迹建模来系统评估陈述的真实性，在True-False数据集上AUC-ROC超过SOTA 14%以上。
 
-**[Are the Hidden States Hiding Something? Testing the Limits of Factuality-Encoding Capabilities in LLMs](hidden-states-factuality-encoding-limits.md)**
-
-:   本文挑战了先前关于 LLM 隐藏状态能编码事实性信息的研究结论，通过构建更真实和更具挑战性的数据集（基于困惑度的负采样 + QA导出的LLM生成事实），发现先前结论在更真实的场景下难以泛化。
-
 **[How Does Response Length Affect Long-Form Factuality](how_does_response_length_affect_long-form_factuality.md)**
 
 :   本文系统研究了LLM响应长度与事实精确度的关系，提出高效的双层事实性评估框架Bafe（与人类注释89.31%一致），确认了长度偏差的存在，并通过排除错误传播和长上下文假说，证明"事实耗竭"是事实性下降的主要原因。
@@ -205,10 +201,6 @@ description: >-
 **[Private Memorization Editing: Turning Memorization into a Defense to Strengthen Data Privacy in Large Language Models](private_memorization_editing_turning_memorization_into_a_defense_to_strengthen_d.md)**
 
 :   提出 PME（Private Memorization Editing），将 LLM 的记忆化特性从安全弱点转化为防御手段，通过编辑 Feed Forward 层参数来移除已记忆的个人身份信息（PII），实现无需重训的隐私保护。
-
-**[Learning Auxiliary Tasks Improves Reference-Free Hallucination Detection in Open-Domain Long-Form Generation](rate-ft-auxiliary-tasks-for-hallucination-detection.md)**
-
-:   本文系统研究了开放域长文本生成中的无参考幻觉检测，发现模型内部状态（概率/熵）不足以可靠检测长文本幻觉，提出 RATE-FT 方法通过引入辅助 QA 任务和推理过程（rationale）来增强微调检测效果。
 
 **[Real-time Factuality Assessment from Adversarial Feedback](real-time_factuality_assessment_from_adversarial_feedback.md)**
 

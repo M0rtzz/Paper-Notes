@@ -154,7 +154,7 @@ CFP-Gen 基于 ESM 架构的扩散语言模型：
 
 - [\[ICML 2025\] Steering Protein Language Models](steering_protein_language_models.md)
 - [\[ACL 2025\] Concept Bottleneck Language Models For Protein Design](../../ACL2025/medical_imaging/concept_bottleneck_language_models_for_protein_design.md)
-- [\[ICML 2025\] Training Flexible Models of Genetic Variant Effects from Functional Annotations using Accelerated Linear Algebra](training_flexible_models_of_genetic_variant_effects_from_functional_annotations.md)
+- [\[ICML 2025\] Training Flexible Models of Genetic Variant Effects from Functional Annotations using Accelerated Linear Algebra](training_flexible_models_of_genetic_variant_effects_from_functional_annotations_.md)
 - [\[ICML 2025\] Elucidating the Design Space of Multimodal Protein Language Models](elucidating_the_design_space_of_multimodal_protein_language_models.md)
 - [\[ICML 2025\] Aligning Protein Conformation Ensemble Generation with Physical Feedback](aligning_protein_conformation_ensemble_generation_with_physical_feedback.md)
 

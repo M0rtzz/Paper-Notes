@@ -1,20 +1,16 @@
 ---
 title: >-
-  ACL2025 multi_agent方向34篇论文解读
+  ACL2025 multi_agent方向33篇论文解读
 description: >-
-  34篇ACL2025的 multi_agent 方向论文解读，涵盖 Agent、LLM、推理、对抗鲁棒、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  33篇ACL2025的 multi_agent 方向论文解读，涵盖 Agent、LLM、推理、对抗鲁棒、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📄 multi_agent
 
-**💬 ACL2025** · **34** 篇论文解读
+**💬 ACL2025** · **33** 篇论文解读
 
-🔥 **高频主题：** Agent ×32 · LLM ×8 · 推理 ×5 · 对抗鲁棒 ×2 · 强化学习 ×2
-
-**[A Multi-Agent Framework for Mitigating Dialect Biases in Privacy Policy Question-Answering Systems](a_multi-agent_framework_for_mitigating_dialect_biases_in_privacy_policy_question.md)**
-
-:   提出一个双agent协作框架(方言Agent + 隐私政策Agent)，通过将非标准英语方言翻译为标准美式英语(SAE)并进行迭代验证，在不需要重训练或方言特定微调的前提下，显著降低隐私政策问答中的方言偏差并提升整体性能。
+🔥 **高频主题：** Agent ×31 · LLM ×8 · 推理 ×5 · 对抗鲁棒 ×2 · 强化学习 ×2
 
 **[AgentDropout: Dynamic Agent Elimination for Token-Efficient and High-Performance LLM-Based Multi-Agent Collaboration](agentdropout-dynamic-agent-elimination-for-multi-agent-collaboration.md)**
 

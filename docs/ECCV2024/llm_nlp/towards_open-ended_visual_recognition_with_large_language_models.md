@@ -232,7 +232,7 @@ OSM 在6个数据集上评估 mask 分类准确率（Acc）和词表外预测比
 
 ## 相关论文
 
-- [\[ECCV 2024\] Meta-Prompting for Automating Zero-shot Visual Recognition with LLMs](metaprompting_for_automating_zeroshot_visual_recognitio.md)
+- [\[ECCV 2024\] Meta-Prompting for Automating Zero-shot Visual Recognition with LLMs](meta-prompting_for_automating_zero-shot_visual_recognition_with_llms.md)
 - [\[ECCV 2024\] Self-Adapting Large Visual-Language Models to Edge Devices across Visual Modalities](self-adapting_large_visual-language_models_to_edge_devices_across_visual_modalit.md)
 - [\[NeurIPS 2025\] AutoDiscovery: Open-ended Scientific Discovery via Bayesian Surprise](../../NeurIPS2025/llm_nlp/autodiscovery_open-ended_scientific_discovery_via_bayesian_surprise.md)
 - [\[ECCV 2024\] Evaluating Text-to-Visual Generation with Image-to-Text Generation](evaluating_text-to-visual_generation_with_image-to-text_generation.md)

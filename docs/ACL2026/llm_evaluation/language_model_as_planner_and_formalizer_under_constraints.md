@@ -125,7 +125,7 @@ CoPE (Constrained Planning Environments) 在 BlocksWorld 和 CoinCollector 两�
 - [\[NeurIPS 2025\] Model-Behavior Alignment under Flexible Evaluation: When the Best-Fitting Model Isn't the Right One](../../NeurIPS2025/llm_evaluation/model-behavior_alignment_under_flexible_evaluation_when_the_best-fitting_model_i.md)
 - [\[AAAI 2026\] Structured Language Generation Model: Loss Calibration and Formatted Decoding for Efficient Text](../../AAAI2026/llm_evaluation/structured_language_generation_model_loss_calibration_and_formatted_decoding_for.md)
 - [\[ACL 2026\] Enhancing Linguistic Competence of Language Models through Pre-training with Language Learning Tasks](enhancing_linguistic_competence_of_language_models_through_pre-training_with_lan.md)
-- [\[ICLR 2026\] Prompt and Parameter Co-Optimization for Large Language Model Task Adaptation](../../ICLR2026/llm_evaluation/prompt_and_parameter_co-optimization_for_large_language_model_task_adaptation.md)
+- [\[ICLR 2026\] Prompt and Parameter Co-Optimization for Large Language Model Task Adaptation](../../ICLR2026/llm_evaluation/prompt_and_parameter_co-optimization_for_large_language_models.md)
 
 </div>
 

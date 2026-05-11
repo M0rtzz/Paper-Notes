@@ -1,18 +1,18 @@
 ---
 title: >-
-  ICLR2026 LLM 推理方向71篇论文解读
+  ICLR2026 LLM 推理方向65篇论文解读
 description: >-
-  71篇ICLR2026的 LLM 推理方向论文解读，涵盖推理、LLM、多模态、Agent、对抗鲁棒、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  65篇ICLR2026的 LLM 推理方向论文解读，涵盖推理、LLM、多模态、Agent、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💡 LLM 推理
 
-**🔬 ICLR2026** · **71** 篇论文解读
+**🔬 ICLR2026** · **65** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (37)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (67)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md) · [🧪 ICML2025 (17)](../../ICML2025/llm_reasoning/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (37)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (12)](../../CVPR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (66)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md) · [🧪 ICML2025 (15)](../../ICML2025/llm_reasoning/index.md)
 
-🔥 **高频主题：** 推理 ×47 · LLM ×10 · 多模态 ×3 · Agent ×2 · 对抗鲁棒 ×2
+🔥 **高频主题：** 推理 ×42 · LLM ×10 · 多模态 ×3 · Agent ×2 · 对抗鲁棒 ×2
 
 **[Adaptive Social Learning via Mode Policy Optimization for Language Agents](adaptive_social_learning_via_mode_policy_optimization_for_language_agents.md)**
 
@@ -78,10 +78,6 @@ description: >-
 
 :   本文系统揭示了多模态大推理模型（MLRM）通过图像推断敏感地理位置信息的隐私泄露风险，提出了三级隐私风险框架和 DoxBench 基准，以及信息论度量 Glare 和协作攻击框架 GeoMiner。
 
-**[Doxing via the Lens: Revealing Location-related Privacy Leakage on Multi-modal Large Reasoning Models](doxing_via_the_lens_revealing_location-related_privacy_leakage_on_multi-modal_la.md)**
-
-:   本文首次系统研究了多模态大推理模型（MLRMs）从用户生成图像中推断敏感地理位置信息的隐私泄露风险，提出三级隐私风险框架、DoxBench 基准和 Glare 信息论评估指标，发现 MLRMs 在地理推断上超越非专家人类，显著降低了攻击者获取敏感位置信息的门槛。
-
 **[DRPO: Efficient Reasoning via Decoupled Reward Policy Optimization](drpo_efficient_reasoning_via_decoupled_reward_policy_optimization.md)**
 
 :   诊断出 GRPO 在加入长度惩罚后的根本缺陷——正确但冗长的回答可能获得负优势值从而被错误惩罚——提出 DRPO 将正负样本的奖励信号解耦，确保长度惩罚只在正确回答组内归一化，在 1.5B 模型上实现 77% 长度缩减仅 1.1% 性能损失（对比基线 68% 缩减 4.3% 损失）。
@@ -121,10 +117,6 @@ description: >-
 **[From Abstract to Contextual: What LLMs Still Cannot Do in Mathematics](from_abstract_to_contextual_what_llms_still_cannot_do_in_math_word_problem_solvi.md)**
 
 :   提出 ContextMATH 基准，通过将 AIME/MATH-500 抽象数学题转化为情景嵌入（SG）和复杂度缩放（CS）两种变体，揭示即使是 GPT-5 和 DeepSeek-R1 等顶级模型在上下文数学推理中也出现 13-34% 的准确率下降，且错误主要由问题建模（formulation）而非计算推理导致。
-
-**[From Abstract to Contextual: What LLMs Still Cannot Do in Mathematics](from_abstract_to_contextual_what_llms_still_cannot_do_in_mathematics.md)**
-
-:   本文提出 ContextMATH 基准，通过将 AIME 和 MATH-500 的抽象数学问题转换为两种情境变体（场景嵌入 SG 和复杂度缩放 CS），系统揭示了LLM在情境化数学推理中的大幅性能下降——开源模型在 SG 上平均下降 13%，CS 上下降 34%——并识别出"问题建模"和"推理执行"是两个互补的性能瓶颈。
 
 **[Generalizable End-to-End Tool-Use RL with Synthetic CodeGym](generalizable_end-to-end_tool-use_rl_with_synthetic_codegym.md)**
 
@@ -190,10 +182,6 @@ description: >-
 
 :   首次将分解式 Chain-of-Thought 推理与多维度强化学习（RL）结合应用于视频到音频（V2A）生成，通过四个专门化的 CoT 模块（语义/时序/美学/空间）配合对应奖励函数，解决了目标纠缠问题，并提出 Fast-GRPO 算法大幅降低 RL 训练开销。
 
-**[RAIN-Merging: A Gradient-Free Method to Enhance Instruction Following in Large Reasoning Models with Preserved Thinking Format](rain-merging_a_gradient-free_method_to_enhance_instruction_following_in_large_re.md)**
-
-:   针对大推理模型（LRM）推理能力强但指令遵循能力弱的矛盾，提出 RAIN-Merging 方法，通过零空间投影保持 thinking 格式不变、注意力引导系数增强指令相关性，无需梯度训练即可将指令微调模型（ITM）的能力合并进 LRM，在 4 个指令遵循和 9 个推理基准上均取得稳定提升。
-
 **[RAIN-Merging: A Gradient-Free Method to Enhance Instruction Following Through Model Merging](rain-merging_a_gradient-free_method_to_enhance_instruction_following_through_mod.md)**
 
 :   提出 RAIN-Merging，一种无梯度的两阶段模型合并方法：先通过零空间投影保护大推理模型 (LRM) 的思维格式，再用指令注意力引导的合并系数增强指令遵循能力，在保持推理质量的同时大幅提升 LRM 的指令遵循性能。
@@ -250,17 +238,9 @@ description: >-
 
 :   构建TopoBench基准(6类拓扑谜题×3难度)评估LLM的全局空间推理能力，发现前沿模型hard tier仅解决<24%，并通过因果干预实验发现错误频率不等于因果影响——低频的约束遗忘比高频的重复推理更具破坏性。
 
-**[Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention](towards_safe_reasoning_in_large_reasoning_models_via_correct-by-construction_gu.md)**
-
-:   提出 Intervened Preference Optimization (IPO)，通过在推理过程中的关键步骤替换合规线索为安全触发器，构造偏好对进行训练，显著提升大推理模型(LRM)思维链推理过程本身的安全性。
-
 **[Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention](towards_safe_reasoning_in_large_reasoning_models_via_corrective_intervention.md)**
 
 :   揭示大推理模型（LRM）的推理链即使最终回答安全也常包含有害内容的问题，提出 Intervened Preference Optimization（IPO），通过用安全触发器替换合规线索来纠正不安全推理轨迹，构造偏好对进行对齐训练，在 3 个 LRM 上将推理有害率降低超过 30% 且不损害推理能力。
-
-**[Training Large Reasoning Models Efficiently via Progressive Thought Encoding](training_large_reasoning_models_efficiently_via_progressive_solution_complexity.md)**
-
-:   提出 Progressive Thought Encoding，通过在 KV 缓存被淘汰时将 token 信息编码为固定大小的 LoRA 权重更新，使大推理模型能在有限缓存下进行高效 RL 训练，同时保持长程推理能力。
 
 **[Training Large Reasoning Models Efficiently via Progressive Thought Encoding](training_large_reasoning_models_efficiently_via_progressive_thought_encoding.md)**
 
@@ -281,10 +261,6 @@ description: >-
 **[Verifying Chain-of-Thought Reasoning via Its Computational Graph](verifying_chain-of-thought_reasoning_via_its_computational_graph.md)**
 
 :   提出 CRV（Circuit-based Reasoning Verification），通过将 LLM 的 MLP 替换为 transcoder 构建可解释归因图，从图的结构特征中提取推理错误的"指纹"，实现白盒 CoT 推理验证，并可通过因果干预修正错误推理。
-
-**[When Reasoning Meets Compression: Understanding the Effects of LLMs Compression on Large Reasoning Models](when_reasoning_meets_compression_understanding_the_effects_of_llms_compression_o.md)**
-
-:   系统性基准测试与机制解释压缩（量化/蒸馏/剪枝）对大推理模型的影响，发现三大核心结论：参数数量对知识记忆影响大于推理能力；蒸馏模型最后一层 MLP up_proj 是最关键权重；保护仅 2% 的被过度压缩权重即可提升平均准确率 6.57%。
 
 **[When Reasoning Meets Compression: Understanding the Effects of LLMs Compression on Large Reasoning Models](when_reasoning_meets_compression_understanding_the_effects_of_pruning_and_quant.md)**
 

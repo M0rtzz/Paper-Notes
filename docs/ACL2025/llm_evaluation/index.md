@@ -1,18 +1,18 @@
 ---
 title: >-
-  ACL2025 LLM 评测方向89篇论文解读
+  ACL2025 LLM 评测方向88篇论文解读
 description: >-
-  89篇ACL2025的 LLM 评测方向论文解读，涵盖 LLM、推理、对抗鲁棒、Agent、情感分析、问答等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  88篇ACL2025的 LLM 评测方向论文解读，涵盖 LLM、推理、对抗鲁棒、Agent、情感分析、问答等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📊 LLM 评测
 
-**💬 ACL2025** · **89** 篇论文解读
+**💬 ACL2025** · **88** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/llm_evaluation/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/llm_evaluation/index.md) · [🔬 ICLR2026 (60)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (39)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (79)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (29)](../../ICCV2025/llm_evaluation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/llm_evaluation/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_evaluation/index.md) · [🔬 ICLR2026 (56)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (39)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (79)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md)
 
-🔥 **高频主题：** LLM ×34 · 推理 ×11 · 对抗鲁棒 ×3 · Agent ×3 · 情感分析 ×2
+🔥 **高频主题：** LLM ×33 · 推理 ×11 · 对抗鲁棒 ×3 · Agent ×3 · 情感分析 ×2
 
 **[A Conformal Risk Control Framework for Granular Word Assessment and Uncertainty Calibration of CLIPScore Quality Estimates](a_conformal_risk_control_framework_for_granular_word_assessment_and_uncertainty_.md)**
 
@@ -109,10 +109,6 @@ description: >-
 **[CoPrUS: Consistency Preserving Utterance Synthesis Towards More Realistic Benchmark](coprus_consistency_preserving_utterance_synthesis_towards_more_realistic_benchma.md)**
 
 :   本文提出 CoPrUS 框架，一种面向对话基准构建的一致性保持话语合成方法，通过在生成对话数据时显式维护人设、知识和对话历史的一致性约束，生成比现有方法更真实的对话基准数据。
-
-**[Can You Really Trust Code Copilots? Evaluating Large Language Models from a Code Security Perspective](cov-eval-code-security-evaluation-benchmark.md)**
-
-:   本文提出多任务代码漏洞评估基准 CoV-Eval，覆盖代码补全、漏洞修复、检测和分类四个任务及18种漏洞类型，并开发了与人类专家高度一致的判断模型 VC-Judge，对20个LLM的综合评估揭示了代码安全领域的关键挑战。
 
 **[CoV-Eval: Can You Really Trust Code Copilots? Evaluating Large Language Models from a Code Security Perspective](cov_eval_evaluating_llms_from_code_security_perspective.md)**
 

@@ -1,18 +1,18 @@
 ---
 title: >-
-  ICML2025 AI 安全方向36篇论文解读
+  ICML2025 AI 安全方向33篇论文解读
 description: >-
-  36篇ICML2025的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、强化学习、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  33篇ICML2025的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、强化学习、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI 安全
 
-**🧪 ICML2025** · **36** 篇论文解读
+**🧪 ICML2025** · **33** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (2)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (24)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (22)](../../ICCV2025/ai_safety/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (2)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (26)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (72)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (21)](../../ICCV2025/ai_safety/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×9 · 联邦学习 ×7 · 强化学习 ×2 · 语音 ×2
+🔥 **高频主题：** 对抗鲁棒 ×8 · 联邦学习 ×6 · 强化学习 ×2 · 语音 ×2
 
 **[A Certified Unlearning Approach without Access to Source Data](a_certified_unlearning_approach_without_access_to_source_data.md)**
 
@@ -45,10 +45,6 @@ description: >-
 **[Collaborative Mean Estimation Among Heterogeneous Strategic Agents: Individual Rationality, Fairness, and Truthful Contribution](collaborative_mean_estimation_among_heterogeneous_strategic_agents_individual_ra.md)**
 
 :   针对异构成本的多智能体协作均值估计问题，设计了同时满足个体理性(IR)、激励相容(IC)和公平性的无货币机制，在最坏情况下实现 $\mathcal{O}(\sqrt{m})$ 近似比，并证明了三条不可能性结果。
-
-**[Connecting Thompson Sampling and UCB: Towards More Efficient Trade-offs Between Privacy and Regret](connecting_thompson_sampling_and_ucb_towards_more_efficient_best-fixed_action_.md)**
-
-:   本文提出 DP-TS-UCB 算法，通过限制每轮高斯采样次数并在采样预算耗尽后切换为 UCB 式探索，实现了隐私与遗憾的参数化权衡，将 GDP 保证从 $O(\sqrt{T})$ 大幅改善至 $\tilde{O}(T^{0.25(1-\alpha)})$，同时保持近最优的遗憾界。
 
 **[Connecting Thompson Sampling and UCB: Towards More Efficient Trade-offs Between Privacy and Regret](connecting_thompson_sampling_and_ucb_towards_more_efficient_trade-offs_between_p.md)**
 
@@ -102,10 +98,6 @@ description: >-
 
 :   首次将差分隐私技术从数值估计问题扩展到搜索问题（需要返回解向量而非单一数值），提出在温和的稀疏近邻假设下用 $\tilde{O}(\sqrt{T} \cdot s)$ 份数据结构副本即可正确回答 $T$ 个自适应近似近邻查询的算法，同时给出依赖条件数的自适应回归数据结构。
 
-**[On Differential Privacy for Adaptively Solving Search Problems via Sketching](on_differential_privacy_for_adaptively_solving_search_problems_via_sketching.md)**
-
-:   首次将差分隐私技术拓展到**搜索问题**（近似最近邻查询和回归解向量输出），在稀疏邻域假设和良好条件数假设下，实现仅需 $\widetilde{O}(\sqrt{T})$ 份数据结构副本即可应对 $T$ 次自适应查询的搜索型数据结构。
-
 **[Privacy-Shielded Image Compression: Defending Against Exploitation from Vision-Language Pretrained Models](privacy-shielded_image_compression_defending_against_exploitation_from_vision-la.md)**
 
 :   提出了 Privacy-Shielded Image Compression (PSIC)，通过在学习图像压缩解码阶段注入条件触发偏置，实现一条码流的双模式解码——默认模式保留视觉感知质量但屏蔽 VLP 模型的语义理解，授权模式则完整恢复图像语义，从而在压缩阶段为用户提供即插即用的隐私保护能力。
@@ -141,10 +133,6 @@ description: >-
 **[Solving Probabilistic Verification Problems of Neural Networks Using Branch and Bound](solving_probabilistic_verification_problems_of_neural_networks_using_branch_and_.md)**
 
 :   本文提出一种基于分支定界（Branch and Bound）的神经网络概率验证算法，通过迭代精化输出概率的上下界来回答"给定输入分布下，网络输出满足特定条件的概率是多少"，速度比已有方法快一到两个数量级。
-
-**[Theoretically Unmasking Inference Attacks Against LDP-Protected Client Data in Federated Vision Models](theoretically_unmasking_inference_attacks_against_ldp-protected_client_data_in_.md)**
-
-:   本文为联邦学习中恶意服务器的主动成员推断攻击（AMI）提供了首个理论分析框架，推导出即使在 LDP 保护下攻击成功率的下界和上界，揭示 LDP 保护强度与模型效用之间的根本矛盾。
 
 **[Theoretically Unmasking Inference Attacks Against LDP-Protected Clients in Federated Vision Models](theoretically_unmasking_inference_attacks_against_ldp-protected_clients_in_feder.md)**
 

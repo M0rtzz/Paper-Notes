@@ -1,18 +1,16 @@
 ---
 title: >-
-  ICCV2025 可解释性方向11篇论文解读
+  ICCV2025 可解释性方向10篇论文解读
 description: >-
-  11篇ICCV2025的可解释性方向论文解读，涵盖点云、自监督学习、扩散模型、推理、少样本学习、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  10篇ICCV2025的可解释性方向论文解读，涵盖自监督学习、点云、扩散模型、推理、少样本学习、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**📹 ICCV2025** · **11** 篇论文解读
+**📹 ICCV2025** · **10** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (31)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (59)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (86)](../../NeurIPS2025/interpretability/index.md) · [🧪 ICML2025 (33)](../../ICML2025/interpretability/index.md)
-
-🔥 **高频主题：** 点云 ×2
+📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (56)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (86)](../../NeurIPS2025/interpretability/index.md) · [🧪 ICML2025 (33)](../../ICML2025/interpretability/index.md)
 
 **[AIM: Amending Inherent Interpretability via Self-Supervised Masking](aim_amending_inherent_interpretability_via_self-supervised_masking.md)**
 
@@ -25,10 +23,6 @@ description: >-
 **[CAD-Recode: Reverse Engineering CAD Code from Point Clouds](cad-recode_reverse_engineering_cad_code_from_point_clouds.md)**
 
 :   提出 CAD-Recode，将点云翻译为可执行的 Python CadQuery 代码来重建 CAD 模型，利用预训练 LLM（Qwen2-1.5B）作为解码器配合轻量级点云编码器，在 DeepCAD、Fusion360 和 CC3D 三个基准上实现了 10 倍以上的 Chamfer Distance 降低。
-
-**[CAD-Recode: Reverse Engineering CAD Code from Point Clouds](cadrecode_reverse_engineering_cad_code_from_point_clouds.md)**
-
-:   CAD-Recode 将 3D CAD 逆向工程问题转化为"点云→Python 代码"翻译任务，利用预训练 LLM 的 Python 代码理解能力作为解码器，结合轻量级点云投影器和百万级程序化生成数据集，在多个 CAD 数据集上显著超越现有方法，并支持 LLM 驱动的 CAD 编辑和问答。
 
 **[CE-FAM: Concept-Based Explanation via Fusion of Activation Maps](ce-fam_concept-based_explanation_via_fusion_of_activation_maps.md)**
 

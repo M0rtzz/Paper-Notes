@@ -139,7 +139,7 @@ Decoder 模型（Mistral-7B）的结果：
 - [\[ACL 2025\] LEANCODE: Understanding Models Better for Code Simplification of Pre-trained Large Language Models](leancode_understanding_models_better_for_code_simplification_of_pre-trained_larg.md)
 - [\[ACL 2025\] DavIR: Data Selection via Implicit Reward for Large Language Models](davir_data_selection_via_implicit_reward_for_large_language_models.md)
 - [\[ACL 2025\] Adversarial Tokenization](adversarial_tokenization.md)
-- [\[ACL 2025\] Stealing Training Data from Large Language Models in Decentralized Training through Activation Inversion Attack](activation-inversion-attack-stealing-training-data-in-decentralized-training.md)
+- [\[ACL 2025\] Stealing Training Data from Large Language Models in Decentralized Training through Activation Inversion Attack](stealing_training_data_from_large_language_models_in_decentralized_training_thro.md)
 
 </div>
 

@@ -227,7 +227,7 @@ DeBias-CLIP 沿用 Long-CLIP 的双对比损失框架：一个长 caption 损失
 
 ## 相关论文
 
-- [\[CVPR 2026\] CLIP Is Shortsighted: Paying Attention Beyond the First Sentence](clip_is_shortsighted_paying_attention_beyond_the_first_sentence.md)
+- [\[CVPR 2026\] CLIP Is Shortsighted: Paying Attention Beyond the First Sentence](clip_shortsighted_beyond_first_sentence.md)
 - [\[CVPR 2026\] Looking Beyond the Window: Global-Local Aligned CLIP for Training-free Open-Vocabulary Semantic Segmentation](looking_beyond_the_window_global-local_aligned_clip_for_training-free_open-vocab.md)
 - [\[CVPR 2026\] PEARL: Geometry Aligns Semantics for Training-Free Open-Vocabulary Semantic Segmentation](pearl_geometry_aligns_semantics_for_training-free_open-vocabulary_semantic_segme.md)
 - [\[CVPR 2026\] Seeing Beyond: Extrapolative Domain Adaptive Panoramic Segmentation](seeing_beyond_extrapolative_domain_adaptive_panoramic_segmentation.md)

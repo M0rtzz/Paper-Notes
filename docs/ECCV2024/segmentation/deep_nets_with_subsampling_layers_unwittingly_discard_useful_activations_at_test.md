@@ -148,7 +148,7 @@ $$\Delta = \sum_{l=1}^{L} s_l \prod_{l'=1}^{l} R^{(l')}$$
 - [\[ICML 2025\] IT³: Idempotent Test-Time Training](../../ICML2025/segmentation/it3_idempotent_test-time_training.md)
 - [\[ICCV 2025\] Hybrid-TTA: Continual Test-time Adaptation via Dynamic Domain Shift Detection](../../ICCV2025/segmentation/hybrid-tta_continual_test-time_adaptation_via_dynamic_domain_shift_detection.md)
 - [\[CVPR 2025\] Show and Tell: Visually Explainable Deep Neural Nets via Spatially-Aware Concept Bottleneck Models](../../CVPR2025/segmentation/show_and_tell_visually_explainable_deep_neural_nets_via_spatially-aware_concept_.md)
-- [\[ICCV 2025\] Correspondence as Video: Test-Time Adaption on SAM2 for Reference Segmentation in the Wild](../../ICCV2025/segmentation/correspondence_as_video_testtime_adaption_on_sam2_for_refere.md)
+- [\[ICCV 2025\] Correspondence as Video: Test-Time Adaption on SAM2 for Reference Segmentation in the Wild](../../ICCV2025/segmentation/correspondence_as_video_test-time_adaption_on_sam2_for_reference_segmentation_in.md)
 - [\[ICCV 2025\] TopoTTA: Topology-Enhanced Test-Time Adaptation for Tubular Structure Segmentation](../../ICCV2025/segmentation/topotta_topology-enhanced_test-time_adaptation_for_tubular_structure_segmentatio.md)
 
 </div>

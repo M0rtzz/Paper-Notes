@@ -145,7 +145,7 @@ tags:
 - [\[CVPR 2025\] Mobile-GS: Real-time Gaussian Splatting for Mobile Devices](../../CVPR2025/3d_vision/mobile-gs_real-time_gaussian_splatting_for_mobile_devices.md)
 - [\[ICCV 2025\] HouseTour: A Virtual Real Estate A(I)gent](housetour_a_virtual_real_estate_aigent.md)
 - [\[ICLR 2026\] D-REX: Differentiable Real-to-Sim-to-Real Engine for Learning Dexterous Grasping](../../ICLR2026/3d_vision/d-rex_differentiable_real-to-sim-to-real_engine_for_learning_dexterous_grasping.md)
-- [\[ICCV 2025\] A Lesson in Splats: Teacher-Guided Diffusion for 3D Gaussian Splats Generation with 2D Supervision](a_lesson_in_splats_teacherguided_diffusion_for_3d_gaussian_s.md)
+- [\[ICCV 2025\] A Lesson in Splats: Teacher-Guided Diffusion for 3D Gaussian Splats Generation with 2D Supervision](a_lesson_in_splats_teacher-guided_diffusion_for_3d_gaussian_splats_generation_wi.md)
 - [\[ICCV 2025\] Radiant Foam: Real-Time Differentiable Ray Tracing](radiant_foam_real-time_differentiable_ray_tracing.md)
 
 </div>
