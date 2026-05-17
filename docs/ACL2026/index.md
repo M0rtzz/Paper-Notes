@@ -1,6 +1,6 @@
 ---
 title: >-
-  ACL2026 639篇论文解读
+  639 篇 ACL2026 论文解读 · 每篇 5 分钟读懂
 description: >-
   639篇ACL2026论文解读，涵盖多模态 VLM(50篇)、信息检索/RAG(43篇)、模型压缩(42篇)、LLM Agent(41篇)、LLM 评测(40篇)、医学图像(40篇)、LLM 推理(37篇)、LLM / NLP(35篇)等 39个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
@@ -1867,7 +1867,7 @@ tags:
 
 ---
 
-## � LLM 安全 { #llm_safety }
+## 🔒 LLM 安全 { #llm_safety }
 
 **[Adaptive Text Anonymization: Learning Privacy-Utility Trade-offs via Prompt Optimization](llm_safety/adaptive_text_anonymization_learning_privacy-utility_trade-offs_via_prompt_optim.md)**
 

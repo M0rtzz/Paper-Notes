@@ -1,6 +1,6 @@
 ---
 title: >-
-  CVPR2026 1645篇论文解读
+  1645 篇 CVPR2026 论文解读 · 每篇 5 分钟读懂
 description: >-
   1645篇CVPR2026论文解读，涵盖多模态 VLM(240篇)、3D 视觉(230篇)、图像生成(208篇)、医学图像(114篇)、自动驾驶(88篇)、语义分割(85篇)、视频理解(77篇)、人体理解(56篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
@@ -5867,7 +5867,7 @@ tags:
 
 ---
 
-## � LLM 安全 { #llm_safety }
+## 🔒 LLM 安全 { #llm_safety }
 
 **[Association and Consolidation: Evolutionary Memory-Enhanced Incremental Multi-View Clustering](llm_safety/association_and_consolidation_evolutionary_memory-enhanced_incremental_multi-vie.md)**
 

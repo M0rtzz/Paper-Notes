@@ -1,6 +1,6 @@
 ---
 title: >-
-  ICCV2025 1321篇论文解读
+  1321 篇 ICCV2025 论文解读 · 每篇 5 分钟读懂
 description: >-
   1321篇ICCV2025论文解读，涵盖 3D 视觉(254篇)、图像生成(213篇)、多模态 VLM(151篇)、自动驾驶(93篇)、语义分割(74篇)、视频理解(57篇)、视频生成(49篇)、模型压缩(48篇)等 39个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
@@ -5003,7 +5003,7 @@ tags:
 
 ---
 
-## � LLM 安全 { #llm_safety }
+## 🔒 LLM 安全 { #llm_safety }
 
 **[Adversarial Robust Memory-Based Continual Learner](llm_safety/adversarial_robust_memory-based_continual_learner.md)**
 

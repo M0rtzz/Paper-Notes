@@ -215,8 +215,8 @@ nav:
     - Towards Robust Real-World Spreadsheet Understanding with Multi-Agent Multi-Format Collaboration: ACL2026/llm_nlp/towards_robust_real-world_spreadsheet_understanding_with_multi-agent_multi-forma.md
     - 'Why Did Apple Fall: Evaluating Curiosity in Large Language Models': ACL2026/llm_nlp/why_did_apple_fall_evaluating_curiosity_in_large_language_models.md
     - 'XtraGPT: Context-Aware and Controllable Academic Paper Revision via Human-AI Collaboration': ACL2026/llm_nlp/xtragpt_context-aware_and_controllable_academic_paper_revision_via_human-ai_coll.md
-  - � LLM 安全 (21):
-    - � LLM 安全: ACL2026/llm_safety/index.md
+  - 🔒 LLM 安全 (21):
+    - 🔒 LLM 安全: ACL2026/llm_safety/index.md
     - 'Adaptive Text Anonymization: Learning Privacy-Utility Trade-offs via Prompt Optimization': ACL2026/llm_safety/adaptive_text_anonymization_learning_privacy-utility_trade-offs_via_prompt_optim.md
     - 'AGSC: Adaptive Granularity and Semantic Clustering for Uncertainty Quantification in Long-text Generation': ACL2026/llm_safety/agsc_adaptive_granularity_and_semantic_clustering_for_uncertainty_quantification.md
     - 'Beyond End-to-End: Dynamic Chain Optimization for Private LLM Adaptation on the Edge': ACL2026/llm_safety/beyond_end-to-end_dynamic_chain_optimization_for_private_llm_adaptation_on_the_e.md
@@ -829,8 +829,8 @@ nav:
     - Unified Primitive Proxies for Structured Shape Completion: CVPR2026/llm_evaluation/unified_primitive_proxies_for_structured_shape_completion.md
     - 'VGA-Bench: A Unified Benchmark for Video Aesthetics and Generation Quality Evaluation': CVPR2026/llm_evaluation/vga_bench_unified_benchmark_for_video_aesthetics_and_generation_quality.md
     - Weakly Supervised Video Anomaly Detection with Anomaly-Connected Components and Intention Reasoning: CVPR2026/llm_evaluation/weakly_supervised_video_anomaly_detection_with_anomaly-connected_components_and_.md
-  - � LLM 安全 (16):
-    - � LLM 安全: CVPR2026/llm_safety/index.md
+  - 🔒 LLM 安全 (16):
+    - 🔒 LLM 安全: CVPR2026/llm_safety/index.md
     - 'Association and Consolidation: Evolutionary Memory-Enhanced Incremental Multi-View Clustering': CVPR2026/llm_safety/association_and_consolidation_evolutionary_memory-enhanced_incremental_multi-vie.md
     - 'Beyond the Global Scores: Fine-Grained Token Grounding as a Robust Detector of LVLM Hallucinations': CVPR2026/llm_safety/beyond_global_scores_fine_grained_token_grounding_as_robust_detector_of_lvlm_hallucinations.md
     - 'The Blind Spot of Adaptation: Quantifying and Mitigating Forgetting in Fine-tuned Driving Models': CVPR2026/llm_safety/blind_spot_of_adaptation_quantifying_and_mitigating_forgetting_in_fine_tuned_driving_models.md
@@ -2878,8 +2878,8 @@ nav:
     - 'WebDevJudge: Evaluating (M)LLMs as Critiques for Web Development Quality': ICLR2026/llm_nlp/webdevjudge_mllm_web_development.md
     - Weight Decay may matter more than μP for Learning Rate Transfer in Practice: ICLR2026/llm_nlp/weight_decay_may_matter_more_than_mup_for_learning_rate_transfer_in_practice.md
     - 'When Stability Fails: Hidden Failure Modes of LLMs in Data-Constrained Scientific Decision-Making': ICLR2026/llm_nlp/when_stability_fails_hidden_failure_modes_of_llms_in_data-constrained_scientific.md
-  - � LLM 安全 (36):
-    - � LLM 安全: ICLR2026/llm_safety/index.md
+  - 🔒 LLM 安全 (36):
+    - 🔒 LLM 安全: ICLR2026/llm_safety/index.md
     - Attention Smoothing Is All You Need For Unlearning: ICLR2026/llm_safety/attention_smoothing_is_all_you_need_for_unlearning.md
     - 'AudioTrust: Benchmarking the Multifaceted Trustworthiness of Audio Large Language Models': ICLR2026/llm_safety/audiotrust_benchmarking_the_multifaceted_trustworthiness_of_audio_large_language.md
     - 'BiasBusters: Uncovering and Mitigating Tool Selection Bias in Large Language Models': ICLR2026/llm_safety/biasbusters_uncovering_and_mitigating_tool_selection_bias_in_large_language_mode.md
@@ -4432,8 +4432,8 @@ nav:
     - ? 'Trade-offs in Large Reasoning Models: An Empirical Analysis of Deliberative
         and Adaptive Reasoning over Foundational Capabilities'
       : AAAI2026/llm_reasoning/trade-offs_in_large_reasoning_models_an_empirical_analysis_of_deliberative_and_a.md
-  - � LLM 安全 (29):
-    - � LLM 安全: AAAI2026/llm_safety/index.md
+  - 🔒 LLM 安全 (29):
+    - 🔒 LLM 安全: AAAI2026/llm_safety/index.md
     - 'Anti-adversarial Learning: Desensitizing Prompts for Large Language Models': AAAI2026/llm_safety/anti-adversarial_learning_desensitizing_prompts_for_large_la.md
     - Attention Retention for Continual Learning with Vision Transformers: AAAI2026/llm_safety/attention_retention_for_continual_learning_with_vision_transformers.md
     - 'AUVIC: Adversarial Unlearning of Visual Concepts for Multi-modal Large Language Models': AAAI2026/llm_safety/auvic_adversarial_unlearning_of_visual_concepts_for_multi-mo.md
@@ -5967,8 +5967,8 @@ nav:
     - Unlocking Multimodal Mathematical Reasoning via Process Reward Model: NeurIPS2025/llm_reasoning/unlocking_multimodal_mathematical_reasoning_via_process_reward_model.md
     - 笔记6：Self-Evaluating LLMs - 多步任务的步级置信度估计: NeurIPS2025/llm_reasoning/value-guided_search_for_efficient_chain-of-thought_reasoning.md
     - 'Visual Thoughts: A Unified Perspective of Understanding Multimodal Chain-of-Thought': NeurIPS2025/llm_reasoning/visual_thoughts_a_unified_perspective_of_understanding_multi.md
-  - � LLM 安全 (59):
-    - � LLM 安全: NeurIPS2025/llm_safety/index.md
+  - 🔒 LLM 安全 (59):
+    - 🔒 LLM 安全: NeurIPS2025/llm_safety/index.md
     - A Cramér–von Mises Approach to Incentivizing Truthful Data Sharing: NeurIPS2025/llm_safety/a_cramrvon_mises_approach_to_incentivizing_truthful_data_sha.md
     - A Reliable Cryptographic Framework for Empirical Machine Unlearning Evaluation: NeurIPS2025/llm_safety/a_reliable_cryptographic_framework_for_empirical_machine_unl.md
     - Adaptive LoRA Experts Allocation and Selection for Federated Fine-Tuning: NeurIPS2025/llm_safety/adaptive_lora_experts_allocation_and_selection_for_federated_fine-tuning.md
@@ -8555,8 +8555,8 @@ nav:
     - 'ShadowHack: Hacking Shadows via Luminance-Color Divide and Conquer': ICCV2025/llm_nlp/shadowhack_hacking_shadows_via_luminance-color_divide_and_conquer.md
     - 'VA-GPT: Aligning Effective Tokens with Video Anomaly in Large Language Models': ICCV2025/llm_nlp/va_gpt_aligning_effective_tokens_video_anomaly.md
     - 'VIM: Versatile Interactive Motion-Language Model': ICCV2025/llm_nlp/vim_versatile_interactive_motion_language_model.md
-  - � LLM 安全 (8):
-    - � LLM 安全: ICCV2025/llm_safety/index.md
+  - 🔒 LLM 安全 (8):
+    - 🔒 LLM 安全: ICCV2025/llm_safety/index.md
     - Adversarial Robust Memory-Based Continual Learner: ICCV2025/llm_safety/adversarial_robust_memory-based_continual_learner.md
     - Asynchronous Event Error-Minimizing Noise for Safeguarding Event Dataset: ICCV2025/llm_safety/asynchronous_event_error-minimizing_noise_for_safeguarding_event_dataset.md
     - 'ChartCap: Mitigating Hallucination of Dense Chart Captioning': ICCV2025/llm_safety/chartcap_mitigating_hallucination_of_dense_chart_captioning.md
@@ -9977,8 +9977,8 @@ nav:
     - 'The Best of Both Worlds: Bridging Quality and Diversity in Data Selection with Bipartite Graph': ICML2025/llm_evaluation/the_best_of_both_worlds_bridging_quality_and_diversity_in_data_selection_with_bi.md
     - 'UI-Evol: Automatic Knowledge Evolving for Computer Use Agents': ICML2025/llm_evaluation/ui-evol_automatic_knowledge_evolving_for_computer_use_agents.md
     - Unlocking Post-hoc Dataset Inference with Synthetic Data: ICML2025/llm_evaluation/unlocking_post-hoc_dataset_inference_with_synthetic_data.md
-  - � LLM 安全 (32):
-    - � LLM 安全: ICML2025/llm_safety/index.md
+  - 🔒 LLM 安全 (32):
+    - 🔒 LLM 安全: ICML2025/llm_safety/index.md
     - Activation Space Interventions Can Be Transferred Between Large Language Models: ICML2025/llm_safety/activation_space_interventions_can_be_transferred_between_large_language_models.md
     - 'Align-then-Unlearn: Embedding Alignment for LLM Unlearning': ICML2025/llm_safety/align-then-unlearn_embedding_alignment_for_llm_unlearning.md
     - An Attack to Break Permutation-Based Private Third-Party Inference Schemes for LLMs: ICML2025/llm_safety/an_attack_to_break_permutation-based_private_third-party_inference_schemes_for_l.md
@@ -11731,8 +11731,8 @@ nav:
     - 'Think&Cite: Improving Attributed Text Generation with Self-Guided Tree Search and Progress Reward Modeling': ACL2025/llm_alignment/think_cite_attributed_text_gen.md
     - Upcycling Instruction Tuning from Dense to Mixture-of-Experts via Parameter Merging: ACL2025/llm_alignment/upcycling_instruction_tuning_from_dense_to_mixture-of-experts_via_parameter_merg.md
     - 'World Modeling Makes a Better Planner: Dual Preference Optimization for Embodied Task Planning': ACL2025/llm_alignment/world_modeling_makes_a_better_planner_dual_preference_optimization_for_embodied_.md
-  - � LLM 安全 (65):
-    - � LLM 安全: ACL2025/llm_safety/index.md
+  - 🔒 LLM 安全 (65):
+    - 🔒 LLM 安全: ACL2025/llm_safety/index.md
     - 'AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection': ACL2025/llm_safety/agrail_a_lifelong_agent_guardrail_with_effective_and_adaptive_safety_detection.md
     - Aligning Large Language Models to Follow Instructions and Hallucinate Less via Effective Data Filtering: ACL2025/llm_safety/aligning_large_language_models_to_follow_instructions_and_hallucinate_less_via_e.md
     - Alleviating Hallucinations from Knowledge Misalignment in Large Language Models via Selective Abstention Learning: ACL2025/llm_safety/alleviating_hallucinations_from_knowledge_misalignment_in_large_language_models_.md
@@ -13247,8 +13247,8 @@ nav:
     - 'Reason-before-Retrieve: One-Stage Reflective Chain-of-Thoughts for Training-Free Zero-Shot Composed Image Retrieval': CVPR2025/llm_reasoning/osrcir_reflective_cot.md
     - Style Evolving along Chain-of-Thought for Unknown-Domain Object Detection: CVPR2025/llm_reasoning/style_evolving_along_chain-of-thought_for_unknown-domain_object_detection.md
     - 'VideoEspresso: A Large-Scale Chain-of-Thought Dataset for Fine-Grained Video Reasoning via Core Frame Selection': CVPR2025/llm_reasoning/videoespresso_a_large-scale_chain-of-thought_dataset_for_fine-grained_video_reas.md
-  - � LLM 安全 (3):
-    - � LLM 安全: CVPR2025/llm_safety/index.md
+  - 🔒 LLM 安全 (3):
+    - 🔒 LLM 安全: CVPR2025/llm_safety/index.md
     - Low-Rank Adaptation in Multilinear Operator Networks for Security-Preserving Incremental Learning: CVPR2025/llm_safety/low-rank_adaptation_in_multilinear_operator_networks_for_security-preserving_inc.md
     - 'Neural Gate: Mitigating Privacy Risks in LVLMs via Neuron-Level Gradient Gating': CVPR2025/llm_safety/neural_gate_mitigating_privacy_risks_in_lvlms_via_neuron-level_gradient_gating.md
     - 'Order-Robust Class Incremental Learning: Graph-Driven Dynamic Similarity Grouping': CVPR2025/llm_safety/order-robust_class_incremental_learning_graph-driven_dynamic_similarity_grouping.md
@@ -15115,8 +15115,8 @@ nav:
     - 'Agent3D-Zero: An Agent for Zero-shot 3D Understanding': ECCV2024/llm_agent/agent3d-zero_an_agent_for_zero-shot_3d_understanding.md
     - 'HYDRA: A Hyper Agent for Dynamic Compositional Visual Reasoning': ECCV2024/llm_agent/hydra_a_hyper_agent_for_dynamic_compositional_visual_reasoning.md
     - 'VideoAgent: A Memory-augmented Multimodal Agent for Video Understanding': ECCV2024/llm_agent/videoagent_a_memory-augmented_multimodal_agent_for_video_understanding.md
-  - � LLM 安全 (2):
-    - � LLM 安全: ECCV2024/llm_safety/index.md
+  - 🔒 LLM 安全 (2):
+    - 🔒 LLM 安全: ECCV2024/llm_safety/index.md
     - ? Is Retain Set All You Need in Machine Unlearning? Restoring Performance of
         Unlearned Models with Out-Of-Distribution Images
       : ECCV2024/llm_safety/is_retain_set_all_you_need_in_machine_unlearning_restoring_performance_of_unlear.md

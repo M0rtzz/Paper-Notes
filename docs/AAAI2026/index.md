@@ -1,6 +1,6 @@
 ---
 title: >-
-  AAAI2026 1383篇论文解读
+  1383 篇 AAAI2026 论文解读 · 每篇 5 分钟读懂
 description: >-
   1383篇AAAI2026论文解读，涵盖医学图像(105篇)、多模态 VLM(91篇)、图像生成(78篇)、3D 视觉(74篇)、强化学习(71篇)、自动驾驶(58篇)、模型压缩(54篇)、AI 安全(44篇)等 44个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
@@ -3979,7 +3979,7 @@ tags:
 
 ---
 
-## � LLM 安全 { #llm_safety }
+## 🔒 LLM 安全 { #llm_safety }
 
 **[Anti-adversarial Learning: Desensitizing Prompts for Large Language Models](llm_safety/anti-adversarial_learning_desensitizing_prompts_for_large_la.md)**
 

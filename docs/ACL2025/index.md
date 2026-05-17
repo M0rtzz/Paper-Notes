@@ -1,6 +1,6 @@
 ---
 title: >-
-  ACL2025 1859篇论文解读
+  1859 篇 ACL2025 论文解读 · 每篇 5 分钟读懂
 description: >-
   1859篇ACL2025论文解读，涵盖 LLM / NLP(438篇)、多模态 VLM(132篇)、LLM 评测(88篇)、多语言/翻译(88篇)、信息检索/RAG(86篇)、对齐 / RLHF(72篇)、LLM 安全(65篇)、模型压缩(64篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
@@ -3663,7 +3663,7 @@ tags:
 
 ---
 
-## � LLM 安全 { #llm_safety }
+## 🔒 LLM 安全 { #llm_safety }
 
 **[AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection](llm_safety/agrail_a_lifelong_agent_guardrail_with_effective_and_adaptive_safety_detection.md)**
 

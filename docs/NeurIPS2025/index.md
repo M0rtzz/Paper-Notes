@@ -1,6 +1,6 @@
 ---
 title: >-
-  NeurIPS2025 2537篇论文解读
+  2537 篇 NeurIPS2025 论文解读 · 每篇 5 分钟读懂
 description: >-
   2537篇NeurIPS2025论文解读，涵盖图像生成(247篇)、强化学习(171篇)、多模态 VLM(153篇)、医学图像(140篇)、模型压缩(137篇)、3D 视觉(116篇)、优化/理论(114篇)、可解释性(86篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
@@ -5579,7 +5579,7 @@ tags:
 
 ---
 
-## � LLM 安全 { #llm_safety }
+## 🔒 LLM 安全 { #llm_safety }
 
 **[A Cramér–von Mises Approach to Incentivizing Truthful Data Sharing](llm_safety/a_cramrvon_mises_approach_to_incentivizing_truthful_data_sha.md)**
 

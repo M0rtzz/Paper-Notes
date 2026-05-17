@@ -1,6 +1,6 @@
 ---
 title: >-
-  ICML2025 1063篇论文解读
+  1063 篇 ICML2025 论文解读 · 每篇 5 分钟读懂
 description: >-
   1063篇ICML2025论文解读，涵盖图像生成(110篇)、强化学习(80篇)、模型压缩(70篇)、医学图像(62篇)、优化/理论(57篇)、多模态 VLM(52篇)、LLM 评测(49篇)、AI 安全(33篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
@@ -2247,7 +2247,7 @@ tags:
 
 ---
 
-## � LLM 安全 { #llm_safety }
+## 🔒 LLM 安全 { #llm_safety }
 
 **[Activation Space Interventions Can Be Transferred Between Large Language Models](llm_safety/activation_space_interventions_can_be_transferred_between_large_language_models.md)**
 

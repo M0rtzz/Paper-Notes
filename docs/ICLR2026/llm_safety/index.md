@@ -16,7 +16,7 @@ tags:
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
-# � LLM 安全
+# 🔒 LLM 安全
 
 **🔬 ICLR2026** · **36** 篇论文解读
 

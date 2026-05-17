@@ -17,7 +17,7 @@ tags:
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
-# � LLM 安全
+# 🔒 LLM 安全
 
 **📷 CVPR2026** · **16** 篇论文解读
 

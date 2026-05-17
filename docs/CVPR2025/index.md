@@ -1,6 +1,6 @@
 ---
 title: >-
-  CVPR2025 1822篇论文解读
+  1822 篇 CVPR2025 论文解读 · 每篇 5 分钟读懂
 description: >-
   1822篇CVPR2025论文解读，涵盖 3D 视觉(359篇)、图像生成(305篇)、多模态 VLM(154篇)、语义分割(98篇)、自动驾驶(94篇)、视频生成(84篇)、医学图像(83篇)、视频理解(77篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
@@ -7137,7 +7137,7 @@ tags:
 
 ---
 
-## � LLM 安全 { #llm_safety }
+## 🔒 LLM 安全 { #llm_safety }
 
 **[Low-Rank Adaptation in Multilinear Operator Networks for Security-Preserving Incremental Learning](llm_safety/low-rank_adaptation_in_multilinear_operator_networks_for_security-preserving_inc.md)**
 

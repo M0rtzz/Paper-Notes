@@ -1,5 +1,5 @@
 ---
-title: "AI 顶会论文解读 | 14000+篇深度笔记"
+title: "14000+ 篇 AI 顶会论文解读 · 每篇 5 分钟读懂"
 description: "14000+篇 AI、LLM、NLP、CV 顶会论文解读，每篇5分钟读懂核心思想。覆盖 ACL、CVPR、ICLR、AAAI、NeurIPS、ICCV、ICML、ECCV 等10大会议46个研究领域，每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。"
 tags:
   - "AI论文解读"

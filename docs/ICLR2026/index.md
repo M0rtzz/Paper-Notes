@@ -1,6 +1,6 @@
 ---
 title: >-
-  ICLR2026 1528篇论文解读
+  1528 篇 ICLR2026 论文解读 · 每篇 5 分钟读懂
 description: >-
   1528篇ICLR2026论文解读，涵盖图像生成(154篇)、强化学习(138篇)、模型压缩(90篇)、多模态 VLM(90篇)、医学图像(72篇)、LLM 推理(65篇)、3D 视觉(63篇)、可解释性(56篇)等 44个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
@@ -4215,7 +4215,7 @@ tags:
 
 ---
 
-## � LLM 安全 { #llm_safety }
+## 🔒 LLM 安全 { #llm_safety }
 
 **[Attention Smoothing Is All You Need For Unlearning](llm_safety/attention_smoothing_is_all_you_need_for_unlearning.md)**
 

@@ -1,6 +1,6 @@
 ---
 title: >-
-  ECCV2024 874篇论文解读
+  874 篇 ECCV2024 论文解读 · 每篇 5 分钟读懂
 description: >-
   874篇ECCV2024论文解读，涵盖 3D 视觉(166篇)、图像生成(107篇)、人体理解(56篇)、语义分割(53篇)、自动驾驶(52篇)、多模态 VLM(50篇)、视频理解(49篇)、目标检测(36篇)等 38个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
@@ -3351,7 +3351,7 @@ tags:
 
 ---
 
-## � LLM 安全 { #llm_safety }
+## 🔒 LLM 安全 { #llm_safety }
 
 **[Is Retain Set All You Need in Machine Unlearning? Restoring Performance of Unlearned Models with Out-Of-Distribution Images](llm_safety/is_retain_set_all_you_need_in_machine_unlearning_restoring_performance_of_unlear.md)**
 
