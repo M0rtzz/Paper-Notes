@@ -131,7 +131,7 @@ CRAFT 在所有指标和数据集上全面领先，且 ImageReward 和 MPS 未�
 - [\[CVPR 2026\] Memory-Efficient Fine-Tuning Diffusion Transformers via Dynamic Patch Sampling and Block Skipping](memory-efficient_fine-tuning_diffusion_transformers_via_dynamic_patch_sampling_a.md)
 - [\[CVPR 2026\] RewardFlow: Generate Images by Optimizing What You Reward](rewardflow_generate_images_by_optimizing_what_you_reward.md)
 - [\[CVPR 2026\] Low-Resolution Editing is All You Need for High-Resolution Editing](low-resolution_editing_is_all_you_need_for_high-resolution_editing.md)
-- [\[CVPR 2026\] YOEO: You Only Erase Once - Erasing Anything without Bringing Unexpected Content](yoeo_you_only_erase_once_erasing_anything_without_bringing_unexpected_content.md)
+- [\[CVPR 2026\] Cycle-Consistent Tuning for Layered Image Decomposition](cycle-consistent_tuning_for_layered_image_decomposition.md)
 
 </div>
 

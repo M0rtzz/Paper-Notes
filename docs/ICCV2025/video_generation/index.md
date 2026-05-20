@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 视频生成方向49篇论文解读
+  ICCV2025 视频生成方向48篇论文解读
 description: >-
-  49篇ICCV2025的视频生成方向论文解读，涵盖视频生成、扩散模型、对抗鲁棒、个性化生成、动态场景、人脸/视线等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  48篇ICCV2025的视频生成方向论文解读，涵盖视频生成、扩散模型、对抗鲁棒、个性化生成、人脸/视线、动态场景等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICCV2025"
   - "视频生成"
@@ -11,18 +11,18 @@ tags:
   - "扩散模型"
   - "对抗鲁棒"
   - "个性化生成"
-  - "动态场景"
   - "人脸/视线"
+  - "动态场景"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎬 视频生成
 
-**📹 ICCV2025** · **49** 篇论文解读
+**📹 ICCV2025** · **48** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (3)](../../ACL2026/video_generation/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/video_generation/index.md) · [🔬 ICLR2026 (19)](../../ICLR2026/video_generation/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/video_generation/index.md) · [🧠 NeurIPS2025 (23)](../../NeurIPS2025/video_generation/index.md) · [🧪 ICML2025 (7)](../../ICML2025/video_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/video_generation/index.md) · [💬 ACL2026 (4)](../../ACL2026/video_generation/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/video_generation/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/video_generation/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/video_generation/index.md) · [🧠 NeurIPS2025 (22)](../../NeurIPS2025/video_generation/index.md)
 
-🔥 **高频主题：** 视频生成 ×21 · 扩散模型 ×12 · 对抗鲁棒 ×5 · 个性化生成 ×3 · 动态场景 ×3
+🔥 **高频主题：** 视频生成 ×20 · 扩散模型 ×12 · 对抗鲁棒 ×5 · 个性化生成 ×3 · 人脸/视线 ×2
 
 **[Adversarial Distribution Matching for Diffusion Distillation Towards Efficient Image and Video Synthesis](adversarial_distribution_matching_for_diffusion_distillation_towards_efficient_i.md)**
 
@@ -107,10 +107,6 @@ tags:
 **[Generating, Fast and Slow: Scalable Parallel Video Generation with Video Interface Networks](generating_fast_and_slow_scalable_parallel_video_generation_with_video_interface.md)**
 
 :   提出 Video Interface Networks (VINs)，一种类似"快思考"的抽象模块，在每个扩散步中将长视频编码为固定大小的全局 token，引导 DiT 并行生成多个视频 chunk，实现高效且时序一致的长视频生成。
-
-**[Geo4D: Leveraging Video Generators for Geometric 4D Scene Reconstruction](geo4d_leveraging_video_generators_for_geometric_4d_scene_reconstruction.md)**
-
-:   将预训练视频扩散模型(DynamiCrafter)改造为单目4D动态场景重建器——同时预测点云图、视差图和射线图三种互补几何模态，通过多模态对齐融合算法和滑动窗口推理，仅用合成数据训练即可零样本泛化至真实视频，大幅超越当前视频深度估计SOTA。
 
 **[LeanVAE: An Ultra-Efficient Reconstruction VAE for Video Diffusion Models](leanvae_an_ultra-efficient_reconstruction_vae_for_video_diffusion_models.md)**
 

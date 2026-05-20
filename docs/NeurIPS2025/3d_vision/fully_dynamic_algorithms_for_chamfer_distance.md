@@ -137,10 +137,10 @@ tags:
 ## 相关论文
 
 - [\[NeurIPS 2025\] DGH: Dynamic Gaussian Hair](dgh_dynamic_gaussian_hair.md)
-- [\[CVPR 2026\] Long-SCOPE: Fully Sparse Long-Range Cooperative 3D Perception](../../CVPR2026/3d_vision/long_scope_fully_sparse_long_range_cooperative_3d_perception.md)
+- [\[CVPR 2025\] FSHNet: Fully Sparse Hybrid Network for 3D Object Detection](../../CVPR2025/3d_vision/fshnet_fully_sparse_hybrid_network_for_3d_object_detection.md)
 - [\[CVPR 2025\] GaussianUDF: Inferring Unsigned Distance Functions through 3D Gaussian Splatting](../../CVPR2025/3d_vision/gaussianudf_inferring_unsigned_distance_functions_through_3d_gaussian_splatting.md)
+- [\[CVPR 2026\] Long-SCOPE: Fully Sparse Long-Range Cooperative 3D Perception](../../CVPR2026/3d_vision/long_scope_fully_sparse_long_range_cooperative_3d_perception.md)
 - [\[ECCV 2024\] Ray-Distance Volume Rendering for Neural Scene Reconstruction](../../ECCV2024/3d_vision/ray-distance_volume_rendering_for_neural_scene_reconstruction.md)
-- [\[ECCV 2024\] WaSt-3D: Wasserstein-2 Distance for Scene-to-Scene Stylization on 3D Gaussians](../../ECCV2024/3d_vision/wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)
 
 </div>
 

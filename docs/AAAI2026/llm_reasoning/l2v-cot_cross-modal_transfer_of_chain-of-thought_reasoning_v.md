@@ -111,7 +111,7 @@ L2V-CoT 包含两步：(1) 从 LLM（DeepSeek-R1-Distill-Qwen-32B）提取低通
 - [\[AAAI 2026\] Efficient Thought Space Exploration Through Strategic Intervention](efficient_thought_space_exploration_through_strategic_intervention.md)
 - [\[AAAI 2026\] CMMCoT: Enhancing Complex Multi-Image Comprehension via Multi-Modal Chain-of-Thought and Memory Augmentation](cmmcot_enhancing_complex_multi-image_comprehension_via_multi.md)
 - [\[AAAI 2026\] ARCHE: A Novel Task to Evaluate LLMs on Latent Reasoning Chain Extraction](arche_a_novel_task_to_evaluate_llms_on_latent_reasoning_chai.md)
-- [\[CVPR 2025\] Interleaved-Modal Chain-of-Thought](../../CVPR2025/llm_reasoning/interleaved-modal_chain-of-thought.md)
+- [\[ICML 2026\] A Formal Comparison Between Chain of Thought and Latent Thought](../../ICML2026/llm_reasoning/a_formal_comparison_between_chain_of_thought_and_latent_thought.md)
 
 </div>
 

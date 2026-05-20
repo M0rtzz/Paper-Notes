@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 医学图像方向26篇论文解读
+  ECCV2024 医学图像方向27篇论文解读
 description: >-
-  26篇ECCV2024的医学图像方向论文解读，涵盖医学影像、语义分割、少样本学习、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  27篇ECCV2024的医学图像方向论文解读，涵盖医学影像、语义分割、扩散模型、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
   - "医学图像"
@@ -10,18 +10,18 @@ tags:
   - "论文笔记"
   - "医学影像"
   - "语义分割"
-  - "少样本学习"
   - "扩散模型"
+  - "多模态"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**🎞️ ECCV2024** · **26** 篇论文解读
+**🎞️ ECCV2024** · **27** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (114)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (72)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (105)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (140)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (38)](../../ICCV2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/medical_imaging/index.md) · [💬 ACL2026 (51)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (119)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (79)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (106)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/medical_imaging/index.md)
 
-🔥 **高频主题：** 医学影像 ×14 · 语义分割 ×3 · 少样本学习 ×2 · 扩散模型 ×2
+🔥 **高频主题：** 医学影像 ×14 · 语义分割 ×4 · 扩散模型 ×2 · 多模态 ×2
 
 **[A Cephalometric Landmark Regression Method Based on Dual-Encoder for High-Resolution X-Ray Image](a_cephalometric_landmark_regression_method_based_on_dual-encoder_for_high-resolu.md)**
 
@@ -30,10 +30,6 @@ tags:
 **[A Rotation-Invariant Texture ViT for Fine-Grained Recognition of Esophageal Cancer Endoscopic Ultrasound Images](a_rotation-invariant_texture_vit_for_fine-grained_recognition_of_esophageal_canc.md)**
 
 :   本文提出 SRRM-ViT，通过在 ViT 中引入统计旋转不变性增强机制(SRRM)，自适应选择关键区域并融合直方图统计特征，实现了对食管癌内镜超声图像中任意径向位置病灶的无偏细粒度分类，在临床和公开数据集上取得了显著性能提升。
-
-**[AdaCLIP: Adapting CLIP with Hybrid Learnable Prompts for Zero-Shot Anomaly Detection](adaclip_adapting_clip_with_hybrid_learnable_prompts_for_zero.md)**
-
-:   在CLIP中同时引入静态（全局共享）和动态（逐图生成）两种可学习提示，用辅助异常检测数据训练后，在14个工业+医学异常检测数据集上实现零样本SOTA，核心在于"任务级+实例级"双层自适应的混合提示设计。
 
 **[Adaptive Correspondence Scoring for Unsupervised Medical Image Registration](adaptive_correspondence_scoring_for_unsupervised_medical_ima.md)**
 
@@ -122,6 +118,14 @@ tags:
 **[Topology-Preserving Downsampling of Binary Images](topology-preserving_downsampling_of_binary_images.md)**
 
 :   提出首个基于离散优化（整数规划）的拓扑保持二值图像下采样方法，通过将下采样像素的黑白决策编码为布尔变量、拓扑保持作为硬约束、与原图相似度作为目标函数来求解，保证下采样结果具有与原图完全相同的Betti数（连通分量数和孔洞数），同时保持与传统方法竞争性的像素级相似度。
+
+**[UMBRAE: Unified Multimodal Brain Decoding](umbrae_unified_multimodal_brain_decoding.md)**
+
+:   提出UMBRAE，通过通用脑编码器将fMRI信号与图像特征对齐后送入冻结的MLLM，实现多模态脑解码（描述、定位、检索、视觉重建），并创新性地引入跨被试训练策略，使单一模型服务多个被试且优于单被试模型。
+
+**[Unleashing the Power of Prompt-driven Nucleus Instance Segmentation](unleashing_the_power_of_prompt-driven_nucleus_instance_segmentation.md)**
+
+:   提出 PromptNucSeg 框架，通过训练一个 prompter 自动生成细胞核中心点 prompt，并微调 SAM 进行逐核分割，同时引入相邻核作为 negative prompt 解决重叠核分割问题，无需复杂后处理即在三个 benchmark 上达到 SOTA。
 
 **[Unsupervised Multi-modal Medical Image Registration via Invertible Translation](unsupervised_multi-modal_medical_image_registration_via_invertible_translation.md)**
 

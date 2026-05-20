@@ -20,7 +20,7 @@ tags:
 
 **📹 ICCV2025** · **48** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (42)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (50)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (90)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (54)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (137)](../../NeurIPS2025/model_compression/index.md) · [🧪 ICML2025 (70)](../../ICML2025/model_compression/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (21)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (49)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (50)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (90)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (53)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (134)](../../NeurIPS2025/model_compression/index.md)
 
 🔥 **高频主题：** 模型压缩 ×10 · 压缩/编码 ×4 · 持续学习 ×3 · LLM ×2 · 对抗鲁棒 ×2
 

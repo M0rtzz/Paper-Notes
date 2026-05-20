@@ -160,10 +160,10 @@ $$\mathcal{L}(\theta) = \mathcal{L}_{\text{base}} + \underbrace{(\mathcal{L}_{\t
 ## 相关论文
 
 - [\[ICLR 2026\] SoFlow: Solution Flow Models for One-Step Generative Modeling](soflow_solution_flow_models_for_one-step_generative_modeling.md)
+- [\[ICML 2026\] Adversarial Flow Models](../../ICML2026/image_generation/adversarial_flow_models.md)
 - [\[NeurIPS 2025\] FALCON: Few-step Accurate Likelihoods for Continuous Flows](../../NeurIPS2025/image_generation/falcon_few-step_accurate_likelihoods_for_continuous_flows.md)
 - [\[ICML 2025\] Revisiting Diffusion Models: From Generative Pre-training to One-Step Generation](../../ICML2025/image_generation/revisiting_diffusion_models_from_generative_pre-training_to_one-step_generation.md)
 - [\[ICLR 2026\] Flow2GAN: Hybrid Flow Matching and GAN with Multi-Resolution Network for Few-step High-Fidelity Audio Generation](flow2gan_hybrid_flow_matching_and_gan_with_multi-resolution_network_for_few-step.md)
-- [\[ICLR 2026\] GLASS Flows: Efficient Inference for Reward Alignment of Flow and Diffusion Models](glass_flows_reward_alignment_diffusion.md)
 
 </div>
 

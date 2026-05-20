@@ -1,0 +1,153 @@
+---
+title: >-
+  [论文解读] Converge Faster, Talk Less: Hessian-Informed Federated Zeroth-Order Optimization
+description: >-
+  [ICLR 2026][优化/理论][联邦学习] 提出 HiSo（Hessian-informed Scalar-only communication），在联邦零阶优化中利用全局对角 Hessian 近似加速收敛，同时严格保持标量通信不传输任何二阶信息…
+tags:
+  - "ICLR 2026"
+  - "优化/理论"
+  - "联邦学习"
+  - "zeroth-order optimization"
+  - "Hessian preconditioning"
+  - "标量通信"
+  - "LLM 微调"
+---
+
+# Converge Faster, Talk Less: Hessian-Informed Federated Zeroth-Order Optimization
+
+**会议**: ICLR 2026  
+**arXiv**: [2506.02370](https://arxiv.org/abs/2506.02370)  
+**代码**: 待确认  
+**领域**: 优化 / 联邦学习  
+**关键词**: 联邦学习, zeroth-order optimization, Hessian preconditioning, 标量通信, LLM 微调
+
+## 一句话总结
+
+提出 HiSo（Hessian-informed Scalar-only communication），在联邦零阶优化中利用全局对角 Hessian 近似加速收敛，同时严格保持标量通信不传输任何二阶信息。理论证明在低有效秩和白化假设下收敛速率独立于 Lipschitz 常数 $L$ 和模型维度 $d$；实验在 OPT-350M/1.3B/2.7B 微调中实现 1.4~5.4× 通信轮次加速，通信成本仅 KB 级。
+
+## 研究背景与动机
+
+**领域现状**：联邦学习 LLM 微调面临严重的通信瓶颈——FedAvg 对 OPT-1.3B 每个客户端需约 1~5 TB 通信量。DeComFL 利用零阶梯度的标量-种子表示实现维度无关通信（TB→KB 级），但收敛极慢。
+
+**现有痛点**：ZO-SGD 使用各向同性随机方向搜索梯度（$u \sim \mathcal{N}(0, I)$），完全忽略 LLM 参数空间的异构曲率——高曲率方向和低曲率方向被等权搜索，导致梯度估计方差大、收敛率 $\mathcal{O}(\sqrt{Ld/mR})$ 依赖维度 $d$ 和 Lipschitz 常数 $L$。传统的 Hessian 预处理需要 $O(d)$ 或 $O(d^2)$ 通信，直接破坏标量通信框架。
+
+**核心矛盾**：曲率信息能显著加速收敛（Adam/二阶方法已证明），但在标量通信框架下传输任何 Hessian 相关信息都会线性或二次增加通信开销——与维度无关通信的根本目标矛盾。
+
+**本文目标**：如何在严格保持标量通信（每轮仅传递一个梯度标量 $g$ 和随机种子）的前提下，利用 Hessian 信息加速联邦零阶优化的收敛？
+
+**切入角度**：关键观察是全局聚合的零阶梯度更新量 $\Delta x_r$ 本身可以从标量重构（已用于模型重构步骤），因此可以"免费"地用 Adam 风格的 EMA 从这些已有变量中计算对角 Hessian 近似——无需任何额外通信。
+
+**核心 idea**：用 Hessian 逆平方根扭曲随机扰动方向使其沿高曲率方向更精细搜索，而 Hessian 本身从已有的全局梯度标量中免费计算，实现零额外通信成本的曲率加速。
+
+## 方法详解
+
+### 整体框架
+
+首先提出通用标量通信 FL 框架（Algorithm 1），将标量通信与具体优化器解耦——不再绑定 ZO-SGD，而是允许任何能用标量+状态表示更新方向的优化算法。在此框架内，HiSo 用 Hessian 引导的零阶更新替代 ZO-SGD：扰动方向从各向同性 $u \sim \mathcal{N}(0, I)$ 改为 $z \sim \mathcal{N}(0, H_r^{-1})$，更新量的期望值从梯度下降 $\nabla f$ 变为 Newton 风格下降 $H_r^{-1}\nabla f$。
+
+### 关键设计 1：Hessian 引导的零阶梯度估计
+
+- **功能**：将 ZO 梯度估计从各向同性搜索升级为曲率引导的定向搜索
+- **核心思路**：将局部更新形式化为最小化梯度估计误差的子问题（式 5-6），在标量表示约束下求解最优上升方向。解为 $\Delta x = \frac{1}{\mu}[f(x + \mu H_r^{-1/2}u) - f(x)] \cdot H_r^{-1/2}u$，其期望值 $\mathbb{E}[\Delta x] \approx H_r^{-1}\nabla f(x)$——等价于自然梯度/Newton 下降。关键：更新仍只产生一个标量 $g$，通信维度无关性完全保持
+- **设计动机**：$H_r^{-1/2}$ 将各向同性搜索变换为沿 Hessian 特征方向的非均等搜索——高曲率方向搜索更精细、低曲率方向搜索更粗，大幅降低梯度估计方差
+
+### 关键设计 2：零通信成本的全局对角 Hessian 学习
+
+- **功能**：在服务端和客户端同步维护全局对角 Hessian 近似，不增加任何通信开销
+- **核心思路**：利用 Adam 风格的 EMA 从全局聚合的更新量计算：$H_{r+1} = (1-\nu)H_r + \nu \text{Diag}([\Delta x_r]^2 + \epsilon I)$。关键观察是 $\Delta x_r$ 可以完全从标量和随机种子重构（这些信息已用于模型重构步骤），因此 Hessian 计算是"免费的"——无需额外通信、无需额外函数求值
+- **设计动机**：对角近似避免 $d^2$ 存储，EMA 平滑避免噪声波动，$\epsilon$ 保证正定性——与 RMSProp 在精神上一致但应用在零阶 FL 场景
+
+### 关键设计 3：低白化秩的方差压缩理论
+
+- **功能**：为 Hessian 引导带来的加速提供严格理论解释
+- **核心思路**：引入"白化秩" $\zeta = \text{Tr}(H^{-1/2}\Sigma H^{-1/2})$ 衡量 Hessian 近似的质量。当 $H$ 是良好近似时，$\zeta \ll L\kappa \ll Ld$，ZO 梯度方差从标准的 $Ld$ 压缩到 $\zeta$——收敛率从 $\mathcal{O}(\sqrt{Ld/mR})$ 改善为 $\mathcal{O}(\sqrt{\zeta/mR})$，独立于 $d$ 和 $L$
+- **设计动机**：LLM 的 Hessian 特征值呈长尾分布（有效秩远小于维度），对角 Hessian 近似的白化操作可以有效压平这一分布
+
+### 损失函数/训练策略
+
+标准联邦学习目标：$\min_x f(x) = \frac{1}{M}\sum_{i=1}^M f_i(x)$。每轮均匀采样客户端子集，客户端执行 $\tau$ 步本地更新后上传标量。Hessian 仅在每轮开始时通过 $\tau$ 步 EMA 更新一次。
+
+## 实验关键数据
+
+### 主实验：HiSo 通信轮次加速（Table 2）
+
+| 模型 | 方法 | SST-2 轮次 | SST-2 加速 | QQP 轮次 | QQP 加速 | SQuAD 轮次 | SQuAD 加速 |
+|------|------|-----------|-----------|---------|---------|-----------|-----------|
+| OPT-350M | DeComFL | 550 | 1× | 775 | 1× | 1350 | 1× |
+| | **HiSo** | **275** | **2×** | **425** | **1.8×** | **250** | **5.4×** |
+| OPT-1.3B | DeComFL | 1500 | 1× | 1125 | 1× | 350 | 1× |
+| | **HiSo** | **1075** | **1.4×** | **750** | **1.5×** | **175** | **2×** |
+| OPT-2.7B | DeComFL | 1250 | 1× | 1475 | 1× | 450 | 1× |
+| | **HiSo** | **775** | **1.6×** | **975** | **1.5×** | **200** | **2.3×** |
+
+通信成本节省：29%~80%（如 OPT-350M SQuAD 从 52.73KB 降至 9.77KB，降 81%）。
+
+### 全面基线对比：LLM 微调精度与通信成本（Table 3）
+
+| 模型 | 方法 | SST-2 Acc | SST-2 通信 | QQP Acc | QQP 通信 | SQuAD F1 | SQuAD 通信 |
+|------|------|----------|-----------|---------|---------|----------|-----------|
+| OPT-125M | FedAvg | 87.63% | 0.15 TB | 61.21% | 0.08 TB | 37.27 | 0.05 TB |
+| | FedAdam | 88.29% | 0.30 TB | 63.18% | 0.06 TB | 37.98 | 0.03 TB |
+| | DeComFL | 85.21% | 22.92 KB | 60.11% | 32.17 KB | 34.12 | 17.42 KB |
+| | **HiSo** | **85.55%** | **14.69 KB** | **60.72%** | **21.23 KB** | **35.26** | **7.12 KB** |
+| OPT-350M | FedAvg | 89.79% | 0.58 TB | 63.32% | 0.31 TB | 43.38 | 0.12 TB |
+| | DeComFL | 86.72% | 21.56 KB | 60.58% | 30.35 KB | 38.20 | 52.73 KB |
+| | **HiSo** | **87.50%** | **17.33 KB** | **62.49%** | **18.63 KB** | **39.13** | **20.51 KB** |
+| OPT-1.3B | FedAvg | 90.48% | 0.63 TB | 65.77% | 0.32 TB | 60.39 | 0.41 TB |
+| | FedAdam | 92.86% | 0.79 TB | 64.59% | 1.10 TB | 61.56 | 0.27 TB |
+| | FedZO | 90.01% | 4.73 TB | 62.91% | 3.53 TB | 57.26 | 1.10 TB |
+| | DeComFL | 90.22% | 58.59 KB | 63.25% | 43.95 KB | 57.14 | 13.67 KB |
+| | **HiSo** | **90.34%** | **49.18 KB** | **64.20%** | **96.67 KB** | **57.58** | **7.81 KB** |
+
+### 关键发现
+
+- **HiSo vs DeComFL 全面胜出**：在所有模型规模（OPT-125M ~ 2.7B）和所有任务上，HiSo 以更少通信轮次达到更高精度。最大加速 5.4×（OPT-350M SQuAD），最小 1.4×（OPT-1.3B SST-2）
+- **通信量 vs 一阶方法对比悬殊**：HiSo 的通信成本为 KB 级（7~97 KB），一阶方法为 TB 级（0.03~4.73 TB），差距可达 **9000 万倍**（如 FedZO 4.73 TB vs HiSo 49.18 KB）
+- **精度 vs 一阶方法的差距可接受**：HiSo SST-2 上 OPT-1.3B 达 90.34% vs FedAdam 92.86%，差 2.5 个百分点但通信成本从 0.79 TB 降至 49.18 KB
+- **Hessian EMA 参数 $\nu$ 鲁棒**：不同 $\nu$ 值对收敛和最终精度影响可忽略
+- **学习到的 Hessian 对角元呈长尾分布**：与低有效秩假设一致，验证了理论基础
+
+## 亮点与洞察
+
+- **"免费的午餐"设计思想**：Hessian 信息从已有的全局标量中提取（这些标量已用于模型重构），零额外通信——将"约束"（标量通信）转化为"优势"（免费的 Hessian）
+- **理论突破**：首个在零阶 FL 中实现维度无关 + Lipschitz 无关收敛率的结果（$\mathcal{O}(\sqrt{\zeta/mR})$），同时解决了 DeComFL 在多步本地更新下无法提供低有效秩保证的开放问题
+- **通用框架贡献**：将标量通信与特定优化器解耦的 Algorithm 1，未来可接入更多优化算法（如动量、方差减少等）
+- **"白化秩"概念**：$\zeta = \text{Tr}(H^{-1/2}\Sigma H^{-1/2})$ 提供了比"有效秩" $\kappa$ 更紧的方差上界，从理论上解释了为什么实践中 ZO 收敛远快于 $\mathcal{O}(d)$ 的最坏情况
+
+## 局限与展望
+
+- 对角 Hessian 是粗糙近似——非对角曲率信息（如参数间交互）被完全忽略，对高度耦合的参数空间可能效果打折
+- 低有效秩 + 白化假设是否对所有 LLM 层都成立？论文承认难以验证但以实验间接支撑
+- 虽然精度与 HiSo 接近一阶方法了，但 OPT-1.3B QQP 上通信成本（96.67 KB）高于 DeComFL（43.95 KB），说明加速并非在所有场景下均匀
+- 仅在分类/QA 任务上验证，生成式任务（如续写、对话）未测试
+- 当前不含动量项（类似 RMSProp 而非 Adam），论文提到可扩展但未实验
+
+## 相关工作与启发
+
+- **vs DeComFL**：HiSo 是 DeComFL 的严格推广（$H_r \equiv I$ 时退化为 DeComFL），同为标量通信但加速 1.4~5.4×，且理论覆盖多步本地更新
+- **vs FedAdam/FedYogi**：一阶自适应 FL 方法精度更高但需 $O(d)$ 通信。HiSo 在标量通信约束下近似实现了类似的自适应效果
+- **vs Hessian-aware ZO (单机)**：Ye et al. (2018) 和 Zhao et al. (2025) 在单机设置验证了 Hessian ZO 的有效性；HiSo 首次将其推广到联邦标量通信场景并解决了 Hessian 通信问题
+- **启发**：标量通信框架的通用性意味着方差减少、动量等技术都可能"免费"引入，通信受限的联邦优化还有很大提升空间
+
+## 评分
+
+- 新颖性: ⭐⭐⭐⭐⭐ 标量通信 + Hessian 引导的完美结合，"免费 Hessian"的观察巧妙，理论贡献（$\zeta$ 和白化秩）扎实
+- 实验充分度: ⭐⭐⭐⭐ 三种 OPT 规模 × 三个任务的完整网格，与一阶和 ZO 基线全面对比，但缺少生成式任务验证
+- 写作质量: ⭐⭐⭐⭐ 框架推导和理论分析清晰，从子问题到算法到理论的逻辑链完整
+- 价值: ⭐⭐⭐⭐⭐ 对通信受限的联邦 LLM 微调有直接实用价值，通用框架打开了后续研究空间
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICML 2026\] Privacy Amplification in Differentially Private Zeroth-Order Optimization with Hidden States](../../ICML2026/llm_safety/privacy_amplification_in_differentially_private_zeroth-order_optimization_with_h.md)
+- [\[ICLR 2026\] Watermark Robustness and Radioactivity May Be at Odds in Federated Learning](watermark_robustness_and_radioactivity_may_be_at_odds_in_federated_learning.md)
+- [\[ICLR 2026\] SHE-LoRA: Selective Homomorphic Encryption for Federated Tuning with Heterogeneous LoRA](she-lora_selective_homomorphic_encryption_for_federated_tuning_with_heterogeneou.md)
+- [\[ICLR 2026\] OFMU: Optimization-Driven Framework for Machine Unlearning](ofmu_optimization-driven_framework_for_machine_unlearning.md)
+- [\[ICLR 2026\] PURGE: Reinforcement Unlearning via Group Relative Policy Optimization](reinforcement_unlearning_via_group_relative_policy_optimization.md)
+
+</div>
+
+<!-- RELATED:END -->

@@ -136,7 +136,7 @@ MegaSynth 的数据生成流程分为三步：(1) 生成场景平面图——确
 - [\[CVPR 2025\] Regularizing INR with Diffusion Prior for Self-Supervised 3D Reconstruction of Neutron CT Data](regularizing_inr_with_diffusion_prior_self-supervised_3d_reconstruction_of_neutr.md)
 - [\[CVPR 2025\] Scaling Mesh Generation via Compressive Tokenization](scaling_mesh_generation_via_compressive_tokenization.md)
 - [\[CVPR 2025\] Scaling Properties of Diffusion Models for Perceptual Tasks](scaling_properties_of_diffusion_models_for_perceptual_tasks.md)
-- [\[CVPR 2025\] Pow3R: Empowering Unconstrained 3D Reconstruction with Camera and Scene Priors](pow3r_empowering_unconstrained_3d_reconstruction_with_camera_and_scene_priors.md)
+- [\[NeurIPS 2025\] RigAnyFace: Scaling Neural Facial Mesh Auto-Rigging with Unlabeled Data](../../NeurIPS2025/3d_vision/riganyface_scaling_neural_facial_mesh_auto-rigging_with_unlabeled_data.md)
 
 </div>
 

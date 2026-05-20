@@ -200,11 +200,11 @@ $$\pi_{A \wedge B}(m) = \min\{\pi_A(m), \pi_B(m)\}, \quad \pi_{A \vee B}(m) = \m
 
 ## 相关论文
 
+- [\[ICML 2026\] The Cylindrical Representation Hypothesis for Language Model Steering](../../ICML2026/llm_nlp/the_cylindrical_representation_hypothesis_for_language_model_steering.md)
 - [\[ACL 2025\] Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](../../ACL2025/llm_nlp/leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
 - [\[ACL 2025\] Representation Bending for Large Language Model Safety](../../ACL2025/llm_nlp/repbend_representation_bending_safety.md)
 - [\[ACL 2025\] SR-LLM: Rethinking the Structured Representation in Large Language Model](../../ACL2025/llm_nlp/sr-llm_rethinking_the_structured_representation_in_large_language_model.md)
-- [\[ICML 2025\] Cover Learning for Large-Scale Topology Representation](../../ICML2025/llm_nlp/cover_learning_for_large-scale_topology_representation.md)
-- [\[ICML 2025\] Binary Hypothesis Testing for Softmax Models and Leverage Score Models](../../ICML2025/llm_nlp/binary_hypothesis_testing_for_softmax_models_and_leverage_score_models.md)
+- [\[ICLR 2026\] PT2-LLM: Post-Training Ternarization for Large Language Models](pt2-llm_post-training_ternarization_for_large_language_models.md)
 
 </div>
 

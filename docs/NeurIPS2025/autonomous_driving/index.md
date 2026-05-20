@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 自动驾驶方向50篇论文解读
+  NeurIPS2025 自动驾驶方向49篇论文解读
 description: >-
-  50篇NeurIPS2025的自动驾驶方向论文解读，涵盖自动驾驶、Agent、多模态、时序预测、遥感、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  49篇NeurIPS2025的自动驾驶方向论文解读，涵盖自动驾驶、Agent、多模态、时序预测、遥感、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "自动驾驶"
@@ -18,9 +18,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🚗 自动驾驶
 
-**🧠 NeurIPS2025** · **50** 篇论文解读
+**🧠 NeurIPS2025** · **49** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (88)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (58)](../../AAAI2026/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (11)](../../ICML2025/autonomous_driving/index.md) · [💬 ACL2025 (1)](../../ACL2025/autonomous_driving/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/autonomous_driving/index.md) · [📷 CVPR2026 (88)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (58)](../../AAAI2026/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (11)](../../ICML2025/autonomous_driving/index.md)
 
 🔥 **高频主题：** 自动驾驶 ×9 · Agent ×5 · 多模态 ×4 · 时序预测 ×3 · 遥感 ×3
 
@@ -95,10 +95,6 @@ tags:
 **[GSAlign: Geometric and Semantic Alignment Network for Aerial-Ground Person Re-Identification](gsalign_geometric_and_semantic_alignment_network_for_aerial-ground_person_re-ide.md)**
 
 :   提出 GSAlign 框架，通过可学习薄板样条变换 (LTPS) 和动态对齐模块 (DAM) 分别解决空地行人重识别中几何畸变与语义不对齐问题，在 CARGO 数据集空地协议上 mAP 提升 +18.8%、Rank-1 提升 +16.8%。
-
-**[HoloLLM: Multisensory Foundation Model for Language-Grounded Human Sensing and Reasoning](holollm_multisensory_foundation_model_for_language-grounded_human_sensing_and_re.md)**
-
-:   提出 HoloLLM，首次将 LiDAR、红外、毫米波雷达、WiFi 等稀有传感模态接入多模态大语言模型（MLLM），通过 Universal Modality-Injection Projector（UMIP）在数据稀缺条件下实现传感模态与文本的高效对齐，在人体动作问答和描述任务上较现有 MLLM 提升约 30%。
 
 **[How Different from the Past? Spatio-Temporal Time Series Forecasting with Self-Supervised Deviation Learning](how_different_from_the_past_spatio-temporal_time_series_forecasting_with_self-su.md)**
 

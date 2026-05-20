@@ -169,7 +169,7 @@ $$\mathbb{P}(|\bar{\boldsymbol{\beta}}_k - \boldsymbol{\beta}^*|_\infty > z) \le
 - [\[NeurIPS 2025\] In-Context Learning of Stochastic Differential Equations with Foundation Inference Models](in-context_learning_of_stochastic_differential_equations_with_foundation_inferen.md)
 - [\[NeurIPS 2025\] A Graph Neural Network Approach for Localized and High-Resolution Temperature Forecasting](a_graph_neural_network_approach_for_localized_and_high-resolution_temperature_fo.md)
 - [\[CVPR 2025\] Learning Extremely High Density Crowds as Active Matters](../../CVPR2025/time_series/learning_extremely_high_density_crowds_as_active_matters.md)
-- [\[NeurIPS 2025\] Time-O1: Time-Series Forecasting Needs Transformed Label Alignment](time-o1_time-series_forecasting_needs_transformed_label_alignment.md)
+- [\[ICML 2026\] HELIX: Hybrid Encoding with Learnable Identity and Cross-dimensional Synthesis for Time Series Imputation](../../ICML2026/time_series/helix_hybrid_encoding_with_learnable_identity_and_cross-dimensional_synthesis_fo.md)
 
 </div>
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 视频生成方向84篇论文解读
+  CVPR2025 视频生成方向82篇论文解读
 description: >-
-  84篇CVPR2025的视频生成方向论文解读，涵盖视频生成、扩散模型、布局/合成、超分辨率、压缩/编码、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  82篇CVPR2025的视频生成方向论文解读，涵盖视频生成、扩散模型、布局/合成、超分辨率、压缩/编码、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "视频生成"
@@ -18,9 +18,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎬 视频生成
 
-**📷 CVPR2025** · **84** 篇论文解读
+**📷 CVPR2025** · **82** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (3)](../../ACL2026/video_generation/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/video_generation/index.md) · [🔬 ICLR2026 (19)](../../ICLR2026/video_generation/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/video_generation/index.md) · [🧠 NeurIPS2025 (23)](../../NeurIPS2025/video_generation/index.md) · [📹 ICCV2025 (49)](../../ICCV2025/video_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/video_generation/index.md) · [💬 ACL2026 (4)](../../ACL2026/video_generation/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/video_generation/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/video_generation/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/video_generation/index.md) · [🧠 NeurIPS2025 (22)](../../NeurIPS2025/video_generation/index.md)
 
 🔥 **高频主题：** 视频生成 ×35 · 扩散模型 ×25 · 布局/合成 ×4 · 超分辨率 ×3 · 压缩/编码 ×3
 
@@ -136,10 +136,6 @@ tags:
 
 :   LongDiff 通过理论分析揭示短视频模型生成长视频时的两个关键挑战——时序位置模糊和信息稀释，并提出 Position Mapping（GROUP+SHIFT）和 Informative Frame Selection（IFS）两个简洁的时序注意力修改策略，无需训练即可让短视频模型一次性生成高质量长视频。
 
-**[ManiVideo: Generating Hand-Object Manipulation Video with Dexterous and Generalizable Grasping](manivideo_generating_hand-object_manipulation_video_with_dexterous_and_generaliz.md)**
-
-:   提出多层遮挡（MLO）表示学习 3D 手-物遮挡关系，并将 Objaverse 大规模 3D 物体数据整合进训练，实现首个支持灵巧双手操作 + 可泛化物体外观的手-物操作视频生成框架。
-
 **[Mimir: Improving Video Diffusion Models for Precise Text Understanding](mimir_improving_video_diffusion_models_for_precise_text_understanding.md)**
 
 :   Mimir 提出一个端到端训练框架，通过精心设计的 Token Fuser 将 decoder-only LLM（Phi-3.5）的强文本理解能力与传统 text encoder（T5）的稳定特征无损融合，显著提升视频扩散模型的文本理解精度，尤其在多物体、空间关系和时序理解上大幅领先现有方法。
@@ -219,10 +215,6 @@ tags:
 **[PoseTraj: Pose-Aware Trajectory Control in Video Diffusion](posetraj_pose-aware_trajectory_control_in_video_diffusion.md)**
 
 :   提出 PoseTraj，一个姿态感知的轨迹引导视频生成模型，通过两阶段姿态感知预训练（利用合成数据集 PoseTraj-10K 和3D包围盒中间监督）和相机运动解耦微调，实现从2D轨迹生成3D对齐的旋转运动视频。
-
-**[Protecting Your Video Content: Disrupting Automated Video-Based LLM Annotations](protecting_your_video_content_disrupting_automated_video-based_llm_annotations.md)**
-
-:   本文提出两类对抗性视频水印方法——Ramblings（诱导视频 LLM 生成错误描述）和 Mutes（诱导视频 LLM 生成极短或空描述），通过不可感知的对抗扰动保护个人视频免受未经授权的自动化标注，并验证了这些低质量标注会降低下游文本到视频生成模型的性能。
 
 **[SAW: Toward a Surgical Action World Model via Controllable and Scalable Video Generation](saw_toward_a_surgical_action_world_model_via_controllable_and_scalable_video_gen.md)**
 

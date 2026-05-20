@@ -130,10 +130,10 @@ tags:
 ## 相关论文
 
 - [\[NeurIPS 2025\] MVSMamba: Multi-View Stereo with State Space Model](mvsmamba_multi-view_stereo_with_state_space_model.md)
+- [\[ICML 2026\] FRACTAL: State Space Model with Fractional Recurrent Architecture for Computational Temporal Analysis of Long Sequences](../../ICML2026/llm_evaluation/fractal_ssm_with_fractional_recurrent_architecture_for_computational_temporal_an.md)
 - [\[CVPR 2025\] Making Old Film Great Again: Degradation-aware State Space Model for Old Film Restoration](../../CVPR2025/llm_evaluation/making_old_film_great_again_degradation-aware_state_space_model_for_old_film_res.md)
 - [\[NeurIPS 2025\] What Does It Take to Build a Performant Selective Classifier?](what_does_it_take_to_build_a_performant_selective_classifier.md)
 - [\[NeurIPS 2025\] PaTH Attention: Position Encoding via Accumulating Householder Transformations](path_attention_position_encoding_via_accumulating_householder_transformations.md)
-- [\[CVPR 2025\] On the Generalization of Handwritten Text Recognition Models](../../CVPR2025/llm_evaluation/on_the_generalization_of_handwritten_text_recognition_models.md)
 
 </div>
 

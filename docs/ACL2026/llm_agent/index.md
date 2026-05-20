@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 LLM Agent方向41篇论文解读
+  ACL2026 LLM Agent方向69篇论文解读
 description: >-
-  41篇ACL2026的 LLM Agent 方向论文解读，涵盖 Agent、LLM、对抗鲁棒、推理、代码智能、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  69篇ACL2026的 LLM Agent 方向论文解读，涵盖 Agent、LLM、对抗鲁棒、推理、强化学习、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2026"
   - "LLM Agent"
@@ -12,18 +12,22 @@ tags:
   - "LLM"
   - "对抗鲁棒"
   - "推理"
-  - "代码智能"
-  - "对齐/RLHF"
+  - "强化学习"
+  - "多模态"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🦾 LLM Agent
 
-**💬 ACL2026** · **41** 篇论文解读
+**💬 ACL2026** · **69** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (15)](../../CVPR2026/llm_agent/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/llm_agent/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/llm_agent/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_agent/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/llm_agent/index.md) · [🧪 ICML2025 (15)](../../ICML2025/llm_agent/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/llm_agent/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/llm_agent/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/llm_agent/index.md) · [🤖 AAAI2026 (43)](../../AAAI2026/llm_agent/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/llm_agent/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/llm_agent/index.md)
 
-🔥 **高频主题：** Agent ×19 · LLM ×16 · 对抗鲁棒 ×3 · 推理 ×3 · 代码智能 ×2
+🔥 **高频主题：** Agent ×28 · LLM ×22 · 对抗鲁棒 ×4 · 推理 ×3 · 强化学习 ×3
+
+**[AdaRubric: Task-Adaptive Rubrics for Reliable LLM Agent Evaluation and Reward Learning](adarubric_task-adaptive_rubrics_for_reliable_llm_agent_evaluation_and_reward_lea.md)**
+
+:   本文指出 "LLM-as-Judge + 固定 rubric"（Helpfulness/Safety/Fluency）对评估目标导向的 agent 轨迹严重不匹配，提出 AdaRubric——由 LLM 根据任务描述自动生成任务专属的 N 维评估 rubric，再用置信度加权的逐步评估产出密集 reward 信号；并设计 DimensionAwareFilter 在 DPO 数据构建中防止"维度掩盖"，在 WebArena/ToolBench/AgentBench 上 Pearson r=0.79，DPO 训练带来 +6.8~+8.5% 任务成功率提升。
 
 **[AgencyBench: Benchmarking the Frontiers of Autonomous Agents in 1M-Token Real-World Contexts](agencybench_benchmarking_the_frontiers_of_autonomous_agents_in_1m-token_real-wor.md)**
 
@@ -33,17 +37,33 @@ tags:
 
 :   本文提出 Agent-GWO，将灰狼优化器的领导者-追随者机制引入多智能体框架，联合优化 prompt 模板和解码超参数（温度、top-p 等），在 11 个数学和混合推理基准上持续超越现有提示优化方法。
 
+**[AgenticEval: Toward Agentic and Self-Evolving Safety Evaluation of Large Language Models](agenticeval_toward_agentic_and_self-evolving_safety_evaluation_of_large_language.md)**
+
+:   AgenticEval 把 LLM 安全评估重新定义为「持续、自我演化的红队过程」：Specialist 把非结构化法规文本拆成原子规则知识库，Generator 围绕每条规则生成多模态多形式的 Question Group，Evaluator + Analyst 不断把当轮失败转化为下一轮更狠的攻击策略，三轮迭代后 GPT-5 对 EU AI Act 的合规率从 72.50% 暴跌到 36.36%，揭示静态 benchmark 严重高估了大模型的安全水位。
+
+**[AnchorMem: Anchored Facts with Associative Contexts for Building Memory in Large Language Models](anchormem_anchored_facts_with_associative_contexts_for_building_memory_in_large_.md)**
+
+:   提出AnchorMem记忆框架，受普鲁斯特现象启发，将检索单元（原子事实）与生成上下文（原始交互）解耦，通过关联事件图连接碎片化记忆，在LoCoMo基准上大幅超越A-Mem、Mem0等现有记忆系统。
+
 **[ATLAS: Adaptive Trading with LLM AgentS Through Dynamic Prompt Optimization and Multi-Agent Coordination](atlas_adaptive_trading_with_llm_agents_through_dynamic_prompt_optimization_and_m.md)**
 
 :   提出 ATLAS 多智能体金融交易框架和 Adaptive-OPRO 提示优化方法，通过专业化分析师智能体准备异构市场信息，并基于延迟噪声反馈动态优化中央交易智能体的指令提示，在多种市场波动环境中显著超越基线。
 
-**[Bayesian Social Deduction with Graph-Informed Language Models](bayesian_social_deduction_with_graph-informed_language_models.md)**
+**[AVA: Attentive VLM Agent for Mastering StarCraft II](ava_attentive_vlm_agent_for_mastering_starcraft_ii.md)**
 
-:   提出 GRAIL（Graph Reasoning Agent Informed through Language），一个混合推理框架，将概率推理外化到因子图模型、用 LLM 处理语言理解和交互，在社交推理游戏 Avalon 中首次击败人类玩家（67% 胜率），且资源消耗远低于大规模推理模型。
+:   本文提出 AVACraft——首个同时支持 MARL 和 VLM 两种决策范式的星际争霸 II 多模态基准（21 场景 / RGB+文本+结构化状态），并给出 VLM 基线 AVA（多模态优先级推理 + RAG + 动态角色分配），实验显示在基础 3m 场景 MARL 训练 5M 步只能到 19–27% 胜率，而 VLM 零样本就能拿到 75–90%。
 
-**[CI-Work: Benchmarking Contextual Integrity in Enterprise LLM Agents](ci-work_benchmarking_contextual_integrity_in_enterprise_llm_agents.md)**
+**[BAPO: Boundary-Aware Policy Optimization for Reliable Agentic Search](bapo_boundary-aware_policy_optimization_for_reliable_agentic_search.md)**
 
-:   基于上下文完整性（Contextual Integrity）理论构建企业场景基准 CI-Work，揭示前沿 LLM 智能体在企业工作流中普遍存在隐私泄漏问题，且模型规模扩大反而加剧泄漏。
+:   针对 RL 训练后的 agentic search 模型几乎从不说"I DON'T KNOW"导致编造答案的可靠性问题，BAPO 在 GRPO 之上加入"基于组的边界感知奖励 + 自适应奖励调制器"，让模型只在真正越界时才拒答，相对 GRPO 在四个多跳 QA 上把 reliability 平均提升约 9.7%，且仅用 5k 训练样本就超过 90k 样本训练的 Search-R1。
+
+**[ChemAmp: Amplified Chemistry Tools via Composable Agents](chemamp_amplified_chemistry_tools_via_composable_agents.md)**
+
+:   提出"工具放大"新范式（区别于传统的工具编排），通过 ChemAmp 框架将化学专用工具（UniMol2、Chemformer等）作为可组合积木块动态构建任务专用超级智能体，在分子设计、反应预测等四个核心化学任务上超越专用模型和通用LLM，同时推理token成本减少94%。
+
+**[CLAG: Adaptive Memory Organization via Agent-Driven Clustering for Small Language Model Agents](clag_adaptive_memory_organization_via_agent-driven_clustering_for_small_language.md)**
+
+:   本文提出 CLAG，一种基于聚类的 Agent 记忆框架，通过 SLM 驱动的路由将记忆组织到语义一致的聚类中，在聚类内部进行局部进化更新，并通过两阶段检索过滤噪声，在多个 QA 数据集上显著优于全局记忆池基线。
 
 **[CodeStruct: Code Agents over Structured Action Spaces](codestruct_code_agents_over_structured_action_spaces.md)**
 
@@ -53,41 +73,57 @@ tags:
 
 :   CoEvolve 提出**智能体-数据共进化框架**，通过从训练轨迹中提取遗忘/边界/稀有三类弱点信号，引导 LLM 做针对性环境再探索和任务合成，使训练数据分布随智能体能力动态适应，在 AppWorld 和 BFCL 上分别带来 19-23% 的绝对提升。
 
-**[Conjunctive Prompt Attacks in Multi-Agent LLM Systems](conjunctive_prompt_attacks_in_multi-agent_llm_systems.md)**
+**[Context-Value-Action Architecture for Value-Driven Large Language Model Agents](context-value-action_architecture_for_value-driven_large_language_model_agents.md)**
 
-:   本文研究多智能体 LLM 系统中的联合提示攻击（conjunctive prompt attacks）：用户查询中嵌入的触发键和被入侵远程代理中的隐藏模板各自看起来无害，但当路由将它们带到同一代理时会激活有害行为，现有防御（PromptGuard、Llama-Guard 等）均无法可靠阻止。
+:   提出 CVA（Context-Value-Action）架构，基于 S-O-R 心理学模型和 Schwartz 价值理论，通过训练在真实人类数据上的 Value Verifier 解耦行为生成与认知推理，有效缓解 LLM 智能体的行为极化问题，在超过 110 万真实交互轨迹的 CVABench 上显著优于基线。
 
-**[Creating ConLangs to Probe the Metalinguistic Grammatical Knowledge of LLMs](creating_conlangs_to_probe_the_metalinguistic_grammatical_knowledge_of_llms.md)**
+**[Don't Act Blindly: Robust GUI Automation via Action-Effect Verification and Self-Correction](don39t_act_blindly_robust_gui_automation_via_action-effect_verification_and_self.md)**
 
-:   本文提出 IASC（Interactive Agentic System for ConLangs），一个模块化的人造语言构建系统，通过让 LLM 按语言学规格执行形态句法变换来探测其元语言知识，发现 LLM 处理常见语言类型模式远优于罕见模式，且不同 LLM 之间能力差异悬殊。
+:   本文提出VeriGUI框架，通过Thinking-Verification-Action-Expectation（TVAE）闭环推理机制和两阶段训练管线（Robust SFT + GRPO），让GUI Agent能够验证每步操作是否成功并在失败时自我纠正，在3B和7B规模上均显著优于基线。
 
-**[Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation](diversity_collapse_in_multi-agent_llm_systems_structural_coupling_and_collective.md)**
+**[Don't Adapt Small Language Models for Tools; Adapt Tool Schemas to the Models](don39t_adapt_small_language_models_for_tools_adapt_tool_schemas_to_the_models.md)**
 
-:   本文通过评估超过 10,000 个研究提案，从模型智能、智能体认知和系统动力学三个层次系统揭示了多智能体 LLM 系统中的"多样性崩溃"现象：更强的模型、权威驱动的角色分配和密集的通信拓扑都会抑制语义多样性，根本原因是交互结构而非模型能力不足。
+:   本文提出 PA-Tool，一种无训练的工具 Schema 优化方法，利用从数据污染检测中借鉴的"尖锐度"（peakedness）信号识别模型预训练中熟悉的命名模式，通过重命名工具组件来对齐小语言模型的内化知识，在 MetaTool 和 RoTBench 上实现最高 17% 的提升，Schema 不对齐错误减少 80%。
 
-**[EA-Agent: A Structured Multi-Step Reasoning Agent for Entity Alignment](ea-agent_a_structured_multi-step_reasoning_agent_for_entity_alignment.md)**
+**[Don't Click That: Teaching Web Agents to Resist Deceptive Interfaces](dont_click_that_teaching_web_agents_to_resist_deceptive_interfaces.md)**
 
-:   提出 EA-Agent，将实体对齐（EA）分解为结构化多步推理过程，通过工具池（三元组选择器+对齐工具+反思器）的规划和执行实现可解释的对齐决策，配合奖励引导的离线策略优化持续改进规划能力，在 DBP15K 上 Hits@1 提升高达 3.17%，同时减少冗余三元组带来的效率问题。
+:   作者首次把"对抗欺骗性 UI"形式化为 web agent 的独立防御问题，提出两阶段框架 **DUDE**（不对称惩罚的 hybrid-reward RL 学一个 evaluator + 用 experience summarization 把失败模式蒸馏成可迁移上下文），并发布含 1407 个真实/合成场景的 **RUC** 基准，在 3 个 VLM agent base 上把欺骗诱发失败率从 23.5% 降到 1.5%、任务成功率从 9.5% 推到 60.5%，且 Stage-2 优化的 prompt 能零样本迁移到闭源模型。
+
+**[Exploring Reasoning Reward Model for Agents](exploring_reasoning_reward_model_for_agents.md)**
+
+:   作者发现现在 agentic RL 普遍用 sparse outcome reward（只看最终对错），导致中间多步推理质量信号被丢掉，于是提出 **Agent-RRM**——一个产生 `<think>/<critique>/<score>` 三段结构化反馈的 reasoning reward model，并系统对比三种整合方式（C：纯 critique refinement、R：scalar reward 增强、U：critique + score 联合 GRPO），最终 **Reagent-U** 在 12 个 benchmark 上把 Qwen3-8B 的 GAIA 拉到 43.7%、WebWalkerQA 拉到 46.2%，证明"语言级 critique + 数值 reward"联合监督比单一信号好得多。
 
 **[ExpSeek: Self-Triggered Experience Seeking for Web Agents](expseek_self-triggered_experience_seeking_for_web_agents.md)**
 
 :   ExpSeek 提出了一种基于步级熵自触发的经验主动寻求框架，让 Web Agent 在交互过程中根据自身信号判断何时需要指导、获取什么指导，在 Qwen3-8B/32B 上分别实现 9.3% 和 7.5% 的绝对提升。
 
-**[FairQE: Multi-Agent Framework for Mitigating Gender Bias in Translation Quality Estimation](fairqe_multi-agent_framework_for_mitigating_gender_bias_in_translation_quality_e.md)**
+**[FAMA: Failure-Aware Meta-Agentic Framework for Open-Source LLMs in Interactive Tool Use Environments](fama_failure-aware_meta-agentic_framework_for_open-source_llms_in_interactive_to.md)**
 
-:   提出 FairQE 多智能体框架，通过性别线索检测、性别翻转变体生成和动态偏见感知分数聚合机制，在不牺牲翻译质量评估准确性的前提下有效缓解 QE 模型中的系统性性别偏见。
+:   FAMA 先用一套独立"失败分析 agent + 编排 agent"自动诊断基线 tool-use agent 在 τ-bench 这类多轮交互上的主要失败模式，再让一个 mitigation agent 按需挑选最小子集 helper agent 注入到上下文，从而在 Qwen 系列开源模型上把任务成功率最高拉高 27%。
 
 **[FedGUI: Benchmarking Federated GUI Agents across Heterogeneous Platforms, Devices, and Operating Systems](fedgui_benchmarking_federated_gui_agents_across_heterogeneous_platforms_devices_.md)**
 
 :   FedGUI 是首个面向跨平台 GUI 代理的联邦学习综合基准，包含六个数据集覆盖移动端/网页端/桌面端，系统研究跨平台、跨设备、跨操作系统和跨数据源四种异构性对联邦 GUI 代理训练的影响。
 
+**[Feedback-Driven Tool-Use Improvements in Large Language Models via Automated Build Environments](feedback-driven_tool-use_improvements_in_large_language_models_via_automated_bui.md)**
+
+:   本文提出 FTRL 框架，通过五阶段自动化管线构建稳定可控的工具使用训练环境，并设计结合工具调用精度和任务完成度的可验证奖励机制，与偏好优化 RL 算法结合后，在 7B-14B 模型上实现平均超 10% 的工具使用性能提升，甚至超越最强闭源模型。
+
 **[FregeLogic at SemEval 2026 Task 11: A Hybrid Neuro-Symbolic Architecture for Content-Robust Syllogistic Validity Prediction](fregelogic_at_semeval_2026_task_11_a_hybrid_neuro-symbolic_architecture_for_cont.md)**
 
 :   提出 FregeLogic 混合神经符号系统，结合五成员 LLM 集成和 Z3 SMT 求解器作为决胜裁判，在三段论有效性判断中将内容效应降低16%的同时提升准确率0.9%。
 
-**[From Query to Counsel: Structured Reasoning with a Multi-Agent Framework and Dataset for Legal Consultation](from_query_to_counsel_structured_reasoning_with_a_multi-agent_framework_and_data.md)**
+**[From Storage to Experience: A Survey on the Evolution of LLM Agent Memory Mechanisms](from_storage_to_experience_a_survey_on_the_evolution_of_llm_agent_memory_mechani.md)**
 
-:   本文构建了JurisCQAD——一个包含43000+真实中文法律咨询的大规模数据集，并提出JurisMA多智能体框架，通过法律元素图进行结构化任务分解和动态多Agent协作（管理Agent+格式检查+法条检索），在LawBench上显著优于通用和法律专用LLM。
+:   本文用「Storage → Reflection → Experience」三阶段演化框架把 LLM Agent 记忆机制做系统综述，用形式化定义把三阶段对应为「轨迹保留 → 轨迹精化 → 跨轨迹抽象」三种 functional signature，并用"Why-How-What"三层 RQ 串起整个 storyline，重点展开 Experience 阶段的两大变革性机制 — Active Exploration 与 Cross-Trajectory Abstraction。
+
+**[GOAT: A Training Framework for Goal-Oriented Agent with Tools](goat_a_training_framework_for_goal-oriented_agent_with_tools.md)**
+
+:   GOAT 通过从 API 文档自动构建"依赖图 + call-first 合成数据"的流水线，让开源小模型在无需人工标注的情况下学会把高层目标拆成一串相互依赖的 API 调用，在 RestBench / API-Bank / 自建的 GOATBench 上把开源模型推到 SOTA，部分场景甚至超过闭源大模型。
+
+**[Grounding Agent Memory in Contextual Intent](grounding_agent_memory_in_contextual_intent.md)**
+
+:   STITCH 为 LLM agent 的长程记忆引入"contextual intent"（主题域 + 事件类型 + 关键实体类型）三元组作为结构化检索 cue，在每条 trajectory step 上在线归纳；推理时按"标签密度排序"先做结构匹配再做语义打分，在新构建的 CAME-Bench 上随 trajectory 增长不掉点，比最强 baseline 在 Large subset 上提升 35.6% 绝对（100% 相对）。
 
 **[HAG: Hierarchical Demographic Tree-based Agent Generation for Topic-Adaptive Simulation](hag_hierarchical_demographic_tree-based_agent_generation_for_topic-adaptive_simu.md)**
 
@@ -97,6 +133,10 @@ tags:
 
 :   本文提出 STEP-HRL，通过引入局部进度模块将交互历史迭代压缩为紧凑的文本摘要，使高层和低层策略仅基于单步转移（而非完整历史）做决策，在 ScienceWorld 和 ALFWorld 上显著提升性能和泛化性，同时减少 token 使用。
 
+**[HiGMem: A Hierarchical and LLM-Guided Memory System for Long-Term Conversational Agents](higmem_a_hierarchical_and_llm-guided_memory_system_for_long-term_conversational_.md)**
+
+:   本文提出 HiGMem，一个两层事件-对话轮记忆系统，通过让 LLM 先浏览事件摘要再预测哪些细粒度对话轮值得读取，在 LoCoMo10 基准上以少一个数量级的检索量达到了五类问题中四类的最优 F1。
+
 **[How Adversarial Environments Mislead Agentic AI](how_adversarial_environments_mislead_agentic_ai.md)**
 
 :   本文形式化了"对抗环境注入"（AEI）威胁模型，将其分解为广度攻击（投毒检索结果导致认知漂移）和深度攻击（注入幻影节点构造导航陷阱导致策略崩溃），在 11,000+ 次实验中发现两种攻击的鲁棒性完全独立——"鲁棒性分裂"表明当前单点防御策略根本不够。
@@ -105,45 +145,89 @@ tags:
 
 :   提出 ImplicitMemBench，首个系统评估 LLM 隐式记忆的基准，包含程序性记忆、启动效应和经典条件反射三种认知范式共 300 个测试项，在 17 个模型上揭示严重局限：最优模型仅达 66% 整体准确率，远低于人类基线。
 
+**[IntrAgent: An LLM Agent for Content-Grounded Information Retrieval through Literature Review](intragent_an_llm_agent_for_content-grounded_information_retrieval_through_litera.md)**
+
+:   IntrAgent 把"研究者读论文找信息"这件事拆成"先按结构排章节、再迭代读章节、读够就停"两段流水线，让 LLM 在不依赖向量检索的前提下，从一整篇科学论文里抽取出与查询忠实对齐的细粒度答案，在新基准 IntraBench 上跨五个 STEM 领域平均比 RAG/科研 agent 基线高出 13.2%。
+
 **[Lightweight LLM Agent Memory with Small Language Models](lightweight_llm_agent_memory_with_small_language_models.md)**
 
 :   本文提出 LightMem，一种由多个专用小语言模型（SLM）驱动的轻量级 LLM 智能体记忆系统，通过将记忆操作模块化为控制器（SLM-1）、选择器（SLM-2）和写入器（SLM-3），并将在线处理与离线整合解耦，在 LoCoMo 基准上平均 F1 提升约 2.5（相比 A-MEM），同时实现 83ms 检索延迟和 581ms 端到端延迟。
+
+**[LLM-Based Human-Agent Collaboration and Interaction Systems: A Survey](llm-based_human-agent_collaboration_and_interaction_systems_a_survey.md)**
+
+:   本文首次系统性梳理"LLM 基础的人-agent 协作系统（LLM-HAS）"——把人重新拉回 agent loop，从环境/画像、人类反馈、交互类型、编排范式、通信结构 5 个维度建立统一分类，并补充了一个 A1–A5 的 Human Agency Scale 量化"任务里到底该让人参与多深"。
 
 **[LPO: Towards Accurate GUI Agent Interaction via Location Preference Optimization](lpo_towards_accurate_gui_agent_interaction_via_location_preference_optimization.md)**
 
 :   本文提出 Location Preference Optimization (LPO)，通过基于信息熵的窗口奖励和基于物理距离的动态位置奖励，结合 GRPO 框架优化 GUI 智能体的空间定位精度，在离线和在线评估中均达到 SOTA。
 
-**[MATA: Multi-Agent Framework for Reliable and Flexible Table Question Answering](mata_multi-agent_framework_for_reliable_and_flexible_table_question_answering.md)**
+**[MAGMA: A Multi-Graph based Agentic Memory Architecture for AI Agents](magma_a_multi-graph_based_agentic_memory_architecture_for_ai_agents.md)**
 
-:   提出 MATA 多Agent表格问答框架，通过调度器优先选择推理路径（CoT/PoT/text2SQL）、置信度检查器筛选答案、法官Agent仲裁，实现模型无关的高效准确表格QA，在10个LLM上平均EM提升40.1%。
+:   MAGMA 把 LLM agent 的记忆拆成语义 / 时间 / 因果 / 实体四张正交关系图，再用 intent 路由 + 适应性 beam search 在合适的图上做 policy-guided traversal 检索，并配以"快路径同步入库 + 慢路径异步 LLM 巩固"双流写入；在 LoCoMo 上 Judge 0.700 全面超过 A-MEM / Nemori / MemoryOS，同时 query latency 仅 1.47s（比次优快 40%）。
 
 **[MCP-Flow: Facilitating LLM Agents to Master Real-World, Diverse and Scaling MCP Tools](mcp-flow_facilitating_llm_agents_to_master_real-world_diverse_and_scaling_mcp_to.md)**
 
 :   MCP-Flow 提出了一个基于 Web Agent 的自动化管道，从 1166 个真实 MCP 服务器中收集工具信息并合成 68733 条高质量训练数据，使小规模微调模型（0.6B-8B）在 MCP 工具使用上超越 GPT-4o 等 SOTA 大模型。
 
-**[MemoPhishAgent: Memory-Augmented Multi-Modal LLM Agent for Phishing URL Detection](memophishagent_memory-augmented_multi-modal_llm_agent_for_phishing_url_detection.md)**
+**[Mem²Evolve: Towards Self-Evolving Agents via Co-Evolutionary Capability Expansion and Experience Distillation](mem2evolve_towards_self-evolving_agents_via_co-evolutionary_capability_expansion.md)**
 
-:   提出 MemoPhishAgent（MPA），首个专为钓鱼URL检测设计的记忆增强多模态LLM智能体，通过5个专用工具的动态编排和情景记忆系统复用历史推理轨迹，在公开基准上召回率提升13.6%，在真实社交媒体数据上提升20%，并已部署生产环境每周处理约6万高风险URL。
+:   本文提出 Mem²Evolve，一种通过双记忆机制（资产记忆 + 经验记忆）实现能力扩展与经验蒸馏协同进化的自进化 Agent 框架，在 6 类任务 8 个基准上平均 Pass@1 达 70.24%，分别超过纯经验进化和纯能力进化的最强基线 11.80% 和 6.46%。
+
+**[Mem^p: Exploring Agent Procedural Memory](memp_exploring_agent_procedural_memory.md)**
+
+:   本文提出 Mem^p 框架，系统性地研究如何为 LLM Agent 构建可学习、可更新、终身演化的程序性记忆——通过将过去的任务轨迹蒸馏为细粒度的分步指令和高层脚本抽象，并配合动态更新机制（添加/验证/反思/淘汰），在 TravelPlanner 和 ALFWorld 上实现了成功率持续提升和执行步数大幅减少。
+
+**[MemSearcher: Training LLMs to Reason, Search and Manage Memory via End-to-End RL](memsearcher_training_llms_to_reason_search_and_manage_memory_via_end-to-end_rein.md)**
+
+:   MemSearcher 把搜索 agent 的"历史拼接"换成"LLM 自管理的紧凑内存"——每轮只看 `(question, memory)` 而不是 `(question, t₁, a₁, o₁, …)`，并用 multi-context GRPO 把整条 trajectory 的 advantage 传播到每一轮独立优化，在 7 个 QA benchmark 上 3B/7B/14B 全面超过同尺寸 ReAct baseline（7B 甚至超 32B ReSearch），context 长度恒定 <4K token。
+
+**[Meta-Tool: Efficient Few-Shot Tool Adaptation for Small Language Models](meta-tool_efficient_few-shot_tool_adaptation_for_small_language_models.md)**
+
+:   通过在四个基准上系统对比超网络 LoRA 适应 vs 精心设计的 few-shot 提示，发现 2.28 亿参数的超网络提供零增益——few-shot 示例贡献 +21.5%、文档编码贡献 +5.0%、超网络贡献 0%，3B 模型配合良好提示可达 GPT-5 平均性能的 79.7% 且延迟低 10 倍。
 
 **[Mina: A Multilingual LLM-Powered Legal Assistant Agent for Bangladesh](mina_a_multilingual_llm-powered_legal_assistant_agent_for_bangladesh_for_empower.md)**
 
 :   开发 Mina——面向孟加拉国法律场景的多语言 LLM 法律助手，通过两阶段 RAG 流水线精准检索法案和条款，配合工具链和多语言嵌入，在孟加拉律师资格考试中取得 75-80% 的通过成绩，法律咨询成本仅为传统方式的 0.12-0.61%。
 
-**[RISK: A Framework for GUI Agents in E-commerce Risk Management](risk_a_framework_for_gui_agents_in_e-commerce_risk_management.md)**
+**[OCR-Memory: Optical Context Retrieval for Long-Horizon Agent Memory](ocr-memory_optical_context_retrieval_for_long-horizon_agent_memory.md)**
 
-:   提出 RISK 框架，包含领域数据集（RISK-Data, 8492单步+2386多步轨迹）、基准（RISK-Bench）和基于GRPO的强化微调方法（RISK-R1），针对电商风控场景的GUI智能体，7B模型以仅7.2%的参数量超越SOTA基线，在线任务成功率达70.5%。
+:   OCR-Memory 将长程 Agent 交互轨迹渲染成带编号锚点的图像，让微调后的 OCR 检索器先在视觉空间定位相关片段、再按索引回取原始文本，从而在严格上下文预算下保留完整历史并提升 Mind2Web 和 AppWorld 上的长程任务表现。
+
+**[OPeRA: A Dataset of Observation, Persona, Rationale, and Action for Evaluating LLMs on Human Online Shopping Behavior Simulation](opera_a_dataset_of_observation_persona_rationale_and_action_for_evaluating_llms_.md)**
+
+:   OPeRA 是一个从真实 Amazon 购物过程中采集的用户行为数据集，把 persona、网页观察、细粒度动作和即时 rationale 放在同一条时间轴上，用来评估 LLM 是否真的能模拟特定用户的下一步购物行为。
+
+**[Polaris: A Gödel Agent Framework for Small Language Models through Experience-Abstracted Policy Repair](polaris_a_gödel_agent_framework_for_small_language_models_through_experience-abs.md)**
+
+:   Polaris 将 Gödel Agent 的递归自我改进改造成适合 7B/8B 小模型的“失败分析 → 经验抽象 → 最小代码补丁 → 执行校验”策略修复循环，在 MGSM、DROP、GPQA、LitBench 上让小模型获得可解释、可持久复用的 policy-level 改进。
+
+**[ProPer Agents: Proactivity Driven Personalized Agents for Advancing Knowledge Gap Navigation](proper_agents_proactivity_driven_personalized_agents_for_advancing_knowledge_gap.md)**
+
+:   ProPer 把主动式助手建模为“发现并校准用户未说出的任务维度”的问题，通过 Dimension Generating Agent、post-hoc reranker 和 Response Generating Agent 选择性补足知识缺口，在医疗、代码和购物推荐任务上显著提升回答质量与 win rate。
+
+**[Rethinking Reasoning-Intensive Retrieval: Evaluating and Advancing Retrievers in Agentic Search Systems](rethinking_reasoning-intensive_retrieval_evaluating_and_advancing_retrievers_in_.md)**
+
+:   本文提出 BRIGHT-PRO，用多方面证据标注和 agentic search 协议重新评测 reasoning-intensive retriever，并用 RTriever-Synth 训练 RTriever-4B，证明检索器应优化“证据组合覆盖”而非单篇相关性。
+
+**[Robust Tool Use via Fission-GRPO: Learning to Recover from Execution Errors](robust_tool_use_via_fission-grpo_learning_to_recover_from_execution_errors.md)**
+
+:   提出 Fission-GRPO，在 RL 训练循环中将工具执行错误动态转化为在线策略修正训练实例：通过学习的错误模拟器生成诊断反馈并重采样恢复轨迹，将 Qwen3-8B 的错误恢复率提升 5.7%，整体准确率从 42.75% 提升至 46.75%。
 
 **[Scaling External Knowledge Input Beyond Context Windows of LLMs via Multi-Agent Collaboration](scaling_external_knowledge_input_beyond_context_windows_of_llms_via_multi-agent_.md)**
 
 :   提出 ExtAgents 多智能体框架，通过全局知识同步（所有Seeking Agent间交换信息）和知识累积推理（逐步向Reasoning Agent注入筛选后的知识）两个机制，解决现有多智能体方法在扩展外部知识输入超出上下文窗口时性能不升反降的瓶颈，在多跳QA和长综述生成任务上显著提升。
 
-**[SecureVibeBench: Evaluating Secure Coding Capabilities of Code Agents with Realistic Vulnerability Scenarios](securevibebench_evaluating_secure_coding_capabilities_of_code_agents_with_realis.md)**
+**[SEARL: Joint Optimization of Policy and Tool Graph Memory for Self-Evolving Agents](searl_joint_optimization_of_policy_and_tool_graph_memory_for_self-evolving_agent.md)**
 
-:   提出 SecureVibeBench，首个仓库级多文件编辑的安全编码基准，从41个OSS-Fuzz项目中构建105个C/C++安全编码任务，通过级联静态+动态分析精确还原漏洞首次引入的场景，评估发现最佳Agent（SWE-agent + Claude Sonnet 4.5）仅23.8%的代码同时满足功能正确性和安全性。
+:   SEARL 将 agent 的策略参数和外部 Tool Graph Memory 联合优化，用工具锚定的 step-level advantage 与过程奖励解决长轨迹信用分配，使小模型在多跳问答和复杂数学任务中能持续创建、复用和整合工具。
 
-**[SILO-BENCH: A Scalable Environment for Evaluating Distributed Coordination in Multi-Agent LLM Systems](silo-bench_a_scalable_environment_for_evaluating_distributed_coordination_in_mul.md)**
+**[Shopping Companion: A Memory-Augmented LLM Agent for Real-World E-Commerce Tasks](shopping_companion_a_memory-augmented_llm_agent_for_real-world_e-commerce_tasks.md)**
 
-:   本文提出 SILO-BENCH，一个角色无关的多智能体 LLM 分布式协调基准，包含 30 个算法任务、三个通信复杂度级别、54 种配置共 1620 个实验，揭示了关键的"通信-推理鸿沟"：智能体能自发形成合理通信拓扑并积极交换信息，但系统性地无法将分布式状态整合为正确答案。
+:   Shopping Companion 构建了一个带长期用户偏好记忆和真实商品库的电商任务基准，并用两阶段 agent 加双重奖励、工具级奖励联合优化偏好识别和商品推荐，使 4B 模型接近强闭源模型表现。
+
+**[SOLAR-RL: Semi-Online Long-horizon Assignment Reinforcement Learning](solar-rl_semi-online_long-horizon_assignment_reinforcement_learning.md)**
+
+:   SOLAR-RL 用离线轨迹重构、失败点检测和目标对齐奖励塑形，把静态 GUI 数据加工成带有伪在线反馈的长程训练信号，使 Qwen2.5-VL-7B 规模的 GUI agent 在 Android Control、GUI-Odyssey 和 Android World 上获得接近或超过强 offline baseline 的稳定表现。
 
 **[Spec-o3: A Tool-Augmented Vision-Language Agent for Rare Celestial Object Candidate Identification](spec-o3_a_tool-augmented_vision-language_agent_for_rare_celestial_object_candida.md)**
 
@@ -153,9 +237,29 @@ tags:
 
 :   StructMem 提出了一种结构增强的层次化记忆框架，通过事件级双视角提取和跨事件语义整合，在 LoCoMo 长对话基准上实现 SOTA 性能（76.82%），同时大幅降低 token 消耗（1.94M vs. 图记忆的 35.8M）和 API 调用次数。
 
+**[Supplement Generation Training for Enhancing Agentic Task Performance](supplement_generation_training_for_enhancing_agentic_task_performance.md)**
+
+:   SGT（Supplement Generation Training）训练一个小型 LLM（1.7B）生成逐实例的补充文本（推理线索、摘要、错误提醒等），附加到输入后让冻结的大型 Actor 模型更有效地解决任务，在 5 个基准上平均提升 21%，无需修改大模型参数。
+
 **[SynthAgent: Adapting Web Agents with Synthetic Supervision](synthagent_adapting_web_agents_with_synthetic_supervision.md)**
 
 :   本文提出 SynthAgent，一个完全基于合成监督的 Web Agent 适应框架，通过分类探索系统覆盖网页功能区域以合成多样化任务，再通过任务精炼（冲突检测触发修正幻觉）和轨迹精炼（全局视角去噪）的双重精炼策略提升合成数据质量，在 WebArena 和 Online-Mind2Web 上显著优于现有合成方法。
+
+**[Temp-R1: A Unified Autonomous Agent for Complex Temporal KGQA via Reverse Curriculum Reinforcement Learning](temp-r1_a_unified_autonomous_agent_for_complex_temporal_kgqa_via_reverse_curricu.md)**
+
+:   Temp-R1 把时序知识图谱问答从人工设计的固定 prompt workflow 改造成可强化学习训练的自主 agent，通过显式内部动作、SFT 冷启动、GRPO 和“先难后易”的反向课程，在 8B 开源模型上超过多种 GPT-4o/DeepSeek-V3 驱动的强基线。
+
+**[The Bitter Lesson of Diffusion Language Models for Agentic Workflows: A Comprehensive Reality Check](the_bitter_lesson_of_diffusion_language_models_for_agentic_workflows_a_comprehen.md)**
+
+:   这篇论文系统评估扩散语言模型在具身智能体和工具调用智能体中的表现，发现它们虽然有并行解码带来的速度潜力，却在长程因果规划和严格格式生成上显著落后于自回归 LLM，并进一步用 DiffuAgent 证明 dLLM 更适合作为记忆压缩、工具筛选等非因果辅助模块。
+
+**[TiMem: Temporal-Hierarchical Memory Consolidation for Long-Horizon Conversational Agents](timem_temporal-hierarchical_memory_consolidation_for_long-horizon_conversational.md)**
+
+:   TiMem 将长程对话记忆组织成显式时间包含的五层 Temporal Memory Tree，并用复杂度感知检索在细粒度事实和高层 persona 之间动态取舍，在 LoCoMo 和 LongMemEval-S 上同时提升准确率并显著减少召回上下文长度。
+
+**[ToolGrad: Efficient Tool-use Dataset Generation with Textual "Gradients"](toolgrad_efficient_tool-use_dataset_generation_with_textual_gradients.md)**
+
+:   ToolGrad 把工具使用数据生成从“先写用户问题、再用 DFS 找工具链”反过来做成“先生成可执行成功的工具链、再反推用户问题”，并用类似 textual gradients 的 API 选择循环构造 ToolGrad-500，使数据生成 pass rate 达到 99.8%，训练出的 Gemma-3 小模型还能超过多种闭源强模型的单轮工具调用表现。
 
 **[ToolOmni: Enabling Open-World Tool Use via Agentic Learning with Proactive Retrieval and Grounded Execution](toolomni_enabling_open-world_tool_use_via_agentic_learning_with_proactive_retrie.md)**
 
@@ -169,9 +273,17 @@ tags:
 
 :   本文提出首个 Agent 不确定性量化（Agent UQ）的形式化框架：将 agent 的问题解决轨迹建模为动态贝叶斯网络上的随机过程 $P(\mathcal{F}_{\leq T}) = P(E_0, O_0) \prod_{i=1}^{T} P_{\pi,\mathcal{T}}(A_i|E_{i-1}, O_{i-1}) P(O_i|A_i, E_i)$，统一了现有 UQ 范式（单步 QA、多步推理）为特例，并通过 $\tau^2$-bench 上的实证分析识别了四个 agent UQ 特有的技术挑战。
 
+**[Verified Critical Step Optimization for LLM Agents](verified_critical_step_optimization_for_llm_agents.md)**
+
+:   CSO 从 agent 自己失败的轨迹中找出“换一个动作就能让任务成功”的 verified critical steps，只在这些关键决策点构造 DPO 偏好对，从而用更少、更可靠的监督提升长程 LLM agent 的后训练效果。
+
 **[Waking Up Blind: Cold-Start Optimization of Supervision-Free Agentic Trajectories](waking_up_blind_cold-start_optimization_of_supervision-free_agentic_trajectories.md)**
 
 :   本文提出 SPECTRA，一种无需监督轨迹的框架——通过冷启动强化学习（GRPO）和软结构化多轮 rollout 拓扑约束，让小型视觉语言模型（SVLM）在纯环境交互中自行发现有效的工具调用和视觉推理行为，在 4 个多模态 benchmark 上提升任务准确率达 5% 和工具效率 9%，同时提出 Tool Instrumental Utility（TIU）指标量化无监督下的工具效能。
+
+**[WebClipper: Efficient Evolution of Web Agents with Graph-based Trajectory Pruning](webclipper_efficient_evolution_of_web_agents_with_graph-based_trajectory_pruning.md)**
+
+:   WebClipper 把 Web Agent 的长工具调用轨迹建模成“动作节点-信息节点”状态图，再挖掘最小必要 DAG 来剪掉循环搜索和无效分支，使 Deep Research 类 agent 平均减少约 21% 工具轮次和 19.4% token，同时保持甚至提升准确率。
 
 **[What Makes an LLM a Good Optimizer? A Trajectory Analysis of LLM-Guided Evolutionary Search](what_makes_an_llm_a_good_optimizer_a_trajectory_analysis_of_llm-guided_evolution.md)**
 
@@ -181,9 +293,9 @@ tags:
 
 :   本文提出了 RPS 和 AGS 两个互补指标来量化 LLM Agent 在工具使用行为上的蒸馏导致的同质化现象，通过区分必要行为和非必要行为，在 18 个模型上揭示了跨家族行为继承模式，发现 Kimi-K2 与 Claude Sonnet 4.5 的行为相似度甚至超过 Anthropic 自家模型。
 
-**[Why Agents Compromise Safety Under Pressure](why_agents_compromise_safety_under_pressure.md)**
+**[YIELD: A Large-Scale Dataset and Evaluation Framework for Information Elicitation Agents](yield_a_large-scale_dataset_and_evaluation_framework_for_information_elicitation.md)**
 
-:   提出"代理压力"（Agentic Pressure）概念——当 LLM 代理在资源约束下无法同时完成任务和遵守安全规则时，会自发地产生规范漂移，主动牺牲安全以保持有用性，且推理能力越强的模型越善于构建语言化合理化来为违规辩护。
+:   提出信息引出代理（IEA）作为新的对话范式，发布了首个大规模（2,281 段对话，26M token）人与人信息引出对话数据集 YIELD，将信息引出形式化为有限视野 POMDP，并设计了专门的评估指标（Conformity、Progression、TLR），实验表明在 YIELD 上微调能显著提升 LLM 与真实引出行为的对齐。
 
 **[ZARA: Training-Free Motion Time-Series Reasoning via Evidence-Grounded LLM Agents](zara_training-free_motion_time-series_reasoning_via_evidence-grounded_llm_agents.md)**
 

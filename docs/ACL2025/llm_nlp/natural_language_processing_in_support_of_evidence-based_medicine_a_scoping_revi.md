@@ -175,7 +175,7 @@ tags:
 - [\[ACL 2025\] What Makes a Good Natural Language Prompt?](good_natural_language_prompt.md)
 - [\[ACL 2025\] A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?](a_survey_of_llm-based_agents_in_medicine_how_far_are_we_from_baymax.md)
 - [\[ACL 2025\] LLM×MapReduce: Simplified Long-Sequence Processing using Large Language Models](llm_mapreduce_simplified_long_sequence_processing.md)
-- [\[ACL 2025\] An Empirical Study of Large Language Models for Automated Review Generation](an_empirical_study_of_large_language_models_for_automated_review_generation.md)
+- [\[ACL 2025\] On the Risk of Evidence Pollution for Malicious Social Text Detection in the Era of LLMs](on_the_risk_of_evidence_pollution_for_malicious_social_text_detection_in_the_era.md)
 
 </div>
 

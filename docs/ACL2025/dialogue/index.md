@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 对话系统方向22篇论文解读
+  ACL2025 对话系统方向17篇论文解读
 description: >-
-  22篇ACL2025的对话系统方向论文解读，涵盖对话系统、情感分析、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  17篇ACL2025的对话系统方向论文解读，涵盖对话系统、情感分析、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "对话系统"
@@ -15,27 +15,15 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🗣️ 对话系统
 
-**💬 ACL2025** · **22** 篇论文解读
+**💬 ACL2025** · **17** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (9)](../../ACL2026/dialogue/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/dialogue/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/dialogue/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/dialogue/index.md) · [🧠 NeurIPS2025 (5)](../../NeurIPS2025/dialogue/index.md) · [🧪 ICML2025 (3)](../../ICML2025/dialogue/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (23)](../../ACL2026/dialogue/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/dialogue/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/dialogue/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/dialogue/index.md) · [🧠 NeurIPS2025 (5)](../../NeurIPS2025/dialogue/index.md) · [🧪 ICML2025 (3)](../../ICML2025/dialogue/index.md)
 
-🔥 **高频主题：** 对话系统 ×20 · 情感分析 ×3 · 个性化生成 ×2
-
-**[Beyond Dialogue: A Profile-Dialogue Alignment Framework Towards General Role-Playing Language Model](beyond_dialogue_a_profile-dialogue_alignment_framework_towards_general_role-play.md)**
-
-:   提出 Beyond Dialogue 框架，通过 Profile-Dialogue 对齐消除角色扮演训练中 profile 与对话之间的偏差，并引入句子级细粒度对齐任务，使模型更好地理解和表现角色特质。
-
-**[Can LLMs Simulate L2-English Dialogue? An Information-Theoretic Analysis of L1-Dependent Biases](can_llms_simulate_l2-english_dialogue_an_information-theoretic_analysis_of_l1-de.md)**
-
-:   本文评估LLM模拟非母语英语使用者（L2学习者）对话的能力，通过信息论和分布密度度量分析LLM生成的L2英语是否能复现人类L2学习者的母语依赖性偏差（如时态一致性错误、回避行为等），发现现代LLM确实能复现部分L1依赖模式。
+🔥 **高频主题：** 对话系统 ×15 · 情感分析 ×3 · 个性化生成 ×2
 
 **[DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)**
 
 :   本文提出对话元素建模（Dialogue Element Modeling）这一新任务，系统定义了对话生命周期中从"前奏"到"尾声"的全面元素体系，构建了包含元素感知和对话智能体交互两大能力的DEMO benchmark，并通过模仿学习训练DEMO agent在域内外任务上均表现优异。
-
-**[Detecting Referring Expressions in Visually Grounded Dialogue with Autoregressive Language Models](detecting_referring_expressions_in_visually_grounded_dialogue_with_autoregressiv.md)**
-
-:   本文将视觉对话中的指称表达检测建模为自回归 token 预测任务，通过对 Llama 3.1-8B 进行参数高效微调 (QLoRA)，证明仅使用文本上下文即可有效检测视觉对话中的 mention span，在 AGOS 和 PhotoBook 数据集上 F1 达 0.90 和 0.94。
 
 **[Dialogue Systems for Emotional Support via Value Reinforcement](dialogue_systems_for_emotional_support_via_value_reinforcement.md)**
 
@@ -44,10 +32,6 @@ tags:
 **[Dynamic Label Name Refinement for Few-Shot Dialogue Intent Classification](dynamic_label_name_refinement_for_few-shot_dialogue_intent_classification.md)**
 
 :   提出动态标签名称精炼方法，在检索式 ICL 意图分类中，利用 LLM 根据检索到的示例动态生成更具区分性的意图标签名称（如 "Verify PAN" → "Verify PAN card details"），有效降低语义相似意图间的混淆，在 6 个数据集上一致提升 2.07%-7.51% 准确率。
-
-**[An Efficient Task-Oriented Dialogue Policy: Evolutionary Reinforcement Learning Injected by Elite Individuals](eierl_dialogue_policy.md)**
-
-:   首次将进化强化学习（ERL）应用于任务导向对话策略任务，提出 EIERL 方法结合 EA 的全局探索与 DRL 的局部优化，并通过精英个体注入（EII）机制解决 EA 在自然语言大搜索空间中进化缓慢的问题，在 4 个数据集上实现了更高效的探索-利用平衡。
 
 **[Enabling Chatbots with Eyes and Ears: An Immersive Multimodal Conversation System](enabling_chatbots_with_eyes_and_ears_an_immersive_multimodal_conversation_system.md)**
 
@@ -92,10 +76,6 @@ tags:
 **[Sparse Rewards Can Self-Train Dialogue Agents](sparse_rewards_can_self-train_dialogue_agents.md)**
 
 :   提出 JOSH（Juxtaposed Outcomes for Simulation Harvesting）自对齐算法，让 LLM 对话 Agent 通过稀疏奖励的模拟环境自主提升性能，无需外部人类反馈，并构建了 ToolWOZ 稀疏奖励工具调用模拟环境加以验证。
-
-**[Training Turn-by-Turn Verifiers for Dialogue Tutoring Agents: The Curious Case of LLMs as Your Coding Tutors](training_turn-by-turn_verifiers_for_dialogue_tutoring_agents_the_curious_case_of.md)**
-
-:   提出 **Traver**（Trace-and-Verify）agent 工作流，通过**知识追踪**显式估计学生知识状态 + **逐轮验证器**（turn-by-turn verifier）对候选辅导话语打分选优，并设计 **Dict** 自动评估协议（模拟学生 + 代码生成测试），在编程辅导场景中将学生 Pass 率从 38.7% 提升至 43.7%（相对提升 106.5%），显著超越 Vanilla Instruct、Self-Refine 和 TreeInstruct。
 
 **[UniConv: Unifying Retrieval and Response Generation for Large Language Models in Conversations](uniconv_retrieval_response_gen.md)**
 

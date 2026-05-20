@@ -21,7 +21,7 @@ tags:
 
 **🤖 AAAI2026** · **35** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🔬 ICLR2026 (37)](../../ICLR2026/time_series/index.md) · [🧠 NeurIPS2025 (58)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md) · [🧪 ICML2025 (26)](../../ICML2025/time_series/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (10)](../../ICML2026/time_series/index.md) · [💬 ACL2026 (6)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/time_series/index.md) · [🧠 NeurIPS2025 (57)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md)
 
 🔥 **高频主题：** 时序预测 ×25 · LLM ×2
 

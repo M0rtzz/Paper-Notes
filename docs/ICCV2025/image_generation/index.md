@@ -21,9 +21,9 @@ tags:
 
 **📹 ICCV2025** · **213** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (208)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (247)](../../NeurIPS2025/image_generation/index.md) · [🧪 ICML2025 (110)](../../ICML2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (2)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (209)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (149)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (244)](../../NeurIPS2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×86 · 文生图 ×17 · 图像编辑 ×15 · 对抗鲁棒 ×12 · 少样本学习 ×8
+🔥 **高频主题：** 扩散模型 ×87 · 文生图 ×17 · 图像编辑 ×15 · 对抗鲁棒 ×12 · 少样本学习 ×8
 
 **[A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation](a0_affordance_aware_hierarchical_model_robotic_manipulation.md)**
 
@@ -601,10 +601,6 @@ tags:
 
 :   提出 SewingLDM，一个多模态条件潜空间扩散模型，通过扩展缝纫版型表示和两阶段训练策略，实现在文本、草图、体型条件控制下合复杂缝纫版型，并可无缝集成到 CG 仿真管线。
 
-**[MUNBa: Machine Unlearning via Nash Bargaining](munba_machine_unlearning_via_nash_bargaining.md)**
-
-:   将机器遗忘（Machine Unlearning）建模为双玩家合作博弈问题，利用 Nash 讨价还价理论推导闭式解来同时解决遗忘目标与保留目标之间的梯度冲突和梯度支配问题，在分类和生成任务上实现遗忘与保留的最优平衡。
-
 **[Music-Aligned Holistic 3D Dance Generation via Hierarchical Motion Modeling](music-aligned_holistic_3d_dance_generation_via_hierarchical_motion_modeling.md)**
 
 :   提出 SoulDance 数据集（首个含身体+手部+面部的高质量3D舞蹈数据集）和 SoulNet 框架（层次化残差向量量化 + 音乐对齐生成模型 + 跨模态检索），实现首个面部表情与身体手部动作协调一致、与音乐节奏情感对齐的全身3D舞蹈生成。
@@ -660,6 +656,10 @@ tags:
 **[PLA: Prompt Learning Attack against Text-to-Image Generative Models](pla_prompt_learning_attack_against_text-to-image_generative_models.md)**
 
 :   本文提出 PLA（Prompt Learning Attack），一种针对黑盒 T2I 模型的梯度驱动对抗攻击框架，通过敏感知识编码和多模态相似度损失来学习对抗性 prompt，从而绕过 prompt 过滤器和后置安全检查器，平均 ASR-4 达 90%+，远超现有方法。
+
+**[PolarAnything: Diffusion-based Polarimetric Image Synthesis](polaranything_diffusion-based_polarimetric_image_synthesis.md)**
+
+:   提出 PolarAnything，首个基于单张 RGB 图像生成偏振图像的扩散模型框架，通过对编码后的 AoLP 和 DoLP 进行去噪扩散，实现了物理准确且逼真的偏振属性合成，无需 3D 资产或偏振相机。
 
 **[Pretrained Reversible Generation as Unsupervised Visual Representation Learning](pretrained_reversible_generation_as_unsupervised_visual_representation_learning.md)**
 

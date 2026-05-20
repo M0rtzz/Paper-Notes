@@ -118,8 +118,8 @@ tags:
 ## 相关论文
 
 - [\[NeurIPS 2025\] How Many Tokens Do 3D Point Cloud Transformer Architectures Really Need?](how_many_tokens_do_3d_point_cloud_transformer_architectures_really_need.md)
-- [\[ICCV 2025\] Efficient Spiking Point Mamba for Point Cloud Analysis](../../ICCV2025/3d_vision/efficient_spiking_point_mamba_for_point_cloud_analysis.md)
 - [\[CVPR 2025\] ERUPT: Efficient Rendering with Unposed Patch Transformer](../../CVPR2025/3d_vision/erupt_efficient_rendering_with_unposed_patch_transformer.md)
+- [\[ICCV 2025\] Efficient Spiking Point Mamba for Point Cloud Analysis](../../ICCV2025/3d_vision/efficient_spiking_point_mamba_for_point_cloud_analysis.md)
 - [\[CVPR 2026\] GGPT: Geometry-Grounded Point Transformer](../../CVPR2026/3d_vision/ggpt_geometry_grounded_point_transformer.md)
 - [\[ECCV 2024\] ScatterFormer: Efficient Voxel Transformer with Scattered Linear Attention](../../ECCV2024/3d_vision/scatterformer_efficient_voxel_transformer_with_scattered_linear_attention.md)
 

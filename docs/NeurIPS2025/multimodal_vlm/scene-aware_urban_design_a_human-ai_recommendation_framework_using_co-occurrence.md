@@ -119,7 +119,7 @@ tags:
 - [\[ACL 2025\] MIRA: Empowering One-Touch AI Services on Smartphones with MLLM-based Instruction Recommendation](../../ACL2025/multimodal_vlm/mira_empowering_one-touch_ai_services_on_smartphones_with_mllm-based_instruction.md)
 - [\[ICML 2025\] CoreMatching: A Co-adaptive Sparse Inference Framework with Token and Neuron Pruning for Comprehensive Acceleration of Vision-Language Models](../../ICML2025/multimodal_vlm/corematching_a_co-adaptive_sparse_inference_framework_with_token_and_neuron_prun.md)
 - [\[NeurIPS 2025\] ViSpec: Accelerating Vision-Language Models with Vision-Aware Speculative Decoding](vispec_accelerating_vision-language_models_with_vision-aware_speculative_decodin.md)
-- [\[NeurIPS 2025\] Zero-Shot Robustness of Vision Language Models Via Confidence-Aware Weighting](zero-shot_robustness_of_vision_language_models_via_confidence-aware_weighting.md)
+- [\[CVPR 2025\] Embodied Scene Understanding for Vision Language Models via MetaVQA](../../CVPR2025/multimodal_vlm/embodied_scene_understanding_for_vision_language_models_via_metavqa.md)
 
 </div>
 

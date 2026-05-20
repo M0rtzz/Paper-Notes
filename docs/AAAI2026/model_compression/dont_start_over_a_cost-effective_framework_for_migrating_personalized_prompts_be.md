@@ -208,8 +208,8 @@ PUMA仅用2000用户就超过了随机抽样6000用户的效果！
 - [\[ICLR 2026\] Highly Efficient and Effective LLMs with Multi-Boolean Architectures](../../ICLR2026/model_compression/highly_efficient_and_effective_llms_with_multi-boolean_architectures.md)
 - [\[AAAI 2026\] Explore and Establish Synergistic Effects between Weight Pruning and Coreset Selection](explore_and_establish_synergistic_effects_between_weight_pruning_and_coreset_sel.md)
 - [\[ACL 2025\] IAM: Efficient Inference through Attention Mapping between Different-scale LLMs](../../ACL2025/model_compression/iam_efficient_inference_through_attention_mapping_between_different-scale_llms.md)
+- [\[ACL 2026\] ASTRA: An Automated Framework for Strategy Discovery, Retrieval, and Evolution for Jailbreaking LLMs](../../ACL2026/model_compression/astra_an_automated_framework_for_strategy_discovery_retrieval_and_evolution_for_.md)
 - [\[AAAI 2026\] Beyond Sharpness: A Flatness Decomposition Framework for Efficient Continual Learning](beyond_sharpness_a_flatness_decomposition_framework_for_efficient_continual_lear.md)
-- [\[AAAI 2026\] HCF: Hierarchical Cascade Framework for Distributed Multi-Stage Image Compression](hcf_hierarchical_cascade_framework_for_distributed_multi-stage_image_compression.md)
 
 </div>
 

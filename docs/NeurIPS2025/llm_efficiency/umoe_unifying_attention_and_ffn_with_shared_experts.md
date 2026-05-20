@@ -143,11 +143,11 @@ Large 模型（1.1B dense → 3.6B MoE）：UMoE PPL 15.95 vs FFN-MoE 16.09 vs M
 
 ## 相关论文
 
+- [\[ICML 2026\] Theoretically Optimal Attention/FFN Ratios in Disaggregated LLM Serving](../../ICML2026/llm_efficiency/theoretically_optimal_attentionffn_ratios_in_disaggregated_llm_serving.md)
 - [\[NeurIPS 2025\] Let the Experts Speak: Improving Survival Prediction & Calibration via Mixture-of-Experts Heads](let_the_experts_speak_improving_survival_prediction_calibration_via_mixture-of-e.md)
-- [\[NeurIPS 2025\] On the Expressive Power of Mixture-of-Experts for Structured Complex Tasks](on_the_expressive_power_of_mixture-of-experts_for_structured_complex_tasks.md)
-- [\[ICML 2025\] Mixture of Lookup Experts](../../ICML2025/llm_efficiency/mixture_of_lookup_experts.md)
-- [\[ICML 2025\] Autonomy-of-Experts Models (AoE)](../../ICML2025/llm_efficiency/autonomy-of-experts_models.md)
 - [\[NeurIPS 2025\] Scale-invariant Attention](scale-invariant_attention.md)
+- [\[NeurIPS 2025\] On the Expressive Power of Mixture-of-Experts for Structured Complex Tasks](on_the_expressive_power_of_mixture-of-experts_for_structured_complex_tasks.md)
+- [\[NeurIPS 2025\] Tensor Product Attention Is All You Need](tensor_product_attention_is_all_you_need.md)
 
 </div>
 

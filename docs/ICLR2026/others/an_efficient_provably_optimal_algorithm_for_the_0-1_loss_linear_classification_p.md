@@ -109,9 +109,9 @@ tags:
 
 - [\[ICLR 2026\] t-SNE Exaggerates Clusters, Provably](t-sne_exaggerates_clusters_provably.md)
 - [\[ICML 2025\] Provably Efficient Algorithm for Best Scoring Rule Identification in Online Principal-Agent Information Acquisition](../../ICML2025/others/provably_efficient_algorithm_for_best_scoring_rule_identification_in_online_prin.md)
+- [\[ICML 2026\] Provably Data-driven Multiple Hyper-parameter Tuning with Structured Loss Function](../../ICML2026/others/provably_data-driven_multiple_hyper-parameter_tuning_with_structured_loss_functi.md)
 - [\[AAAI 2026\] Automated Reproducibility Has a Problem Statement Problem](../../AAAI2026/others/automated_reproducibility_has_a_problem_statement_problem.md)
 - [\[AAAI 2026\] The Publication Choice Problem](../../AAAI2026/others/the_publication_choice_problem.md)
-- [\[ICLR 2026\] Distributionally Robust Classification for Multi-Source Unsupervised Domain Adaptation](distributionally_robust_classification_for_multi-source_unsupervised_domain_adap.md)
 
 </div>
 

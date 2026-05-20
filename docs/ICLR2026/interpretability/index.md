@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 可解释性方向56篇论文解读
+  ICLR2026 可解释性方向55篇论文解读
 description: >-
-  56篇ICLR2026的可解释性方向论文解读，涵盖推理、LLM、Agent、多模态、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  55篇ICLR2026的可解释性方向论文解读，涵盖推理、LLM、Agent、多模态、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICLR2026"
   - "可解释性"
@@ -18,9 +18,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**🔬 ICLR2026** · **56** 篇论文解读
+**🔬 ICLR2026** · **55** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (86)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md) · [🧪 ICML2025 (33)](../../ICML2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (21)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (51)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (84)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
 
 🔥 **高频主题：** 推理 ×6 · LLM ×5 · Agent ×3 · 多模态 ×2 · 对齐/RLHF ×2
 
@@ -221,10 +221,6 @@ tags:
 **[Uncovering Grounding IDs: How External Cues Shape Multimodal Binding](uncovering_grounding_ids_how_external_cues_shape_multimodal_binding.md)**
 
 :   本文通过机制可解释性工具揭示了LVLM中外部视觉线索（符号+分割线）改善推理的内部机理：模型在结构化输入下自发产生"Grounding IDs"——将视觉区域与符号锚点绑定的潜在标识符，因果激活交换实验（swap accuracy=0.98）证明该绑定因果性地驱动模型预测，且该机制在MS-COCO上将Qwen2.5-VL的CHAIRs幻觉率从32.4%降至27.2%，同时适用于GPT-4o等闭源模型。
-
-**[Uni-NTFM: A Unified Foundation Model for EEG Signal Representation Learning](uni-ntfm_a_unified_foundation_model_for_eeg_signal_representation_learning.md)**
-
-:   Uni-NTFM 从神经科学第一性原理出发，设计异质特征投影（HFPM）解耦时频编码、分层拓扑嵌入（TE）统一异构电极配置、MoE Transformer 实现功能模块化与稀疏编码，在 28000 小时 EEG 数据上预训练 1.9B 参数模型，9 个下游任务上的线性探测和微调均达到 SOTA。
 
 **[Universal Properties of Activation Sparsity in Modern Large Language Models](universal_properties_of_activation_sparsity_in_modern_large_language_models.md)**
 

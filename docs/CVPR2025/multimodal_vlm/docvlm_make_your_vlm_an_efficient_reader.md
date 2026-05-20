@@ -126,8 +126,8 @@ tags:
 ## 相关论文
 
 - [\[CVPR 2025\] How to Merge Your Multimodal Models Over Time?](how_to_merge_your_multimodal_models_over_time.md)
-- [\[AAAI 2026\] PatientVLM Meets DocVLM: Pre-Consultation Dialogue Between Vision-Language Models for Efficient Diagnosis](../../AAAI2026/multimodal_vlm/patientvlm_meets_docvlm_pre-consultation_dialogue_between_vision_language_models.md)
 - [\[CVPR 2025\] Critic-V: VLM Critics Help Catch VLM Errors in Multimodal Reasoning](critic-v_vlm_critics_help_catch_vlm_errors_in_multimodal_reasoning.md)
+- [\[AAAI 2026\] PatientVLM Meets DocVLM: Pre-Consultation Dialogue Between Vision-Language Models for Efficient Diagnosis](../../AAAI2026/multimodal_vlm/patientvlm_meets_docvlm_pre-consultation_dialogue_between_vision_language_models.md)
 - [\[CVPR 2025\] FastVLM: Efficient Vision Encoding for Vision Language Models](fastvlm_efficient_vision_encoding_for_vision_language_models.md)
 - [\[NeurIPS 2025\] HAWAII: Hierarchical Visual Knowledge Transfer for Efficient VLM](../../NeurIPS2025/multimodal_vlm/hawaii_hierarchical_visual_knowledge_transfer_for_efficient_vision-language_mode.md)
 

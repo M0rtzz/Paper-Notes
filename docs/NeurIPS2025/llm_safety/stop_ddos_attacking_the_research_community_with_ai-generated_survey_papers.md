@@ -178,11 +178,11 @@ tags:
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Collective Narrative Grounding: Community-Coordinated Data Contributions to Improve Local AI Systems](collective_narrative_grounding_community-coordinated_data_contributions_to_impro.md)
 - [\[NeurIPS 2025\] Adversarial Paraphrasing: A Universal Attack for Humanizing AI-Generated Text](adversarial_paraphrasing_a_universal_attack_for_humanizing_ai-generated_text.md)
+- [\[NeurIPS 2025\] Collective Narrative Grounding: Community-Coordinated Data Contributions to Improve Local AI Systems](collective_narrative_grounding_community-coordinated_data_contributions_to_impro.md)
 - [\[NeurIPS 2025\] DNA-DetectLLM: Unveiling AI-Generated Text via a DNA-Inspired Mutation-Repair Paradigm](dna-detectllm_unveiling_ai-generated_text_via_a_dna-inspired_mutation-repair_par.md)
 - [\[NeurIPS 2025\] ORBIT -- Open Recommendation Benchmark for Reproducible Research with Hidden Tests](orbit_--_open_recommendation_benchmark_for_reproducible_research_with_hidden_tes.md)
-- [\[NeurIPS 2025\] When AI Democratizes Exploitation: LLM-Assisted Strategic Manipulation of Fair Division Algorithms](when_ai_democratizes_exploitation_llm-assisted_strategic_manipulation_of_fair_di.md)
+- [\[NeurIPS 2025\] AgentStealth: Reinforcing Large Language Model for Anonymizing User-generated Text](agentstealth_reinforcing_large_language_model_for_anonymizing_user-generated_tex.md)
 
 </div>
 

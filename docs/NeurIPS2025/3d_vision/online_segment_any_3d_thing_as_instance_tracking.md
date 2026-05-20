@@ -130,9 +130,9 @@ AutoSeg3D是一个跟踪中心的在线3D分割框架，由三个轻量级模块
 
 - [\[NeurIPS 2025\] TAPIP3D: Tracking Any Point in Persistent 3D Geometry](tapip3d_tracking_any_point_in_persistent_3d_geometry.md)
 - [\[ICCV 2025\] SAS: Segment Any 3D Scene with Integrated 2D Priors](../../ICCV2025/3d_vision/sas_segment_any_3d_scene_with_integrated_2d_priors.md)
+- [\[ICCV 2025\] WildSeg3D: Segment Any 3D Objects in the Wild from 2D Images](../../ICCV2025/3d_vision/wildseg3d_segment_any_3d_objects_in_the_wild_from_2d_images.md)
 - [\[CVPR 2025\] Any3DIS: Class-Agnostic 3D Instance Segmentation by 2D Mask Tracking](../../CVPR2025/3d_vision/any3dis_class-agnostic_3d_instance_segmentation_by_2d_mask_tracking.md)
 - [\[ICCV 2025\] TAPNext: Tracking Any Point (TAP) as Next Token Prediction](../../ICCV2025/3d_vision/tapnext_tracking_any_point_tap_as_next_token_prediction.md)
-- [\[NeurIPS 2025\] Segment then Splat: Unified 3D Open-Vocabulary Segmentation via Gaussian Splatting](segment_then_splat_unified_3d_open-vocabulary_segmentation_via_gaussian_splattin.md)
 
 </div>
 

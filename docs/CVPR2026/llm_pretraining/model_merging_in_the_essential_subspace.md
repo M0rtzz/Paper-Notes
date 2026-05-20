@@ -137,10 +137,10 @@ ESM 不涉及训练，仅需 32 个无标签代理样本做一次前向传播。
 ## 相关论文
 
 - [\[CVPR 2026\] Defending Unauthorized Model Merging via Dual-Stage Weight Protection](defending_unauthorized_model_merging_via_dual-stage_weight_protection.md)
+- [\[ICML 2026\] Model Merging Scaling Laws in Large Language Models](../../ICML2026/llm_pretraining/model_merging_scaling_laws_in_large_language_models.md)
 - [\[NeurIPS 2025\] Breaking the Frozen Subspace: Importance Sampling for Low-Rank Optimization in LLM Pretraining](../../NeurIPS2025/llm_pretraining/breaking_the_frozen_subspace_importance_sampling_for_low-rank_optimization_in_ll.md)
+- [\[ICML 2026\] Predicting Large Model Test Losses with a Noisy Quadratic System](../../ICML2026/llm_pretraining/predicting_large_model_test_losses_with_a_noisy_quadratic_system.md)
 - [\[CVPR 2026\] LottieGPT: Tokenizing Vector Animation for Autoregressive Generation](lottiegpt_vector_animation_generation.md)
-- [\[CVPR 2026\] Evidential Transformation Network: Turning Pretrained Models into Evidential Models for Post-hoc Uncertainty Estimation](evidential_transformation_network_post_hoc_uncertainty_estimation.md)
-- [\[NeurIPS 2025\] Gemstones: A Model Suite for Multi-Faceted Scaling Laws](../../NeurIPS2025/llm_pretraining/gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)
 
 </div>
 

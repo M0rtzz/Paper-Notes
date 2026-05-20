@@ -125,8 +125,8 @@ tags:
 ## 相关论文
 
 - [\[ICML 2025\] Morse: Dual-Sampling for Lossless Acceleration of Diffusion Models](../../ICML2025/image_generation/morse_dual-sampling_for_lossless_acceleration_of_diffusion_models.md)
-- [\[NeurIPS 2025\] Continuous Diffusion Model for Language Modeling](continuous_diffusion_model_for_language_modeling.md)
 - [\[ICML 2025\] Provable Maximum Entropy Manifold Exploration via Diffusion Models](../../ICML2025/image_generation/provable_maximum_entropy_manifold_exploration_via_diffusion_models.md)
+- [\[NeurIPS 2025\] Continuous Diffusion Model for Language Modeling](continuous_diffusion_model_for_language_modeling.md)
 - [\[NeurIPS 2025\] Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
 - [\[NeurIPS 2025\] Progressive Inference-Time Annealing of Diffusion Models for Sampling from Boltzmann Densities](progressive_inference-time_annealing_of_diffusion_models_for_sampling_from_boltz.md)
 

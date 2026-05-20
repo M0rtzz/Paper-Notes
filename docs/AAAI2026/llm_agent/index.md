@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 LLM Agent方向44篇论文解读
+  AAAI2026 LLM Agent方向43篇论文解读
 description: >-
-  44篇AAAI2026的 LLM Agent 方向论文解读，涵盖 Agent、LLM、推理、对齐/RLHF、多模态、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  43篇AAAI2026的 LLM Agent 方向论文解读，涵盖 Agent、LLM、推理、对齐/RLHF、多模态、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "LLM Agent"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🦾 LLM Agent
 
-**🤖 AAAI2026** · **44** 篇论文解读
+**🤖 AAAI2026** · **43** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (41)](../../ACL2026/llm_agent/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/llm_agent/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/llm_agent/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_agent/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/llm_agent/index.md) · [🧪 ICML2025 (15)](../../ICML2025/llm_agent/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/llm_agent/index.md) · [💬 ACL2026 (69)](../../ACL2026/llm_agent/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/llm_agent/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/llm_agent/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/llm_agent/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/llm_agent/index.md)
 
-🔥 **高频主题：** Agent ×19 · LLM ×18 · 推理 ×5 · 对齐/RLHF ×3 · 多模态 ×3
+🔥 **高频主题：** Agent ×19 · LLM ×17 · 推理 ×5 · 对齐/RLHF ×3 · 多模态 ×3
 
 **[A2Flow: Automating Agentic Workflow Generation via Self-Adaptive Abstraction Operators](a2flow_automating_agentic_workflow_generation_via_self-adaptive_abstraction_oper.md)**
 
@@ -36,10 +36,6 @@ tags:
 **[KDR-Agent: A Multi-Agent LLM Framework for Multi-Domain Low-Resource In-Context NER via Knowledge Retrieval](a_multi-agent_llm_framework_for_multi-domain_low-resource_in-context_ner_via_kno.md)**
 
 :   提出 KDR-Agent 多 Agent 框架，通过中央规划器协调知识检索、上下文消歧和反思纠错三个专用 Agent，结合自然语言类型定义和实体级正负对比示例，无需微调即可在 5 个领域 10 个低资源 NER 数据集上全面超越 zero-shot 和 few-shot 基线（GPT-4o 上 BC5CDR F1=82.47，WNUT-17 F1=80.78）。
-
-**[AgentSense: Virtual Sensor Data Generation Using LLM Agents in Simulated Home Environments](agentsense_virtual_sensor_data_generation_using_llm_agents_i.md)**
-
-:   利用LLM驱动的具身智能体在模拟智能家居中"生活"，生成虚拟环境传感器数据用于预训练HAR模型，在低资源场景下显著提升活动识别性能。
 
 **[AgentSwift: Efficient LLM Agent Design via Value-guided Hierarchical Search](agentswift_efficient_llm_agent_design_via_value-guided_hierarchical_search.md)**
 

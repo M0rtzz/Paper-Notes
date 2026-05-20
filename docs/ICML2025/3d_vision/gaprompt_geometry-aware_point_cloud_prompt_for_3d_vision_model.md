@@ -166,8 +166,8 @@ GAPrompt 冻结预训练骨干，引入三个轻量化模块：
 
 ## 相关论文
 
-- [\[CVPR 2026\] GS-CLIP: Zero-shot 3D Anomaly Detection by Geometry-Aware Prompt and Synergistic View Representation Learning](../../CVPR2026/3d_vision/gs-clip_zero-shot_3d_anomaly_detection_by_geometry-aware_prompt_and_synergistic_.md)
 - [\[ICCV 2025\] Egocentric Action-aware Inertial Localization in Point Clouds with Vision-Language Guidance](../../ICCV2025/3d_vision/egocentric_action-aware_inertial_localization_in_point_clouds_with_vision-langua.md)
+- [\[CVPR 2026\] GS-CLIP: Zero-shot 3D Anomaly Detection by Geometry-Aware Prompt and Synergistic View Representation Learning](../../CVPR2026/3d_vision/gs-clip_zero-shot_3d_anomaly_detection_by_geometry-aware_prompt_and_synergistic_.md)
 - [\[ICCV 2025\] UPP: Unified Point-Level Prompting for Robust Point Cloud Analysis](../../ICCV2025/3d_vision/upp_unified_point-level_prompting_for_robust_point_cloud_analysis.md)
 - [\[AAAI 2026\] DANCE: Density-Agnostic and Class-Aware Network for Point Cloud Completion](../../AAAI2026/3d_vision/dance_density-agnostic_and_class-aware_network_for_point_cloud_completion.md)
 - [\[CVPR 2026\] AnyPcc: Compressing Any Point Cloud with a Single Universal Model](../../CVPR2026/3d_vision/anypcc_compressing_any_point_cloud_with_a_single_universal_model.md)

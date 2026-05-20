@@ -1,54 +1,48 @@
 ---
 title: >-
-  ACL2026 机器人/具身智能方向7篇论文解读
+  ACL2026 机器人/具身智能方向6篇论文解读
 description: >-
-  7篇ACL2026的机器人/具身智能方向论文解读，涵盖推理、LLM、Agent、对齐/RLHF、导航、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  6篇ACL2026的机器人/具身智能方向论文解读，涵盖导航、推理、机器人、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "机器人/具身智能"
   - "论文解读"
   - "论文笔记"
-  - "推理"
-  - "LLM"
-  - "Agent"
-  - "对齐/RLHF"
   - "导航"
-  - "对抗鲁棒"
+  - "推理"
+  - "机器人"
+  - "多模态"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🤖 机器人/具身智能
 
-**💬 ACL2026** · **7** 篇论文解读
+**💬 ACL2026** · **6** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (38)](../../CVPR2026/robotics/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/robotics/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/robotics/index.md) · [🧠 NeurIPS2025 (57)](../../NeurIPS2025/robotics/index.md) · [📹 ICCV2025 (26)](../../ICCV2025/robotics/index.md) · [🧪 ICML2025 (16)](../../ICML2025/robotics/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (12)](../../ICML2026/robotics/index.md) · [📷 CVPR2026 (38)](../../CVPR2026/robotics/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/robotics/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/robotics/index.md) · [🧠 NeurIPS2025 (55)](../../NeurIPS2025/robotics/index.md) · [📹 ICCV2025 (26)](../../ICCV2025/robotics/index.md)
 
-🔥 **高频主题：** 推理 ×2 · LLM ×2
+🔥 **高频主题：** 导航 ×4 · 推理 ×2
 
-**[Can AI-Generated Persuasion Be Detected? Persuaficial Benchmark and AI vs. Human Linguistic Differences](can_ai-generated_persuasion_be_detected_persuaficial_benchmark_and_ai_vs_human_l.md)**
+**[Breaking Down and Building Up: Mixture of Skill-Based Vision-and-Language Navigation Agents](breaking_down_and_building_up_mixture_of_skill-based_vision-and-language_navigat.md)**
 
-:   本文引入 Persuaficial——一个覆盖六种语言的高质量 AI 生成说服性文本多语言基准，系统评估了 LLM 生成的说服性文本与人类撰写的说服性文本在自动检测难度上的差异，发现微妙的 AI 说服比人类说服更难检测（F1 下降约 20%），而过度强化的说服反而更容易被发现。
+:   SkillNav 把视觉语言导航任务拆解成 5 个原子技能（方向调整、垂直移动、停顿、地标识别、区域识别）+ 1 个时序规划技能，每个技能用合成数据微调一个 DUET 子 agent，再用 training-free 的 VLM router 做时序重排 + 子目标定位 + 技能选择，在 GSA-R2R 上取得 SOTA 泛化能力（Test-N-Scene SPL 48% vs. 之前最高 43%）。
 
-**[Debating the Unspoken: Role-Anchored Multi-Agent Reasoning for Half-Truth Detection](debating_the_unspoken_role-anchored_multi-agent_reasoning_for_half-truth_detecti.md)**
+**[ElasticFlow: One-Step Physics-Consistent Policy with Elastic Time Horizons for Language-Guided Manipulation](elasticflow_one-step_physics-consistent_policy_with_elastic_time_horizons_for_la.md)**
 
-:   提出RADAR框架，通过角色锚定（政客 vs 科学家）的多智能体辩论来检测基于遗漏上下文的半真半假信息，配合双阈值自适应早停机制，在噪声检索条件下一致超越单智能体和传统多智能体基线。
+:   提出 ElasticFlow：用平均速度场 (MeanFlow) 取代瞬时速度场学习语言条件机器人动作，配合 "弹性时间区间 $\Delta t=t-r$" 显式编码控制粒度，实现 1-NFE 单步推理 (∼71Hz)，在 LIBERO-Long、CALVIN ABC-D 等长程任务上超过 OpenVLA 与 $\pi_0$。
 
-**[DeCoVec: Building Decoding Space based Task Vector for Large Language Models via In-Context Learning](decovec_building_decoding_space_based_task_vector_for_large_language_models_via_.md)**
+**[GoViG: Goal-Conditioned Visual Navigation Instruction Generation via Multimodal Reasoning](govig_goal-conditioned_visual_navigation_instruction_generation_via_multimodal_r.md)**
 
-:   提出 DeCoVec（Decoding Space based Task Vector），一个无训练、非侵入式的框架，通过对比 few-shot 和 zero-shot prompt 的输出 logit 分布差异构建解码空间中的任务向量，注入解码过程引导生成，在 TruthfulQA、Math-500 和 AQUA-RAT 上比标准 few-shot 基线平均提升高达 5.50 准确率。
+:   GoViG 提出一个**只靠第一视角初始与目标观测**就能生成导航指令的新任务，并把它拆成"先想象中间画面再写指令"两步，用 Anole-7B 在 token 级 MSE + 标签平滑 CE 双目标下联合训练，配合 one-pass / interleaved 两种多模态推理策略，把 BLEU-4 从基线 0.08 推到 0.32 并在跨域真实视频上保持 0.27。
 
-**[On Safety Risks in Experience-Driven Self-Evolving Agents](on_safety_risks_in_experience-driven_self-evolving_agents.md)**
+**[GROKE: Vision-Free Navigation Instruction Evaluation via Graph Reasoning on OpenStreetMap](groke_vision-free_navigation_instruction_evaluation_via_graph_reasoning_on_opens.md)**
 
-:   本文系统研究经验驱动自进化Agent的安全风险，发现仅从无害任务积累的经验也导致安全性显著退化（ASR上升13-49%），根因是经验的执行导向本质强化了行动而非拒绝。
+:   GROKE 提出**完全不用视觉**就评测导航指令好不好——把 OSM 地图序列化成 JSON，让 Gemini-3 Pro 当 follower agent 沿图执行指令，用 Navigation Error / SR / SDTW 反过来当指令质量的 proxy；相比启发式 baseline 在 Map2Seq 上降低 navigation error 68.5%，且 NE 与人类对"指令清晰度"的判断显著相关 ($r = -0.31, p < 0.01$)。
 
-**[Reasoning Hijacking: The Fragility of Reasoning Alignment in Large Language Models](reasoning_hijacking_the_fragility_of_reasoning_alignment_in_large_language_model.md)**
+**[Limited Linguistic Diversity in Embodied AI Datasets](limited_linguistic_diversity_in_embodied_ai_datasets.md)**
 
-:   本文提出"推理劫持"(Reasoning Hijacking) 这一新型攻击范式，通过在数据通道注入虚假决策标准来操纵 LLM 的推理逻辑而非改变任务目标，实现高攻击成功率且能绕过基于意图检测的防御方法。
+:   本文对主流 VLA 训练语料（RT-1、BRIDGE、TacoPlay、Language Table、LIBERO）做系统性"语言多样性体检"，从词汇/语义/句法三维度量化发现：VLA 数据**仅 < 2% 指令唯一、RT-1 整库只有 49 个 unique word、否定/条件句 < 1%**，远逊于指令调优语料（OASST2 93%、Alpaca 99.8% 唯一），这种"模板化贫乏"或许正是 VLA 模型对 paraphrase 脆弱、泛化失败的根源。
 
 **[VLN-NF: Feasibility-Aware Vision-and-Language Navigation with False-Premise Instructions](vln-nf_feasibility-aware_vision-and-language_navigation_with_false-premise_instr.md)**
 
 :   本文提出 VLN-NF 基准——首个要求 VLN agent 在 3D 部分可观测环境中识别虚假前提指令并输出 NOT-FOUND 的任务，配套提出 REV-SPL 评估指标和 ROAM 两阶段混合框架，ROAM 达到 6.1 REV-SPL，比监督基线提升 45%。
-
-**[XOXO: Stealthy Cross-Origin Context Poisoning Attacks against AI Coding Assistants](xoxo_stealthy_cross-origin_context_poisoning_attacks_against_ai_coding_assistant.md)**
-
-:   揭示了 AI 编码助手自动收集上下文的设计漏洞，提出 Cross-Origin Context Poisoning（XOXO）攻击：通过语义保持的代码变换（如变量重命名）毒化共享代码库，使 GitHub Copilot 等助手在不知情的情况下生成有漏洞的代码，对 8 个 SOTA 模型平均攻击成功率达 73.20%。

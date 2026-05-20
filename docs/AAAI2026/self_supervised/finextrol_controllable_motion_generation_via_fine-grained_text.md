@@ -248,10 +248,10 @@ tags:
 ## 相关论文
 
 - [\[ICML 2025\] Foundation Model Insights and a Multi-Model Approach for Superior Fine-Grained One-shot Subset Selection](../../ICML2025/self_supervised/foundation_model_insights_and_a_multi-model_approach_for_superior_fine-grained_o.md)
+- [\[ACL 2026\] Team-Based Self-Play With Dual Adaptive Weighting for Fine-Tuning LLMs](../../ACL2026/self_supervised/team-based_self-play_with_dual_adaptive_weighting_for_fine-tuning_llms.md)
 - [\[ACL 2025\] Contrastive Learning on LLM Back Generation Treebank for Cross-domain Constituency Parsing](../../ACL2025/self_supervised/llm_back_gen_treebank.md)
 - [\[CVPR 2025\] Few-Shot Implicit Function Generation via Equivariance](../../CVPR2025/self_supervised/few-shot_implicit_function_generation_via_equivariance.md)
 - [\[CVPR 2025\] SMILE: Infusing Spatial and Motion Semantics in Masked Video Learning](../../CVPR2025/self_supervised/smile_infusing_spatial_and_motion_semantics_in_masked_video_learning.md)
-- [\[ICCV 2025\] MoSiC: Optimal-Transport Motion Trajectory for Dense Self-Supervised Learning](../../ICCV2025/self_supervised/mosic_optimal-transport_motion_trajectory_for_dense_self-supervised_learning.md)
 
 </div>
 

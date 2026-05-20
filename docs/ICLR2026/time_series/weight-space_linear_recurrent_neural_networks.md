@@ -13,7 +13,7 @@ tags:
   - "无梯度适应"
 ---
 
-# WARP: 权重空间线性循环神经网络
+# Weight-Space Linear Recurrent Neural Networks
 
 **会议**: ICLR 2026  
 **arXiv**: [2506.01153](https://arxiv.org/abs/2506.01153)  
@@ -150,11 +150,11 @@ WARP 在 6 个方法中 4 个数据集进入前三名，包括在 SCP2 和 Heart
 
 ## 相关论文
 
-- [\[ICLR 2026\] Delta-XAI: A Unified Framework for Explaining Prediction Changes in Online Time Series Monitoring](delta-xai_a_unified_framework_for_explaining_prediction_changes_in_online_time_s.md)
-- [\[ICLR 2026\] SciTS: Scientific Time Series Understanding and Generation with LLMs](scits_scientific_time_series_llm.md)
-- [\[ICLR 2026\] Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting](learning_recursive_multi-scale_representations_for_irregular_multivariate_time_s.md)
-- [\[ICLR 2026\] VoT: 事件驱动推理与多层对齐解锁文本价值用于时间序列预测](unlocking_the_value_of_text_event-driven_reasoning_and_multi-level_alignment_for.md)
-- [\[ICLR 2026\] 调节 RNN 训练中的 Burn-in 阶段可提升性能](tuning_the_burn-in_phase_in_training_recurrent_neural_networks_improves_their_pe.md)
+- [\[ICLR 2026\] Tuning the burn-in phase in training recurrent neural networks improves their performance](tuning_the_burn-in_phase_in_training_recurrent_neural_networks_improves_their_pe.md)
+- [\[ICLR 2026\] TimeSliver: Symbolic-Linear Decomposition for Explainable Time Series Classification](timesliver_symbolic-linear_decomposition_for_explainable_time_series_classificat.md)
+- [\[NeurIPS 2025\] Parallelization of Non-linear State-Space Models: Scaling Up Liquid-Resistance Liquid-Capacitance Networks for Efficient Sequence Modeling](../../NeurIPS2025/time_series/parallelization_of_non-linear_state-space_models_scaling_up_liquid-resistance_li.md)
+- [\[CVPR 2026\] Stable Spike: Dual Consistency Optimization via Bitwise AND Operations for Spiking Neural Networks](../../CVPR2026/time_series/stable_spike_dual_consistency_optimization_via_bitwise_and_operations_for_spikin.md)
+- [\[AAAI 2026\] Urban Incident Prediction with Graph Neural Networks: Integrating Government Ratings and Crowdsourced Reports](../../AAAI2026/time_series/urban_incident_prediction_with_graph_neural_networks_integrating_government_rati.md)
 
 </div>
 

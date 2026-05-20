@@ -152,8 +152,8 @@ $$r_{\text{HEI}} = 1 + \frac{1}{\kappa} \sum_{k \in \{L,R\}} \min(0, P_k)$$
 - [\[ICLR 2026\] Characterizing Human Semantic Navigation in Concept Production as Trajectories in Embedding Space](characterizing_human_semantic_navigation_in_concept_production_as_trajectories_i.md)
 - [\[CVPR 2026\] Beyond Pixel Simulation: Pathology Image Generation via Diagnostic Semantic Tokens and Prototype Control](../../CVPR2026/medical_imaging/beyond_pixel_simulation_pathology_image_generation_via_diagnostic_semantic_token.md)
 - [\[ICLR 2026\] DriftLite: Lightweight Drift Control for Inference-Time Scaling of Diffusion Models](driftlite_lightweight_drift_control_for_inference-time_scaling_of_diffusion_mode.md)
+- [\[NeurIPS 2025\] Exploring and Leveraging Class Vectors for Classifier Editing](../../NeurIPS2025/medical_imaging/exploring_and_leveraging_class_vectors_for_classifier_editing.md)
 - [\[ICLR 2026\] Human Behavior Atlas: Benchmarking Unified Psychological and Social Behavior Understanding](human_behavior_atlas_benchmarking_unified_psychological_and_social_behavior_unde.md)
-- [\[AAAI 2026\] Advancing Safe Mechanical Ventilation Using Offline RL With Hybrid Actions and Clinically Aligned Rewards](../../AAAI2026/medical_imaging/advancing_safe_mechanical_ventilation_using_offline_rl_with_.md)
 
 </div>
 

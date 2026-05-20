@@ -136,7 +136,7 @@ $\mathcal{L} = \mathcal{L}_{MSE} + \alpha \cdot \mathcal{L}_{cos}$，其中 $\ma
 - [\[ICML 2025\] Progressive Tempering Sampler with Diffusion](../../ICML2025/image_generation/progressive_tempering_sampler_with_diffusion.md)
 - [\[NeurIPS 2025\] Progressive Inference-Time Annealing of Diffusion Models for Sampling from Boltzmann Densities](../../NeurIPS2025/image_generation/progressive_inference-time_annealing_of_diffusion_models_for_sampling_from_boltz.md)
 - [\[NeurIPS 2025\] Diffusion-Driven Progressive Target Manipulation for Source-Free Domain Adaptation](../../NeurIPS2025/image_generation/diffusion-driven_progressive_target_manipulation_for_source-free_domain_adaptati.md)
-- [\[ECCV 2024\] BrushNet: A Plug-and-Play Image Inpainting Model with Decomposed Dual-Branch Diffusion](../../ECCV2024/image_generation/brushnet_a_plug-and-play_image_inpainting_model_with_decomposed_dual-branch_diff.md)
+- [\[CVPR 2025\] See Further When Clear: Curriculum Consistency Model](see_further_when_clear_curriculum_consistency_model.md)
 
 </div>
 

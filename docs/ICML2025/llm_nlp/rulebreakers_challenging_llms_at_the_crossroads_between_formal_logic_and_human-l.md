@@ -141,9 +141,9 @@ RULEBREAKERS 是一个包含 25,600 个实例的评估数据集，由 12,800 个
 
 - [\[ACL 2025\] HumT DumT: Measuring and Controlling Human-like Language in LLMs](../../ACL2025/llm_nlp/humt_dumt_measuring_and_controlling_human-like_language_in_llms.md)
 - [\[ACL 2025\] Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning](../../ACL2025/llm_nlp/problem-solving_logic_guided_curriculum_in-context_learning_for_llms_complex_rea.md)
-- [\[AAAI 2026\] Understanding Syllogistic Reasoning in LLMs from Formal and Natural Language Perspectives](../../AAAI2026/llm_nlp/understanding_syllogistic_reasoning_in_llms_from_formal_and_natural_language_per.md)
 - [\[ACL 2025\] Can We Further Elicit Reasoning in LLMs? Critic-Guided Planning with Retrieval-Augmentation for Solving Challenging Tasks](../../ACL2025/llm_nlp/can_we_further_elicit_reasoning_in_llms_critic-guided_planning_with_retrieval-au.md)
 - [\[ICML 2025\] Regress, Don't Guess — A Regression-like Loss on Number Tokens for Language Models](regress_dont_guess_--_a_regression-like_loss_on_number_tokens_for_language_model.md)
+- [\[ACL 2026\] Dual Alignment Between Language Model Layers and Human Sentence Processing](../../ACL2026/llm_nlp/dual_alignment_between_language_model_layers_and_human_sentence_processing.md)
 
 </div>
 

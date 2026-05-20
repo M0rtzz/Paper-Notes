@@ -174,8 +174,8 @@ $$\sum_{k=l}^u f(X)_k - \lambda \cdot \ell(l,u) \ge \tau$$
 - [\[ICLR 2026\] COMPASS: Robust Feature Conformal Prediction for Medical Segmentation Metrics](../../ICLR2026/medical_imaging/compass_robust_feature_conformal_prediction_for_medical_segmentation_metrics.md)
 - [\[NeurIPS 2025\] RAxSS: Retrieval-Augmented Sparse Sampling for Explainable Variable-Length Medical Time Series Classification](../../NeurIPS2025/medical_imaging/raxss_retrieval-augmented_sparse_sampling_for_explainable_variable-length_medica.md)
 - [\[NeurIPS 2025\] Bridging Graph and State-Space Modeling for Intensive Care Unit Length of Stay Prediction](../../NeurIPS2025/medical_imaging/bridging_graph_and_state-space_modeling_for_intensive_care_unit_length_of_stay_p.md)
-- [\[AAAI 2026\] Federated CLIP for Resource-Efficient Heterogeneous Medical Image Classification](federated_clip_for_resource-efficient_heterogeneous_medical_image_classification.md)
 - [\[NeurIPS 2025\] Amortized Active Generation of Pareto Sets](../../NeurIPS2025/medical_imaging/amortized_active_generation_of_pareto_sets.md)
+- [\[AAAI 2026\] Cross-Sample Augmented Test-Time Adaptation for Personalized Intraoperative Hypotension Prediction](cross-sample_augmented_test-time_adaptation_for_personalized_intraoperative_hypo.md)
 
 </div>
 

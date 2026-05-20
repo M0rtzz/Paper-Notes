@@ -144,9 +144,9 @@ ES-VR (DPO) 在 Experience（4.20 vs 3.11）和价值强化（Supporter 0.56 vs 
 
 - [\[ACL 2025\] Enhancing Goal-oriented Proactive Dialogue Systems via Consistency Reflection and Correction](enhancing_goal-oriented_proactive_dialogue_systems_via_consistency_reflection_an.md)
 - [\[ACL 2025\] EnSToM: Enhancing Dialogue Systems with Entropy-Scaled Steering Vectors for Topic Maintenance](enstom_enhancing_dialogue_systems_with_entropy-scaled_steering_vectors_for_topic.md)
-- [\[ACL 2025\] An Efficient Task-Oriented Dialogue Policy: Evolutionary Reinforcement Learning Injected by Elite Individuals](eierl_dialogue_policy.md)
+- [\[ACL 2026\] Stress-Testing Emotional Support Models: Moving from Homogeneous to Diverse Help Seekers](../../ACL2026/dialogue/stress-testing_emotional_support_models_moving_from_homogeneous_to_diverse_help_.md)
 - [\[ACL 2026\] ETHICMIND: A Risk-Aware Framework for Ethical-Emotional Alignment in Multi-Turn Dialogue](../../ACL2026/dialogue/ethicmind_a_risk-aware_framework_for_ethical-emotional_alignment_in_multi-turn_d.md)
-- [\[ACL 2026\] Towards Proactive Information Probing: Customer Service Chatbots Harvesting Value from Conversation](../../ACL2026/dialogue/towards_proactive_information_probing_customer_service_chatbots_harvesting_value.md)
+- [\[ACL 2025\] DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
 
 </div>
 

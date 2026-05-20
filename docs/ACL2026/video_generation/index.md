@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 视频生成方向3篇论文解读
+  ACL2026 视频生成方向4篇论文解读
 description: >-
-  3篇ACL2026的视频生成方向论文解读，涵盖视频生成、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  4篇ACL2026的视频生成方向论文解读，涵盖视频生成、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "视频生成"
@@ -14,9 +14,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎬 视频生成
 
-**💬 ACL2026** · **3** 篇论文解读
+**💬 ACL2026** · **4** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (54)](../../CVPR2026/video_generation/index.md) · [🔬 ICLR2026 (19)](../../ICLR2026/video_generation/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/video_generation/index.md) · [🧠 NeurIPS2025 (23)](../../NeurIPS2025/video_generation/index.md) · [📹 ICCV2025 (49)](../../ICCV2025/video_generation/index.md) · [🧪 ICML2025 (7)](../../ICML2025/video_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/video_generation/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/video_generation/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/video_generation/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/video_generation/index.md) · [🧠 NeurIPS2025 (22)](../../NeurIPS2025/video_generation/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/video_generation/index.md)
 
 🔥 **高频主题：** 视频生成 ×3
 
@@ -31,3 +31,7 @@ tags:
 **[Self-Correcting Text-to-Video Generation with Misalignment Detection and Localized Refinement](self-correcting_text-to-video_generation_with_misalignment_detection_and_localiz.md)**
 
 :   提出 VideoRepair，首个免训练、模型无关的文本到视频自校正框架，通过 MLLM 检测细粒度文本-视频不对齐，保留正确区域并选择性修复问题区域，在 EvalCrafter 和 T2V-CompBench 上跨四种 T2V 骨干模型一致提升对齐质量。
+
+**[TeachMaster: Generative Teaching via Code](teachmaster_generative_teaching_via_code.md)**
+
+:   TeachMaster 提出 Generative Teaching 范式，用代码作为教育视频的可解释中间表示，让规划、代码生成、配音、调试、同步和布局智能体协作生成完整课程视频，在接近人工质量的同时把 45 小时课程制作成本降到传统方式的约 0.3%。

@@ -144,7 +144,7 @@ ITT ×4-162M 在 11 个基准上超越 230M Transformer，达到 466M Transforme
 - [\[ACL 2025\] Dolphin: Moving Towards Closed-loop Auto-research through Thinking, Practice, and Feedback](dolphin_moving_towards_closed-loop_auto-research_through_thinking_practice_and_f.md)
 - [\[ACL 2025\] Principled Understanding of Generalization for Generative Transformer Models in Arithmetic Reasoning Tasks](principled_generalization_arithmetic.md)
 - [\[ACL 2025\] ConceptCarve: Dynamic Realization of Evidence](conceptcarve_dynamic_realization_of_evidence.md)
-- [\[ICCV 2025\] AdaptiveAE: An Adaptive Exposure Strategy for HDR Capturing in Dynamic Scenes](../../ICCV2025/others/adaptiveae_an_adaptive_exposure_strategy_for_hdr_capturing_i.md)
+- [\[ACL 2025\] Explaining Matters: Leveraging Definitions and Semantic Expansion for Sexism Detection](explaining_matters_leveraging_definitions_and_semantic_expansion_for_sexism_dete.md)
 
 </div>
 

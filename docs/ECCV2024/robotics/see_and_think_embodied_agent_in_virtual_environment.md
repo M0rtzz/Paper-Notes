@@ -154,8 +154,8 @@ STEVE 是一个基于 LLM 的多模态自主系统，接收视觉状态 $X^v$、
 - [\[CVPR 2026\] Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation](../../CVPR2026/robotics/learning_to_see_and_act_task-aware_virtual_view_exploration_for_robotic_manipula.md)
 - [\[ECCV 2024\] ReALFRED: An Embodied Instruction Following Benchmark in Photo-Realistic Environments](realfred_an_embodied_instruction_following_benchmark_in_photo-realistic_environm.md)
 - [\[CVPR 2025\] Collaborative Tree Search for Enhancing Embodied Multi-Agent Collaboration](../../CVPR2025/robotics/collaborative_tree_search_for_enhancing_embodied_multi-agent_collaboration.md)
-- [\[ECCV 2024\] Octopus: Embodied Vision-Language Programmer from Environmental Feedback](octopus_embodied_vision-language_programmer_from_environmental_feedback.md)
 - [\[ICLR 2026\] Visual Planning: Let's Think Only with Images](../../ICLR2026/robotics/visual_planning_lets_think_only_with_images.md)
+- [\[CVPR 2025\] DRAWER: Digital Reconstruction and Articulation with Environment Realism](../../CVPR2025/robotics/drawer_digital_reconstruction_and_articulation_with_environment_realism.md)
 
 </div>
 

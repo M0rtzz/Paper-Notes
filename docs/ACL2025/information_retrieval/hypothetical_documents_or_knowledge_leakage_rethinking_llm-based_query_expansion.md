@@ -155,11 +155,11 @@ HyDE 假设生成的假设性文档即使有事实错误也能辅助检索。本
 
 ## 相关论文
 
+- [\[ACL 2026\] Rethinking Evaluation for LLM Hallucination Detection: A Desiderata, A New RAG-based Benchmark, New Insights](../../ACL2026/information_retrieval/rethinking_evaluation_for_llm_hallucination_detection_a_desiderata_a_new_rag-bas.md)
 - [\[ICLR 2026\] LightRetriever: A LLM-based Text Retrieval Architecture with Extremely Faster Query Inference](../../ICLR2026/information_retrieval/lightretriever_a_llm-based_text_retrieval_architecture_with_extremely_faster_que.md)
-- [\[CVPR 2025\] VDocRAG: Retrieval-Augmented Generation over Visually-Rich Documents](../../CVPR2025/information_retrieval/vdocrag_retrieval-augmented_generation_over_visually-rich_documents.md)
+- [\[ACL 2026\] LeakDojo: Decoding the Leakage Threats of RAG Systems](../../ACL2026/information_retrieval/leakdojo_decoding_the_leakage_threats_of_rag_systems.md)
 - [\[ACL 2025\] Investigating the Robustness of Retrieval-Augmented Generation at the Query Level](investigating_the_robustness_of_retrieval-augmented_generation_at_the_query_leve.md)
-- [\[ACL 2026\] CURaTE: Continual Unlearning in Real Time with Ensured Preservation of LLM Knowledge](../../ACL2026/information_retrieval/curate_continual_unlearning_in_real_time_with_ensured_preservation_of_llm_knowle.md)
-- [\[ACL 2025\] Health-LLM: Personalized Retrieval-Augmented Disease Prediction System](health-llm_personalized_retrieval-augmented_disease_prediction_system.md)
+- [\[CVPR 2025\] VDocRAG: Retrieval-Augmented Generation over Visually-Rich Documents](../../CVPR2025/information_retrieval/vdocrag_retrieval-augmented_generation_over_visually-rich_documents.md)
 
 </div>
 

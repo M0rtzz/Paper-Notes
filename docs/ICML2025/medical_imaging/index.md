@@ -21,7 +21,7 @@ tags:
 
 **🧪 ICML2025** · **62** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (114)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (72)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (105)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (140)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (38)](../../ICCV2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/medical_imaging/index.md) · [💬 ACL2026 (51)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (119)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (79)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (106)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/medical_imaging/index.md)
 
 🔥 **高频主题：** 生物分子 ×11 · 医学影像 ×8 · 扩散模型 ×4 · 多模态 ×3 · 强化学习 ×3
 

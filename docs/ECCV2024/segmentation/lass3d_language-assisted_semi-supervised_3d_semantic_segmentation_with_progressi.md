@@ -127,9 +127,9 @@ LASS3D 基于 MeanTeacher 框架构建。输入包含点云和对应的 2D 图�
 
 - [\[ECCV 2024\] Learning from the Web: Language Drives Weakly-Supervised Incremental Learning for Semantic Segmentation](learning_from_the_web_language_drives_weakly-supervised_incremental_learning_for.md)
 - [\[AAAI 2026\] S5: Scalable Semi-Supervised Semantic Segmentation in Remote Sensing](../../AAAI2026/segmentation/s5_scalable_semi-supervised_semantic_segmentation_in_remote_sensing.md)
-- [\[CVPR 2026\] SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](../../CVPR2026/segmentation/semitooth_a_generalizable_semisupervised_framework.md)
-- [\[ECCV 2024\] Part2Object: Hierarchical Unsupervised 3D Instance Segmentation](part2object_hierarchical_unsupervised_3d_instance_segmentation.md)
 - [\[ICCV 2025\] ConformalSAM: Unlocking the Potential of Foundational Segmentation Models in Semi-Supervised Semantic Segmentation with Conformal Prediction](../../ICCV2025/segmentation/conformalsam_unlocking_the_potential_of_foundational_segmentation_models_in_semi.md)
+- [\[ECCV 2024\] Point-Supervised Panoptic Segmentation via Estimating Pseudo Labels from Learnable Distance](point-supervised_panoptic_segmentation_via_estimating_pseudo_labels_from_learnab.md)
+- [\[ECCV 2024\] PartSTAD: 2D-to-3D Part Segmentation Task Adaptation](partstad_2d-to-3d_part_segmentation_task_adaptation.md)
 
 </div>
 

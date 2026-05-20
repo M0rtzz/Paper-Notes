@@ -128,8 +128,8 @@ tags:
 
 - [\[ACL 2025\] Measuring Social Biases in Masked Language Models by Proxy of Prediction Quality](measuring_social_biases_in_masked_language_models_by_proxy_of_prediction_quality.md)
 - [\[ACL 2025\] HateDay: Insights from a Global Hate Speech Dataset Representative of a Day on Twitter](hateday_global_hate_speech.md)
-- [\[ACL 2025\] Explicit vs. Implicit: Investigating Social Bias in Large Language Models through Self-Reflection](explicit_vs_implicit_investigating_social_bias_in_large_language_models_through_.md)
 - [\[ACL 2025\] Exploring the Impact of Instruction-Tuning on LLMs' Susceptibility to Misinformation](exploring_the_impact_of_instruction-tuning_on_llms_susceptibility_to_misinformat.md)
+- [\[ACL 2025\] Explicit vs. Implicit: Investigating Social Bias in Large Language Models through Self-Reflection](explicit_vs_implicit_investigating_social_bias_in_large_language_models_through_.md)
 - [\[ACL 2025\] Synergizing LLMs with Global Label Propagation for Multimodal Fake News Detection](llm_label_propagation.md)
 
 </div>

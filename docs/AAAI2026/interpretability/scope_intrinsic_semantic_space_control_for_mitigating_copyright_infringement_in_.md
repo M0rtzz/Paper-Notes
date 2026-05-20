@@ -139,10 +139,10 @@ MMLU通用能力（无损）：
 
 ## 相关论文
 
+- [\[ACL 2026\] SafeConstellations: Mitigating Over-Refusals in LLMs Through Task-Aware Representation Steering](../../ACL2026/interpretability/safeconstellations_mitigating_over-refusals_in_llms_through_task-aware_represent.md)
 - [\[NeurIPS 2025\] Out of Control -- Why Alignment Needs Formal Control Theory (and an Alignment Control Stack)](../../NeurIPS2025/interpretability/out_of_control_--_why_alignment_needs_formal_control_theory_and_an_alignment_con.md)
 - [\[AAAI 2026\] Adaptive Evidential Learning for Temporal-Semantic Robustness in Moment Retrieval](adaptive_evidential_learning_for_temporal-semantic_robustnes.md)
 - [\[CVPR 2026\] Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP](../../CVPR2026/interpretability/beyond_semantics_disentangling_information_scope_in_sparse_autoencoders_for_clip.md)
-- [\[AAAI 2026\] Finding the Translation Switch: Discovering and Exploiting the Task-Initiation Features in LLMs](finding_the_translation_switch_discovering_and_exploiting_the_task-initiation_fe.md)
 - [\[ICLR 2026\] The Geometry of Reasoning: Flowing Logics in Representation Space](../../ICLR2026/interpretability/the_geometry_of_reasoning_flowing_logics_in_representation_space.md)
 
 </div>

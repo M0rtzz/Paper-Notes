@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 LLM Agent方向15篇论文解读
+  ICML2025 LLM Agent方向14篇论文解读
 description: >-
-  15篇ICML2025的 LLM Agent 方向论文解读，涵盖 LLM、Agent、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  14篇ICML2025的 LLM Agent 方向论文解读，涵盖 LLM、Agent、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "LLM Agent"
@@ -16,11 +16,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🦾 LLM Agent
 
-**🧪 ICML2025** · **15** 篇论文解读
+**🧪 ICML2025** · **14** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (41)](../../ACL2026/llm_agent/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/llm_agent/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/llm_agent/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/llm_agent/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_agent/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/llm_agent/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/llm_agent/index.md) · [💬 ACL2026 (69)](../../ACL2026/llm_agent/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/llm_agent/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/llm_agent/index.md) · [🤖 AAAI2026 (43)](../../AAAI2026/llm_agent/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/llm_agent/index.md)
 
-🔥 **高频主题：** LLM ×7 · Agent ×6 · 推理 ×4
+🔥 **高频主题：** LLM ×6 · Agent ×5 · 推理 ×4
 
 **[AdvAgent: Controllable Blackbox Red-teaming on Web Agents](advagent_controllable_blackbox_red-teaming_on_web_agents.md)**
 
@@ -65,10 +65,6 @@ tags:
 **[Open Source Planning & Control System with Language Agents for Autonomous Scientific Discovery](open_source_planning_control_system_with_language_agents_for_autonomous_scientif.md)**
 
 :   本文提出 cmbagent，一个由约 30 个 LLM Agent 组成的多智能体系统，采用 Planning & Control 策略编排无人干预的科研工作流，各 Agent 分别负责论文检索、代码编写、结果解读、输出评审等专业任务，并可在本地执行代码；该系统成功完成了博士级别的宇宙学任务（用超新星数据测量宇宙学参数），在两个基准测试集上优于当前最先进的 LLM。
-
-**[TAMAS: Benchmarking Adversarial Risks in Multi-Agent LLM Systems](tamas_benchmarking_adversarial_risks_in_multi-agent_llm_systems.md)**
-
-:   本文提出 TAMAS，首个系统评估多智能体 LLM 系统安全性的基准，覆盖 5 个高风险领域、6 种攻击类型、300 个对抗样本和 10 个骨干模型，揭示多智能体系统在协作场景中存在严重的对抗脆弱性，并引入 ERS 指标衡量安全-效用权衡。
 
 **[Theorem-of-Thought: A Multi-Agent Framework for Abductive, Deductive, and Inductive Reasoning in Language Models](theorem-of-thought_a_multi-agent_framework_for_abductive_deductive_and_inductive.md)**
 

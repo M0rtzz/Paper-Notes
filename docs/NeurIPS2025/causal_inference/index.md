@@ -21,7 +21,7 @@ tags:
 
 **🧠 NeurIPS2025** · **21** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (8)](../../ACL2026/causal_inference/index.md) · [📷 CVPR2026 (3)](../../CVPR2026/causal_inference/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/causal_inference/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/causal_inference/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/causal_inference/index.md) · [🧪 ICML2025 (16)](../../ICML2025/causal_inference/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (3)](../../ICML2026/causal_inference/index.md) · [💬 ACL2026 (6)](../../ACL2026/causal_inference/index.md) · [📷 CVPR2026 (3)](../../CVPR2026/causal_inference/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/causal_inference/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/causal_inference/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/causal_inference/index.md)
 
 🔥 **高频主题：** LLM ×3
 

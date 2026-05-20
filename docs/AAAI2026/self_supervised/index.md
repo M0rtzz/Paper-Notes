@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 自监督/表示学习方向14篇论文解读
+  AAAI2026 自监督/表示学习方向13篇论文解读
 description: >-
-  14篇AAAI2026的自监督/表示学习方向论文解读，涵盖对抗鲁棒、对齐/RLHF、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  13篇AAAI2026的自监督/表示学习方向论文解读，涵盖对抗鲁棒、对齐/RLHF、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "自监督/表示学习"
@@ -16,11 +16,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔄 自监督/表示学习
 
-**🤖 AAAI2026** · **14** 篇论文解读
+**🤖 AAAI2026** · **13** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (2)](../../ACL2026/self_supervised/index.md) · [📷 CVPR2026 (30)](../../CVPR2026/self_supervised/index.md) · [🔬 ICLR2026 (14)](../../ICLR2026/self_supervised/index.md) · [🧠 NeurIPS2025 (33)](../../NeurIPS2025/self_supervised/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/self_supervised/index.md) · [🧪 ICML2025 (24)](../../ICML2025/self_supervised/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (9)](../../ICML2026/self_supervised/index.md) · [📷 CVPR2026 (30)](../../CVPR2026/self_supervised/index.md) · [🔬 ICLR2026 (14)](../../ICLR2026/self_supervised/index.md) · [🧠 NeurIPS2025 (32)](../../NeurIPS2025/self_supervised/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/self_supervised/index.md) · [🧪 ICML2025 (24)](../../ICML2025/self_supervised/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×4 · 对齐/RLHF ×3 · 自监督学习 ×3
+🔥 **高频主题：** 对抗鲁棒 ×4 · 对齐/RLHF ×2 · 自监督学习 ×2
 
 **[BCE3S: Binary Cross-Entropy Based Tripartite Synergistic Learning for Long-tailed Recognition](bce3s_binary_cross-entropy_based_tripartite_synergistic_learning_for_long-tailed.md)**
 
@@ -57,10 +57,6 @@ tags:
 **[MovSemCL: Movement-Semantics Contrastive Learning for Trajectory Similarity (Extension)](movsemcl_movement-semantics_contrastive_learning_for_trajectory_similarity_exten.md)**
 
 :   提出 MovSemCL 框架，将 GPS 轨迹转化为运动语义特征（位移向量 + 航向角 + Node2Vec 空间图嵌入），通过 patch 级双层注意力实现层次编码（复杂度从 $O(L^2)$ 降为近线性），并设计曲率引导增广（CGA）保留转弯/路口等行为关键片段，在轨迹检索任务上 mean rank 接近理想值 1，推理延迟降低 43.4%。
-
-**[NeuroBridge: Bio-Inspired Self-Supervised EEG-to-Image Decoding via Cognitive Priors and Bidirectional Semantic Alignment](neurobridge_bio-inspired_self-supervised_eeg-to-image_decoding_via_cognitive_pri.md)**
-
-:   提出NeuroBridge框架，通过认知先验增强（CPA，非对称增广模拟感知变异性）和共享语义投影器（SSP，双向对齐到统一语义空间），在THINGS-EEG数据集200类零样本EEG-图像检索任务上达到63.2% Top-1（+12.3%）和89.9% Top-5（+10.2%），大幅超越现有SOTA。
 
 **[Robust Tabular Foundation Models](robust_tabular_foundation_models.md)**
 

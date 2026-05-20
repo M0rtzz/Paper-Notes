@@ -141,7 +141,7 @@ MVSMamba基于coarse-to-fine范式，整体流程为：(1) FPN编码器提取多
 - [\[CVPR 2025\] Making Old Film Great Again: Degradation-aware State Space Model for Old Film Restoration](../../CVPR2025/llm_evaluation/making_old_film_great_again_degradation-aware_state_space_model_for_old_film_res.md)
 - [\[ICCV 2025\] Neural Multi-View Self-Calibrated Photometric Stereo without Photometric Stereo Cues](../../ICCV2025/llm_evaluation/neural_multi-view_self-calibrated_photometric_stereo_without_photometric_stereo_.md)
 - [\[NeurIPS 2025\] Incomplete Multi-view Clustering via Hierarchical Semantic Alignment and Cooperative Completion](incomplete_multi-view_clustering_via_hierarchical_semantic_alignment_and_coopera.md)
-- [\[NeurIPS 2025\] Model-Behavior Alignment under Flexible Evaluation: When the Best-Fitting Model Isn't the Right One](model-behavior_alignment_under_flexible_evaluation_when_the_best-fitting_model_i.md)
+- [\[ICML 2026\] FRACTAL: State Space Model with Fractional Recurrent Architecture for Computational Temporal Analysis of Long Sequences](../../ICML2026/llm_evaluation/fractal_ssm_with_fractional_recurrent_architecture_for_computational_temporal_an.md)
 
 </div>
 

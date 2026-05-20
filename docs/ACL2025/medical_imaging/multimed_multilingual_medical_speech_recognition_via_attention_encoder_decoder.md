@@ -127,9 +127,9 @@ tags:
 
 - [\[ACL 2025\] Pattern Recognition or Medical Knowledge? The Problem with Multiple-Choice Questions in Medicine](pattern_recognition_or_medical_knowledge_the_problem_with_multiple-choice_questi.md)
 - [\[ACL 2025\] Mitigating Confounding in Speech-Based Dementia Detection through Weight Masking](mitigating_confounding_in_speech-based_dementia_detection_through_weight_masking.md)
+- [\[ACL 2026\] CURE-Med: Curriculum-Informed Reinforcement Learning for Multilingual Medical Reasoning](../../ACL2026/medical_imaging/cure-med_curriculum-informed_reinforcement_learning_for_multilingual_medical_rea.md)
 - [\[CVPR 2025\] Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](../../CVPR2025/medical_imaging/decoding_matters_efficient_mamba-based_decoder_with_distribution-aware_deep_supe.md)
 - [\[CVPR 2025\] SapiensID: Foundation for Human Recognition](../../CVPR2025/medical_imaging/sapiensid_foundation_for_human_recognition.md)
-- [\[ICML 2025\] iDPA: Instance Decoupled Prompt Attention for Incremental Medical Object Detection](../../ICML2025/medical_imaging/idpa_instance_decoupled_prompt_attention_for_incremental_medical_object_detectio.md)
 
 </div>
 

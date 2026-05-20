@@ -224,7 +224,7 @@ RFFT 可用率比原始模型提升 29.1 个百分点（56.4→85.5%），人工
 - [\[ECCV 2024\] Text2Place: Affordance-aware Text Guided Human Placement](text2place_affordance-aware_text_guided_human_placement.md)
 - [\[ECCV 2024\] Learning Semantic Latent Directions for Accurate and Controllable Human Motion Prediction](learning_semantic_latent_directions_for_accurate_and_controllable_human_motion_p.md)
 - [\[ICCV 2025\] TRCE: Towards Reliable Malicious Concept Erasure in Text-to-Image Diffusion Models](../../ICCV2025/image_generation/trce_towards_reliable_malicious_concept_erasure_in_text-to-image_diffusion_model.md)
-- [\[NeurIPS 2025\] GenIR: Generative Visual Feedback for Mental Image Retrieval](../../NeurIPS2025/image_generation/genir_generative_visual_feedback_for_mental_image_retrieval.md)
+- [\[ECCV 2024\] Stable Preference: Redefining Training Paradigm of Human Preference Model for Text-to-Image Synthesis](stable_preference_redefining_training_paradigm_of_human_preference_model_for_tex.md)
 
 </div>
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 信号/通信方向13篇论文解读
+  NeurIPS2025 信号/通信方向12篇论文解读
 description: >-
-  13篇NeurIPS2025的信号/通信方向论文解读，涵盖持续学习、LLM、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  12篇NeurIPS2025的信号/通信方向论文解读，涵盖持续学习、LLM、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "信号/通信"
@@ -16,9 +16,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📡 信号/通信
 
-**🧠 NeurIPS2025** · **13** 篇论文解读
+**🧠 NeurIPS2025** · **12** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (3)](../../ACL2026/signal_comm/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/signal_comm/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/signal_comm/index.md) · [🤖 AAAI2026 (3)](../../AAAI2026/signal_comm/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/signal_comm/index.md) · [🧪 ICML2025 (6)](../../ICML2025/signal_comm/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (5)](../../CVPR2026/signal_comm/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/signal_comm/index.md) · [🤖 AAAI2026 (3)](../../AAAI2026/signal_comm/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/signal_comm/index.md) · [🧪 ICML2025 (5)](../../ICML2025/signal_comm/index.md) · [💬 ACL2025 (1)](../../ACL2025/signal_comm/index.md)
 
 **[Angular Steering: Behavior Control via Rotation in Activation Space](angular_steering_behavior_control_via_rotation_in_activation_space.md)**
 
@@ -28,11 +28,7 @@ tags:
 
 :   构建了 Infinity-Chat 数据集（26K 开放式真实用户查询 + 31,250 条人类标注），揭示了 LM 在开放式生成中的"Artificial Hivemind"效应——模型内重复和模型间同质化严重，并发现 Reward Model 和 LM Judge 在个体偏好差异大的样本上校准失败。
 
-**[Bispectral OT: Dataset Comparison using Symmetry-Aware Optimal Transport](bispectral_ot_dataset_comparison_using_symmetry-aware_optimal_transport.md)**
-
-:   提出 Bispectral Optimal Transport (BOT)，将离散最优传输中的代价矩阵从原始像素距离替换为 bispectrum（群 Fourier 不变量）距离，使得传输计划在保持信号结构的同时精确消除群作用（如旋转）带来的变异，在旋转变换的 MNIST 等数据集上将类别保持准确率从 33% 提升至 84%。
-
-**[ConTextTab: 语义感知的表格上下文学习器](contexttab_a_semantics-aware_tabular_in-context_learner.md)**
+**[ConTextTab: A Semantics-Aware Tabular In-Context Learner](contexttab_a_semantics-aware_tabular_in-context_learner.md)**
 
 :   ConTextTab 将语义嵌入（列名、分类值的文本编码）融入 table-native ICL 架构，并在大规模真实表格数据（T4, ~2.18M 表）上预训练，在语义丰富的 CARTE 基准上取得新 SOTA，同时在非语义基准上保持与现有方法竞争力。
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 LLM 效率方向36篇论文解读
+  ACL2025 LLM 效率方向38篇论文解读
 description: >-
-  36篇ACL2025的 LLM 效率方向论文解读，涵盖 LLM、文本摘要、对话系统、问答、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  38篇ACL2025的 LLM 效率方向论文解读，涵盖 LLM、文本摘要、对话系统、问答、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "LLM 效率"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚡ LLM 效率
 
-**💬 ACL2025** · **36** 篇论文解读
+**💬 ACL2025** · **38** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (8)](../../ACL2026/llm_efficiency/index.md) · [📷 CVPR2026 (4)](../../CVPR2026/llm_efficiency/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/llm_efficiency/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/llm_efficiency/index.md) · [🧠 NeurIPS2025 (34)](../../NeurIPS2025/llm_efficiency/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/llm_efficiency/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (11)](../../ICML2026/llm_efficiency/index.md) · [💬 ACL2026 (20)](../../ACL2026/llm_efficiency/index.md) · [📷 CVPR2026 (4)](../../CVPR2026/llm_efficiency/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/llm_efficiency/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/llm_efficiency/index.md) · [🧠 NeurIPS2025 (35)](../../NeurIPS2025/llm_efficiency/index.md)
 
-🔥 **高频主题：** LLM ×8
+🔥 **高频主题：** LLM ×9
 
 **[A Drop-In Solution for On-the-Fly Adaptation of Speculative Decoding in Large Language Models](a_drop-in_solution_for_on-the-fly_adaptation_of_speculative_decoding_in_large_la.md)**
 
@@ -61,6 +61,10 @@ tags:
 
 :   本文提出 LongPiBench 基准，首次系统研究当长上下文中存在多个相关信息片段时，LLM 对信息片段间距离（spacing）的敏感性，揭示了当前模型虽已基本克服"中间丢失"问题，但在相关信息间距变化时仍存在显著的位置偏差。
 
+**[DIVE into MoE: Diversity-Enhanced Reconstruction of Large Language Models from Dense into Mixture-of-Experts](dive_moe_reconstruction.md)**
+
+:   提出 DIVE，一种将 Dense LLM 重构为 MoE 架构的方法，核心洞察是不同领域的校准数据集会让结构化剪枝产生不同的剪枝结果，利用这种多样性构建领域特异的专家，配合高效的两阶段重训练（router dense训练 + expert LoRA稀疏训练），在仅调不到 1% 参数的情况下实现优于现有剪枝和 MoE 重构方法的效果。
+
 **[Dynamic Chunking and Selection for Reading Comprehension of Ultra-Long Context in Large Language Models](dynamic_chunking_and_selection_for_reading_comprehension_of_ultra-long_context_i.md)**
 
 :   提出 Dynamic Chunking and Selection (DCS)，通过基于语义相似度的动态分块和问题感知分类器的块选择，解决长文本固定分块导致的语义断裂问题，在 12 个长文本 QA 数据集上以 Llama3 为基座实现 single-hop 平均 35.50（+28.6%）和 multi-hop 平均 29.07（+20.0%）的提升，且在 256k token 输入下保持鲁棒。
@@ -80,6 +84,10 @@ tags:
 **[FUEL: Unveiling Environmental Impacts of Large Language Model Serving: A Functional Unit View](fuel_unveiling_environmental_impacts_of_llm_serving.md)**
 
 :   提出 FUEL 框架，首次引入生命周期评估中的"功能单元"（Functional Unit）概念作为标准化比较基准，在统一的质量、性能和工作负载约束下评估不同 LLM 服务配置的碳排放，通过模型大小、量化策略和硬件选择三个案例研究揭示了多个反直觉的绿色 AI 洞察。
+
+**[GigaChat Family: Efficient Russian Language Modeling Through Mixture of Experts Architecture](gigachat_family_efficient_russian_language_modeling_through_mixture_of_experts_a.md)**
+
+:   介绍 GigaChat 系列——首个从头为俄语设计并预训练的 MoE 架构 LLM 家族，包含 20B 总参数/3.3B 激活参数的基座和指令微调模型，在俄语 benchmark 上达到同规模 SOTA，训练速度是同量级 dense 模型的 2 倍，推理延迟降低 40%。
 
 **[KV-Latent: Dimensional-level KV Cache Reduction with Frequency-aware Rotary Positional Embedding](kv_latent_cache_reduction.md)**
 

@@ -15,10 +15,10 @@ tags:
 
 # ProtoCycle: Reflective Tool-Augmented Planning for Text-Guided Protein Design
 
-**会议**: ACL 2026 (Findings)
-**arXiv**: [2604.16896](https://arxiv.org/abs/2604.16896)
-**代码**: 无
-**领域**: 医学图像
+**会议**: ACL 2026 (Findings)  
+**arXiv**: [2604.16896](https://arxiv.org/abs/2604.16896)  
+**代码**: 无  
+**领域**: 医学图像  
 **关键词**: 蛋白质设计, 文本引导, 反思规划, 工具增强, 强化学习
 
 ## 一句话总结

@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 多语言/翻译方向13篇论文解读
+  NeurIPS2025 多语言/翻译方向14篇论文解读
 description: >-
-  13篇NeurIPS2025的多语言/翻译方向论文解读，涵盖 LLM、翻译、异常检测、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  14篇NeurIPS2025的多语言/翻译方向论文解读，涵盖 LLM、翻译、异常检测、推理、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "多语言/翻译"
@@ -11,15 +11,16 @@ tags:
   - "LLM"
   - "翻译"
   - "异常检测"
+  - "推理"
   - "少样本学习"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🌐 多语言/翻译
 
-**🧠 NeurIPS2025** · **13** 篇论文解读
+**🧠 NeurIPS2025** · **14** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (23)](../../ACL2026/multilingual_mt/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/multilingual_mt/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/multilingual_mt/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/multilingual_mt/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/multilingual_mt/index.md) · [🧪 ICML2025 (1)](../../ICML2025/multilingual_mt/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/multilingual_mt/index.md) · [💬 ACL2026 (52)](../../ACL2026/multilingual_mt/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/multilingual_mt/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/multilingual_mt/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/multilingual_mt/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/multilingual_mt/index.md)
 
 🔥 **高频主题：** LLM ×4 · 翻译 ×2
 
@@ -58,6 +59,10 @@ tags:
 **[ParallelPrompt: Extracting Parallelism from Large Language Model Queries](parallelprompt_extracting_parallelism_from_large_language_model_queries.md)**
 
 :   构建了首个查询内并行（intra-query parallelism）基准数据集ParallelPrompt，包含37000+条真实用户提示的结构化分解标注，证明约10%的用户查询包含可并行的潜在结构，并行执行可实现最高5.7×的延迟加速且质量损失有限。
+
+**[PolyMath: Evaluating Mathematical Reasoning in Multilingual Contexts](polymath_evaluating_mathematical_reasoning_in_multilingual_contexts.md)**
+
+:   提出Value-Guided Search(VGS)——通过token级价值模型指导块级束搜索，无需预定义"步骤"，相对多数投票在竞赛数学上准确度提升+14.5%，同时推理计算效率提升30%，超越现有PRM方案。
 
 **[Quantifying Climate Policy Action and Its Links to Development Outcomes: A Cross-National Data-Driven Analysis](quantifying_climate_policy_action_and_its_links_to_development_outcomes_a_cross-.md)**
 

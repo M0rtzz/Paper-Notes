@@ -13,7 +13,7 @@ tags:
   - "推理能力"
 ---
 
-# 笔记1: CoT是幻觉吗？数据分布角度
+# Is Chain-of-Thought Reasoning of LLMs a Mirage? A Data Distribution Lens
 
 **会议**: NeurIPS 2025  
 **arXiv**: [2508.01191](https://arxiv.org/abs/2508.01191)  
@@ -98,11 +98,11 @@ tags:
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] CoT Red-Handed: Stress Testing Chain-of-Thought Monitoring](cot_redhanded_stress_testing_chainofthought_monitoring.md)
-- [\[ACL 2025\] CoT-based Synthesizer: Enhancing LLM Performance through Answer Synthesis](../../ACL2025/llm_reasoning/cot-based_synthesizer_enhancing_llm_performance_through_answer_synthesis.md)
-- [\[ACL 2025\] CoT-Valve: Length-Compressible Chain-of-Thought Tuning](../../ACL2025/llm_reasoning/cot-valve_length-compressible_chain-of-thought_tuning.md)
-- [\[ACL 2025\] CoT-UQ: Improving Response-wise Uncertainty Quantification in LLMs with Chain-of-Thought](../../ACL2025/llm_reasoning/cot-uq_improving_response-wise_uncertainty_quantification_in_llms_with_chain-of-.md)
-- [\[CVPR 2025\] CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models](../../CVPR2025/llm_reasoning/cot-vla_visual_chain-of-thought_reasoning_for_vision-language-action_models.md)
+- [\[NeurIPS 2025\] The Illusion of Thinking: Understanding the Strengths and Limitations of Reasoning Models via the Lens of Problem Complexity](the_illusion_of_thinking_understanding_the_strengths_and_limitations_of_reasonin.md)
+- [\[NeurIPS 2025\] ReasonFlux-PRM: Trajectory-Aware PRMs for Long Chain-of-Thought Reasoning in LLMs](reasonfluxprm_trajectoryaware_prms_for_long_chainofthought_r.md)
+- [\[NeurIPS 2025\] Latent Chain-of-Thought for Visual Reasoning](latent_chain-of-thought_for_visual_reasoning.md)
+- [\[NeurIPS 2025\] Does Thinking More Always Help? Mirage of Test-Time Scaling in Reasoning Models](does_thinking_more_always_help_mirage_of_test-time_scaling_in_reasoning_models.md)
+- [\[NeurIPS 2025\] SafePath: Preventing Harmful Reasoning in Chain-of-Thought via Early Alignment](safepath_preventing_harmful_reasoning_in_chain-of-thought_via_early_alignment.md)
 
 </div>
 

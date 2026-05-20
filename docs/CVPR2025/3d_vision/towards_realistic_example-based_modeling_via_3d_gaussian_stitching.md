@@ -133,8 +133,8 @@ $\lambda_1 = \lambda_2 = 2$。T-phase 损失在 S-phase 进行一段时间后加
 - [\[CVPR 2025\] Vid2Sim: Realistic and Interactive Simulation from Video for Urban Navigation](vid2sim_realistic_and_interactive_simulation_from_video_for_urban_navigation.md)
 - [\[CVPR 2025\] EnvGS: Modeling View-Dependent Appearance with Environment Gaussian](envgs_modeling_view-dependent_appearance_with_environment_gaussian.md)
 - [\[CVPR 2025\] Textured Gaussians for Enhanced 3D Scene Appearance Modeling](textured_gaussians_for_enhanced_3d_scene_appearance_modeling.md)
-- [\[ICCV 2025\] From Gallery to Wrist: Realistic 3D Bracelet Insertion in Videos](../../ICCV2025/3d_vision/from_gallery_to_wrist_realistic_3d_bracelet_insertion_in_videos.md)
 - [\[CVPR 2025\] RigGS: Rigging of 3D Gaussians for Modeling Articulated Objects in Videos](riggs_rigging_of_3d_gaussians_for_modeling_articulated_objects_in_videos.md)
+- [\[ICCV 2025\] From Gallery to Wrist: Realistic 3D Bracelet Insertion in Videos](../../ICCV2025/3d_vision/from_gallery_to_wrist_realistic_3d_bracelet_insertion_in_videos.md)
 
 </div>
 

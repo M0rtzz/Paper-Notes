@@ -139,11 +139,11 @@ tags:
 
 ## 相关论文
 
-- [\[AAAI 2026\] MindCross: Fast New Subject Adaptation with Limited Data for Cross-subject Video Reconstruction from Brain Signals](../../AAAI2026/others/mindcross_fast_new_subject_adaptation_with_limited_data_for_cross-subject_video_.md)
-- [\[ICLR 2026\] SEED: Towards More Accurate Semantic Evaluation for Visual Brain Decoding](../../ICLR2026/others/seed_towards_more_accurate_semantic_evaluation_for_visual_brain_decoding.md)
 - [\[NeurIPS 2025\] Brain-Like Processing Pathways Form in Models With Heterogeneous Experts](../../NeurIPS2025/others/brain-like_processing_pathways_form_in_models_with_heterogeneous_experts.md)
+- [\[NeurIPS 2025\] EvoBrain: Dynamic Multi-Channel EEG Graph Modeling for Time-Evolving Brain Networks](../../NeurIPS2025/others/evobrain_dynamic_multi-channel_eeg_graph_modeling_for_time-evolving_brain_networ.md)
 - [\[ECCV 2024\] FreeAugment: Data Augmentation Search Across All Degrees of Freedom](freeaugment_data_augmentation_search_across_all_degrees_of_freedom.md)
 - [\[ECCV 2024\] Superpixel-Informed Implicit Neural Representation for Multi-Dimensional Data](superpixel-informed_implicit_neural_representation_for_multi-dimensional_data.md)
+- [\[ECCV 2024\] Real-Data-Driven 2000 FPS Color Video from Mosaicked Chromatic Spikes](real-data-driven_2000_fps_color_video_from_mosaicked_chromatic_spikes.md)
 
 </div>
 

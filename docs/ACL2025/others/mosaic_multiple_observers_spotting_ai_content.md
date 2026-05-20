@@ -128,8 +128,8 @@ tags:
 
 - [\[ACL 2025\] LAQuer: Localized Attribution Queries in Content-grounded Generation](laquer_localized_attribution.md)
 - [\[ACL 2025\] Principled Content Selection to Generate Diverse and Personalized Multi-Document Summaries](dpp_diverse_multidoc_summary.md)
-- [\[ICML 2025\] Multiple-Policy Evaluation via Density Estimation](../../ICML2025/others/multiple-policy_evaluation_via_density_estimation.md)
 - [\[ACL 2025\] AnalyticKWS: Towards Exemplar-Free Analytic Class Incremental Learning for Small-footprint Keyword Spotting](analytickws_towards_exemplar-free_analytic_class_incremental_learning_for_small-.md)
+- [\[ICML 2025\] Multiple-Policy Evaluation via Density Estimation](../../ICML2025/others/multiple-policy_evaluation_via_density_estimation.md)
 - [\[ACL 2025\] Spotting Out-of-Character Behavior: Atomic-Level Evaluation of Persona Fidelity in Open-Ended Generation](spotting_out-of-character_behavior_atomic-level_evaluation_of_persona_fidelity_i.md)
 
 </div>

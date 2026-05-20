@@ -177,7 +177,7 @@ WeCromCL vs. oCLIP（测试集 F-measure）：
 
 ## 相关论文
 
-- [\[ECCV 2024\] OmniSat: Self-Supervised Modality Fusion for Earth Observation](omnisat_self-supervised_modality_fusion_for_earth_observation.md)
+- [\[ECCV 2024\] SCPNet: Unsupervised Cross-modal Homography Estimation via Intra-modal Self-supervised Learning](scpnet_unsupervised_cross-modal_homography_estimation_via_intra-modal_self-super.md)
 - [\[ECCV 2024\] ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders](vic-mae_self-supervised_representation_learning_from_images_and_video_with_contr.md)
 - [\[ECCV 2024\] InfMAE: A Foundation Model in the Infrared Modality](infmae_a_foundation_model_in_the_infrared_modality.md)
 - [\[ICML 2025\] Collapse-Proof Non-Contrastive Self-Supervised Learning](../../ICML2025/self_supervised/collapse-proof_non-contrastive_self-supervised_learning.md)

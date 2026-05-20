@@ -147,8 +147,8 @@ RLNLC 将问题定义为 MDP $\mathcal{M} = (\mathcal{S}, \mathcal{A}, P, \mathc
 
 - [\[ICML 2025\] Adversarial Cooperative Rationalization: The Risk of Spurious Correlations in Even Clean Datasets](../../ICML2025/reinforcement_learning/adversarial_cooperative_rationalization_the_risk_of_spurious_correlations_in_eve.md)
 - [\[NeurIPS 2025\] Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
-- [\[NeurIPS 2025\] Reinforcement Learning with Action Chunking](reinforcement_learning_with_action_chunking.md)
 - [\[NeurIPS 2025\] On the Global Optimality of Policy Gradient Methods in General Utility Reinforcement Learning](on_the_global_optimality_of_policy_gradient_methods_in_general_utility_reinforce.md)
+- [\[NeurIPS 2025\] Reinforcement Learning with Action Chunking](reinforcement_learning_with_action_chunking.md)
 - [\[NeurIPS 2025\] Learning Interactive World Model for Object-Centric Reinforcement Learning](learning_interactive_world_model_for_object-centric_reinforcement_learning.md)
 
 </div>

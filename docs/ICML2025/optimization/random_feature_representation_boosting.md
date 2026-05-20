@@ -163,9 +163,9 @@ $$\min_A \frac{1}{n}\sum_{i=1}^n \|\nabla_2\hat{\mathcal{R}}(W,\Phi)(x_i) - A f(
 
 - [\[ICML 2025\] Global Convergence and Rich Feature Learning in $L$-Layer Infinite-Width Neural Networks under $\mu$P Parametrization](global_convergence_and_rich_feature_learning_in_l-layer_infinite-width_neural_ne.md)
 - [\[ICML 2025\] Provable Benefit of Random Permutations over Uniform Sampling in Stochastic Coordinate Descent](provable_benefit_of_random_permutations_over_uniform_sampling_in_stochastic_coor.md)
+- [\[NeurIPS 2025\] From Linear to Nonlinear: Provable Weak-to-Strong Generalization through Feature Learning](../../NeurIPS2025/optimization/from_linear_to_nonlinear_provable_weak-to-strong_generalization_through_feature_.md)
 - [\[ICCV 2025\] Zeroth-Order Fine-Tuning of LLMs in Random Subspaces](../../ICCV2025/optimization/zeroth-order_fine-tuning_of_llms_in_random_subspaces.md)
 - [\[ICLR 2026\] Rapid Training of Hamiltonian Graph Networks using Random Features](../../ICLR2026/optimization/rapid_training_of_hamiltonian_graph_networks_using_random_features.md)
-- [\[NeurIPS 2025\] From Linear to Nonlinear: Provable Weak-to-Strong Generalization through Feature Learning](../../NeurIPS2025/optimization/from_linear_to_nonlinear_provable_weak-to-strong_generalization_through_feature_.md)
 
 </div>
 

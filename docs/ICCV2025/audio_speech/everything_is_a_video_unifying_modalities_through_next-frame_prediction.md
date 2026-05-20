@@ -133,11 +133,11 @@ tags:
 
 ## 相关论文
 
+- [\[ICML 2026\] Group Cognition Learning: Making Everything Better Through Governed Two-Stage Agents Collaboration](../../ICML2026/audio_speech/group_cognition_learning_making_everything_better_through_governed_two-stage_age.md)
 - [\[ICML 2025\] FLAM: Frame-Wise Language-Audio Modeling](../../ICML2025/audio_speech/flam_frame-wise_language-audio_modeling.md)
 - [\[ICML 2025\] Teaching Physical Awareness to LLMs through Sounds](../../ICML2025/audio_speech/teaching_physical_awareness_to_llms_through_sounds.md)
+- [\[ICCV 2025\] MUG: Pseudo Labeling Augmented Audio-Visual Mamba Network for Audio-Visual Video Parsing](mug_pseudo_labeling_augmented_audio-visual_mamba_network_for_audio-visual_video_.md)
 - [\[ACL 2025\] CLaMP 3: Universal Music Information Retrieval Across Unaligned Modalities and Unseen Languages](../../ACL2025/audio_speech/clamp_3_universal_music_information_retrieval_across_unaligned_modalities_and_un.md)
-- [\[NeurIPS 2025\] Unifying Symbolic Music Arrangement: Track-Aware Reconstruction and Structured Tokenization](../../NeurIPS2025/audio_speech/unifying_symbolic_music_arrangement_track-aware_reconstruction_and_structured_to.md)
-- [\[ICML 2025\] One Wave To Explain Them All: A Unifying Perspective On Feature Attribution](../../ICML2025/audio_speech/one_wave_to_explain_them_all_a_unifying_perspective_on_feature_attribution.md)
 
 </div>
 

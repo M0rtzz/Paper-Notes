@@ -150,9 +150,9 @@ tags:
 
 - [\[CVPR 2025\] SAP: Segment Any 4K Panorama](sap_segment_any_4k_panorama.md)
 - [\[CVPR 2025\] GleSAM: Segment Any-Quality Images with Generative Latent Space Enhancement](segment_any-quality_images_with_generative_latent_space_enhancement.md)
-- [\[ICCV 2025\] WildSeg3D: Segment Any 3D Objects in the Wild from 2D Images](../../ICCV2025/segmentation/wildseg3d_segment_any_3d_objects_in_the_wild_from_2d_images.md)
 - [\[CVPR 2025\] SAM2-LOVE: Segment Anything Model 2 in Language-Aided Audio-Visual Scenes](sam2-love_segment_anything_model_2_in_language-aided_audio-visual_scenes.md)
 - [\[CVPR 2025\] Holmes-VAU: Towards Long-term Video Anomaly Understanding at Any Granularity](holmes-vau_towards_long-term_video_anomaly_understanding_at_any_granularity.md)
+- [\[CVPR 2025\] FineCaption: Compositional Image Captioning Focusing on Wherever You Want at Any Granularity](finecaption_compositional_image_captioning_focusing_on_wherever_you_want_at_any_.md)
 
 </div>
 

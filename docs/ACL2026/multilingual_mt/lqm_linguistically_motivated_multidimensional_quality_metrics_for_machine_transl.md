@@ -15,10 +15,10 @@ tags:
 
 # LQM: Linguistically Motivated Multidimensional Quality Metrics for Machine Translation
 
-**会议**: ACL 2026
-**arXiv**: [2604.18490](https://arxiv.org/abs/2604.18490)
-**代码**: [GitHub](https://github.com/UBC-NLP/LQM_MT)
-**领域**: 多语言翻译
+**会议**: ACL 2026  
+**arXiv**: [2604.18490](https://arxiv.org/abs/2604.18490)  
+**代码**: [GitHub](https://github.com/UBC-NLP/LQM_MT)  
+**领域**: 多语言翻译  
 **关键词**: 机器翻译评估, 错误分类体系, 阿拉伯方言, 多维质量度量, 语言学驱动
 
 ## 一句话总结
@@ -131,11 +131,11 @@ LQM是一个层次化的MT错误分类体系，包含六个语言学层次，从
 
 ## 相关论文
 
-- [\[ACL 2025\] Alleviating Distribution Shift in Synthetic Data for Machine Translation Quality Estimation](../../ACL2025/multilingual_mt/alleviating_distribution_shift_in_synthetic_data_for_machine_translation_quality.md)
-- [\[ACL 2025\] Watching the Watchers: Exposing Gender Disparities in Machine Translation Quality Estimation](../../ACL2025/multilingual_mt/watching_the_watchers_exposing_gender_disparities_in_machine_translation_quality.md)
-- [\[ACL 2025\] LLMs Can Achieve High-quality Simultaneous Machine Translation as Efficiently as Offline](../../ACL2025/multilingual_mt/llms_can_achieve_high-quality_simultaneous_machine_translation_as_efficiently_as.md)
-- [\[ACL 2026\] Beyond Literal Mapping: Benchmarking and Improving Non-Literal Translation Evaluation](beyond_literal_mapping_benchmarking_and_improving_non-literal_translation_evalua.md)
-- [\[ACL 2025\] Has Machine Translation Evaluation Achieved Human Parity?](../../ACL2025/multilingual_mt/mt_eval_human_parity.md)
+- [\[ACL 2026\] XQ-MEval: A Dataset with Cross-lingual Parallel Quality for Benchmarking Translation Metrics](xq-meval_a_dataset_with_cross-lingual_parallel_quality_for_benchmarking_translat.md)
+- [\[ACL 2026\] Alexandria: A Multi-Domain Dialectal Arabic Machine Translation Dataset for Culturally Inclusive and Linguistically Diverse LLMs](alexandria_a_multi-domain_dialectal_arabic_machine_translation_dataset_for_cultu.md)
+- [\[ACL 2026\] FairQE: Multi-Agent Framework for Mitigating Gender Bias in Translation Quality Estimation](fairqe_multi-agent_framework_for_mitigating_gender_bias_in_translation_quality_e.md)
+- [\[ACL 2026\] LaoBench: A Large-Scale Multidimensional Lao Benchmark for Large Language Models](laobench_a_large-scale_multidimensional_lao_benchmark_for_large_language_models.md)
+- [\[ACL 2025\] M-MAD: Multidimensional Multi-Agent Debate for Advanced Machine Translation Evaluation](../../ACL2025/multilingual_mt/m-mad_multidimensional_multi-agent_debate_for_advanced_machine_translation_evalu.md)
 
 </div>
 

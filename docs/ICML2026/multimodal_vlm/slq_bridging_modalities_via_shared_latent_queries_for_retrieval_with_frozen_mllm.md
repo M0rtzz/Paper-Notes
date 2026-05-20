@@ -1,0 +1,141 @@
+---
+title: >-
+  [论文解读] SLQ: Bridging Modalities via Shared Latent Queries for Retrieval with Frozen MLLMs
+description: >-
+  [ICML 2026][多模态VLM][冻结 MLLM] SLQ 把一小组"共享潜在查询" $\mathbf{Q}$ 追加到图像/文本 token 序列尾部，借助 MLLM 自身的因果注意力聚合全局上下文，**只训练几千个查询参数**就让冻结的 MLLM 变成检索器…
+tags:
+  - "ICML 2026"
+  - "多模态VLM"
+  - "冻结 MLLM"
+  - "Shared Latent Queries"
+  - "知识感知推理检索"
+  - "对比学习"
+  - "KARR-Bench"
+---
+
+# SLQ: Bridging Modalities via Shared Latent Queries for Retrieval with Frozen MLLMs
+
+**会议**: ICML 2026  
+**arXiv**: [2604.13710](https://arxiv.org/abs/2604.13710)  
+**代码**: <https://github.com/CnFaker/SLQ>  
+**领域**: 多模态 VLM / 跨模态检索 / 参数高效微调  
+**关键词**: 冻结 MLLM, Shared Latent Queries, 知识感知推理检索, 对比学习, KARR-Bench
+
+## 一句话总结
+SLQ 把一小组"共享潜在查询" $\mathbf{Q}$ 追加到图像/文本 token 序列尾部，借助 MLLM 自身的因果注意力聚合全局上下文，**只训练几千个查询参数**就让冻结的 MLLM 变成检索器，在 COCO/Flickr30K 上胜过全量微调和 LoRA，并配套发布了考验"隐式知识推理"能力的 KARR-Bench。
+
+## 研究背景与动机
+
+**领域现状**：多模态大模型 (MLLM) 如 InternVL3、Qwen3-VL 等通过统一 Transformer 处理交错图文输入，相比 CLIP/BLIP 的双塔架构能捕获更丰富的跨模态语义交互。最近一系列工作 (GME, MM-Embed, VLM2VEC, MMRet) 想把 MLLM 改造成检索器以利用其推理能力。
+
+**现有痛点**：(1) **侵入式微调**——主流做法是全量微调或 LoRA + 对比学习目标，但这种**生成式对齐 → 判别式对齐**的目标错配会扭曲预训练语义空间、引起灾难性遗忘 (semantic degradation)；(2) **训练效率灾难**——对比学习需要超大 batch 维持负样本多样性，全量微调 billion 参数 backbone 在大 batch 下计算成本高到不可承受 (training inefficiency)；(3) 多数 baseline 用 `<EOS>` 最后一个 token 的隐状态作为全局 embedding——但 last token 是"信息瓶颈"，难以压缩复杂语义，作者的诊断实验 (Figure 2) 显示它在隐式推理任务（如"2+7 命的动物"暗示猫）上完全失败。
+
+**核心矛盾**：MLLM 的预训练已经把视觉+语言对齐到了**同一表示空间**（这是它们能做零样本 VQA 的根本），但要么完全不微调（zero-shot 检索性能差），要么大改参数（破坏预训练空间）——缺少一个"轻量但有效"的中间方案。
+
+**本文目标**：(1) **保持 backbone 冻结**——不动一个预训练参数；(2) 用一种轻量机制**激发** MLLM 的隐式知识与推理能力做检索；(3) 解决"用什么 token 做 embedding"——既不用 last token 也不用 pooling 所有 token；(4) 配套一个真正能区分"模式匹配 vs 知识推理"的检索 benchmark。
+
+**切入角度**：作者做了一个诊断实验——给冻结的 InternVL3-1B 喂入一个**零初始化的额外 query token** 接在序列尾部，让它经过因果注意力"看遍"前面所有 token；用其最终隐状态做检索。结果：在"模式匹配"任务上 query 和 last token 都成功，但在"知识检索 (basic associations)"上 last token 给出几乎无差异的低区分度分数，query 保持高 margin；在"逻辑推理"上 last token 完全失败、query 成功找到目标。这说明 MLLM **已经有**做推理检索的能力，只是 last token 卡在了信息瓶颈。
+
+**核心 idea**：用一小组"共享的可学习潜在查询"作为**模态无关的全局聚合器**，借 MLLM 自身的因果注意力从图像/文本序列中提取统一的检索 embedding——**只学查询，不动 backbone**。
+
+## 方法详解
+
+### 整体框架
+冻结 MLLM backbone + 一小组 $N$ 个可学习的 Shared Latent Queries $\mathbf{Q} \in \mathbb{R}^{N \times D}$（在 InternVL3-8B 上 $N=20$，总参数仅 $20 \times D \approx$ 几万）。文本输入：$\mathbf{X}_T = [\mathbf{E}_T; \mathbf{E}_{P_T}; \mathbf{Q}]$（文本 embedding + 文本指令 prompt + 共享查询）；图像输入：$\mathbf{X}_I = [\mathbf{E}_I; \mathbf{E}_{P_I}; \mathbf{Q}]$。两种输入都喂入冻结 MLLM $\mathcal{M}$ 走一遍因果注意力，取**最后 $N$ 个位置**的隐状态（对应查询位置），mean pooling + L2 归一化得到 embedding $\mathbf{z}_T, \mathbf{z}_I \in \mathbb{R}^D$。用对称 InfoNCE 损失对齐两个 embedding 空间。推理时这些查询位置的输出就是模态无关的全局 embedding 用于检索。训练只更新 $\mathbf{Q}$ 和温度 $\tau$，backbone 完全冻结。
+
+### 关键设计
+
+1. **Shared Latent Queries + 尾部追加 + 因果注意力聚合**:
+
+    - 功能：把可变长度的图像/文本序列压缩成定长的、模态对齐的检索 embedding。
+    - 核心思路：把 $N$ 个可学习查询**追加到序列末尾**（而不是像 CoOp/VPT 那样 prepend），这样在 decoder-only MLLM 的**因果注意力**下，这些查询可以 attend 到**所有**前置 token——天然就是"全局聚合器"。同一组 $\mathbf{Q}$ 既附给图像也附给文本（"Shared"的来源），用同一个冻结模型走一遍前向，最后取这 $N$ 个位置的隐状态：$\mathbf{H}^Q_T = \mathbf{H}_T[-N:], \mathbf{H}^Q_I = \mathbf{H}_I[-N:]$，mean pooling 加 L2 norm 得到最终 embedding $\mathbf{z}_T = \bar{\mathbf{h}}_T / \|\bar{\mathbf{h}}_T\|_2$。
+    - 设计动机：(1) 尾部追加 + causal attention 让查询"看到所有上下文"，正好对应检索需要全局信息的特性；prepend 风（CoOp/VPT）下查询只是 conditioning signal，必须再用 [CLS] 之类 summary token——在 decoder-only MLLM 没有自然的 [CLS]。(2) 用多个 ($N=20$) 查询而不是单个，相当于"多头汇聚 + 平均"，比单一 last token 信息瓶颈更宽。(3) 共享查询而非分别给两个模态各一组，把图像/文本投到**同一参数化空间**，避免双塔风的"模态各自学独立投影"的对齐困难。
+
+2. **冻结 backbone + 仅训练查询 (Parameter-Efficient Retrieval Adaptation)**:
+
+    - 功能：把 MLLM 的预训练知识与推理能力**完整保留**，避免对比微调引入的语义扭曲。
+    - 核心思路：训练时反向传播只更新 $\mathbf{Q}$ 和 $\tau$；MLLM 的所有 attention/FFN/embedding 参数都不动。InternVL3-8B 总参数 8B，但训练参数只是 $N \times D = 20 \times D$（D 是隐维度，几万参数级别）。对比之下 LoRA 要更新几 M 参数，全量微调要更新整个 backbone。
+    - 设计动机：直接呼应作者的诊断实验——MLLM **已经**学到了对齐的多模态语义空间，检索任务不是要"重新教模型"而是"激发已有能力"；改 backbone 反而破坏这个空间。同时小训练集 (~$10^4$ 参数) 不需要很多负样本就能学得好，规避了对比学习的 batch size 内卷。
+
+3. **KARR-Bench：知识感知推理检索 benchmark**:
+
+    - 功能：真正考查 MLLM 是否能用**隐式知识与推理**做检索，而非肤浅的"red car 配 red car"模式匹配。
+    - 核心思路：从 COCO 测试集 5000 张图出发，三阶段 pipeline 构造：(1) **视觉锚定实体筛选**——去掉抽象概念，确保每个目标视觉可验证；(2) **知识增强查询生成**——用 GPT-5-mini 把目标身份编码成**隐式推理 query**，不提目标名或同义词（如不说"cat"而说"the animal with 9 lives"），共约 4500 候选；(3) **人工四标注员交叉验证**——剔除 MLLM 幻觉和弱关联，接受率 60-70%，最终 2915 条高质量图文对。query 跨 6 个维度：Tool & Appliance Utility (18.8%)、Contextual & Spatial Relations (18.1%)、Functional Relationship (17.4%)、Cultural Symbolism (19.4%)、Encyclopedic Knowledge (14.9%)、Logical & Mathematical (11.4%)。
+    - 设计动机：现有 COCO/Flickr30K 用描述性 caption ("a red car") 直接匹配视觉特征，掩盖了 MLLM 推理能力的优势；KARR-Bench 让检索器必须做"隐式知识 + 逻辑"才能命中，是更公平的 MLLM-retriever 评估场。
+
+### 损失函数 / 训练策略
+对称 InfoNCE 损失 $\mathcal{L} = \frac{1}{2}(\mathcal{L}_{I2T} + \mathcal{L}_{T2I})$，每个方向是标准 batch 内对比 softmax 损失，温度 $\tau$ 可学。InternVL3 (1B, 8B) / Qwen3-VL (2B, 4B) 四种 backbone。在 Flickr30K/COCO/KARR-Bench 上用 COCO 训练 5 epoch；MMEB 上用 MMEB-train 训 1 epoch；global batch size 1024（8B 用 512），$N = 20$。
+
+## 实验关键数据
+
+### 主实验
+对比双塔模型 (CLIP, BLIP, FLAME) + MLLM-based 全量微调 baseline (E5-V-7B, VLM2VEC-7B, GME-7B 等) + SLQ 多个规模。
+
+| 数据集 | 方法 | I→T R@5 | T→I R@5 | 参数 |
+|--------|------|---------|---------|------|
+| Flickr30K | CLIP ViT-L | 98.3 | 89.0 | 全量 |
+| Flickr30K | VLM2VEC-7B (full FT) | **99.5** | 95.0 | 7B 微调 |
+| Flickr30K | SLQ (InternVL3-8B) | 99.4 | **95.1** | **~万级** |
+| COCO 5K | VLM2VEC-7B (full FT) | 88.4 | 73.8 | 7B 微调 |
+| COCO 5K | SLQ (InternVL3-8B) | **89.1** | **79.7** | **~万级** |
+| MMEB Overall | VLM2VEC-7B† | 62.9 | — | 7B 微调 |
+| MMEB Overall | UniME-7B† | 66.6 | — | 7B 微调 |
+| MMEB Overall | **SLQ-8B†** | **67.5** | — | **~万级** |
+
+### 消融实验
+
+| 配置 | 关键指标 | 说明 |
+|------|---------|------|
+| SLQ 完整（冻结 backbone + $N$=20 queries） | 最优 | — |
+| Last token baseline (零 shot) | 模式匹配通过、知识推理失败 | 诊断 query 优于 last token |
+| Single query (N=1) | 性能下降 | 多查询提供更宽信息带 |
+| 全量 fine-tune | 平均同等或更弱、GPU 时数高得多 | 验证非侵入更优 |
+| LoRA | 介于 SLQ 与全量之间 | 仍轻微破坏预训练空间 |
+
+### 关键发现
+- **参数效率惊人**：SLQ-8B 用万级参数就在 MMEB 上达到 67.5 平均分，胜过 7B 全量微调的 VLM2VEC (62.9) 和 UniME (66.6)——验证了"激发 > 重训"的核心观点。
+- **多模态共享 query 是关键**：图像和文本共用同一组 $\mathbf{Q}$，强制 backbone 把两种模态投到同一隐空间，比双塔分投影更对齐。
+- **尾部追加 + causal attention** 比 prepend 风的 CoOp/VPT 更适合 decoder-only MLLM——因果掩码让追加 query 能 attend 到所有上下文。
+- 在 KARR-Bench 上 SLQ 比 last token 类基线"实质性提升"，说明该 benchmark 确实能区分模式匹配与推理能力。
+
+## 亮点与洞察
+- **"激发预训练能力" vs "重新训练"的范式对比**：本文给出了非常清晰的论据——LLM/MLLM 的预训练已经学到了所需对齐空间，只需要一个"接口"暴露出来，而不是再做侵入式修改。
+- **诊断实验设计极佳**：Figure 2 三个难度等级（模式匹配 / 知识检索 / 逻辑推理）的对比图，几乎一图证明了 last token 的瓶颈与 query 的优势。
+- **KARR-Bench 是社区需要的工具**：把"知识感知 + 隐式推理"作为一类检索任务系统化评测，避免现有 benchmark 被"shortcut"分数压平的问题。
+- 这套"加少量 query token + 冻结 backbone"的 PEFT 策略可迁移到：检索增强生成 (RAG)、向量索引服务、跨模态 Re-ranking、多语言对齐等。
+
+## 局限与展望
+- $N$ 个 query 是超参，论文固定 $N=20$ 没有大规模扫描；不同任务可能最优 $N$ 不同。
+- 仅在 COCO/Flickr30K/MMEB/KARR-Bench 上验证，**长文档检索**、**视频检索**、**音频-文本检索**等场景需要进一步验证。
+- KARR-Bench 由 GPT-5-mini 生成 query + 人工筛选——GPT 生成可能引入风格偏差，未来更大样本和多 LLM 生成可能更稳健。
+- 推理时每张图/每条文本仍要跑完整 MLLM 前向（虽不更新参数）——比 CLIP 类双塔模型推理慢；SLQ 的优势主要在**训练成本**而非**推理速度**。
+- 完全冻结 backbone 也意味着无法吸收新领域知识——若目标域与预训练分布差异大（如医学图像）可能受限。
+
+## 相关工作与启发
+- **vs VLM2VEC / MMRet / GME / MM-Embed (全量微调或 LoRA + last token)**：他们改参数 + 用 `<EOS>` 隐状态；SLQ 不改参数 + 用 query 隐状态。MMEB 上 SLQ-8B 67.5 胜过 VLM2VEC-7B 62.9、UniME-7B 66.6，且训练参数少几个数量级。
+- **vs ColPali / VisRAG (multi-vector)**：他们用多向量表示（更精细但存储贵）；SLQ 是单向量 + 多 query 聚合，更简洁。
+- **vs CoOp / MaPLe / VPT (prompt tuning)**：那些 prepend 学习 token 适配 CLIP 类 encoder-only；SLQ append 适配 decoder-only MLLM，借因果注意力实现"全局聚合"。
+- **vs BLIP-2 Q-Former**：Q-Former 引入额外 cross-attention 模块；SLQ 完全用 MLLM 自身 self-attention，零额外模块。
+- **vs E5-V (last token + Matryoshka)**：他们也是 MLLM 转检索器，但用 last token 受限于信息瓶颈；SLQ 用多 query 解决该瓶颈。
+
+## 评分
+- 新颖性: ⭐⭐⭐⭐ "尾部追加共享查询 + 冻结 backbone"是简洁有效的设计；KARR-Bench 的构造也有独立价值
+- 实验充分度: ⭐⭐⭐⭐ 四种 backbone 规模 × 四个 benchmark 全面比较；缺更多 ablation（如 $N$ 的扫描、prompt 内容影响）
+- 写作质量: ⭐⭐⭐⭐⭐ 诊断实验 → 方法 → benchmark 三段论结构清晰，Figure 2 极强说服力
+- 价值: ⭐⭐⭐⭐⭐ 让 MLLM 检索化的训练成本降几个数量级，工程上立即可用；KARR-Bench 为社区提供推理检索评测工具
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[AAAI 2026\] Bridging Modalities via Progressive Re-alignment for Multimodal Test-Time Adaptation (BriMPR)](../../AAAI2026/multimodal_vlm/bridging_modalities_via_progressive_re-alignment_for_multimo.md)
+- [\[ICLR 2026\] Steering and Rectifying Latent Representation Manifolds in Frozen Multi-Modal LLMs for Video Anomaly Detection](../../ICLR2026/multimodal_vlm/steering_and_rectifying_latent_representation_manifolds_in_frozen_multi-modal_ll.md)
+- [\[CVPR 2026\] FINER: MLLMs Hallucinate under Fine-grained Negative Queries](../../CVPR2026/multimodal_vlm/finer_mllms_hallucinate_under_fine-grained_negative_queries.md)
+- [\[NeurIPS 2025\] CyIN: Cyclic Informative Latent Space for Bridging Complete and Incomplete Multimodal Learning](../../NeurIPS2025/multimodal_vlm/cyin_cyclic_informative_latent_space_for_bridging_complete_and_incomplete_multim.md)
+- [\[ICML 2026\] Calibrated Multimodal Representation Learning with Missing Modalities](calibrated_multimodal_representation_learning_with_missing_modalities.md)
+
+</div>
+
+<!-- RELATED:END -->

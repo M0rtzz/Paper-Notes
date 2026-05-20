@@ -140,10 +140,10 @@ AGrail (Claude-3.5) 保留了 95.6% 的正常动作，同时将 Prompt Injection
 ## 相关论文
 
 - [\[NeurIPS 2025\] Poly-Guard: Massive Multi-Domain Safety Policy-Grounded Guardrail Dataset](../../NeurIPS2025/llm_safety/poly-guard_massive_multi-domain_safety_policy-grounded_guardrail_dataset.md)
-- [\[ACL 2025\] SafeRoute: Adaptive Model Selection for Efficient and Accurate Safety Guardrails in Large Language Models](saferoute_adaptive_model_selection_for_efficient_and_accurate_safety_guardrails_.md)
 - [\[ACL 2025\] Towards Effective Extraction and Evaluation of Factual Claims](towards_effective_extraction_and_evaluation_of_factual_claims.md)
+- [\[ACL 2025\] SafeRoute: Adaptive Model Selection for Efficient and Accurate Safety Guardrails in Large Language Models](saferoute_adaptive_model_selection_for_efficient_and_accurate_safety_guardrails_.md)
+- [\[ACL 2025\] Unveiling Privacy Risks in LLM Agent Memory](mextra_agent_memory_privacy.md)
 - [\[ACL 2025\] Aligning Large Language Models to Follow Instructions and Hallucinate Less via Effective Data Filtering](aligning_large_language_models_to_follow_instructions_and_hallucinate_less_via_e.md)
-- [\[ACL 2025\] MorphMark: Flexible Adaptive Watermarking for Large Language Models](morphmark_adaptive_watermarking.md)
 
 </div>
 

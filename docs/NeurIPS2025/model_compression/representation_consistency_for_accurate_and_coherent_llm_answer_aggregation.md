@@ -143,11 +143,11 @@ tags:
 
 ## 相关论文
 
+- [\[ACL 2026\] VecCISC: Improving Confidence-Informed Self-Consistency with Reasoning Trace Clustering and Candidate Answer Selection](../../ACL2026/model_compression/veccisc_improving_confidence-informed_self-consistency_with_reasoning_trace_clus.md)
 - [\[NeurIPS 2025\] Robustifying Learning-Augmented Caching Efficiently without Compromising 1-Consistency](robustifying_learning-augmented_caching_efficiently_without_compromising_1-consi.md)
 - [\[NeurIPS 2025\] Accurate and Efficient Low-Rank Model Merging in Core Space](accurate_and_efficient_low-rank_model_merging_in_core_space.md)
 - [\[NeurIPS 2025\] BaRISTA: Brain-Scale Informed Spatiotemporal Representation of Human Intracranial EEG](barista_brain_scale_informed_spatiotemporal_representation_of_human_intracranial.md)
-- [\[ICML 2025\] any4: Learned 4-bit Numeric Representation for LLMs](../../ICML2025/model_compression/any4_learned_4-bit_numeric_representation_for_llms.md)
-- [\[NeurIPS 2025\] VQToken: Neural Discrete Token Representation Learning for Extreme Token Reduction in Video Large Language Models](vqtoken_neural_discrete_token_representation_learning_for_extreme_token_reductio.md)
+- [\[NeurIPS 2025\] Q-Palette: Fractional-Bit Quantizers Toward Optimal Bit Allocation for Efficient LLM Deployment](q-palette_fractional-bit_quantizers_toward_optimal_bit_allocation_for_efficient_.md)
 
 </div>
 

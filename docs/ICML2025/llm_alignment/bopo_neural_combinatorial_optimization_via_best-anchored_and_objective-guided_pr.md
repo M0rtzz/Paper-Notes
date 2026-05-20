@@ -206,10 +206,10 @@ DMU 上差异更显著：DPO 14.1% → SimPO 13.6% → BOPO 12.9%。SimPO 在 OO
 ## 相关论文
 
 - [\[ICML 2025\] Preference Optimization for Combinatorial Optimization Problems](preference_optimization_for_combinatorial_optimization_problems.md)
-- [\[ICML 2025\] Improving LLM Safety Alignment with Dual-Objective Optimization](improving_llm_safety_alignment_with_dual-objective_optimization.md)
 - [\[ICML 2025\] TGDPO: Harnessing Token-Level Reward Guidance for Enhancing Direct Preference Optimization](tgdpo_harnessing_token-level_reward_guidance_for_enhancing_direct_preference_opt.md)
 - [\[NeurIPS 2025\] LongVPO: From Anchored Cues to Self-Reasoning for Long-Form Video Preference Optimization](../../NeurIPS2025/llm_alignment/longvpo_from_anchored_cues_to_selfreasoning_for_longform_vid.md)
 - [\[ICML 2025\] Self-Consistency Preference Optimization](self-consistency_preference_optimization.md)
+- [\[ICML 2025\] Right Now, Wrong Then: Non-Stationary Direct Preference Optimization under Preference Drift](right_now_wrong_then_non-stationary_direct_preference_optimization_under_prefere.md)
 
 </div>
 

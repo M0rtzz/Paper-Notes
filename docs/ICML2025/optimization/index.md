@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 优化/理论方向57篇论文解读
+  ICML2025 优化/理论方向56篇论文解读
 description: >-
-  57篇ICML2025的优化/理论方向论文解读，涵盖联邦学习、布局/合成、对抗鲁棒、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  56篇ICML2025的优化/理论方向论文解读，涵盖联邦学习、布局/合成、对抗鲁棒、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "优化/理论"
@@ -17,11 +17,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**🧪 ICML2025** · **57** 篇论文解读
+**🧪 ICML2025** · **56** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/optimization/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (45)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (23)](../../AAAI2026/optimization/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/optimization/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/optimization/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (44)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (22)](../../AAAI2026/optimization/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md)
 
-🔥 **高频主题：** 联邦学习 ×5 · 布局/合成 ×2 · 对抗鲁棒 ×2 · LLM ×2
+🔥 **高频主题：** 联邦学习 ×4 · 布局/合成 ×2 · 对抗鲁棒 ×2 · LLM ×2
 
 **[A Generalization Result for Convergence in Learning-to-Optimize](a_generalization_result_for_convergence_in_learning-to-optimize.md)**
 
@@ -170,10 +170,6 @@ tags:
 **[Optimization over Sparse Support-Preserving Sets: Two-Step Projection with Global Optimality Guarantees](optimization_over_sparse_support-preserving_sets_two-step_projection_with_global.md)**
 
 :   针对带有额外支撑保持约束的稀疏优化问题，提出两步投影IHT算法（先硬阈值再投影凸集），在RSC/RSS条件下给出全局目标值保证（无系统误差），揭示稀疏度松弛与次优性间的新trade-off。
-
-**[POPri: Private Federated Learning using Preference-Optimized Synthetic Data](popri_private_federated_learning_using_preference-optimized_synthetic_data.md)**
-
-:   将差分隐私联邦学习中的合成数据生成问题重新建模为 LLM 策略优化（DPO）问题，利用客户端 DP 反馈构建偏好对来微调 LLM，比传统 Private Evolution 提升更大——在 ε=1 下将隐私-性能差距缩小 58%。
 
 **[Provable Benefit of Random Permutations over Uniform Sampling in Stochastic Coordinate Descent](provable_benefit_of_random_permutations_over_uniform_sampling_in_stochastic_coor.md)**
 

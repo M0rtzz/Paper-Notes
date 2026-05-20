@@ -123,8 +123,8 @@ QuartDepth 流水线分为三步：(1) 先用 LogNP 磨光变换激活值分布�
 - [\[ICCV 2025\] FlashDepth: Real-time Streaming Video Depth Estimation at 2K Resolution](../../ICCV2025/3d_vision/flashdepth_real-time_streaming_video_depth_estimation_at_2k_resolution.md)
 - [\[CVPR 2025\] Blurry-Edges: Photon-Limited Depth Estimation from Defocused Boundaries](blurry-edges_photon-limited_depth_estimation_from_defocused_boundaries.md)
 - [\[CVPR 2025\] SAT-HMR: Real-Time Multi-Person 3D Mesh Estimation via Scale-Adaptive Tokens](sat-hmr_real-time_multi-person_3d_mesh_estimation_via_scale-adaptive_tokens.md)
-- [\[CVPR 2026\] NanoSD: Edge Efficient Foundation Model for Real Time Image Restoration](../../CVPR2026/3d_vision/nanosd_edge_efficient_foundation_model_for_real_time_image_restoration.md)
 - [\[CVPR 2025\] BLADE: Single-view Body Mesh Learning through Accurate Depth Estimation](blade_single-view_body_mesh_estimation_through_accurate_depth_estimation.md)
+- [\[CVPR 2025\] Scalable Autoregressive Monocular Depth Estimation](scalable_autoregressive_monocular_depth_estimation.md)
 
 </div>
 

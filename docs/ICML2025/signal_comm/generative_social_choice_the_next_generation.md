@@ -148,11 +148,11 @@ $$\frac{\mathrm{sup}(\alpha^*, S, \ell - \delta)}{\max_{\alpha \in \mathcal{U}: 
 
 ## 相关论文
 
-- [\[ICML 2025\] Reward-Augmented Data Enhances Direct Preference Alignment of LLMs](reward-augmented_data_enhances_direct_preference_alignment_of_llms.md)
 - [\[ICML 2025\] Fourier Position Embedding: Enhancing Attention's Periodic Extension for Length Generalization](fourier_position_embedding_enhancing_attentions_periodic_extension_for_length_ge.md)
 - [\[ICML 2025\] Deep Electromagnetic Structure Design Under Limited Evaluation Budgets](deep_electromagnetic_structure_design_under_limited_evaluation_budgets.md)
 - [\[ICML 2025\] SepLLM: Accelerate Large Language Models by Compressing One Segment into One Separator](sepllm_accelerate_large_language_models_by_compressing_one_segment_into_one_sepa.md)
 - [\[ICML 2025\] Large Language Model (LLM)-enabled In-context Learning for Wireless Network Optimization](large_language_model_llm-enabled_in-context_learning_for_wireless_network_optimi.md)
+- [\[CVPR 2025\] Neural Video Compression with Context Modulation](../../CVPR2025/signal_comm/neural_video_compression_with_context_modulation.md)
 
 </div>
 

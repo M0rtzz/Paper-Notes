@@ -122,9 +122,9 @@ SIMECO 比 AdaPoinTr+增广提升 10% CD-$\ell_1$ 和 8% F1
 
 - [\[CVPR 2026\] Unified Primitive Proxies for Structured Shape Completion](../../CVPR2026/llm_evaluation/unified_primitive_proxies_for_structured_shape_completion.md)
 - [\[NeurIPS 2025\] Incomplete Multi-view Clustering via Hierarchical Semantic Alignment and Cooperative Completion](incomplete_multi-view_clustering_via_hierarchical_semantic_alignment_and_coopera.md)
-- [\[ICCV 2025\] Combinative Matching for Geometric Shape Assembly](../../ICCV2025/llm_evaluation/combinative_matching_for_geometric_shape_assembly.md)
 - [\[NeurIPS 2025\] CLIMB: Class-Imbalanced Learning Benchmark on Tabular Data](climb_class-imbalanced_learning_benchmark_on_tabular_data.md)
-- [\[NeurIPS 2025\] Put CASH on Bandits: A Max K-Armed Problem for Automated Machine Learning](put_cash_on_bandits_a_max_k-armed_problem_for_automated_machine_learning.md)
+- [\[ICCV 2025\] Combinative Matching for Geometric Shape Assembly](../../ICCV2025/llm_evaluation/combinative_matching_for_geometric_shape_assembly.md)
+- [\[ICML 2025\] G-Sim: Generative Simulations with Large Language Models and Gradient-Free Calibration](../../ICML2025/llm_evaluation/g-sim_generative_simulations_with_large_language_models_and_gradient-free_calibr.md)
 
 </div>
 

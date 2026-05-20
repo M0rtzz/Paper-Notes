@@ -147,8 +147,8 @@ Grounding forecaster 使用标准的因果语言建模目标（causal language m
 - [\[ACL 2025\] ELABORATION: A Comprehensive Benchmark on Human-LLM Competitive Programming](elaboration_competitive_programming.md)
 - [\[ACL 2025\] Towards Dynamic Theory of Mind: Evaluating LLM Adaptation to Temporal Evolution of Human States](towards_dynamic_theory_of_mind_evaluating_llm_adaptation_to_temporal_evolution_o.md)
 - [\[ACL 2025\] Influences on LLM Calibration: A Study of Response Agreement, Loss Functions, and Prompt Styles](influences_on_llm_calibration_a_study_of_response_agreement_loss_functions_and_p.md)
-- [\[ACL 2025\] HalluLens: LLM Hallucination Benchmark](hallulens_llm_hallucination_benchmark.md)
 - [\[NeurIPS 2025\] RGB-to-Polarization Estimation: A New Task and Benchmark Study](../../NeurIPS2025/llm_evaluation/rgb-to-polarization_estimation_a_new_task_and_benchmark_study.md)
+- [\[ACL 2025\] HalluLens: LLM Hallucination Benchmark](hallulens_llm_hallucination_benchmark.md)
 
 </div>
 

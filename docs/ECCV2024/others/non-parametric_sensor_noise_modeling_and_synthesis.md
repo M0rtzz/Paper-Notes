@@ -124,10 +124,10 @@ tags:
 ## 相关论文
 
 - [\[AAAI 2026\] Predict and Resist: Long-Term Accident Anticipation under Sensor Noise](../../AAAI2026/others/predict_and_resist_long-term_accident_anticipation_under_sensor_noise.md)
+- [\[ECCV 2024\] Domain Reduction Strategy for Non-Line-of-Sight Imaging](domain_reduction_strategy_for_non-line-of-sight_imaging.md)
 - [\[ECCV 2024\] AddMe: Zero-Shot Group-Photo Synthesis by Inserting People Into Scenes](addme_zero-shot_group-photo_synthesis_by_inserting_people_into_scenes.md)
 - [\[NeurIPS 2025\] Coresets for Clustering Under Stochastic Noise](../../NeurIPS2025/others/coresets_for_clustering_under_stochastic_noise.md)
 - [\[ACL 2025\] SudoLM: Learning Access Control of Parametric Knowledge with Authorization Alignment](../../ACL2025/others/sudolm_authorization_alignment.md)
-- [\[ICCV 2025\] Recovering Parametric Scenes from Very Few Time-of-Flight Pixels](../../ICCV2025/others/recovering_parametric_scenes_from_very_few_time-of-flight_pixels.md)
 
 </div>
 

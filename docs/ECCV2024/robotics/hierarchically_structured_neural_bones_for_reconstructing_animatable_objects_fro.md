@@ -144,7 +144,7 @@ $$\mathcal{L} = \mathcal{L}_{recon} + \mathcal{L}_{cycle} + \mathcal{L}_{bone} +
 - [\[NeurIPS 2025\] Spatial Understanding from Videos: Structured Prompts Meet Simulation Data](../../NeurIPS2025/robotics/spatial_understanding_from_videos_structured_prompts_meet_simulation_data.md)
 - [\[ECCV 2024\] GraspXL: Generating Grasping Motions for Diverse Objects at Scale](graspxl_generating_grasping_motions_for_diverse_objects_at_scale.md)
 - [\[AAAI 2026\] Neural Graph Navigation for Intelligent Subgraph Matching](../../AAAI2026/robotics/neural_graph_navigation_for_intelligent_subgraph_matching.md)
-- [\[NeurIPS 2025\] GUI-Rise: Structured Reasoning and History Summarization for GUI Navigation](../../NeurIPS2025/robotics/gui-rise_structured_reasoning_and_history_summarization_for_gui_navigation.md)
+- [\[ACL 2026\] SCAN: Structured Capability Assessment and Navigation for LLMs](../../ACL2026/robotics/scan_structured_capability_assessment_and_navigation_for_llms.md)
 - [\[CVPR 2025\] Coordinated Manipulation of Hybrid Deformable-Rigid Objects in Constrained Environments](../../CVPR2025/robotics/coordinated_manipulation_hybrid_deformable_rigid_objects.md)
 
 </div>

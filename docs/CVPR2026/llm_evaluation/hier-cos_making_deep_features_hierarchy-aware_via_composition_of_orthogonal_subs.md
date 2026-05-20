@@ -124,9 +124,9 @@ $\mathcal{L}_{total} = \mathcal{L}_{kl} + \alpha \mathcal{L}_{reg}$。$\mathcal{
 
 - [\[CVPR 2025\] Making Old Film Great Again: Degradation-aware State Space Model for Old Film Restoration](../../CVPR2025/llm_evaluation/making_old_film_great_again_degradation-aware_state_space_model_for_old_film_res.md)
 - [\[ICLR 2026\] Deep FlexQP: Accelerated Nonlinear Programming via Deep Unfolding](../../ICLR2026/llm_evaluation/deep_flexqp_accelerated_nonlinear_programming_via_deep_unfolding.md)
-- [\[CVPR 2026\] SATTC: Structure-Aware Label-Free Test-Time Calibration for Cross-Subject EEG-to-Image Retrieval](sattc_structure-aware_label-free_test-time_calibration_for_cross-subject_eeg-to-.md)
-- [\[CVPR 2026\] AdaBet: Gradient-free Layer Selection for Efficient Training of Deep Neural Networks](adabet_gradient-free_layer_selection_for_efficient_training_of_deep_neural_netwo.md)
+- [\[ICML 2026\] Possibilistic Predictive Uncertainty for Deep Learning](../../ICML2026/llm_evaluation/possibilistic_predictive_uncertainty_for_deep_learning.md)
 - [\[ICCV 2025\] HiERO: Understanding the Hierarchy of Human Behavior Enhances Reasoning on Egocentric Videos](../../ICCV2025/llm_evaluation/hiero_understanding_the_hierarchy_of_human_behavior_enhances_reasoning_on_egocen.md)
+- [\[CVPR 2026\] AdaBet: Gradient-free Layer Selection for Efficient Training of Deep Neural Networks](adabet_gradient-free_layer_selection_for_efficient_training_of_deep_neural_netwo.md)
 
 </div>
 

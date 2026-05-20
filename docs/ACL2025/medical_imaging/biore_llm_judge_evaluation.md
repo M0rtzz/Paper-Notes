@@ -124,8 +124,8 @@ tags:
 - [\[ACL 2025\] Evaluation of LLMs in Medical Text Summarization: The Role of Vocabulary Adaptation in High OOV Settings](evaluation_of_llms_in_medical_text_summarization_the_role_of_vocabulary_adaptati.md)
 - [\[ACL 2025\] Query-driven Document-level Scientific Evidence Extraction from Biomedical Studies](urca_biomedical_evidence_extraction.md)
 - [\[NeurIPS 2025\] Shallow Robustness, Deep Vulnerabilities: Multi-Turn Evaluation of Medical LLMs](../../NeurIPS2025/medical_imaging/shallow_robustness_deep_vulnerabilities_multi-turn_evaluation_of_medical_llms.md)
-- [\[ACL 2025\] Exploring Compositional Generalization of Multimodal LLMs for Medical Imaging](exploring_compositional_generalization_of_multimodal_llms_for_medical_imaging.md)
 - [\[ICLR 2026\] CounselBench: A Large-Scale Expert Evaluation and Adversarial Benchmarking of LLMs in Mental Health QA](../../ICLR2026/medical_imaging/counselbench_llm_mental_health_qa.md)
+- [\[AAAI 2026\] Note2Chat: Improving LLMs for Multi-Turn Clinical History Taking Using Medical Notes](../../AAAI2026/medical_imaging/note2chat_improving_llms_for_multi-turn_clinical_history_taking_using_medical_no.md)
 
 </div>
 

@@ -139,8 +139,8 @@ vHeat-B 比 Swin-B 高 0.5%，吞吐量高 40%，GPU 显存少 80%，FLOPs 少 3
 - [\[AAAI 2026\] Learning Spatial Decay for Vision Transformers](../../AAAI2026/llm_nlp/learning_spatial_decay_for_vision_transformers.md)
 - [\[AAAI 2026\] Vision Transformers are Circulant Attention Learners](../../AAAI2026/llm_nlp/vision_transformers_are_circulant_attention_learners.md)
 - [\[ICML 2025\] Defending LVLMs Against Vision Attacks through Partial-Perception Supervision](../../ICML2025/llm_nlp/defending_lvlms_against_vision_attacks_through_partial-perception_supervision.md)
+- [\[ICML 2026\] FRISM: Fine-Grained Reasoning Injection via Subspace-Level Model Merging for Vision–Language Models](../../ICML2026/llm_nlp/frism_fine-grained_reasoning_injection_via_subspace-level_model_merging_for_visi.md)
 - [\[CVPR 2025\] Exposure-slot: Exposure-centric Representations Learning with Slot-in-Slot Attention](exposure-slot_exposure-centric_representations_learning_with_slot-in-slot_attent.md)
-- [\[CVPR 2025\] Robust Message Embedding via Attention Flow-Based Steganography](robust_message_embedding_via_attention_flow-based_steganography.md)
 
 </div>
 

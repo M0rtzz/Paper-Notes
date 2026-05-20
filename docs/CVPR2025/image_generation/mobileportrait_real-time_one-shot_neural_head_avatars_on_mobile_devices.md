@@ -143,8 +143,8 @@ $$\mathcal{L} = \mathcal{L}_{percep} + \mathcal{L}_{L1} + \mathcal{L}_{kp} + \ma
 - [\[CVPR 2025\] SemanticDraw: Towards Real-Time Interactive Content Creation from Image Diffusion](semanticdraw_towards_real-time_interactive_content_creation_from_image_diffusion.md)
 - [\[CVPR 2026\] StreamAvatar: Streaming Diffusion Models for Real-Time Interactive Human Avatars](../../CVPR2026/image_generation/streamavatar_streaming_diffusion_models_for_real-time_interactive_human_avatars.md)
 - [\[CVPR 2025\] SnapGen-V: Generating a Five-Second Video within Five Seconds on a Mobile Device](snapgen-v_generating_a_five-second_video_within_five_seconds_on_a_mobile_device.md)
-- [\[CVPR 2025\] Reanimating Images using Neural Representations of Dynamic Stimuli](reanimating_images_using_neural_representations_of_dynamic_stimuli.md)
 - [\[CVPR 2025\] DNF: Unconditional 4D Generation with Dictionary-Based Neural Fields](dnf_unconditional_4d_generation_with_dictionary-based_neural_fields.md)
+- [\[CVPR 2025\] Generation of Maximal Snake Polyominoes Using a Deep Neural Network](generation_of_maximal_snake_polyominoes_using_a_deep_neural_network.md)
 
 </div>
 

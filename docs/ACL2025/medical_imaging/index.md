@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 医学图像方向31篇论文解读
+  ACL2025 医学图像方向30篇论文解读
 description: >-
-  31篇ACL2025的医学图像方向论文解读，涵盖医学影像、RAG、LLM、问答、对话系统、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  30篇ACL2025的医学图像方向论文解读，涵盖医学影像、RAG、LLM、问答、对话系统、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "医学图像"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**💬 ACL2025** · **31** 篇论文解读
+**💬 ACL2025** · **30** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (114)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (72)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (105)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (140)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (38)](../../ICCV2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/medical_imaging/index.md) · [💬 ACL2026 (51)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (119)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (79)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (106)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/medical_imaging/index.md)
 
-🔥 **高频主题：** 医学影像 ×26 · RAG ×4 · LLM ×4 · 问答 ×3 · 对话系统 ×3
+🔥 **高频主题：** 医学影像 ×25 · RAG ×4 · LLM ×4 · 问答 ×3 · 对话系统 ×3
 
 **[A Modular Approach for Clinical SLMs Driven by Synthetic Data with Pre-Instruction Tuning, Model Merging, and Clinical-Tasks Alignment](a_modular_approach_for_clinical_slms_driven_by_synthetic_data_with_pre-instructi.md)**
 
@@ -84,10 +84,6 @@ tags:
 **[Evaluation of LLMs in Medical Text Summarization: The Role of Vocabulary Adaptation in High OOV Settings](evaluation_of_llms_in_medical_text_summarization_the_role_of_vocabulary_adaptati.md)**
 
 :   系统性基准研究发现 LLM 在高 OOV（词汇外词）和高新颖性医学文本摘要场景下性能显著下降，并通过多种词汇适配策略（MEDVOC、MEDVOC-LLM、ScafFix）证明即使 Llama-3.1（128K 词汇量）仍受过度分片问题困扰，词汇适配可带来显著改善。
-
-**[Exploring Compositional Generalization of Multimodal LLMs for Medical Imaging](exploring_compositional_generalization_of_multimodal_llms_for_medical_imaging.md)**
-
-:   提出 Med-MAT 数据集（106个医学数据集、53个子集），通过 MAT-Triplet（Modality-Anatomical area-Task）分解医学影像属性，首次系统验证了多模态大模型在医学影像上存在组合泛化（Compositional Generalization）现象，并证明组合泛化是多任务训练泛化增益的关键驱动因素。
 
 **[KokoroChat: A Japanese Psychological Counseling Dialogue Dataset Collected via Role-Playing by Trained Counselors](kokorochat_a_japanese_psychological_counseling_dialogue.md)**
 

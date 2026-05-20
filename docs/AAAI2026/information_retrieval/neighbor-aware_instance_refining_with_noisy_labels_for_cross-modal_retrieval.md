@@ -62,9 +62,9 @@ $$\mathcal{L}_{CMP} = \frac{1}{N} \sum_{i=1}^{N} \sum_{j \neq i}^{N} |\Gamma(f_i
     $\hat{p}(c|\mathcal{V}_i) = \frac{1}{K} \sum_{k=1, \mathcal{V}_k \in \mathcal{N}_i^{\mathcal{V}}}^{K} \mathbb{I}[y_k^c = 1]$
 
     - **三分数据集**：根据软标签与 ground-truth 标签的一致性将样本分为三类：
-      - **纯净子集** $\mathcal{D}_P$：两个模态的软标签都与 ground-truth 一致（标签高度可靠）
-      - **困难子集** $\mathcal{D}_H$：仅一个模态一致（标签可靠性不确定）
-      - **噪声子集** $\mathcal{D}_N$：两个模态的软标签都与 ground-truth 不一致（标签大概率错误）
+        - **纯净子集** $\mathcal{D}_P$：两个模态的软标签都与 ground-truth 一致（标签高度可靠）
+        - **困难子集** $\mathcal{D}_H$：仅一个模态一致（标签可靠性不确定）
+        - **噪声子集** $\mathcal{D}_N$：两个模态的软标签都与 ground-truth 不一致（标签大概率错误）
 
     - **Wasserstein 重心提取**：通过 EM 算法计算每个类别在共享空间中的语义重心 $\bar{u}_c$，用于后续各子集的损失计算
 

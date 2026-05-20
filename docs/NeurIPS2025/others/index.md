@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 其他方向153篇论文解读
+  NeurIPS2025 其他方向147篇论文解读
 description: >-
-  153篇NeurIPS2025的其他方向论文解读，涵盖对抗鲁棒、异常检测、对齐/RLHF、人脸/视线、布局/合成、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  147篇NeurIPS2025的其他方向论文解读，涵盖对抗鲁棒、异常检测、对齐/RLHF、人脸/视线、布局/合成、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "其他"
@@ -19,9 +19,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🧠 NeurIPS2025** · **153** 篇论文解读
+**🧠 NeurIPS2025** · **147** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/others/index.md) · [📷 CVPR2026 (44)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (76)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (126)](../../AAAI2026/others/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/others/index.md) · [🧪 ICML2025 (93)](../../ICML2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (27)](../../ICML2026/others/index.md) · [📷 CVPR2026 (44)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (125)](../../AAAI2026/others/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/others/index.md) · [🧪 ICML2025 (92)](../../ICML2025/others/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×7 · 异常检测 ×3 · 对齐/RLHF ×3 · 人脸/视线 ×2 · 布局/合成 ×2
 
@@ -56,10 +56,6 @@ tags:
 **[Active Measurement: Efficient Estimation at Scale](active_measurement_efficient_estimation_at_scale.md)**
 
 :   提出 Active Measurement 框架，将 AI 模型预测作为重要性采样提议分布，通过迭代的人类标注与模型更新实现科学总量测量的无偏估计，搭配新颖的组合权重方案和条件方差估计器构建可靠的置信区间。
-
-**[AcuRank: 基于不确定性感知的自适应计算列表式重排序](acurank_uncertainty-aware_adaptive_computation_for_listwise_reranking.md)**
-
-:   利用贝叶斯TrueSkill模型维护文档相关性的概率分布，在每轮迭代中只对排名不确定的文档进行重排序，实现根据查询难度自适应调配计算量的重排框架，在多个基准上以更少调用次数超越固定计算基线。
 
 **[Adaptive Data Analysis for Growing Data](adaptive_data_analysis_for_growing_data.md)**
 
@@ -216,10 +212,6 @@ tags:
 **[FlashMD: Long-Stride, Universal Prediction of Molecular Dynamics](flashmd_long-stride_universal_prediction_of_molecular_dynamics.md)**
 
 :   提出 FlashMD，基于 GNN 直接预测分子动力学轨迹的位置与动量跨步演化，实现比传统 MD 积分器大 1–2 个数量级的时间步长跨越，并在架构中融入哈密顿动力学约束，推广到任意热力学系综和通用化学体系。
-
-**[FlowMoE: 分布式MoE训练的可扩展流水线调度框架](flowmoe_a_scalable_pipeline_scheduling_framework_for_distributed_mixture-of-expe.md)**
-
-:   FlowMoE提出统一的流水线调度框架，将MHA计算、门控、专家计算和A2A通信纳入一体化流水线，并使用优先级驱动的all-reduce张量分块机制最大化通信与计算的重叠，在多种真实MoE模型上实现1.13×-1.82×加速、10-39%能耗降低和7-32%内存节省。
 
 **[Fostering the Ecosystem of AI for Social Impact Requires Expanding and Strengthening Evaluation Standards](fostering_the_ecosystem_of_ai_for_social_impact_requires_expanding_and_strengthe.md)**
 
@@ -449,10 +441,6 @@ tags:
 
 :   本文提出**广义有向信息（GDI）**作为度量智能体可塑性（plasticity）的信息论工具，揭示可塑性是赋权（empowerment）的"镜像"——两者使用相同度量、仅方向相反，并证明了两者之间存在严格的张力约束（tension bound）。
 
-**[笔记7：价值引导搜索 - 高效链式思考推理](polymath_evaluating_mathematical_reasoning_in_multilingual_contexts.md)**
-
-:   提出Value-Guided Search(VGS)——通过token级价值模型指导块级束搜索，无需预定义"步骤"，相对多数投票在竞赛数学上准确度提升+14.5%，同时推理计算效率提升30%，超越现有PRM方案。
-
 **[Position: There Is No Free Bayesian Uncertainty Quantification](position_there_is_no_free_bayesian_uncertainty_quantification.md)**
 
 :   本文从频率学派视角质疑贝叶斯不确定性量化（UQ）的有效性，将贝叶斯更新重新解释为模型集成的优化问题，并提出基于PAC框架的校准算法以构建具有频率学派保证的预测区间。
@@ -488,10 +476,6 @@ tags:
 **[Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry](reliable_active_learning_from_unreliable_labels_via_neural_collapse_geometry.md)**
 
 :   提出 NCAL-R，利用深度网络训练后期涌现的 Neural Collapse 几何结构，设计类均值对齐扰动（CMAP）和特征波动（FF）两个评分指标来选择样本，使主动学习在标签噪声和分布偏移下更加可靠，在 ImageNet-100 和 CIFAR-100 上一致优于传统 AL 基线。
-
-**[笔记5：ReSearch - 学习通过搜索推理](research_learning_to_reason_with_search_for_llms_via_reinforcement_learning.md)**
-
-:   ReSearch框架将搜索操作嵌入推理链中作为第一类原语，通过GRPO强化学习自动学习何时何如搜索，无需任何推理步骤的监督标注，在多跳QA任务上相对基线平均提升15.81%。
 
 **[ResNets Are Deeper Than You Think](resnets_are_deeper_than_you_think.md)**
 
@@ -625,14 +609,6 @@ tags:
 
 :   提出 Var-RUOT，通过将正则化非平衡最优传输（RUOT）问题的最优性必要条件融入参数化和损失设计，仅需学习单个标量场即可求解 RUOT，获得更低作用量的解并提升训练稳定性；同时分析了增长惩罚函数对生物先验的影响。
 
-**[笔记4：WebThinker - 赋予推理模型深度研究能力](webthinker_empowering_large_reasoning_models_with_deep_research_capability.md)**
-
-:   WebThinker赋予大型推理模型(LRM)自主的网络搜索与导航能力，通过Think-Search-Draft策略实现推理、信息采集与报告生成的无缝交织，经RL优化后在复杂推理与科学报告生成任务上超越o1与Gemini。
-
 **[Weight Weaving: Parameter Pooling for Data-Free Model Merging](weight_weaving_parameter_pooling_for_data-free_model_merging.md)**
 
 :   本文提出Weight Weaving，一种即插即用的无数据模型合并增强方法，通过在缩放因子搜索空间上对模型参数进行池化操作（如平均、随机选择），消除了对评估数据的依赖，在多任务学习、持续学习和域泛化三个场景中平均准确率最高提升15.9个百分点。
-
-**[Zebra: Towards Zero-Shot Cross-Subject Generalization for Universal Brain Visual Decoding](zebra_towards_zero-shot_cross-subject_generalization_for_universal_brain_visual_.md)**
-
-:   提出 Zebra，首个零样本脑视觉解码框架，通过对抗训练与残差分解将 fMRI 表征解耦为主体不变和语义特定成分，无需对新被试做微调即可实现跨被试的视觉重建泛化。

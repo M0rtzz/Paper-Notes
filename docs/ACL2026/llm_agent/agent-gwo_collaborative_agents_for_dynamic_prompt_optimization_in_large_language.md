@@ -15,10 +15,10 @@ tags:
 
 # Agent-GWO: Collaborative Agents for Dynamic Prompt Optimization in Large Language Models
 
-**会议**: ACL 2026
-**arXiv**: [2604.18612](https://arxiv.org/abs/2604.18612)
-**代码**: 即将公开
-**领域**: LLM Agent
+**会议**: ACL 2026  
+**arXiv**: [2604.18612](https://arxiv.org/abs/2604.18612)  
+**代码**: 即将公开  
+**领域**: LLM Agent  
 **关键词**: 提示优化, 灰狼优化器, 多智能体, 推理增强, 解码超参数
 
 ## 一句话总结
@@ -131,8 +131,8 @@ Agent-GWO 将 N 个 agent 组成种群，每个 agent 由一个共享的冻结 L
 - [\[ACL 2026\] ATLAS: Adaptive Trading with LLM AgentS Through Dynamic Prompt Optimization and Multi-Agent Coordination](atlas_adaptive_trading_with_llm_agents_through_dynamic_prompt_optimization_and_m.md)
 - [\[ACL 2026\] ImplicitMemBench: Measuring Unconscious Behavioral Adaptation in Large Language Models](implicitmembench_measuring_unconscious_behavioral_adaptation_in_large_language_m.md)
 - [\[ICLR 2026\] ToolWeaver: Weaving Collaborative Semantics for Scalable Tool Use in Large Language Models](../../ICLR2026/llm_agent/toolweaver_weaving_collaborative_semantics_for_scalable_tool_use_in_large_langua.md)
-- [\[ACL 2026\] Lightweight LLM Agent Memory with Small Language Models](lightweight_llm_agent_memory_with_small_language_models.md)
-- [\[ACL 2026\] Conjunctive Prompt Attacks in Multi-Agent LLM Systems](conjunctive_prompt_attacks_in_multi-agent_llm_systems.md)
+- [\[ACL 2026\] AgenticEval: Toward Agentic and Self-Evolving Safety Evaluation of Large Language Models](agenticeval_toward_agentic_and_self-evolving_safety_evaluation_of_large_language.md)
+- [\[ACL 2026\] AnchorMem: Anchored Facts with Associative Contexts for Building Memory in Large Language Models](anchormem_anchored_facts_with_associative_contexts_for_building_memory_in_large_.md)
 
 </div>
 

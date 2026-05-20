@@ -146,8 +146,8 @@ $$\mathbf{Adv}^{\mathsf{AMI}}_{\text{LDP}}(\mathcal{A}^{\mathcal{D}}_{\mathsf{FC
 - [\[ICML 2025\] Privacy-Shielded Image Compression: Defending Against Exploitation from Vision-Language Pretrained Models](privacy-shielded_image_compression_defending_against_exploitation_from_vision-la.md)
 - [\[ICML 2025\] Clients Collaborate: Flexible Differentially Private Federated Learning with Guaranteed Improvement of Utility-Privacy Trade-off](clients_collaborate_flexible_differentially_private_federated_learning_with_guar.md)
 - [\[ICML 2025\] Adversarial Inception Backdoor Attacks against Reinforcement Learning](adversarial_inception_backdoor_attacks_against_reinforcement_learning.md)
+- [\[ACL 2026\] ATAAT: Adaptive Threat-Aware Adversarial Tuning Framework against Backdoor Attacks on Vision-Language-Action Models](../../ACL2026/ai_safety/ataat_adaptive_threat-aware_adversarial_tuning_framework_against_backdoor_attack.md)
 - [\[ICML 2025\] De-AntiFake: Rethinking the Protective Perturbations Against Voice Cloning Attacks](de-antifake_rethinking_the_protective_perturbations_against_voice_cloning_attack.md)
-- [\[ICCV 2025\] Staining and Locking Computer Vision Models without Retraining](../../ICCV2025/ai_safety/staining_and_locking_computer_vision_models_without_retraining.md)
 
 </div>
 

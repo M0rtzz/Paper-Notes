@@ -157,7 +157,7 @@ $$\rho(M_t, M^*) = \frac{\langle \tilde{M}_t, \tilde{M}^* \rangle}{\|\tilde{M}_t
 - [\[NeurIPS 2025\] Natural Gradient VI: Guarantees for Non-Conjugate Models](../../NeurIPS2025/optimization/natural_gradient_vi_guarantees_for_non-conjugate_models.md)
 - [\[ICML 2025\] Provable In-Context Vector Arithmetic via Retrieving Task Concepts](provable_in-context_vector_arithmetic_via_retrieving_task_concepts.md)
 - [\[NeurIPS 2025\] Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks](../../NeurIPS2025/optimization/emergence_and_scaling_laws_in_sgd_learning_of_shallow_neural_networks.md)
-- [\[NeurIPS 2025\] Probing Neural Combinatorial Optimization Models](../../NeurIPS2025/optimization/probing_neural_combinatorial_optimization_models.md)
+- [\[ICLR 2026\] Optimizer Choice Matters for the Emergence of Neural Collapse](../../ICLR2026/optimization/optimizer_choice_matters_for_the_emergence_of_neural_collapse.md)
 
 </div>
 

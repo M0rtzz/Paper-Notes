@@ -140,7 +140,7 @@ K1在盲测上PPV和NPV分别比纯ViT高29%和27%，5折交叉验证ROC AUC达9
 - [\[AAAI 2026\] PulseMind: A Multi-Modal Medical Model for Real-World Clinical Diagnosis](pulsemind_a_multi-modal_medical_model_for_real-world_clinical_diagnosis.md)
 - [\[ACL 2026\] OmniCompliance-100K: A Multi-Domain Rule-Grounded Real-World Safety Compliance Dataset](../../ACL2026/medical_imaging/omnicompliance-100k_a_multi-domain_rule-grounded_real-world_safety_compliance_da.md)
 - [\[ICML 2025\] LangDAug: Langevin Data Augmentation for Multi-Source Domain Generalization in Medical Imaging](../../ICML2025/medical_imaging/langdaug_langevin_data_augmentation_for_multi-source_domain_generalization_in_me.md)
-- [\[ACL 2025\] Exploring Compositional Generalization of Multimodal LLMs for Medical Imaging](../../ACL2025/medical_imaging/exploring_compositional_generalization_of_multimodal_llms_for_medical_imaging.md)
+- [\[ICML 2026\] Evidential Reasoning Advances Interpretable Real-World Disease Screening](../../ICML2026/medical_imaging/evidential_reasoning_advances_interpretable_real-world_disease_screening.md)
 
 </div>
 

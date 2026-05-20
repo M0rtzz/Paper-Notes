@@ -152,7 +152,7 @@ $$\mathcal{L} = \lambda_{\text{data}} \mathcal{L}_{\text{data}} + \lambda_{\text
 - [\[CVPR 2025\] TensoFlow: Tensorial Flow-based Sampler for Inverse Rendering](../../CVPR2025/llm_evaluation/tensoflow_tensorial_flow-based_sampler_for_inverse_rendering.md)
 - [\[ICCV 2025\] A Real-world Display Inverse Rendering Dataset](../../ICCV2025/llm_evaluation/a_real-world_display_inverse_rendering_dataset.md)
 - [\[ICML 2025\] DiLQR: Differentiable Iterative Linear Quadratic Regulator via Implicit Differentiation](../../ICML2025/llm_evaluation/dilqr_differentiable_iterative_linear_quadratic_regulator_via_implicit_different.md)
-- [\[ICML 2025\] Leveraging Online Olympiad-Level Math Problems for LLMs Training and Contamination-Resistant Evaluation](../../ICML2025/llm_evaluation/leveraging_online_olympiad-level_math_problems_for_llms_training_and_contaminati.md)
+- [\[ACL 2026\] RoadMapper: A Multi-Agent System for Roadmap Generation of Solving Complex Research Problems](../../ACL2026/llm_evaluation/roadmapper_a_multi-agent_system_for_roadmap_generation_of_solving_complex_resear.md)
 
 </div>
 

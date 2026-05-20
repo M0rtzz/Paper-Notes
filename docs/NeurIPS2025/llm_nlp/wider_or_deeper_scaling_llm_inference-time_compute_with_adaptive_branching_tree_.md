@@ -139,7 +139,7 @@ AB-MCTS 构建搜索树 $T$，每个非根节点对应一个 LLM 生成的答案
 - [\[ACL 2025\] Dynamic Parallel Tree Search for Efficient LLM Reasoning](../../ACL2025/llm_nlp/dynamic_parallel_tree_search_for_efficient_llm_reasoning.md)
 - [\[ACL 2025\] Boosting LLM's Molecular Structure Elucidation with Knowledge Enhanced Tree Search Reasoning](../../ACL2025/llm_nlp/boosting_llms_molecular_structure_elucidation_with_knowledge_enhanced_tree_searc.md)
 - [\[NeurIPS 2025\] Don't Be Lazy: CompleteP Enables Compute-Efficient Deep Transformers](dont_be_lazy_completep_enables_compute-efficient_deep_transformers.md)
-- [\[NeurIPS 2025\] Valid Inference with Imperfect Synthetic Data](valid_inference_with_imperfect_synthetic_data.md)
+- [\[ACL 2025\] BFS-Prover: Scalable Best-First Tree Search for LLM-Based Automatic Theorem Proving](../../ACL2025/llm_nlp/bfs-prover_scalable_best-first_tree_search_for_llm-based_automatic_theorem_provi.md)
 
 </div>
 

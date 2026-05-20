@@ -144,8 +144,8 @@ ReALFRED 本身是一个基准而非模型。作者评估了两类方法：
 - [\[ICLR 2026\] Enhancing Instruction Following of LLMs via Activation Steering with Dynamic Rejection](../../ICLR2026/robotics/enhancing_instruction_following_of_llms_via_activation_steering_with_dynamic_rej.md)
 - [\[ICML 2025\] Hi Robot: Open-Ended Instruction Following with Hierarchical Vision-Language-Action Models](../../ICML2025/robotics/hi_robot_open-ended_instruction_following_with_hierarchical_vision-language-acti.md)
 - [\[ECCV 2024\] See and Think: Embodied Agent in Virtual Environment](see_and_think_embodied_agent_in_virtual_environment.md)
-- [\[ECCV 2024\] Octopus: Embodied Vision-Language Programmer from Environmental Feedback](octopus_embodied_vision-language_programmer_from_environmental_feedback.md)
 - [\[ICLR 2026\] Test-Time Mixture of World Models for Embodied Agents in Dynamic Environments](../../ICLR2026/robotics/test-time_mixture_of_world_models_for_embodied_agents_in_dynamic_environments.md)
+- [\[NeurIPS 2025\] LabUtopia: High-Fidelity Simulation and Hierarchical Benchmark for Scientific Embodied Agents](../../NeurIPS2025/robotics/labutopia_high-fidelity_simulation_and_hierarchical_benchmark_for_scientific_emb.md)
 
 </div>
 

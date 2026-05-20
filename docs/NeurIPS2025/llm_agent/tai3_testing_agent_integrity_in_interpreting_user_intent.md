@@ -170,10 +170,10 @@ TAI3 在 **所有领域、所有意图类别、所有目标模型** 上均超越
 ## 相关论文
 
 - [\[ACL 2025\] iAgent: LLM Agent as a Shield between User and Recommender Systems](../../ACL2025/llm_agent/iagent_llm_agent_as_a_shield_between_user_and_recommender_systems.md)
-- [\[ACL 2026\] CI-Work: Benchmarking Contextual Integrity in Enterprise LLM Agents](../../ACL2026/llm_agent/ci-work_benchmarking_contextual_integrity_in_enterprise_llm_agents.md)
 - [\[ICLR 2026\] Judge Reliability Harness: Stress Testing the Reliability of LLM Judges](../../ICLR2026/llm_agent/judge_reliability_harness_stress_testing_the_reliability_of_llm_judges.md)
 - [\[AAAI 2026\] A Multi-Agent Conversational Bandit Approach to Online Evaluation and Selection of User-Aligned LLM Responses](../../AAAI2026/llm_agent/a_multi-agent_conversational_bandit_approach_to_online_evaluation_and_selection_.md)
 - [\[NeurIPS 2025\] MAT-Agent: Adaptive Multi-Agent Training Optimization](mat-agent_adaptive_multi-agent_training_optimization.md)
+- [\[NeurIPS 2025\] R&D-Agent-Quant: A Multi-Agent Framework for Data-Centric Factors and Model Joint Optimization](rd-agent-quant_a_multi-agent_framework_for_data-centric_factors_and_model_joint_.md)
 
 </div>
 

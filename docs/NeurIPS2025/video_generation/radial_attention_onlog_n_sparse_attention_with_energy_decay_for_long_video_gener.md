@@ -153,8 +153,8 @@ Radial Attention 是一种静态稀疏注意力机制，使用预定义的掩码
 - [\[NeurIPS 2025\] VORTA: Efficient Video Diffusion via Routing Sparse Attention](vorta_efficient_video_diffusion_via_routing_sparse_attention.md)
 - [\[NeurIPS 2025\] VSA: Faster Video Diffusion with Trainable Sparse Attention](vsa_faster_video_diffusion_with_trainable_sparse_attention.md)
 - [\[CVPR 2025\] Presto: Long Video Diffusion Generation with Segmented Cross-Attention and Content-Rich Video Data Curation](../../CVPR2025/video_generation/long_video_diffusion_generation_with_segmented_cross-attention_and_content-rich_.md)
-- [\[NeurIPS 2025\] S²Q-VDiT: Accurate Quantized Video Diffusion Transformer with Salient Data and Sparse Token Distillation](s2q-vdit_accurate_quantized_video_diffusion_transformer_with_salient_data_and_sp.md)
-- [\[NeurIPS 2025\] Scaling RL to Long Videos](scaling_rl_to_long_videos.md)
+- [\[ICML 2026\] Attention Sparsity is Input-Stable: Training-Free Sparse Attention for Video Generation via Offline Sparsity Profiling and Online QK Co-Clustering](../../ICML2026/video_generation/attention_sparsity_is_input-stable_training-free_sparse_attention_for_video_gene.md)
+- [\[ICML 2026\] Lightning Unified Video Editing via In-Context Sparse Attention](../../ICML2026/video_generation/lightning_unified_video_editing_via_in-context_sparse_attention.md)
 
 </div>
 

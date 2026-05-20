@@ -136,10 +136,10 @@ AntigenLM 采用 GPT-2 风格的 decoder-only Transformer 架构，输入是流�
 ## 相关论文
 
 - [\[AAAI 2026\] TrinityDNA: A Bio-Inspired Foundational Model for Efficient Long-Sequence DNA Modeling](../../AAAI2026/medical_imaging/trinitydna_a_bio-inspired_foundational_model_for_efficient_long-sequence_dna_mod.md)
-- [\[NeurIPS 2025\] Securing the Language of Life: Inheritable Watermarks from DNA Language Models to Proteins](../../NeurIPS2025/medical_imaging/securing_the_language_of_life_inheritable_watermarks_from_dna_language_models_to.md)
 - [\[ICLR 2026\] Protein Structure Tokenization via Geometric Byte Pair Encoding](protein_structure_tokenization_via_geometric_byte_pair_encoding.md)
 - [\[AAAI 2026\] Learning Cell-Aware Hierarchical Multi-Modal Representations for Robust Molecular Modeling](../../AAAI2026/medical_imaging/learning_cell-aware_hierarchical_multi-modal_representations.md)
 - [\[AAAI 2026\] MergeDNA: Context-aware Genome Modeling with Dynamic Tokenization through Token Merging](../../AAAI2026/medical_imaging/mergedna_context-aware_genome_modeling_with_dynamic_tokenization_through_token_m.md)
+- [\[ICLR 2026\] Bridging Explainability and Embeddings: BEE Aware of Spuriousness](bridging_explainability_and_embeddings_bee_aware_of_spuriousness.md)
 
 </div>
 

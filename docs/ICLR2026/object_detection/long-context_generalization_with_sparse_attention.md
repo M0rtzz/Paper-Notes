@@ -148,9 +148,9 @@ Associative Recall 任务（训练长度 64）的长度外推准确率：
 
 - [\[ICLR 2026\] SPWOOD: Sparse Partial Weakly-Supervised Oriented Object Detection](spwood_sparse_partial_weakly-supervised_oriented_object_detection.md)
 - [\[ICCV 2025\] Adversarial Attention Perturbations for Large Object Detection Transformers](../../ICCV2025/object_detection/adversarial_attention_perturbations_for_large_object_detection_transformers.md)
-- [\[CVPR 2025\] FSHNet: Fully Sparse Hybrid Network for 3D Object Detection](../../CVPR2025/object_detection/fshnet_fully_sparse_hybrid_network_for_3d_object_detection.md)
-- [\[CVPR 2025\] Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection](../../CVPR2025/object_detection/learning_class_prototypes_for_unified_sparse-supervised_3d_object_detection.md)
 - [\[ECCV 2024\] Rectify the Regression Bias in Long-Tailed Object Detection](../../ECCV2024/object_detection/rectify_the_regression_bias_in_long-tailed_object_detection.md)
+- [\[CVPR 2026\] AR²-4FV: Anchored Referring and Re-identification for Long-Term Grounding in Fixed-View Videos](../../CVPR2026/object_detection/ar2-4fv_anchored_referring_and_re-identification_for_long-term_grounding_in_fixe.md)
+- [\[NeurIPS 2025\] Video-RAG: Visually-aligned Retrieval-Augmented Long Video Comprehension](../../NeurIPS2025/object_detection/video-rag_visually-aligned_retrieval-augmented_long_video_comprehension.md)
 
 </div>
 

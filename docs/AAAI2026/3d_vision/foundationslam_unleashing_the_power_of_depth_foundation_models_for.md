@@ -13,7 +13,7 @@ tags:
   - "几何一致性"
 ---
 
-# FoundationSLAM: 释放深度基础模型在端到端稠密视觉SLAM中的潜力
+# FoundationSLAM: Unleashing the Power of Depth Foundation Models for End-to-End Dense Visual SLAM
 
 **会议**: AAAI 2026 (Oral)  
 **arXiv**: [2512.25008v2](https://arxiv.org/abs/2512.25008v2)  
@@ -120,11 +120,11 @@ tags:
 
 ## 相关论文
 
-- [\[CVPR 2026\] DROID-W: DROID-SLAM in the Wild](../../CVPR2026/3d_vision/droid-slam_in_the_wild.md)
+- [\[CVPR 2025\] End-to-End Implicit Neural Representations for Classification](../../CVPR2025/3d_vision/end-to-end_implicit_neural_representations_for_classification.md)
+- [\[ICCV 2025\] ViT-Split: Unleashing the Power of Vision Foundation Models via Efficient Splitting Heads](../../ICCV2025/3d_vision/vit-split_unleashing_the_power_of_vision_foundation_models_via_efficient_splitti.md)
+- [\[CVPR 2025\] End-to-End HOI Reconstruction Transformer with Graph-based Encoding](../../CVPR2025/3d_vision/end-to-end_hoi_reconstruction_transformer_with_graph-based_encoding.md)
+- [\[CVPR 2025\] Rethinking End-to-End 2D to 3D Scene Segmentation in Gaussian Splatting](../../CVPR2025/3d_vision/rethinking_end-to-end_2d_to_3d_scene_segmentation_in_gaussian_splatting.md)
 - [\[CVPR 2026\] Unblur-SLAM: Dense Neural SLAM for Blurry Inputs](../../CVPR2026/3d_vision/unblur-slam_dense_neural_slam_for_blurry_inputs.md)
-- [\[CVPR 2026\] VGGT-SLAM++: Visual SLAM with DEM-Based Covisibility and Local Bundle Adjustment](../../CVPR2026/3d_vision/vggt-slam.md)
-- [\[CVPR 2025\] MASt3R-SLAM: Real-Time Dense SLAM with 3D Reconstruction Priors](../../CVPR2025/3d_vision/mast3r-slam_real-time_dense_slam_with_3d_reconstruction_priors.md)
-- [\[CVPR 2026\] SGAD-SLAM: Splatting Gaussians at Adjusted Depth for Better Radiance Fields in RGBD SLAM](../../CVPR2026/3d_vision/sgad-slam_splatting_gaussians_at_adjusted_depth_for_better_radiance_fields_in_rg.md)
 
 </div>
 

@@ -185,8 +185,8 @@ AR 提升 +16.1/+20.5，ADD(-S) 提升 +41.2/+48.0，提升幅度巨大。
 - [\[CVPR 2025\] Any6D: Model-free 6D Pose Estimation of Novel Objects](../../CVPR2025/human_understanding/any6d_model-free_6d_pose_estimation_of_novel_objects.md)
 - [\[CVPR 2025\] One2Any: One-Reference 6D Pose Estimation for Any Object](../../CVPR2025/human_understanding/one2any_one-reference_6d_pose_estimation_for_any_object.md)
 - [\[CVPR 2026\] COG: Confidence-aware Optimal Geometric Correspondence for Unsupervised Single-reference Novel Object Pose Estimation](../../CVPR2026/human_understanding/cog_confidence-aware_optimal_geometric_correspondence_for_unsupervised_single-re.md)
-- [\[ICCV 2025\] MixRI: Mixing Features of Reference Images for Novel Object Pose Estimation](../../ICCV2025/human_understanding/mixri_mixing_features_of_reference_images_for_novel_object_pose_estimation.md)
 - [\[AAAI 2026\] MVGD-Net: A Novel Motion-aware Video Glass Surface Detection Network](mvgd-net_a_novel_motion-aware_video_glass_surface_detection_network.md)
+- [\[ICCV 2025\] MixRI: Mixing Features of Reference Images for Novel Object Pose Estimation](../../ICCV2025/human_understanding/mixri_mixing_features_of_reference_images_for_novel_object_pose_estimation.md)
 
 </div>
 

@@ -176,10 +176,10 @@ tags:
 ## 相关论文
 
 - [\[ICML 2025\] Context Matters: Query-aware Dynamic Long Sequence Modeling of Gigapixel Images](../../ICML2025/medical_imaging/context_matters_query-aware_dynamic_long_sequence_modeling_of_gigapixel_images.md)
+- [\[AAAI 2026\] NeuroBridge: Bio-Inspired Self-Supervised EEG-to-Image Decoding via Cognitive Priors and Bidirectional Semantic Alignment](neurobridge_bio-inspired_self-supervised_eeg-to-image_decoding_via_cognitive_pri.md)
 - [\[ICML 2025\] eccDNAMamba: A Pre-Trained Model for Ultra-Long eccDNA Sequence Analysis](../../ICML2025/medical_imaging/eccdnamamba_a_pre-trained_model_for_ultra-long_eccdna_sequence_analysis.md)
 - [\[ICLR 2026\] AntigenLM: Structure-Aware DNA Language Modeling for Influenza](../../ICLR2026/medical_imaging/antigenlm_structure-aware_dna_language_modeling_for_influenza.md)
 - [\[NeurIPS 2025\] JanusDNA: A Powerful Bi-directional Hybrid DNA Foundation Model](../../NeurIPS2025/medical_imaging/janusdna_a_powerful_bi-directional_hybrid_dna_foundation_model.md)
-- [\[ICML 2025\] SPACE: Your Genomic Profile Predictor is a Powerful DNA Foundation Model](../../ICML2025/medical_imaging/space_your_genomic_profile_predictor_is_a_powerful_dna_foundation_model.md)
 
 </div>
 

@@ -140,8 +140,8 @@ VLAForge基于CLIP构建，包含两个核心组件：ForgePerceiver和Identity-
 
 - [\[CVPR 2026\] Vision-Language Attribute Disentanglement and Reinforcement for Lifelong Person Re-Identification](vision-language_attribute_disentanglement_and_reinforcement_for_lifelong_person_.md)
 - [\[CVPR 2026\] All in One: Unifying Deepfake Detection, Tampering Localization, and Source Tracing with a Robust Landmark-Identity Watermark](all_in_one_unifying_deepfake_detection_tampering_localization_and_source_tracing.md)
+- [\[ICML 2026\] Privacy-Aware Video Anomaly Detection through Orthogonal Subspace Projection](../../ICML2026/human_understanding/privacy-aware_video_anomaly_detection_through_orthogonal_subspace_projection.md)
 - [\[CVPR 2026\] LaScA: Language-Conditioned Scalable Modelling of Affective Dynamics](lasca_language-conditioned_scalable_modelling_of_affective_dynamics.md)
-- [\[CVPR 2026\] MoLingo: Motion-Language Alignment for Text-to-Human Motion Generation](molingo_motion-language_alignment_for_text-to-motion_generation.md)
 - [\[AAAI 2026\] MVGD-Net: A Novel Motion-aware Video Glass Surface Detection Network](../../AAAI2026/human_understanding/mvgd-net_a_novel_motion-aware_video_glass_surface_detection_network.md)
 
 </div>

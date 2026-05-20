@@ -164,10 +164,10 @@ $$\pi_\theta^* = \arg\min_\theta \mathbb{E}[-\log \pi_\theta(\mathcal{A}|\mathca
 ## 相关论文
 
 - [\[CVPR 2026\] EBMC: Enhance-then-Balance Modality Collaboration for Robust Multimodal Sentiment Analysis](../../CVPR2026/multimodal_vlm/ebmc_multimodal_sentiment_analysis.md)
-- [\[ACL 2025\] Modality-Aware Neuron Pruning for Unlearning in Multimodal Large Language Models](../../ACL2025/multimodal_vlm/manu_modality_aware_unlearning.md)
 - [\[CVPR 2025\] MBQ: Modality-Balanced Quantization for Large Vision-Language Models](../../CVPR2025/multimodal_vlm/mbq_modality-balanced_quantization_for_large_vision-language_models.md)
 - [\[CVPR 2026\] Predictive Regularization Against Visual Representation Degradation in Multimodal Large Language Models](../../CVPR2026/multimodal_vlm/predictive_regularization_against_visual_representation_degradation_in_multimoda.md)
 - [\[CVPR 2026\] MASQuant: Modality-Aware Smoothing Quantization for Multimodal Large Language Models](../../CVPR2026/multimodal_vlm/masquant_modality-aware_smoothing_quantization_for_multimodal_large_language_mod.md)
+- [\[ICML 2025\] Reasoning Limitations of Multimodal Large Language Models. A Case Study of Bongard Problems](reasoning_limitations_of_multimodal_large_language_models_a_case_study_of_bongar.md)
 
 </div>
 

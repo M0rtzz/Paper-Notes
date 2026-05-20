@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 优化/理论方向23篇论文解读
+  AAAI2026 优化/理论方向22篇论文解读
 description: >-
-  23篇AAAI2026的优化/理论方向论文解读，涵盖联邦学习、LLM、对抗鲁棒、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  22篇AAAI2026的优化/理论方向论文解读，涵盖联邦学习、LLM、对抗鲁棒、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "优化/理论"
@@ -17,9 +17,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**🤖 AAAI2026** · **23** 篇论文解读
+**🤖 AAAI2026** · **22** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/optimization/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (45)](../../ICLR2026/optimization/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (57)](../../ICML2025/optimization/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/optimization/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (44)](../../ICLR2026/optimization/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (56)](../../ICML2025/optimization/index.md)
 
 🔥 **高频主题：** 联邦学习 ×5 · LLM ×4 · 对抗鲁棒 ×2 · 个性化生成 ×2
 
@@ -67,10 +67,6 @@ tags:
 
 :   针对隐式击中集框架中击中集组件依赖商用IP求解器带来的数值不稳定问题，提出基于伪布尔推理和随机局部搜索的替代方案及混合策略，实现了首个可认证的IHS计算并在1786个基准实例上展示了效率与可靠性的有效权衡。
 
-**[FedP²EFT: Federated Learning to Personalize PEFT for Multilingual LLMs](fedp2eft_federated_learning_to_personalize_peft_for_multilingual_llms.md)**
-
-:   提出FedP²EFT，通过联邦学习协作训练一个Personalization Strategy Generator (PSG)，为每个客户端自动生成个性化的LoRA rank结构，在多语言LLM微调中大幅超越手工设计的PEFT配置和现有FL个性化方法。
-
 **[FedPM: Federated Learning Using Second-order Optimization with Preconditioned Mixing of Local Parameters](fedpm_federated_learning_using_second-order_optimization_with_preconditioned_mix.md)**
 
 :   提出 FedPM（Federated Preconditioned Mixing），一种新型联邦学习方法，通过在服务器端用"预条件混合"替代传统的简单参数平均，解决了现有二阶联邦优化方法中局部预条件器漂移问题，在理论上证明了强凸目标的超线性收敛速率，并在异质数据场景中显著超越现有方法。
@@ -103,7 +99,7 @@ tags:
 
 :   首次提出"一次性自适应测试 (OAT)"任务，将其建模为组合优化问题，并设计 PEOAT 框架——结合个性化初始化、认知增强进化搜索和多样性保持选择策略，在无交互反馈的条件下为每位考生一次性选出最优题集，大幅超越传统 CAT 方法。
 
-**[pFed1BS: 基于单比特随机草图的双向通信压缩个性化联邦学习](personalized_federated_learning_with_bidirectional_communication_compression_via.md)**
+**[Personalized Federated Learning with Bidirectional Communication Compression via One-Bit Random Sketching](personalized_federated_learning_with_bidirectional_communication_compression_via.md)**
 
 :   提出 pFed1BS 框架，通过单比特随机草图实现联邦学习中上下行双向极致通信压缩（降低 99%+），同时引入基于符号的正则化器实现客户端模型个性化，在非 IID 数据场景下同时解决通信瓶颈和数据异质性两大难题。
 

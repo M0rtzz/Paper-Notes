@@ -172,9 +172,9 @@ $$\mathcal{L}_{\text{DPO}} = -\mathbb{E}_{(\mathbf{x},y^+,y^-) \sim \mathcal{D}}
 
 - [\[ACL 2025\] AutoGUI: Scaling GUI Grounding with Automatic Functionality Annotations from LLMs](autogui_scaling_gui_grounding_with_automatic.md)
 - [\[ACL 2025\] Genetic Instruct: Scaling up Synthetic Generation of Coding Instructions for Large Language Models](genetic_instruct_scaling_up_synthetic_generation_of_coding_instructions_for_larg.md)
+- [\[ACL 2025\] LESA: Learnable LLM Layer Scaling-Up](lesa_learnable_llm_layer_scaling-up.md)
 - [\[ACL 2025\] Value Portrait: Assessing Language Models' Values through Psychometrically and Ecologically Valid Items](value_portrait_assessing_language_models_values_through_psychometrically_and_eco.md)
 - [\[ACL 2025\] Knockout LLM Assessment: Using Large Language Models for Evaluations through Iterative Pairwise Comparisons](knockout_llm_assessment_using_large_language_models_for_evaluations_through_iter.md)
-- [\[ACL 2025\] Can Large Language Models Understand Internet Buzzwords Through User-Generated Content](buzzword_understanding_ugc.md)
 
 </div>
 

@@ -150,7 +150,7 @@ FDR在不同显著性水平和不同MIA方法下均被有效控制。
 - [\[CVPR 2025\] Improving Transferable Targeted Attacks with Feature Tuning Mixup](../../CVPR2025/others/improving_transferable_targeted_attacks_with_feature_tuning_mixup.md)
 - [\[NeurIPS 2025\] Statistical Inference Under Performativity](../../NeurIPS2025/others/statistical_inference_under_performativity.md)
 - [\[CVPR 2025\] Towards Million-Scale Adversarial Robustness Evaluation With Stronger Individual Attacks](../../CVPR2025/others/towards_million-scale_adversarial_robustness_evaluation_with_stronger_individual.md)
-- [\[NeurIPS 2025\] Statistical Inference for Gradient Boosting Regression](../../NeurIPS2025/others/statistical_inference_for_gradient_boosting_regression.md)
+- [\[ICCV 2025\] Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery](intra-view_and_inter-view_correlation_guided_multi-view_novel_class_discovery.md)
 
 </div>
 

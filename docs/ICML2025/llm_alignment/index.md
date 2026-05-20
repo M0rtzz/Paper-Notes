@@ -1,27 +1,27 @@
 ---
 title: >-
-  ICML2025 对齐 / RLHF方向27篇论文解读
+  ICML2025 对齐 / RLHF方向24篇论文解读
 description: >-
-  27篇ICML2025的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、LLM、扩散模型、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  24篇ICML2025的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、扩散模型、LLM、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "对齐 / RLHF"
   - "论文解读"
   - "论文笔记"
   - "对齐/RLHF"
-  - "LLM"
   - "扩散模型"
+  - "LLM"
   - "多模态"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐 / RLHF
 
-**🧪 ICML2025** · **27** 篇论文解读
+**🧪 ICML2025** · **24** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (42)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (20)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (53)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (7)](../../ICML2026/llm_alignment/index.md) · [💬 ACL2026 (26)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (41)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (19)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_alignment/index.md)
 
-🔥 **高频主题：** 对齐/RLHF ×22 · LLM ×4 · 扩散模型 ×3 · 多模态 ×2
+🔥 **高频主题：** 对齐/RLHF ×19 · 扩散模型 ×3 · LLM ×3 · 多模态 ×2
 
 **[ADHMR: Aligning Diffusion-based Human Mesh Recovery via Direct Preference Optimization](adhmr_aligning_diffusion-based_human_mesh_recovery_via_direct_preference_optimiz.md)**
 
@@ -67,10 +67,6 @@ tags:
 
 :   本文提出 Reinforced Token Optimization (RTO)，将 RLHF 建模为 token 级别的 MDP（而非句子级 bandit），利用 DPO 隐式地提取 token-wise 奖励信号后用 PPO 进行策略优化，在 AlpacaEval 2 上比 PPO 高 7.5 分、在 Arena-Hard 上高 4.1 分，且仅需 1/8 数据量即可达到 PPO 级别性能。
 
-**[Improving LLM Safety Alignment with Dual-Objective Optimization](improving_llm_safety_alignment_with_dual-objective_optimization.md)**
-
-:   通过梯度分析揭示DPO在安全对齐中的两大缺陷（学习率饱和与OOD泛化差），提出DOOR/W-DOOR双目标优化框架（鲁棒拒绝训练+有害知识遗忘+token级加权），在Llama-3-8B和Gemma-2-2B上显著降低了prefilling/suffix/multi-turn等多种越狱攻击的成功率，同时保持通用能力。
-
 **[Improving Model Alignment through Collective Intelligence of Open-Source LLMs](improving_model_alignment_through_collective_intelligence_of_open-source_llms.md)**
 
 :   本文提出 Mixture of Agents Alignment（MoAA），利用多个开源 LLM 的集体智慧生成高质量的对齐数据（SFT 数据和偏好数据），显著提升目标模型在 Arena-Hard 和 AlpacaEval2 上的表现，并展示了无需外部强监督的自我提升能力。
@@ -111,10 +107,6 @@ tags:
 
 :   提出 NS-DPO，通过 Dynamic Bradley-Terry 模型引入单一指数衰减参数 γ 对训练数据进行时序加权，使 DPO 在偏好随时间漂移的场景下仍能鲁棒对齐，同时在平稳场景下不损失性能。
 
-**[Safety Alignment Can Be Not Superficial With Explicit Safety Signals](safety_alignment_can_be_not_superficial_with_explicit_safety_signals.md)**
-
-:   通过在LLM中引入显式的安全二分类任务（[CLS] token），并设计策略性注意力机制和解码策略，在推理过程中动态评估安全性，以不到0.2x的额外开销将对抗攻击成功率从90%+降至接近0%。
-
 **[Self-Consistency Preference Optimization](self-consistency_preference_optimization.md)**
 
 :   将推理时的自一致性(self-consistency)概念引入训练阶段，通过投票机制构建偏好对并使用加权DPO损失进行迭代训练，在无需金标签的情况下大幅提升LLM的数学和逻辑推理能力。
@@ -126,7 +118,3 @@ tags:
 **[TGDPO: Harnessing Token-Level Reward Guidance for Enhancing Direct Preference Optimization](tgdpo_harnessing_token-level_reward_guidance_for_enhancing_direct_preference_opt.md)**
 
 :   将序列级PPO分解为一系列token级近端策略优化问题，并引入token级奖励引导函数 $f(\hat{r}(s_t, a_t))$ 来替代DPO中的固定常数 $\beta$，使不同token根据各自奖励值呈现不同程度的偏离参考策略，在MT-Bench/AlpacaEval 2/Arena-Hard上分别提升最多7.5/6.2/4.3个胜率点。
-
-**[Vulnerability-Aware Alignment: Mitigating Uneven Forgetting in Harmful Fine-Tuning](vulnerability-aware_alignment_mitigating_uneven_forgetting_in_harmful_fine-tunin.md)**
-
-:   揭示安全对齐数据在有害微调(HFT)过程中存在**不均匀遗忘**现象——某些样本子集在不同微调任务和有害数据比例下始终更容易被破坏，据此提出 Vulnerability-Aware Alignment (VAA)：先通过代理微调识别脆弱/非脆弱样本分组，再利用 Group DRO 框架学习对抗采样器进行平衡训练，在四个下游微调任务上将平均有害率从 34.5% 降至 24.8%，同时保持下游任务精度。

@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 LLM 推理方向65篇论文解读
+  NeurIPS2025 LLM 推理方向66篇论文解读
 description: >-
-  65篇NeurIPS2025的 LLM 推理方向论文解读，涵盖推理、LLM、多模态、强化学习、模型压缩、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  66篇NeurIPS2025的 LLM 推理方向论文解读，涵盖推理、LLM、多模态、强化学习、模型压缩、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "LLM 推理"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💡 LLM 推理
 
-**🧠 NeurIPS2025** · **65** 篇论文解读
+**🧠 NeurIPS2025** · **66** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (37)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (12)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (65)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md) · [🧪 ICML2025 (15)](../../ICML2025/llm_reasoning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (20)](../../ICML2026/llm_reasoning/index.md) · [💬 ACL2026 (64)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (12)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (63)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
 
-🔥 **高频主题：** 推理 ×42 · LLM ×11 · 多模态 ×4 · 强化学习 ×4 · 模型压缩 ×2
+🔥 **高频主题：** 推理 ×44 · LLM ×12 · 多模态 ×4 · 强化学习 ×4 · 模型压缩 ×2
 
 **[AbbIE: Autoregressive Block-Based Iterative Encoder for Efficient Sequence Modeling](abbie_autoregressive_block-based_iterative_encoder_for_efficient_sequence_modeli.md)**
 
@@ -49,7 +49,7 @@ tags:
 
 :   提出 ChemCoTBench，首个评估 LLM 化学推理能力的 CoT 基准，将复杂化学问题分解为模块化的化学操作（加/删/替换官能团），配合 22,000 条专家标注的 CoT 数据集（ChemCoTDataset），系统性评估了推理型和非推理型 LLM 在分子理解/编辑/优化/反应预测上的能力。
 
-**[Clip-and-Verify: 线性约束驱动的域裁剪加速神经网络验证](clip-and-verify_linear_constraint-driven_domain_clipping_for_accelerating_neural.md)**
+**[Clip-and-Verify: Linear Constraint-Driven Domain Clipping for Accelerating Neural Network Verification](clip-and-verify_linear_constraint-driven_domain_clipping_for_accelerating_neural.md)**
 
 :   提出Clip-and-Verify验证流水线，利用线性界传播过程中"免费"产生的线性约束，通过完全裁剪（坐标上升对偶求解）和松弛裁剪（闭式输入域收缩）两种GPU高效算法收紧全网络中间层界，在多个benchmark上减少高达96%的BaB子问题数量，是VNN-COMP 2025获胜验证器的核心组件。
 
@@ -97,7 +97,7 @@ tags:
 
 :   提出 KAPPA (KL-Adjusted Pruned Path Algorithm)，利用 KL 散度、置信度和熵三个无需额外训练的信号对 Best-of-N 采样的推理分支进行渐进式剪枝，在保持准确率的同时实现最高 60% 峰值内存和 90% token 生成量的削减。
 
-**[笔记1: CoT是幻觉吗？数据分布角度](is_chain-of-thought_reasoning_of_llms_a_mirage_a_data_distribution_lens.md)**
+**[Is Chain-of-Thought Reasoning of LLMs a Mirage? A Data Distribution Lens](is_chain-of-thought_reasoning_of_llms_a_mirage_a_data_distribution_lens.md)**
 
 :   通过构建完全可控的抽象环境DataAlchemy，本文揭示CoT推理是一种幻觉——其有效性完全由训练数据分布主导，在分布外场景表现极其脆弱。
 
@@ -144,10 +144,6 @@ tags:
 **[On Learning Verifiers and Implications to Chain-of-Thought Reasoning](on_learning_verifiers_and_implications_to_chain-of-thought_reasoning.md)**
 
 :   提出学习Chain-of-Thought验证器的形式化PAC框架，定义三种递进强度的验证目标（Simple → Trustable → γ-Trustable），证明当每个问题只有少量正确证明时样本复杂度为 $O(\log|H|)$，但当正确证明数量不受限时样本复杂度不可避免地跃升至 $\Theta(|H|)$，除非验证器类满足交集封闭性等额外结构假设；同时利用USAT问题证明验证与生成之间存在计算复杂度差距。
-
-**[One Token Embedding Is Enough to Deadlock Your Large Reasoning Model](one_token_embedding_is_enough_to_deadlock_your_large_reasoning_model.md)**
-
-:   本文提出 Deadlock Attack，通过优化单个对抗性 token embedding 并以后门方式植入 LRM，使模型在推理时陷入永久思考循环（无限生成 "Wait"、"But" 等过渡词），在 4 个 LRM 和 3 个数学推理 benchmark 上实现 100% 攻击成功率，且对正常输入几乎无性能影响。
 
 **[ProofSketch: Efficient Verified Reasoning for Large Language Models](proofsketch_efficient_verified_reasoning_for_large_language_models.md)**
 
@@ -201,13 +197,17 @@ tags:
 
 :   提出SPO框架，采用段级（而非令牌级或轨迹级）的advantage估计，通过新颖的蒙特卡洛方法和树形采样，在短CoT和长CoT场景下分别超越PPO和GRPO 6-12和7-11个百分点。
 
-**[笔记8：PolyMath - 多语言背景下的数学推理评估](self-evaluating_llms_for_multi-step_tasks_stepwise_confidence_estimation_for_fai.md)**
+**[Self-Evaluating LLMs for Multi-Step Tasks: Stepwise Confidence Estimation for Failure Detection](self-evaluating_llms_for_multi-step_tasks_stepwise_confidence_estimation_for_fai.md)**
 
 :   PolyMath构建的18语言、4难度级、500问题数学推理基准揭露：(1)推理性能跨语言差异达10分，(2)推理模型输入-输出语言一致性低且可能影响性能，(3)思考长度在语言间显著不一致，为多语言推理研究提供新视角。
 
 **[Smaller Models, Smarter Rewards: A Two-Sided Approach to Process and Outcome Rewards](smaller_models_smarter_rewards_a_two-sided_approach_to_process_and_outcome_rewar.md)**
 
 :   将 Phi-4 系列小模型（3.8B/14B）的最后一层替换为回归头并微调，使其同时具备 ORM（结果奖励）和 PRM（过程奖励）能力，在代码生成任务上通过选择最优 rollout 实现 20%+ 的 pass@k 提升。
+
+**[SolverLLM: Leveraging Test-Time Scaling for Optimization Problem via LLM-Guided Search](solverllm_leveraging_test-time_scaling_for_optimization_problem_via_llm-guided_s.md)**
+
+:   提出SolverLLM，一个无需训练的框架，将优化问题的数学建模视为搜索问题，通过改进的MCTS在六元素表述空间中探索最优formulation，引入动态扩展、提示反向传播和不确定性反向传播，在6个基准上以无训练方式超越prompt方法和微调方法。
 
 **[SPRINT: Enabling Interleaved Planning and Parallelized Execution in Reasoning Models](sprint_enabling_interleaved_planning_and_parallelized_execution_in_reasoning_mod.md)**
 
@@ -277,10 +277,14 @@ tags:
 
 :   提出URSA三阶段框架，依次构建百万级多模态CoT数据(MMathCoT-1M)训练基座、双视角过程监督数据(DualMath-1.1M)训练PRM、以及PS-GRPO算法将PRM融入在线RL，8B模型在6个数学基准上平均超越GPT-4o 2.7%。
 
-**[笔记6：Self-Evaluating LLMs - 多步任务的步级置信度估计](value-guided_search_for_efficient_chain-of-thought_reasoning.md)**
+**[Value-Guided Search for Efficient Chain-of-Thought Reasoning](value-guided_search_for_efficient_chain-of-thought_reasoning.md)**
 
 :   本文扩展置信度估计到多步任务，证明步级评估相比整体评估能更有效地检测推理失败，相对整体评估在CoQA上AUC-ROC提升15%，为多步推理系统的可信部署提供实用框架。
 
 **[Visual Thoughts: A Unified Perspective of Understanding Multimodal Chain-of-Thought](visual_thoughts_a_unified_perspective_of_understanding_multi.md)**
 
 :   提出"视觉思维(Visual Thoughts)"作为统一框架解释多模态链式推理(MCoT)的有效性——无论是文本MCoT还是交错图文MCoT，其性能提升的核心机制都是将视觉信息缓存并传递到推理过程中，定义了四种视觉思维表达形式并揭示其在Transformer深层中作为图像-推理中介的角色。
+
+**[WebThinker: Empowering Large Reasoning Models with Deep Research Capability](webthinker_empowering_large_reasoning_models_with_deep_research_capability.md)**
+
+:   WebThinker赋予大型推理模型(LRM)自主的网络搜索与导航能力，通过Think-Search-Draft策略实现推理、信息采集与报告生成的无缝交织，经RL优化后在复杂推理与科学报告生成任务上超越o1与Gemini。

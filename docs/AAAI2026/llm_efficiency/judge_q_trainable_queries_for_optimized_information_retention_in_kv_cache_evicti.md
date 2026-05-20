@@ -153,7 +153,7 @@ Critical KV Hit Rate（与理论上界的重合度）：
 - [\[ACL 2025\] RefreshKV: Updating Small KV Cache During Long-form Generation](../../ACL2025/llm_efficiency/refreshkv_updating_small_kv_cache_during_long-form_generation.md)
 - [\[ACL 2025\] SpindleKV: A Novel KV Cache Reduction Method Balancing Both Shallow and Deep Layers](../../ACL2025/llm_efficiency/spindlekv_layered_kv_cache.md)
 - [\[ACL 2026\] Speculative Verification: Exploiting Information Gain to Refine Speculative Decoding](../../ACL2026/llm_efficiency/speculative_verification_exploiting_information_gain_to_refine_speculative_decod.md)
-- [\[ICLR 2026\] Randomization Boosts KV Caching, Learning Balances Query Load: A Joint Perspective](../../ICLR2026/llm_efficiency/randomization_boosts_kv_caching_learning_balances_query_load_a_joint_perspective.md)
+- [\[ICML 2026\] Scout: Active Information Foraging for Long-Text Understanding with Decoupled Epistemic States](../../ICML2026/llm_efficiency/scout_active_information_foraging_for_long-text_understanding_with_decoupled_epi.md)
 
 </div>
 

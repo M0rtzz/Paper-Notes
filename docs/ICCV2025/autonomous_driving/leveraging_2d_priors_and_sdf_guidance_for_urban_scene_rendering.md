@@ -148,7 +148,7 @@ SDF 损失包含 RGB 渲染损失 $\mathcal{L}_{rgb}$、深度损失 $\mathcal{L
 - [\[ICCV 2025\] GaussRender: Learning 3D Occupancy with Gaussian Rendering](gaussrender_learning_3d_occupancy_with_gaussian_rendering.md)
 - [\[ICCV 2025\] Extrapolated Urban View Synthesis Benchmark](extrapolated_urban_view_synthesis_benchmark.md)
 - [\[ICCV 2025\] CoDa-4DGS: Dynamic Gaussian Splatting with Context and Deformation Awareness for Autonomous Driving](coda-4dgs_dynamic_gaussian_splatting_with_context_and_deformation_awareness_for_.md)
-- [\[NeurIPS 2025\] FlowScene: Learning Temporal 3D Semantic Scene Completion via Optical Flow Guidance](../../NeurIPS2025/autonomous_driving/learning_temporal_3d_semantic_scene_completion_via_optical_flow_guidance.md)
+- [\[ICCV 2025\] SkyDiffusion: Leveraging BEV Paradigm for Ground-to-Aerial Image Synthesis](leveraging_bev_paradigm_for_ground-to-aerial_image_synthesis.md)
 
 </div>
 

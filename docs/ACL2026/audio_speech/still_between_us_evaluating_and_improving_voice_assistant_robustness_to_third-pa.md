@@ -15,10 +15,10 @@ tags:
 
 # Still Between Us? Evaluating and Improving Voice Assistant Robustness to Third-Party Interruptions
 
-**会议**: ACL 2026
-**arXiv**: [2604.17358](https://arxiv.org/abs/2604.17358)
-**代码**: [GitHub](https://github.com/pleasedpenguin/tpi-va)
-**领域**: 音频语音
+**会议**: ACL 2026  
+**arXiv**: [2604.17358](https://arxiv.org/abs/2604.17358)  
+**代码**: [GitHub](https://github.com/pleasedpenguin/tpi-va)  
+**领域**: 音频语音  
 **关键词**: 语音助手, 第三方打断, 说话人感知, 困难负样本挖掘, 语义捷径学习
 
 ## 一句话总结
@@ -124,8 +124,8 @@ tags:
 
 - [\[ACL 2025\] Does Your Voice Assistant Remember? Analyzing Conversational Context Recall and Utilization in Voice Interaction Models](../../ACL2025/audio_speech/does_your_voice_assistant_remember_analyzing_conversational_context_recall_and_u.md)
 - [\[ACL 2025\] Distilling an End-to-End Voice Assistant Without Instruction Training Data](../../ACL2025/audio_speech/distilling_an_end-to-end_voice_assistant_without_instruction_training_data.md)
-- [\[ACL 2026\] Robustness via Referencing: Defending against Prompt Injection Attacks by Referencing the Executed Instruction](robustness_via_referencing_defending_against_prompt_injection_attacks_by_referen.md)
-- [\[ICLR 2026\] EchoMind: An Interrelated Multi-level Benchmark for Evaluating Empathetic Speech Language Models](../../ICLR2026/audio_speech/echomind_an_interrelated_multi-level_benchmark_for_evaluating_empathetic_speech_.md)
+- [\[ACL 2026\] Speculative End-Turn Detector for Efficient Speech Chatbot Assistant](speculative_end-turn_detector_for_efficient_speech_chatbot_assistant.md)
+- [\[ACL 2026\] S2S-Arena: Evaluating Paralinguistic Instruction Following in Speech-to-Speech Models](s2s-arena_evaluating_paralinguistic_instruction_following_in_speech-to-speech_mo.md)
 - [\[ICLR 2026\] Improving Black-Box Generative Attacks via Generator Semantic Consistency](../../ICLR2026/audio_speech/improving_black-box_generative_attacks_via_generator_semantic_consistency.md)
 
 </div>

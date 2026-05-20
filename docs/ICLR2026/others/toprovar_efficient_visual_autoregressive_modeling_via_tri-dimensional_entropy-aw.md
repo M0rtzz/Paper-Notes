@@ -159,11 +159,11 @@ People 类别 FID 甚至从 58.91 降至 58.84（边加速边提升），Landsca
 
 ## 相关论文
 
-- [\[ICLR 2026\] SEED: Towards More Accurate Semantic Evaluation for Visual Brain Decoding](seed_towards_more_accurate_semantic_evaluation_for_visual_brain_decoding.md)
 - [\[AAAI 2026\] OR-R1: Automating Modeling and Solving of Operations Research Optimization Problems](../../AAAI2026/others/or-r1_automating_modeling_and_solving_of_operations_research_optimization_proble.md)
 - [\[CVPR 2025\] RandAR: Decoder-only Autoregressive Visual Generation in Random Orders](../../CVPR2025/others/randar_decoder-only_autoregressive_visual_generation_in_random_orders.md)
 - [\[AAAI 2026\] TDSNNs: Competitive Topographic Deep Spiking Neural Networks for Visual Cortex Modeling](../../AAAI2026/others/tdsnns_competitive_topographic_deep_spiking_neural_networks_for_visual_cortex_mo.md)
 - [\[ACL 2025\] QG-SMS: Enhancing Test Item Analysis via Student Modeling and Simulation](../../ACL2025/others/qg-sms_enhancing_test_item_analysis_via_student_modeling_and_simulation.md)
+- [\[ICML 2025\] Exploiting Similarity for Computation and Communication-Efficient Decentralized Optimization](../../ICML2025/others/exploiting_similarity_for_computation_and_communication-efficient_decentralized_.md)
 
 </div>
 

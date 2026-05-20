@@ -153,10 +153,10 @@ Shapley 值 → 约束回归问题 (Eq.1.2)
 ## 相关论文
 
 - [\[NeurIPS 2025\] Words That Unite The World: A Unified Framework for Deciphering Central Bank Communications Globally](words_that_unite_the_world_a_unified_framework_for_deciphering_central_bank_comm.md)
+- [\[ICML 2026\] iWorld-Bench: A Benchmark for Interactive World Models with a Unified Action Generation Framework](../../ICML2026/llm_evaluation/iworld-bench_a_benchmark_for_interactive_world_models_with_a_unified_action_gene.md)
 - [\[ICML 2025\] Provably Cost-Sensitive Adversarial Defense via Randomized Smoothing](../../ICML2025/llm_evaluation/provably_cost-sensitive_adversarial_defense_via_randomized_smoothing.md)
 - [\[NeurIPS 2025\] HybridNorm: Towards Stable and Efficient Transformer Training via Hybrid Normalization](hybridnorm_towards_stable_and_efficient_transformer_training_via_hybrid_normaliz.md)
 - [\[ACL 2025\] PapersPlease: A Benchmark for Evaluating Motivational Values of Large Language Models Based on ERG Theory](../../ACL2025/llm_evaluation/papersplease_a_benchmark_for_evaluating_motivational_values_of_large_language_mo.md)
-- [\[NeurIPS 2025\] Efficient Semantic Uncertainty Quantification in Language Models via Diversity-Steered Sampling](efficient_semantic_uncertainty_quantification_in_language_models_via_diversity-s.md)
 
 </div>
 

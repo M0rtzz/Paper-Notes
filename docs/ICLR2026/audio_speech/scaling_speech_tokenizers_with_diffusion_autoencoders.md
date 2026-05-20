@@ -137,10 +137,10 @@ SiTok 在仅 200bps（所有基线最低比特率）下，WER 3.34%、SIM 0.682 
 ## 相关论文
 
 - [\[ICLR 2026\] The Devil behind the Mask: An Emergent Safety Vulnerability of Diffusion LLMs](the_devil_behind_the_mask_an_emergent_safety_vulnerability_of_diffusion_llms.md)
-- [\[NeurIPS 2025\] The Impact of Scaling Training Data on Adversarial Robustness](../../NeurIPS2025/audio_speech/the_impact_of_scaling_training_data_on_adversarial_robustness.md)
+- [\[ACL 2026\] AgentV-RL: Scaling Reward Modeling with Agentic Verifier](../../ACL2026/audio_speech/agentv-rl_scaling_reward_modeling_with_agentic_verifier.md)
 - [\[NeurIPS 2025\] Perceptually Aligning Representations of Music via Noise-Augmented Autoencoders](../../NeurIPS2025/audio_speech/perceptually_aligning_representations_of_music_via_noise-augmented_autoencoders.md)
+- [\[NeurIPS 2025\] The Impact of Scaling Training Data on Adversarial Robustness](../../NeurIPS2025/audio_speech/the_impact_of_scaling_training_data_on_adversarial_robustness.md)
 - [\[ICCV 2025\] Latent Swap Joint Diffusion for 2D Long-Form Latent Generation](../../ICCV2025/audio_speech/latent_swap_joint_diffusion_for_2d_long-form_latent_generation.md)
-- [\[ACL 2026\] Breaking Block Boundaries: Anchor-based History-stable Decoding for Diffusion Large Language Models](../../ACL2026/audio_speech/breaking_block_boundaries_anchor-based_history-stable_decoding_for_diffusion_lar.md)
 
 </div>
 

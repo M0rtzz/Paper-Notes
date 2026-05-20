@@ -131,7 +131,7 @@ tags:
 - [\[ICML 2025\] Provable In-Context Vector Arithmetic via Retrieving Task Concepts](provable_in-context_vector_arithmetic_via_retrieving_task_concepts.md)
 - [\[NeurIPS 2025\] FedRTS: Federated Robust Pruning via Combinatorial Thompson Sampling](../../NeurIPS2025/optimization/fedrts_federated_robust_pruning_via_combinatorial_thompson_sampling.md)
 - [\[ICML 2025\] Learning Mixtures of Experts with EM: A Mirror Descent Perspective](learning_mixtures_of_experts_with_em_a_mirror_descent_perspective.md)
-- [\[ICCV 2025\] Zeroth-Order Fine-Tuning of LLMs in Random Subspaces](../../ICCV2025/optimization/zeroth-order_fine-tuning_of_llms_in_random_subspaces.md)
+- [\[NeurIPS 2025\] Stable Coresets via Posterior Sampling: Aligning Induced and Full Loss Landscapes](../../NeurIPS2025/optimization/stable_coresets_via_posterior_sampling_aligning_induced_and_full_loss_landscapes.md)
 
 </div>
 

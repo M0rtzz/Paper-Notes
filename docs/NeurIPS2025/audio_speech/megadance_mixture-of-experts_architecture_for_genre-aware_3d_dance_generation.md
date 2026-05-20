@@ -179,8 +179,8 @@ HFDQ 阶段消融：
 
 - [\[NeurIPS 2025\] MoME: Mixture of Matryoshka Experts for Audio-Visual Speech Recognition](mome_mixture_of_matryoshka_experts_for_audio-visual_speech_recognition.md)
 - [\[ECCV 2024\] Beat-It: Beat-Synchronized Multi-Condition 3D Dance Generation](../../ECCV2024/audio_speech/beat-it_beat-synchronized_multi-condition_3d_dance_generation.md)
-- [\[NeurIPS 2025\] Physics of Language Models: Part 4.1, Architecture Design and the Magic of Canon Layers](physics_of_language_models_part_41_architecture_design_and_the_magic_of_canon_la.md)
 - [\[ICCV 2025\] Align Your Rhythm: Generating Highly Aligned Dance Poses with Gating-Enhanced Rhythm-Aware Feature Representation](../../ICCV2025/audio_speech/align_your_rhythm_generating_highly_aligned_dance_poses_with_gating-enhanced_rhy.md)
+- [\[NeurIPS 2025\] Physics of Language Models: Part 4.1, Architecture Design and the Magic of Canon Layers](physics_of_language_models_part_41_architecture_design_and_the_magic_of_canon_la.md)
 - [\[NeurIPS 2025\] Unifying Symbolic Music Arrangement: Track-Aware Reconstruction and Structured Tokenization](unifying_symbolic_music_arrangement_track-aware_reconstruction_and_structured_to.md)
 
 </div>

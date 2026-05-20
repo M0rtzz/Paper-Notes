@@ -129,7 +129,7 @@ ELEMENTAL 将视觉语言模型 (VLM) 与逆强化学习 (IRL) 融合，通过 V
 - [\[CVPR 2025\] RoboSpatial: Teaching Spatial Understanding to 2D and 3D Vision-Language Models for Robotics](../../CVPR2025/multimodal_vlm/robospatial_teaching_spatial_understanding_to_2d_and_3d_vision-language_models_f.md)
 - [\[ICML 2025\] The Devil Is in the Details: Tackling Unimodal Spurious Correlations for Generalizable Multimodal Reward Models](the_devil_is_in_the_details_tackling_unimodal_spurious_correlations_for_generali.md)
 - [\[ICML 2025\] Learning Invariant Causal Mechanism from Vision-Language Models](learning_invariant_causal_mechanism_from_vision-language_models.md)
-- [\[NeurIPS 2025\] Scene-Aware Urban Design: A Human-AI Recommendation Framework Using Co-Occurrence Embeddings and Vision-Language Models](../../NeurIPS2025/multimodal_vlm/scene-aware_urban_design_a_human-ai_recommendation_framework_using_co-occurrence.md)
+- [\[CVPR 2025\] Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](../../CVPR2025/multimodal_vlm/continual_learning_with_vision-language_models_via_semantic-geometry_preservatio.md)
 
 </div>
 

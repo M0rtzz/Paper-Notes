@@ -17,7 +17,7 @@ tags:
 
 **🧠 NeurIPS2025** · **5** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (9)](../../ACL2026/dialogue/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/dialogue/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/dialogue/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/dialogue/index.md) · [🧪 ICML2025 (3)](../../ICML2025/dialogue/index.md) · [💬 ACL2025 (22)](../../ACL2025/dialogue/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (23)](../../ACL2026/dialogue/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/dialogue/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/dialogue/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/dialogue/index.md) · [🧪 ICML2025 (3)](../../ICML2025/dialogue/index.md) · [💬 ACL2025 (17)](../../ACL2025/dialogue/index.md)
 
 🔥 **高频主题：** LLM ×2
 

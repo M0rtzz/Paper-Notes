@@ -176,11 +176,11 @@ WHP 中 $D_{\text{low}}$（Lorem Ipsum 填充文本）的句法相似度与 $D_{
 
 ## 相关论文
 
-- [\[ICLR 2026\] LLM Unlearning with LLM Beliefs](llm_unlearning_with_llm_beliefs.md)
-- [\[ICLR 2026\] Revisiting the Past: Data Unlearning with Model State History](revisiting_the_past_data_unlearning_with_model_state_history.md)
-- [\[ACL 2026\] From Domains to Instances: Dual-Granularity Data Synthesis for LLM Unlearning](../../ACL2026/llm_evaluation/from_domains_to_instances_dual-granularity_data_synthesis_for_llm_unlearning.md)
+- [\[CVPR 2025\] LoTUS: Large-Scale Machine Unlearning with a Taste of Uncertainty](../../CVPR2025/llm_evaluation/lotus_large-scale_machine_unlearning_with_a_taste_of_uncertainty.md)
+- [\[ACL 2026\] Gated Tree Cross-Attention for Checkpoint-Compatible Syntax Injection in Decoder-Only LLMs](../../ACL2026/llm_evaluation/gated_tree_cross-attention_for_checkpoint-compatible_syntax_injection_in_decoder.md)
 - [\[NeurIPS 2025\] Reliably Detecting Model Failures in Deployment Without Labels](../../NeurIPS2025/llm_evaluation/reliably_detecting_model_failures_in_deployment_without_labels.md)
 - [\[NeurIPS 2025\] Aggregation Hides OOD Generalization Failures from Spurious Correlations](../../NeurIPS2025/llm_evaluation/aggregation_hides_out-of-distribution_generalization_failures_from_spurious_corr.md)
+- [\[NeurIPS 2025\] Rethinking Losses for Diffusion Bridge Samplers](../../NeurIPS2025/llm_evaluation/rethinking_losses_for_diffusion_bridge_samplers.md)
 
 </div>
 

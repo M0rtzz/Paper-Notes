@@ -1,0 +1,158 @@
+---
+title: >-
+  [论文解读] Moving Beyond Medical Exams: A Clinician-Annotated Fairness Dataset of Real-World Tasks and Ambiguity in Mental Healthcare
+description: >-
+  [ICLR 2026][医学图像][mental healthcare] 提出MENTAT——由9名美国精神科医生设计和标注的评估数据集（203道基础题×人口统计变量扩展），覆盖诊断/治疗/分诊/监测/文档5个临床实践领域，通过系统性替换患者年龄/种族/性别评估22个语言模型的决策偏见…
+tags:
+  - "ICLR 2026"
+  - "医学图像"
+  - "mental healthcare"
+  - "fairness benchmark"
+  - "clinical decision-making"
+  - "demographic bias"
+  - "expert annotation"
+---
+
+# Moving Beyond Medical Exams: A Clinician-Annotated Fairness Dataset of Real-World Tasks and Ambiguity in Mental Healthcare
+
+**会议**: ICLR 2026  
+**arXiv**: [2502.16051](https://arxiv.org/abs/2502.16051)  
+**代码**: [GitHub](https://github.com/maxlampe/mentat)（MIT许可）  
+**领域**: 医学AI评估 / 精神科 / 公平性  
+**关键词**: mental healthcare, fairness benchmark, clinical decision-making, demographic bias, expert annotation
+
+## 一句话总结
+
+提出MENTAT——由9名美国精神科医生设计和标注的评估数据集（203道基础题×人口统计变量扩展），覆盖诊断/治疗/分诊/监测/文档5个临床实践领域，通过系统性替换患者年龄/种族/性别评估22个语言模型的决策偏见，发现模型在各人口统计维度上存在显著且不可预测的准确率差异。
+
+## 研究背景与动机
+
+**领域现状**：医学AI评测主要依赖执业考试题（MedQA、MMLU-Med等），侧重事实性知识回忆。但在精神科领域，诊断和管理严重依赖主观判断和人际互动，标准化考试成绩与临床实际表现仅弱相关。
+
+**现有痛点**：
+
+1. 考试题关注知识回忆，无法评估真实临床决策能力——精神科医生每天面临的分诊决策、药物剂量调整、文档记录等任务远比多选题复杂
+
+2. 现有基准缺乏模糊性/不确定性的设计——实际精神科中许多决策没有唯一正确答案（如非自愿住院判断、临床总结的侧重点）
+
+3. 医学AI公平性评估不足——患者人口统计信息（种族/性别/年龄）对模型决策的影响未被系统研究，但可能在规模化部署中造成系统性偏见
+
+4. 现有数据集大多由LM辅助生成（如MedS-bench的网络爬取+LM合成），存在已知的质量和污染问题
+
+**核心矛盾**：需要一个完全由人类专家设计、捕捉真实临床模糊性、且能系统评估人口统计偏见的精神科AI评估数据集。
+
+## 方法详解
+
+### 整体框架
+
+5名精神科医生设计203道基础题（每题5个选项）→ 移除无关人口统计信息并替换为变量（年龄/种族/性别）→ 按变量扩展为多个评估数据集（$\mathcal{D}_0$=183题基础, $\mathcal{D}_G$=549题按性别, $\mathcal{D}_A$=915题按年龄, $\mathcal{D}_N$=1098题按种族）→ 对分诊/文档类题目收集8名专家标注 → 层级Bradley-Terry模型生成偏好概率标签。
+
+### 关键设计
+
+1. **五领域临床任务设计**
+
+    - **诊断**（50题）：根据症状信息按DSM-5-TR做出诊断
+    - **治疗**（47题）：制定治疗方案，包括具体药物剂量（考试题通常不涉及）
+    - **分诊**（28题）：评估紧急程度、决定是否升级护理——存在多个合理答案
+    - **监测**（49题）：评估治疗效果和病情严重程度
+    - **文档**（29题）：电子病历记录——存在多个合理答案（如何总结、如何编码计费）
+    - 诊断/治疗/监测有唯一正确答案；分诊/文档设计为模糊题（多个合理选项+专家偏好标注）
+
+2. **层级Bradley-Terry偏好模型**
+
+    - 对分诊/文档57道模糊题收集657条标注（平均11.5条/题），8名专家使用0-100量表独立评分
+    - 将评分转化为pairwise比较，建立层级Bradley-Terry模型：$P(i \succ j | a) = \frac{1}{1 + \exp[-(\gamma_a + \alpha_a(\beta_i - \beta_j))]}$
+    - 引入标注者特异性偏移 $\gamma_a$ 和斜率 $\alpha_a$，捕捉不同专家的严格/宽松趋势
+    - 最终用softmax将 $\beta_{ik}$ 转化为每个答案的偏好概率
+    - 设计动机：Krippendorff's $\alpha$ 在0到0.8之间，专家间确实存在分歧——这正是数据集要捕捉的临床模糊性
+
+### 损失函数 / 训练策略
+
+MENTAT是评估数据集，不用于训练。核心评估设计：
+
+- 多选题评估：温度$T=0$采样，按类别计算准确率
+- 偏见评估：比较相同题目在不同人口统计变量（3种性别×6种种族×3个年龄段）下的准确率差异
+- 自由文本评估：使用三种不一致性指标比较开放回答与专家标注
+- 90%/10%分割：183题评估 + 20题few-shot prompting
+
+## 实验关键数据
+
+### 主实验
+
+22个模型在 $\mathcal{D}_0$ 上的平均准确率：
+
+| 任务类别 | 所有模型平均 | OpenAI+Anthropic平均 |
+|---------|------------|-------------------|
+| 诊断 | 0.77±0.03 | 0.91±0.04 |
+| 治疗 | 0.74±0.02 | 0.92±0.03 |
+| 监测 | 0.65±0.02 | 0.79±0.04 |
+| 分诊 | 0.51±0.03 | 0.48±0.03 |
+| 文档 | 0.44±0.03 | 0.46±0.02 |
+
+### 消融实验
+
+人口统计敏感性（平均准确率，诊断/监测类别，所有模型）：
+
+| 维度 | 条件 | 诊断准确率 | 监测准确率 |
+|------|------|----------|----------|
+| 性别 | 女 | 0.85 | 0.71 |
+| 性别 | 男 | 0.84 | **0.81** |
+| 性别 | 非二元 | 0.81 | 0.74 |
+| 种族 | 非裔美国人 | **0.89** | 0.70 |
+| 种族 | 白人 | 0.84 | 0.75 |
+| 种族 | 西班牙裔 | 0.87 | 0.63 |
+| 年龄 | 18-33 | **0.90** | 0.71 |
+| 年龄 | 49-65 | 0.76 | 0.77 |
+
+### 关键发现
+
+- **结构化任务vs模糊任务**：诊断/治疗准确率0.74-0.91，分诊/文档仅约0.5——模型在存在多个合理答案的任务上表现显著下降
+- **人口统计偏见显著**：男性编码患者在监测/分诊/文档上比女性准确率高8-10%；非裔美国人在诊断类比白人高5%；西班牙裔在监测类最低（0.63）
+- **微调无效**：在MedS-bench上微调的MMedS-Llama-3-8B在MENTAT上未超过其Llama3.1-8b基座模型——LM合成数据的微调不能改善真实临床决策
+- **多选vs自由文本不一致**：高多选题准确率的模型在自由回答中可能显著偏离专家选项
+- **开源模型追赶**：Qwen3/Gemma3/MedGemma在分诊/文档类别上甚至超过闭源模型
+
+## 亮点与洞察
+
+- 全人类专家设计+标注的数据集，无LM参与——避免了LM合成数据的已知质量问题
+- 分诊/文档的"模糊"设计+层级Bradley-Terry偏好标注，捕捉了精神科决策的内在不确定性
+- 人口统计变量替换的系统性评估设计，使偏见分析可控且大规模——比个案分析远泛化性更强
+- "MENTAT is evaluation-first"的定位清晰：不追求大规模而追求高质量
+
+## 局限与展望
+
+- 数据集规模较小（203题基础），虽通过变量扩展放大但题目多样性受限
+- 仅限美国精神科体系（DSM-5-TR、美国计费编码等），不适用于其他国家医疗制度
+- 选择题+自由文本评估仍无法完全捕捉真实临床互动的动态性（如患者访谈、多轮对话）
+- 标注者偏见可能存在（虽团队多元化且Jensen-Shannon距离分析未发现显著性别差异，但样本量有限）
+- 目前仅能评估等于人类水平而非超越人类水平的能力
+
+## 相关工作与启发
+
+- **vs MedQA/MMLU**：考试题评估知识回忆，MENTAT评估临床决策——两者互补
+- **vs MedS-bench**：MedS-bench规模大但依赖LM合成数据；MENTAT规模小但完全人类设计
+- **vs AIME/HumanEval/BIG-Bench Hard**：同为"少量高质量"评估设计范式
+- **精神科AI启发**：当前LM在模糊决策任务上表现约50%，距实用部署仍有很大差距；偏见问题使超人类表现的讨论为时尚早
+
+## 评分
+
+- 新颖性: ⭐⭐⭐⭐ 首个全专家设计的精神科决策+公平性评估数据集
+- 实验充分度: ⭐⭐⭐⭐ 22个模型+5个任务类别+3个人口统计维度+自由文本评估
+- 写作质量: ⭐⭐⭐⭐ 数据集设计和标注流程描述详尽
+- 价值: ⭐⭐⭐⭐ 填补精神科AI评估空白，公平性分析具有重要社会意义
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[NeurIPS 2025\] SWE-SQL: Illuminating LLM Pathways to Solve User SQL Issues in Real-World Applications](../../NeurIPS2025/llm_safety/swe-sql_illuminating_llm_pathways_to_solve_user_sql_issues_in_real-world_applica.md)
+- [\[ICLR 2026\] Measuring Physical-World Privacy Awareness of Large Language Models: An Evaluation Benchmark](measuring_physical-world_privacy_awareness_of_large_language_models_an_evaluatio.md)
+- [\[ACL 2025\] ReDial: Assessing Dialect Fairness and Robustness of Large Language Models in Reasoning Tasks](../../ACL2025/llm_safety/dialect_fairness_robustness.md)
+- [\[AAAI 2026\] Federated CLIP for Resource-Efficient Heterogeneous Medical Image Classification](../../AAAI2026/llm_safety/federated_clip_for_resource-efficient_heterogeneous_medical_image_classification.md)
+- [\[CVPR 2025\] Towards All-in-One Medical Image Re-Identification](../../CVPR2025/llm_safety/towards_all-in-one_medical_image_re-identification.md)
+
+</div>
+
+<!-- RELATED:END -->

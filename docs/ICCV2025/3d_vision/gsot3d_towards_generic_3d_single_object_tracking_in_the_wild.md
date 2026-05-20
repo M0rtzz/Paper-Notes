@@ -167,7 +167,7 @@ $$\mathcal{R}_t = \text{MLP}(\mathbf{x}^{N+1}_t), \quad b_t = \mathcal{B}_t(h), 
 - [\[ICCV 2025\] Multi-View 3D Point Tracking](multi-view_3d_point_tracking.md)
 - [\[ICCV 2025\] AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction](ar1to3_single_image_to_consistent_3d_object_via_nextview_pre.md)
 - [\[CVPR 2025\] HOT3D: Hand and Object Tracking in 3D from Egocentric Multi-View Videos](../../CVPR2025/3d_vision/hot3d_hand_and_object_tracking_in_3d_from_egocentric_multi-view_videos.md)
-- [\[CVPR 2025\] Reconstructing In-the-Wild Open-Vocabulary Human-Object Interactions](../../CVPR2025/3d_vision/reconstructing_in-the-wild_open-vocabulary_human-object_interactions.md)
+- [\[ICCV 2025\] AllTracker: Efficient Dense Point Tracking at High Resolution](alltracker_efficient_dense_point_tracking_at_high_resolution.md)
 
 </div>
 

@@ -143,7 +143,7 @@ TIP 攻击由两个组件构成：任务指令 x_task（要求模型处理编码
 - [\[NeurIPS 2025\] On the Robustness of Verbal Confidence of LLMs in Adversarial Attacks](../../NeurIPS2025/llm_safety/on_the_robustness_of_verbal_confidence_of_llms_in_adversarial_attacks.md)
 - [\[ACL 2025\] Bias in the Mirror: Are LLMs' Opinions Robust to Their Own Adversarial Attacks](bias_in_the_mirror_are_llms_opinions_robust_to_their_own_adversarial_attacks.md)
 - [\[ACL 2025\] Can Indirect Prompt Injection Attacks Be Detected and Removed?](indirect_prompt_injection_detection.md)
-- [\[NeurIPS 2025\] Bits Leaked per Query: Information-Theoretic Bounds on Adversarial Attacks Against LLMs](../../NeurIPS2025/llm_safety/bits_leaked_per_query_information-theoretic_bounds_on_adversarial_attacks_agains.md)
+- [\[ACL 2025\] Lacuna Inc. at SemEval-2025 Task 4: LoRA-Enhanced Influence-Based Unlearning for LLMs](lacuna_inc_at_semeval-2025_task_4_lora-enhanced_influence-based_unlearning_for_l.md)
 
 </div>
 

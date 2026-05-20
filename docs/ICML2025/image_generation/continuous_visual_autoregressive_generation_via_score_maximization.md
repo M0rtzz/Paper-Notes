@@ -123,7 +123,7 @@ tags:
 - [\[NeurIPS 2025\] InfinityStar: Unified Spacetime AutoRegressive Modeling for Visual Generation](../../NeurIPS2025/image_generation/infinitystar_unified_spacetime_autoregressive_modeling_for_v.md)
 - [\[ICML 2025\] Visual Generation Without Guidance](visual_generation_without_guidance.md)
 - [\[ICML 2025\] Continuous Semi-Implicit Models](continuous_semi-implicit_models.md)
-- [\[NeurIPS 2025\] Watermarking Autoregressive Image Generation](../../NeurIPS2025/image_generation/watermarking_autoregressive_image_generation.md)
+- [\[ICML 2026\] Visual Implicit Autoregressive Modeling](../../ICML2026/image_generation/visual_implicit_autoregressive_modeling.md)
 
 </div>
 

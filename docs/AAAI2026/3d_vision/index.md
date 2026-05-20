@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 3D 视觉方向74篇论文解读
+  AAAI2026 3D 视觉方向76篇论文解读
 description: >-
-  74篇AAAI2026的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、点云、语义分割、形状补全、动态场景、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  76篇AAAI2026的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、点云、语义分割、形状补全、3D 目标检测、动态场景等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "3D 视觉"
@@ -12,18 +12,18 @@ tags:
   - "点云"
   - "语义分割"
   - "形状补全"
+  - "3D 目标检测"
   - "动态场景"
-  - "压缩/编码"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**🤖 AAAI2026** · **74** 篇论文解读
+**🤖 AAAI2026** · **76** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (230)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (63)](../../ICLR2026/3d_vision/index.md) · [🧠 NeurIPS2025 (116)](../../NeurIPS2025/3d_vision/index.md) · [📹 ICCV2025 (254)](../../ICCV2025/3d_vision/index.md) · [🧪 ICML2025 (11)](../../ICML2025/3d_vision/index.md) · [💬 ACL2025 (1)](../../ACL2025/3d_vision/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (8)](../../ICML2026/3d_vision/index.md) · [📷 CVPR2026 (230)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (63)](../../ICLR2026/3d_vision/index.md) · [🧠 NeurIPS2025 (112)](../../NeurIPS2025/3d_vision/index.md) · [📹 ICCV2025 (265)](../../ICCV2025/3d_vision/index.md) · [🧪 ICML2025 (12)](../../ICML2025/3d_vision/index.md)
 
-🔥 **高频主题：** 3D 高斯渲染 ×19 · 点云 ×14 · 语义分割 ×7 · 形状补全 ×5 · 动态场景 ×4
+🔥 **高频主题：** 3D 高斯渲染 ×19 · 点云 ×13 · 语义分割 ×7 · 形状补全 ×5 · 3D 目标检测 ×5
 
 **[3D-ANC: Adaptive Neural Collapse for Robust 3D Point Cloud Recognition](3d-anc_adaptive_neural_collapse_for_robust_3d_point_cloud_re.md)**
 
@@ -121,7 +121,7 @@ tags:
 
 :   本文开发了基于视觉的 3D 代理建模框架，通过将数据中心的服务器负载、风扇速度和空调温度设定点编码为 3D 体素表示，利用 3D CNN U-Net、3D 傅里叶神经算子和 3D Vision Transformer 等架构实现实时温度场预测，速度比传统 CFD 求解器快 20000 倍，同时实现 7% 的能耗节约。
 
-**[FoundationSLAM: 释放深度基础模型在端到端稠密视觉SLAM中的潜力](foundationslam_unleashing_the_power_of_depth_foundation_models_for.md)**
+**[FoundationSLAM: Unleashing the Power of Depth Foundation Models for End-to-End Dense Visual SLAM](foundationslam_unleashing_the_power_of_depth_foundation_models_for.md)**
 
 :   将深度基础模型的几何先验注入光流式SLAM系统，通过混合光流网络、双向一致BA层和可靠性感知精炼三个模块形成闭环，在TUM/EuRoC/7Scenes/ETH3D四大数据集取得SOTA轨迹精度和稠密重建质量，18 FPS实时运行。
 
@@ -181,6 +181,10 @@ tags:
 
 :   MoBGS 提出了一种端到端的动态去模糊 3D Gaussian Splatting 框架，通过 Blur-adaptive Latent Camera Estimation (BLCE) 和 Latent Camera-induced Exposure Estimation (LCEE) 两个核心模块，从模糊单目视频中重建清晰的时空新视角，在 Stereo Blur 数据集上大幅超越现有 SOTA 方法。
 
+**[MonoCLUE: Object-Aware Clustering Enhances Monocular 3D Object Detection](monoclue_object-aware_clustering_enhances_monocular_3d_object_detection.md)**
+
+:   提出 MonoCLUE，通过**局部聚类**提取对象级视觉模式（如引擎盖、车顶等部件）和**广义场景记忆**聚合跨图像的一致外观特征，增强单目3D检测中被遮挡和截断物体的检测能力，在KITTI基准上实现SOTA性能，且不依赖额外深度或LiDAR信息。
+
 **[MR-CoSMo: Visual-Text Memory Recall and Direct Cross-Modal Alignment Method for Query-Driven 3D Segmentation](mr-cosmo_visual-text_memory_recall_and_direct_cross-modal_alignment_method_for_q.md)**
 
 :   提出MR-CoSMo，一种由粗到精的查询驱动3D分割模型，通过直接跨模态对齐模块（DCMA）建立3D点云与文本/2D图像的显式对齐，结合视觉-文本记忆模块（Memory Module）存储高置信度特征对来增强跨场景分割一致性，在3D指令分割、引用分割和语义分割三个任务上均达到SOTA。
@@ -233,9 +237,13 @@ tags:
 
 :   提出 PCQ（Point Cloud Quantization），利用预训练视觉-语言模型的文本嵌入作为语义原型，通过 Gumbel-Softmax 可微量化将连续点云特征离散化到文本原型空间，结合跨模态特征融合实现3D理解的显著提升。
 
-**[RadarLLM: Empowering Large Language Models to Understand Human Motion from Millimeter-Wave Point Cloud Sequence](radarllm_empowering_large_language_models_to_understand_human_motion_from_millim.md)**
+**[PressTrack-HMR: Pressure-Based Top-Down Multi-Person Global Human Mesh Recovery](presstrack-hmr_pressure-based_top-down_multi-person_global_human_mesh_recovery.md)**
 
-:   提出 RadarLLM，首个利用大语言模型从毫米波雷达点云进行语义级人体运动理解的端到端框架，包含基于 Aggregate VQ-VAE 的运动引导雷达分词器和雷达感知语言模型，并通过物理感知仿真管线生成大规模雷达-文本配对数据。
+:   提出 PressTrack-HMR，首个仅基于压力信号实现多人全局人体网格恢复的自上而下流水线，通过创新的 UoE 相似度度量实现压力足迹跟踪（93.6% MOTA），并构建了首个多人交互压力数据集 MIP。
+
+**[Real-Time 3D Object Detection with Inference-Aligned Learning](real-time_3d_object_detection_with_inference-aligned_learning.md)**
+
+:   提出 SR3D 框架，通过空间优先最优传输标签分配（SPOTA）和排序感知自适应自蒸馏（RAS）两个训练阶段组件，弥合室内密集 3D 目标检测中训练与推理行为的不一致性，在 ScanNet V2 和 SUN RGB-D 上以 42ms 实时速度刷新密集检测器 SOTA。
 
 **[Redundant Queries in DETR-Based 3D Detection: Unnecessary and Prunable](redundant_queries_in_detr-based_3d_detection_methods_unnecessary_and_prunable.md)**
 

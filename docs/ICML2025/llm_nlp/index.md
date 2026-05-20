@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 LLM / NLP方向28篇论文解读
+  ICML2025 LLM / NLP方向27篇论文解读
 description: >-
-  28篇ICML2025的 LLM / NLP 方向论文解读，涵盖 LLM、少样本学习、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  27篇ICML2025的 LLM / NLP 方向论文解读，涵盖 LLM、少样本学习、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "LLM / NLP"
@@ -16,9 +16,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 LLM / NLP
 
-**🧪 ICML2025** · **28** 篇论文解读
+**🧪 ICML2025** · **27** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (35)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (53)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (50)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (35)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (32)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_nlp/index.md)
 
 🔥 **高频主题：** LLM ×7 · 少样本学习 ×2 · 推理 ×2
 
@@ -45,10 +45,6 @@ tags:
 **[Build Agent Advocates, Not Platform Agents](build_agent_advocates_not_platform_agents.md)**
 
 :   Position paper，指出LMA（语言模型代理）若被平台公司控制将成为加剧监控、锁定和注意力操控的"platform agents"，提出应发展用户控制的"agent advocates"来保护个人自主权，并给出三大干预措施：开放模型/算力、互操作性标准、市场监管。
-
-**[Cover Learning for Large-Scale Topology Representation](cover_learning_for_large-scale_topology_representation.md)**
-
-:   提出 Cover Learning 作为一种统一的无监督学习问题，基于优化的视角设计三项损失函数（测度、几何、拓扑）学习数据集的拓扑忠实覆盖，所得单纯复形在拓扑推断中比标准几何复形更紧凑，在大规模拓扑可视化中比 Mapper 图能表示更高维信息。
 
 **[Defending LVLMs Against Vision Attacks through Partial-Perception Supervision](defending_lvlms_against_vision_attacks_through_partial-perception_supervision.md)**
 

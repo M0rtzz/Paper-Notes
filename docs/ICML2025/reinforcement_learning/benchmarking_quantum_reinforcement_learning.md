@@ -128,8 +128,8 @@ tags:
 - [\[NeurIPS 2025\] TensorRL-QAS: Reinforcement Learning with Tensor Networks for Improved Quantum Architecture Search](../../NeurIPS2025/reinforcement_learning/tensorrl-qas_reinforcement_learning_with_tensor_networks_for_improved_quantum_ar.md)
 - [\[ICLR 2026\] VerifyBench: Benchmarking Reference-based Reward Systems for Large Language Models](../../ICLR2026/reinforcement_learning/verifybench_benchmarking_reference-based_reward_systems_for_large_language_model.md)
 - [\[ICML 2025\] Sliding Puzzles Gym: A Scalable Benchmark for State Representation in Visual Reinforcement Learning](sliding_puzzles_gym_a_scalable_benchmark_for_state_representation_in_visual_rein.md)
-- [\[ICML 2025\] Stealing That Free Lunch: Exposing the Limits of Dyna-Style Reinforcement Learning](stealing_that_free_lunch_exposing_the_limits_of_dyna-style_reinforcement_learnin.md)
 - [\[NeurIPS 2025\] Near-Optimal Quantum Algorithms for Computing (Coarse) Correlated Equilibria of General-Sum Games](../../NeurIPS2025/reinforcement_learning/near-optimal_quantum_algorithms_for_computing_coarse_correlated_equilibria_of_ge.md)
+- [\[ICML 2025\] Stealing That Free Lunch: Exposing the Limits of Dyna-Style Reinforcement Learning](stealing_that_free_lunch_exposing_the_limits_of_dyna-style_reinforcement_learnin.md)
 
 </div>
 

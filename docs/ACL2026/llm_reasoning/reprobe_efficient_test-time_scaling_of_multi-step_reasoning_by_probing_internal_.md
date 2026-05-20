@@ -1,0 +1,257 @@
+---
+title: >-
+  [论文解读] ReProbe: Efficient Test-Time Scaling of Multi-Step Reasoning by Probing Internal States of Large Language Models
+description: >-
+  [ACL 2026][LLM推理][内部状态探针] ReProbe 用冻结 LLM 的隐藏状态、注意力和 logits 训练一个小于 10M 参数的轻量探针来判断每个推理步骤是否可信…
+tags:
+  - "ACL 2026"
+  - "LLM推理"
+  - "内部状态探针"
+  - "推理步骤验证"
+  - "PRM"
+  - "Best-of-N"
+  - "Beam Search"
+---
+
+# ReProbe: Efficient Test-Time Scaling of Multi-Step Reasoning by Probing Internal States of Large Language Models
+
+**会议**: ACL2026  
+**arXiv**: [2511.06209](https://arxiv.org/abs/2511.06209)  
+**代码**: https://reprobe.github.io/  
+**领域**: llm_reasoning  
+**关键词**: 测试时扩展、过程验证、内部状态探针、PRM、思维链
+
+## 一句话总结
+这篇论文提出 ReProbe，用少于 10M 参数的轻量 transformer probe 读取冻结 LLM 的隐藏状态、注意力和 logits 来判断每一步推理是否可信，在数学、规划和问答任务上接近或超过大 750-810 倍的 PRM，并能作为 Best-of-N 和 beam search 的高效 step verifier。
+
+## 研究背景与动机
+**领域现状**：Chain-of-Thought 和大型推理模型让 LLM 能生成长推理链，但长链条里任何一步错误都可能把最终答案带偏。测试时扩展通过采样多条候选推理、筛选更可靠的中间步骤或完整轨迹来提升准确率，常见形式包括 Best-of-N 和 beam search。
+
+**现有痛点**：当前主流 step verifier 是 Process Reward Model。PRM 通常是 1.5B 到 8B 参数的独立 LLM，需要大量步骤级标注、Monte-Carlo rollouts 或昂贵的人类/LLM 判断；推理时还要额外跑一个大模型，显存和延迟都高。更重要的是，许多 PRM 在数学上训练得很强，但跨到规划、问答等 OOD 任务时泛化有限。
+
+**核心矛盾**：推理时扩展需要一个可靠 scorer，但 scorer 越强通常越大、越贵、越领域化；简单不确定性指标很便宜，却不够准确。理想方案应该像 PRM 一样能判断过程质量，又像 uncertainty probe 一样轻量。
+
+**本文目标**：作者希望验证一个假设：LLM 在生成推理步骤时，其内部状态已经编码了“这一步是否可信”的信号；只要用一个小 probe 把信号读出来，就可以替代或补充 PRM。
+
+**切入角度**：过去 hallucination detection 研究表明，隐藏状态、注意力分布和 logits 中含有模型自知信号。ReProbe 把这种 introspection 思路从事实幻觉检测迁移到多步推理验证。
+
+**核心 idea**：不用另一个大模型读文本来打分，而是让小型探针直接读目标 LLM 生成时已经产生的内部状态，并输出当前推理步骤正确的概率。
+
+## 方法详解
+ReProbe 是一个 plug-and-play step verifier。它不改变被监督的 LLM，也不生成新的推理文本，只在目标模型生成每个推理步骤时抽取内部特征，然后给这一步打一个 correctness score。这个分数可以像 PRM reward 一样用于 Best-of-N 轨迹选择，也可以在 beam search 中选择下一批 partial trajectories。
+
+### 整体框架
+训练阶段先从 PRM800K 的训练问题中采样 10.8K 个数学题，让目标 LLM 生成多条 CoT 轨迹，再由 DeepSeek-R1 或目标模型自身给每个步骤打正确/错误标签。然后冻结目标 LLM，抽取每个步骤对应的内部特征，训练 ReProbe 做二分类。推理阶段，目标 LLM 生成候选步骤；ReProbe 实时读取内部状态并输出 step score；TTS 策略根据分数保留最可信的步骤或完整轨迹。
+
+### 关键设计
+1. **内部状态特征而非外部文本评审**:
+
+    - 功能：用目标模型自身的生成信号判断推理步骤可信度。
+    - 核心思路：作者比较两类特征。一类是 Attn+Logit，包括所有层对前 5 个 token 的注意力权重，以及 top-K 候选生成的 logits；另一类是所有层 hidden states。每个 token 的特征来自当前问题、历史推理步骤和新生成步骤的上下文。
+    - 设计动机：PRM 只能看到生成文本，ReProbe 能看到模型在生成文本时的“内部犹豫”和表征状态，因此可能捕捉到文本表面没有显式表达的置信度。
+
+2. **步骤级 transformer probe 架构**:
+
+    - 功能：把 token-level 内部特征汇聚成 step-level correctness score。
+    - 核心思路：ReProbe 先用线性层把特征投影到统一维度，再经过若干 transformer layers 建模步骤内 token 之间的依赖；随后对当前步骤 token 做平均池化，得到步骤向量，最后用两层 MLP 输出正确性 logit。
+    - 设计动机：简单线性探针只看局部 token 特征，难以理解一步推理内部的组合结构；轻量 transformer 足够小，却能在步骤范围内建模上下文。
+
+3. **低成本标注与 TTS 集成**:
+
+    - 功能：减少 PRM 式训练数据构建和推理部署成本。
+    - 核心思路：训练数据可以由 DeepSeek-R1 标注，也可以由目标模型自标注。非 thinking 模式下，模型被提示每个 CoT step 单独成行；native thinking 模式下，则把每个句子当作一个推理步骤。用于 TTS 时，Best-of-N 对完整轨迹做聚合评分，beam search 则在每一步用 ReProbe 分数保留 top-B 续写。
+    - 设计动机：许多任务没有可自动检验的最终答案，更不适合做大规模 Monte-Carlo 过程标注；probe 训练把昂贵监督压缩到一个小模型上，推理时也不需要额外大 LLM。
+
+### 损失函数 / 训练策略
+ReProbe 使用标准二分类交叉熵训练，并用 class weighting 缓解正确/错误步骤类别不平衡。目标 LLM 全程冻结，只更新 probe 参数。主要实验在 Qwen3-8B 的非 thinking CoT 模式上进行，也扩展到 Qwen3-1.7B、Qwen3-32B 的 native thinking 模式和 Phi-4。训练数据来自 10.8K 个 PRM800K 问题，每题采样 3 条轨迹，约 32K 个 reasoning trajectory 样本；生成时使用 top-k 50、top-p 0.95、temperature 1.0。作者还提供 vLLM 管线来加速 hidden-state extraction 和训练。
+
+## 实验关键数据
+
+### 主实验
+步骤级错误检测使用 PR-AUC。ReProbe 在 in-domain 数学上接近最强 PRM，在 OOD 规划和 QA 上更有优势；尤其 Hidden States + Self-anno 的总体 PR-AUC 达到 0.604，高于 Qwen2.5-Math-PRM-7B 的 0.565。
+
+| 方法 | 参数/样本规模 | ID Avg PR-AUC↑ | OOD Avg PR-AUC↑ | Overall PR-AUC↑ | 结论 |
+|------|---------------|----------------|-----------------|-----------------|------|
+| Semantic Entropy | 无训练 | 0.182 | 0.409 | 0.324 | 不确定性信号有用但不够强 |
+| Skywork-PRM-1.5B | 1.5B, samples unknown | 0.281 | 0.426 | 0.371 | 小 PRM 泛化有限 |
+| Qwen2.5-Math-PRM-7B | 7B, 860K | 0.514 | 0.595 | 0.565 | 强数学 PRM，OOD 仍被 probe 追上 |
+| ReProbe Attn+Logit Self-anno | <10M, 32K | 0.461 | 0.618 | 0.559 | 自监督即可接近强 PRM |
+| ReProbe Hidden States Self-anno | <10M, 32K | 0.498 | 0.667 | 0.604 | 总体最佳，OOD 优势明显 |
+| ReProbe Hidden States DeepSeek-anno | <10M, 32K | 0.488 | 0.639 | 0.582 | 外部标注也稳定有效 |
+
+在测试时扩展上，ReProbe 可以直接替代 PRM 作为 scorer。Beam search 中，Hidden States + DeepSeek-anno 的 overall accuracy 为 76.6，高于两类 Qwen2.5-Math PRM。
+
+| 方法 | MATH↑ | GSM8K↑ | ProofNet↑ | ID Avg↑ | OOD Avg↑ | Overall↑ |
+|------|-------|--------|-----------|---------|----------|----------|
+| Qwen2.5-Math-7B-PRM800K | 89.8 | 80.4 | 95.2 | 88.5 | 59.0 | 71.6 |
+| Qwen2.5-Math-PRM-7B | 88.1 | 95.4 | 93.6 | 92.4 | 54.4 | 70.7 |
+| ReProbe Attn+Logit Self-anno | 90.3 | 95.4 | 95.1 | 93.6 | 61.9 | 75.5 |
+| ReProbe Hidden States Self-anno | 84.1 | 97.3 | 90.6 | 90.7 | 60.0 | 73.2 |
+| ReProbe Hidden States DeepSeek-anno | 86.8 | 98.8 | 95.6 | 93.7 | 63.7 | 76.6 |
+
+### 消融实验
+论文分析了数据多样性、PRM 互补性和架构选择。更丰富的问题分布能显著提升 probe 的总体 PR-AUC；把 ReProbe 分数与 PRM 分数做简单 logistic regression 融合，还能进一步提高部分数学数据集表现。
+
+| 消融/组合 | MATH PR-AUC↑ | GSM8K PR-AUC↑ | ProofNet PR-AUC↑ | 说明 |
+|-----------|--------------|---------------|------------------|------|
+| ReProbe Attn+Logit, homogeneous 6K | 0.308 | 0.549 | 0.205 | 训练问题相似，泛化受限 |
+| ReProbe Attn+Logit, diverse 6K | 0.409 | 0.575 | 0.180 | 多样性提升总体表现，尤其 OOD |
+| PRM1 (Qwen2.5-Math-7B-PRM800K) | 0.586 | 0.613 | 0.301 | 强文本过程奖励模型 |
+| ReProbe + PRM1 | 0.613 | 0.674 | 0.318 | 内部置信信号与外部文本评审互补 |
+| PRM2 (Qwen2.5-Math-7B) | 0.531 | 0.702 | 0.310 | 另一强 PRM |
+| ReProbe + PRM2 | 0.573 | 0.710 | 0.327 | 融合后继续提升 |
+
+### 关键发现
+- ReProbe 的优势主要来自 OOD 泛化。PRM 在数学域很强，但 probe 直接读目标模型内部信号，较少过拟合数学文本分布。
+- 自监督标注并不弱。Self-anno ReProbe 在多个平均指标上接近甚至超过 DeepSeek-anno，说明目标模型自身也能提供有用过程监督。
+- ReProbe 不是只能替代 PRM，也能补充 PRM。融合实验表明两者关注的信息不同：PRM 更像外部审稿人，ReProbe 更像模型自己的置信度读数。
+- 运行效率有实际意义。论文报告当前实现相对 state-of-the-art PRM 有 2.6× 到 25× 加速，且参数量小到可以作为每个目标模型的专属插件。
+
+## 亮点与洞察
+- 这篇论文最有启发的地方是把“过程奖励”从文本空间转到状态空间。推理质量不一定只由生成文本判断，生成过程中的隐藏表示本身就是监督信号。
+- ReProbe 给 TTS 提供了更细粒度的成本控制。相比“多采样 + 大 PRM 打分”，它更适合资源受限但仍想做 reasoning search 的系统。
+- Native thinking mode 的实验很重要：即使模型没有规整输出分步 CoT，把句子作为步骤也能训练 probe，说明方法不完全依赖 prompt 格式工程。
+- 对工程部署而言，ReProbe 可以和 PRM 做 cascade：先用 probe 过滤大量候选，只有不确定样本再交给 PRM，从而保留质量并降低成本。
+
+## 局限与展望
+- ReProbe 是目标模型专属的。因为它读取内部状态，不同模型、不同层结构甚至微调后的模型都可能需要重新训练或适配。
+- 性能仍随训练数据规模增长，StrategyQA 等任务曲线还没有饱和。未来需要更大、更跨域的问题集，而不只是 PRM800K 派生数据。
+- DeepSeek-R1 作为评测/标注 judge 仍有 API 成本和非确定性。论文提供标注以保证复现，但从零复现实验数字会受 judge 漂移影响。
+- 对极长推理链，PRM 和 ReProbe 都会轻微退化。如何在长上下文中稳定切分步骤、聚合历史错误，是后续 TTS 系统要继续解决的问题。
+- 目前主要验证了 step correctness 和 final answer accuracy，尚未深入分析 probe 是否会偏好短步骤、保守步骤或某些表达风格。
+
+## 相关工作与启发
+- **vs PRM**: PRM 用另一个语言模型读推理文本并打过程分；ReProbe 用小模型读目标 LLM 的内部状态，成本低、OOD 泛化更好，但模型专属性更强。
+- **vs unsupervised UQ**: MaxProb、entropy、perplexity 等无需训练却效果有限；ReProbe 保留轻量优势，同时通过监督学习提取更复杂的可信度模式。
+- **vs self-consistency / majority voting**: 多数投票只在完整答案层面聚合，不能纠正中间错误；ReProbe 在 step level 介入搜索，更适合 beam search。
+- **vs formal verification**: 形式化验证可靠但领域窄、依赖 autoformalization；ReProbe 更通用，能覆盖数学、规划和 QA，但不提供严格证明。
+
+## 评分
+- 新颖性: ⭐⭐⭐⭐⭐ 把内部状态 probing 系统化用于 reasoning step verification，和 PRM 路线形成清晰互补。
+- 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 step PR-AUC、Best-of-N、beam search、多模型、native thinking、效率和融合分析，实验很扎实。
+- 写作质量: ⭐⭐⭐⭐ 结构清楚、表格信息密集；训练成本部分在主文和限制中略显复杂，需要读者仔细区分标注设置。
+- 价值: ⭐⭐⭐⭐⭐ 对低成本测试时扩展和可部署推理系统非常有价值，尤其适合作为 PRM 的轻量替代或前置过滤器。# ReProbe: Efficient Test-Time Scaling of Multi-Step Reasoning by Probing Internal States of Large Language Models
+
+**会议**: ACL 2026  
+**arXiv**: [2511.06209](https://arxiv.org/abs/2511.06209)  
+**代码**: https://reprobe.github.io/  
+**领域**: LLM 推理 / Test-Time Scaling / 过程验证  
+**关键词**: 内部状态探针、推理步骤验证、PRM、Best-of-N、Beam Search
+
+## 一句话总结
+ReProbe 用冻结 LLM 的隐藏状态、注意力和 logits 训练一个小于 10M 参数的轻量探针来判断每个推理步骤是否可信，在多领域 step verification 和 test-time scaling 中达到或超过大 150 到 810 倍的 PRM，尤其在 OOD 推理任务上更稳。
+
+## 研究背景与动机
+**领域现状**：大语言模型通过 chain-of-thought 生成多步推理，test-time scaling 会在推理时采样多条路径或多段候选步骤，再用验证器挑选更可靠的路径。当前最常用的验证器是 Process Reward Model，它像外部裁判一样读取文本推理轨迹并给每一步打分。
+
+**现有痛点**：PRM 的训练和部署都很重。训练需要人工标注、Monte Carlo rollout 或昂贵的模型裁判，部署时还要额外运行一个 1.5B 到 8B 级别的模型；更麻烦的是，很多 PRM 主要在数学数据上训练，对规划和开放 QA 等 OOD 任务泛化不稳。
+
+**核心矛盾**：推理过程的正确性既需要强信号，又不能让验证器比被验证模型还重。文本轨迹提供了显性证据，但 LLM 自身在生成时已经产生了隐藏状态、注意力模式和 logits，这些内部信号可能包含模型对自己推理步骤的“自知程度”。
+
+**本文目标**：作者希望验证一个假设：冻结 LLM 的内部状态足以支撑 step-level correctness 判断；只需训练一个轻量 probing 模块，就能替代 PRM 作为 BoN 和 beam search 的打分器。
+
+**切入角度**：与 PRM 只看输出文本不同，ReProbe 直接读取目标 LLM 生成当前步骤时的 token 级内部特征。这样验证器不需要重新理解整段文本，而是从模型生成过程里的表征信号中提取可信度。
+
+**核心 idea**：把“推理步骤验证”改成 frozen LLM internal-state probing，用小模型读内部信号来判断这一步是否会把解题轨迹带偏。
+
+## 方法详解
+ReProbe 是一个 plug-and-play step verifier。目标 LLM 负责正常生成推理步骤，ReProbe 在每一步结束后拿到该步骤对应的内部特征，并输出该步骤正确的概率。这个概率随后可以像 PRM reward 一样用于 Best-of-N 或 beam search：完整轨迹按步骤分数聚合，部分轨迹按当前步骤分数扩展。
+
+### 整体框架
+训练阶段，先用目标 LLM 在 PRM800K 的训练问题上生成 reasoning trajectories，再用外部 LLM 或目标 LLM 自身给每个步骤打正确/错误标签。冻结目标 LLM 后，抽取每个步骤的 hidden states、attention/logit 等 token 特征，训练一个小型 transformer probe 做二分类。推理阶段，ReProbe 对候选步骤打分，test-time scaling 策略用这些分数选择继续扩展的路径。
+
+### 关键设计
+1. **内部特征抽取**:
+
+	- 功能：从目标 LLM 的生成过程里取出步骤级可信度信号。
+	- 核心思路：论文研究两类特征：Attn+Logit 使用所有层对前 5 个 token 的注意力权重和 top-K 候选 logits；Hidden States 使用所有层的隐藏状态。每个 token 的内部信号被视为该 token 生成时模型不确定性和语义状态的压缩表示。
+	- 设计动机：PRM 要重新读文本并外部判断，内部特征则已经在生成过程中计算完成。若隐藏状态编码了“我是否正在编造/走错”的信号，probe 可以用很小成本提取它。
+
+2. **轻量 Transformer Probe**:
+
+	- 功能：把 token 级特征聚合成步骤级正确性概率。
+	- 核心思路：先用线性层把特征投影到统一维度，再经过若干 Transformer 层建模 token 间依赖；随后对当前 reasoning step 的 token 表征做平均池化，送入两层 MLP 输出二分类 logit。
+	- 设计动机：步骤正确性不是单个 token 的属性，而是整句话或整段局部推理是否成立。轻量 Transformer 比线性探针更能捕捉步骤内部依赖，又远小于一个完整 PRM。
+
+3. **可替代 PRM 的 TTS 打分接口**:
+
+	- 功能：让 ReProbe 无缝用于 Best-of-N 和 beam search。
+	- 核心思路：在 BoN 中，对每条完整 reasoning trajectory 的步骤分数做聚合，例如取最小步骤分数代表最薄弱环节；在 beam search 中，对每个候选 continuation 的当前步骤打分，保留分数最高的 beam。
+	- 设计动机：论文不是只做检测任务，而是验证 probe 分数能否真的转化为最终答案准确率提升。沿用 PRM 的接口也保证了与现有 TTS 框架兼容。
+
+### 损失函数 / 训练策略
+训练数据来自 PRM800K 的 10.8K 个数学问题，每题生成 3 条推理轨迹，总计约 32K 个带步骤标签的样本。标签来源有两种：DeepSeek-R1 外部标注，以及目标 LLM 自标注。ReProbe 用 binary cross-entropy 训练，并用类别权重处理正确/错误步骤不平衡。作者报告标注成本约 200 美元，训练计算约 4 个 GH200 GPU-hour；目标 LLM 全程冻结。
+
+## 实验关键数据
+
+### 主实验
+实验覆盖三类场景：数学推理作为 ID，规划任务和通用知识 QA 作为 OOD。目标模型包括 Qwen3-8B、Qwen3-1.7B/32B native thinking mode 和 Phi-4。下面摘取 Qwen3-8B 的核心结果。
+
+| 验证器 | 训练样本 | ID PR-AUC | OOD PR-AUC | Overall PR-AUC | 规模/含义 |
+|--------|----------|-----------|------------|----------------|-----------|
+| Universal-PRM-Qwen2.5-Math-7B | 690K | 0.496 | 0.566 | 0.540 | 数学向大型 PRM |
+| Qwen2.5-Math-PRM-7B | 860K | 0.514 | 0.595 | 0.565 | 强数学 PRM |
+| ReProbe Attn+Logit Self-anno | 32K | 0.461 | 0.618 | 0.559 | 小探针，OOD 强 |
+| ReProbe Hidden States Self-anno | 32K | 0.498 | 0.667 | 0.604 | 总体最佳 |
+| ReProbe Hidden States DeepSeek-anno | 32K | 0.488 | 0.639 | 0.582 | 外部标注也有效 |
+
+在 test-time scaling 上，ReProbe 不只是能识别错误步骤，也能提升最终答案。Qwen3-8B 的 beam search 中，Qwen2.5-Math-PRM-7B 的 overall accuracy 为 70.7，Qwen2.5-Math-7B-PRM800K 为 71.6；ReProbe Attn+Logit Self-anno 达到 75.5，ReProbe Hidden States DeepSeek-anno 达到 76.6。Best-of-N 中，ReProbe 最好 overall 为 62.8，优于多数 PRM，但距离 pass@N upper bound 72.1 仍有明显空间。
+
+### 消融实验
+论文最关键的分析是特征类型和标注来源。Hidden states 普遍比 Attn+Logit 更强，自标注并不明显弱于外部标注。
+
+| ReProbe 变体 | ID PR-AUC | OOD PR-AUC | Overall PR-AUC | 观察 |
+|--------------|-----------|------------|----------------|------|
+| Attn+Logit, Self-anno | 0.461 | 0.618 | 0.559 | 已能超过强 PRM 的 OOD 平均 |
+| Attn+Logit, DeepSeek-anno | 0.441 | 0.617 | 0.551 | 外部标注不一定带来更高平均值 |
+| Hidden States, Self-anno | 0.498 | 0.667 | 0.604 | 最强，说明隐藏层表征含有丰富可信度信号 |
+| Hidden States, DeepSeek-anno | 0.488 | 0.639 | 0.582 | 稳定强于多数 PRM |
+
+作者还在 native thinking 模式下测试 Qwen3-1.7B 和 Qwen3-32B。Qwen3-1.7B 中 ReProbe overall PR-AUC 为 0.447，高于 Qwen2.5-Math-7B-PRM800K 的 0.427；Qwen3-32B 中 ReProbe overall 为 0.585，低于最强 Qwen2.5-Math-PRM-7B 的 0.613，但 OOD 平均 0.558 高于后者 0.532。
+
+### 关键发现
+- LLM 内部状态确实编码了推理步骤可信度，而且 hidden states 比 attention/logit 更适合做通用验证。
+- ReProbe 在 ID 数学任务上偶尔略输强数学 PRM，但在 OOD 规划和 QA 上明显更稳，说明小 probe 不像大型数学 PRM 那样过拟合单一领域。
+- 自标注结果接近甚至优于 DeepSeek-R1 标注，暗示模型内部可能已经有可提取的自我一致性信号；这对低成本扩展很关键。
+- Beam search 对 step verifier 的质量更敏感，因此 ReProbe 的收益在 beam search 中比 Best-of-N 更明显。
+
+## 亮点与洞察
+- 论文最大的价值是把“验证器”从另一个大模型降成目标模型上的探针。这不仅节省参数和显存，还避免验证器和生成器之间的领域错配。
+- 使用内部状态比看文本更像“在线诊断”。当模型刚走错一步时，隐藏状态可能已经暴露不确定性或异常，而文本表面仍可能很流畅。
+- 自监督标注很有启发：如果模型能给自己的推理步骤产生足够好的标签，再训练 probe 读取自己的内部状态，就形成了一种低成本 introspection pipeline。
+- ReProbe 可与不同 TTS 策略结合，不绑定具体 benchmark。它可以作为 PRM 的轻量替代，也可以和 PRM 级联：先用 probe 快速筛掉差候选，再用 PRM 精排。
+
+## 局限与展望
+- 步骤标签很大程度依赖 LLM judge，虽然作者做了人工一致性验证，但复杂开放问题的 step correctness 仍可能有主观性。
+- 非 native thinking 模式要求模型按行输出步骤；native thinking 模式只能用句子切分近似步骤，粒度可能不稳定。
+- Probe 与目标 LLM 的内部结构绑定，换模型通常需要重新抽特征并训练，闭源模型也无法直接使用。
+- ReProbe 判断的是“这一步是否可信”，不负责修复错误步骤；与搜索策略结合后仍会受候选采样质量限制。
+- Best-of-N 提升有限，说明只用步骤分数选择整条轨迹还不够，未来可以研究更细的回溯、重写和局部修复机制。
+
+## 相关工作与启发
+- **vs PRM**: PRM 是外部文本裁判，强但昂贵；ReProbe 是内部状态探针，轻且 OOD 泛化更好。两者可以互补而不是完全替代。
+- **vs Uncertainty Quantification**: UQ 无需训练但效果弱，ReProbe 则用少量训练把内部不确定性信号转成更可靠的步骤级分类器。
+- **vs self-consistency / majority voting**: 多数投票只利用最终答案分布，ReProbe 在中间步骤就能介入搜索，适合 beam search 和 tree-of-thought。
+- **启发**: 对 LLM 推理来说，模型“内部知道自己可能错了”的信号值得系统挖掘。未来可把这类 probe 用于早停、自动反思触发、推理轨迹压缩和安全监控。
+
+## 评分
+- 新颖性: ⭐⭐⭐⭐⭐ 用内部状态探针替代 PRM 是很有想象力且实证扎实的方向。
+- 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 step detection、BoN、beam search、多模型、多领域和标注方式，实验量很足。
+- 写作质量: ⭐⭐⭐⭐☆ 结构清楚，表格丰富；部分大表较密，读者需要自己抓重点。
+- 价值: ⭐⭐⭐⭐⭐ 对降低 test-time scaling 成本非常有价值，也为 LLM introspection 提供了实证支撑。
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICLR 2026\] Efficient Test-Time Scaling for Small Vision-Language Models](../../ICLR2026/llm_reasoning/efficient_test-time_scaling_for_small_vision-language_models.md)
+- [\[ACL 2026\] Multi-Agent Reasoning Improves Compute Efficiency: Pareto-Optimal Test-Time Scaling](multi-agent_reasoning_improves_compute_efficiency_pareto-optimal_test-time_scali.md)
+- [\[ACL 2026\] DRP: Distilled Reasoning Pruning with Skill-aware Step Decomposition for Efficient Large Reasoning Models](drp_distilled_reasoning_pruning_with_skill-aware_step_decomposition_for_efficien.md)
+- [\[ACL 2026\] Parallel Test-Time Scaling for Latent Reasoning Models](parallel_test-time_scaling_for_latent_reasoning_models.md)
+- [\[ACL 2026\] Distilling Long-CoT Reasoning through Collaborative Step-wise Multi-Teacher Decoding (CoRD)](distilling_long-cot_reasoning_through_collaborative_step-wise_multi-teacher_deco.md)
+
+</div>
+
+<!-- RELATED:END -->

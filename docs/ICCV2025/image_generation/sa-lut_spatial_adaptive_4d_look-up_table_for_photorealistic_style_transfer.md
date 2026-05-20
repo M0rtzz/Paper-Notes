@@ -147,7 +147,7 @@ $$\mathcal{L}_{\text{total}} = \lambda_1\mathcal{L}_{\text{lpips}} + \lambda_2\m
 - [\[ICCV 2025\] Domain Generalizable Portrait Style Transfer](domain_generalizable_portrait_style_transfer.md)
 - [\[ICCV 2025\] Free4D: Tuning-free 4D Scene Generation with Spatial-Temporal Consistency](free4d_tuning-free_4d_scene_generation_with_spatial-temporal_consistency.md)
 - [\[CVPR 2025\] HSI: A Holistic Style Injector for Arbitrary Style Transfer](../../CVPR2025/image_generation/hsi_a_holistic_style_injector_for_arbitrary_style_transfer.md)
-- [\[ICCV 2025\] Balanced Image Stylization with Style Matching Score](balanced_image_stylization_with_style_matching_score.md)
+- [\[CVPR 2025\] StyleStudio: Text-Driven Style Transfer with Selective Control of Style Elements](../../CVPR2025/image_generation/stylestudio_text-driven_style_transfer_with_selective_control_of_style_elements.md)
 
 </div>
 

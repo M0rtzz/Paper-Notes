@@ -148,7 +148,7 @@ VoiceCloak 对参考音频 $x_{ref}$ 添加对抗扰动 $\delta$（满足 $\|\de
 - [\[ICCV 2025\] DCT-Shield: A Robust Frequency Domain Defense against Malicious Image Editing](../../ICCV2025/image_generation/dct-shield_a_robust_frequency_domain_defense_against_malicious_image_editing.md)
 - [\[CVPR 2026\] coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](../../CVPR2026/image_generation/codrawagents_a_multiagent_dialogue_framework_for_c.md)
 - [\[AAAI 2026\] T2I-RiskyPrompt: A Benchmark for Safety Evaluation, Attack, and Defense on Text-to-Image Model](t2i-riskyprompt_a_benchmark_for_safety_evaluation_attack_and_defense_on_text-to-.md)
-- [\[CVPR 2026\] Towards Robust Content Watermarking Against Removal and Forgery Attacks](../../CVPR2026/image_generation/towards_robust_content_watermarking_against_removal_and_forgery_attacks.md)
+- [\[CVPR 2026\] Reparameterized Tensor Ring Functional Decomposition for Multi-Dimensional Data Recovery](../../CVPR2026/image_generation/reparameterized_tensor_ring_functional_decomposition_for_multi-dimensional_data_.md)
 
 </div>
 

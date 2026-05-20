@@ -204,10 +204,10 @@ $$\mathcal{L}_{KD} = \lambda_1 \mathcal{L}_{pv} + \lambda_2 \mathcal{L}_{bev} + 
 ## 相关论文
 
 - [\[AAAI 2026\] Multi-Modal Assistance for Unsupervised Domain Adaptation on Point Cloud 3D Object Detection](multi-modal_assistance_for_unsupervised_domain_adaptation_on_point_cloud_3d_obje.md)
+- [\[AAAI 2026\] MonoCLUE: Object-Aware Clustering Enhances Monocular 3D Object Detection](monoclue_object-aware_clustering_enhances_monocular_3d_object_detection.md)
 - [\[NeurIPS 2025\] DynaRend: Learning 3D Dynamics via Masked Future Rendering for Robotic Manipulation](../../NeurIPS2025/3d_vision/dynarend_learning_3d_dynamics_via_masked_future_rendering_for_robotic_manipulati.md)
+- [\[ECCV 2024\] T-MAE: Temporal Masked Autoencoders for Point Cloud Representation Learning](../../ECCV2024/3d_vision/t-mae_temporal_masked_autoencoders_for_point_cloud_representation_learning.md)
 - [\[CVPR 2026\] R4Det: 4D Radar-Camera Fusion for High-Performance 3D Object Detection# R4Det: 4D Radar-Camera Fusion for High-Performance 3D Object Detection](../../CVPR2026/3d_vision/r4det_4d_radar_camera_fusion_3d_detection.md)
-- [\[AAAI 2026\] Griffin: Aerial-Ground Cooperative Detection and Tracking Dataset and Benchmark](griffin_aerial-ground_cooperative_detection_and_tracking_dataset_and_benchmark.md)
-- [\[AAAI 2026\] Redundant Queries in DETR-Based 3D Detection: Unnecessary and Prunable](redundant_queries_in_detr-based_3d_detection_methods_unnecessary_and_prunable.md)
 
 </div>
 

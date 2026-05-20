@@ -15,10 +15,10 @@ tags:
 
 # BizCompass: Benchmarking the Reasoning Capabilities of LLMs in Business Knowledge and Applications
 
-**会议**: ACL 2026 Findings
-**arXiv**: [2604.17305](https://arxiv.org/abs/2604.17305)
-**代码**: [https://bizcompass.dev.ypemc.com/](https://bizcompass.dev.ypemc.com/)
-**领域**: LLM评测
+**会议**: ACL 2026 Findings  
+**arXiv**: [2604.17305](https://arxiv.org/abs/2604.17305)  
+**代码**: [https://bizcompass.dev.ypemc.com/](https://bizcompass.dev.ypemc.com/)  
+**领域**: LLM评测  
 **关键词**: 商业推理基准, 知识与应用评估, LLM能力诊断, 金融经济, 双轴设计
 
 ## 一句话总结
@@ -130,9 +130,9 @@ BizCompass 分为两个层次。知识层覆盖四个核心领域：金融（FIN
 
 - [\[ACL 2025\] VoxEval: Benchmarking the Knowledge Understanding Capabilities of End-to-End Spoken Language Models](../../ACL2025/llm_evaluation/voxeval_benchmarking_the_knowledge_understanding_capabilities_of_end-to-end_spok.md)
 - [\[ACL 2026\] Do LLMs Overthink Basic Math Reasoning? Benchmarking the Accuracy-Efficiency Tradeoff](do_llms_overthink_basic_math_reasoning_benchmarking_the_accuracy-efficiency_trad.md)
-- [\[ICLR 2026\] Benchmarking Overton Pluralism in LLMs](../../ICLR2026/llm_evaluation/benchmarking_overton_pluralism_in_llms.md)
-- [\[ACL 2026\] ResearchBench: Benchmarking LLMs in Scientific Discovery via Inspiration-Based Task Decomposition](researchbench_benchmarking_llms_in_scientific_discovery_via_inspiration-based_ta.md)
-- [\[ACL 2026\] Are They Lovers or Friends? Evaluating LLMs' Social Reasoning in English and Korean Dialogues](are_they_lovers_or_friends_evaluating_llms39_social_reasoning_in_english_and_kor.md)
+- [\[ACL 2026\] Can LLMs Act as Historians? Evaluating Historical Research Capabilities of LLMs via the Chinese Imperial Examination](can_llms_act_as_historians_evaluating_historical_research_capabilities_of_llms_v.md)
+- [\[ACL 2026\] Personalized Benchmarking: Evaluating LLMs by Individual Preferences](personalized_benchmarking_evaluating_llms_by_individual_preferences.md)
+- [\[ACL 2026\] Aggregate vs. Personalized Judges in Business Idea Evaluation: Evidence from Expert Disagreement](aggregate_vs_personalized_judges_in_business_idea_evaluation_evidence_from_exper.md)
 
 </div>
 

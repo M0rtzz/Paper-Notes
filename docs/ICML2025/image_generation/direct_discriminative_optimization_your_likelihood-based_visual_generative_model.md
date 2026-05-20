@@ -167,9 +167,9 @@ DDO 的 pipeline 非常简洁：
 
 - [\[ICML 2025\] Discriminative Policy Optimization for Token-Level Reward Models](discriminative_policy_optimization_for_token-level_reward_models.md)
 - [\[CVPR 2025\] Training Data Provenance Verification: Did Your Model Use Synthetic Data from My Generative Model for Training?](../../CVPR2025/image_generation/training_data_provenance_verification_did_your_model_use_synthetic_data_from_my_.md)
+- [\[ICML 2026\] Threshold-Guided Optimization for Visual Generative Models](../../ICML2026/image_generation/threshold-guided_optimization_for_visual_generative_models.md)
 - [\[ICML 2025\] PPO-MI: Efficient Black-Box Model Inversion via Proximal Policy Optimization](ppo-mi_efficient_black-box_model_inversion_via_proximal_policy_optimization.md)
 - [\[ICML 2025\] GRAM: A Generative Foundation Reward Model for Reward Generalization](gram_a_generative_foundation_reward_model_for_reward_generalization.md)
-- [\[ICML 2025\] BRIDGE: Bootstrapping Text to Control Time-Series Generation via Multi-Agent Iterative Optimization and Diffusion Modeling](bridge_bootstrapping_text_to_control_time-series_generation_via_multi-agent_iter.md)
 
 </div>
 

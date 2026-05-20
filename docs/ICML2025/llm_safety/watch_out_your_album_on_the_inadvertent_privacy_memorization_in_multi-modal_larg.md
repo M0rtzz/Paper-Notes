@@ -146,10 +146,10 @@ tags:
 ## 相关论文
 
 - [\[ACL 2025\] Private Memorization Editing: Turning Memorization into a Defense to Strengthen Data Privacy in Large Language Models](../../ACL2025/llm_safety/private_memorization_editing_turning_memorization_into_a_defense_to_strengthen_d.md)
-- [\[ACL 2025\] Jailbreak Large Vision-Language Models Through Multi-Modal Linkage](../../ACL2025/llm_safety/jailbreak_large_vision-language_models_through_multi-modal_linkage.md)
 - [\[CVPR 2026\] Multi-Paradigm Collaborative Adversarial Attack Against Multi-Modal Large Language Models](../../CVPR2026/llm_safety/multi-paradigm_collaborative_adversarial_attack_against_multi-modal_large_langua.md)
 - [\[ICML 2025\] Cut out and Replay: A Simple yet Versatile Strategy for Multi-Label Online Continual Learning](cut_out_and_replay_a_simple_yet_versatile_strategy_for_multi-label_online_contin.md)
 - [\[AAAI 2026\] AUVIC: Adversarial Unlearning of Visual Concepts for Multi-modal Large Language Models](../../AAAI2026/llm_safety/auvic_adversarial_unlearning_of_visual_concepts_for_multi-mo.md)
+- [\[ICML 2025\] Learning Safety Constraints for Large Language Models](learning_safety_constraints_for_large_language_models.md)
 
 </div>
 

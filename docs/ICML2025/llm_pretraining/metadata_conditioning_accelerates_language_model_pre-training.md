@@ -187,8 +187,8 @@ MeCo 解锁了推理时的可控性——在 prompt 前加上特定 URL（真实
 
 - [\[ICML 2025\] The Sharpness Disparity Principle in Transformers for Accelerating Language Model Pre-Training](the_sharpness_disparity_principle_in_transformers_for_accelerating_language_mode.md)
 - [\[NeurIPS 2025\] Nemotron-CLIMB: CLustering-based Iterative Data Mixture Bootstrapping for Language Model Pre-training](../../NeurIPS2025/llm_pretraining/nemotron-climb_clustering-based_iterative_data_mixture_bootstrapping_for_languag.md)
-- [\[ICML 2025\] Language Model Developers Should Report Train-Test Overlap](language_model_developers_should_report_train-test_overlap.md)
 - [\[ACL 2025\] AsyncLM: Efficient and Adaptive Async Pre-training of Language Models](../../ACL2025/llm_pretraining/asynclm_efficient_and_adaptive_async_pre-training_of_language_models.md)
+- [\[ICML 2025\] Language Model Developers Should Report Train-Test Overlap](language_model_developers_should_report_train-test_overlap.md)
 - [\[ICML 2025\] Chameleon: A Flexible Data-mixing Framework for Language Model Pretraining and Finetuning](chameleon_a_flexible_data-mixing_framework_for_language_model_pretraining_and_fi.md)
 
 </div>

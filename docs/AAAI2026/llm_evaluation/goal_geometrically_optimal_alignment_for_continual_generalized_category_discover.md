@@ -127,8 +127,8 @@ GOAL 分为基础 session 和增量 session。基础 session 用有标注数据�
 - [\[NeurIPS 2025\] Consistent Supervised-Unsupervised Alignment for Generalized Category Discovery](../../NeurIPS2025/llm_evaluation/consistent_supervised-unsupervised_alignment_for_generalized_category_discovery.md)
 - [\[CVPR 2026\] Learning Like Humans: Analogical Concept Learning for Generalized Category Discovery](../../CVPR2026/llm_evaluation/learning_like_humans_analogical_concept_learning_for_generalized_category_discov.md)
 - [\[AAAI 2026\] Break the Tie: Learning Cluster-Customized Category Relationships for Categorical Data Clustering](break_the_tie_learning_cluster-customized_category_relationships_for_categorical.md)
-- [\[ICLR 2026\] LCA: Local Classifier Alignment for Continual Learning](../../ICLR2026/llm_evaluation/lca_local_classifier_alignment_for_continual_learning.md)
 - [\[AAAI 2026\] Deep Incomplete Multi-View Clustering via Hierarchical Imputation and Alignment](deep_incomplete_multi-view_clustering_via_hierarchical_imputation_and_alignment.md)
+- [\[ICLR 2026\] LCA: Local Classifier Alignment for Continual Learning](../../ICLR2026/llm_evaluation/lca_local_classifier_alignment_for_continual_learning.md)
 
 </div>
 

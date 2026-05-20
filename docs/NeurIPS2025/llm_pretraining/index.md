@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 预训练方向48篇论文解读
+  NeurIPS2025 预训练方向47篇论文解读
 description: >-
-  48篇NeurIPS2025的预训练方向论文解读，涵盖 LLM、对齐/RLHF、扩散模型、人脸/视线等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  47篇NeurIPS2025的预训练方向论文解读，涵盖 LLM、对齐/RLHF、扩散模型、人脸/视线等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "预训练"
@@ -17,11 +17,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📚 预训练
 
-**🧠 NeurIPS2025** · **48** 篇论文解读
+**🧠 NeurIPS2025** · **47** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/llm_pretraining/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/llm_pretraining/index.md) · [🔬 ICLR2026 (26)](../../ICLR2026/llm_pretraining/index.md) · [🤖 AAAI2026 (6)](../../AAAI2026/llm_pretraining/index.md) · [📹 ICCV2025 (9)](../../ICCV2025/llm_pretraining/index.md) · [🧪 ICML2025 (30)](../../ICML2025/llm_pretraining/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/llm_pretraining/index.md) · [💬 ACL2026 (10)](../../ACL2026/llm_pretraining/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/llm_pretraining/index.md) · [🔬 ICLR2026 (26)](../../ICLR2026/llm_pretraining/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/llm_pretraining/index.md) · [📹 ICCV2025 (9)](../../ICCV2025/llm_pretraining/index.md)
 
-🔥 **高频主题：** LLM ×7 · 对齐/RLHF ×4 · 扩散模型 ×2 · 人脸/视线 ×2
+🔥 **高频主题：** LLM ×7 · 对齐/RLHF ×3 · 扩散模型 ×2 · 人脸/视线 ×2
 
 **[A Practical Guide for Incorporating Symmetry in Diffusion Policy](a_practical_guide_for_incorporating_symmetry_in_diffusion_policy.md)**
 
@@ -46,10 +46,6 @@ tags:
 **[Born a Transformer – Always a Transformer? On the Effect of Pretraining on Architectural Abilities](born_a_transformer_--_always_a_transformer_on_the_effect_of_pretraining_on_archi.md)**
 
 :   通过系统性地研究检索和复制任务家族，揭示了大规模预训练会为Transformer引入方向性偏置（右/前向优于左/后向），但无法克服非唯一任务上的根本架构限制；微调可消除方向偏置但不能突破架构表达力边界。
-
-**[Brain-tuning Improves Generalizability and Efficiency of Brain Alignment in Speech Models](brain-tuning_improves_generalizability_and_efficiency_of_brain_alignment_in_spee.md)**
-
-:   提出 Multi-brain-tuning 方法，通过联合多个被试的 fMRI 数据微调预训练语音模型，将脑对齐所需数据量降低 5 倍，同时脑对齐度提升最高 50%，并可泛化到全新被试和数据集。
 
 **[Breaking the Frozen Subspace: Importance Sampling for Low-Rank Optimization in LLM Pretraining](breaking_the_frozen_subspace_importance_sampling_for_low-rank_optimization_in_ll.md)**
 

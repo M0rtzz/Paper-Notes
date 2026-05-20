@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 LLM 评测方向78篇论文解读
+  NeurIPS2025 LLM 评测方向79篇论文解读
 description: >-
-  78篇NeurIPS2025的 LLM 评测方向论文解读，涵盖 LLM、对齐/RLHF、对抗鲁棒、域适应、少样本学习、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  79篇NeurIPS2025的 LLM 评测方向论文解读，涵盖 LLM、对齐/RLHF、对抗鲁棒、域适应、少样本学习、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "LLM 评测"
@@ -19,9 +19,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📊 LLM 评测
 
-**🧠 NeurIPS2025** · **78** 篇论文解读
+**🧠 NeurIPS2025** · **79** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (40)](../../ACL2026/llm_evaluation/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_evaluation/index.md) · [🔬 ICLR2026 (56)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (39)](../../AAAI2026/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md) · [🧪 ICML2025 (49)](../../ICML2025/llm_evaluation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (8)](../../ICML2026/llm_evaluation/index.md) · [💬 ACL2026 (79)](../../ACL2026/llm_evaluation/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/llm_evaluation/index.md) · [🔬 ICLR2026 (53)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (39)](../../AAAI2026/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md)
 
 🔥 **高频主题：** LLM ×12 · 对齐/RLHF ×7 · 对抗鲁棒 ×4 · 域适应 ×2 · 少样本学习 ×2
 
@@ -72,6 +72,10 @@ tags:
 **[Beyond the Surface: Enhancing LLM-as-a-Judge Alignment with Human via Internal Representations](beyond_the_surface_enhancing_llm-as-a-judge_alignment_with_human_via_internal_re.md)**
 
 :   提出LAGER框架，通过聚合LLM中间层到最终层的score token logits并计算期望分数，无需微调模型即可将LLM评判与人类评分的对齐度提升最高7.5%，且不需要思维链推理步骤就能匹配或超过推理类方法。
+
+**[Bispectral OT: Dataset Comparison using Symmetry-Aware Optimal Transport](bispectral_ot_dataset_comparison_using_symmetry-aware_optimal_transport.md)**
+
+:   提出 Bispectral Optimal Transport (BOT)，将离散最优传输中的代价矩阵从原始像素距离替换为 bispectrum（群 Fourier 不变量）距离，使得传输计划在保持信号结构的同时精确消除群作用（如旋转）带来的变异，在旋转变换的 MNIST 等数据集上将类别保持准确率从 33% 提升至 84%。
 
 **[BLINK-Twice: You See But Do You Observe? A Reasoning Benchmark on Visual Perception](blink-twice_you_see_but_do_you_observe_a_reasoning_benchmark_on_visual_perceptio.md)**
 

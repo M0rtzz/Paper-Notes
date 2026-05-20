@@ -16,7 +16,7 @@ tags:
 
 **🧪 ICML2025** · **7** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (29)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/audio_speech/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (7)](../../ICML2026/audio_speech/index.md) · [💬 ACL2026 (47)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/audio_speech/index.md)
 
 🔥 **高频主题：** 语音 ×4
 

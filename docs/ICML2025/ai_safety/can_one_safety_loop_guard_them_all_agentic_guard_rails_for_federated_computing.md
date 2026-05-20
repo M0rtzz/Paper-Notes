@@ -141,7 +141,7 @@ Guardian-FC 采用两层架构：上层为 **Agentic-AI 控制平面**（只处�
 - [\[ICCV 2025\] Backdoor Attacks on Neural Networks via One-Bit Flip](../../ICCV2025/ai_safety/backdoor_attacks_on_neural_networks_via_one_bit_flip.md)
 - [\[CVPR 2025\] Where the Devil Hides: Deepfake Detectors Can No Longer Be Trusted](../../CVPR2025/ai_safety/where_the_devil_hides_deepfake_detectors_can_no_longer_be_trusted.md)
 - [\[ICML 2025\] Towards Trustworthy Federated Learning with Untrusted Participants](towards_trustworthy_federated_learning_with_untrusted_participants.md)
-- [\[AAAI 2026\] Matrix-Free Two-to-Infinity and One-to-Two Norms Estimation](../../AAAI2026/ai_safety/matrix-free_two-to-infinity_and_one-to-two_norms_estimation.md)
+- [\[ECCV 2024\] One-stage Prompt-based Continual Learning](../../ECCV2024/ai_safety/one-stage_prompt-based_continual_learning.md)
 
 </div>
 

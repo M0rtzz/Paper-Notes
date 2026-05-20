@@ -147,9 +147,9 @@ QUART 在所有任务上均超越 baseline，尤其在高难度任务（Crawl/Un
 
 - [\[ICCV 2025\] VQ-VLA: Improving Vision-Language-Action Models via Scaling Vector-Quantized Action Tokenizers](../../ICCV2025/multimodal_vlm/vq-vla_improving_vision-language-action_models_via_scaling_vector-quantized_acti.md)
 - [\[NeurIPS 2025\] VLA-Cache: Efficient Vision-Language-Action Manipulation via Adaptive Token Caching](../../NeurIPS2025/multimodal_vlm/vla-cache_efficient_vision-language-action_manipulation_via_adaptive_token_cachi.md)
+- [\[ICML 2026\] Latent Reasoning VLA: Latent Thinking and Prediction for Vision-Language-Action Models](../../ICML2026/multimodal_vlm/latent_reasoning_vla_latent_thinking_and_prediction_for_vision-language-action_m.md)
 - [\[CVPR 2026\] AVA-VLA: Improving Vision-Language-Action models with Active Visual Attention](../../CVPR2026/multimodal_vlm/ava_vla_improving_vision_language_action_models_with_active_visual_attention.md)
 - [\[ICCV 2025\] CoA-VLA: Improving Vision-Language-Action Models via Visual-Textual Chain-of-Affordance](../../ICCV2025/multimodal_vlm/coavla_improving_visionlanguageaction_models_via_visualtext.md)
-- [\[CVPR 2026\] From Observation to Action: Latent Action-based Primitive Segmentation for VLA Pre-training in Industrial Settings](../../CVPR2026/multimodal_vlm/from_observation_to_action_latent_action-based_primitive_segmentation_for_vla_pr.md)
 
 </div>
 

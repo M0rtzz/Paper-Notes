@@ -126,7 +126,7 @@ Siamese 架构：左塔处理原始序列做下游任务，右塔处理掩码序
 - [\[AAAI 2026\] Explanation-Preserving Augmentation for Semi-Supervised Graph Representation Learning](../../AAAI2026/self_supervised/explanation-preserving_augmentation_for_semi-supervised_graph_representation_lea.md)
 - [\[ECCV 2024\] Self-supervised Video Copy Localization with Regional Token Representation](../../ECCV2024/self_supervised/self-supervised_video_copy_localization_with_regional_token_representation.md)
 - [\[NeurIPS 2025\] Adv-SSL: Adversarial Self-Supervised Representation Learning with Theoretical Guarantees](adv-ssl_adversarial_self-supervised_representation_learning_with_theoretical_gua.md)
-- [\[ICCV 2025\] Always Skip Attention](../../ICCV2025/self_supervised/always_skip_attention.md)
+- [\[ICLR 2026\] Gradient-Sign Masking for Task Vector Transport Across Pre-Trained Models](../../ICLR2026/self_supervised/gradient-sign_masking_for_task_vector_transport_across_pre-trained_models.md)
 
 </div>
 

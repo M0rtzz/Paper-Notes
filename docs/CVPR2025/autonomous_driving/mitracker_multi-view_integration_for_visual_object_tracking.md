@@ -125,7 +125,7 @@ $$L_{track} = L_{cls} + \lambda_{giou}L_{giou} + \lambda_{L_1}L_1 + \lambda_{bev
 - [\[ICCV 2025\] EVT: Efficient View Transformation for Multi-Modal 3D Object Detection](../../ICCV2025/autonomous_driving/evt_efficient_view_transformation_for_multi-modal_3d_object_detection.md)
 - [\[CVPR 2025\] ZeroVO: Visual Odometry with Minimal Assumptions](zerovo_visual_odometry_with_minimal_assumptions.md)
 - [\[ECCV 2024\] OPEN: Object-wise Position Embedding for Multi-view 3D Object Detection](../../ECCV2024/autonomous_driving/open_object-wise_position_embedding_for_multi-view_3d_object_detection.md)
-- [\[ECCV 2024\] FSD-BEV: Foreground Self-Distillation for Multi-View 3D Object Detection](../../ECCV2024/autonomous_driving/fsd-bev_foreground_self-distillation_for_multi-view_3d_object_detection.md)
+- [\[ECCV 2024\] Weakly Supervised 3D Object Detection via Multi-Level Visual Guidance](../../ECCV2024/autonomous_driving/weakly_supervised_3d_object_detection_via_multi-level_visual_guidance.md)
 
 </div>
 

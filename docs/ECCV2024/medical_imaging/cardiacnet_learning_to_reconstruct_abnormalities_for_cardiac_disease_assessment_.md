@@ -153,8 +153,8 @@ CDD 包含两个判别器确保重建结果的时空一致性：
 ## 相关论文
 
 - [\[NeurIPS 2025\] Care-PD: A Multi-Site Anonymized Clinical Dataset for Parkinson's Disease Gait Assessment](../../NeurIPS2025/medical_imaging/care-pd_a_multi-site_anonymized_clinical_dataset_for_parkinsons_disease_gait_ass.md)
-- [\[CVPR 2026\] Deep Learning-based Assessment of the Relation Between the Third Molar and Mandibular Canal on Panoramic Radiographs using Local, Centralized, and Federated Learning](../../CVPR2026/medical_imaging/deep_learningbased_assessment_of_the_relation_betw.md)
 - [\[AAAI 2026\] Unsupervised Motion-Compensated Decomposition for Cardiac MRI Reconstruction via Neural Representation](../../AAAI2026/medical_imaging/unsupervised_motion-compensated_decomposition_for_cardiac_mri_reconstruction_via.md)
+- [\[CVPR 2026\] Deep Learning-based Assessment of the Relation Between the Third Molar and Mandibular Canal on Panoramic Radiographs using Local, Centralized, and Federated Learning](../../CVPR2026/medical_imaging/deep_learningbased_assessment_of_the_relation_betw.md)
 - [\[AAAI 2026\] CountVid: Open-World Object Counting in Videos](../../AAAI2026/medical_imaging/open-world_object_counting_in_videos.md)
 - [\[AAAI 2026\] From Policy to Logic for Efficient and Interpretable Coverage Assessment](../../AAAI2026/medical_imaging/from_policy_to_logic_for_efficient_and_interpretable_coverage_assessment.md)
 

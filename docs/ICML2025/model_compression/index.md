@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 模型压缩方向70篇论文解读
+  ICML2025 模型压缩方向69篇论文解读
 description: >-
-  70篇ICML2025的模型压缩方向论文解读，涵盖 LLM、模型压缩、压缩/编码、知识蒸馏、持续学习、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  69篇ICML2025的模型压缩方向论文解读，涵盖 LLM、模型压缩、压缩/编码、知识蒸馏、持续学习、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2025"
   - "模型压缩"
@@ -12,17 +12,17 @@ tags:
   - "压缩/编码"
   - "知识蒸馏"
   - "持续学习"
-  - "推理"
+  - "Agent"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**🧪 ICML2025** · **70** 篇论文解读
+**🧪 ICML2025** · **69** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (42)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (50)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (90)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (54)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (137)](../../NeurIPS2025/model_compression/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/model_compression/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (21)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (49)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (50)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (90)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (53)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (134)](../../NeurIPS2025/model_compression/index.md)
 
-🔥 **高频主题：** LLM ×19 · 模型压缩 ×15 · 压缩/编码 ×7 · 知识蒸馏 ×3 · 持续学习 ×3
+🔥 **高频主题：** LLM ×18 · 模型压缩 ×15 · 压缩/编码 ×7 · 知识蒸馏 ×3 · 持续学习 ×3
 
 **[A Mathematical Framework for AI-Human Integration in Work](a_mathematical_framework_for_ai-human_integration_in_work.md)**
 
@@ -83,10 +83,6 @@ tags:
 **[DLP: Dynamic Layerwise Pruning in Large Language Models](dlp_dynamic_layerwise_pruning_in_large_language_models.md)**
 
 :   提出动态层级剪枝方法 DLP，利用权重与激活值的中位数自适应计算每层的相对重要性，按"越重要稀疏率越低"的原则进行非均匀剪枝，在 70% 高稀疏率下将 LLaMA2-7B 的困惑度降低 7.79、平均零样本准确率提升 2.7%。
-
-**[DRAGON: Guard LLM Unlearning in Context via Negative Detection and Reasoning](dragon_guard_llm_unlearning_in_context_via_negative_detection_and_reasoning.md)**
-
-:   提出 DRAGON，一种无需微调的 LLM 遗忘框架，通过双层检测模块识别需遗忘的 prompt，再由 CoT guard 模型生成推理指令做上下文干预，在不修改模型参数的前提下实现高效遗忘。
 
 **[Efficient Logit-based Knowledge Distillation of Deep Spiking Neural Networks for Full-Range Timestep Deployment](efficient_logit-based_knowledge_distillation_of_deep_spiking_neural_networks_for.md)**
 

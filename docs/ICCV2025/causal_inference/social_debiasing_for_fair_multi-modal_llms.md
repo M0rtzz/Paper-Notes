@@ -140,8 +140,8 @@ tags:
 - [\[ICML 2025\] MPF: Aligning and Debiasing Language Models post Deployment via Multi Perspective Fusion](../../ICML2025/causal_inference/mpf_aligning_and_debiasing_language_models_post_deployment_via_multi_perspective.md)
 - [\[NeurIPS 2025\] Few-Shot Knowledge Distillation of LLMs With Counterfactual Explanations](../../NeurIPS2025/causal_inference/few-shot_knowledge_distillation_of_llms_with_counterfactual_explanations.md)
 - [\[ACL 2026\] Cross-Modal Taxonomic Generalization in (Vision-) Language Models](../../ACL2026/causal_inference/cross-modal_taxonomic_generalization_in_vision-_language_models.md)
+- [\[ACL 2026\] The Proxy Presumption: From Semantic Embeddings to Valid Social Measures](../../ACL2026/causal_inference/the_proxy_presumption_from_semantic_embeddings_to_valid_social_measures.md)
 - [\[NeurIPS 2025\] A Principle of Targeted Intervention for Multi-Agent Reinforcement Learning](../../NeurIPS2025/causal_inference/a_principle_of_targeted_intervention_for_multi-agent_reinforcement_learning.md)
-- [\[ICLR 2026\] On the Eligibility of LLMs for Counterfactual Reasoning: A Decompositional Study](../../ICLR2026/causal_inference/on_the_eligibility_of_llms_for_counterfactual_reasoning_a_decompositional_study.md)
 
 </div>
 

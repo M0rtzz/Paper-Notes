@@ -134,8 +134,8 @@ tags:
 - [\[NeurIPS 2025\] Discovering Transformer Circuits via a Hybrid Attribution and Pruning Framework](discovering_transformer_circuits_via_a_hybrid_attribution_and_pruning_framework.md)
 - [\[CVPR 2026\] From Weights to Concepts: Data-Free Interpretability of CLIP via Singular Vector Decomposition](../../CVPR2026/interpretability/from_weights_to_concepts_data-free_interpretability_of_clip_via_singular_vector_.md)
 - [\[NeurIPS 2025\] Why Is Attention Sparse in Particle Transformer?](why_is_attention_sparse_in_particle_transformer.md)
-- [\[NeurIPS 2025\] MoPFormer: Motion-Primitive Transformer for Wearable-Sensor Activity Recognition](mopformer_motion-primitive_transformer_for_wearable-sensor_activity_recognition.md)
 - [\[NeurIPS 2025\] Beyond Token Probes: Hallucination Detection via Activation Tensors with ACT-ViT](beyond_token_probes_hallucination_detection_via_activation_tensors_with_act-vit.md)
+- [\[NeurIPS 2025\] MoPFormer: Motion-Primitive Transformer for Wearable-Sensor Activity Recognition](mopformer_motion-primitive_transformer_for_wearable-sensor_activity_recognition.md)
 
 </div>
 

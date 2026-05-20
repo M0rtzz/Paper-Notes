@@ -15,7 +15,7 @@ tags:
 
 **🧪 ICML2025** · **6** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (1)](../../CVPR2026/physics/index.md) · [🔬 ICLR2026 (2)](../../ICLR2026/physics/index.md) · [🤖 AAAI2026 (2)](../../AAAI2026/physics/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/physics/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/physics/index.md) · [📷 CVPR2025 (1)](../../CVPR2025/physics/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/physics/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/physics/index.md) · [🔬 ICLR2026 (2)](../../ICLR2026/physics/index.md) · [🤖 AAAI2026 (2)](../../AAAI2026/physics/index.md) · [🧠 NeurIPS2025 (19)](../../NeurIPS2025/physics/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/physics/index.md)
 
 **[Compact Matrix Quantum Group Equivariant Neural Networks](compact_matrix_quantum_group_equivariant_neural_networks.md)**
 

@@ -18,7 +18,7 @@ tags:
 
 **📷 CVPR2026** · **5** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (3)](../../ACL2026/signal_comm/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/signal_comm/index.md) · [🤖 AAAI2026 (3)](../../AAAI2026/signal_comm/index.md) · [🧠 NeurIPS2025 (13)](../../NeurIPS2025/signal_comm/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/signal_comm/index.md) · [🧪 ICML2025 (6)](../../ICML2025/signal_comm/index.md)
+📌 **同领域跨会议浏览：** [🔬 ICLR2026 (8)](../../ICLR2026/signal_comm/index.md) · [🤖 AAAI2026 (3)](../../AAAI2026/signal_comm/index.md) · [🧠 NeurIPS2025 (12)](../../NeurIPS2025/signal_comm/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/signal_comm/index.md) · [🧪 ICML2025 (5)](../../ICML2025/signal_comm/index.md) · [💬 ACL2025 (1)](../../ACL2025/signal_comm/index.md)
 
 🔥 **高频主题：** 多模态 ×2
 

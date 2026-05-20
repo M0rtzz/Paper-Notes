@@ -133,7 +133,7 @@ MEMIT 等方法的闭式解为 $\hat{W} = W_0 + (V_E - W_0 K_E) K_E^T (\lambda C
 - [\[NeurIPS 2025\] MEMOIR: Lifelong Model Editing with Minimal Overwrite and Informed Retention for LLMs](../../NeurIPS2025/knowledge_editing/memoir_lifelong_model_editing_with_minimal_overwrite_and_informed_retention_for_.md)
 - [\[ACL 2025\] Context-Robust Knowledge Editing for Language Models](context-robust_knowledge_editing_for_language_models.md)
 - [\[ACL 2025\] Towards a Principled Evaluation of Knowledge Editors](towards_a_principled_evaluation_of_knowledge_editors.md)
-- [\[ACL 2025\] SAKE: Steering Activations for Knowledge Editing](sake_steering_activations_for_knowledge_editing.md)
+- [\[NeurIPS 2025\] Rethinking Residual Distribution in Locate-then-Edit Model Editing](../../NeurIPS2025/knowledge_editing/rethinking_residual_distribution_in_locate-then-edit_model_editing.md)
 
 </div>
 

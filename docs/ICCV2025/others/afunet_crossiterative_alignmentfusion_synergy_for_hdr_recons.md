@@ -112,8 +112,8 @@ tags:
 ## 相关论文
 
 - [\[ICCV 2025\] AdaptiveAE: An Adaptive Exposure Strategy for HDR Capturing in Dynamic Scenes](adaptiveae_an_adaptive_exposure_strategy_for_hdr_capturing_i.md)
-- [\[ECCV 2024\] Intrinsic Single-Image HDR Reconstruction](../../ECCV2024/others/intrinsic_single-image_hdr_reconstruction.md)
 - [\[ACL 2025\] Towards Style Alignment in Cross-Cultural Translation](../../ACL2025/others/towards_style_alignment_in_cross-cultural_translation.md)
+- [\[ECCV 2024\] Intrinsic Single-Image HDR Reconstruction](../../ECCV2024/others/intrinsic_single-image_hdr_reconstruction.md)
 - [\[ICCV 2025\] Revisiting Image Fusion for Multi-Illuminant White-Balance Correction](revisiting_image_fusion_for_multi-illuminant_white-balance_correction.md)
 - [\[ACL 2025\] ALGEN: Few-Shot Inversion Attacks on Textual Embeddings via Cross-Model Alignment](../../ACL2025/others/algen_few-shot_inversion_attacks_on_textual_embeddings_via_cross-model_alignment.md)
 

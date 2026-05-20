@@ -140,7 +140,7 @@ SELDON是一个定制化VAE：输入为多波段（u,g,r,i,z,y）稀疏不规则
 - [\[AAAI 2026\] Counterfactual Explainable AI (XAI) Method for Deep Learning-Based Multivariate Time Series Classification](counterfactual_explainable_ai_xai_method_for_deep_learning-based_multivariate_ti.md)
 - [\[AAAI 2026\] Urban Incident Prediction with Graph Neural Networks: Integrating Government Ratings and Crowdsourced Reports](urban_incident_prediction_with_graph_neural_networks_integrating_government_rati.md)
 - [\[CVPR 2025\] FLAVC: Learned Video Compression with Feature Level Attention](../../CVPR2025/time_series/flavc_learned_video_compression_with_feature_level_attention.md)
-- [\[CVPR 2025\] DejaVid: Encoder-Agnostic Learned Temporal Matching for Video Classification](../../CVPR2025/time_series/dejavid_encoder-agnostic_learned_temporal_matching_for_video_classification.md)
+- [\[ICLR 2026\] Weight-Space Linear Recurrent Neural Networks](../../ICLR2026/time_series/weight-space_linear_recurrent_neural_networks.md)
 
 </div>
 

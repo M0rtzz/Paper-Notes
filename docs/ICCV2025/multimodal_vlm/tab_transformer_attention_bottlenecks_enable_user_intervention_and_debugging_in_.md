@@ -159,7 +159,7 @@ ZeroAttention将所有输出变为"无变化"（变化准确率降为0%，无变
 - [\[ICCV 2025\] MaTVLM: Hybrid Mamba-Transformer for Efficient Vision-Language Modeling](matvlm_hybrid_mamba-transformer_for_efficient_vision-language_modeling.md)
 - [\[ICCV 2025\] Dita: Scaling Diffusion Transformer for Generalist Vision-Language-Action Policy](dita_scaling_diffusion_transformer_for_generalist_visionlang.md)
 - [\[ICCV 2025\] Mitigating Object Hallucinations via Sentence-Level Early Intervention](mitigating_object_hallucinations_via_sentence-level_early_intervention.md)
-- [\[CVPR 2025\] CleanSight: Test-Time Attention Purification for Backdoored Large Vision Language Models](../../CVPR2025/multimodal_vlm/test-time_attention_purification_for_backdoored_large_vision_language_models.md)
+- [\[ECCV 2024\] REVISION: Rendering Tools Enable Spatial Fidelity in Vision-Language Models](../../ECCV2024/multimodal_vlm/revision_rendering_tools_enable_spatial_fidelity_in_vision-language_models.md)
 
 </div>
 

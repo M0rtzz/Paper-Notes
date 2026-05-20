@@ -13,7 +13,7 @@ tags:
   - "SPARC"
 ---
 
-# SPARC: 用单一策略驾驶100辆未见车辆的OOD泛化
+# Out-of-Distribution Generalization with a SPARC: Racing 100 Unseen Vehicles with a Single Policy
 
 **会议**: AAAI 2026  
 **arXiv**: [2511.09737](https://arxiv.org/abs/2511.09737)  
@@ -127,11 +127,11 @@ SPARC 的核心洞察：**将两阶段合并为单阶段同时训练，上下文
 
 ## 相关论文
 
-- [\[AAAI 2026\] LiDARCrafter: Dynamic 4D World Modeling from LiDAR Sequences](lidarcrafter_dynamic_4d_world_modeling_from_lidar_sequences.md)
-- [\[AAAI 2026\] FastDriveVLA: Efficient End-to-End Driving via Plug-and-Play Reconstruction-based Token Pruning](fastdrivevla_efficient_end-to-end_driving_via_plug-and-play_.md)
-- [\[AAAI 2026\] FQ-PETR: Fully Quantized Position Embedding Transformation for Multi-View 3D Object Detection](fq-petr_fully_quantized_position_embedding_transformation_fo.md)
-- [\[AAAI 2026\] STRIDE-QA: Visual Question Answering Dataset for Spatiotemporal Reasoning in Urban Driving Scenes](stride-qa_visual_question_answering_dataset_for_spatiotemporal_reasoning_in_urba.md)
-- [\[AAAI 2026\] SparseCoop: Cooperative Perception with Kinematic-Grounded Queries](sparsecoop_cooperative_perception_with_kinematic-grounded_queries.md)
+- [\[CVPR 2026\] Neural Distribution Prior for LiDAR Out-of-Distribution Detection](../../CVPR2026/autonomous_driving/neural_distribution_prior_for_lidar_ood_detection.md)
+- [\[CVPR 2026\] ProOOD: Prototype-Guided Out-of-Distribution 3D Occupancy Prediction](../../CVPR2026/autonomous_driving/proood_prototype-guided_out-of-distribution_3d_occupancy_prediction.md)
+- [\[AAAI 2026\] Beta Distribution Learning for Reliable Roadway Crash Risk Assessment](beta_distribution_learning_for_reliable_roadway_crash_risk_a.md)
+- [\[CVPR 2026\] FedBPrompt: Federated Domain Generalization Person Re-Identification via Body Distribution Aware Visual Prompts](../../CVPR2026/autonomous_driving/fedbprompt_federated_domain_generalization_person_re-identification_via_body_dis.md)
+- [\[NeurIPS 2025\] Extremely Simple Multimodal Outlier Synthesis for Out-of-Distribution Detection and Segmentation](../../NeurIPS2025/autonomous_driving/extremely_simple_multimodal_outlier_synthesis_for_out-of-distribution_detection_.md)
 
 </div>
 

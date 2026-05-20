@@ -151,8 +151,8 @@ tags:
 
 - [\[ACL 2025\] AkaCE: A Multimodal Multi-party Dataset for Emotion Recognition in Movie Dialogues](akan_cinematic_emotions_ace_a_multimodal_multi-party_dataset_for_emotion_recogni.md)
 - [\[ACL 2025\] Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach](multimodal_coreference_resolution_for_chinese_social_media_dialogues_dataset_and.md)
-- [\[ACL 2025\] Filter-And-Refine: A MLLM Based Cascade System for Industrial-Scale Video Content Moderation](filter-and-refine_a_mllm_based_cascade_system_for_industrial-scale_video_content.md)
 - [\[ACL 2025\] GODBench: A Benchmark for Multimodal Large Language Models in Video Comment Art](godbench_a_benchmark_for_multimodal_large_language_models_in_video_comment_art.md)
+- [\[ACL 2025\] Filter-And-Refine: A MLLM Based Cascade System for Industrial-Scale Video Content Moderation](filter-and-refine_a_mllm_based_cascade_system_for_industrial-scale_video_content.md)
 - [\[ACL 2025\] ViGiL3D: A Linguistically Diverse Dataset for 3D Visual Grounding](vigil3d_a_linguistically_diverse_dataset_for_3d_visual_grounding.md)
 
 </div>

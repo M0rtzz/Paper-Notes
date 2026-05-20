@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 自监督/表示学习方向33篇论文解读
+  NeurIPS2025 自监督/表示学习方向32篇论文解读
 description: >-
-  33篇NeurIPS2025的自监督/表示学习方向论文解读，涵盖自监督学习、对抗鲁棒、持续学习、推理、少样本学习、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  32篇NeurIPS2025的自监督/表示学习方向论文解读，涵盖自监督学习、对抗鲁棒、持续学习、推理、少样本学习、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "自监督/表示学习"
@@ -19,9 +19,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔄 自监督/表示学习
 
-**🧠 NeurIPS2025** · **33** 篇论文解读
+**🧠 NeurIPS2025** · **32** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (2)](../../ACL2026/self_supervised/index.md) · [📷 CVPR2026 (30)](../../CVPR2026/self_supervised/index.md) · [🔬 ICLR2026 (14)](../../ICLR2026/self_supervised/index.md) · [🤖 AAAI2026 (14)](../../AAAI2026/self_supervised/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/self_supervised/index.md) · [🧪 ICML2025 (24)](../../ICML2025/self_supervised/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (9)](../../ICML2026/self_supervised/index.md) · [📷 CVPR2026 (30)](../../CVPR2026/self_supervised/index.md) · [🔬 ICLR2026 (14)](../../ICLR2026/self_supervised/index.md) · [🤖 AAAI2026 (13)](../../AAAI2026/self_supervised/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/self_supervised/index.md) · [🧪 ICML2025 (24)](../../ICML2025/self_supervised/index.md)
 
 🔥 **高频主题：** 自监督学习 ×5
 
@@ -40,10 +40,6 @@ tags:
 **[Asymptotic and Finite-Time Guarantees for Langevin-Based Temperature Annealing in InfoNCE](asymptotic_and_finite-time_guarantees_for_langevin-based_temperature_annealing_i.md)**
 
 :   本文通过将嵌入演化建模为紧致黎曼流形上的 Langevin 动力学，证明了经典模拟退火的收敛保证可以扩展到对比学习的温度调度设定中：缓慢对数逆温度调度保证概率收敛到全局最优表示集合，而更快的调度则可能陷入次优极小值。
-
-**[BrainOmni: A Brain Foundation Model for Unified EEG and MEG Signals](brainomni_a_brain_foundation_model_for_unified_eeg_and_meg_signals.md)**
-
-:   提出 BrainOmni——首个统一 EEG 和 MEG 的脑信号基础模型，通过 BrainTokenizer（含物理传感器编码器）将异构脑电/脑磁信号离散化为统一 token，再用 Criss-Cross Transformer 进行自监督掩码预测预训练，在阿尔茨海默病检测上提升 11.7 个百分点，并实现对完全未见设备的零样本重建泛化。
 
 **[Connecting Jensen-Shannon and Kullback-Leibler Divergences: A New Bound for Representation Learning](connecting_jensenshannon_and_kullbackleibler_divergences_a_n.md)**
 

@@ -152,8 +152,8 @@ FiDeSR 基于 SD 2.1-base，采用 LoRA 微调的单步扩散框架：
 - [\[CVPR 2026\] Disentangled Textual Priors for Diffusion-based Image Super-Resolution](disentangled_textual_priors_for_diffusion-based_image_super-resolution.md)
 - [\[CVPR 2025\] Detail-Preserving Latent Diffusion for Stable Shadow Removal](../../CVPR2025/image_restoration/detail-preserving_latent_diffusion_for_stable_shadow_removal.md)
 - [\[CVPR 2025\] One-Step Event-Driven High-Speed Autofocus](../../CVPR2025/image_restoration/one-step_event-driven_high-speed_autofocus.md)
-- [\[ECCV 2024\] You Only Need One Step: Fast Super-Resolution with Stable Diffusion via Scale Distillation](../../ECCV2024/image_restoration/you_only_need_one_step_fast_super-resolution_with_stable_diffusion_via_scale_dis.md)
 - [\[CVPR 2026\] Statistical Characteristic-Guided Denoising for Rapid High-Resolution Transmission Electron Microscopy Imaging](statistical_characteristic-guided_denoising_for_rapid_high-resolution_transmissi.md)
+- [\[CVPR 2026\] Bridging the Perception Gap in Image Super-Resolution Evaluation](bridging_the_perception_gap_in_image_super-resolution_evaluation.md)
 
 </div>
 

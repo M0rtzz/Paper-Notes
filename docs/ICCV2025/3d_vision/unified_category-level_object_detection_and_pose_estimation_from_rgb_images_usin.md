@@ -141,8 +141,8 @@ tags:
 - [\[ECCV 2024\] Omni6D: Large-Vocabulary 3D Object Dataset for Category-Level 6D Object Pose Estimation](../../ECCV2024/3d_vision/omni6d_large-vocabulary_3d_object_dataset_for_category-level_6d_object_pose_esti.md)
 - [\[ICCV 2025\] BoxDreamer: Dreaming Box Corners for Generalizable Object Pose Estimation](boxdreamer_dreaming_box_corners_for_generalizable_object_pose_estimation.md)
 - [\[NeurIPS 2025\] SingRef6D: Monocular Novel Object Pose Estimation with a Single RGB Reference](../../NeurIPS2025/3d_vision/singref6d_monocular_novel_object_pose_estimation_with_a_single_rgb_reference.md)
+- [\[CVPR 2025\] Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection](../../CVPR2025/3d_vision/learning_class_prototypes_for_unified_sparse-supervised_3d_object_detection.md)
 - [\[ICCV 2025\] A Unified Interpretation of Training-Time Out-of-Distribution Detection](a_unified_interpretation_of_training-time_out-of-distribution_detection.md)
-- [\[ICCV 2025\] UPP: Unified Point-Level Prompting for Robust Point Cloud Analysis](upp_unified_point-level_prompting_for_robust_point_cloud_analysis.md)
 
 </div>
 

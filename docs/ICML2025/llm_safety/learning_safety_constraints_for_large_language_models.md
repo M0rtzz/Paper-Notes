@@ -222,10 +222,10 @@ Xin Chen, Yarden As, Andreas Krause. **Learning Safety Constraints for Large Lan
 ## 相关论文
 
 - [\[ACL 2025\] ReLearn: Unlearning via Learning for Large Language Models](../../ACL2025/llm_safety/relearn_unlearning_via_learning_for_large_language_models.md)
+- [\[ICML 2025\] Safety Alignment Can Be Not Superficial With Explicit Safety Signals](safety_alignment_can_be_not_superficial_with_explicit_safety_signals.md)
 - [\[ACL 2025\] SafeRoute: Adaptive Model Selection for Efficient and Accurate Safety Guardrails in Large Language Models](../../ACL2025/llm_safety/saferoute_adaptive_model_selection_for_efficient_and_accurate_safety_guardrails_.md)
 - [\[ICML 2025\] CROW: Eliminating Backdoors from Large Language Models via Internal Consistency Regularization](crow_eliminating_backdoors_from_large_language_models_via_internal_consistency_r.md)
-- [\[NeurIPS 2025\] ALMGuard: Safety Shortcuts and Where to Find Them as Guardrails for Audio-Language Models](../../NeurIPS2025/llm_safety/almguard_safety_shortcuts_and_where_to_find_them_as_guardrails_for_audio-languag.md)
-- [\[ACL 2025\] ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](../../ACL2025/llm_safety/elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)
+- [\[CVPR 2025\] Hyperbolic Safety-Aware Vision-Language Models](../../CVPR2025/llm_safety/hyperbolic_safety-aware_vision-language_models.md)
 
 </div>
 

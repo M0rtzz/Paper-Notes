@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 可解释性方向86篇论文解读
+  NeurIPS2025 可解释性方向84篇论文解读
 description: >-
-  86篇NeurIPS2025的可解释性方向论文解读，涵盖推理、LLM、多模态、模型压缩、布局/合成、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  84篇NeurIPS2025的可解释性方向论文解读，涵盖推理、LLM、多模态、模型压缩、布局/合成、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "可解释性"
@@ -19,9 +19,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**🧠 NeurIPS2025** · **86** 篇论文解读
+**🧠 NeurIPS2025** · **84** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (56)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md) · [🧪 ICML2025 (33)](../../ICML2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (21)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (51)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
 
 🔥 **高频主题：** 推理 ×10 · LLM ×10 · 多模态 ×4 · 模型压缩 ×3 · 布局/合成 ×3
 
@@ -205,10 +205,6 @@ tags:
 
 :   揭示了不确定性校准（模型置信度与实际准确率的对齐）与扰动式可解释性方法质量之间的根本联系，证明模型在扰动输入下的误校准直接损害全局和局部解释质量，并提出 ReCalX 通过扰动级别自适应温度缩放显著改善解释的鲁棒性和保真度。
 
-**[Interpretable Next-token Prediction via the Generalized Induction Head](interpretable_next-token_prediction_via_the_generalized_induction_head.md)**
-
-:   提出 Induction-Gram (GIM)，一种结合精确n-gram匹配与模糊匹配的可解释语言模型，通过构建"广义归纳头"在输入上下文中检索相似序列进行下一token预测，比可解释基线提升最高25%p准确率，并在fMRI脑响应预测中提升20%。
-
 **[Knowing When to Stop: Efficient Context Processing via Latent Sufficiency Signals](knowing_when_to_stop_efficient_context_processing_via_latent_sufficiency_signals.md)**
 
 :   本文提出 dynamic context cutoff，通过探测 Transformer 特定注意力头中编码的"信息充分性信号"，训练轻量分类器判断模型何时已获取足够上下文，实现提前终止处理，在6个QA数据集上平均提高3.4%准确率同时减少1.33×token消耗。
@@ -292,10 +288,6 @@ tags:
 **[Steering Information Utility in Key-Value Memory for Language Model Post-Training](steering_information_utility_in_key-value_memory_for_language_model_post-trainin.md)**
 
 :   提出 InfoSteer，一种轻量级方法，将 Transformer 的 FFN 层视为关联键值记忆，通过前向传播干预（提升低活跃记忆向量的 key coefficient）和反向传播正则化（最大化 key 分布熵）来促进预训练知识在后训练阶段的充分利用。在 Qwen/LLaMA/Gemma 三个系列 6 个模型上，15 个 ID+OOD 任务一致提升，且被引导的 LM 展现出自适应信息分配行为。
-
-**[SynBrain: Enhancing Visual-to-fMRI Synthesis via Probabilistic Representation Learning](synbrain_enhancing_visual-to-fmri_synthesis_via_probabilistic_representation_lea.md)**
-
-:   提出 SynBrain 框架，通过 BrainVAE 将 fMRI 响应建模为视觉语义条件的概率分布，并用 S2N Mapper 实现一步式语义到神经空间的映射，在视觉-fMRI 合成任务上显著超越 MindSimulator（MSE 降低 65%，Pearson 提升 96%），且合成的 fMRI 可有效增强少样本跨被试解码性能。
 
 **[Table as a Modality for Large Language Models](table_as_a_modality_for_large_language_models.md)**
 

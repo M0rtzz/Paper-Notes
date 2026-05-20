@@ -148,11 +148,11 @@ Teacher: GLM-4-9b-chat, Student: Llama-7b / Llama-3.2-1b。水印方案: KGW (n=
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders](../../NeurIPS2025/llm_safety/saemark_steering_personalized_multilingual_llm_watermarks_with_sparse_autoencode.md)
 - [\[ACL 2025\] Ensemble Watermarks for Large Language Models](ensemble_watermarks_llm.md)
+- [\[NeurIPS 2025\] SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders](../../NeurIPS2025/llm_safety/saemark_steering_personalized_multilingual_llm_watermarks_with_sparse_autoencode.md)
+- [\[NeurIPS 2025\] Distillation Robustifies Unlearning](../../NeurIPS2025/llm_safety/distillation_robustifies_unlearning.md)
 - [\[NeurIPS 2025\] Self-Refining Language Model Anonymizers via Adversarial Distillation](../../NeurIPS2025/llm_safety/self-refining_language_model_anonymizers_via_adversarial_distillation.md)
-- [\[ACL 2025\] Can Indirect Prompt Injection Attacks Be Detected and Removed?](indirect_prompt_injection_detection.md)
-- [\[ACL 2025\] Estimating Privacy Leakage of Augmented Contextual Knowledge in Language Models](estimating_privacy_leakage_of_augmented_contextual_knowledge_in_language_models.md)
+- [\[ACL 2025\] Correcting Hallucinations in News Summaries: Exploration of Self-Correcting LLM Methods with External Knowledge](correcting_hallucinations_in_news_summaries_exploration_of_self-correcting_llm_m.md)
 
 </div>
 

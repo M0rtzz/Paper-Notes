@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 3D 视觉方向359篇论文解读
+  CVPR2025 3D 视觉方向367篇论文解读
 description: >-
-  359篇CVPR2025的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、三维重建、点云、对抗鲁棒、语义分割等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  367篇CVPR2025的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、三维重建、点云、语义分割、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "3D 视觉"
@@ -12,18 +12,18 @@ tags:
   - "扩散模型"
   - "三维重建"
   - "点云"
-  - "对抗鲁棒"
   - "语义分割"
+  - "对抗鲁棒"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**📷 CVPR2025** · **359** 篇论文解读
+**📷 CVPR2025** · **367** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (230)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (63)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (74)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (116)](../../NeurIPS2025/3d_vision/index.md) · [📹 ICCV2025 (254)](../../ICCV2025/3d_vision/index.md) · [🧪 ICML2025 (11)](../../ICML2025/3d_vision/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (8)](../../ICML2026/3d_vision/index.md) · [📷 CVPR2026 (230)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (63)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (76)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (112)](../../NeurIPS2025/3d_vision/index.md) · [📹 ICCV2025 (265)](../../ICCV2025/3d_vision/index.md)
 
-🔥 **高频主题：** 3D 高斯渲染 ×61 · 扩散模型 ×28 · 三维重建 ×18 · 点云 ×16 · 对抗鲁棒 ×14
+🔥 **高频主题：** 3D 高斯渲染 ×61 · 扩散模型 ×27 · 三维重建 ×18 · 点云 ×16 · 语义分割 ×15
 
 **[3D-GRAND: A Million-Scale Dataset for 3D-LLMs with Better Grounding and Less Hallucination](3d-grand_a_million-scale_dataset_for_3d-llms_with_better_grounding_and_less_hall.md)**
 
@@ -467,6 +467,10 @@ tags:
 
 :   FruitNinja 首次提出为 3DGS 物体生成内部纹理的方法，通过渐进式截面修复 + 体素平滑 + OpaqueAtom GS 策略，实现切割后实时渲染无需额外优化，在语义对齐和纹理一致性上显著优于基线。
 
+**[FSHNet: Fully Sparse Hybrid Network for 3D Object Detection](fshnet_fully_sparse_hybrid_network_for_3d_object_detection.md)**
+
+:   FSHNet 提出全稀疏混合网络，通过 SlotFormer（槽分区+线性注意力）建立全局范围的稀疏体素交互，配合动态稀疏标签分配和稀疏上采样模块，在 Waymo、nuScenes、Argoverse2 三大基准上超越现有稀疏和密集检测器。
+
 **[Functionality Understanding and Segmentation in 3D Scenes](functionality_understanding_and_segmentation_in_3d_scenes.md)**
 
 :   Fun3DU 首次提出针对 3D 场景功能性理解的方法，通过 LLM 链式思维解析任务描述 + VLM 多视角分割功能性物体 + 2D-3D 投票聚合，在 SceneFun3D 上大幅超越开放词汇 3D 分割基线（mIoU +13.2）。
@@ -551,6 +555,10 @@ tags:
 
 :   提出一种低成本偏振辅助3D重建方法，仅需在普通RGB相机前加一块线性偏振片，每视角拍摄一张偏振图像（无需校准偏振角），通过神经隐式场端到端优化偏振渲染损失来恢复光泽物体的高保真几何和材质分解。
 
+**[GO-N3RDet: Geometry Optimized NeRF-enhanced 3D Object Detector](go-n3rdet_geometry_optimized_nerf-enhanced_3d_object_detector.md)**
+
+:   提出GO-N3RDet，通过位置信息嵌入的体素优化模块（PEOM）、双重重要性采样（DIS）和不透明度优化模块（OOM）三个协同模块，解决基于NeRF的多视图3D检测中缺乏3D位置信息和场景几何感知不足的问题，在ScanNet和ARKitScenes上建立了新SOTA。
+
 **[GREAT: Geometry-Intention Collaborative Inference for Open-Vocabulary 3D Object Affordance Grounding](great_geometry-intention_collaborative_inference_for_open-vocabulary_3d_object_a.md)**
 
 :   提出 GREAT 框架，通过多头 Affordance Chain-of-Thought (MHACoT) 微调 InternVL 推理交互图像中的物体几何属性和潜在交互意图，形成 affordance 知识字典，并通过跨模态自适应融合模块（CMAFM）将知识注入点云和图像特征，实现开放词汇 3D 物体 affordance 定位。同时构建最大规模 3D affordance 数据集 PIADv2（15K 图像 + 38K 点云）。
@@ -594,6 +602,10 @@ tags:
 **[Hearing Hands: Generating Sounds from Physical Interactions in 3D Scenes](hearing_hands_generating_sounds_from_physical_interactions_in_3d_scenes.md)**
 
 :   本文提出通过在3D重建场景中记录人手交互的动作-声音对，训练基于rectified flow的生成模型，实现从3D手部轨迹预测对应交互声音，生成结果在人类评估中约47%无法与真实声音区分。
+
+**[HeatFormer: A Neural Optimizer for Multiview Human Mesh Recovery](heatformer_a_neural_optimizer_for_multiview_human_mesh_recovery.md)**
+
+:   提出HeatFormer——一种基于Transformer的神经优化器，通过将SMPL参数估计转化为热力图生成与对齐问题，实现对多视角图像中人体形状和姿态的迭代优化恢复，在Human3.6M上达到29.5mm MPJPE的SOTA精度，且对视角数量、相机配置和遮挡具有强鲁棒性。
 
 **[High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)**
 
@@ -691,6 +703,10 @@ tags:
 
 :   提出可学习无穷 Taylor 级数（Learnable Infinite Taylor Formula）建模动态场景中高斯基元的位置/旋转/缩放随时间的演化，用三阶 Taylor 展开捕捉大运动、MLP+LBS 构造 Peano 余项补偿高阶项，实现无近似误差的运动建模，N3DV 和 Technicolor 数据集上超越 SOTA。
 
+**[Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection](learning_class_prototypes_for_unified_sparse-supervised_3d_object_detection.md)**
+
+:   提出首个统一室内外稀疏监督 3D 目标检测方法 CPDet3D，通过类感知原型聚类（跨场景 Sinkhorn-Knopp 最优传输匹配）挖掘未标注物体的类别，再用多标签协同精化（伪标签 + 原型标签）恢复漏检，仅用每场景 1 个标注即达 ScanNet V2 全监督 78% / SUN RGB-D 90% / KITTI 96% 性能。
+
 **[Light3R-SfM: Towards Feed-forward Structure-from-Motion](light3r-sfm_towards_feed-forward_structure-from-motion.md)**
 
 :   Light3R-SfM提出了首个前馈式端到端SfM框架，通过可学习的潜在全局对齐模块替代传统的优化式全局对齐，结合基于检索分数的最短路径树构建场景图，在Tanks&Temples 200图设置下仅需33秒完成重建（比MASt3R-SfM快49倍），同时保持相当的精度。
@@ -723,6 +739,10 @@ tags:
 
 :   Mani-GS 提出了一种基于三角网格操控 3D Gaussian Splatting 的方法——通过在每个三角形上定义局部坐标系来绑定高斯，使得网格变形时高斯的位置、旋转和缩放能自适应调整，从而实现大变形、局部编辑和软体仿真等多种操控类型，同时保持高质量渲染且对网格精度有高容忍度。
 
+**[ManiVideo: Generating Hand-Object Manipulation Video with Dexterous and Generalizable Grasping](manivideo_generating_hand-object_manipulation_video_with_dexterous_and_generaliz.md)**
+
+:   提出多层遮挡（MLO）表示学习 3D 手-物遮挡关系，并将 Objaverse 大规模 3D 物体数据整合进训练，实现首个支持灵巧双手操作 + 可泛化物体外观的手-物操作视频生成框架。
+
 **[MAR-3D: Progressive Masked Auto-regressor for High-Resolution 3D Generation](mar-3d_progressive_masked_auto-regressor_for_high-resolution_3d_generation.md)**
 
 :   提出金字塔 VAE + 级联 MAR（MAR-LR → MAR-HR）的渐进式 3D 生成框架，通过随机遮罩适配 3D token 的无序特性，并用条件增强策略缓解分辨率上扩展时的累计误差，在开源方法中达到 SOTA。
@@ -754,6 +774,10 @@ tags:
 **[Matrix3D: Large Photogrammetry Model All-in-One](matrix3d_large_photogrammetry_model_all-in-one.md)**
 
 :   Matrix3D 提出一个基于多模态扩散 Transformer 的统一摄影测量模型，通过掩码学习策略在单一模型中同时完成位姿估计、深度预测和新视角合成三大任务，在 CO3D 上位姿估计旋转精度达 96.5%，显著超越所有专用方法。
+
+**[MEGA: Masked Generative Autoencoder for Human Mesh Recovery](mega_masked_generative_autoencoder_for_human_mesh_recovery.md)**
+
+:   MEGA 提出了一种基于遮掩生成建模的人体网格恢复方法，通过将人体 mesh 离散化为 token 序列，在自监督预训练后进行图像条件生成，同时支持确定性单次预测和随机多输出生成模式，在两种模式下均达到 SOTA 性能。
 
 **[MegaSaM: Accurate, Fast and Robust Structure and Motion from Casual Dynamic Videos](megasam_accurate_fast_and_robust_structure_and_motion_from_casual_dynamic_videos.md)**
 
@@ -810,6 +834,10 @@ tags:
 **[Morpheus: Text-Driven 3D Gaussian Splat Shape and Color Stylization](morpheus_text-driven_3d_gaussian_splat_shape_and_color_stylization.md)**
 
 :   提出Morpheus，一种自回归3DGS风格化方法，核心贡献包括：(1) 新的RGBD扩散模型实现外观和形状风格化的独立强度控制；(2) Warp ControlNet通过变形合成帧传播风格；(3) 深度引导的特征共享确保多视角一致性。
+
+**[Mosaic3D: Foundation Dataset and Model for Open-Vocabulary 3D Segmentation](mosaic3d_foundation_dataset_and_model_for_open-vocabulary_3d_segmentation.md)**
+
+:   提出自动化数据生成管线构建大规模3D mask-text数据集Mosaic3D-5.6M（5.6M对、30K场景），训练语言对齐3D编码器+mask decoder，实现首个单阶段开放词汇3D实例分割。
 
 **[MoSca: Dynamic Gaussian Fusion from Casual Videos via 4D Motion Scaffolds](mosca_dynamic_gaussian_fusion_from_casual_videos_via_4d_motion_scaffolds.md)**
 
@@ -1031,6 +1059,10 @@ tags:
 
 :   ProbeSDF 重新设计了 SDF 基神经表面重建的外观模型，将空间特征和角度特征解耦存储在不同分辨率的体素网格中，用极少参数（每体素 4 个）和微型 MLP 实现了更好的几何和图像质量，训练仅需 1-2 分钟并支持实时渲染。
 
+**[PromptHMR: Promptable Human Mesh Recovery](prompthmr_promptable_human_mesh_recovery.md)**
+
+:   PromptHMR 提出了一种基于 Transformer 的可提示式人体姿态与形状估计方法，通过空间提示（边界框、分割掩码）和语义提示（语言描述、交互标签）灵活引导全图 3D 人体重建，在多个基准上达到 SOTA 并支持视频版的世界坐标运动估计。
+
 **[ProtoDepth: Unsupervised Continual Depth Completion with Prototypes](protodepth_unsupervised_continual_depth_completion_with_prototypes.md)**
 
 :   ProtoDepth提出基于原型（Prototype）的持续学习方法，通过冻结预训练模型并为每个新域学习轻量原型集来调制隐层特征，在室内和室外场景中将遗忘率降低超过50%。
@@ -1167,6 +1199,10 @@ tags:
 
 :   SCFlow2 提出了一个即插即用的 6D 物体位姿精修框架，将 3D 场景流的刚体运动嵌入引入基于形状约束的循环匹配网络中，并将深度图作为迭代正则化嵌入端到端训练，在 BOP 基准的 7 个数据集上作为后处理一致地提升了 6 个 SOTA 方法的精度，无需任何重新训练。
 
+**[SCOPE: Scene-Contextualized Incremental Few-Shot 3D Segmentation](scope_scene-contextualized_incremental_few-shot_3d_segmentation.md)**
+
+:   SCOPE 提出一个即插即用的背景引导原型富化框架，在基类训练后用类无关分割模型从背景区域挖掘伪实例建立 Instance Prototype Bank (IPB)，当新类别以少样本方式出现时，通过 Contextual Prototype Retrieval (CPR) 和 Attention-Based Prototype Enrichment (APE) 融合背景原型与少样本原型，在 ScanNet/S3DIS 上新类 IoU 提升最高 6.98%。
+
 **[SeeGround: See and Ground for Zero-Shot Open-Vocabulary 3D Visual Grounding](seeground_see_and_ground_for_zero-shot_open-vocabulary_3d_visual_grounding.md)**
 
 :   本文提出 SeeGround，一个免训练的零样本 3D 视觉定位框架，通过将 3D 场景表示为查询对齐的渲染图像和空间增强文本描述的混合形式，利用 2D 视觉语言模型实现了在 ScanRefer 上超越之前零样本方法 7.7% 的精度。
@@ -1219,10 +1255,6 @@ tags:
 
 :   发现INR权重空间呈高斯分布这一关键性质，基于压缩感知理论用随机感知矩阵将权重向量转换为高维稀疏编码，实现了不依赖量化方案的基础性INR压缩，可与任何现有INR压缩方法叠加使用。
 
-**[SIR-DIFF: Sparse Image Sets Restoration with Multi-View Diffusion Model](sir-diff_sparse_image_sets_restoration_with_multi-view_diffusion_model.md)**
-
-:   提出 SIR-Diff，一种多视角扩散模型，通过联合去噪多张同场景退化图像来实现跨视角一致的图像修复，利用 Spatial-3D ResNet 和 3D 自注意力 Transformer 融合多视角互补信息，在去模糊和超分辨率任务上超越单视角和视频修复方法。
-
 **[Sketchy Bounding-Box Supervision for 3D Instance Segmentation](sketchy_bounding-box_supervision_for_3d_instance_segmentation.md)**
 
 :   提出 Sketchy-3DIS 框架，首次将不精确（sketchy）的3D包围盒标注引入弱监督3D实例分割，通过自适应 box-to-point 伪标签生成器和粗到精实例分割器的联合训练，在 ScanNetV2 和 S3DIS 上达到 SOTA，甚至超越部分全监督方法。
@@ -1242,6 +1274,10 @@ tags:
 **[SoundVista: Novel-View Ambient Sound Synthesis via Visual-Acoustic Binding](soundvista_novel-view_ambient_sound_synthesis_via_visual-acoustic_binding.md)**
 
 :   SoundVista 提出了一种从稀疏分布式麦克风录音合成任意新视角环境声的方法，通过视觉-声学绑定（VAB）模块从全景 RGB-D 数据推断声学属性，优化参考麦克风布局，并用 Transformer 自适应加权参考录音的贡献，在模拟和真实场景上均显著超越现有方法。
+
+**[SP3D: Boosting Sparsely-Supervised 3D Object Detection via Accurate Cross-Modal Semantic Prompts](sp3d_boosting_sparsely-supervised_3d_object_detection_via_accurate_cross-modal_s.md)**
+
+:   提出 SP3D 两阶段训练策略，利用大多模态模型 (LMMs) 生成精确跨模态语义提示，通过动态聚类伪标签生成和分布形状评分，在极低标注率（2%）下大幅提升稀疏监督 3D 目标检测性能。
 
 **[SPAR3D: Stable Point-Aware Reconstruction of 3D Objects from Single Images](spar3d_stable_point-aware_reconstruction_of_3d_objects_from_single_images.md)**
 
@@ -1338,10 +1374,6 @@ tags:
 **[Textured Gaussians for Enhanced 3D Scene Appearance Modeling](textured_gaussians_for_enhanced_3d_scene_appearance_modeling.md)**
 
 :   Textured Gaussians 将传统图形学中的纹理映射和Alpha映射引入 3DGS，为每个高斯体分配独立的 2D RGBA 纹理图，使单个高斯体能表达空间变化的颜色和透明度，大幅提升了3DGS的表达能力——在相同高斯数量下提升渲染质量，在 1% 高斯数量下 PSNR 提升近 2dB。
-
-**[Thin-Shell-SfT: Fine-Grained Monocular Non-Rigid 3D Surface Tracking with Neural Deformation Fields](thin-shell-sft_fine-grained_monocular_non-rigid_3d_surface_tracking_with_neural_.md)**
-
-:   Thin-Shell-SfT 提出了基于连续神经变形场和 Kirchhoff-Love 薄壳物理先验的单目非刚性 3D 表面跟踪方法，结合表面诱导的 3D 高斯泼溅进行可微渲染，实现了前所未有的细粒度褶皱重建精度。
 
 **[Touch2Shape: Touch-Conditioned 3D Diffusion for Shape Exploration and Reconstruction](touch2shape_touch-conditioned_3d_diffusion_for_shape_exploration_and_reconstruct.md)**
 

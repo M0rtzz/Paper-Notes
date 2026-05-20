@@ -145,10 +145,10 @@ SAM FTI-FDet 提出基于轻量 SAM 的自动提示实例分割框架，通过 T
 ## 相关论文
 
 - [\[CVPR 2025\] Foveated Instance Segmentation](foveated_instance_segmentation.md)
-- [\[CVPR 2025\] Mosaic3D: Foundation Dataset and Model for Open-Vocabulary 3D Segmentation](mosaic3d_foundation_dataset_and_model_for_open-vocabulary_3d_segmentation.md)
 - [\[CVPR 2025\] HFP-SAM: Hierarchical Frequency Prompted SAM for Efficient Marine Animal Segmentation](hfp-sam_hierarchical_frequency_prompted_sam_for_efficient_marine_animal_segmenta.md)
 - [\[CVPR 2025\] CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation](crossearth-sar_a_sar-centric_and_billion-scale_geospatial_foundation_model_for_d.md)
 - [\[CVPR 2025\] Task-driven Image Fusion with Learnable Fusion Loss](task-driven_image_fusion_with_learnable_fusion_loss.md)
+- [\[CVPR 2025\] SAMWise: Infusing Wisdom in SAM2 for Text-Driven Video Segmentation](samwise_infusing_wisdom_in_sam2_for_text-driven_video_segmentation.md)
 
 </div>
 

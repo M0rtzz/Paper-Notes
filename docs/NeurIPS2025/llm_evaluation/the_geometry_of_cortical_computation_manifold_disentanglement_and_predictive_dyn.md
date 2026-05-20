@@ -146,11 +146,11 @@ Spots-10（动物纹理分类，10类，50K灰度32×32图像）：
 
 ## 相关论文
 
+- [\[ICML 2026\] Possibilistic Predictive Uncertainty for Deep Learning](../../ICML2026/llm_evaluation/possibilistic_predictive_uncertainty_for_deep_learning.md)
 - [\[CVPR 2026\] Reframing Long-Tailed Learning via Loss Landscape Geometry](../../CVPR2026/llm_evaluation/reframing_long-tailed_learning_via_loss_landscape_geometry.md)
 - [\[AAAI 2026\] Towards a Rigorous Understanding of the Population Dynamics of the NSGA-III: Tight Runtime Bounds](../../AAAI2026/llm_evaluation/towards_a_rigorous_understanding_of_the_population_dynamics_of_the_nsga-iii_tigh.md)
 - [\[CVPR 2026\] Flow3r: Factored Flow Prediction for Scalable Visual Geometry Learning](../../CVPR2026/llm_evaluation/flow3r_factored_flow_prediction_for_scalable_visual_geometry_learning.md)
-- [\[ACL 2026\] Min-k Sampling: Decoupling Truncation from Temperature Scaling via Relative Logit Dynamics](../../ACL2026/llm_evaluation/min-k_sampling_decoupling_truncation_from_temperature_scaling_via_relative_logit.md)
-- [\[ICLR 2026\] Disentangling Shared and Private Neural Dynamics with SPIRE: A Latent Modeling Framework for Deep Brain Stimulation](../../ICLR2026/llm_evaluation/disentangling_shared_and_private_neural_dynamics_with_spire_a_latent_modeling_fr.md)
+- [\[ICML 2026\] Teaching Molecular Dynamics to a Non-Autoregressive Ionic Transport Predictor](../../ICML2026/llm_evaluation/teaching_molecular_dynamics_to_a_non-autoregressive_ionic_transport_predictor.md)
 
 </div>
 

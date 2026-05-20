@@ -168,9 +168,9 @@ InstanceAssemble 支持两种 DiT 骨架——Flux.1-dev（28步推理）、Flux
 
 - [\[NeurIPS 2025\] OverLayBench: A Benchmark for Layout-to-Image Generation with Dense Overlaps](overlaybench_a_benchmark_for_layout-to-image_generation_with_dense_overlaps.md)
 - [\[CVPR 2025\] ROICtrl: Boosting Instance Control for Visual Generation](../../CVPR2025/object_detection/roictrl_boosting_instance_control_for_visual_generation.md)
+- [\[ECCV 2024\] Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](../../ECCV2024/object_detection/be_yourself_bounded_attention_for_multisubject_texttoimage_g.md)
 - [\[NeurIPS 2025\] MSTAR: Box-Free Multi-Query Scene Text Retrieval with Attention Recycling](mstar_box-free_multi-query_scene_text_retrieval_with_attention_recycling.md)
 - [\[ICCV 2025\] YOLO-Count: Differentiable Object Counting for Text-to-Image Generation](../../ICCV2025/object_detection/yolo-count_differentiable_object_counting_for_text-to-image_generation.md)
-- [\[NeurIPS 2025\] Delving into Cascaded Instability: A Lipschitz Continuity View on Image Restoration and Object Detection Synergy](lr_yolo_lipschitz_continuity_image_restoration_object_detection.md)
 
 </div>
 

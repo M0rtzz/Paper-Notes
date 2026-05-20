@@ -140,8 +140,8 @@ tags:
 - [\[ACL 2025\] K/DA: Automated Data Generation Pipeline for Detoxifying Implicitly Offensive Language in Korean](kda_automated_data_generation_pipeline_for_detoxifying_implicitly_offensive_lang.md)
 - [\[NeurIPS 2025\] Any Large Language Model Can Be a Reliable Judge: Debiasing with a Reasoning-based Bias Detector](../../NeurIPS2025/social_computing/any_large_language_model_can_be_a_reliable_judge_debiasing_w.md)
 - [\[ACL 2025\] Exploring the Impact of Instruction-Tuning on LLMs' Susceptibility to Misinformation](exploring_the_impact_of_instruction-tuning_on_llms_susceptibility_to_misinformat.md)
-- [\[ACL 2025\] Evaluation of LLM Vulnerabilities to Being Misused for Personalized Disinformation Generation](llm_personalized_disinformation.md)
 - [\[ACL 2025\] BanStereoSet: A Dataset to Measure Stereotypical Social Biases in LLMs for Bangla](banstereoset_a_dataset_to_measure_stereotypical_social_biases_in_llms_for_bangla.md)
+- [\[ACL 2025\] Synergizing LLMs with Global Label Propagation for Multimodal Fake News Detection](llm_label_propagation.md)
 
 </div>
 

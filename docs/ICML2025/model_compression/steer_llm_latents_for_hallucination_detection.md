@@ -146,11 +146,11 @@ $$\mathcal{D}_S = \{\mathcal{D}_U^j \mid j \in \text{TopK}_{i}(-\Omega_i)\}$$
 
 ## 相关论文
 
-- [\[ICML 2025\] DRAGON: Guard LLM Unlearning in Context via Negative Detection and Reasoning](dragon_guard_llm_unlearning_in_context_via_negative_detection_and_reasoning.md)
 - [\[NeurIPS 2025\] Benford's Curse: Tracing Digit Bias to Numerical Hallucination in LLMs](../../NeurIPS2025/model_compression/benfords_curse_tracing_digit_bias_to_numerical_hallucination_in_llms.md)
 - [\[NeurIPS 2025\] AI-Generated Video Detection via Perceptual Straightening](../../NeurIPS2025/model_compression/ai-generated_video_detection_via_perceptual_straightening.md)
+- [\[ICCV 2025\] Gradient Short-Circuit: Efficient Out-of-Distribution Detection via Feature Intervention](../../ICCV2025/model_compression/gradient_short-circuit_efficient_out-of-distribution_detection_via_feature_inter.md)
 - [\[ICML 2025\] Sketch to Adapt: Fine-Tunable Sketches for Efficient LLM Adaptation](sketch_to_adapt_fine-tunable_sketches_for_efficient_llm_adaptation.md)
-- [\[ICML 2025\] RocketKV: Accelerating Long-Context LLM Inference via Two-Stage KV Cache Compression](rocketkv_accelerating_long-context_llm_inference_via_two-stage_kv_cache_compress.md)
+- [\[NeurIPS 2025\] S2M-Former: Spiking Symmetric Mixing Branchformer for Brain Auditory Attention Detection](../../NeurIPS2025/model_compression/s2m-former_spiking_symmetric_mixing_branchformer_for_brain_auditory_attention_de.md)
 
 </div>
 

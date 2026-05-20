@@ -134,11 +134,11 @@ AV-LDM 是一个音频-视觉潜在扩散模型。输入为一段无声视频，
 
 ## 相关论文
 
-- [\[ECCV 2024\] Spherical World-Locking for Audio-Visual Localization in Egocentric Videos](spherical_world-locking_for_audio-visual_localization_in_egocentric_videos.md)
 - [\[ECCV 2024\] Listen to Look into the Future: Audio-Visual Egocentric Gaze Anticipation](listen_to_look_into_the_future_audio-visual_egocentric_gaze_anticipation.md)
+- [\[ACL 2026\] Point of Order: Action-Aware LLM Persona Modeling for Realistic Civic Simulation](../../ACL2026/audio_speech/point_of_order_action-aware_llm_persona_modeling_for_realistic_civic_simulation.md)
 - [\[ECCV 2024\] Latent-INR: A Flexible Framework for Implicit Representations of Videos with Discriminative Semantics](latent-inr_a_flexible_framework_for_implicit_representations_of_videos_with_disc.md)
-- [\[ECCV 2024\] Beat-It: Beat-Synchronized Multi-Condition 3D Dance Generation](beat-it_beat-synchronized_multi-condition_3d_dance_generation.md)
 - [\[NeurIPS 2025\] MEGADance: Mixture-of-Experts Architecture for Genre-Aware 3D Dance Generation](../../NeurIPS2025/audio_speech/megadance_mixture-of-experts_architecture_for_genre-aware_3d_dance_generation.md)
+- [\[ECCV 2024\] Beat-It: Beat-Synchronized Multi-Condition 3D Dance Generation](beat-it_beat-synchronized_multi-condition_3d_dance_generation.md)
 
 </div>
 

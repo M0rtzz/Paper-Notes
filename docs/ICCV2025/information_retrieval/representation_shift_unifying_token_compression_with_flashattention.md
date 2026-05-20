@@ -142,10 +142,10 @@ tags:
 ## 相关论文
 
 - [\[ICLR 2026\] Token-Guard: Towards Token-Level Hallucination Control via Self-Checking Decoding](../../ICLR2026/information_retrieval/token-guard_towards_token-level_hallucination_control_via_self-checking_decoding.md)
+- [\[ACL 2026\] TPA: Next Token Probability Attribution for Detecting Hallucinations in RAG](../../ACL2026/information_retrieval/tpa_next_token_probability_attribution_for_detecting_hallucinations_in_rag.md)
 - [\[NeurIPS 2025\] Scaling Language-Centric Omnimodal Representation Learning](../../NeurIPS2025/information_retrieval/scaling_language-centric_omnimodal_representation_learning.md)
 - [\[ACL 2025\] EXIT: Context-Aware Extractive Compression for Enhancing Retrieval-Augmented Generation](../../ACL2025/information_retrieval/exit_context-aware_extractive_compression_for_enhancing_retrieval-augmented_gene.md)
-- [\[ACL 2026\] TPA: Next Token Probability Attribution for Detecting Hallucinations in RAG](../../ACL2026/information_retrieval/tpa_next_token_probability_attribution_for_detecting_hallucinations_in_rag.md)
-- [\[NeurIPS 2025\] HyperGraphRAG: Retrieval-Augmented Generation via Hypergraph-Structured Knowledge Representation](../../NeurIPS2025/information_retrieval/hypergraphrag_retrieval-augmented_generation_via_hypergraph-structured_knowledge.md)
+- [\[ACL 2025\] Any Information Is Just Worth One Single Screenshot: Unifying Search With Visualized Information Retrieval](../../ACL2025/information_retrieval/any_information_is_just_worth_one_single_screenshot_unifying_search_with_visuali.md)
 
 </div>
 

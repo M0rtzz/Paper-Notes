@@ -148,10 +148,10 @@ Pipeline: 多来源图像 → 数据特定prompt设计 → GPT4-Vision生成100K
 ## 相关论文
 
 - [\[ICCV 2025\] CompCap: Improving Multimodal Large Language Models with Composite Captions](../../ICCV2025/multimodal_vlm/compcap_improving_multimodal_large_language_models_with_composite_captions.md)
-- [\[ECCV 2024\] Large Motion Model for Unified Multi-Modal Motion Generation](large_motion_model_for_unified_multi-modal_motion_generation.md)
 - [\[ICCV 2025\] Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
 - [\[ECCV 2024\] m&m's: A Benchmark to Evaluate Tool-Use for Multi-step Multi-modal Tasks](m_ampmaposs_a_benchmark_to_evaluate_tool-use_for_multi-step_multi-modal_tasks.md)
 - [\[ECCV 2024\] MathVerse: Does Your Multi-modal LLM Truly See the Diagrams in Visual Math Problems?](mathverse_does_your_multi-modal_llm_truly_see_the_diagrams_in_visual_math_proble.md)
+- [\[ECCV 2024\] MMBench: Is Your Multi-modal Model an All-Around Player?](mmbench_is_your_multi-modal_model_an_all-around_player.md)
 
 </div>
 

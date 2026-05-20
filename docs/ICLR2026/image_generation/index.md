@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 图像生成方向154篇论文解读
+  ICLR2026 图像生成方向149篇论文解读
 description: >-
-  154篇ICLR2026的图像生成方向论文解读，涵盖扩散模型、文生图、对抗鲁棒、对齐/RLHF、布局/合成、图像编辑等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  149篇ICLR2026的图像生成方向论文解读，涵盖扩散模型、文生图、对齐/RLHF、布局/合成、对抗鲁棒、图像编辑等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICLR2026"
   - "图像生成"
@@ -10,20 +10,20 @@ tags:
   - "论文笔记"
   - "扩散模型"
   - "文生图"
-  - "对抗鲁棒"
   - "对齐/RLHF"
   - "布局/合成"
+  - "对抗鲁棒"
   - "图像编辑"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🔬 ICLR2026** · **154** 篇论文解读
+**🔬 ICLR2026** · **149** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (208)](../../CVPR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (247)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md) · [🧪 ICML2025 (110)](../../ICML2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (2)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (209)](../../CVPR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (244)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×48 · 文生图 ×11 · 对抗鲁棒 ×7 · 对齐/RLHF ×7 · 布局/合成 ×6
+🔥 **高频主题：** 扩散模型 ×48 · 文生图 ×10 · 对齐/RLHF ×7 · 布局/合成 ×6 · 对抗鲁棒 ×6
 
 **[A Hidden Semantic Bottleneck in Conditional Embeddings of Diffusion Transformers](a_hidden_semantic_bottleneck_in_conditional_embeddings_of_diffusion_transformers.md)**
 
@@ -209,10 +209,6 @@ tags:
 
 :   提出首个系统性的"基准评测→奖励模型→强化学习训练"图像编辑 RL 管线：构建 EditReward-Bench 基准，训练 EditScore 系列奖励模型（7B-72B，超过 GPT-5），并成功将其用于 Online RL 训练显著提升编辑模型性能。
 
-**[Efficient Adversarial Attacks on High-dimensional Offline Bandits](efficient_adversarial_attacks_on_high-dimensional_offline_bandits.md)**
-
-:   揭示了离线多臂老虎机（MAB）评估框架的安全漏洞：攻击者只需对公开的奖励模型权重进行极小的不可感知扰动，就能完全劫持 bandit 的决策行为，且所需扰动范数随输入维度增加而降低（$\widetilde{\mathcal{O}}(d^{-1/2})$），使基于图像的生成模型评估特别脆弱。
-
 **[Eliminating VAE for Fast and High-Resolution Generative Detail Restoration](eliminating_vae_for_fast_and_high-resolution_generative_detail_restoration.md)**
 
 :   通过用 ×8 pixel-(un)shuffle 替代 VAE 的编码器和解码器，将潜空间扩散超分（GenDR）逆转为像素空间超分（GenDR-Pix），结合多阶段对抗蒸馏和 PadCFG 推理策略，实现 2.8× 加速和 60% 显存节省，同时保持可忽略的视觉退化，首次实现 1 秒内 4K 图像恢复仅需 6GB 显存。
@@ -236,10 +232,6 @@ tags:
 **[Evolutionary Caching to Accelerate Your Off-the-Shelf Diffusion Model](evolutionary_caching_to_accelerate_your_off-the-shelf_diffusion_model.md)**
 
 :   提出 ECAD（Evolutionary Caching to Accelerate Diffusion models），利用遗传算法在速度-质量 Pareto 前沿上自动搜索最优缓存调度策略，无需修改模型参数，仅用 100 条校准提示即可实现扩散模型 2-3 倍推理加速并保持甚至提升生成质量。
-
-**[Exposing Hidden Biases in Text-to-Image Models via Automated Prompt Search](exposing_hidden_biases_in_text-to-image_models_via_automated_prompt_search.md)**
-
-:   提出 Bias-Guided Prompt Search (BGPS)，通过结合 LLM 解码引导和扩散模型中间层属性分类器，自动发现可解释的、能最大化暴露 T2I 模型隐藏社会偏见的文本提示，即使对已去偏的模型也能揭示残留偏见。
 
 **[Factuality Matters: When Image Generation and Editing Meet Structured Visuals](factuality_matters_when_image_generation_and_editing_meet_structured_visuals.md)**
 
@@ -397,10 +389,6 @@ tags:
 
 :   提出 Mod-Adapter，一种无需测试时微调的多概念个性化方法，通过在 DiT 的调制（modulation）空间中预测概念特定的调制方向，实现对物体和抽象概念（姿态、光照、材质等）的解耦化定制生成，在多概念个性化上大幅超越现有方法。
 
-**[Model Collapse Is Not a Bug but a Feature in Machine Unlearning for LLMs](model_collapse_is_not_a_bug_but_a_feature_in_machine_unlearning_for_llms.md)**
-
-:   将通常被视为负面现象的"模型坍缩"（model collapse）重新定位为机器遗忘的工具，提出PMC方法——通过在保留数据和模型自身生成数据上迭代微调来实现针对性信息删除，无需在遗忘目标上直接优化，从理论和实验两方面证明了其有效性。
-
 **[MOLM: Mixture of LoRA Markers](molm_mixture_of_lora_markers.md)**
 
 :   提出 MOLM 水印框架，将 LoRA 适配器重新解释为水印载体，通过二进制密钥驱动的路由机制在冻结生成模型中嵌入可验证、鲁棒的水印，无需逐密钥重训练。
@@ -432,10 +420,6 @@ tags:
 **[Next Visual Granularity Generation](next_visual_granularity_generation.md)**
 
 :   提出 Next Visual Granularity (NVG) 生成框架，将图像分解为不同粒度级别的结构化序列，从全局布局到精细细节逐级生成，相比 VAR 系列在 FID 上一致提升。
-
-**[No Caption, No Problem: Caption-Free Membership Inference via Model-Fitted Embeddings](no_caption_no_problem_caption-free_membership_inference_via_model-fitted_embeddi.md)**
-
-:   提出 MoFit，首个面向无标题场景的扩散模型成员推断攻击框架，通过构建过拟合于目标模型的代理图像和条件嵌入，利用成员样本对条件错配的不对称敏感性实现有效推断。
 
 **[Offline Reinforcement Learning with Generative Trajectory Policies](offline_reinforcement_learning_with_generative_trajectory_policies.md)**
 
@@ -584,10 +568,6 @@ tags:
 **[There and Back Again: On the Relation between Noise and Image Inversions in Diffusion Models](there_and_back_again_on_the_relation_between_noise_and_image_inversions_in_diffu.md)**
 
 :   深入分析 DDIM 反转的误差机制，发现潜在编码在平滑图像区域（如天空）呈现低多样性和高相关性，并追溯到反转初始步骤的噪声预测不准确，提出用正向扩散替代前几步反转的简单修复方案。
-
-**[Towards Interpretable Visual Decoding with Attention to Brain Representations](towards_interpretable_visual_decoding_with_attention_to_brain_representations.md)**
-
-:   提出 NeuroAdapter，将 fMRI 信号按脑区分割为独立 token 并通过交叉注意力直接条件化 Stable Diffusion，跳过传统的 CLIP/DINO 中间嵌入空间，在 NSD 等数据集上高层语义指标超越或持平现有方法，同时引入 IBBI 双向可解释性框架，首次动态揭示不同皮层区域在去噪轨迹中如何驱动图像生成。
 
 **[Training-Free Reward-Guided Image Editing via Trajectory Optimal Control](training-free_reward-guided_image_editing_via_trajectory_optimal_control.md)**
 

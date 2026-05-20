@@ -127,7 +127,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{rgb}} + \alpha(t)\sum_i \lambd
 - [\[ICCV 2025\] RegGS: Unposed Sparse Views Gaussian Splatting with 3DGS Registration](../../ICCV2025/3d_vision/reggs_unposed_sparse_views_gaussian_splatting_with_3dgs_registration.md)
 - [\[NeurIPS 2025\] From Pixels to Views: Learning Angular-Aware and Physics-Consistent Representations for Light Field Microscopy](../../NeurIPS2025/3d_vision/from_pixels_to_views_learning_angular-aware_and_physics-consistent_representatio.md)
 - [\[ICCV 2025\] TRAN-D: 2D Gaussian Splatting-based Sparse-view Transparent Object Depth Reconstruction via Physics Simulation for Scene Update](../../ICCV2025/3d_vision/2d_gaussian_splattingbased_sparseview_transparent_object_dep.md)
-- [\[CVPR 2025\] PhysAnimator: Physics-Guided Generative Cartoon Animation](../../CVPR2025/3d_vision/physanimator_physics-guided_generative_cartoon_animation.md)
+- [\[ICCV 2025\] No Pose at All: Self-Supervised Pose-Free 3D Gaussian Splatting from Sparse Views](../../ICCV2025/3d_vision/no_pose_at_all_self-supervised_pose-free_3d_gaussian_splatting_from_sparse_views.md)
 
 </div>
 

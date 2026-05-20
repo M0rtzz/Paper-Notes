@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 知识编辑方向20篇论文解读
+  ACL2025 知识编辑方向19篇论文解读
 description: >-
-  20篇ACL2025的知识编辑方向论文解读，涵盖 LLM、对抗鲁棒、问答、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  19篇ACL2025的知识编辑方向论文解读，涵盖 LLM、对抗鲁棒、问答、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "知识编辑"
@@ -17,11 +17,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✏️ 知识编辑
 
-**💬 ACL2025** · **20** 篇论文解读
+**💬 ACL2025** · **19** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/knowledge_editing/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/knowledge_editing/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/knowledge_editing/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/knowledge_editing/index.md) · [🧠 NeurIPS2025 (6)](../../NeurIPS2025/knowledge_editing/index.md) · [🧪 ICML2025 (2)](../../ICML2025/knowledge_editing/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/knowledge_editing/index.md) · [💬 ACL2026 (7)](../../ACL2026/knowledge_editing/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/knowledge_editing/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/knowledge_editing/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/knowledge_editing/index.md) · [🧠 NeurIPS2025 (6)](../../NeurIPS2025/knowledge_editing/index.md)
 
-🔥 **高频主题：** LLM ×4 · 对抗鲁棒 ×2
+🔥 **高频主题：** LLM ×3 · 对抗鲁棒 ×2
 
 **[A General Knowledge Injection Framework for ICD Coding](a_general_knowledge_injection_framework_for_icd_coding.md)**
 
@@ -58,10 +58,6 @@ tags:
 **[Efficient Knowledge Editing via Minimal Precomputation](efficient_knowledge_editing.md)**
 
 :   证明了 MEMIT/ROME/EMMET 等知识编辑方法的预计算步骤（缓存 4400 万隐向量）可以减少到理论最小值的 2-10 倍（不到原来的 0.3%），将预计算时间从数十小时降到几分钟，且编辑性能基本无损。
-
-**[MEGen: Generative Backdoor into Large Language Models via Model Editing](megen_generative_backdoor_into_large_language_models_via_model_editing.md)**
-
-:   提出 MEGen，一种基于模型编辑的生成式后门攻击方法，能够仅通过少量样本修改少量局部参数，在 LLM 中注入生成式后门，使模型在触发时自由输出预设的危险内容。
 
 **[Memorizing is Not Enough: Deep Knowledge Injection Through Reasoning](memorizing_is_not_enough_deep_knowledge_injection_through_reasoning.md)**
 

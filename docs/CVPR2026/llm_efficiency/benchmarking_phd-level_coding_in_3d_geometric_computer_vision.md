@@ -130,8 +130,8 @@ tags:
 - [\[ACL 2026\] HumanLLM: Benchmarking and Improving LLM Anthropomorphism via Human Cognitive Patterns](../../ACL2026/llm_efficiency/humanllm_benchmarking_and_improving_llm_anthropomorphism_via_human_cognitive_pat.md)
 - [\[AAAI 2026\] InterMoE: Individual-Specific 3D Human Interaction Generation via Dynamic Temporal-Selective MoE](../../AAAI2026/llm_efficiency/intermoe_individual-specific_3d_human_interaction_generation_via_dynamic_tempora.md)
 - [\[AAAI 2026\] Resource Efficient Sleep Staging via Multi-Level Masking and Prompt Learning](../../AAAI2026/llm_efficiency/resource_efficient_sleep_staging_via_multi-level_masking_and_prompt_learning.md)
+- [\[ICML 2026\] Scaling Continual Learning to 300+ Tasks with Bi-Level Routing Mixture-of-Experts](../../ICML2026/llm_efficiency/scaling_continual_learning_to_300_tasks_with_bi-level_routing_mixture-of-experts.md)
 - [\[ACL 2025\] Ref-Long: Benchmarking the Long-Context Referencing Capability of Long-Context Language Models](../../ACL2025/llm_efficiency/ref-long_benchmarking_the_long-context_referencing_capability_of_long-context_la.md)
-- [\[ACL 2025\] KV-Latent: Dimensional-level KV Cache Reduction with Frequency-aware Rotary Positional Embedding](../../ACL2025/llm_efficiency/kv_latent_cache_reduction.md)
 
 </div>
 

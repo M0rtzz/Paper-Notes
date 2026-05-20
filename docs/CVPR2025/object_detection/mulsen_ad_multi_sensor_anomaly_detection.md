@@ -110,8 +110,8 @@ MulSen-AD 数据集包含 15 类工业产品，使用工业 RGB 相机（1920×1
 - [\[CVPR 2025\] MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism](mi-detr_an_object_detection_model_with_multi-time_inquiries_mechanism.md)
 - [\[CVPR 2025\] Mr. DETR++: Instructive Multi-Route Training for Detection Transformers with MoE](mr_detr_instructive_multi-route_training_for_detection_transformers.md)
 - [\[CVPR 2025\] Towards RAW Object Detection in Diverse Conditions](towards_raw_object_detection_in_diverse_conditions.md)
-- [\[ICCV 2025\] Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction](../../ICCV2025/object_detection/boosting_multiview_indoor_3d_object_detection_via_adaptive_3.md)
 - [\[ECCV 2024\] Adaptive Multi-task Learning for Few-Shot Object Detection](../../ECCV2024/object_detection/adaptive_multi-task_learning_for_few-shot_object_detection.md)
+- [\[CVPR 2025\] Test-Time Backdoor Detection for Object Detection Models](test-time_backdoor_detection_for_object_detection_models.md)
 
 </div>
 

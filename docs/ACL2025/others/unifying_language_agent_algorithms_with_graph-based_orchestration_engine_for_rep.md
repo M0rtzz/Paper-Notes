@@ -145,8 +145,8 @@ AGORA（Agent Graph-based Orchestration for Reasoning and Assessment）构建于
 
 - [\[ACL 2025\] A Dual-Mind Framework for Strategic and Expressive Negotiation Agent](a_dual-mind_framework_for_strategic_and_expressive_negotiation_agent.md)
 - [\[ACL 2025\] Frictional Agent Alignment Framework: Slow Down and Don't Break Things](frictional_agent_alignment.md)
-- [\[ACL 2025\] You need to MIMIC to get FAME: Solving Meeting Transcript Scarcity with Multi-Agent Conversations](you_need_to_mimic_to_get_fame_solving_meeting_transcript_scarcity_with_a_multi-a.md)
 - [\[ACL 2025\] Research Borderlands: Analysing Writing Across Research Cultures](research_borderlands_analysing_writing_across_research_cultures.md)
+- [\[ACL 2025\] You need to MIMIC to get FAME: Solving Meeting Transcript Scarcity with Multi-Agent Conversations](you_need_to_mimic_to_get_fame_solving_meeting_transcript_scarcity_with_a_multi-a.md)
 - [\[ACL 2025\] Sleepless Nights, Sugary Days: Creating Synthetic Users with Health Conditions for Realistic Coaching Agent Interactions](sleepless_nights_sugary_days_creating_synthetic_users_with_health_conditions_for.md)
 
 </div>

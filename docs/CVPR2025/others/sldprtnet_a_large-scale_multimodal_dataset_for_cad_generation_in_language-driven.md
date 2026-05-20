@@ -124,8 +124,8 @@ SldprtNet 的构建 pipeline 包含四个阶段：(1) 从 GrabCAD、McMaster-Car
 
 - [\[CVPR 2025\] BenDFM: A taxonomy and synthetic CAD dataset for manufacturability assessment in sheet metal bending](bendfm_a_taxonomy_and_synthetic_cad_dataset_for_manufacturability_assessment_in_.md)
 - [\[CVPR 2025\] Exploring Contextual Attribute Density in Referring Expression Counting (CAD-GD)](exploring_contextual_attribute_density_in_referring_expression_counting.md)
-- [\[CVPR 2025\] Regor: Progressive Correspondence Regenerator for Robust 3D Registration](progressive_correspondence_regenerator_for_robust_3d_registration.md)
 - [\[CVPR 2025\] Towards Million-Scale Adversarial Robustness Evaluation With Stronger Individual Attacks](towards_million-scale_adversarial_robustness_evaluation_with_stronger_individual.md)
+- [\[CVPR 2025\] Regor: Progressive Correspondence Regenerator for Robust 3D Registration](progressive_correspondence_regenerator_for_robust_3d_registration.md)
 - [\[CVPR 2025\] Which Viewpoint Shows it Best? Language for Weakly Supervising View Selection in Multi-view Instructional Videos](which_viewpoint_shows_it_best_language_for_weakly_supervising_view_selection_in_.md)
 
 </div>

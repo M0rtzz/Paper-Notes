@@ -145,8 +145,8 @@ tags:
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Detecting Generated Images by Fitting Natural Image Distributions](../../NeurIPS2025/image_generation/detecting_generated_images_by_fitting_natural_image_distributions.md)
 - [\[ICML 2025\] Synthetic Face Datasets Generation via Latent Space Exploration from Brownian Identity Diffusion](synthetic_face_datasets_generation_via_latent_space_exploration_from_brownian_id.md)
+- [\[NeurIPS 2025\] Detecting Generated Images by Fitting Natural Image Distributions](../../NeurIPS2025/image_generation/detecting_generated_images_by_fitting_natural_image_distributions.md)
 - [\[AAAI 2026\] Beautiful Images, Toxic Words: Understanding and Addressing Offensive Text in Generated Images](../../AAAI2026/image_generation/beautiful_images_toxic_words_understanding_and_addressing_offensive_text_in_gene.md)
 - [\[NeurIPS 2025\] AugGen: Synthetic Augmentation using Diffusion Models Can Improve Recognition](../../NeurIPS2025/image_generation/auggen_synthetic_augmentation_using_diffusion_models_can_imp.md)
 - [\[NeurIPS 2025\] Increasing the Utility of Synthetic Images through Chamfer Guidance](../../NeurIPS2025/image_generation/increasing_the_utility_of_synthetic_images_through_chamfer_guidance.md)

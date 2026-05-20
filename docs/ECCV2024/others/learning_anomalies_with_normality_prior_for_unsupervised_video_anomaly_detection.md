@@ -230,11 +230,11 @@ LANP 框架由三个核心组件构成。首先，提出正常性先验假设，
 
 ## 相关论文
 
-- [\[AAAI 2026\] RcAE: Recursive Reconstruction Framework for Unsupervised Industrial Anomaly Detection](../../AAAI2026/others/rcae_recursive_reconstruction_framework_for_unsupervised_industrial_anomaly_dete.md)
+- [\[ECCV 2024\] Interleaving One-Class and Weakly-Supervised Models with Adaptive Thresholding for Unsupervised Video Anomaly Detection](interleaving_one-class_and_weakly-supervised_models_with_adaptive_thresholding_f.md)
+- [\[ECCV 2024\] Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection](self-supervised_feature_adaptation_for_3d_industrial_anomaly_detection.md)
 - [\[ECCV 2024\] STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning](stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning.md)
-- [\[CVPR 2025\] TailedCore: Few-Shot Sampling for Unsupervised Long-Tail Noisy Anomaly Detection](../../CVPR2025/others/tailedcore_few-shot_sampling_for_unsupervised_long-tail_noisy_anomaly_detection.md)
+- [\[AAAI 2026\] RcAE: Recursive Reconstruction Framework for Unsupervised Industrial Anomaly Detection](../../AAAI2026/others/rcae_recursive_reconstruction_framework_for_unsupervised_industrial_anomaly_dete.md)
 - [\[ECCV 2024\] Free-Viewpoint Video of Outdoor Sports Using a Flying Camera](free-viewpoint_video_of_outdoor_sports_using_a_flying_camera.md)
-- [\[NeurIPS 2025\] Semi-supervised Graph Anomaly Detection via Robust Homophily Learning](../../NeurIPS2025/others/semi-supervised_graph_anomaly_detection_via_robust_homophily_learning.md)
 
 </div>
 

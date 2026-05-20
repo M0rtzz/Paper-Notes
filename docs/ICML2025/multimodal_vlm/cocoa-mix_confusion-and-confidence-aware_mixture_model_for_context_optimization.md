@@ -201,8 +201,8 @@ Table 4 对比了不同 loss (CE, Focal, SupCon, CoA-loss) × 不同 mixing (nai
 - [\[CVPR 2025\] Context-Aware Multimodal Pretraining](../../CVPR2025/multimodal_vlm/context-aware_multimodal_pretraining.md)
 - [\[ICML 2025\] Handling Imbalanced Pseudolabels for Vision-Language Models with Concept Alignment and Confusion-Aware Calibrated Margin](handling_imbalanced_pseudolabels_for_vision-language_models_with_concept_alignme.md)
 - [\[CVPR 2026\] CAPT: Confusion-Aware Prompt Tuning for Reducing Vision-Language Misalignment](../../CVPR2026/multimodal_vlm/capt_confusion-aware_prompt_tuning_for_reducing_vision-language_misalignment.md)
-- [\[NeurIPS 2025\] Zero-Shot Robustness of Vision Language Models Via Confidence-Aware Weighting](../../NeurIPS2025/multimodal_vlm/zero-shot_robustness_of_vision_language_models_via_confidence-aware_weighting.md)
 - [\[ICML 2025\] MMInference: Accelerating Pre-filling for Long-Context VLMs via Modality-Aware Permutation Sparse Attention](mminference_accelerating_pre-filling_for_long-context_vlms_via_modality-aware_pe.md)
+- [\[ACL 2025\] Single-to-mix Modality Alignment with Multimodal Large Language Model for Document Image Machine Translation](../../ACL2025/multimodal_vlm/single-to-mix_modality_alignment_with_multimodal_large_language_model_for_docume.md)
 
 </div>
 

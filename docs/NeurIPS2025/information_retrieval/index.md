@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 信息检索/RAG方向30篇论文解读
+  NeurIPS2025 信息检索/RAG方向31篇论文解读
 description: >-
-  30篇NeurIPS2025的信息检索/RAG 方向论文解读，涵盖 RAG、多模态、推理、问答、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  31篇NeurIPS2025的信息检索/RAG 方向论文解读，涵盖 RAG、多模态、推理、问答、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "信息检索/RAG"
@@ -18,11 +18,15 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔍 信息检索/RAG
 
-**🧠 NeurIPS2025** · **30** 篇论文解读
+**🧠 NeurIPS2025** · **31** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (43)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (7)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (28)](../../AAAI2026/information_retrieval/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/information_retrieval/index.md) · [🧪 ICML2025 (5)](../../ICML2025/information_retrieval/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/information_retrieval/index.md) · [💬 ACL2026 (60)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (7)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (28)](../../AAAI2026/information_retrieval/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/information_retrieval/index.md)
 
 🔥 **高频主题：** RAG ×16 · 多模态 ×5 · 推理 ×4 · 问答 ×3 · LLM ×2
+
+**[AcuRank: Uncertainty-Aware Adaptive Computation for Listwise Reranking](acurank_uncertainty-aware_adaptive_computation_for_listwise_reranking.md)**
+
+:   利用贝叶斯TrueSkill模型维护文档相关性的概率分布，在每轮迭代中只对排名不确定的文档进行重排序，实现根据查询难度自适应调配计算量的重排框架，在多个基准上以更少调用次数超越固定计算基线。
 
 **[Benchmarking Retrieval-Augmented Multimodal Generation for Document Question Answering](benchmarking_retrievalaugmented_multimodal_generation_for_do.md)**
 

@@ -132,7 +132,7 @@ DASH包含四个阶段：查询生成（DASH-LLM或DASH-OPT）→ 探索（Explo
 - [\[ICCV 2025\] Training-free Generation of Temporally Consistent Rewards from VLMs](training-free_generation_of_temporally_consistent_rewards_from_vlms.md)
 - [\[ICCV 2025\] BabyVLM: Data-Efficient Pretraining of VLMs Inspired by Infant Learning](babyvlm_data-efficient_pretraining_of_vlms_inspired_by_infant_learning.md)
 - [\[ICCV 2025\] HRScene: How Far Are VLMs from Effective High-Resolution Image Understanding?](hrscene_how_far_are_vlms_from_effective_high-resolution_image_understanding.md)
-- [\[NeurIPS 2025\] Bias in the Picture: Benchmarking VLMs with Social-Cue News Images and LLM-as-Judge Assessment](../../NeurIPS2025/multimodal_vlm/bias_in_the_picture_benchmarking_vlms_with_social-cue_news_images_and_llm-as-jud.md)
+- [\[CVPR 2026\] Rethinking VLMs for Image Forgery Detection and Localization](../../CVPR2026/multimodal_vlm/rethinking_vlms_for_image_forgery_detection_and_localization.md)
 
 </div>
 

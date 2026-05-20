@@ -168,10 +168,10 @@ ControlNet++ 在所有条件控制下显著优于现有方法。
 ## 相关论文
 
 - [\[ECCV 2024\] CPM: Class-Conditional Prompting Machine for Audio-Visual Segmentation](cpm_class-conditional_prompting_machine_for_audio-visual_segmentation.md)
+- [\[ECCV 2024\] SiLC: Improving Vision Language Pretraining with Self-Distillation](silc_improving_vision_language_pretraining_with_self-distillation.md)
 - [\[ECCV 2024\] CoLA: Conditional Dropout and Language-Driven Robust Dual-Modal Salient Object Detection](cola_conditional_dropout_and_language-driven_robust_dual-modal_salient_object_de.md)
 - [\[ECCV 2024\] Efficient and Versatile Robust Fine-Tuning of Zero-shot Models](efficient_and_versatile_robust_fine-tuning_of_zero-shot_models.md)
 - [\[ECCV 2024\] SeiT++: Masked Token Modeling Improves Storage-Efficient Training](seit_masked_token_modeling_improves_storage-efficient_training.md)
-- [\[CVPR 2025\] EditAR: Unified Conditional Generation with Autoregressive Models](../../CVPR2025/segmentation/editar_unified_conditional_generation_with_autoregressive_models.md)
 
 </div>
 

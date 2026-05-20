@@ -125,9 +125,9 @@ tags:
 
 - [\[ICCV 2025\] Signs as Tokens: A Retrieval-Enhanced Multilingual Sign Language Generator](../../ICCV2025/human_understanding/signs_as_tokens_a_retrieval-enhanced_multilingual_sign_language_generator.md)
 - [\[ECCV 2024\] SCAPE: A Simple and Strong Category-Agnostic Pose Estimator](scape_a_simple_and_strong_category-agnostic_pose_estimator.md)
-- [\[ECCV 2024\] CanonicalFusion: Generating Drivable 3D Human Avatars from Multiple Images](canonicalfusion_generating_drivable_3d_human_avatars_from_multiple_images.md)
-- [\[ECCV 2024\] TRAM: Global Trajectory and Motion of 3D Humans from in-the-wild Videos](tram_global_trajectory_and_motion_of_3d_humans_from_in-the-wild_videos.md)
 - [\[CVPR 2025\] Pose Priors from Language Models](../../CVPR2025/human_understanding/pose_priors_from_language_models.md)
+- [\[NeurIPS 2025\] VimoRAG: Video-based Retrieval-augmented 3D Motion Generation for Motion Language Models](../../NeurIPS2025/human_understanding/vimorag_video-based_retrieval-augmented_3d_motion_generation_for_motion_language.md)
+- [\[ECCV 2024\] CoMo: Controllable Motion Generation Through Language Guided Pose Code Editing](como_controllable_motion_generation_through_language_guided_pose_code_editing.md)
 
 </div>
 

@@ -139,11 +139,11 @@ tags:
 
 ## 相关论文
 
-- [\[CVPR 2025\] Textured Gaussians for Enhanced 3D Scene Appearance Modeling](textured_gaussians_for_enhanced_3d_scene_appearance_modeling.md)
 - [\[ICCV 2025\] UST-SSM: Unified Spatio-Temporal State Space Models for Point Cloud Video Modeling](../../ICCV2025/3d_vision/ust-ssm_unified_spatio-temporal_state_space_models_for_point_cloud_video_modelin.md)
+- [\[CVPR 2025\] Textured Gaussians for Enhanced 3D Scene Appearance Modeling](textured_gaussians_for_enhanced_3d_scene_appearance_modeling.md)
 - [\[CVPR 2025\] PMA: Towards Parameter-Efficient Point Cloud Understanding via Point Mamba Adapter](pma_towards_parameter-efficient_point_cloud_understanding_via_point_mamba_adapte.md)
 - [\[ICCV 2025\] MeshMamba: State Space Models for Articulated 3D Mesh Generation and Reconstruction](../../ICCV2025/3d_vision/meshmamba_state_space_models_for_articulated_3d_mesh_generation_and_reconstructi.md)
-- [\[ECCV 2024\] CRM: Single Image to 3D Textured Mesh with Convolutional Reconstruction Model](../../ECCV2024/3d_vision/crm_single_image_to_3d_textured_mesh_with_convolutional_reconstruction_model.md)
+- [\[CVPR 2025\] Continuous 3D Perception Model with Persistent State](continuous_3d_perception_model_with_persistent_state.md)
 
 </div>
 

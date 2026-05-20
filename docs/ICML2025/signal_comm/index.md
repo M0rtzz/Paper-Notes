@@ -1,24 +1,23 @@
 ---
 title: >-
-  ICML2025 信号/通信方向6篇论文解读
+  ICML2025 信号/通信方向5篇论文解读
 description: >-
-  6篇ICML2025的信号/通信方向论文解读，涵盖 LLM、对齐/RLHF、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  5篇ICML2025的信号/通信方向论文解读，涵盖 LLM、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "信号/通信"
   - "论文解读"
   - "论文笔记"
   - "LLM"
-  - "对齐/RLHF"
   - "压缩/编码"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📡 信号/通信
 
-**🧪 ICML2025** · **6** 篇论文解读
+**🧪 ICML2025** · **5** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (3)](../../ACL2026/signal_comm/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/signal_comm/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/signal_comm/index.md) · [🤖 AAAI2026 (3)](../../AAAI2026/signal_comm/index.md) · [🧠 NeurIPS2025 (13)](../../NeurIPS2025/signal_comm/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/signal_comm/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (5)](../../CVPR2026/signal_comm/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/signal_comm/index.md) · [🤖 AAAI2026 (3)](../../AAAI2026/signal_comm/index.md) · [🧠 NeurIPS2025 (12)](../../NeurIPS2025/signal_comm/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/signal_comm/index.md) · [💬 ACL2025 (1)](../../ACL2025/signal_comm/index.md)
 
 🔥 **高频主题：** LLM ×2
 
@@ -37,10 +36,6 @@ tags:
 **[Large Language Model (LLM)-enabled In-context Learning for Wireless Network Optimization](large_language_model_llm-enabled_in-context_learning_for_wireless_network_optimi.md)**
 
 :   提出基于 LLM 上下文学习（In-context Learning）的基站功率控制算法，通过自然语言任务描述和经验池驱动的示例选择，在不更新模型参数的条件下达到接近传统深度强化学习的性能。
-
-**[Reward-Augmented Data Enhances Direct Preference Alignment of LLMs](reward-augmented_data_enhances_direct_preference_alignment_of_llms.md)**
-
-:   提出一种**奖励增强的数据重标注方法**，通过将偏好对条件化于奖励分数构建扩增数据集，使DPO能感知回复质量全谱，缓解高质量rejected回复被遗忘和低质量chosen回复被盲目学习的问题，在多个基准上一致性大幅提升DPO性能。
 
 **[SepLLM: Accelerate Large Language Models by Compressing One Segment into One Separator](sepllm_accelerate_large_language_models_by_compressing_one_segment_into_one_sepa.md)**
 

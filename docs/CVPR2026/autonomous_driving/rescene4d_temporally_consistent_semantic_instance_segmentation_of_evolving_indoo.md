@@ -161,7 +161,7 @@ ReScene4D 基于 Mask3D 的掩码Transformer架构进行 4D 扩展。输入为�
 - [\[ECCV 2024\] Monocular Occupancy Prediction for Scalable Indoor Scenes](../../ECCV2024/autonomous_driving/monocular_occupancy_prediction_for_scalable_indoor_scenes.md)
 - [\[CVPR 2026\] An Instance-Centric Panoptic Occupancy Prediction Benchmark for Autonomous Driving](an_instance-centric_panoptic_occupancy_prediction_benchmark_for_autonomous_drivi.md)
 - [\[CVPR 2026\] SABER: Spatially Consistent 3D Universal Adversarial Objects for BEV Detectors](saber_spatially_consistent_3d_universal_adversarial_objects_for_bev_detectors.md)
-- [\[CVPR 2026\] Sparsity-Aware Voxel Attention and Foreground Modulation for 3D Semantic Scene Completion](sparsity-aware_voxel_attention_and_foreground_modulation_for_3d_semantic_scene_c.md)
+- [\[ACL 2026\] CO-EVO: Co-evolving Semantic Anchoring and Style Diversification for Federated DG-ReID](../../ACL2026/autonomous_driving/co-evo_co-evolving_semantic_anchoring_and_style_diversification_for_federated_dg.md)
 
 </div>
 

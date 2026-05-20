@@ -208,7 +208,7 @@ FiLM 模块是性能提升的关键（去掉后 AOE 从 9.22 升至 11.35），F
 - [\[AAAI 2026\] Realistic Synthetic Household Data Generation at Scale](realistic_synthetic_household_data_generation_at_scale.md)
 - [\[AAAI 2026\] Affordance-Guided Coarse-to-Fine Exploration for Base Placement in Open-Vocabulary Mobile Manipulation](affordance-guided_coarse-to-fine_exploration_for_base_placem.md)
 - [\[AAAI 2026\] Recursive Visual Imagination and Adaptive Linguistic Grounding for Vision Language Navigation](recursive_visual_imagination_and_adaptive_linguistic_grounding_for_vision_langua.md)
-- [\[AAAI 2026\] Theory of Mind for Explainable Human-Robot Interaction](theory_of_mind_for_explainable_human-robot_interaction.md)
+- [\[CVPR 2026\] QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](../../CVPR2026/robotics/quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
 
 </div>
 

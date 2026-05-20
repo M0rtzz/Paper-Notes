@@ -106,7 +106,7 @@ PromptObfus 与传统对抗攻击做了一件"反方向"的事：对抗攻击是
 - [\[AAAI 2026\] Learning from the Undesirable: Robust Adaptation of Language Models without Forgetting](learning_from_the_undesirable_robust_adaptation_of_language_models_without_forge.md)
 - [\[AAAI 2026\] Gender Bias in Emotion Recognition by Large Language Models](gender_bias_in_emotion_recognition_by_large_language_models.md)
 - [\[AAAI 2026\] SproutBench: A Benchmark for Safe and Ethical Large Language Models for Youth](sproutbench_a_benchmark_for_safe_and_ethical_large_language_models_for_youth.md)
-- [\[ACL 2025\] ReLearn: Unlearning via Learning for Large Language Models](../../ACL2025/llm_safety/relearn_unlearning_via_learning_for_large_language_models.md)
+- [\[AAAI 2026\] LAMP: Learning Universal Adversarial Perturbations for Multi-Image Tasks via Pre-trained Models](lamp_learning_universal_adversarial_perturbations_for_multi-image_tasks_via_pre-.md)
 
 </div>
 

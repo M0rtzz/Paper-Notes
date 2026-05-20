@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 语义分割方向74篇论文解读
+  ICCV2025 语义分割方向73篇论文解读
 description: >-
-  74篇ICCV2025的语义分割方向论文解读，涵盖语义分割、扩散模型、语音、推理、遥感、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  73篇ICCV2025的语义分割方向论文解读，涵盖语义分割、扩散模型、语音、推理、遥感、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "语义分割"
@@ -18,9 +18,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**📹 ICCV2025** · **74** 篇论文解读
+**📹 ICCV2025** · **73** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (85)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/segmentation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/segmentation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/segmentation/index.md) · [💬 ACL2026 (1)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/segmentation/index.md)
 
 🔥 **高频主题：** 语义分割 ×40 · 扩散模型 ×4 · 语音 ×4 · 推理 ×4 · 遥感 ×3
 
@@ -311,10 +311,6 @@ tags:
 **[What If: Understanding Motion Through Sparse Interactions](what_if_understanding_motion_through_sparse_interactions.md)**
 
 :   提出 Flow Poke Transformer (FPT)，直接预测场景中物体运动的**多模态概率分布**（而非单一确定性结果），通过稀疏"戳动 (poke)"交互条件化，实现可解释的运动理解和运动部件分割。
-
-**[WildSeg3D: Segment Any 3D Objects in the Wild from 2D Images](wildseg3d_segment_any_3d_objects_in_the_wild_from_2d_images.md)**
-
-:   提出 WildSeg3D，首个前馈式3D分割模型，无需场景特定训练，通过动态全局对齐(DGA)解决多视角点图对齐误差，结合多视角组映射(MGM)实现实时交互式3D分割，比现有SOTA快40倍且精度更优。
 
 **[ZIM: Zero-Shot Image Matting for Anything](zim_zero-shot_image_matting_for_anything.md)**
 

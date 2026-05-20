@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 强化学习方向171篇论文解读
+  NeurIPS2025 强化学习方向172篇论文解读
 description: >-
-  171篇NeurIPS2025的强化学习方向论文解读，涵盖强化学习、Agent、推理、对抗鲁棒、LLM、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  172篇NeurIPS2025的强化学习方向论文解读，涵盖强化学习、Agent、推理、对抗鲁棒、LLM、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "强化学习"
@@ -18,11 +18,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎮 强化学习
 
-**🧠 NeurIPS2025** · **171** 篇论文解读
+**🧠 NeurIPS2025** · **172** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/reinforcement_learning/index.md) · [📷 CVPR2026 (19)](../../CVPR2026/reinforcement_learning/index.md) · [🔬 ICLR2026 (138)](../../ICLR2026/reinforcement_learning/index.md) · [🤖 AAAI2026 (71)](../../AAAI2026/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md) · [🧪 ICML2025 (80)](../../ICML2025/reinforcement_learning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (20)](../../ICML2026/reinforcement_learning/index.md) · [💬 ACL2026 (34)](../../ACL2026/reinforcement_learning/index.md) · [📷 CVPR2026 (19)](../../CVPR2026/reinforcement_learning/index.md) · [🔬 ICLR2026 (138)](../../ICLR2026/reinforcement_learning/index.md) · [🤖 AAAI2026 (71)](../../AAAI2026/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md)
 
-🔥 **高频主题：** 强化学习 ×63 · Agent ×16 · 推理 ×12 · 对抗鲁棒 ×11 · LLM ×5
+🔥 **高频主题：** 强化学习 ×64 · Agent ×16 · 推理 ×12 · 对抗鲁棒 ×11 · LLM ×5
 
 **[A Differential and Pointwise Control Approach to Reinforcement Learning](a_differential_and_pointwise_control_approach_to_reinforceme.md)**
 
@@ -503,6 +503,10 @@ tags:
 **[RePIC: Reinforced Post-Training for Personalizing Multi-Modal Language Models](repic_reinforced_post-training_for_personalizing_multi-modal_language_models.md)**
 
 :   提出首个基于强化学习的多模态大模型后训练框架 RePIC,用于个性化图像描述生成,在多概念场景中显著优于基于 SFT 的方法。
+
+**[ReSearch: Learning to Reason with Search for LLMs via Reinforcement Learning](research_learning_to_reason_with_search_for_llms_via_reinforcement_learning.md)**
+
+:   ReSearch框架将搜索操作嵌入推理链中作为第一类原语，通过GRPO强化学习自动学习何时何如搜索，无需任何推理步骤的监督标注，在多跳QA任务上相对基线平均提升15.81%。
 
 **[Retrosynthesis Planning via Worst-path Policy Optimisation in Tree-structured MDPs](retrosynthesis_planning_via_worst-path_policy_optimisation_in_tree-structured_md.md)**
 

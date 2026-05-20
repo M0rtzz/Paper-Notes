@@ -164,8 +164,8 @@ $$\tilde{\boldsymbol{A}_t} = \text{asym}(\boldsymbol{\phi}_t \odot \boldsymbol{A
 
 - [\[AAAI 2026\] RAST: A Retrieval Augmented Spatio-Temporal Framework for Traffic Prediction](rast_a_retrieval_augmented_spatio-temporal_framework_for_traffic_prediction.md)
 - [\[ACL 2025\] Embracing Large Language Models in Traffic Flow Forecasting](../../ACL2025/autonomous_driving/embracing_large_language_models_in_traffic_flow_forecasting.md)
-- [\[CVPR 2026\] MetaDAT: Generalizable Trajectory Prediction via Meta Pre-training and Data-Adaptive Test-Time Updating](../../CVPR2026/autonomous_driving/metadat_generalizable_trajectory_prediction_via_meta_pre-training_and_data-adapt.md)
 - [\[AAAI 2026\] CaTFormer: Causal Temporal Transformer with Dynamic Contextual Fusion for Driving Intention Prediction](catformer_causal_temporal_transformer_with_dynamic_contextual_fusion_for_driving.md)
+- [\[CVPR 2026\] MetaDAT: Generalizable Trajectory Prediction via Meta Pre-training and Data-Adaptive Test-Time Updating](../../CVPR2026/autonomous_driving/metadat_generalizable_trajectory_prediction_via_meta_pre-training_and_data-adapt.md)
 - [\[AAAI 2026\] Global-Lens Transformers: Adaptive Token Mixing for Dynamic Link Prediction](global-lens_transformers_adaptive_token_mixing_for_dynamic_link_prediction.md)
 
 </div>

@@ -165,11 +165,11 @@ $$\mathcal{L} = \mathcal{L}_{top}(\mathbf{A}_{ll}) + \mathcal{L}_{cls}(\mathbf{S
 
 ## 相关论文
 
-- [\[ICML 2025\] Cover Learning for Large-Scale Topology Representation](../../ICML2025/llm_nlp/cover_learning_for_large-scale_topology_representation.md)
 - [\[CVPR 2025\] Spiking Transformer: Introducing Accurate Addition-Only Spiking Self-Attention for Transformer](../../CVPR2025/llm_nlp/spiking_transformer_introducing_accurate_addition-only_spiking_self-attention_fo.md)
 - [\[CVPR 2025\] Spiking Transformer with Spatial-Temporal Attention](../../CVPR2025/llm_nlp/spiking_transformer_with_spatial-temporal_attention.md)
 - [\[NeurIPS 2025\] Spectral Conditioning of Attention Improves Transformer Performance](../../NeurIPS2025/llm_nlp/spectral_conditioning_of_attention_improves_transformer_performance.md)
 - [\[NeurIPS 2025\] Characterizing the Expressivity of Fixed-Precision Transformer Language Models](../../NeurIPS2025/llm_nlp/characterizing_the_expressivity_of_fixed-precision_transformer_language_models.md)
+- [\[ACL 2025\] A Systematic Study of Compositional Syntactic Transformer Language Models](../../ACL2025/llm_nlp/a_systematic_study_of_compositional_syntactic_transformer_language_models.md)
 
 </div>
 

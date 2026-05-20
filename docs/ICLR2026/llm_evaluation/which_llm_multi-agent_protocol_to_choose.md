@@ -171,11 +171,11 @@ tags:
 
 ## 相关论文
 
-- [\[AAAI 2026\] MAPS: Multi-Agent Personality Shaping for Collaborative Reasoning](../../AAAI2026/llm_evaluation/maps_multi-agent_personality_shaping_for_collaborative_reaso.md)
+- [\[ACL 2026\] Seeing the Whole Elephant: A Benchmark for Failure Attribution in LLM-based Multi-Agent Systems](../../ACL2026/llm_evaluation/seeing_the_whole_elephant_a_benchmark_for_failure_attribution_in_llm-based_multi.md)
 - [\[ICLR 2026\] Multi-LLM Adaptive Conformal Inference for Reliable LLM Responses](multi-llm_adaptive_conformal_inference_for_reliable_llm_responses.md)
+- [\[AAAI 2026\] MAPS: Multi-Agent Personality Shaping for Collaborative Reasoning](../../AAAI2026/llm_evaluation/maps_multi-agent_personality_shaping_for_collaborative_reaso.md)
 - [\[NeurIPS 2025\] Model Context Protocol for Vision Systems: Audit, Security, and Protocol Extensions](../../NeurIPS2025/llm_evaluation/model_context_protocol_for_vision_systems_audit_security_and_protocol_extensions.md)
-- [\[ICLR 2026\] LLM Unlearning with LLM Beliefs](llm_unlearning_with_llm_beliefs.md)
-- [\[CVPR 2025\] NADER: Neural Architecture Design via Multi-Agent Collaboration](../../CVPR2025/llm_evaluation/nader_neural_architecture_design_via_multi-agent_collaboration.md)
+- [\[ACL 2026\] RoadMapper: A Multi-Agent System for Roadmap Generation of Solving Complex Research Problems](../../ACL2026/llm_evaluation/roadmapper_a_multi-agent_system_for_roadmap_generation_of_solving_complex_resear.md)
 
 </div>
 

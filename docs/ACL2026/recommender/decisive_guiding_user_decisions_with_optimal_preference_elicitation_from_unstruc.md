@@ -15,10 +15,10 @@ tags:
 
 # Decisive: Guiding User Decisions with Optimal Preference Elicitation from Unstructured Documents
 
-**会议**: ACL 2026
-**arXiv**: [2604.18122](https://arxiv.org/abs/2604.18122)
-**代码**: 无
-**领域**: 推荐系统
+**会议**: ACL 2026  
+**arXiv**: [2604.18122](https://arxiv.org/abs/2604.18122)  
+**代码**: 无  
+**领域**: 推荐系统  
 **关键词**: 决策支持, 偏好获取, 贝叶斯推断, 文档锚定, 交互式系统
 
 ## 一句话总结
@@ -124,11 +124,11 @@ DECISIVE 的输入是一组与决策相关的非结构化文档（如产品评�
 
 ## 相关论文
 
+- [\[ACL 2026\] Mirroring Users: Towards Building Preference-aligned User Simulator with User Feedback in Recommendation](mirroring_users_towards_building_preference-aligned_user_simulator_with_user_fee.md)
 - [\[ACL 2026\] Learning to Retrieve User History and Generate User Profiles for Personalized Persuasiveness Prediction](learning_to_retrieve_user_history_and_generate_user_profiles_for_personalized_pe.md)
 - [\[ACL 2026\] HORIZON: A Benchmark for in-the-wild User Behaviour Modeling](horizon_a_benchmark_for_in-the-wild_user_behaviour_modeling.md)
-- [\[ACL 2026\] What Makes LLMs Effective Sequential Recommenders? A Study on Preference Intensity and Temporal Context](what_makes_llms_effective_sequential_recommenders_a_study_on_preference_intensit.md)
 - [\[ACL 2026\] HARPO: Hierarchical Agentic Reasoning for User-Aligned Conversational Recommendation](harpo_hierarchical_agentic_reasoning_for_user-aligned_conversational_recommendat.md)
-- [\[ICML 2025\] Adaptive Elicitation of Latent Information Using Natural Language](../../ICML2025/recommender/adaptive_elicitation_of_latent_information_using_natural_language.md)
+- [\[ACL 2026\] What Makes LLMs Effective Sequential Recommenders? A Study on Preference Intensity and Temporal Context](what_makes_llms_effective_sequential_recommenders_a_study_on_preference_intensit.md)
 
 </div>
 

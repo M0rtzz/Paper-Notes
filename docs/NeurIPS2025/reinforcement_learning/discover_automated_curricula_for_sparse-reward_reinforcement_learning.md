@@ -155,9 +155,9 @@ TD3 + curiosity、TD3 + RND、TD3 + count-based 等非 goal-conditioned 方法�
 ## 相关论文
 
 - [\[NeurIPS 2025\] Learning Interestingness in Automated Mathematical Theory Formation](learning_interestingness_in_automated_mathematical_theory_formation.md)
+- [\[ICLR 2026\] Thermodynamics of Reinforcement Learning Curricula](../../ICLR2026/reinforcement_learning/thermodynamics_of_reinforcement_learning_curricula.md)
 - [\[NeurIPS 2025\] Risk-Averse Total-Reward Reinforcement Learning](risk-averse_total-reward_reinforcement_learning.md)
 - [\[NeurIPS 2025\] Reward-Aware Proto-Representations in Reinforcement Learning](reward-aware_proto-representations_in_reinforcement_learning.md)
-- [\[ICLR 2026\] Thermodynamics of Reinforcement Learning Curricula](../../ICLR2026/reinforcement_learning/thermodynamics_of_reinforcement_learning_curricula.md)
 - [\[NeurIPS 2025\] Sample Complexity of Distributionally Robust Average-Reward Reinforcement Learning](sample_complexity_of_distributionally_robust_average-reward_reinforcement_learni.md)
 
 </div>

@@ -148,11 +148,11 @@ $$D(\mathcal{R}, \hat{\mathcal{R}}) \lesssim \frac{1}{\sqrt{T}}\left(\sqrt{S(m+n
 
 ## 相关论文
 
+- [\[ICML 2026\] Game of Thought: Robust Information Seeking with Large Language Models Using Game Theory](../../ICML2026/reinforcement_learning/game_of_thought_robust_information_seeking_with_large_language_models_using_game.md)
 - [\[ICML 2025\] Learning to Trust Bellman Updates: Selective State-Adaptive Regularization for Offline RL](learning_to_trust_bellman_updates_selective_state-adaptive_regularization_for_of.md)
 - [\[ICML 2025\] Robust Offline Reinforcement Learning with Linearly Structured f-Divergence Regularization](robust_offline_reinforcement_learning_with_linearly_structured_f-divergence_regu.md)
-- [\[NeurIPS 2025\] Learning Intractable Multimodal Policies with Reparameterization and Diversity Regularization](../../NeurIPS2025/reinforcement_learning/learning_intractable_multimodal_policies_with_reparameterization_and_diversity_r.md)
 - [\[NeurIPS 2025\] Convergence Theorems for Entropy-Regularized and Distributional Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/convergence_theorems_for_entropy-regularized_and_distributional_reinforcement_le.md)
-- [\[NeurIPS 2025\] Learning Interestingness in Automated Mathematical Theory Formation](../../NeurIPS2025/reinforcement_learning/learning_interestingness_in_automated_mathematical_theory_formation.md)
+- [\[ICML 2025\] Solving Zero-Sum Convex Markov Games](solving_zero-sum_convex_markov_games.md)
 
 </div>
 

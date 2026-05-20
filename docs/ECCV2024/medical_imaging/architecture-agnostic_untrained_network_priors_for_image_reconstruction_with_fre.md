@@ -172,8 +172,8 @@ $$\min_{\Theta, K} \mathcal{L}(\mathbf{y}; \mathbf{AG_\Theta(z)}) + \lambda \sum
 ## 相关论文
 
 - [\[ECCV 2024\] Domesticating SAM for Breast Ultrasound Image Segmentation via Spatial-Frequency Fusion and Uncertainty Correction](domesticating_sam_for_breast_ultrasound_image_segmentation_via_spatial-frequency.md)
-- [\[ECCV 2024\] Brain-ID: Learning Contrast-agnostic Anatomical Representations for Brain Imaging](brain-id_learning_contrast-agnostic_anatomical_representations_for_brain_imaging.md)
 - [\[CVPR 2026\] Adaptive Confidence Regularization for Multimodal Failure Detection](../../CVPR2026/medical_imaging/adaptive_confidence_regularization_for_multimodal_failure_detection.md)
+- [\[ECCV 2024\] Brain-ID: Learning Contrast-agnostic Anatomical Representations for Brain Imaging](brain-id_learning_contrast-agnostic_anatomical_representations_for_brain_imaging.md)
 - [\[AAAI 2026\] FunKAN: Functional Kolmogorov-Arnold Network for Medical Image Enhancement and Segmentation](../../AAAI2026/medical_imaging/funkan_functional_kolmogorov-arnold_network_for_medical_image_enhancement_and_se.md)
 - [\[CVPR 2026\] Novel Architecture of RPA In Oral Cancer Lesion Detection](../../CVPR2026/medical_imaging/novel_architecture_of_rpa_in_oral_cancer_lesion_detection.md)
 

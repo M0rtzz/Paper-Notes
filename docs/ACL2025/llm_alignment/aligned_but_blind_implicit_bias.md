@@ -143,11 +143,11 @@ tags:
 
 ## 相关论文
 
+- [\[ACL 2026\] Beyond Fixed Psychological Personas: State Beats Trait, but Language Models are State-Blind](../../ACL2026/llm_alignment/beyond_fixed_psychological_personas_state_beats_trait_but_language_models_are_st.md)
 - [\[ACL 2025\] Rewrite to Jailbreak: Discover Learnable and Transferable Implicit Harmfulness Instruction](rewrite_to_jailbreak_discover_learnable_and_transferable_implicit_harmfulness_in.md)
 - [\[ACL 2025\] QueryAttack: Jailbreaking Aligned Large Language Models Using Structured Non-natural Query Language](queryattack_jailbreaking_aligned_large_language_models_using_structured_non-natu.md)
+- [\[ICML 2026\] Implicit Preference Alignment for Human Image Animation](../../ICML2026/llm_alignment/implicit_preference_alignment_for_human_image_animation.md)
 - [\[AAAI 2026\] Reducing the Scope of Language Models](../../AAAI2026/llm_alignment/reducing_the_scope_of_language_models.md)
-- [\[AAAI 2026\] Exploring the Effects of Alignment on Numerical Bias in Large Language Models](../../AAAI2026/llm_alignment/exploring_the_effects_of_alignment_on_numerical_bias_in_large_language_models.md)
-- [\[CVPR 2026\] Bias at the End of the Score: Demographic Biases in Reward Models for T2I](../../CVPR2026/llm_alignment/bias_reward_models_t2i.md)
 
 </div>
 

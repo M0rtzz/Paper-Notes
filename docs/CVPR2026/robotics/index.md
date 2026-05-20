@@ -20,7 +20,7 @@ tags:
 
 **📷 CVPR2026** · **38** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (7)](../../ACL2026/robotics/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/robotics/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/robotics/index.md) · [🧠 NeurIPS2025 (57)](../../NeurIPS2025/robotics/index.md) · [📹 ICCV2025 (26)](../../ICCV2025/robotics/index.md) · [🧪 ICML2025 (16)](../../ICML2025/robotics/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (12)](../../ICML2026/robotics/index.md) · [💬 ACL2026 (6)](../../ACL2026/robotics/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/robotics/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/robotics/index.md) · [🧠 NeurIPS2025 (55)](../../NeurIPS2025/robotics/index.md) · [📹 ICCV2025 (26)](../../ICCV2025/robotics/index.md)
 
 🔥 **高频主题：** 机器人 ×17 · 多模态 ×10 · 推理 ×9 · 导航 ×5 · Agent ×2
 

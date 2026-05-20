@@ -145,8 +145,8 @@ MVSplat用**1/10参数量**、**2倍以上速度**超越pixelSplat。
 - [\[ECCV 2024\] CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization](cor-gs_sparse-view_3d_gaussian_splatting_via_co-regularization.md)
 - [\[ECCV 2024\] GaussCtrl: Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing](gaussctrl_multi-view_consistent_text-driven_3d_gaussian_splatting_editing.md)
 - [\[ECCV 2024\] MVDiffusion++: A Dense High-Resolution Multi-View Diffusion Model for Single or Sparse-View 3D Object Reconstruction](mvdiffusion_a_dense_high-resolution_multi-view_diffusion_model_for_single_or_spa.md)
-- [\[ECCV 2024\] SparseSSP: 3D Subcellular Structure Prediction from Sparse-View Transmitted Light Images](sparsessp_3d_subcellular_structure_prediction_from_sparse-view_transmitted_light.md)
 - [\[ECCV 2024\] Differentiable Convex Polyhedra Optimization from Multi-view Images](differentiable_convex_polyhedra_optimization_from_multi-view_images.md)
+- [\[ECCV 2024\] SparseSSP: 3D Subcellular Structure Prediction from Sparse-View Transmitted Light Images](sparsessp_3d_subcellular_structure_prediction_from_sparse-view_transmitted_light.md)
 
 </div>
 

@@ -182,8 +182,8 @@ VISA 由三个核心组件组成，构成一个优雅的流水线：
 - [\[ECCV 2024\] CoReS: Orchestrating the Dance of Reasoning and Segmentation](cores_orchestrating_the_dance_of_reasoning_and_segmentation.md)
 - [\[ECCV 2024\] ActionVOS: Actions as Prompts for Video Object Segmentation](actionvos_actions_as_prompts_for_video_object_segmentation.md)
 - [\[ECCV 2024\] OpenPSG: Open-set Panoptic Scene Graph Generation via Large Multimodal Models](openpsg_open-set_panoptic_scene_graph_generation_via_large_multimodal_models.md)
-- [\[ECCV 2024\] Unleashing the Power of Prompt-driven Nucleus Instance Segmentation](unleashing_the_power_of_prompt-driven_nucleus_instance_segmentation.md)
 - [\[CVPR 2025\] GLUS: Global-Local Reasoning Unified into A Single Large Language Model for Video Segmentation](../../CVPR2025/segmentation/glus_global-local_reasoning_unified_into_a_single_large_language_model_for_video.md)
+- [\[ECCV 2024\] SOS: Segment Object System for Open-World Instance Segmentation With Object Priors](sos_segment_object_system_for_open-world_instance_segmentation_with_object_prior.md)
 
 </div>
 

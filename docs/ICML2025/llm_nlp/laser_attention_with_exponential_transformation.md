@@ -150,7 +150,7 @@ $$\text{LASER}(X) = \log\!\Big(\text{softmax}(QK^\top) \cdot \exp(V)\Big)$$
 - [\[NeurIPS 2025\] Spectral Conditioning of Attention Improves Transformer Performance](../../NeurIPS2025/llm_nlp/spectral_conditioning_of_attention_improves_transformer_performance.md)
 - [\[NeurIPS 2025\] Strassen Attention, Split VC Dimension and Compositionality in Transformers](../../NeurIPS2025/llm_nlp/strassen_attention_split_vc_dimension_and_compositionality_in_transformers.md)
 - [\[CVPR 2025\] Spiking Transformer with Spatial-Temporal Attention](../../CVPR2025/llm_nlp/spiking_transformer_with_spatial-temporal_attention.md)
-- [\[CVPR 2025\] Robust Message Embedding via Attention Flow-Based Steganography](../../CVPR2025/llm_nlp/robust_message_embedding_via_attention_flow-based_steganography.md)
+- [\[ACL 2025\] Enhancing Transformation from Natural Language to Signal Temporal Logic Using LLMs with Diverse External Knowledge](../../ACL2025/llm_nlp/enhancing_transformation_from_natural_language_to_signal_temporal_logic_using_ll.md)
 
 </div>
 

@@ -129,8 +129,8 @@ $$n = \widetilde{\Omega}\!\left(\frac{d}{\beta^2} + \frac{d^{3/4}}{\varepsilon\a
 - [\[ICML 2025\] Improved Last-Iterate Convergence of Shuffling Gradient Methods for Nonsmooth Convex Optimization](improved_last-iterate_convergence_of_shuffling_gradient_methods_for_nonsmooth_co.md)
 - [\[ICML 2025\] Nearly Optimal Sample Complexity for Learning with Label Proportions](nearly_optimal_sample_complexity_for_learning_with_label_proportions.md)
 - [\[NeurIPS 2025\] Second-Order Optimization Under Heavy-Tailed Noise: Hessian Clipping and Sample Complexity](../../NeurIPS2025/optimization/second-order_optimization_under_heavy-tailed_noise_hessian_clipping_and_sample_c.md)
-- [\[ICML 2025\] POPri: Private Federated Learning using Preference-Optimized Synthetic Data](popri_private_federated_learning_using_preference-optimized_synthetic_data.md)
 - [\[NeurIPS 2025\] Sharper Convergence Rates for Nonconvex Optimisation via Reduction Mappings](../../NeurIPS2025/optimization/sharper_convergence_rates_for_nonconvex_optimisation_via_reduction_mappings.md)
+- [\[ICML 2025\] Enhancing Parallelism in Decentralized Stochastic Convex Optimization](enhancing_parallelism_in_decentralized_stochastic_convex_optimization.md)
 
 </div>
 

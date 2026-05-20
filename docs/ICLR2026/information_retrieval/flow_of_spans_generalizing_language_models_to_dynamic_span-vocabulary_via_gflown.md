@@ -163,11 +163,11 @@ FoSS 全面领先，In-Domain Nucleus 下比 CoG 高 5.51%，比 GFlowNets-FT �
 
 ## 相关论文
 
+- [\[ACL 2026\] Retrieval Heads are Dynamic](../../ACL2026/information_retrieval/retrieval_heads_are_dynamic.md)
 - [\[ICLR 2026\] TokMem: One-Token Procedural Memory for Large Language Models](tokmem_one-token_procedural_memory_for_large_language_models.md)
 - [\[ICLR 2026\] Query-Level Uncertainty in Large Language Models](query-level_uncertainty_in_large_language_models.md)
 - [\[ICLR 2026\] FutureMind: Equipping Small Language Models with Strategic Thinking-Pattern Priors via Adaptive Knowledge Distillation](futuremind_equipping_small_language_models_with_strategic_thinking-pattern_prior.md)
 - [\[ICLR 2026\] Hierarchical Concept-based Interpretable Models](hierarchical_concept-based_interpretable_models.md)
-- [\[ECCV 2024\] Grounding Language Models for Visual Entity Recognition](../../ECCV2024/information_retrieval/grounding_language_models_for_visual_entity_recognition.md)
 
 </div>
 

@@ -182,7 +182,7 @@ $\textsf{GF}\varphi$ 直接构造 vs 最先进约简方法（Table 2）：
 - [\[AAAI 2026\] Efficient Multiagent Planning via Shared Action Suggestions](efficient_multiagent_planning_via_shared_action_suggestions.md)
 - [\[NeurIPS 2025\] Horizon Reduction Makes RL Scalable](../../NeurIPS2025/reinforcement_learning/horizon_reduction_makes_rl_scalable.md)
 - [\[ICLR 2026\] SUSD: Structured Unsupervised Skill Discovery through State Factorization](../../ICLR2026/reinforcement_learning/susd_structured_unsupervised_skill_discovery_through_state_factorization.md)
-- [\[CVPR 2026\] Anticipatory Planning for Multimodal AI Agents](../../CVPR2026/reinforcement_learning/anticipatory_planning_for_multimodal_ai_agents.md)
+- [\[ICML 2026\] Stochastic Minimum-Cost Reach-Avoid Reinforcement Learning](../../ICML2026/reinforcement_learning/stochastic_minimum-cost_reach-avoid_reinforcement_learning.md)
 
 </div>
 

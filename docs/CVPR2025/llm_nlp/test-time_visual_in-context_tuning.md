@@ -123,8 +123,8 @@ tags:
 ## 相关论文
 
 - [\[ICML 2025\] BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute](../../ICML2025/llm_nlp/best-route_adaptive_llm_routing_with_test-time_optimal_compute.md)
-- [\[ECCV 2024\] Self-Adapting Large Visual-Language Models to Edge Devices across Visual Modalities](../../ECCV2024/llm_nlp/self-adapting_large_visual-language_models_to_edge_devices_across_visual_modalit.md)
 - [\[ACL 2025\] Exploring Explanations Improves the Robustness of In-Context Learning](../../ACL2025/llm_nlp/exploring_explanations_improves_the_robustness_of_in-context_learning.md)
+- [\[ACL 2025\] Does Time Have Its Place? Temporal Heads Where Language Models Recall Time-specific Information](../../ACL2025/llm_nlp/does_time_have_its_place_temporal_heads_where_language_models_recall_time-specif.md)
 - [\[ACL 2025\] LLM-Powered Test Case Generation for Detecting Bugs in Plausible Programs](../../ACL2025/llm_nlp/llm_test_case_gen_bugs.md)
 - [\[ACL 2025\] Leveraging Human Production-Interpretation Asymmetries to Test LLM Cognitive Plausibility](../../ACL2025/llm_nlp/leveraging_human_production-interpretation_asymmetries_to_test_llm_cognitive_pla.md)
 

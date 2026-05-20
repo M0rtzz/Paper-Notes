@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 机器人/具身智能方向13篇论文解读
+  ECCV2024 机器人/具身智能方向12篇论文解读
 description: >-
-  13篇ECCV2024的机器人/具身智能方向论文解读，涵盖机器人、导航、模型压缩、LLM、多模态、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  12篇ECCV2024的机器人/具身智能方向论文解读，涵盖机器人、导航、模型压缩、LLM、少样本学习、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ECCV2024"
   - "机器人/具身智能"
@@ -12,16 +12,16 @@ tags:
   - "导航"
   - "模型压缩"
   - "LLM"
-  - "多模态"
   - "少样本学习"
+  - "Agent"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🤖 机器人/具身智能
 
-**🎞️ ECCV2024** · **13** 篇论文解读
+**🎞️ ECCV2024** · **12** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (7)](../../ACL2026/robotics/index.md) · [📷 CVPR2026 (38)](../../CVPR2026/robotics/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/robotics/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/robotics/index.md) · [🧠 NeurIPS2025 (57)](../../NeurIPS2025/robotics/index.md) · [📹 ICCV2025 (26)](../../ICCV2025/robotics/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (12)](../../ICML2026/robotics/index.md) · [💬 ACL2026 (6)](../../ACL2026/robotics/index.md) · [📷 CVPR2026 (38)](../../CVPR2026/robotics/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/robotics/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/robotics/index.md) · [🧠 NeurIPS2025 (55)](../../NeurIPS2025/robotics/index.md)
 
 🔥 **高频主题：** 机器人 ×5 · 导航 ×3
 
@@ -56,10 +56,6 @@ tags:
 **[LLM as Copilot for Coarse-Grained Vision-and-Language Navigation](llm_as_copilot_for_coarse-grained_vision-and-language_navigation.md)**
 
 :   本文提出VLN-Copilot框架，让视觉语言导航智能体在粗粒度（简短模糊）指令下遇到困惑时主动向LLM求助，LLM作为副驾驶实时生成细粒度导航指导，在两个粗粒度VLN数据集上显著提升导航成功率。
-
-**[Octopus: Embodied Vision-Language Programmer from Environmental Feedback](octopus_embodied_vision-language_programmer_from_environmental_feedback.md)**
-
-:   提出 Octopus，一个具身视觉-语言编程模型，通过生成可执行代码来连接高层规划与底层操控，并引入 Reinforcement Learning with Environmental Feedback (RLEF) 训练方案来提升决策质量。
 
 **[Prioritized Semantic Learning for Zero-shot Instance Navigation](prioritized_semantic_learning_for_zero-shot_instance_navigation.md)**
 

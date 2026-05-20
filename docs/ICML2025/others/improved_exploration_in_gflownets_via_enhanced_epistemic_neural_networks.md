@@ -138,7 +138,7 @@ tags:
 - [\[ICML 2025\] Permutation Equivariant Neural Networks for Symmetric Tensors](permutation_equivariant_neural_networks_for_symmetric_tensors.md)
 - [\[ICML 2025\] Rethinking Aleatoric and Epistemic Uncertainty](rethinking_aleatoric_and_epistemic_uncertainty.md)
 - [\[ICML 2025\] Curvature Enhanced Data Augmentation for Regression](curvature_enhanced_data_augmentation_for_regression.md)
-- [\[NeurIPS 2025\] Infrequent Exploration in Linear Bandits](../../NeurIPS2025/others/infrequent_exploration_in_linear_bandits.md)
+- [\[NeurIPS 2025\] Depth-Bounds for Neural Networks via the Braid Arrangement](../../NeurIPS2025/others/depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
 
 </div>
 

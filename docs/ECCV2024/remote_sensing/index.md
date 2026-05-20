@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 遥感方向7篇论文解读
+  ECCV2024 遥感方向6篇论文解读
 description: >-
-  7篇ECCV2024的遥感方向论文解读，涵盖遥感、对抗鲁棒、重识别、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  6篇ECCV2024的遥感方向论文解读，涵盖遥感、对抗鲁棒、重识别等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
   - "遥感"
@@ -10,15 +10,14 @@ tags:
   - "论文笔记"
   - "对抗鲁棒"
   - "重识别"
-  - "自监督学习"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛰️ 遥感
 
-**🎞️ ECCV2024** · **7** 篇论文解读
+**🎞️ ECCV2024** · **6** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/remote_sensing/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/remote_sensing/index.md) · [🔬 ICLR2026 (6)](../../ICLR2026/remote_sensing/index.md) · [🤖 AAAI2026 (8)](../../AAAI2026/remote_sensing/index.md) · [🧠 NeurIPS2025 (11)](../../NeurIPS2025/remote_sensing/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/remote_sensing/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (15)](../../CVPR2026/remote_sensing/index.md) · [🔬 ICLR2026 (6)](../../ICLR2026/remote_sensing/index.md) · [🤖 AAAI2026 (8)](../../AAAI2026/remote_sensing/index.md) · [🧠 NeurIPS2025 (11)](../../NeurIPS2025/remote_sensing/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/remote_sensing/index.md) · [🧪 ICML2025 (7)](../../ICML2025/remote_sensing/index.md)
 
 🔥 **高频主题：** 遥感 ×3
 
@@ -41,10 +40,6 @@ tags:
 **[Masked Angle-Aware Autoencoder for Remote Sensing Images](masked_angle-aware_autoencoder_for_remote_sensing_images.md)**
 
 :   提出 MA3E，在 MAE 预训练中显式引入角度变化（通过 scaling center crop 构建旋转裁剪），并用最优传输损失自动分配重建目标，使模型感知遥感目标的多样角度，学习旋转不变表示。
-
-**[SCPNet: Unsupervised Cross-modal Homography Estimation via Intra-modal Self-supervised Learning](scpnet_unsupervised_cross-modal_homography_estimation_via_intra-modal_self-super.md)**
-
-:   提出 SCPNet，通过模内自监督学习（intra-modal self-supervised learning）、相关性网络和一致性特征图投影三个关键组件的协同，首次在卫星-地图等大模态差距数据集上实现了有效的无监督跨模态单应性估计，MACE 比监督方法 MHN 低 14%。
 
 **[Weakly-Supervised Camera Localization by Ground-to-Satellite Image Registration](weakly-supervised_camera_localization_by_ground-to-satellite_image_registration.md)**
 

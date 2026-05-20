@@ -15,10 +15,10 @@ tags:
 
 # IMPACT: Importance-Aware Activation Space Reconstruction
 
-**会议**: ACL 2026
-**arXiv**: [2507.03828](https://arxiv.org/abs/2507.03828)
-**代码**: 无
-**领域**: 模型压缩
+**会议**: ACL 2026  
+**arXiv**: [2507.03828](https://arxiv.org/abs/2507.03828)  
+**代码**: 无  
+**领域**: 模型压缩  
 **关键词**: 低秩压缩, 激活空间重构, 重要性感知, 梯度加权, 大语言模型
 
 ## 一句话总结

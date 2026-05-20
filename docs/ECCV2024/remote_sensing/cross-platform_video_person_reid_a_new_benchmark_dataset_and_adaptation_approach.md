@@ -176,9 +176,9 @@ $$\mathcal{L}_{stage2} = \mathcal{L}_{v2sce} + \beta\mathcal{L}_{tri} + \gamma\m
 
 - [\[CVPR 2026\] Cross-modal Fuzzy Alignment Network for Text-Aerial Person Retrieval and A Large-scale Benchmark](../../CVPR2026/remote_sensing/cross-modal_fuzzy_alignment_network_for_text-aerial_person_retrieval_and_a_large.md)
 - [\[ECCV 2024\] Adapting Fine-Grained Cross-View Localization to Areas without Fine Ground Truth](adapting_fine-grained_cross-view_localization_to_areas_without_fine_ground_truth.md)
-- [\[ECCV 2024\] SCPNet: Unsupervised Cross-modal Homography Estimation via Intra-modal Self-supervised Learning](scpnet_unsupervised_cross-modal_homography_estimation_via_intra-modal_self-super.md)
 - [\[ECCV 2024\] ConGeo: Robust Cross-View Geo-Localization Across Ground View Variations](congeo_robust_cross-view_geo-localization_across_ground_view_variations.md)
 - [\[ICCV 2025\] CityNav: A Large-Scale Dataset for Real-World Aerial Navigation](../../ICCV2025/remote_sensing/citynav_a_large-scale_dataset_for_real-world_aerial_navigation.md)
+- [\[CVPR 2026\] No Labels, No Look-Ahead: Unsupervised Online Video Stabilization with Classical Priors](../../CVPR2026/remote_sensing/no_labels_no_look-ahead_unsupervised_online_video_stabilization_with_classical_p.md)
 
 </div>
 

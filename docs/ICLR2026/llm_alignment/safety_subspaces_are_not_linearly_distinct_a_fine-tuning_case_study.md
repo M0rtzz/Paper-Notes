@@ -137,11 +137,11 @@ tags:
 
 ## 相关论文
 
+- [\[ICML 2026\] Safety Anchor: Defending Harmful Fine-tuning via Geometric Bottlenecks](../../ICML2026/llm_alignment/safety_anchor_defending_harmful_fine-tuning_via_geometric_bottlenecks.md)
 - [\[ICLR 2026\] Antibody: Strengthening Defense Against Harmful Fine-Tuning for Large Language Models via Attenuating Harmful Gradient Influence](antibody_strengthening_defense_against_harmful_fine-tuning_for_large_language_mo.md)
-- [\[ICML 2025\] Safety Alignment Can Be Not Superficial With Explicit Safety Signals](../../ICML2025/llm_alignment/safety_alignment_can_be_not_superficial_with_explicit_safety_signals.md)
 - [\[ICLR 2026\] Superficial Safety Alignment Hypothesis](superficial_safety_alignment_hypothesis.md)
 - [\[ACL 2026\] SafeMERGE: Preserving Safety Alignment in Fine-Tuned Large Language Models via Selective Layer-Wise Model Merging](../../ACL2026/llm_alignment/safemerge_preserving_safety_alignment_in_fine-tuned_large_language_models_via_se.md)
-- [\[ICML 2025\] Vulnerability-Aware Alignment: Mitigating Uneven Forgetting in Harmful Fine-Tuning](../../ICML2025/llm_alignment/vulnerability-aware_alignment_mitigating_uneven_forgetting_in_harmful_fine-tunin.md)
+- [\[ACL 2025\] Intuitive Fine-Tuning: Towards Simplifying Alignment into a Single Process](../../ACL2025/llm_alignment/intuitive_fine_tuning_simplifying_alignment_into_single_process.md)
 
 </div>
 

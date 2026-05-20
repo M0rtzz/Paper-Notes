@@ -132,9 +132,9 @@ ROI 对比：RLTHF 相对于 Random 标注的投资回报率在 HH-RLHF 上高 1
 ## 相关论文
 
 - [\[NeurIPS 2025\] Position: Towards Bidirectional Human-AI Alignment](../../NeurIPS2025/recommender/position_towards_bidirectional_human-ai_alignment.md)
+- [\[ICML 2025\] Recommendations and Reporting Checklist for Rigorous & Transparent Human Baselines in Model Evaluations](recommendations_and_reporting_checklist_for_rigorous_transparent_human_baselines.md)
 - [\[AAAI 2026\] Align³GR: Unified Multi-Level Alignment for LLM-based Generative Recommendation](../../AAAI2026/recommender/align3gr_unified_multi-level_alignment_for_llm-based_generat.md)
 - [\[ICML 2025\] PARM: Multi-Objective Test-Time Alignment via Preference-Aware Autoregressive Reward Model](parm_multi-objective_test-time_alignment_via_preference-aware_autoregressive_rew.md)
-- [\[ICML 2025\] Recommendations and Reporting Checklist for Rigorous & Transparent Human Baselines in Model Evaluations](recommendations_and_reporting_checklist_for_rigorous_transparent_human_baselines.md)
 - [\[ICML 2025\] MATCHA: Toward Safe and Human-Aligned Game Conversational Recommendation via Multi-Agent Decomposition](toward_safe_and_human-aligned_game_conversational_recommendation_via_multi-agent.md)
 
 </div>

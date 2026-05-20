@@ -193,10 +193,10 @@ NSL-PFN快约4-5个数量级！
 ## 相关论文
 
 - [\[ICML 2025\] Position: The Future of Bayesian Prediction Is Prior-Fitted](position_the_future_of_bayesian_prediction_is_prior-fitted.md)
-- [\[ICML 2025\] Does Data Scaling Lead to Visual Compositional Generalization?](does_data_scaling_lead_to_visual_compositional_generalization.md)
 - [\[NeurIPS 2025\] Superposition Yields Robust Neural Scaling](../../NeurIPS2025/llm_pretraining/superposition_yields_robust_neural_scaling.md)
+- [\[ICML 2025\] Does Data Scaling Lead to Visual Compositional Generalization?](does_data_scaling_lead_to_visual_compositional_generalization.md)
 - [\[NeurIPS 2025\] Generalization Bounds for Rank-sparse Neural Networks](../../NeurIPS2025/llm_pretraining/generalization_bounds_for_rank-sparse_neural_networks.md)
-- [\[ICML 2025\] Scaling Inference-Efficient Language Models](scaling_inference-efficient_language_models.md)
+- [\[NeurIPS 2025\] Neural Collapse under Gradient Flow on Shallow ReLU Networks for Orthogonally Separable Data](../../NeurIPS2025/llm_pretraining/neural_collapse_under_gradient_flow_on_shallow_relu_networks_for_orthogonally_se.md)
 
 </div>
 

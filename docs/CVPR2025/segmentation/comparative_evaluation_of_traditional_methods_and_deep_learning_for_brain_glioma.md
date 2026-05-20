@@ -132,9 +132,9 @@ tags:
 
 - [\[CVPR 2025\] LiVOS: Light Video Object Segmentation with Gated Linear Matching](livos_light_video_object_segmentation_with_gated_linear_matching.md)
 - [\[CVPR 2025\] Your ViT is Secretly an Image Segmentation Model](your_vit_is_secretly_an_image_segmentation_model.md)
-- [\[CVPR 2025\] Mosaic3D: Foundation Dataset and Model for Open-Vocabulary 3D Segmentation](mosaic3d_foundation_dataset_and_model_for_open-vocabulary_3d_segmentation.md)
 - [\[CVPR 2025\] Golden Cudgel Network for Real-Time Semantic Segmentation](golden_cudgel_network_for_real-time_semantic_segmentation.md)
 - [\[CVPR 2025\] Show and Tell: Visually Explainable Deep Neural Nets via Spatially-Aware Concept Bottleneck Models](show_and_tell_visually_explainable_deep_neural_nets_via_spatially-aware_concept_.md)
+- [\[CVPR 2025\] DeCLIP: Decoupled Learning for Open-Vocabulary Dense Perception](declip_decoupled_learning_for_open-vocabulary_dense_perception.md)
 
 </div>
 

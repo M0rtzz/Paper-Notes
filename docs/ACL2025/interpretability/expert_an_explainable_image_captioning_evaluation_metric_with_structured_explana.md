@@ -205,8 +205,8 @@ EXPERT 在所有无参考指标中取得 SOTA（除 Pascal-50S）。甚至超越
 - [\[CVPR 2025\] Why Does It Look There? Structured Explanations for Image Classification](../../CVPR2025/interpretability/why_does_it_look_there_structured_explanations_for_image_classification.md)
 - [\[NeurIPS 2025\] ARECHO: Autoregressive Evaluation via Chain-Based Hypothesis Optimization for Speech Multi-Metric Estimation](../../NeurIPS2025/interpretability/arecho_autoregressive_evaluation_via_chain-based_hypothesis_optimization_for_spe.md)
 - [\[ACL 2026\] TabReX: Tabular Referenceless eXplainable Evaluation](../../ACL2026/interpretability/tabrex_tabular_referenceless_explainable_evaluation.md)
-- [\[ACL 2025\] Establishing Trustworthy LLM Evaluation via Shortcut Neuron Analysis](shortcut_neuron_eval.md)
 - [\[ACL 2025\] Bias Attribution in Filipino Language Models: Extending a Bias Interpretability Metric for Application on Agglutinative Languages](bias_attribution_in_filipino_language_models_extending_a_bias_interpretability_m.md)
+- [\[ACL 2025\] Establishing Trustworthy LLM Evaluation via Shortcut Neuron Analysis](shortcut_neuron_eval.md)
 
 </div>
 

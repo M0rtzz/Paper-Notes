@@ -125,10 +125,10 @@ tags:
 ## 相关论文
 
 - [\[ECCV 2024\] GraphBEV: Towards Robust BEV Feature Alignment for Multi-Modal 3D Object Detection](graphbev_towards_robust_bev_feature_alignment_for_multi-modal_3d_object_detectio.md)
+- [\[AAAI 2026\] PriorDrive: Enhancing Online HD Mapping with Unified Vector Priors](../../AAAI2026/autonomous_driving/priordrive_enhancing_online_hd_mapping_with_unified_vector_p.md)
 - [\[ECCV 2024\] H-V2X: A Large Scale Highway Dataset for BEV Perception](h-v2x_a_large_scale_highway_dataset_for_bev_perception.md)
 - [\[CVPR 2026\] Failure Modes for Deep Learning-Based Online Mapping: How to Measure and Address Them](../../CVPR2026/autonomous_driving/failure_modes_for_deep_learning-based_online_mapping_how_to_measure_and_address_.md)
 - [\[ECCV 2024\] MapTracker: Tracking with Strided Memory Fusion for Consistent Vector HD Mapping](maptracker_tracking_with_strided_memory_fusion_for_consistent_vector_hd_mapping.md)
-- [\[ECCV 2024\] Navigation Instruction Generation with BEV Perception and Large Language Models](navigation_instruction_generation_with_bev_perception_and_large_language_models.md)
 
 </div>
 

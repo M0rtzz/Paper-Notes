@@ -138,7 +138,7 @@ $$\min_\Psi \max P_e \geq \frac{1}{2}\left(1 - \frac{1}{2\sqrt{d}}\left[\frac{1}
 - [\[ICML 2025\] Rethinking Explainable Machine Learning as Applied Statistics](../../ICML2025/interpretability/rethinking_explainable_machine_learning_as_applied_statistics.md)
 - [\[ICLR 2026\] When Thinking Backfires: Mechanistic Insights Into Reasoning-Induced Misalignment](when_thinking_backfires_mechanistic_insights_into_reasoning-induced_misalignment.md)
 - [\[ICLR 2026\] Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data](behavior_learning_bl_learning_hierarchical_optimization_structures_from_data.md)
-- [\[ICLR 2026\] Decoupling Dynamical Richness from Representation Learning: Towards Practical Measurement](decoupling_dynamical_richness_from_representation_learning_towards_practical_mea.md)
+- [\[ICML 2025\] Conformal Prediction as Bayesian Quadrature](../../ICML2025/interpretability/conformal_prediction_as_bayesian_quadrature.md)
 
 </div>
 

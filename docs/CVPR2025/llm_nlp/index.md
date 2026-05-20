@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 LLM / NLP方向20篇论文解读
+  CVPR2025 LLM / NLP方向19篇论文解读
 description: >-
-  20篇CVPR2025的 LLM / NLP 方向论文解读，涵盖对抗鲁棒、对齐/RLHF、对话系统、文本摘要、水印/隐写、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  19篇CVPR2025的 LLM / NLP 方向论文解读，涵盖对抗鲁棒、对齐/RLHF、对话系统、文本摘要、水印/隐写、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "LLM / NLP"
@@ -19,15 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 LLM / NLP
 
-**📷 CVPR2025** · **20** 篇论文解读
+**📷 CVPR2025** · **19** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (35)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (53)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (50)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (35)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (32)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_nlp/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×2
-
-**[ArtFormer: Controllable Generation of Diverse 3D Articulated Objects](artformer_controllable_generation_of_diverse_3d_articulated_objects.md)**
-
-:   提出ArtFormer框架，通过树结构参数化和条件扩散Shape Prior，从文本/图像描述生成高质量、多样化且运动学关系准确的3D关节物体，在生成质量和多样性上显著超越现有方法。
 
 **[Attribute-formed Class-specific Concept Space: Endowing Language Bottleneck Model with Better Interpretability and Scalability](attribute-formed_class-specific_concept_space_endowing_language_bottleneck_model.md)**
 

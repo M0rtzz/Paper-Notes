@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 语义分割方向47篇论文解读
+  NeurIPS2025 语义分割方向48篇论文解读
 description: >-
-  47篇NeurIPS2025的语义分割方向论文解读，涵盖语义分割、扩散模型、对抗鲁棒、推理、自监督学习、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  48篇NeurIPS2025的语义分割方向论文解读，涵盖语义分割、扩散模型、对抗鲁棒、自监督学习、推理、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "语义分割"
@@ -10,19 +10,19 @@ tags:
   - "论文笔记"
   - "扩散模型"
   - "对抗鲁棒"
-  - "推理"
   - "自监督学习"
+  - "推理"
   - "强化学习"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**🧠 NeurIPS2025** · **47** 篇论文解读
+**🧠 NeurIPS2025** · **48** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (85)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [📹 ICCV2025 (74)](../../ICCV2025/segmentation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/segmentation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/segmentation/index.md) · [💬 ACL2026 (1)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [📹 ICCV2025 (73)](../../ICCV2025/segmentation/index.md)
 
-🔥 **高频主题：** 语义分割 ×21 · 扩散模型 ×7 · 对抗鲁棒 ×5 · 推理 ×3 · 自监督学习 ×2
+🔥 **高频主题：** 语义分割 ×20 · 扩散模型 ×7 · 对抗鲁棒 ×5 · 自监督学习 ×2 · 推理 ×2
 
 **[Alligat0R: Pre-Training through Covisibility Segmentation for Relative Camera Pose Regression](alligat0r_pre-training_through_co-visibility_segmentation_for_relative_camera_po.md)**
 
@@ -80,6 +80,10 @@ tags:
 
 :   提出HumanCrafter——首个统一单图3D人体重建与人体部位语义分割的前馈框架，通过人体几何先验引导的Transformer聚合多视角特征，结合DINOv2自监督语义先验构建3D特征场，在2K2K和THuman2.1上同时超越现有3D重建和分割SOTA。
 
+**[Instant Video Models: Universal Adapters for Stabilizing Image-Based Networks](instant_video_models_universal_adapters_for_stabilizing_image-based_networks.md)**
+
+:   提出一类通用的稳定化适配器（Stabilization Adapters），可插入几乎任何图像模型架构中，通过冻结基础网络仅训练适配器参数，配合统一的精度-稳定性-鲁棒性损失函数，使帧级模型获得视频时序一致性和腐蚀鲁棒性。
+
 **[InstructSAM: A Training-Free Framework for Instruction-Oriented Remote Sensing Object Recognition](instructsam_a_training-free_framework_for_instruction-oriented_remote_sensing_ob.md)**
 
 :   定义指令导向目标计数/检测/分割(InstructCDS)新任务，构建EarthInstruct遥感基准（覆盖开放词汇/开放端/开放子类三种设置），提出InstructSAM——无需训练的框架：LVLM解析指令+计数、SAM2生成掩码提议、CLIP计算相似度，通过二进制整数规划(BIP)在计数约束下实现掩码-标签最优匹配，推理时间近乎恒定且优于专用基线。
@@ -100,13 +104,13 @@ tags:
 
 :   训练 vanilla RNN 复现 HMM 的发射统计，然后通过反向工程揭示 RNN 实现离散随机状态转换的机制：噪声驱动的轨道动力学 + "kick 神经元"触发的快速转换，本质是自诱导随机共振（SISR），该动力学基元可组合复用以模拟更复杂的离散潜在结构。
 
+**[Mechanistic Interpretability of RNNs Emulating Hidden Markov Models](mechanistic_interpretability_of_rnns_emulating_hidden_markov_models.md)**
+
+:   训练vanilla RNN复现隐马尔可夫模型（HMM）的发射统计量，然后通过逆向工程揭示RNN利用噪声维持的轨道动力学、"kick neuron"电路和自致随机共振机制来实现离散随机状态转换的计算原理。
+
 **[MultiHuman-Testbench: Benchmarking Image Generation for Multiple Humans](multihuman-testbench_benchmarking_image_generation_for_multiple_humans.md)**
 
 :   提出 MultiHuman-Testbench，首个系统性评估多人图像生成的基准，包含 1800 个测试样本配对 5550 张人脸图像，以及基于匈牙利匹配的身份相似度等多维度评估指标，并提出区域隔离和隐式匹配技术提升现有方法性能。
-
-**[Novel Class Discovery for Point Cloud Segmentation via Joint Learning of Causal Representation and Reasoning](novel_class_discovery_for_point_cloud_segmentation_via_joint_learning_of_causal_.md)**
-
-:   本文首次将因果学习引入3D点云新类发现（3D-NCD），通过结构因果模型（SCM）分析基类中的混杂因子和基-新类间的因果关系，提出因果表示原型学习（通过对抗网络消除混杂因子）和基于图的因果推理（GCN生成伪标签），在SemanticKITTI和SemanticPOSS上取得了SOTA结果。
 
 **[OmniSegmentor: A Flexible Multi-Modal Learning Framework for Semantic Segmentation](omnisegmentor_a_flexible_multi-modal_learning_framework_for_semantic_segmentatio.md)**
 

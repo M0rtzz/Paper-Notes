@@ -189,7 +189,7 @@ $$\mathbf{z}_i^{(l+1)} \leftarrow f_{\text{thick}}^V(\mathbf{z}_i^{\text{surf},(
 - [\[NeurIPS 2025\] Copresheaf Topological Neural Networks: A Generalized Deep Learning Framework](../../NeurIPS2025/3d_vision/copresheaf_topological_neural_networks_a_generalized_deep_learning_framework.md)
 - [\[ICML 2025\] FlowDrag: 3D-aware Drag-based Image Editing with Mesh-guided Deformation Vector Flow Fields](flowdrag_3d-aware_drag-based_image_editing_with_mesh-guided_deformation_vector_f.md)
 - [\[ICCV 2025\] Nautilus: Locality-aware Autoencoder for Scalable Mesh Generation](../../ICCV2025/3d_vision/nautilus_locality-aware_autoencoder_for_scalable_mesh_generation.md)
-- [\[ICML 2025\] FreeMesh: Boosting Mesh Generation with Coordinates Merging](freemesh_boosting_mesh_generation_with_coordinates_merging.md)
+- [\[CVPR 2025\] Exploiting Deblurring Networks for Radiance Fields](../../CVPR2025/3d_vision/exploiting_deblurring_networks_for_radiance_fields.md)
 
 </div>
 

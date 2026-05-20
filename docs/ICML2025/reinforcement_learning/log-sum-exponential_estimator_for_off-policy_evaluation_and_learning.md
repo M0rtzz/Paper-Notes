@@ -135,7 +135,7 @@ $$\mathbb{E}\left[(w_\theta(A,X) R)^{1+\epsilon}\right] \leq \nu$$
 - [\[ICLR 2026\] A Unifying View of Coverage in Linear Off-Policy Evaluation](../../ICLR2026/reinforcement_learning/a_unifying_view_of_coverage_in_linear_off-policy_evaluation.md)
 - [\[NeurIPS 2025\] Bootstrap Off-policy with World Model (BOOM)](../../NeurIPS2025/reinforcement_learning/bootstrap_off-policy_with_world_model.md)
 - [\[AAAI 2026\] Behaviour Policy Optimization: Provably Lower Variance Return Estimates for Off-Policy Reinforcement Learning](../../AAAI2026/reinforcement_learning/behaviour_policy_optimization_provably_lower_variance_return_estimates_for_off-p.md)
-- [\[ICML 2025\] Wasserstein Policy Optimization](wasserstein_policy_optimization.md)
+- [\[ICML 2025\] Solving Zero-Sum Convex Markov Games](solving_zero-sum_convex_markov_games.md)
 
 </div>
 

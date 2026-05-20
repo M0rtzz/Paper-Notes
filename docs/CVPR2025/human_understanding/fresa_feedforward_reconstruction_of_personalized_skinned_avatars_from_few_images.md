@@ -141,7 +141,7 @@ tags:
 - [\[ICCV 2025\] Avat3r: Large Animatable Gaussian Reconstruction Model for High-fidelity 3D Head Avatars](../../ICCV2025/human_understanding/avat3r_large_animatable_gaussian_reconstruction_model_for_hi.md)
 - [\[CVPR 2025\] ShowMak3r++: Compositional Entertainment Video Reconstruction](showmak3r_compositional_tv_show_reconstruction.md)
 - [\[CVPR 2025\] WildAvatar: Learning In-the-Wild 3D Avatars from the Web](wildavatar_learning_in-the-wild_3d_avatars_from_the_web.md)
-- [\[ECCV 2024\] CanonicalFusion: Generating Drivable 3D Human Avatars from Multiple Images](../../ECCV2024/human_understanding/canonicalfusion_generating_drivable_3d_human_avatars_from_multiple_images.md)
+- [\[CVPR 2025\] RGBAvatar: Reduced Gaussian Blendshapes for Online Modeling of Head Avatars](rgbavatar_reduced_gaussian_blendshapes_for_online_modeling_of_head_avatars.md)
 
 </div>
 

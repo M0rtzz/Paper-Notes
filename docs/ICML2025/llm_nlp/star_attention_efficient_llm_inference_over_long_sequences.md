@@ -137,8 +137,8 @@ tags:
 - [\[ACL 2025\] Bitnet.cpp: Efficient Edge Inference for Ternary LLMs](../../ACL2025/llm_nlp/bitnetcpp_efficient_edge_inference_for_ternary_llms.md)
 - [\[ECCV 2024\] Stripe Observation Guided Inference Cost-Free Attention Mechanism](../../ECCV2024/llm_nlp/stripe_observation_guided_inference_cost-free_attention_mechanism.md)
 - [\[ACL 2025\] MHA2MLA: Towards Economical Inference by Enabling DeepSeek's Multi-Head Latent Attention in Any Transformer-based LLMs](../../ACL2025/llm_nlp/mha2mla_deepseek_latent_attention.md)
-- [\[ICML 2025\] TabFlex: Scaling Tabular Learning to Millions with Linear Attention](tabflex_scaling_tabular_learning_to_millions_with_linear_attention.md)
 - [\[ACL 2025\] LLM×MapReduce: Simplified Long-Sequence Processing using Large Language Models](../../ACL2025/llm_nlp/llm_mapreduce_simplified_long_sequence_processing.md)
+- [\[ICML 2025\] TabFlex: Scaling Tabular Learning to Millions with Linear Attention](tabflex_scaling_tabular_learning_to_millions_with_linear_attention.md)
 
 </div>
 

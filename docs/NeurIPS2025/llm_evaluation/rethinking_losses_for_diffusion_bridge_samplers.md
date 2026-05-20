@@ -131,7 +131,7 @@ $$\nabla_\nu D_{LV}^{q_{\alpha,\nu}^*}(q_{\alpha,\nu}, p_{\phi,\nu}) = \mathbb{E
 - [\[ICML 2025\] Gradient Aligned Regression via Pairwise Losses](../../ICML2025/llm_evaluation/gradient_aligned_regression_via_pairwise_losses.md)
 - [\[CVPR 2025\] Erase Diffusion: Empowering Object Removal Through Calibrating Diffusion Pathways (EraDiff)](../../CVPR2025/llm_evaluation/erase_diffusion_empowering_object_removal_through_calibrating_diffusion_pathways.md)
 - [\[ICCV 2025\] Degradation-Modeled Multipath Diffusion for Tunable Metalens Photography](../../ICCV2025/llm_evaluation/degradation-modeled_multipath_diffusion_for_tunable_metalens_photography.md)
-- [\[ICCV 2025\] Lay2Story: Extending Diffusion Transformers for Layout-Togglable Story Generation](../../ICCV2025/llm_evaluation/lay2story_extending_diffusion_transformers_for_layout-togglable_story_generation.md)
+- [\[NeurIPS 2025\] Not All Splits Are Equal: Rethinking Attribute Generalization Across Unrelated Categories](not_all_splits_are_equal_rethinking_attribute_generalization_across_unrelated_ca.md)
 
 </div>
 

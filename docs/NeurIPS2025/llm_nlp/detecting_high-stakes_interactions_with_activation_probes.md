@@ -127,10 +127,10 @@ tags:
 ## 相关论文
 
 - [\[NeurIPS 2025\] Polar Sparsity: High Throughput Batched LLM Inferencing with Scalable Contextual Sparsity](polar_sparsity_high_throughput_batched_llm_inferencing_with_scalable_contextual_.md)
-- [\[ACL 2025\] Personalized Text Generation with Contrastive Activation Steering](../../ACL2025/llm_nlp/personalized_text_generation_with_contrastive_activation_steering.md)
-- [\[ICML 2025\] B-score: Detecting biases in large language models using response history](../../ICML2025/llm_nlp/b-score_detecting_biases_in_large_language_models_using_response_history.md)
 - [\[ICML 2025\] LaRoSA: Enhancing LLM Efficiency via Layerwise Rotated Sparse Activation](../../ICML2025/llm_nlp/la_rosa_enhancing_llm_efficiency_via_layerwise_rotated_sparse_activation.md)
 - [\[ACL 2025\] Improving Preference Extraction In LLMs By Identifying Latent Knowledge Through Classifying Probes](../../ACL2025/llm_nlp/improving_preference_extraction_in_llms_by_identifying_latent_knowledge_through_.md)
+- [\[ICML 2025\] B-score: Detecting biases in large language models using response history](../../ICML2025/llm_nlp/b-score_detecting_biases_in_large_language_models_using_response_history.md)
+- [\[ACL 2025\] LLM-Powered Test Case Generation for Detecting Bugs in Plausible Programs](../../ACL2025/llm_nlp/llm_test_case_gen_bugs.md)
 
 </div>
 

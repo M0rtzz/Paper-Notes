@@ -2,16 +2,16 @@
 title: >-
   AAAI2026 自动驾驶方向58篇论文解读
 description: >-
-  58篇AAAI2026的自动驾驶方向论文解读，涵盖自动驾驶、3D 目标检测、对抗鲁棒、扩散模型、Agent、重识别等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  58篇AAAI2026的自动驾驶方向论文解读，涵盖自动驾驶、3D 目标检测、扩散模型、Agent、对抗鲁棒、重识别等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "自动驾驶"
   - "论文解读"
   - "论文笔记"
   - "3D 目标检测"
-  - "对抗鲁棒"
   - "扩散模型"
   - "Agent"
+  - "对抗鲁棒"
   - "重识别"
 ---
 
@@ -20,9 +20,9 @@ tags:
 
 **🤖 AAAI2026** · **58** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (88)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (11)](../../ICML2025/autonomous_driving/index.md) · [💬 ACL2025 (1)](../../ACL2025/autonomous_driving/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/autonomous_driving/index.md) · [📷 CVPR2026 (88)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (49)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (11)](../../ICML2025/autonomous_driving/index.md)
 
-🔥 **高频主题：** 自动驾驶 ×8 · 3D 目标检测 ×6 · 对抗鲁棒 ×5 · 扩散模型 ×5 · Agent ×4
+🔥 **高频主题：** 自动驾驶 ×9 · 3D 目标检测 ×5 · 扩散模型 ×5 · Agent ×5 · 对抗鲁棒 ×4
 
 **[A Data-Driven Model Predictive Control Framework for Multi-Aircraft TMA Routing Under Travel Time Uncertainty](a_data-driven_model_predictive_control_framework_for_multi-aircraft_tma_routing_.md)**
 
@@ -60,7 +60,7 @@ tags:
 
 :   识别出端到端自动驾驶中ego status过度依赖的架构根源（BEV编码器中ego status的过早融合），提出AdaptiveAD双分支架构：场景驱动分支（去除ego status）和自我驱动分支独立生成决策，再通过场景感知融合模块自适应整合，配合路径注意力、BEV单向蒸馏和自回归在线建图辅助任务，在nuScenes上达到SOTA规划性能。
 
-**[SAML: 可微语义元学习框架用于长尾运动预测](differentiable_semantic_meta-learning_framework_for_long-tail_motion_forecasting.md)**
+**[Differentiable Semantic Meta-Learning Framework for Long-Tail Motion Forecasting in Autonomous Driving](differentiable_semantic_meta-learning_framework_for_long-tail_motion_forecasting.md)**
 
 :   提出 SAML 框架，首次给出运动预测中"长尾性"的可微语义定义——通过 5 类内在/交互属性量化稀有度，经贝叶斯尾部感知器融合为连续 Tail Index 驱动 MAML 元学习适配，在 nuScenes worst-case top 1% 上 minADE 比次优低 17.2%。
 
@@ -128,10 +128,6 @@ tags:
 
 :   提出 I-INR（Iterative Implicit Neural Representations），一个即插即用的迭代精修框架，通过引入轻量级 FeedbackNet 和 FuseNet 模块（仅增加 0.5-2% 参数），对信号进行渐进式多步重建，有效缓解 INR 的频谱偏差问题，在图像拟合、超分辨率、去噪和 3D 占位预测等任务上均显著超越基线。
 
-**[Invisible Triggers, Visible Threats! Road-Style Adversarial Creation Attack for Visual 3D Detection in Autonomous Driving](invisible_triggers_visible_threats_road-style_adversarial_creation_attack_for_vi.md)**
-
-:   提出 AdvRoad 框架，通过两阶段方法（Road-Style Adversary Generation + Scenario-Associated Adaptation）生成多样化、具有道路表面纹理风格的对抗海报，能够在自动驾驶视觉 3D 检测器中诱发"幽灵物体"（false positive），同时因外观自然而难以被人类驾驶员察觉，显著提升了 FP 攻击的隐蔽性和防御难度。
-
 **[LiDAR-GS++: Improving LiDAR Gaussian Reconstruction via Diffusion Priors](lidar-gsimproving_lidar_gaussian_reconstruction_via_diffusion_priors.md)**
 
 :   提出 LiDAR-GS++，通过引入**可控LiDAR扩散生成模型**作为先验，对神经2DGS场进行**扩展重建**，解决了单次遍历LiDAR扫描在外推视角（如换道场景）下重建质量严重下降的问题，在多个公开数据集上实现了插值和外推视角的SOTA性能。
@@ -168,11 +164,11 @@ tags:
 
 :   提出一种**多模态数据融合框架**，整合眼动追踪、运动传感器（IMU）、生理监测（EDA/HRV）、GPS和视频录制等多种穿戴与环境传感数据，动态表征脆弱老年人（膝骨关节炎/跌倒史）与城市建成环境的交互过程，通过AI驱动的数据融合揭示微观尺度上对步行行为和感知有显著影响的城市路段，为**适老化城市规划**提供循证依据。
 
-**[SPARC: 用单一策略驾驶100辆未见车辆的OOD泛化](out-of-distribution_generalization_with_a_sparc_racing_100_u.md)**
+**[Out-of-Distribution Generalization with a SPARC: Racing 100 Unseen Vehicles with a Single Policy](out-of-distribution_generalization_with_a_sparc_racing_100_u.md)**
 
 :   提出 SPARC（Single-Phase Adaptation for Robust Control），将 RMA 的两阶段上下文编码与历史适应统一为单阶段训练，在 Gran Turismo 7 高保真赛车模拟器中用单一策略驾驶100+未见车辆实现SOTA OOD泛化性能。
 
-**[PriorDrive: 用统一向量先验增强在线HD地图构建](priordrive_enhancing_online_hd_mapping_with_unified_vector_p.md)**
+**[PriorDrive: Enhancing Online HD Mapping with Unified Vector Priors](priordrive_enhancing_online_hd_mapping_with_unified_vector_p.md)**
 
 :   提出 PriorDrive 框架，通过 Unified Vector Encoder (UVE) 和 Hybrid Prior Representation (HPQuery) 将多种向量化先验地图（SD地图、旧HD地图、历史预测地图）统一编码并集成到各种在线建图模型中，在 nuScenes 上 mAP 提升 14.3，兼容 query-based 和 non-query-based 两类建图架构。
 
@@ -188,7 +184,7 @@ tags:
 
 :   将 RAG 思想引入时空预测，通过维护双维度 memory bank 存储历史时空 pattern 并在推理时检索融合，构建通用 retrieval-augmented 时空预测框架 RAST，在 6 个交通数据集上取得 SOTA 且显存仅需竞品的 1/12。
 
-**[ReflexDiffusion: 反思增强的高侧向加速度自动驾驶轨迹规划](reflexdiffusion_reflection-enhanced_trajectory_planning_for_.md)**
+**[ReflexDiffusion: Reflection-Enhanced Trajectory Planning for High-lateral-acceleration Scenarios in Autonomous Driving](reflexdiffusion_reflection-enhanced_trajectory_planning_for_.md)**
 
 :   提出 ReflexDiffusion，在扩散模型推理阶段引入物理感知的反思机制，通过梯度注入强化曲率-速度-加速度耦合约束（a_y = κv²），在 nuPlan 高侧向加速度长尾场景中驾驶分数提升 14.1%，架构无关可直接部署到现有扩散规划器。
 
@@ -199,6 +195,10 @@ tags:
 **[RoadSceneVQA: Benchmarking Visual Question Answering in Roadside Perception Systems for Intelligent Transportation System](roadscenevqa_benchmarking_visual_question_answering_in_roadside_perception_syste.md)**
 
 :   提出 RoadSceneVQA——首个面向路侧感知场景的大规模视觉问答数据集（34,736 QA 对），并设计了 RoadMind 模型，通过认知锚点融合（CAF）和辅助解耦思维链（AD-CoT）显著提升轻量级 MLLM 在交通场景推理中的表现，在 0.9B 参数下即可超越 8B 模型。
+
+**[Smart: A Surrogate Model for Predicting Application Runtime in Dragonfly Systems](smart_a_surrogate_model_for_predicting_application_runtime_in_dragonfly_systems.md)**
+
+:   提出 Smart（Surrogate Model for Predicting Application RunTime），首次将 GNN 和 LLM（Time-LLM）融合用于 Dragonfly 互连网络中的应用迭代运行时预测，在 1,056 节点系统上 MAPE 最低达 1.78%（LAMMPS），推理时间仅 0.515 秒，相比原始仿真实现数量级加速。
 
 **[SparseCoop: Cooperative Perception with Kinematic-Grounded Queries](sparsecoop_cooperative_perception_with_kinematic-grounded_queries.md)**
 

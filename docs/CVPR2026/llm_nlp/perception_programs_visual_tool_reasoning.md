@@ -128,10 +128,10 @@ P2 不涉及任何训练。它是一个纯推理时的表示转换模块。
 
 ## 相关论文
 
-- [\[AAAI 2026\] Language Models and Logic Programs for Trustworthy Tax Reasoning](../../AAAI2026/llm_nlp/language_models_and_logic_programs_for_trustworthy_tax_reasoning.md)
 - [\[ACL 2026\] Don't Adapt Small Language Models for Tools; Adapt Tool Schemas to the Models](../../ACL2026/llm_nlp/don39t_adapt_small_language_models_for_tools_adapt_tool_schemas_to_the_models.md)
-- [\[ECCV 2024\] Self-Adapting Large Visual-Language Models to Edge Devices across Visual Modalities](../../ECCV2024/llm_nlp/self-adapting_large_visual-language_models_to_edge_devices_across_visual_modalit.md)
+- [\[ACL 2026\] Hot-Start from Pixels: Low-Resolution Visual Tokens for Chinese Language Modeling](../../ACL2026/llm_nlp/hot-start_from_pixels_low-resolution_visual_tokens_for_chinese_language_modeling.md)
 - [\[ICLR 2026\] How Far Are LLMs from Professional Poker Players? Revisiting Game-Theoretic Reasoning with Agentic Tool Use](../../ICLR2026/llm_nlp/how_far_are_llms_from_professional_poker_players_revisiting_game-theoretic_reaso.md)
+- [\[CVPR 2025\] Test-Time Visual In-Context Tuning](../../CVPR2025/llm_nlp/test-time_visual_in-context_tuning.md)
 - [\[ACL 2026\] Foresight Optimization for Strategic Reasoning in Large Language Models](../../ACL2026/llm_nlp/foresight_optimization_for_strategic_reasoning_in_large_language_models.md)
 
 </div>

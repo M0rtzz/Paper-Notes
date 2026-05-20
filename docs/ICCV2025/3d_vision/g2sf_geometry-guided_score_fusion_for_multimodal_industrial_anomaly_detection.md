@@ -137,7 +137,7 @@ G2SF 采用冻结的 DINO（图像）和 Point-MAE（点云）提取特征，构
 - [\[ICCV 2025\] GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering](geosplatting_towards_geometry_guided_gaussian_splatting_for_physically-based_inv.md)
 - [\[ICCV 2025\] Stable Score Distillation](stable_score_distillation.md)
 - [\[CVPR 2025\] Odd-One-Out: Anomaly Detection by Comparing with Neighbors](../../CVPR2025/3d_vision/odd-one-out_anomaly_detection_by_comparing_with_neighbors.md)
-- [\[ICCV 2025\] Advancing Text-to-3D Generation with Linearized Lookahead Variational Score Distillation](advancing_text-to-3d_generation_with_linearized_lookahead_variational_score_dist.md)
+- [\[ICCV 2025\] Geometry Distributions](geometry_distributions.md)
 
 </div>
 

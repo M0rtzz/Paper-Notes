@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 语义分割方向22篇论文解读
+  ICML2025 语义分割方向21篇论文解读
 description: >-
-  22篇ICML2025的语义分割方向论文解读，涵盖语义分割、推荐系统、少样本学习、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  21篇ICML2025的语义分割方向论文解读，涵盖语义分割、推荐系统、少样本学习、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "语义分割"
@@ -16,11 +16,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**🧪 ICML2025** · **22** 篇论文解读
+**🧪 ICML2025** · **21** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (85)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/segmentation/index.md) · [📹 ICCV2025 (74)](../../ICCV2025/segmentation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/segmentation/index.md) · [💬 ACL2026 (1)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/segmentation/index.md)
 
-🔥 **高频主题：** 语义分割 ×7 · 推荐系统 ×2 · 少样本学习 ×2 · 遥感 ×2
+🔥 **高频主题：** 语义分割 ×6 · 推荐系统 ×2 · 少样本学习 ×2 · 遥感 ×2
 
 **[ActionPiece: Contextually Tokenizing Action Sequences for Generative Recommendation](actionpiece_contextually_tokenizing_action_sequences_for_generative_recommendati.md)**
 
@@ -73,10 +73,6 @@ tags:
 **[MorphTok: Morphologically Grounded Tokenization for Indian Languages](morphtok_morphologically_grounded_tokenization_for_indian_languages.md)**
 
 :   提出 MorphTok 框架，通过形态学感知的预分词步骤（查找表/语言模型）和约束 BPE（CBPE）算法处理印度语言中的依存元音问题，在机器翻译和语言建模任务上提升下游性能，并引入人类评估指标 EvalTok。
-
-**[Probabilistic Interactive 3D Segmentation with Hierarchical Neural Processes](probabilistic_interactive_3d_segmentation_with_hierarchical_neural_processes.md)**
-
-:   NPISeg3D提出了首个基于层次化神经过程（Hierarchical Neural Processes）的概率交互式3D分割框架，通过场景级和物体级双层潜变量结构以及概率原型调制器，在少量点击下实现了优于AGILE3D的分割精度，同时提供可靠的不确定性估计。
 
 **[QMamba: On First Exploration of Vision Mamba for Image Quality Assessment](qmamba_on_first_exploration_of_vision_mamba_for_image_quality_assessment.md)**
 

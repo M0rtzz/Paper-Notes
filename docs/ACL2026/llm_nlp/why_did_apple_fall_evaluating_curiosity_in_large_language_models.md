@@ -133,7 +133,7 @@ SFT 阶段用标准语言建模损失，RLVR 阶段用 GRPO，仅使用格式奖
 - [\[ACL 2025\] ELI-Why: Evaluating the Pedagogical Utility of Language Model Explanations](../../ACL2025/llm_nlp/eli-why_evaluating_the_pedagogical_utility_of_language_model_explanations.md)
 - [\[ACL 2026\] Foresight Optimization for Strategic Reasoning in Large Language Models](foresight_optimization_for_strategic_reasoning_in_large_language_models.md)
 - [\[ACL 2026\] Adam's Law: Textual Frequency Law on Large Language Models](adam39s_law_textual_frequency_law_on_large_language_models.md)
-- [\[ACL 2025\] SocialEval: Evaluating Social Intelligence of Large Language Models](../../ACL2025/llm_nlp/socialeval_evaluating_social_intelligence_of_large_language_models.md)
+- [\[ACL 2026\] From Static Inference to Dynamic Interaction: A Survey of Streaming Large Language Models](from_static_inference_to_dynamic_interaction_a_survey_of_streaming_large_languag.md)
 
 </div>
 

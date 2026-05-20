@@ -168,8 +168,8 @@ Top-$k$ 假设数量：$k=3$ 最优（CIDEr 57.04），$k=10$ 时下降至 53.66
 - [\[AAAI 2026\] AStar: Boosting Multimodal Reasoning with Automated Structured Thinking](astar_boosting_multimodal_reasoning_with_automated_structure.md)
 - [\[AAAI 2026\] When Eyes and Ears Disagree: Can MLLMs Discern Audio-Visual Confusion?](when_eyes_and_ears_disagree_can_mllms_discern_audio-visual_confusion.md)
 - [\[ICCV 2025\] Boosting MLLM Reasoning with Text-Debiased Hint-GRPO](../../ICCV2025/multimodal_vlm/boosting_mllm_reasoning_with_text-debiased_hint-grpo.md)
-- [\[CVPR 2026\] EgoMind: Activating Spatial Cognition through Linguistic Reasoning in MLLMs](../../CVPR2026/multimodal_vlm/egomind_activating_spatial_cognition_through_linguistic_reasoning_in_mllms.md)
 - [\[CVPR 2026\] PaddleOCR-VL: Boosting Document Parsing Efficiency and Performance with Coarse-to-Fine Visual Processing](../../CVPR2026/multimodal_vlm/paddleocr_vl_coarse_to_fine_document_parsing.md)
+- [\[ICCV 2025\] BASIC: Boosting Visual Alignment with Intrinsic Refined Embeddings in Multimodal Large Language Models](../../ICCV2025/multimodal_vlm/basic_boosting_visual_alignment_with_intrinsic_refined_embeddings_in_multimodal_.md)
 
 </div>
 

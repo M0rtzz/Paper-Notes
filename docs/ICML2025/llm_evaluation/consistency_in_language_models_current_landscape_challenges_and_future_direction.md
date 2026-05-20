@@ -140,11 +140,11 @@ tags:
 
 ## 相关论文
 
+- [\[ACL 2026\] Evaluating Temporal Consistency in Multi-Turn Language Models](../../ACL2026/llm_evaluation/evaluating_temporal_consistency_in_multi-turn_language_models.md)
 - [\[ICML 2025\] Correlated Errors in Large Language Models](correlated_errors_in_large_language_models.md)
-- [\[NeurIPS 2025\] On the Entropy Calibration of Language Models](../../NeurIPS2025/llm_evaluation/on_the_entropy_calibration_of_language_models.md)
-- [\[ACL 2025\] Retrieval Models Aren't Tool-Savvy: Benchmarking Tool Retrieval for Large Language Models](../../ACL2025/llm_evaluation/retrieval_models_arent_tool-savvy_benchmarking_tool_retrieval_for_large_language.md)
 - [\[ICML 2025\] Position: Theory of Mind Benchmarks are Broken for Large Language Models](position_theory_of_mind_benchmarks_are_broken_for_large_language_models.md)
-- [\[CVPR 2026\] Reframing Long-Tailed Learning via Loss Landscape Geometry](../../CVPR2026/llm_evaluation/reframing_long-tailed_learning_via_loss_landscape_geometry.md)
+- [\[ICML 2025\] Fleet of Agents: Coordinated Problem Solving with Large Language Models](fleet_of_agents_coordinated_problem_solving_with_large_language_models.md)
+- [\[ICML 2025\] Learning Distribution-Wise Control in Representation Space for Language Models](learning_distribution-wise_control_in_representation_space_for_language_models.md)
 
 </div>
 

@@ -127,11 +127,11 @@ COSMOS 采用学生-教师自蒸馏框架。学生模型和教师模型共享相
 
 ## 相关论文
 
+- [\[ECCV 2024\] SiLC: Improving Vision Language Pretraining with Self-Distillation](../../ECCV2024/segmentation/silc_improving_vision_language_pretraining_with_self-distillation.md)
 - [\[CVPR 2025\] ResCLIP: Residual Attention for Training-free Dense Vision-language Inference](resclip_residual_attention_for_training-free_dense_vision-language_inference.md)
-- [\[NeurIPS 2025\] Vision Transformers with Self-Distilled Registers](../../NeurIPS2025/segmentation/vision_transformers_with_self-distilled_registers.md)
+- [\[ECCV 2024\] DreamLIP: Language-Image Pre-training with Long Captions](../../ECCV2024/segmentation/dreamlip_language-image_pre-training_with_long_captions.md)
 - [\[CVPR 2025\] Assessing and Learning Alignment of Unimodal Vision and Language Models (SAIL)](assessing_and_learning_alignment_of_unimodal_vision_and_language_model.md)
-- [\[ECCV 2024\] SCLIP: Rethinking Self-Attention for Dense Vision-Language Inference](../../ECCV2024/segmentation/sclip_rethinking_self-attention_for_dense_vision-language_inference.md)
-- [\[CVPR 2025\] DINOv2 Meets Text: A Unified Framework for Image- and Pixel-Level Vision-Language Alignment](dinov2_meets_text_a_unified_framework_for_image-_and_pixel-level_vision-language.md)
+- [\[NeurIPS 2025\] Vision Transformers with Self-Distilled Registers](../../NeurIPS2025/segmentation/vision_transformers_with_self-distilled_registers.md)
 
 </div>
 

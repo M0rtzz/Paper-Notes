@@ -149,9 +149,9 @@ LIT-PCBA 基准（15 个药物靶标）：
 
 - [\[ICML 2025\] ETTA: Elucidating the Design Space of Text-to-Audio Models](etta_elucidating_the_design_space_of_text-to-audio_models.md)
 - [\[CVPR 2026\] PhysGen: Physically Grounded 3D Shape Generation for Industrial Design](../../CVPR2026/image_generation/physgen_physically_grounded_3d_shape_generation_for_industrial_design.md)
-- [\[ICML 2025\] Normalizing Flows are Capable Generative Models](normalizing_flows_are_capable_generative_models.md)
 - [\[ICML 2025\] Piloting Structure-Based Drug Design via Modality-Specific Optimal Schedule](piloting_structure-based_drug_design_via_modality-specific_optimal_schedule.md)
 - [\[CVPR 2025\] ShapeWords: Guiding Text-to-Image Synthesis with 3D Shape-Aware Prompts](../../CVPR2025/image_generation/shapewords_guiding_text-to-image_synthesis_with_3d_shape-aware_prompts.md)
+- [\[ICML 2025\] Normalizing Flows are Capable Generative Models](normalizing_flows_are_capable_generative_models.md)
 
 </div>
 

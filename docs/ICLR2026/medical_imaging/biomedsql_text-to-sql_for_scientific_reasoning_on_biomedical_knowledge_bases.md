@@ -147,9 +147,9 @@ tags:
 ## 相关论文
 
 - [\[NeurIPS 2025\] CGBench: Benchmarking Language Model Scientific Reasoning for Clinical Genetics Research](../../NeurIPS2025/medical_imaging/cgbench_benchmarking_language_model_scientific_reasoning_for_clinical_genetics_r.md)
+- [\[ICLR 2026\] Augmenting Representations with Scientific Papers](augmenting_representations_with_scientific_papers.md)
 - [\[ICLR 2026\] MedAgentGym: A Scalable Agentic Training Environment for Code-Centric Reasoning in Biomedical Data Science](medagentgym_agentic_training_biomedical.md)
 - [\[ACL 2025\] Query-driven Document-level Scientific Evidence Extraction from Biomedical Studies](../../ACL2025/medical_imaging/urca_biomedical_evidence_extraction.md)
-- [\[ICLR 2026\] Augmenting Representations with Scientific Papers](augmenting_representations_with_scientific_papers.md)
 - [\[NeurIPS 2025\] Mind the Gap: Aligning Knowledge Bases with User Needs to Enhance Mental Health Retrieval](../../NeurIPS2025/medical_imaging/mind_the_gap_aligning_knowledge_bases_with_user_needs_to_enhance_mental_health_r.md)
 
 </div>

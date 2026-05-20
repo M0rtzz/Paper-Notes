@@ -130,8 +130,8 @@ tags:
 
 ## 相关论文
 
-- [\[CVPR 2025\] ATA: Adaptive Transformation Agent for Text-Guided Subject-Position Variable Background Generation](ata_adaptive_transformation_agent_for_text-guided_subject-position_variable_back.md)
 - [\[CVPR 2025\] Visual Agentic AI for Spatial Reasoning with a Dynamic API](visual_agentic_ai_for_spatial_reasoning_with_a_dynamic_api.md)
+- [\[CVPR 2025\] ATA: Adaptive Transformation Agent for Text-Guided Subject-Position Variable Background Generation](ata_adaptive_transformation_agent_for_text-guided_subject-position_variable_back.md)
 - [\[CVPR 2025\] Sketchtopia: A Dataset and Foundational Agents for Benchmarking Asynchronous Multimodal Communication with Iconic Feedback](sketchtopia_a_dataset_and_foundational_agents_for_benchmarking_asynchronous_mult.md)
 - [\[CVPR 2025\] TANGO: Training-free Embodied AI Agents for Open-world Tasks](tango_training-free_embodied_ai_agents_for_open-world_tasks.md)
 - [\[CVPR 2025\] RL-RC-DoT: A Block-level RL Agent for Task-Aware Video Compression](rl-rc-dot_a_block-level_rl_agent_for_task-aware_video_compression.md)

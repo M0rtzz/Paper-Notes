@@ -193,10 +193,10 @@ $$\mathcal{L}_{mse} = \frac{1}{M} \sum_{i=1}^{M} (y_i - x_i)^2$$
 
 ## 相关论文
 
-- [\[ECCV 2024\] OmniSat: Self-Supervised Modality Fusion for Earth Observation](omnisat_self-supervised_modality_fusion_for_earth_observation.md)
 - [\[ECCV 2024\] MarineInst: A Foundation Model for Marine Image Analysis with Instance Visual Description](marineinst_a_foundation_model_for_marine_image_analysis_with_instance_visual_des.md)
 - [\[ECCV 2024\] WeCromCL: Weakly Supervised Cross-Modality Contrastive Learning for Transcription-only Supervised Text Spotting](wecromcl_weakly_supervised_cross-modality_contrastive_learning_for_transcription.md)
 - [\[ICML 2025\] Griffin: Towards a Graph-Centric Relational Database Foundation Model](../../ICML2025/self_supervised/griffin_towards_a_graph-centric_relational_database_foundation_model.md)
+- [\[ICML 2026\] How 'Neural' is a Neural Foundation Model?](../../ICML2026/self_supervised/how_neural_is_a_neural_foundation_model.md)
 - [\[CVPR 2026\] MOMO: Mars Orbital Model — Foundation Model for Mars Orbital Applications](../../CVPR2026/self_supervised/momo_mars_orbital_model_foundation_model_for_mars_orbital_applications.md)
 
 </div>

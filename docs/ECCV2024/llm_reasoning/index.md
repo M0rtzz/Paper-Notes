@@ -17,7 +17,7 @@ tags:
 
 **🎞️ ECCV2024** · **1** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (37)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (12)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (65)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (65)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (20)](../../ICML2026/llm_reasoning/index.md) · [💬 ACL2026 (64)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (12)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (63)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (66)](../../NeurIPS2025/llm_reasoning/index.md)
 
 **[Controllable Navigation Instruction Generation with Chain of Thought Prompting](controllable_navigation_instruction_generation_with_chain_of_thought_prompting.md)**
 

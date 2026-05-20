@@ -19,7 +19,7 @@ tags:
 
 **🔬 ICLR2026** · **39** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (41)](../../ACL2026/llm_agent/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/llm_agent/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/llm_agent/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_agent/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/llm_agent/index.md) · [🧪 ICML2025 (15)](../../ICML2025/llm_agent/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/llm_agent/index.md) · [💬 ACL2026 (69)](../../ACL2026/llm_agent/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/llm_agent/index.md) · [🤖 AAAI2026 (43)](../../AAAI2026/llm_agent/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/llm_agent/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/llm_agent/index.md)
 
 🔥 **高频主题：** LLM ×17 · Agent ×11 · 推理 ×6 · 对抗鲁棒 ×2
 

@@ -131,7 +131,7 @@ SapiensID 以 ViT-Base 为骨干网络，输入任意人体图像（人脸特写
 - [\[CVPR 2025\] vesselFM: A Foundation Model for Universal 3D Blood Vessel Segmentation](vesselfm_a_foundation_model_for_universal_3d_blood_vessel_segmentation.md)
 - [\[CVPR 2025\] VISTA3D: A Unified Segmentation Foundation Model For 3D Medical Imaging](vista3d_a_unified_segmentation_foundation_model_for_3d_medical_imaging.md)
 - [\[CVPR 2025\] Unsupervised Foundation Model-Agnostic Slide-Level Representation Learning](unsupervised_foundation_model-agnostic_slide-level_representation_learning.md)
-- [\[ICML 2025\] Bayesian Inference for Correlated Human Experts and Classifiers](../../ICML2025/medical_imaging/bayesian_inference_for_correlated_human_experts_and_classifiers.md)
+- [\[CVPR 2025\] Multimodal Protein Language Models for Enzyme Kinetic Parameters: From Substrate Recognition to Conformational Adaptation](multimodal_protein_language_models_for_enzyme_kinetic_parameters_from_substrate_.md)
 
 </div>
 

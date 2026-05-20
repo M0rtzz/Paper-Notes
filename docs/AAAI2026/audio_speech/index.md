@@ -20,9 +20,9 @@ tags:
 
 **🤖 AAAI2026** · **31** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (29)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/audio_speech/index.md) · [🧪 ICML2025 (7)](../../ICML2025/audio_speech/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (7)](../../ICML2026/audio_speech/index.md) · [💬 ACL2026 (47)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/audio_speech/index.md)
 
-🔥 **高频主题：** 语音 ×9 · 情感分析 ×6 · 多模态 ×4 · 对话系统 ×2 · LLM ×2
+🔥 **高频主题：** 语音 ×9 · 情感分析 ×7 · 多模态 ×4 · 对话系统 ×2 · LLM ×2
 
 **[A Mind Cannot Be Smeared Across Time](a_mind_cannot_be_smeared_across_time.md)**
 
@@ -132,7 +132,7 @@ tags:
 
 :   提出 VARSTok，首个全动态可变帧率语音 tokenizer，通过时序感知密度峰聚类和隐式时长编码，实现自适应 token 分配，在使用更少 token 的同时超越固定帧率基线。
 
-**[TEXT: 文本路由稀疏专家混合模型——融合解释增强与时序对齐的多模态情感分析](text-routed_sparse_mixture-of-experts_model_with_explanation_and_temporal_alignm.md)**
+**[A Text-Routed Sparse Mixture-of-Experts Model with Explanation and Temporal Alignment for Multi-Modal Sentiment Analysis](text-routed_sparse_mixture-of-experts_model_with_explanation_and_temporal_alignm.md)**
 
 :   提出 TEXT 模型，利用 MLLM 为音视频生成自然语言解释来增强模态表示，设计融合 Mamba 与时序交叉注意力优点的轻量时序对齐模块，并以文本路由的稀疏专家混合进行跨模态融合，在四个 MSA 数据集上全面超越 SOTA 及 GPT-4o 等大模型。
 

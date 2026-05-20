@@ -181,7 +181,7 @@ $$\bm{h} = I_T(\cdot) \circ I_A(\cdot) \circ I_V(\cdot), \quad I_k(\bm{x}) = \be
 - [\[NeurIPS 2025\] Resounding Acoustic Fields with Reciprocity](../../NeurIPS2025/audio_speech/resounding_acoustic_fields_with_reciprocity.md)
 - [\[ACL 2026\] Splits! Flexible Sociocultural Linguistic Investigation at Scale](../../ACL2026/audio_speech/splits_flexible_sociocultural_linguistic_investigation_at_scale.md)
 - [\[ACL 2025\] Acoustic Individual Identification of White-Faced Capuchin Monkeys Using Joint Multi-Species Embeddings](acoustic_individual_identification_of_white-faced_capuchin_monkeys_using_joint_m.md)
-- [\[AAAI 2026\] Aligning Generative Music AI with Human Preferences: Methods and Challenges](../../AAAI2026/audio_speech/aligning_generative_music_ai_with_human_preferences_methods_and_challenges.md)
+- [\[ICML 2026\] Reward Modeling from Natural Language Human Feedback](../../ICML2026/audio_speech/reward_modeling_from_natural_language_human_feedback.md)
 
 </div>
 

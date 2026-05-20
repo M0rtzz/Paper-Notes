@@ -139,10 +139,10 @@ tags:
 ## 相关论文
 
 - [\[ICLR 2026\] Multi-modal Data Spectrum: Multi-modal Datasets are Multi-dimensional](../../ICLR2026/signal_comm/multi-modal_data_spectrum_multi-modal_datasets_are_multi-dimensional.md)
+- [\[NeurIPS 2025\] ConTextTab: A Semantics-Aware Tabular In-Context Learner](../../NeurIPS2025/signal_comm/contexttab_a_semantics-aware_tabular_in-context_learner.md)
 - [\[CVPR 2026\] ChartNet: A Million-Scale, High-Quality Multimodal Dataset for Robust Chart Understanding](../../CVPR2026/signal_comm/chartnet_a_million-scale_high-quality_multimodal_dataset_for_robust_chart_unders.md)
-- [\[ICLR 2026\] Spectrum Tuning: Post-Training for Distributional Coverage and In-Context Steerability](../../ICLR2026/signal_comm/spectrum_tuning_post-training_for_distributional_coverage_and_in-context_steerab.md)
-- [\[ACL 2025\] ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](../../ACL2025/signal_comm/toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)
 - [\[ACL 2026\] PolicyLLM: Towards Excellent Comprehension of Public Policy for Large Language Models](../../ACL2026/signal_comm/policyllm_towards_excellent_comprehension_of_public_policy_for_large_language_mo.md)
+- [\[ICLR 2026\] Spectrum Tuning: Post-Training for Distributional Coverage and In-Context Steerability](../../ICLR2026/signal_comm/spectrum_tuning_post-training_for_distributional_coverage_and_in-context_steerab.md)
 
 </div>
 

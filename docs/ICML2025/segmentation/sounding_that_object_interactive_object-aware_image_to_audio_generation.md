@@ -308,9 +308,9 @@ $$\text{err}_{\text{test}} \leq L_v \cdot L_f \cdot (\epsilon_{\mathbf{V}} + B_v
 
 - [\[CVPR 2025\] ROS-SAM: High-Quality Interactive Segmentation for Remote Sensing Moving Object](../../CVPR2025/segmentation/ros-sam_high-quality_interactive_segmentation_for_remote_sensing_moving_object.md)
 - [\[CVPR 2025\] A Distractor-Aware Memory for Visual Object Tracking with SAM2](../../CVPR2025/segmentation/a_distractor-aware_memory_for_visual_object_tracking_with_sam2.md)
-- [\[ICML 2025\] Probabilistic Interactive 3D Segmentation with Hierarchical Neural Processes](probabilistic_interactive_3d_segmentation_with_hierarchical_neural_processes.md)
 - [\[NeurIPS 2025\] ARGenSeg: Image Segmentation with Autoregressive Image Generation Model](../../NeurIPS2025/segmentation/argenseg_image_segmentation_with_autoregressive_image_generation_model.md)
 - [\[ICML 2025\] unMORE: Unsupervised Multi-Object Segmentation via Center-Boundary Reasoning](unmore_unsupervised_multi-object_segmentation_via_center-boundary_reasoning.md)
+- [\[CVPR 2025\] RDNet: Region Proportion-Aware Dynamic Adaptive Salient Object Detection Network in Optical Remote Sensing Images](../../CVPR2025/segmentation/rdnet_region_proportion-aware_dynamic_adaptive_salient_object_detection_network_.md)
 
 </div>
 

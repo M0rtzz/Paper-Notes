@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 图像恢复方向15篇论文解读
+  ICLR2026 图像恢复方向14篇论文解读
 description: >-
-  15篇ICLR2026的图像恢复方向论文解读，涵盖扩散模型、语音、LLM、图像恢复、对抗鲁棒、推荐系统等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  14篇ICLR2026的图像恢复方向论文解读，涵盖扩散模型、语音、LLM、图像恢复、对抗鲁棒、推荐系统等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICLR2026"
   - "图像恢复"
@@ -18,11 +18,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🖼️ 图像恢复
 
-**🔬 ICLR2026** · **15** 篇论文解读
+**🔬 ICLR2026** · **14** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/image_restoration/index.md) · [📷 CVPR2026 (39)](../../CVPR2026/image_restoration/index.md) · [🤖 AAAI2026 (13)](../../AAAI2026/image_restoration/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/image_restoration/index.md) · [📹 ICCV2025 (29)](../../ICCV2025/image_restoration/index.md) · [🧪 ICML2025 (5)](../../ICML2025/image_restoration/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/image_restoration/index.md) · [📷 CVPR2026 (39)](../../CVPR2026/image_restoration/index.md) · [🤖 AAAI2026 (13)](../../AAAI2026/image_restoration/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/image_restoration/index.md) · [📹 ICCV2025 (29)](../../ICCV2025/image_restoration/index.md) · [🧪 ICML2025 (5)](../../ICML2025/image_restoration/index.md)
 
-🔥 **高频主题：** 扩散模型 ×7 · 语音 ×2
+🔥 **高频主题：** 扩散模型 ×6 · 语音 ×2
 
 **[Activation Steering for Masked Diffusion Language Models](activation_steering_for_masked_diffusion_language_models.md)**
 
@@ -79,7 +79,3 @@ tags:
 **[Trust but Verify: Adaptive Conditioning for Reference-Based Diffusion Super-Resolution](trust_but_verify_adaptive_conditioning_for_reference-based_diffusion_super-resol.md)**
 
 :   提出 Ada-RefSR，一个基于"Trust but Verify"原则的单步参考引导扩散超分辨率框架，通过自适应隐式相关性门控（AICG）机制在利用可靠参考信息的同时抑制错误融合，仅增加 0.13% 计算开销。
-
-**[wd1: Weighted Policy Optimization for Reasoning in Diffusion Language Models](wd1_weighted_policy_optimization_for_reasoning_in_diffusion_language_models.md)**
-
-:   提出 wd1，一种无需策略比率（ratio-free）的加权对数似然策略优化方法用于扩散语言模型（dLLM）的 RL 微调，通过正样本加权和负样本惩罚避免了 GRPO 中策略比率估计的偏差和高方差问题，在 LLaDA-8B 上实现了 Sudoku +59%、GSM8K 84.5% 的 SOTA 性能。

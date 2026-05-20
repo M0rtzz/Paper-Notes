@@ -171,7 +171,7 @@ ABRA 的流程分为三步：
 - [\[CVPR 2025\] BACON: Improving Clarity of Image Captions via Bag-of-Concept Graphs](bacon_improving_clarity_of_image_captions_via_bag-of-concept_graphs.md)
 - [\[CVPR 2025\] Test-Time Backdoor Detection for Object Detection Models](test-time_backdoor_detection_for_object_detection_models.md)
 - [\[CVPR 2025\] Towards RAW Object Detection in Diverse Conditions](towards_raw_object_detection_in_diverse_conditions.md)
-- [\[CVPR 2025\] Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection](learning_class_prototypes_for_unified_sparse-supervised_3d_object_detection.md)
+- [\[CVPR 2025\] MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism](mi-detr_an_object_detection_model_with_multi-time_inquiries_mechanism.md)
 
 </div>
 

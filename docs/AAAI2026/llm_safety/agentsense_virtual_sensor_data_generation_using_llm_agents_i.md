@@ -1,0 +1,140 @@
+---
+title: >-
+  [论文解读] AgentSense: Virtual Sensor Data Generation Using LLM Agents in Simulated Home Environments
+description: >-
+  [AAAI 2026][LLM Agent][虚拟传感器数据] 利用LLM驱动的具身智能体在模拟智能家居中"生活"，生成虚拟环境传感器数据用于预训练HAR模型，在低资源场景下显著提升活动识别性能。
+tags:
+  - "AAAI 2026"
+  - "LLM Agent"
+  - "虚拟传感器数据"
+  - "智能家居"
+  - "人类活动识别"
+  - "模拟环境"
+---
+
+# AgentSense: Virtual Sensor Data Generation Using LLM Agents in Simulated Home Environments
+
+**会议**: AAAI 2026  
+**arXiv**: [2506.11773v4](https://arxiv.org/abs/2506.11773v4)  
+**代码**: [https://github.com/ZikangLeng/AgentSense](https://github.com/ZikangLeng/AgentSense)  
+**领域**: 人类活动识别 (HAR) / 具身AI / 合成数据生成  
+**关键词**: LLM Agent, 虚拟传感器数据, 智能家居, 人类活动识别, 模拟环境  
+
+## 一句话总结
+利用LLM驱动的具身智能体在模拟智能家居中"生活"，生成虚拟环境传感器数据用于预训练HAR模型，在低资源场景下显著提升活动识别性能。
+
+## 背景与动机
+
+### 领域现状
+
+**领域现状**：智能家居中的人类活动识别（HAR）依赖环境传感器（运动、门、设备激活等）来监测日常活动，在医疗保健和老年护理等领域至关重要。然而，HAR模型的发展受限于**大规模标注传感器数据的稀缺**——不同家庭布局、传感器配置和居民行为模式的差异使数据收集成本极高，且涉及隐私问题。现有的合成数据生成方法主要集中在可穿戴传感器（如从视频/音频生成IMU数据），对环境传感器的支持不足。虽然VirtualHome等仿真平台能模拟家庭活动，但缺乏环境传感器模拟能力，无法直接产生传感器级数据。
+
+### 解决思路
+
+**本文目标**：如何在不进行真实世界数据采集的前提下，自动生成多样化、隐私保护的环境传感器数据，以缓解HAR模型训练中的数据稀缺问题？关键挑战在于：(1) 生成行为多样性以覆盖不同人群和场景；(2) 将高层活动描述转化为模拟器可执行的细粒度动作；(3) 从仿真器中提取真实感的传感器信号。
+
+## 方法详解
+
+### 整体框架
+AgentSense是一个端到端的虚拟传感器数据生成管线：LLM生成多样化人设 → LLM生成日常作息 → LLM分解为细粒度动作 → 动作清洗与验证 → 在X-VirtualHome中执行 → 虚拟传感器记录数据 → 标签映射到目标数据集。
+
+### 关键设计
+1. **三阶段LLM提示管线**:
+
+    - **人设生成**: 利用LLM生成多样化的虚拟人设（年龄、职业、健康状况、生活习惯），捕捉行为多样性。
+    - **高层日程生成**: 基于人设、星期几和家庭环境（房间列表）生成全天作息表，区分"在家"和"外出"活动，包含少样本示例引导，并避免过于整齐的时间槽。
+    - **低层动作分解**: 将每个高层活动分解为模拟器可执行的动作序列（18种预定义动作如walk、grab、open等），LLM先选择合适房间，再基于房间内可用物品列表生成动作。
+
+2. **LLM输出到模拟器指令的转换**（五步流程）:
+
+    - 清洗输出、嵌入VirtualHome词汇表（FAISS索引）、最近邻检索替换LLM幻觉token、阈值过滤（动作阈值0.8，物品阈值0.6）、组装最终命令。使用LangChain + OpenAI embeddings + FAISS实现语义对齐，消除LLM幻觉。
+
+3. **X-VirtualHome虚拟传感器系统**:
+
+    - **运动传感器**: 根据房间面积自动放置（小≤30m²放1个、中放2个、大>60m²放3个），每0.2秒追踪角色位置，检测半径5.0m，运动阈值ε=0.1m区分真实运动和抖动。
+    - **门传感器**: 监测环境图中CAN_OPEN属性物品（门、柜子等）的CLOSED→OPEN状态转换。
+    - **设备激活传感器**: 监测HAS_SWITCH属性物品（微波炉、洗衣机等）的OFF→ON状态转换。
+
+### 损失函数 / 训练策略
+采用TDOST框架（基于文本描述的布局无关HAR方法）：将传感器触发事件转换为自然语言句子 → 用all-distilroberta-v1编码 → 双向LSTM（64隐藏单元）分类。两种变体：TDOST-Basic（传感器类型+位置）和TDOST-Temporal（加入时间信息）。训练使用Adam优化器，学习率1e-4，ReduceLROnPlateau调度器，三折分层交叉验证。
+
+## 实验关键数据
+
+| 数据集 | 指标 | Real (TDOST-Basic) | Real+Virtual (TDOST-Basic) | 提升 |
+|--------|------|------|----------|------|
+| Aruba | Accuracy | 91.00 | 93.19 | +2.19 |
+| Cairo | Accuracy | 69.01 | 75.61 | +6.60 |
+| Orange | Accuracy | 82.40 | 85.21 | +2.81 |
+| Aruba | Macro F1 | 63.98 | 72.20 | +8.22 |
+| Cairo | Macro F1 | 51.51 | 62.47 | +10.96 |
+| Orange | Macro F1 | 21.56 | 41.83 | +20.27 |
+| Milan | Macro F1 (Temporal) | 57.20 | 73.41 | +16.21 |
+| Aruba | Macro F1 (Temporal) | 68.57 | 77.36 | +8.79 |
+
+虚拟数据规模：18个人设 × 22个家庭布局 = 250天数据，3266个活动窗口。
+
+### 消融实验要点
+- **真实数据用量**: 仅用5%-10%真实数据+虚拟预训练即可获得显著提升（Aruba Macro F1提升约10%，Kyoto7提升45%）。在Cairo和Orange上，约200个真实样本即可接近全量训练效果。
+- **各组件贡献**（在Aruba上）: 单人设+单天+单环境 Macro F1=68.35% → +多环境=70.69% → +多天=71.01% → +多人设=72.20%。每个多样性维度都有正贡献，且总数据量保持不变。- **不同下游模型变体**：TDOST-Temporal 在 Milan 上 Macro F1 从 57.20% 提升至 73.41%（+16.21%），说明时序信息对虚拟数据质量提升尤为重要
+- **跨布局泛化**：尽管虚拟环境布局与真实家庭存在差异，预训练模型在 5 个不同的真实数据集上均有提升，证明行为多样性比布局匹配更重要
+
+## 亮点与洞察
+- **完整端到端管线**: 从人设生成到传感器数据的全自动化流程，无需真实数据采集
+- **LLM幻觉消除机制**: 通过embedding+FAISS最近邻检索将LLM输出对齐到模拟器本体论，巧妙解决了LLM-仿真器接口问题
+- **隐私保护**: 完全基于仿真生成，避免侵入式真实数据采集
+- **"Digital Cousin"理念**: 不追求一对一的数字孪生，而是通过多样化agent和环境来生成多样数据
+- **低资源场景价值**: 仅需少量真实数据微调即可接近全量训练效果，实用性强
+
+## 局限与展望
+- **域差距**: 虚拟环境与真实家庭布局存在差异（如Milan有更多房间），未做布局匹配
+- **单居民假设**: 仅模拟单人场景，无法处理多居民交互活动
+- **活动覆盖不全**: LLM自由生成可能遗漏某些常见活动（如Watch_TV、Enter_Home），需要更有针对性的提示
+- **LLM选择单一**: 仅测试了GPT-4o-mini，未探索其他LLM对生成质量的影响
+- **传感器类型有限**: 仅实现运动、门和设备激活三类传感器，未覆盖温度、湿度、光照等
+- **评估框架单一**: 仅用TDOST一种下游框架评估，未验证其他HAR模型
+- **动作转换成功率**：经过五步清洗流程后，约 87% 的 LLM 生成动作可成功转换为模拟器命令，剩余通过 LLM 重新生成或丢弃
+
+## 相关工作与启发
+- **Generative Agents (Park et al., 2023)**: 同样用LLM驱动虚拟agent行为，但关注叙事和社交互动，不产生结构化传感器数据。AgentSense将此范式引向HAR数据生成这一具体下游任务。
+- **IMUTube / IMUGPT (Kwon et al., 2020; Leng et al., 2024)**: 从视频/文本生成可穿戴IMU数据，但方法不适用于环境传感器（涉及空间和触发机制不同）。AgentSense填补了环境传感器合成数据的空白。
+- **Yonekura et al. (2024)**: 用LLM生成智能家居日程，但未产生传感器数据。AgentSense在此基础上完成了从日程到传感器信号的完整链路。
+
+## 相关工作与启发
+- **跨模态合成数据思路值得借鉴**: 从文本（LLM生成的人设和日程）到时序传感器数据的跨模态转换思路，可推广到其他传感器数据稀缺领域（如工业IoT、自动驾驶中的边缘场景传感器模拟）。
+- **LLM作为行为先验**: 利用LLM内化的人类行为知识作为合成数据的先验，这一范式可扩展到其他需要人类行为建模的任务（如人群模拟、交通流预测）。
+- **仿真器+LLM的组合**: LLM负责高层规划与多样性，仿真器保证物理合理性和传感器真实性，这种分工模式对具身AI数据生成有参考价值。
+- **可扩展到多模态**: 论文提到未来可联合生成Pose2IMU、Video2IMU数据，构建多模态同步数据集，这与视频理解中的跨视角学习有潜在关联。
+
+## 评分
+- 新颖性: ⭐⭐⭐⭐ （LLM驱动仿真生成环境传感器数据是新应用，但各模块技术相对成熟）
+- 实验充分度: ⭐⭐⭐⭐ （5个真实数据集+消融实验，但仅用一种下游框架，缺少传感器数据质量的直接评估）
+- 写作质量: ⭐⭐⭐⭐ （结构清晰，附录完整包含所有prompt模板，方法描述详实）
+- 价值: ⭐⭐⭐⭐ （解决了HAR领域实际痛点，低资源场景效果显著，代码开源）
+
+## 补充说明
+- 该工作的方法论和实验设计对相关领域有参考价值
+- 后续工作可在更多场景和更大规模上验证方法的泛化性和可扩展性
+- 与近期相关工作的结合（如与 RL/MCTS/多模态方法的交叉）有潜在研究价值
+- 建议结合实际应用需求评估该方法的部署可行性和计算效率
+- 数据集和评估指标的选择可能影响结论的普适性，需在更多 benchmark 上交叉验证
+
+## 补充说明
+- 该工作的方法论和实验设计对相关领域有参考价值
+- 后续工作可在更多场景和更大规模上验证方法的泛化性和可扩展性
+- 与近期相关工作的结合（如与 RL/MCTS/多模态方法的交叉）有潜在研究价值
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[AAAI 2026\] An LLM-Based Simulation Framework for Embodied Conversational Agents in Psychological Counseling](an_llm-based_simulation_framework_for_embodied_conversationa.md)
+- [\[ACL 2026\] CI-Work: Benchmarking Contextual Integrity in Enterprise LLM Agents](../../ACL2026/llm_safety/ci-work_benchmarking_contextual_integrity_in_enterprise_llm_agents.md)
+- [\[ACL 2026\] Synthia: Scalable Grounded Persona Generation from Social Media Data](../../ACL2026/llm_safety/synthia_scalable_grounded_persona_generation_from_social_media_data.md)
+- [\[ACL 2026\] SAGE: Sparse Adaptive Guidance for Dependency-Aware Tabular Data Generation](../../ACL2026/llm_safety/sage_sparse_adaptive_guidance_for_dependency-aware_tabular_data_generation.md)
+- [\[NeurIPS 2025\] Attractive Metadata Attack: Inducing LLM Agents to Invoke Malicious Tools](../../NeurIPS2025/llm_safety/attractive_metadata_attack_inducing_llm_agents_to_invoke_malicious_tools.md)
+
+</div>
+
+<!-- RELATED:END -->

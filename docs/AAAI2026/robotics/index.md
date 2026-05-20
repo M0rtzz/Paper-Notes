@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 机器人/具身智能方向38篇论文解读
+  AAAI2026 机器人/具身智能方向37篇论文解读
 description: >-
-  38篇AAAI2026的机器人/具身智能方向论文解读，涵盖机器人、导航、多模态、Agent、对齐/RLHF、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  37篇AAAI2026的机器人/具身智能方向论文解读，涵盖机器人、导航、多模态、Agent、对齐/RLHF、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "机器人/具身智能"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🤖 机器人/具身智能
 
-**🤖 AAAI2026** · **38** 篇论文解读
+**🤖 AAAI2026** · **37** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (7)](../../ACL2026/robotics/index.md) · [📷 CVPR2026 (38)](../../CVPR2026/robotics/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/robotics/index.md) · [🧠 NeurIPS2025 (57)](../../NeurIPS2025/robotics/index.md) · [📹 ICCV2025 (26)](../../ICCV2025/robotics/index.md) · [🧪 ICML2025 (16)](../../ICML2025/robotics/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (12)](../../ICML2026/robotics/index.md) · [💬 ACL2026 (6)](../../ACL2026/robotics/index.md) · [📷 CVPR2026 (38)](../../CVPR2026/robotics/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/robotics/index.md) · [🧠 NeurIPS2025 (55)](../../NeurIPS2025/robotics/index.md) · [📹 ICCV2025 (26)](../../ICCV2025/robotics/index.md)
 
-🔥 **高频主题：** 机器人 ×11 · 导航 ×6 · 多模态 ×5 · Agent ×5 · 对齐/RLHF ×5
+🔥 **高频主题：** 机器人 ×12 · 导航 ×6 · 多模态 ×5 · Agent ×5 · 对齐/RLHF ×5
 
 **[10 Open Challenges Steering the Future of Vision-Language-Action Models](10_open_challenges_steering_the_future_of_vision-language-ac.md)**
 
@@ -81,7 +81,7 @@ tags:
 
 :   本文系统性地测试了三种文本操控策略（冗长、策略性多答案嵌入、正确答案前置+矛盾）对 LLM 答案匹配评判器的影响，发现这些操控**不会提升分数甚至降低分数**，且二值评分比连续评分更鲁棒，证明答案匹配是一种对低成本文本操控具有鲁棒性的评估方法。
 
-**[Sketch-HARP: 分层自回归草图生成实现灵活笔画级绘制操控](generating_sketches_in_a_hierarchical_auto-regressive_proces.md)**
+**[Generating Sketches in a Hierarchical Auto-Regressive Process for Flexible Sketch Drawing Manipulation at Stroke-Level](generating_sketches_in_a_hierarchical_auto-regressive_proces.md)**
 
 :   提出 Sketch-HARP 分层自回归草图生成框架，通过三阶段层次化过程（预测笔画嵌入→确定画布位置→生成绘制动作序列），首次实现草图绘制过程中的灵活笔画级操控，在替换/擦除/扩展等任务上显著优于 SketchEdit。
 
@@ -100,10 +100,6 @@ tags:
 **[Human Cognitive Biases in Explanation-based Interaction: The Case of Within and Between Session Order Effect](human_cognitive_biases_in_explanation-based_interaction_the_case_of_within_and_b.md)**
 
 :   本文通过两项大规模用户研究（总计 713 名参与者）系统评估了**顺序效应**（order effect）对解释性交互学习（XIL）的影响，发现顺序效应对用户反馈质量的影响**有限且不一致**，且仅在 session 内（而非 session 间）有显著但微弱的影响——总体结论是顺序效应不构成 XIL 实际应用的重大障碍。
-
-**[iSeal: Encrypted Fingerprinting for Reliable LLM Ownership Verification](iseal_encrypted_fingerprinting_for_reliable_llm_ownership_verification.md)**
-
-:   提出 iSeal——首个在模型窃取者完全控制推理过程的黑盒场景下仍能可靠验证 LLM 所有权的主动指纹方法，通过外部加密编码器 + RSC 纠错 + 相似度匹配三重机制，在 12 个 LLM、10+ 种攻击下均保持 100% 指纹成功率（FSR），而已有方法降至 0%。
 
 **[LaF-GRPO: In-Situ Navigation Instruction Generation for the Visually Impaired via GRPO with LLM-as-Follower Reward](laf-grpo_in-situ_navigation_instruction_generation_for_the_visually_impaired_via.md)**
 

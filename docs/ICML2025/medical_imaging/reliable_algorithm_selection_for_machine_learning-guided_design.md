@@ -180,7 +180,7 @@ p 值：$P = 1 - \Phi\left(\frac{\hat{\theta}-\tau}{\sigma}\right)$
 - [\[NeurIPS 2025\] Pharmacophore-Guided Generative Design of Novel Drug-Like Molecules](../../NeurIPS2025/medical_imaging/pharmacophore-guided_generative_design_of_novel_drug-like_molecules.md)
 - [\[ICML 2025\] Improved Off-policy Reinforcement Learning in Biological Sequence Design](improved_off-policy_reinforcement_learning_in_biological_sequence_design.md)
 - [\[NeurIPS 2025\] Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design](../../NeurIPS2025/medical_imaging/uncertainty-aware_multi-objective_reinforcement_learning-guided_diffusion_models.md)
-- [\[ICLR 2026\] DistMLIP: A Distributed Inference Platform for Machine Learning Interatomic Potentials](../../ICLR2026/medical_imaging/distmlip_a_distributed_inference_platform_for_machine_learning_interatomic_poten.md)
+- [\[CVPR 2026\] CURE: Curriculum-guided Multi-task Training for Reliable Anatomy Grounded Report Generation](../../CVPR2026/medical_imaging/cure_curriculum-guided_multi-task_training_for_reliable_anatomy_grounded_report_.md)
 
 </div>
 

@@ -141,9 +141,9 @@ DeCoRL 将 CoT 推理从单体顺序处理转变为"交响乐团式"的模块化
 
 - [\[NeurIPS 2025\] Trajectory Balance with Asynchrony: Decoupling Exploration and Learning for Fast, Scalable LLM Post-Training](../../NeurIPS2025/llm_alignment/trajectory_balance_with_asynchrony_decoupling_exploration_and_learning_for_fast_.md)
 - [\[ACL 2025\] Chain-of-Jailbreak Attack for Image Generation Models via Editing Step by Step](../../ACL2025/llm_alignment/chain-of-jailbreak_attack_for_image_generation_models_via_editing_step_by_step.md)
+- [\[ACL 2026\] Too Correct to Learn: Reinforcement Learning on Saturated Reasoning Data](../../ACL2026/llm_alignment/too_correct_to_learn_reinforcement_learning_on_saturated_reasoning_data.md)
 - [\[AAAI 2026\] On the Exponential Convergence for Offline RLHF with Pairwise Comparisons](on_the_exponential_convergence_for_offline_rlhf_with_pairwise_comparisons.md)
 - [\[AAAI 2026\] GRAM-R²: Self-Training Generative Foundation Reward Models for Reward Reasoning](gram-r2_self-training_generative_foundation_reward_models_for_reward_reasoning.md)
-- [\[AAAI 2026\] EPO: Diverse and Realistic Protein Ensemble Generation via Energy Preference Optimization](epo_diverse_and_realistic_protein_ensemble_generation_via_energy_preference_opti.md)
 
 </div>
 

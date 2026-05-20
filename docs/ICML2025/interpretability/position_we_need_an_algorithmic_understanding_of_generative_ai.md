@@ -159,8 +159,8 @@ AlgEval 主张结合以下方法：
 
 - [\[ICML 2025\] SafetyAnalyst: Interpretable, Transparent, and Steerable Safety Moderation for AI Behavior](safetyanalyst_interpretable_transparent_and_steerable_safety_moderation_for_ai_b.md)
 - [\[ACL 2025\] Position-aware Automatic Circuit Discovery](../../ACL2025/interpretability/position-aware_automatic_circuit_discovery.md)
+- [\[ICML 2026\] Riemannian Generative Decoder](../../ICML2026/interpretability/riemannian_generative_decoder.md)
 - [\[NeurIPS 2025\] Tropical Attention: Neural Algorithmic Reasoning for Combinatorial Algorithms](../../NeurIPS2025/interpretability/tropical_attention_neural_algorithmic_reasoning_for_combinatorial_algorithms.md)
-- [\[AAAI 2026\] Quiet Feature Learning in Algorithmic Tasks](../../AAAI2026/interpretability/quiet_feature_learning_in_algorithmic_tasks.md)
 - [\[NeurIPS 2025\] OrdShap: Feature Position Importance for Sequential Black-Box Models](../../NeurIPS2025/interpretability/ordshap_feature_position_importance_for_sequential_black-box_models.md)
 
 </div>

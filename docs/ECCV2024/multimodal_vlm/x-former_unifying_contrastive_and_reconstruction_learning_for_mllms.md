@@ -164,7 +164,7 @@ X-Former采用两阶段训练：
 - [\[ICCV 2025\] DisenQ: Disentangling Q-Former for Activity-Biometrics](../../ICCV2025/multimodal_vlm/disenq_disentangling_q-former_for_activity-biometrics.md)
 - [\[NeurIPS 2025\] Continual Multimodal Contrastive Learning](../../NeurIPS2025/multimodal_vlm/continual_multimodal_contrastive_learning.md)
 - [\[ICLR 2026\] EgoHandICL: Egocentric 3D Hand Reconstruction with In-Context Learning](../../ICLR2026/multimodal_vlm/egohandicl_egocentric_3d_hand_reconstruction_with_in-context_learning.md)
-- [\[ICLR 2026\] BEAT: Visual Backdoor Attacks on VLM-based Embodied Agents via Contrastive Trigger Learning](../../ICLR2026/multimodal_vlm/beat_visual_backdoor_attacks_on_vlm-based_embodied_agents_via_contrastive_trigge.md)
+- [\[CVPR 2026\] FALCON: False-Negative Aware Learning of Contrastive Negatives in Vision-Language Alignment](../../CVPR2026/multimodal_vlm/falcon_false-negative_aware_learning_of_contrastive_negatives_in_vision-language.md)
 
 </div>
 

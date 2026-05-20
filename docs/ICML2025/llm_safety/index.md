@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 LLM 安全方向32篇论文解读
+  ICML2025 LLM 安全方向43篇论文解读
 description: >-
-  32篇ICML2025的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、持续学习、水印/隐写、对齐/RLHF、联邦学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  43篇ICML2025的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、对齐/RLHF、持续学习、水印/隐写、联邦学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2025"
   - "LLM 安全"
@@ -10,20 +10,20 @@ tags:
   - "论文笔记"
   - "LLM"
   - "对抗鲁棒"
+  - "对齐/RLHF"
   - "持续学习"
   - "水印/隐写"
-  - "对齐/RLHF"
   - "联邦学习"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM 安全
 
-**🧪 ICML2025** · **32** 篇论文解读
+**🧪 ICML2025** · **43** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (21)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (59)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/llm_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (18)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (115)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (29)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (54)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (43)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (84)](../../NeurIPS2025/llm_safety/index.md)
 
-🔥 **高频主题：** LLM ×11 · 对抗鲁棒 ×6 · 持续学习 ×4 · 水印/隐写 ×3 · 对齐/RLHF ×2
+🔥 **高频主题：** LLM ×14 · 对抗鲁棒 ×7 · 对齐/RLHF ×6 · 持续学习 ×4 · 水印/隐写 ×3
 
 **[Activation Space Interventions Can Be Transferred Between Large Language Models](activation_space_interventions_can_be_transferred_between_large_language_models.md)**
 
@@ -61,6 +61,10 @@ tags:
 
 :   提出De-mark框架，通过随机选择探测(random selection probing)策略估计n-gram水印强度并重建红绿列表，无需知道哈希函数即可去除水印，并提供去除后LM分布与原始分布之间的理论差距保证。
 
+**[DRAGON: Guard LLM Unlearning in Context via Negative Detection and Reasoning](dragon_guard_llm_unlearning_in_context_via_negative_detection_and_reasoning.md)**
+
+:   提出 DRAGON，一种无需微调的 LLM 遗忘框架，通过双层检测模块识别需遗忘的 prompt，再由 CoT guard 模型生成推理指令做上下文干预，在不修改模型参数的前提下实现高效遗忘。
+
 **[EgoPrivacy: What Your First-Person Camera Says About You?](egoprivacy_what_your_first-person_camera_says_about_you.md)**
 
 :   提出 EgoPrivacy——首个大规模第一人称视频隐私基准，定义三类隐私（人口统计/个体/情境）七大任务，并设计检索增强攻击 (RAA) 将 ego-to-exo 检索与分类联合，证明基础模型零样本即可以 70–80% 准确率推断佩戴者性别、种族等敏感属性。
@@ -89,6 +93,10 @@ tags:
 
 :   本文首次探索了早退出网络（early-exit networks）在持续学习中的应用，发现早期分类器天然遭受更少的灾难性遗忘，并提出 Task-wise Logits Correction (TLC) 方法来均衡任务偏差，在阶段增量学习中以不到 70% 的计算量匹配标准方法的准确率。
 
+**[Improving LLM Safety Alignment with Dual-Objective Optimization](improving_llm_safety_alignment_with_dual-objective_optimization.md)**
+
+:   通过梯度分析揭示DPO在安全对齐中的两大缺陷（学习率饱和与OOD泛化差），提出DOOR/W-DOOR双目标优化框架（鲁棒拒绝训练+有害知识遗忘+token级加权），在Llama-3-8B和Gemma-2-2B上显著降低了prefilling/suffix/multi-turn等多种越狱攻击的成功率，同时保持通用能力。
+
 **[Improving Your Model Ranking on Chatbot Arena by Vote Rigging](improving_your_model_ranking_on_chatbot_arena_by_vote_rigging.md)**
 
 :   论文揭示 Chatbot Arena 的众包投票机制可被恶意操纵：提出 target-only 和 omnipresent 两类投票操纵策略，其中 omnipresent 策略利用 Bradley-Terry 评分系统的全局耦合特性，仅需操纵数百票即可将目标模型排名提升 15 位，凸显当前 LLM 评估平台的安全脆弱性。
@@ -109,6 +117,10 @@ tags:
 
 :   提出 NegMerge，通过合并多个不同超参数微调模型的任务向量、仅保留符号一致的权重元素来构造更有效的遗忘向量，在零样本与标准分类场景中均取得 SOTA 遗忘效果。
 
+**[POPri: Private Federated Learning using Preference-Optimized Synthetic Data](popri_private_federated_learning_using_preference-optimized_synthetic_data.md)**
+
+:   将差分隐私联邦学习中的合成数据生成问题重新建模为 LLM 策略优化（DPO）问题，利用客户端 DP 反馈构建偏好对来微调 LLM，比传统 Private Evolution 提升更大——在 ε=1 下将隐私-性能差距缩小 58%。
+
 **[Rejecting Hallucinated State Targets during Planning](rejecting_hallucinated_state_targets_during_planning.md)**
 
 :   本文系统识别了目标导向决策规划中生成器产生不可行目标（幻觉目标）导致的"妄想行为"类型，并设计了一种可行性评估器（feasibility evaluator）作为附加模块来识别和拒绝这些不可行目标，结合离策略学习规则、分布式架构和后见重标记数据增强，在不修改原始智能体的前提下显著减少妄想行为并提升OOD泛化性能。
@@ -117,9 +129,21 @@ tags:
 
 :   提出 SIRA（Self-Information Rewrite Attack），利用自信息识别水印嵌入的高熵 token 并进行定向替换，在 7 种主流水印方法上实现近 100% 攻击成功率，成本仅 $0.88/百万 token，且完全黑盒、可迁移至任意 LLM 甚至移动端模型。
 
+**[Reward-Augmented Data Enhances Direct Preference Alignment of LLMs](reward-augmented_data_enhances_direct_preference_alignment_of_llms.md)**
+
+:   提出一种**奖励增强的数据重标注方法**，通过将偏好对条件化于奖励分数构建扩增数据集，使DPO能感知回复质量全谱，缓解高质量rejected回复被遗忘和低质量chosen回复被盲目学习的问题，在多个基准上一致性大幅提升DPO性能。
+
 **[Robust Multi-bit Text Watermark with LLM-based Paraphrasers](robust_multi-bit_text_watermark_with_llm-based_paraphrasers.md)**
 
 :   提出基于LLM释义器（paraphraser）的多比特文本水印方法，通过共训练一对行为差异化的释义器和一个解码分类器，利用PPO强化学习优化编码-解码对，在1.1B小模型上实现>99.99% AUC的检测精度，同时保持文本语义不变。
+
+**[SAEBench: A Comprehensive Benchmark for Sparse Autoencoders in Language Model Interpretability](saebench_a_comprehensive_benchmark_for_sparse_autoencoders_in_language_model_int.md)**
+
+:   提出 SAEBench——一个包含 8 项评估指标的综合基准，系统评测稀疏自编码器（SAE）在语言模型可解释性中的表现，揭示了代理指标（稀疏-保真度）与下游任务性能之间的严重脱节。
+
+**[Safety Alignment Can Be Not Superficial With Explicit Safety Signals](safety_alignment_can_be_not_superficial_with_explicit_safety_signals.md)**
+
+:   通过在LLM中引入显式的安全二分类任务（[CLS] token），并设计策略性注意力机制和解码策略，在推理过程中动态评估安全性，以不到0.2x的额外开销将对抗攻击成功率从90%+降至接近0%。
 
 **[Sorbet: A Neuromorphic Hardware-Compatible Transformer-Based Spiking Language Model](sorbet_a_neuromorphic_hardware-compatible_transformer-based_spiking_language_mod.md)**
 
@@ -128,6 +152,14 @@ tags:
 **[System-Aware Unlearning Algorithms: Use Lesser, Forget Faster](system-aware_unlearning_algorithms_use_lesser_forget_faster.md)**
 
 :   提出系统感知遗忘 (system-aware unlearning) 新定义，将攻击者的能力限制为只能访问系统实际存储的内容而非全部剩余数据，并基于核心集 (core set) + 选择采样 (selective sampling) 设计了线性分类的精确遗忘算法，实现亚线性内存和极低删除时间。
+
+**[TAMAS: Benchmarking Adversarial Risks in Multi-Agent LLM Systems](tamas_benchmarking_adversarial_risks_in_multi-agent_llm_systems.md)**
+
+:   本文提出 TAMAS，首个系统评估多智能体 LLM 系统安全性的基准，覆盖 5 个高风险领域、6 种攻击类型、300 个对抗样本和 10 个骨干模型，揭示多智能体系统在协作场景中存在严重的对抗脆弱性，并引入 ERS 指标衡量安全-效用权衡。
+
+**[Targeted Unlearning with Single Layer Unlearning Gradient](targeted_unlearning_with_single_layer_unlearning_gradient.md)**
+
+:   提出 SLUG (Single Layer Unlearning Gradient) 方法，通过层重要性和梯度对齐指标识别最优单层，仅需一次梯度计算和单层参数更新即可实现高效精准的定向遗忘，可应用于 CLIP、Stable Diffusion 和 VLM。
 
 **[The Canary's Echo: Auditing Privacy Risks of LLM-Generated Synthetic Text](the_canarys_echo_auditing_privacy_risks_of_llm-generated_synthetic_text.md)**
 
@@ -141,9 +173,21 @@ tags:
 
 :   提出 Tuning Contribution (TuCo) 指标，通过将微调后 LLM 的前向传播精确分解为预训练分量 (PTC) 和微调分量 (FTC)，首次实现在推理时逐 prompt 量化微调对模型输出的贡献，并揭示越狱攻击通过削弱 FTC 幅度来绕过安全防护。
 
+**[Unlocking the Capabilities of Large Vision-Language Models for Generalizable and Explainable Deepfake Detection](unlocking_the_capabilities_of_large_vision-language_models_for_generalizable_and.md)**
+
+:   提出基于 LVLM 的 deepfake 检测框架，通过知识引导伪造检测器（KFD）计算图像特征与真/假描述文本的相关性实现分类和定位，再通过伪造提示学习器（FPL）将细粒度伪造特征注入 LLM 生成可解释的检测结果，在 FF++/CDF2/DFDC/DF40 等多个基准上超越 SOTA 泛化性能。
+
 **[Unlocking the Power of Rehearsal in Continual Learning: A Theoretical Perspective](unlocking_the_power_of_rehearsal_in_continual_learning_a_theoretical_perspective.md)**
 
 :   从理论角度严格证明持续学习中排练策略的有效性机制——排练通过控制梯度方向偏差将多任务顺序学习近似为联合训练，遗忘界随缓冲区大小 $m$ 呈 $O(\sqrt{T/m})$ 次线性增长，为实际系统的缓冲区配置提供了 $O(d/\epsilon^2)$ 的精确指导。
+
+**[Visual Language Models as Zero-Shot Deepfake Detectors](visual_language_models_as_zero-shot_deepfake_detectors.md)**
+
+:   提出基于 VLM token 概率归一化的图像分类框架，将 deepfake 检测从二元判断升级为概率估计，在零样本设置下用 InstructBLIP 超越多数专用 deepfake 检测器，微调后在 DFDC-P 上接近完美。
+
+**[Vulnerability-Aware Alignment: Mitigating Uneven Forgetting in Harmful Fine-Tuning](vulnerability-aware_alignment_mitigating_uneven_forgetting_in_harmful_fine-tunin.md)**
+
+:   揭示安全对齐数据在有害微调(HFT)过程中存在**不均匀遗忘**现象——某些样本子集在不同微调任务和有害数据比例下始终更容易被破坏，据此提出 Vulnerability-Aware Alignment (VAA)：先通过代理微调识别脆弱/非脆弱样本分组，再利用 Group DRO 框架学习对抗采样器进行平衡训练，在四个下游微调任务上将平均有害率从 34.5% 降至 24.8%，同时保持下游任务精度。
 
 **[Watch Out Your Album! On the Inadvertent Privacy Memorization in Multi-Modal Large Language Models](watch_out_your_album_on_the_inadvertent_privacy_memorization_in_multi-modal_larg.md)**
 

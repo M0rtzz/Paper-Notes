@@ -157,7 +157,7 @@ SuperEdit 以 **30× 更少数据**和 **13× 更小模型**超越 SmartEdit 9.1
 - [\[ICCV 2025\] Early Timestep Zero-Shot Candidate Selection for Instruction-Guided Image Editing](early_timestep_zero-shot_candidate_selection_for_instruction-guided_image_editin.md)
 - [\[CVPR 2025\] InsightEdit: Towards Better Instruction Following for Image Editing](../../CVPR2025/image_generation/insightedit_towards_better_instruction_following_for_image_editing.md)
 - [\[ICCV 2025\] CaO2: Rectifying Inconsistencies in Diffusion-Based Dataset Distillation](cao2_rectifying_inconsistencies_in_diffusion-based_dataset_distillation.md)
-- [\[ICLR 2026\] EditReward: A Human-Aligned Reward Model for Instruction-Guided Image Editing](../../ICLR2026/image_generation/editreward_a_human-aligned_reward_model_for_instruction-guided_image_editing.md)
+- [\[ICCV 2025\] LUSD: Localized Update Score Distillation for Text-Guided Image Editing](lusd_localized_update_score_distillation_for_text-guided_image_editing.md)
 
 </div>
 

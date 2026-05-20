@@ -174,9 +174,9 @@ KV 缓存 → PCA 变换（去相关） → 自适应量化 → 熵编码 → �
 
 - [\[ACL 2026\] River-LLM: Large Language Model Seamless Exit Based on KV Share](../../ACL2026/code_intelligence/river-llm_large_language_model_seamless_exit_based_on_kv_share.md)
 - [\[ICLR 2026\] Inference-Time Safety for Code LLMs via Retrieval-Augmented Revision](inference-time_safety_for_code_llms_via_retrieval-augmented_revision.md)
+- [\[ACL 2026\] Student Guides Teacher: Weak-to-Strong Inference via Spectral Orthogonal Exploration](../../ACL2026/code_intelligence/student_guides_teacher_weak-to-strong_inference_via_spectral_orthogonal_explorat.md)
 - [\[NeurIPS 2025\] A Self-Improving Coding Agent](../../NeurIPS2025/code_intelligence/a_selfimproving_coding_agent.md)
-- [\[ACL 2025\] UTBoost: Rigorous Evaluation of Coding Agents on SWE-Bench](../../ACL2025/code_intelligence/utboost_rigorous_evaluation_of_coding_agents_on_swe-bench.md)
-- [\[ACL 2025\] SceneGenAgent: Precise Industrial Scene Generation with Coding Agent](../../ACL2025/code_intelligence/scenegenagent_precise_industrial_scene_generation_with_coding_agent.md)
+- [\[ACL 2026\] RExBench: Can coding agents autonomously implement AI research extensions?](../../ACL2026/code_intelligence/rexbench_can_coding_agents_autonomously_implement_ai_research_extensions.md)
 
 </div>
 

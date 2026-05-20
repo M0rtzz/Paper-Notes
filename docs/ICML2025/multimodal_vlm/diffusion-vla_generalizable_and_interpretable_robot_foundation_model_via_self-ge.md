@@ -185,7 +185,7 @@ $$L = L_{diff} + \alpha \cdot L_{ntp}$$
 - [\[ICCV 2025\] AIGI-Holmes: Towards Explainable and Generalizable AI-Generated Image Detection via Multimodal Large Language Models](../../ICCV2025/multimodal_vlm/aigi_holmes_towards_explainable_and_generalizable_ai_generated_image_detection_via_mllm.md)
 - [\[ICLR 2026\] Evaluating VLMs' Spatial Reasoning Over Robot Motion: A Step Towards Robot Planning with Motion Preferences](../../ICLR2026/multimodal_vlm/evaluating_vlms_spatial_reasoning_over_robot_motion_a_step_towards_robot_plannin.md)
 - [\[ACL 2025\] LogicQA: Logical Anomaly Detection with Vision Language Model Generated Questions](../../ACL2025/multimodal_vlm/logicqa_logical_anomaly_detection_with_vision_language_model_generated_questions.md)
-- [\[ICML 2025\] The Devil Is in the Details: Tackling Unimodal Spurious Correlations for Generalizable Multimodal Reward Models](the_devil_is_in_the_details_tackling_unimodal_spurious_correlations_for_generali.md)
+- [\[ICCV 2025\] Interpretable Zero-Shot Learning with Locally-Aligned Vision-Language Model](../../ICCV2025/multimodal_vlm/interpretable_zero-shot_learning_with_locally-aligned_vision-language_model.md)
 
 </div>
 

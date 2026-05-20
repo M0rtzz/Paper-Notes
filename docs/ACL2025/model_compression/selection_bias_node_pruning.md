@@ -160,7 +160,7 @@ AOI 在无法获取模型参数的黑盒场景同样有效：
 - [\[ICML 2025\] Beyond Communication Overhead: A Multilevel Monte Carlo Approach for Mitigating Compression Bias in Distributed Learning](../../ICML2025/model_compression/beyond_communication_overhead_a_multilevel_monte_carlo_approach_for_mitigating_c.md)
 - [\[ACL 2025\] Wanda++: Pruning Large Language Models via Regional Gradients](wanda_pruning_large_language_models_via_regional_gradients.md)
 - [\[ACL 2025\] LongReD: Mitigating Short-Text Degradation of Long-Context Large Language Models via Restoration Distillation](longred_mitigating_short-text_degradation_of_long-context_large_language_models_.md)
-- [\[ICML 2025\] Best Subset Selection: Optimal Pursuit for Feature Selection and Elimination](../../ICML2025/model_compression/best_subset_selection_optimal_pursuit_for_feature_selection_and_elimination.md)
+- [\[ACL 2025\] BlockPruner: Fine-grained Pruning for Large Language Models](blockpruner_fine-grained_pruning_for_large_language_models.md)
 
 </div>
 

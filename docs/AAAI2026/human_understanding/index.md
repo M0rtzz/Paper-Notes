@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 人体理解方向16篇论文解读
+  AAAI2026 人体理解方向15篇论文解读
 description: >-
-  16篇AAAI2026的人体理解方向论文解读，涵盖人脸/视线、人体姿态、推理、情感分析、重识别、目标跟踪等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  15篇AAAI2026的人体理解方向论文解读，涵盖人脸/视线、人体姿态、推理、情感分析、重识别、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "人体理解"
@@ -13,17 +13,17 @@ tags:
   - "推理"
   - "情感分析"
   - "重识别"
-  - "目标跟踪"
+  - "对抗鲁棒"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧑 人体理解
 
-**🤖 AAAI2026** · **16** 篇论文解读
+**🤖 AAAI2026** · **15** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (56)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (7)](../../ICLR2026/human_understanding/index.md) · [🧠 NeurIPS2025 (19)](../../NeurIPS2025/human_understanding/index.md) · [📹 ICCV2025 (46)](../../ICCV2025/human_understanding/index.md) · [🧪 ICML2025 (2)](../../ICML2025/human_understanding/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (1)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (53)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (7)](../../ICLR2026/human_understanding/index.md) · [🧠 NeurIPS2025 (18)](../../NeurIPS2025/human_understanding/index.md) · [📹 ICCV2025 (38)](../../ICCV2025/human_understanding/index.md)
 
-🔥 **高频主题：** 人脸/视线 ×4 · 人体姿态 ×4
+🔥 **高频主题：** 人脸/视线 ×4 · 人体姿态 ×3
 
 **[AHAN: Asymmetric Hierarchical Attention Network for Identical Twin Face Verification](ahan_asymmetric_hierarchical_attention_network_for_identical.md)**
 
@@ -64,10 +64,6 @@ tags:
 **[New Synthetic Goldmine: Hand Joint Angle-Driven EMG Data Generation Framework for Micro-Gesture Recognition](new_synthetic_goldmine_hand_joint_angle-driven_emg_data_generation_framework_for.md)**
 
 :   提出 SeqEMG-GAN，一种基于手部关节角度序列驱动的条件对抗生成框架，通过角度编码器、双层上下文编码器（含新颖 Ang2Gist 单元）、深度卷积生成器和多视角判别器的联合设计，从关节运动学轨迹合成高保真 EMG 信号，实现对未见手势的零样本生成，合成数据与真实数据混合训练将分类精度从 57.77% 提升至 60.53%。
-
-**[PressTrack-HMR: Pressure-Based Top-Down Multi-Person Global Human Mesh Recovery](presstrack-hmr_pressure-based_top-down_multi-person_global_human_mesh_recovery.md)**
-
-:   提出 PressTrack-HMR，首个仅基于压力信号实现多人全局人体网格恢复的自上而下流水线，通过创新的 UoE 相似度度量实现压力足迹跟踪（93.6% MOTA），并构建了首个多人交互压力数据集 MIP。
 
 **[Robust Long-term Test-Time Adaptation for 3D Human Pose Estimation through Motion Discretization](robust_long-term_test-time_adaptation_for_3d_human_pose_estimation_through_motio.md)**
 

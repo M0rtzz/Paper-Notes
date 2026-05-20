@@ -132,10 +132,10 @@ tags:
 ## 相关论文
 
 - [\[CVPR 2025\] Single Pixel Image Classification using an Ultrafast Digital Light Projector](../../CVPR2025/autonomous_driving/single_pixel_image_classification_using_an_ultrafast_digital_light_projector.md)
-- [\[CVPR 2025\] Pixel-Aligned RGB-NIR Stereo Imaging and Dataset for Robot Vision](../../CVPR2025/autonomous_driving/pixel-aligned_rgb-nir_stereo_imaging_and_dataset_for_robot_vision.md)
 - [\[CVPR 2025\] Unlocking Generalization Power in LiDAR Point Cloud Registration](../../CVPR2025/autonomous_driving/unlocking_generalization_power_in_lidar_point_cloud_registration.md)
-- [\[CVPR 2025\] M²-Occ: Resilient 3D Semantic Occupancy Prediction for Autonomous Driving with Incomplete Camera Inputs](../../CVPR2025/autonomous_driving/m2-occ_resilient_3d_semantic_occupancy_prediction_for_autonomous_driving_with_in.md)
+- [\[CVPR 2025\] Pixel-Aligned RGB-NIR Stereo Imaging and Dataset for Robot Vision](../../CVPR2025/autonomous_driving/pixel-aligned_rgb-nir_stereo_imaging_and_dataset_for_robot_vision.md)
 - [\[ICML 2025\] Geometry-to-Image Synthesis-Driven Generative Point Cloud Registration](../../ICML2025/autonomous_driving/geometry-to-image_synthesis-driven_generative_point_cloud_registration.md)
+- [\[CVPR 2025\] M²-Occ: Resilient 3D Semantic Occupancy Prediction for Autonomous Driving with Incomplete Camera Inputs](../../CVPR2025/autonomous_driving/m2-occ_resilient_3d_semantic_occupancy_prediction_for_autonomous_driving_with_in.md)
 
 </div>
 

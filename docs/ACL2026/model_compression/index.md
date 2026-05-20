@@ -1,32 +1,32 @@
 ---
 title: >-
-  ACL2026 模型压缩方向42篇论文解读
+  ACL2026 模型压缩方向49篇论文解读
 description: >-
-  42篇ACL2026的模型压缩方向论文解读，涵盖 LLM、模型压缩、Agent、压缩/编码、推理、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  49篇ACL2026的模型压缩方向论文解读，涵盖 LLM、模型压缩、压缩/编码、推理、个性化生成、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2026"
   - "模型压缩"
   - "论文解读"
   - "论文笔记"
   - "LLM"
-  - "Agent"
   - "压缩/编码"
   - "推理"
   - "个性化生成"
+  - "对齐/RLHF"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**💬 ACL2026** · **42** 篇论文解读
+**💬 ACL2026** · **49** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (50)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (90)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (54)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (137)](../../NeurIPS2025/model_compression/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/model_compression/index.md) · [🧪 ICML2025 (70)](../../ICML2025/model_compression/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (21)](../../ICML2026/model_compression/index.md) · [📷 CVPR2026 (50)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (90)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (53)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (134)](../../NeurIPS2025/model_compression/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/model_compression/index.md)
 
-🔥 **高频主题：** LLM ×9 · 模型压缩 ×3 · Agent ×3 · 压缩/编码 ×3 · 推理 ×3
+🔥 **高频主题：** LLM ×14 · 模型压缩 ×6 · 压缩/编码 ×4 · 推理 ×3 · 个性化生成 ×2
 
-**[A Computational Method for Measuring "Open Codes" in Qualitative Analysis](a_computational_method_for_measuring_34open_codes34_in_qualitative_analysis.md)**
+**[A BERTology View of LLM Orchestrations: Token- and Layer-Selective Probes for Efficient Single-Pass Classification](a_bertology_view_of_llm_orchestrations_token-_and_layer-selective_probes_for_eff.md)**
 
-:   提出一种基于理论的计算方法，通过LLM增强的代码合并算法和四个无需ground truth的指标（Coverage, Overlap, Novelty, Divergence），系统评估人类和AI在归纳定性编码中的表现。
+:   把 production LLM 的 token×layer 隐状态张量当成可挖掘资源，用「先压 token、再压 layer」的两阶段聚合 probe 在同一次 forward 里完成安全/情感分类，35M 可训练参数即可逼近独立 guard 模型，省掉一次额外的 LLM 调用。
 
 **[A Layer-wise Analysis of Supervised Fine-Tuning](a_layer-wise_analysis_of_supervised_fine-tuning.md)**
 
@@ -40,9 +40,13 @@ tags:
 
 :   提出一种分析式后训练框架，通过神经元激活模式分析将dense FFN快速重构为sparse MoE——区分高频共享专家和低频路由专家，并从激活统计量构建路由器，仅需2k样本微调即可实现1.17×加速。
 
-**[arXiv2Table: Toward Realistic Benchmarking and Evaluation for LLM-Based Literature-Review Table Generation](arxiv2table_toward_realistic_benchmarking_and_evaluation_for_llm-based_literatur.md)**
+**[ArcLight: A Lightweight LLM Inference Architecture for Many-Core CPUs](arclight_a_lightweight_llm_inference_architecture_for_many-core_cpus.md)**
 
-:   提出 arXiv2Table 基准（1,957 张表、7,158 篇论文），通过引入干扰论文、模式无关的用户需求和基于 QA 的无标注评估框架，实现更真实的 LLM 文献综述表格生成评估，并提出迭代批处理生成方法。
+:   ArcLight 是一个从零写的轻量级 LLM 推理框架（约 10 个 C++ 文件），专为多 NUMA 节点的 many-core CPU 设计，通过 NUMA 局部内存池、多视图线程池、跨 NUMA 张量并行 + 异步子图同步打破"远程内存墙"，在 192 核 ARM 鲲鹏平台上把 Qwen3-4B Q4_0 的 decode 吞吐相对 llama.cpp 提高至多 46%。
+
+**[BaseCal: Unsupervised Confidence Calibration via Base Model Signals](basecal_unsupervised_confidence_calibration_via_base_model_signals.md)**
+
+:   观察到 base LLM 在 free-form QA 上仍然保持良好校准、而 post-trained LLM（PoLLM）严重过自信，BaseCal 提出两种无监督方案——把 PoLLM 的回答喂进 base LLM 拿 token 概率做置信度（BaseCal-ReEval），或用一层线性投影把 PoLLM 末层隐状态映射回 base LLM 空间再过 base 的输出层（BaseCal-Proj），在 5 个数据集 × 3 个模型族上把 ECE 相对最佳无监督基线平均降低 42.9%。
 
 **[Calibrated Speculative Decoding: Frequency-Guided Candidate Selection for Efficient Inference](calibrated_speculative_decoding_frequency-guided_candidate_selection_for_efficie.md)**
 
@@ -52,17 +56,9 @@ tags:
 
 :   CBRS 提出一个多平台框架，通过双层过滤架构（轻量分类器 + LLM）从社交媒体消息流中高效检测并解析血液捐献请求，构建了首个包含 11K 条孟加拉语-英语-转写孟加拉语的血液捐献请求数据集，LoRA 微调的 Llama-3.2-3B 在解析任务上达到 92% 零样本准确率。
 
-**[ChemAmp: Amplified Chemistry Tools via Composable Agents](chemamp_amplified_chemistry_tools_via_composable_agents.md)**
+**[Cognitive-Uncertainty Guided Knowledge Distillation for Accurate Classification of Student Misconceptions](cognitive-uncertainty_guided_knowledge_distillation_for_accurate_classification_.md)**
 
-:   提出"工具放大"新范式（区别于传统的工具编排），通过 ChemAmp 框架将化学专用工具（UniMol2、Chemformer等）作为可组合积木块动态构建任务专用超级智能体，在分子设计、反应预测等四个核心化学任务上超越专用模型和通用LLM，同时推理token成本减少94%。
-
-**[CLAG: Adaptive Memory Organization via Agent-Driven Clustering for Small Language Model Agents](clag_adaptive_memory_organization_via_agent-driven_clustering_for_small_language.md)**
-
-:   本文提出 CLAG，一种基于聚类的 Agent 记忆框架，通过 SLM 驱动的路由将记忆组织到语义一致的聚类中，在聚类内部进行局部进化更新，并通过两阶段检索过滤噪声，在多个 QA 数据集上显著优于全局记忆池基线。
-
-**[Compositional Steering of Large Language Models with Steering Tokens](compositional_steering_of_large_language_models_with_steering_tokens.md)**
-
-:   本文提出组合引导 token，通过自蒸馏将行为指令压缩为输入空间的嵌入向量，并训练专用组合 token <and> 来捕获"组合"的通用概念，在未见过的行为组合、未见过的行为以及未见过的组合数量上均展现强泛化能力。
+:   论文用两阶段知识蒸馏 + 基于教师认知不确定性的"双层边际样本选择" + 难度自适应损失，在仅用 10.30% 真实样本增量训练的情况下，把 4B 学生模型在 MAP-Charting 上做到 MAP@3 = 0.9585（+17.8%），并在 220 题中学代数误解 benchmark 上以 84.38% 准确率超过 GPT-5（67.73%）与直接微调的 72B 教师（81.25%），同时推理速度比教师快 23×。
 
 **[DeepPrune: Parallel Scaling without Inter-Trace Redundancy](deepprune_parallel_scaling_without_inter-trace_redundancy.md)**
 
@@ -80,6 +76,10 @@ tags:
 
 :   本文利用对数似然向量将不同架构的语言模型嵌入统一空间，系统测量了预训练、模型规模、随机种子、量化、微调和层间等多种设置下的 KL 散度特征尺度，并发现预训练轨迹在对数似然空间中呈亚扩散行为——尽管权重空间持续漂移，模型输出分布早期即趋于稳定。
 
+**[Evolutionary Negative Module Pruning for Better LoRA Merging](evolutionary_negative_module_pruning_for_better_lora_merging.md)**
+
+:   提出 ENMP 方法，通过进化搜索策略发现并剪除 LoRA 合并中降低性能的"负面模块"，作为即插即用的增强手段，在 NLP 和视觉领域全面提升现有合并算法的效果。
+
 **[FastKV: Decoupling of Context Reduction and KV Cache Compression for Prefill-Decoding Acceleration](fastkv_decoupling_of_context_reduction_and_kv_cache_compression_for_prefill-deco.md)**
 
 :   本文提出 FastKV，通过将上下文缩减（prefill 阶段的 Token-Selective Propagation）与 KV 缓存压缩（decoding 阶段的层级 KV 保留）解耦，在 LLaMA-3.1-8B-Instruct 上实现 prefill 1.82× 和 decoding 2.87× 加速，同时在 LongBench 上精度下降控制在 1% 以内。
@@ -88,13 +88,13 @@ tags:
 
 :   提出 PerSyn（Personalized data Synthesis），通过"先路由再生成"范式让路由器为每个 prompt 分配最优教师模型，综合考虑学生可学习性和教师响应质量，比传统"先生成再选择"范式高效且效果更好，在指令微调和数学推理两个场景中一致超越所有基线。
 
-**[MAGEO: From Experience to Skill — Multi-Agent Generative Engine Optimization via Reusable Strategy Learning](from_experience_to_skill_multi-agent_generative_engine_optimization_via_reusable.md)**
+**[From Signal Degradation to Computation Collapse: Uncovering the Two Failure Modes of LLM Quantization](from_signal_degradation_to_computation_collapse_uncovering_the_two_failure_modes.md)**
 
-:   本文将生成引擎优化（GEO）从逐实例启发式优化重构为策略学习问题，提出 MAGEO 多智能体框架——执行层由偏好/规划/编辑/评估四个智能体协作，学习层将验证有效的编辑模式蒸馏为可复用的引擎特定策略技能，并引入 Twin Branch 因果评估协议和 DSV-CF 双轴指标，在三个主流引擎上显著优于启发式基线。
+:   本文通过系统的机械可解释性分析，揭示LLM量化存在两种质性不同的失败模式：4-bit的信号退化（Signal Degradation，计算模式完整但精度受损，可局部修复）和2-bit的计算崩溃（Computation Collapse，关键组件功能性破坏，需结构重建）。
 
-**[From Weights to Activations: Is Steering the Next Frontier of Adaptation?](from_weights_to_activations_is_steering_the_next_frontier_of_adaptation.md)**
+**[GlimpRouter: Efficient Collaborative Inference by Glimpsing One Token of Thoughts](glimprouter_efficient_collaborative_inference_by_glimpsing_one_token_of_thoughts.md)**
 
-:   本文系统性地论证 steering（推理时激活空间干预）应被视为一种独立的模型适配范式，提出八项功能性评估标准对比 steering 与微调、PEFT、提示工程等传统方法，将 steering 定位为基于激活空间的局部可逆行为修改方法，具有计算高效、数据高效和可逆性等独特优势。
+:   本文提出 **GlimpRouter**：在 step 级 LRM 协同推理中，先让小模型只解码每个推理步的"第一个 token"，用它的熵 $\mathbf{H}_{\text{init}}$ 估计该步难度，低则小模型续写、高则切换到大模型；training-free，无需大模型 verifier，在 AIME25 上比独立大模型准确率 +10.7% 同时延迟 −25.9%，且与 token-level Speculative Decoding 正交叠加。
 
 **[HeteroCache: A Dynamic Retrieval Approach to Heterogeneous KV Cache Compression for Long-Context LLM Inference](heterocache_a_dynamic_retrieval_approach_to_heterogeneous_kv_cache_compression_f.md)**
 
@@ -108,9 +108,17 @@ tags:
 
 :   提出 CadLLM，一种免训练的自适应推理加速方法，利用扩散语言模型（dLLM）的 token 解码置信度信号动态调整块大小、步数、词表采样范围和提交阈值四个维度，在 LLaDA 和 DREAM 上实现 1.1-2.28× 的吞吐量提升且保持竞争性准确率。
 
+**[IntroLM: Introspective Language Models via Prefilling-Time Self-Evaluation](introlm_introspective_language_models_via_prefilling-time_self-evaluation.md)**
+
+:   IntroLM 在 prompt 尾部追加特殊 `[CPX]` 内省 token，再通过"只对该 token 生效的 token-conditional LoRA"在 prefilling 阶段一次性算出"这个 prompt 我能不能答对"，整套自评不进 KV cache、不影响生成，在 HotpotQA 等长上下文 QA 上 ROC-AUC 比 DeBERTa-v3-Large 高 14 个点，用作模型路由能省下最多 50% 大模型调用、33% 端到端延迟。
+
 **[JudgeMeNot: Personalizing Large Language Models to Emulate Judicial Reasoning in Hebrew](judgemenot_personalizing_large_language_models_to_emulate_judicial_reasoning_in_.md)**
 
 :   提出了一个 synthetic-organic 监督管线，将法官的原始判决文书转化为推理指令微调数据，通过 CLM→指令微调的 Chain-of-LoRA 策略实现对个体法官推理风格的高保真模拟，在希伯来语低资源场景下生成内容与真实法官不可区分。
+
+**[LEAP: Layer-wise Exit-Aware Pretraining for Efficient Transformer Inference](leap_layer-wise_exit-aware_pretraining_for_efficient_transformer_inference.md)**
+
+:   首先在理论 + 实证上指出"逐层对齐蒸馏"与"基于收敛的早退"在标准部署下**系统性不兼容**——蒸馏模型每一层都在干活、没有冗余可早退，然后提出 LEAP 这种零额外参数的辅助训练目标，让中间层提前逼近最终层表示，在 MiniLM-L12 上拿到 1.61× 实测墙钟加速（batch=1，91.9% 样本在 L7 退出）。
 
 **[LLM Prompt Duel Optimizer: Efficient Label-Free Prompt Optimization](llm_prompt_duel_optimizer_efficient_label-free_prompt_optimization.md)**
 
@@ -120,29 +128,21 @@ tags:
 
 :   提出 LoGo（LoRA on the Go），一个免训练的框架，通过单次前向传播提取 LoRA 激活信号（范数或熵），在实例级别动态选择和合并最相关的 LoRA 适配器，无需标注数据或额外训练即可实现跨任务泛化。
 
-**[MAESTRO: Meta-learning Adaptive Estimation of Scalarization Trade-offs for Reward Optimization](maestro_meta-learning_adaptive_estimation_of_scalarization_trade-offs_for_reward.md)**
+**[MeepleLM: A Virtual Playtester Simulating Diverse Subjective Experiences](meeplelm_a_virtual_playtester_simulating_diverse_subjective_experiences.md)**
 
-:   本文提出 MAESTRO，将 GRPO 中的奖励标量化重新定义为上下文老虎机问题，通过轻量级 Conductor 网络利用模型末层隐藏状态自适应地为每个 prompt-response 对选择奖励权重，在七个开放域基准上一致超越静态奖励和单一奖励基线。
+:   为桌游设计师做"虚拟玩家测试"——把官方规则书 + 5 类玩家人格送给一个微调过的 Qwen3-8B (MeepleLM)，让它先沿 Mechanics→Dynamics→Aesthetics (MDA) 三步推理再生成 rating + review，最终在 207 个游戏上超越 GPT-5.1 / Gemini3-Pro 在社区分布对齐 (Wasserstein 0.22 vs GPT-5.1 0.95)、内容多样性 (Div 4.34 vs 4.26) 和 Opinion Recovery (69.77 vs 63.44) 三项，并在盲测 A/B 中拿到 70%+ 用户偏好。
 
-**[Mem²Evolve: Towards Self-Evolving Agents via Co-Evolutionary Capability Expansion and Experience Distillation](mem2evolve_towards_self-evolving_agents_via_co-evolutionary_capability_expansion.md)**
+**[MTA: Multi-Granular Trajectory Alignment for Large Language Model Distillation](mta_multi-granular_trajectory_alignment_for_large_language_model_distillation.md)**
 
-:   本文提出 Mem²Evolve，一种通过双记忆机制（资产记忆 + 经验记忆）实现能力扩展与经验蒸馏协同进化的自进化 Agent 框架，在 6 类任务 8 个基准上平均 Pass@1 达 70.24%，分别超过纯经验进化和纯能力进化的最强基线 11.80% 和 6.46%。
-
-**[Mem^p: Exploring Agent Procedural Memory](memp_exploring_agent_procedural_memory.md)**
-
-:   本文提出 Mem^p 框架，系统性地研究如何为 LLM Agent 构建可学习、可更新、终身演化的程序性记忆——通过将过去的任务轨迹蒸馏为细粒度的分步指令和高层脚本抽象，并配合动态更新机制（添加/验证/反思/淘汰），在 TravelPlanner 和 ALFWorld 上实现了成功率持续提升和执行步数大幅减少。
-
-**[Meta-Tool: Efficient Few-Shot Tool Adaptation for Small Language Models](meta-tool_efficient_few-shot_tool_adaptation_for_small_language_models.md)**
-
-:   通过在四个基准上系统对比超网络 LoRA 适应 vs 精心设计的 few-shot 提示，发现 2.28 亿参数的超网络提供零增益——few-shot 示例贡献 +21.5%、文档编码贡献 +5.0%、超网络贡献 0%，3B 模型配合良好提示可达 GPT-5 平均性能的 79.7% 且延迟低 10 倍。
-
-**[Model Internal Sleuthing: Finding Lexical Identity and Inflectional Features in Modern Language Models](model_internal_sleuthing_finding_lexical_identity_and_inflectional_features_in_m.md)**
-
-:   本文系统地对 25 个 Transformer 语言模型（从 BERT Base 到 Qwen2.5-7B）进行探针分析，发现词汇同一性（lexeme）在早期层线性可解码但随深度衰减，而屈折特征（inflection）在所有层中保持稳定可读，且占据紧凑可控的子空间。
+:   MTA 将 LLM 蒸馏从“对齐某几个静态层”推进到“按网络深度对齐表示演化轨迹”：低层对齐词级信息，高层对齐短语级关系几何，并作为插件稳定提升 FDD、DistiLLM、DistiLLM-2 在指令跟随任务上的 ROUGE-L 表现。
 
 **[No-Worse Context-Aware Decoding: Preventing Neutral Regression in Context-Conditioned Generation](no-worse_context-aware_decoding_preventing_neutral_regression_in_context-conditi.md)**
 
 :   提出 NWCAD，一种解码时适配器，通过两阶段门控机制在上下文无信息时精确回退到无上下文解码（防止中性退化），在上下文有帮助时利用上下文进行修正，兼顾"无害"与"有效"两个目标。
+
+**[Not All Directions Matter: Towards Structured and Task-Aware Low-Rank Model Adaptation](not_all_directions_matter_towards_structured_and_task-aware_low-rank_model_adapt.md)**
+
+:   本文提出 StructLoRA：先用信息瓶颈过滤掉低秩更新里与任务无关的方向，再用训练期图神经网络协调不同层的 LoRA 更新，在语言、视觉和多模态任务上稳定超过 LoRA / AdaLoRA / DoRA / Sensitivity-LoRA，同时保持推理零额外开销。
 
 **[Polynomial Expansion Rank Adaptation: Enhancing Low-Rank Fine-Tuning with High-Order Interactions](polynomial_expansion_rank_adaptation_enhancing_low-rank_fine-tuning_with_high-or.md)**
 
@@ -152,42 +152,70 @@ tags:
 
 :   提出 E-GRM 框架，利用模型并行解码的收敛行为估计不确定性，仅在必要时触发 CoT 推理，并通过混合损失训练的判别式评分器精细评估推理路径质量，在多个奖励模型基准上实现 SOTA 同时降低 62% 推理延迟。
 
+**[Rethinking Parameter Sharing for LLM Fine-Tuning with Multiple LoRAs](rethinking_parameter_sharing_for_llm_fine-tuning_with_multiple_loras.md)**
+
+:   本文推翻了“多 LoRA 应共享 A 矩阵”的常见假设，证明 A 的相似性主要来自相同初始化而非共享知识，并提出共享 B 矩阵的 ALoRA / Fed-ALoRA，在多任务和联邦微调中兼顾性能、均衡性与通信效率。
+
+**[RouteNLP: Closed-Loop LLM Routing with Conformal Cascading and Distillation Co-Optimization](routenlp_closed-loop_llm_routing_with_conformal_cascading_and_distillation_co-op.md)**
+
+:   RouteNLP 是一个闭环 LLM 路由与级联框架，用任务感知路由器、 conformal 校准级联和失败簇定向蒸馏共同优化模型组合，在六任务企业基准上以 0.971 质量比达到 0.159 成本比，并在 8 周客服试点中节省 58% 推理成本、保持 91% 响应可接受率。
+
 **[SAMoRA: Semantic-Aware Mixture of LoRA Experts for Task-Adaptive Learning](samora_semantic-aware_mixture_of_lora_experts_for_task-adaptive_learning.md)**
 
 :   SAMoRA 通过语义感知路由器和任务自适应缩放机制，解决了现有 MoE-LoRA 方法中路由不精确和权重融合缺乏灵活性的问题，在多任务基准上以最少可训练参数（0.15%）达到 SOTA。
 
-**[SCURank: Ranking Multiple Candidate Summaries with Summary Content Units for Enhanced Summarization](scurank_ranking_multiple_candidate_summaries_with_summary_content_units_for_enha.md)**
+**[Social Story Frames: Contextual Reasoning about Narrative Intent and Reception](social_story_frames_contextual_reasoning_about_narrative_intent_and_reception.md)**
 
-:   本文提出 SCURank，一种基于摘要内容单元（SCU）的排序框架，通过提取 SCU、跨摘要聚类估计信息重要性、按信息丰富度评分来排序候选摘要，替代不稳定的 LLM 直接排序和粗粒度的 ROUGE 排序，在多 LLM 蒸馏场景中配合 BRIO 对比学习显著提升了蒸馏模型的摘要性能。
+:   这篇论文提出 SocialStoryFrames，用一个包含 10 个维度的读者反应 taxonomy 和两个蒸馏模型，把 Reddit 故事放回社区与对话上下文中推断其叙事意图、读者情感和价值判断，并在 6,140 条社交媒体故事上展示了比语义相似度更细的社区叙事实践分析。
 
-**[SeLaR: Selective Latent Reasoning in Large Language Models](selar_selective_latent_reasoning_in_large_language_models.md)**
+**[SRA: Span Representation Alignment for Large Language Model Distillation](sra_span_representation_alignment_for_large_language_model_distillation.md)**
 
-:   本文提出 SeLaR，一种轻量级无训练框架，通过熵门控机制仅在模型不确定的"探索步"激活软嵌入潜在推理、在高置信的"确定步"保持离散解码，并引入熵感知对比正则化防止软嵌入向主导 token 坍缩，在五个推理基准上一致超越标准 CoT 和 SOTA 无训练方法。
+:   SRA 把跨分词器 LLM 蒸馏的基本对齐单元从易碎的 token 换成 tokenizer-agnostic 的文本 span，通过 LCS 字符偏移匹配、注意力加权 center-of-mass 表示、几何结构正则和共享词表 span logit 蒸馏，在多组 teacher-student 压缩实验中稳定超过 ULD、MinED、DSKD 和 MultiLevelOT。
 
-**[Supplement Generation Training for Enhancing Agentic Task Performance](supplement_generation_training_for_enhancing_agentic_task_performance.md)**
+**[Stable On-Policy Distillation through Adaptive Target Reformulation](stable_on-policy_distillation_through_adaptive_target_reformulation.md)**
 
-:   SGT（Supplement Generation Training）训练一个小型 LLM（1.7B）生成逐实例的补充文本（推理线索、摘要、错误提醒等），附加到输入后让冻结的大型 Actor 模型更有效地解决任务，在 5 个基准上平均提升 21%，无需修改大模型参数。
+:   本文提出 Veto，一种目标层面的重构方法，通过在 logit 空间构建教师-学生的几何桥接分布来稳定 on-policy 知识蒸馏，单一参数 $\beta$ 同时在 forward KL 中充当自适应梯度否决器（抑制低置信度 token 的有害梯度）和在 reverse KL 中充当果断性旋钮（平衡奖励驱动和输出多样性），在 GSM8K 上比 SFT 提升 9.2%。
 
 **[Task-Stratified Knowledge Scaling Laws for Post-Training Quantized LLMs](task-stratified_knowledge_scaling_laws_for_post-training_quantized_large_languag.md)**
 
 :   本文建立了首个面向后训练量化（PTQ）的任务分层知识缩放定律，将 LLM 能力分为记忆/应用/推理三层，统一建模模型大小、位宽、组大小和校准集大小四个因素，在 293 种 PTQ 配置上验证，揭示推理对精度敏感、应用随规模提升、记忆对校准敏感的差异化规律。
 
+**[TELL-TALE: Task Efficient LLMs with Task Aware Layer Elimination](tell-tale_task_efficient_llms_with_task_aware_layer_elimination.md)**
+
+:   TALE 用一个无需重训的贪心搜索过程，为每个下游任务直接删除“拖后腿”的 Transformer 层，在 5 个开源 LLM 和 9 个 benchmark 上同时提升任务准确率并减少推理成本。
+
+**[The Pitfalls of KV Cache Compression](the_pitfalls_of_kv_cache_compression.md)**
+
+:   这篇论文指出 KV cache 压缩在多指令提示中会导致选择性遗忘和系统提示泄露，问题来自不同指令被不均匀驱逐以及关键 token 被错误删除，并提出白名单保留和 fair eviction 两种简单改造来显著降低泄露、稳定指令遵循。
+
+**[TLoRA: Task-aware Low Rank Adaptation of Large Language Models](tlora_task-aware_low_rank_adaptation_of_large_language_models.md)**
+
+:   TLoRA 用训练样本激活协方差来初始化并冻结 LoRA 的 $A$ 矩阵，再按模块重要性自适应分配 rank 和 scaling factor，使 LLM 在 NLU、常识推理、数学、代码生成和聊天任务上用约一半可训练参数达到或超过主流 LoRA 变体。
+
 **[Training-Free Test-Time Contrastive Learning for Large Language Models](training-free_test-time_contrastive_learning_for_large_language_models.md)**
 
 :   本文提出 TF-TTCL，一种无需梯度更新的测试时对比学习框架，通过"探索-反思-引导"循环让冻结的 LLM 在线自我改进——用多智能体角色扮演生成多样推理轨迹，从正负样本对比中蒸馏文本规则存入记忆库，推理时检索相关规则引导生成。
+
+**[Two-Stage Regularization-Based Structured Pruning for LLMs](two-stage_regularization-based_structured_pruning_for_llms.md)**
+
+:   TRSP 用第一阶段正则学习每个 Transformer 层的重要性，再用第二阶段正则把待删层的输入输出拉近，让知识转移到保留层中，从而在无需重训练的情况下实现 LLM 层级结构化剪枝和实际推理加速。
 
 **[UKP_Psycontrol at SemEval-2026 Task 2: Modeling Valence and Arousal Dynamics from Text](ukp_psycontrol_at_semeval-2026_task_2_modeling_valence_and_arousal_dynamics_from.md)**
 
 :   UKP_Psycontrol 在 SemEval-2026 Task 2 上取得双项第一，通过结合 LLM 提示、Ising 交互的 MaxEnt 模型和神经回归模型，发现 LLM 擅长捕捉静态情感信号而短期情感变化更多由近期数值轨迹而非文本语义解释。
 
-**[Which Reasoning Trajectories Teach Students to Reason Better? A Simple Metric of Informative Alignment](which_reasoning_trajectories_teach_students_to_reason_better_a_simple_metric_of_.md)**
+**[VecCISC: Improving Confidence-Informed Self-Consistency with Reasoning Trace Clustering and Candidate Answer Selection](veccisc_improving_confidence-informed_self-consistency_with_reasoning_trace_clus.md)**
 
-:   提出 Rank-Surprisal Ratio (RSR) 指标，通过联合衡量推理轨迹对学生模型的"信息量"和"对齐度"来评估训练数据适配性，在 5 个学生模型和 11 个教师模型的组合中与训练后性能达到平均 0.86 的 Spearman 相关性，并成功应用于轨迹选择和教师选择。
+:   VecCISC 在 CISC 的置信度加权自一致性之前加入“按答案分组的推理轨迹嵌入聚类”，只把每个语义簇的代表轨迹交给 critic 打分，从而在基本保持甚至略微提升准确率的同时显著减少 critic 调用和 token 成本。
+
+**[When Reviews Disagree: Fine-Grained Contradiction Analysis in Scientific Peer Reviews](when_reviews_disagree_fine-grained_contradiction_analysis_in_scientific_peer_rev.md)**
+
+:   这篇论文把审稿意见分歧从句对级二分类推进到完整 review 上的证据抽取与强度评分，并用 IMPACT 多智能体教师蒸馏出单次前向即可部署的 TIDE 小模型。
+
+**[Why Steering Works: Toward a Unified View of Language Model Parameter Dynamics](why_steering_works_toward_a_unified_view_of_language_model_parameter_dynamics.md)**
+
+:   本文把局部权重微调、LoRA 和 activation steering 统一成“控制信号诱导的动态权重更新”，用 preference-utility log-odds 与 activation manifold 解释强控制会提升目标偏好但损害生成效用，并据此提出 SPLIT 训练目标，在三类干预形式上更好地兼顾偏好和效用。
 
 **[WISCA: A Lightweight Model Transition Method to Improve LLM Training via Weight Scaling](wisca_a_lightweight_model_transition_method_to_improve_llm_training_via_weight_s.md)**
 
 :   本文提出等价模型理论和 WISCA 权重缩放策略，通过在训练中动态调整 Transformer 注意力层的 $W_q/W_k$ 和 $W_v/W_o$ 权重使其 L1 范数相等（保持模型输出不变），将优化引导至更平坦的损失最小值区域，在 GQA 架构上实现平均 5.6% 的零样本评估提升和 2.12% 的训练困惑度降低。
-
-**[YIELD: A Large-Scale Dataset and Evaluation Framework for Information Elicitation Agents](yield_a_large-scale_dataset_and_evaluation_framework_for_information_elicitation.md)**
-
-:   提出信息引出代理（IEA）作为新的对话范式，发布了首个大规模（2,281 段对话，26M token）人与人信息引出对话数据集 YIELD，将信息引出形式化为有限视野 POMDP，并设计了专门的评估指标（Conformity、Progression、TLR），实验表明在 YIELD 上微调能显著提升 LLM 与真实引出行为的对齐。

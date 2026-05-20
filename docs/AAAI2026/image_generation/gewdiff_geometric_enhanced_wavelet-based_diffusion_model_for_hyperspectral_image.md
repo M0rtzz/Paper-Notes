@@ -184,7 +184,7 @@ $$\mathcal{L} = \lambda(t) \cdot (\lambda_1 \mathcal{L}_{pixel} + \lambda_2 \mat
 - [\[AAAI 2026\] Realism Control One-step Diffusion for Real-World Image Super-Resolution](realism_control_one-step_diffusion_for_real-world_image_super-resolution.md)
 - [\[CVPR 2025\] Uncertainty-guided Perturbation for Image Super-Resolution Diffusion Model](../../CVPR2025/image_generation/uncertainty-guided_perturbation_for_image_super-resolution_diffusion_model.md)
 - [\[ECCV 2024\] DCDM: Diffusion-Conditioned-Diffusion Model for Scene Text Image Super-Resolution](../../ECCV2024/image_generation/dcdm_diffusion-conditioned-diffusion_model_for_scene_text_image_super-resolution.md)
-- [\[AAAI 2026\] Mixture of Ranks with Degradation-Aware Routing for One-Step Real-World Image Super-Resolution](mixture_of_ranks_with_degradation-aware_routing_for_one-step_real-world_image_su.md)
+- [\[AAAI 2026\] Exposing DeepFakes via Hyperspectral Domain Mapping](exposing_deepfakes_via_hyperspectral_domain_mapping.md)
 
 </div>
 

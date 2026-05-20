@@ -16,7 +16,7 @@ tags:
 
 **📹 ICCV2025** · **3** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (3)](../../ACL2026/signal_comm/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/signal_comm/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/signal_comm/index.md) · [🤖 AAAI2026 (3)](../../AAAI2026/signal_comm/index.md) · [🧠 NeurIPS2025 (13)](../../NeurIPS2025/signal_comm/index.md) · [🧪 ICML2025 (6)](../../ICML2025/signal_comm/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (5)](../../CVPR2026/signal_comm/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/signal_comm/index.md) · [🤖 AAAI2026 (3)](../../AAAI2026/signal_comm/index.md) · [🧠 NeurIPS2025 (12)](../../NeurIPS2025/signal_comm/index.md) · [🧪 ICML2025 (5)](../../ICML2025/signal_comm/index.md) · [💬 ACL2025 (1)](../../ACL2025/signal_comm/index.md)
 
 **[Boosting Multimodal Learning via Disentangled Gradient Learning](boosting_multimodal_learning_via_disentangled_gradient_learning.md)**
 

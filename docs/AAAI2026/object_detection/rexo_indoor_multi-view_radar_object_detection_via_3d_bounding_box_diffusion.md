@@ -136,11 +136,11 @@ $$\mathcal{L}_{\text{box}}^{\text{GA}} = \lambda_{3D} \mathcal{L}_{\text{box}}^{
 
 ## 相关论文
 
-- [\[ICCV 2025\] Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction](../../ICCV2025/object_detection/boosting_multiview_indoor_3d_object_detection_via_adaptive_3.md)
-- [\[CVPR 2026\] Few-Shot Incremental 3D Object Detection in Dynamic Indoor Environments](../../CVPR2026/object_detection/few-shot_incremental_3d_object_detection_in_dynamic_indoor_environments.md)
-- [\[AAAI 2026\] MonoCLUE: Object-Aware Clustering Enhances Monocular 3D Object Detection](monoclue_object-aware_clustering_enhances_monocular_3d_object_detection.md)
-- [\[AAAI 2026\] Real-Time 3D Object Detection with Inference-Aligned Learning](real-time_3d_object_detection_with_inference-aligned_learning.md)
+- [\[ECCV 2024\] Adaptive Bounding Box Uncertainties via Two-Step Conformal Prediction](../../ECCV2024/object_detection/adaptive_bounding_box_uncertainties_via_twostep_conformal_pr.md)
 - [\[AAAI 2026\] AerialMind: Towards Referring Multi-Object Tracking in UAV Scenarios](aerialmind_towards_referring_multi-object_tracking_in_uav_sc.md)
+- [\[ICCV 2025\] 3D-MOOD: Lifting 2D to 3D for Monocular Open-Set Object Detection](../../ICCV2025/object_detection/3dmood_lifting_2d_to_3d_for_monocular_openset_object_detecti.md)
+- [\[AAAI 2026\] SM3Det: A Unified Model for Multi-Modal Remote Sensing Object Detection](sm3det_a_unified_model_for_multi-modal_remote_sensing_object_detection.md)
+- [\[NeurIPS 2025\] MSTAR: Box-Free Multi-Query Scene Text Retrieval with Attention Recycling](../../NeurIPS2025/object_detection/mstar_box-free_multi-query_scene_text_retrieval_with_attention_recycling.md)
 
 </div>
 

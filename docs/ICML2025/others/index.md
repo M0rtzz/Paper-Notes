@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 其他方向93篇论文解读
+  ICML2025 其他方向92篇论文解读
 description: >-
-  93篇ICML2025的其他方向论文解读，涵盖对抗鲁棒、推理、Agent、少样本学习、域适应、生物分子等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  92篇ICML2025的其他方向论文解读，涵盖对抗鲁棒、推理、Agent、少样本学习、域适应、生物分子等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "其他"
@@ -19,9 +19,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🧪 ICML2025** · **93** 篇论文解读
+**🧪 ICML2025** · **92** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/others/index.md) · [📷 CVPR2026 (44)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (76)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (126)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (153)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (27)](../../ICML2026/others/index.md) · [📷 CVPR2026 (44)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (125)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/others/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×6
 
@@ -132,10 +132,6 @@ tags:
 **[Generation from Noisy Examples](generation_from_noisy_examples.md)**
 
 :   将 Kleinberg & Mullainathan (2024) 的"极限语言生成"理论框架扩展至噪声样本流场景，提出 Noisy Closure 维度，完整刻画了均匀噪声依赖可生成性的充要条件，并证明所有可数假设类在有限噪声下仍可非均匀生成。
-
-**[GLGENN: 基于Clifford几何代数的轻参数等变神经网络架构](glgenn_a_novel_parameter-light_equivariant_neural_networks_architecture_based_on.md)**
-
-:   提出广义Lipschitz群等变神经网络(GLGENN)，利用几何代数中grade involution和reversion定义的四个基本子空间实现权重共享，在保持伪正交群等变性的同时大幅减少可训练参数（约为CGENN的1/2至1/3），在多个基准任务上匹配或超越CGENN。
 
 **[GPU-friendly and Linearly Convergent First-order Methods for Certifying Optimal $k$-sparse GLMs](gpu-friendly_and_linearly_convergent_first-order_methods_for_certifying_optimal_.md)**
 

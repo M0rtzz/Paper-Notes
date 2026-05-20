@@ -140,7 +140,7 @@ CLIP 特征中元数据参数的线性探针预测准确率：
 - [\[NeurIPS 2025\] Regression Trees Know Calculus](../../NeurIPS2025/others/regression_trees_know_calculus.md)
 - [\[ICCV 2025\] Doodle Your Keypoints: Sketch-Based Few-Shot Keypoint Detection](doodle_your_keypoints_sketch-based_few-shot_keypoint_detection.md)
 - [\[ACL 2025\] FastDraft: How to Train Your Draft](../../ACL2025/others/fastdraft_how_to_train_your_draft.md)
-- [\[NeurIPS 2025\] Brain-Like Processing Pathways Form in Models With Heterogeneous Experts](../../NeurIPS2025/others/brain-like_processing_pathways_form_in_models_with_heterogeneous_experts.md)
+- [\[ICCV 2025\] Kaputt: A Large-Scale Dataset for Visual Defect Detection](kaputt_a_large-scale_dataset_for_visual_defect_detection.md)
 
 </div>
 

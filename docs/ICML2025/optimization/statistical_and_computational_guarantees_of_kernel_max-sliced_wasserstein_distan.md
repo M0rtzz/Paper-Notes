@@ -169,7 +169,7 @@ $$\max_{S\in\mathcal{S}_{2n}} F(S), \quad F(S)=\min_{\pi\in\Gamma_n}\sum_{i,j}\p
 - [\[NeurIPS 2025\] Wasserstein Transfer Learning](../../NeurIPS2025/optimization/wasserstein_transfer_learning.md)
 - [\[NeurIPS 2025\] Learning Theory for Kernel Bilevel Optimization](../../NeurIPS2025/optimization/learning_theory_for_kernel_bilevel_optimization.md)
 - [\[ICML 2025\] Subspace Optimization for Large Language Models with Convergence Guarantees](subspace_optimization_for_large_language_models_with_convergence_guarantees.md)
-- [\[NeurIPS 2025\] Kernel Learning with Adversarial Features: Numerical Efficiency and Adaptive Regularization](../../NeurIPS2025/optimization/kernel_learning_with_adversarial_features_numerical_efficiency_and_adaptive_regu.md)
+- [\[ICML 2025\] Optimization over Sparse Support-Preserving Sets: Two-Step Projection with Global Optimality Guarantees](optimization_over_sparse_support-preserving_sets_two-step_projection_with_global.md)
 
 </div>
 

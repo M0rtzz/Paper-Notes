@@ -171,8 +171,8 @@ FUN算法为每条边分配四种状态之一：
 - [\[AAAI 2026\] Provably Data-Driven Projection Method for Quadratic Programming](provably_data-driven_projection_method_for_quadratic_programming.md)
 - [\[AAAI 2026\] Data Complexity of Querying Description Logic Knowledge Bases under Cost-Based Semantics](data_complexity_of_querying_description_logic_knowledge_bases_under_cost-based_s.md)
 - [\[AAAI 2026\] TaylorPODA: A Taylor Expansion-Based Method to Improve Post-Hoc Attributions for Opaque Models](taylorpoda_a_taylor_expansion-based_method_to_improve_post-hoc_attributions_for_.md)
+- [\[ICML 2026\] Estimating Correlation Clustering Cost in Node-Arrival Stream](../../ICML2026/others/estimating_correlation_clustering_cost_in_node-arrival_stream.md)
 - [\[AAAI 2026\] DiffMM: Efficient Method for Accurate Noisy and Sparse Trajectory Map Matching via One Step Diffusion](diffmm_efficient_method_for_accurate_noisy_and_sparse_trajectory_map_matching_vi.md)
-- [\[CVPR 2026\] U-F²-CBM: CLIP-Free, Label Free, Unsupervised Concept Bottleneck Models](../../CVPR2026/others/clipfree_label_free_unsupervised_concept_bottlenec.md)
 
 </div>
 

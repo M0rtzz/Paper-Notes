@@ -137,10 +137,10 @@ SCLIP 在预训练 CLIP 模型（ViT-Base/16）上做最简修改：仅将视觉
 ## 相关论文
 
 - [\[CVPR 2025\] ResCLIP: Residual Attention for Training-free Dense Vision-language Inference](../../CVPR2025/segmentation/resclip_residual_attention_for_training-free_dense_vision-language_inference.md)
+- [\[ECCV 2024\] SiLC: Improving Vision Language Pretraining with Self-Distillation](silc_improving_vision_language_pretraining_with_self-distillation.md)
 - [\[ECCV 2024\] VISA: Reasoning Video Object Segmentation via Large Language Models](visa_reasoning_video_object_segmentation_via_large_language_models.md)
 - [\[ECCV 2024\] SOS: Segment Object System for Open-World Instance Segmentation With Object Priors](sos_segment_object_system_for_open-world_instance_segmentation_with_object_prior.md)
 - [\[ECCV 2024\] GiT: Towards Generalist Vision Transformer through Universal Language Interface](git_towards_generalist_vision_transformer_through_universal_language_interface.md)
-- [\[ECCV 2024\] Attention Decomposition for Cross-Domain Semantic Segmentation](attention_decomposition_for_cross-domain_semantic_segmentation.md)
 
 </div>
 

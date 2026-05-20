@@ -128,8 +128,8 @@ TF-FAS基于CLIP视觉语言模型构建。输入为人脸图像，经过CLIP的
 - [\[ECCV 2024\] Towards Unified Representation of Invariant-Specific Features in Missing Modality Face Anti-Spoofing](towards_unified_representation_of_invariant-specific_features_in_missing_modalit.md)
 - [\[ECCV 2024\] Generalizable Facial Expression Recognition](generalizable_facial_expression_recognition.md)
 - [\[AAAI 2026\] CLIP-FTI: Fine-Grained Face Template Inversion via CLIP-Driven Attribute Conditioning](../../AAAI2026/human_understanding/clip-fti_fine-grained_face_template_inversion_via_clip-driven_attribute_conditio.md)
-- [\[ECCV 2024\] Improving Point-based Crowd Counting and Localization Based on Auxiliary Point Guidance](improving_point-based_crowd_counting_and_localization_based_on_auxiliary_point_g.md)
-- [\[ECCV 2024\] SemanticHuman-HD: High-Resolution Semantic Disentangled 3D Human Generation](semantichuman-hd_high-resolution_semantic_disentangled_3d_human_generation.md)
+- [\[ECCV 2024\] GS-Pose: Category-Level Object Pose Estimation via Geometric and Semantic Correspondence](gs-pose_category-level_object_pose_estimation_via_geometric_and_semantic_corresp.md)
+- [\[CVPR 2025\] SemGeoMo: Dynamic Contextual Human Motion Generation with Semantic and Geometric Guidance](../../CVPR2025/human_understanding/semgeomo_dynamic_contextual_human_motion_generation_with_semantic_and_geometric_.md)
 
 </div>
 

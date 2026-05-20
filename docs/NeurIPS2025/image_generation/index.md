@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 图像生成方向247篇论文解读
+  NeurIPS2025 图像生成方向244篇论文解读
 description: >-
-  247篇NeurIPS2025的图像生成方向论文解读，涵盖扩散模型、文生图、对抗鲁棒、多模态、布局/合成、水印/隐写等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  244篇NeurIPS2025的图像生成方向论文解读，涵盖扩散模型、文生图、对抗鲁棒、多模态、布局/合成、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "图像生成"
@@ -13,17 +13,17 @@ tags:
   - "对抗鲁棒"
   - "多模态"
   - "布局/合成"
-  - "水印/隐写"
+  - "对齐/RLHF"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🧠 NeurIPS2025** · **247** 篇论文解读
+**🧠 NeurIPS2025** · **244** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (208)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md) · [🧪 ICML2025 (110)](../../ICML2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (2)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (209)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (149)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×91 · 文生图 ×13 · 对抗鲁棒 ×9 · 多模态 ×8 · 布局/合成 ×7
+🔥 **高频主题：** 扩散模型 ×92 · 文生图 ×13 · 对抗鲁棒 ×9 · 多模态 ×8 · 布局/合成 ×7
 
 **[70% Size, 100% Accuracy: Lossless LLM Compression for Efficient GPU Inference via Dynamic-Length Float (DFloat11)](70_size_100_accuracy_lossless_llm_compression_for_efficient.md)**
 
@@ -277,13 +277,13 @@ tags:
 
 :   提出 Dual Data Alignment (DDA)，通过像素域和频域双重对齐生成训练用合成图像，消除数据集偏置导致的虚假相关性，使检测器仅学习伪造相关特征，在11个基准上平均准确率达到90.7%，大幅超越现有方法。
 
+**[Dynamic Diffusion Schrödinger Bridge in Astrophysical Observational Inversions](dynamic_diffusion_schrödinger_bridge_in_astrophysical_observational_inversions.md)**
+
+:   提出 Astro-DSB，一种基于 Diffusion Schrödinger Bridge 的天文物理反问题建模方法，直接学习观测量到真实物理分布的概率映射，训练成本仅为条件 DDPM 的 25%，且在分布外（OOD）测试中展现出显著的泛化优势，并成功应用于 Taurus B213 真实观测数据。
+
 **[EditInfinity: Image Editing with Binary-Quantized Generative Models](editinfinity_image_editing_with_binary-quantized_generative_models.md)**
 
 :   提出 EditInfinity，首次将经典"图像反演-图像编辑"范式应用于二值量化自回归生成模型 Infinity，利用量化表示可获取精确中间监督的优势实现高精度图像反演，配合分段线性平滑核实现高保真编辑效果，在 PIE-Bench 上全面超越扩散模型基线。
-
-**[EEGReXferNet: A Lightweight Gen-AI Framework for EEG Subspace Reconstruction via Cross-Subject Transfer Learning and Channel-Aware Embedding](eegrexfernet_a_lightweight_gen-ai_framework_for_eeg_subspace_reconstruction_via_.md)**
-
-:   提出 EEGReXferNet，一种轻量级生成式 AI 框架，通过邻域通道感知输入选择、频带特定子窗口卷积编解码、动态滑窗隐空间和参考统计量缩放，在跨被试迁移学习设置下实现 EEG 子空间重建，参数减少约 45%、推理延迟 <1ms，同时保持 PSD 相关性 $\geq 0.95$ 和谱图 RV 系数 $\geq 0.85$。
 
 **[Efficient Rectified Flow for Image Fusion](efficient_rectified_flow_for_image_fusion.md)**
 
@@ -429,6 +429,10 @@ tags:
 
 :   将神经科学的 Free Energy Principle (FEP) 与知识图谱推理连接，提出用图的最短路径距离作为 surprise 的度量，将 Murphy et al. 的树结构 surprise 理论推广到一般有向图，为 KG-based agent 的 entity grounding 提供了一个有原则的理论框架。
 
+**[Grasp2Grasp: Vision-Based Dexterous Grasp Translation via Schrödinger Bridges](grasp2grasp_vision-based_dexterous_grasp_translation_via_schrödinger_bridges.md)**
+
+:   提出将跨手形态的视觉灵巧抓取迁移建模为 Schrödinger Bridge 问题，通过在潜空间中学习得分与流匹配（[SF]²M），并设计物理感知的最优传输代价函数（位姿/接触图/力旋量空间/雅可比可操作性），在无需配对数据的条件下实现不同机械手之间抓取意图的分布级迁移。
+
 **[GSPN-2: Efficient Parallel Sequence Modeling](gspn-2_efficient_parallel_sequence_modeling.md)**
 
 :   GSPN-2 通过算法-系统联合重设计（单 kernel 融合、紧凑通道传播、共享内存优化），将 GSPN-1 的 2D 空间传播加速最高 40×，在 ImageNet 分类和文本到图像生成中达到 Transformer 级精度且计算成本显著更低。
@@ -476,10 +480,6 @@ tags:
 **[Image Super-Resolution with Guarantees via Conformalized Generative Models](image_super-resolution_with_guarantees_via_conformalized_generative_models.md)**
 
 :   基于共形预测（Conformal Prediction）技术，为生成式图像超分辨率模型构建二值"置信度掩码"，能可靠地标识生成图像中可信赖的区域，并提供严格的统计保证。
-
-**[ImageSentinel: Protecting Visual Datasets from Unauthorized Retrieval-Augmented Image Generation](imagesentinel_protecting_visual_datasets_from_unauthorized_retrieval-augmented_i.md)**
-
-:   提出 ImageSentinel 框架，通过合成与私有数据集视觉一致的哨兵图像（sentinel images）并绑定随机字符检索键，实现对检索增强图像生成（RAIG）系统未授权使用私有数据集的可靠检测——仅需 3–10 次查询即可达到接近 100% 的 AUC。
 
 **[Improved Training Technique for Shortcut Models (iSM)](improved_training_technique_for_shortcut_models.md)**
 
@@ -653,10 +653,6 @@ tags:
 
 :   OmniVCus 提出了一个前馈式 DiT 框架，通过数据构建流水线 VideoCus-Factory 和两种嵌入机制（Lottery Embedding 和 Temporally Aligned Embedding），实现了多主体、多模态控制条件下的视频定制生成，在身份保持和可控性上显著超越 SOTA。
 
-**[On Optimal Steering to Achieve Exact Fairness](on_optimal_steering_to_achieve_exact_fairness.md)**
-
-:   本文定义了"理想分布"——使任意代价敏感风险下的 Bayes 最优分类器都满足精确公平性的数据分布，并提出通过 KL 散度最小化寻找最近理想分布的优化框架，为公平预处理和 LLM 表示引导提供了可证明的公平性保证。
-
 **[On the Emergence of Linear Analogies in Word Embeddings](on_the_emergence_of_linear_analogies_in_word_embeddings.md)**
 
 :   提出一个基于二值语义属性的词共现生成模型，解析性地证明了词嵌入中线性类比结构（如 $W_{\text{king}} - W_{\text{man}} + W_{\text{woman}} \approx W_{\text{queen}}$）的涌现机制，统一解释了已知的四个关键观测现象。
@@ -772,10 +768,6 @@ tags:
 **[Riemannian Consistency Model](riemannian_consistency_model.md)**
 
 :   首次将一致性模型（Consistency Model）扩展到黎曼流形上，利用指数映射参数化和协变导数推导出离散和连续时间 RCM 目标函数，实现在球面、平坦环面和 SO(3) 等非欧几何上的高质量少步生成。
-
-**[Riemannian Flow Matching for Brain Connectivity Matrices via Pullback Geometry](riemannian_flow_matching_for_brain_connectivity_matrices_via_pullback_geometry.md)**
-
-:   提出DiffeoCFM，利用全局微分同胚诱导的拉回度量，将黎曼流形上的条件流匹配等价转化为欧几里得空间中的标准CFM，实现对脑连接矩阵（SPD/相关矩阵）的高效生成，同时严格保持流形约束，在3个fMRI和2个EEG数据集上达到SOTA。
 
 **[RLVR-World: Training World Models with Reinforcement Learning](rlvr-world_training_world_models_with_reinforcement_learning.md)**
 
@@ -984,10 +976,6 @@ tags:
 **[Vicinity-Guided Discriminative Latent Diffusion for Privacy-Preserving Domain Adaptation](vicinity-guided_discriminative_latent_diffusion_for_privacy-preserving_domain_ad.md)**
 
 :   提出 Discriminative Vicinity Diffusion (DVD)，首次将潜扩散模型用于判别式知识迁移，通过在源域特征的近邻潜空间中训练扩散模型生成源样式线索，实现无需源数据访问的域适应，在标准 SFDA 基准上超越 SOTA。
-
-**[Watermarking Autoregressive Image Generation](watermarking_autoregressive_image_generation.md)**
-
-:   首次将 LLM 水印技术（KGW green/red scheme）适配到自回归图像生成模型的 token 层，识别并解决了关键挑战——反向循环一致性（RCC）不足，通过 tokenizer-detokenizer 微调和水印同步层实现了鲁棒的、具有理论保证的图像水印检测。
 
 **[What We Don't C: Manifold Disentanglement for Structured Discovery](what_we_dont_c_manifold_disentanglement_for_structured_discovery.md)**
 

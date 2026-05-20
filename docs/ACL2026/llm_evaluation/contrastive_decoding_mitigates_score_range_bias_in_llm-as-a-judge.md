@@ -15,10 +15,10 @@ tags:
 
 # Contrastive Decoding Mitigates Score Range Bias in LLM-as-a-Judge
 
-**会议**: ACL 2026
-**arXiv**: [2510.18196](https://arxiv.org/abs/2510.18196)
-**代码**: 无
-**领域**: LLM评测
+**会议**: ACL 2026  
+**arXiv**: [2510.18196](https://arxiv.org/abs/2510.18196)  
+**代码**: 无  
+**领域**: LLM评测  
 **关键词**: LLM评判器, 对比解码, 分数范围偏差, 直接评估, 模型家族偏差
 
 ## 一句话总结

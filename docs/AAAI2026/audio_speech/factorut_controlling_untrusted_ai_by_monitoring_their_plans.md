@@ -106,7 +106,7 @@ tags:
 - [\[AAAI 2026\] Characterizing AI Manipulation Risks in Brazilian YouTube Climate Discourse](characterizing_ai_manipulation_risks_in_brazilian_youtube_climate_discourse.md)
 - [\[NeurIPS 2025\] Accelerate Creation of Product Claims Using Generative AI](../../NeurIPS2025/audio_speech/accelerate_creation_of_product_claims_using_generative_ai.md)
 - [\[CVPR 2026\] ViDscribe: Multimodal AI for Customizing Audio Description and Question Answering in Online Videos](../../CVPR2026/audio_speech/vidscribe_multimodal_ai_for_customizing_audio_description_and_question_answering.md)
-- [\[NeurIPS 2025\] Echoes of Humanity: Exploring the Perceived Humanness of AI Music](../../NeurIPS2025/audio_speech/echoes_of_humanity_exploring_the_perceived_humanness_of_ai_music.md)
+- [\[ACL 2026\] Reheat Nachos for Dinner? Evaluating AI Support for Cross-Cultural Communication of Neologisms](../../ACL2026/audio_speech/reheat_nachos_for_dinner_evaluating_ai_support_for_cross-cultural_communication_.md)
 
 </div>
 

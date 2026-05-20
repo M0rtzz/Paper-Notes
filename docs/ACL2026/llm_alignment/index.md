@@ -1,68 +1,128 @@
 ---
 title: >-
-  ACL2026 对齐 / RLHF方向11篇论文解读
+  ACL2026 对齐 / RLHF方向26篇论文解读
 description: >-
-  11篇ACL2026的对齐 / RLHF 方向论文解读，涵盖 LLM、Agent、对抗鲁棒、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  26篇ACL2026的对齐 / RLHF 方向论文解读，涵盖 LLM、对齐/RLHF、个性化生成、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "对齐 / RLHF"
   - "论文解读"
   - "论文笔记"
   - "LLM"
-  - "Agent"
-  - "对抗鲁棒"
   - "对齐/RLHF"
+  - "个性化生成"
+  - "强化学习"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐 / RLHF
 
-**💬 ACL2026** · **11** 篇论文解读
+**💬 ACL2026** · **26** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (10)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (42)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (20)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (53)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md) · [🧪 ICML2025 (27)](../../ICML2025/llm_alignment/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (7)](../../ICML2026/llm_alignment/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (41)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (19)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md)
 
-🔥 **高频主题：** LLM ×3 · Agent ×2 · 对抗鲁棒 ×2 · 对齐/RLHF ×2
+🔥 **高频主题：** LLM ×7 · 对齐/RLHF ×5 · 个性化生成 ×2 · 强化学习 ×2
+
+**[AgentV-RL: Scaling Reward Modeling with Agentic Verifier](agentv-rl_scaling_reward_modeling_with_agentic_verifier.md)**
+
+:   把奖励模型从"单轮打分"重塑为"前向+后向双 agent + 工具调用"的多轮审议流程，并通过 SFT+GRPO 把多 agent 能力蒸馏到单个 4B 模型中，使其在 BoN 选择上比 70B 量级 ORM 高 25.2%。
 
 **[Aligning Agents via Planning: A Benchmark for Trajectory-Level Reward Modeling](aligning_agents_via_planning_a_benchmark_for_trajectory-level_reward_modeling.md)**
 
 :   提出 Plan-RewardBench，一个面向复杂工具增强场景的轨迹级偏好基准，用于评估奖励模型在多步规划、工具使用和错误恢复等场景下区分优劣智能体轨迹的能力。
 
-**[Beyond Marginal Distributions: A Framework to Evaluate the Representativeness of Demographic-Aligned LLMs](beyond_marginal_distributions_a_framework_to_evaluate_the_representativeness_of_.md)**
+**[ARES: Adaptive Red-Teaming and End-to-End Repair of Policy-Reward System](ares_adaptive_red-teaming_and_end-to-end_repair_of_policy-reward_system.md)**
 
-:   本文提出了一种超越边际分布的 LLM 代表性评估框架，通过同时考察边际响应分布和跨问题相关结构来评估人口统计对齐模型，发现虽然微调和 persona prompting 能改善边际分布的近似度，但两者都无法忠实再现人类价值观调查中的多变量相关模式。
+:   ARES 通过一个能动态组合「话题 / 人设 / 目标 / 战术」四元结构的 Safety Mentor 同时探测 Core LLM 和 Reward Model 的「系统性弱点」（两者同时失守），然后用先修 RM 再修策略的两阶段闭环把 RedTeam 安全率从 0.28 提到 0.96，几乎不损失通用能力。
+
+**[BACH-V: Bridging Abstract and Concrete Human-Values in Large Language Models](bach-v_bridging_abstract_and_concrete_human-values_in_large_language_models.md)**
+
+:   本文提出 abstraction-grounding 框架，把 LLM 的概念理解拆成"抽象-抽象 / 抽象-具体 / 具体-具体"三层，并用概念探针 + 激活引导在 6 个开源 LLM、10 个价值维度上证明：LLM 内部确实存在结构化的价值表示，能跨抽象层迁移、并因果地驱动具体决策。
 
 **[ConsistRM: Improving Generative Reward Models via Consistency-Aware Self-Training](consistrm_improving_generative_reward_models_via_consistency-aware_self-training.md)**
 
 :   ConsistRM 提出基于一致性感知的自训练框架，通过时序一致性伪标签（融合在线状态和历史记忆的偏好一致性）和语义一致性批评奖励（衡量多次生成批评的语义相似度）两个模块，在无需人工标注的条件下将生成式奖励模型的五个基准平均性能提升 1.5%，同时显著缓解了位置偏差问题。
 
-**[Into the Gray Zone: Domain Contexts Can Blur LLM Safety Boundaries](into_the_gray_zone_domain_contexts_can_blur_llm_safety_boundaries.md)**
+**[Debiasing Reward Models via Causally Motivated Inference-Time Intervention](debiasing_reward_models_via_causally_motivated_inference-time_intervention.md)**
 
-:   本文发现领域特定上下文（如化学论文）会选择性放松 LLM 对相关有害知识的防护（纵向解锁），而安全研究上下文会触发跨所有有害类别的广泛防护放松（通用解锁），据此提出 Jargon 攻击框架，在包括 GPT-5.2、Claude-4.5 在内的七个前沿模型上实现超 93% 的攻击成功率。
+:   作者把 Bradley-Terry reward model 视作估计 total effect 的因果图，识别出与五类风格性偏差（长度 / 段落 / 词重叠 / 感叹号 / 粗体）激活高度相关的 bias-specific neurons（占总神经元 < 2%），在推理时把这些神经元激活替换为验证集中位数（估计 controlled direct effect），在 RewardBench / RM-Bench 上既不掉点又消除偏差，DPO 下游使用后让 8B 模型的对齐分数追平 70B SOTA reward model。
 
-**[Reward Modeling for Scientific Writing Evaluation](reward_modeling_for_scientific_writing_evaluation.md)**
+**[How Value Induction Reshapes LLM Behaviour](how_value_induction_reshapes_llm_behaviour.md)**
 
-:   本文提出 SciRM 和 SciRM-Ref 两个针对科学写作评估的开源奖励模型，通过两阶段强化学习（GRPO）分别优化评估偏好和推理能力，实现了在多种科学写作任务上的细粒度多方面评估，并能泛化到未见过的评估任务和标准。
+:   本文用价值标注后的偏好数据子集对 8 个开源 LLM (3 系) × 15 个价值做 DPO 微调，发现价值之间存在系统性串扰 —— 诱导一个值会同时强化或抑制其他相关 / 对立值，正面价值能提升安全性但所有价值都会让模型更"拟人化"，使输出更易被感知为阿谀。
 
-**[Robust Tool Use via Fission-GRPO: Learning to Recover from Execution Errors](robust_tool_use_via_fission-grpo_learning_to_recover_from_execution_errors.md)**
+**[MAESTRO: Meta-learning Adaptive Estimation of Scalarization Trade-offs for Reward Optimization](maestro_meta-learning_adaptive_estimation_of_scalarization_trade-offs_for_reward.md)**
 
-:   提出 Fission-GRPO，在 RL 训练循环中将工具执行错误动态转化为在线策略修正训练实例：通过学习的错误模拟器生成诊断反馈并重采样恢复轨迹，将 Qwen3-8B 的错误恢复率提升 5.7%，整体准确率从 42.75% 提升至 46.75%。
+:   本文提出 MAESTRO，将 GRPO 中的奖励标量化重新定义为上下文老虎机问题，通过轻量级 Conductor 网络利用模型末层隐藏状态自适应地为每个 prompt-response 对选择奖励权重，在七个开放域基准上一致超越静态奖励和单一奖励基线。
 
-**[SafeMERGE: Preserving Safety Alignment in Fine-Tuned Large Language Models via Selective Layer-Wise Model Merging](safemerge_preserving_safety_alignment_in_fine-tuned_large_language_models_via_se.md)**
+**[Mitigating Selection Bias in Large Language Models via Permutation-Aware GRPO](mitigating_selection_bias_in_large_language_models_via_permutation-aware_grpo.md)**
 
-:   本文提出 SafeMERGE，一种轻量级后微调框架，通过余弦相似度检测偏离安全行为的微调层，仅将这些层与安全模型的对应层合并，在四个 LLM 上显著降低有害输出同时保持甚至提升任务性能。
+:   作者发现标准 GRPO 把同一题目的不同选项顺序当成独立 prompt 训练，导致模型在"换顺序"后选择会变化（permutation-blindness），于是提出 PA-GRPO：把同一语义实例的多种排列组成 permutation group，用跨排列的 advantage baseline + 一致性 reward 显式优化"换顺序不换选择"，在 7 个 MCQ/Judge benchmark 上把 selection bias 大幅压低同时保持准确率。
+
+**[ModeX: Evaluator-Free Best-of-N Selection for Open-Ended Generation](modex_evaluator-free_best-of-n_selection_for_open-ended_generation.md)**
+
+:   把开放式文本生成的 Best-of-N 选样建模为「在生成文本的相似度图上找模态簇」的问题——用 n-gram Jaccard 构图 + 递归 Fiedler 向量谱聚类 + 中心度选 centroid，不需要任何 reward model / LLM-judge 就把 self-consistency 推广到摘要 / 代码 / 数学等无标准答案的任务。
+
+**[On the Rejection Criterion for Proxy-Based Test-Time Alignment](on_the_rejection_criterion_for_proxy-based_test-time_alignment.md)**
+
+:   这篇论文把隐式奖励、Nudging 和 KAD 等 proxy-based test-time alignment 方法统一成一个“先采样再决定是否拒绝”的概率图模型，并提出用小对齐模型的最佳置信度作为参照的 conservative confidence bet，在多个数学与常识推理数据集上提升了混合解码精度。
+
+**[P-Check: Advancing Personalized Reward Model via Learning to Generate Dynamic Checklist](p-check_advancing_personalized_reward_model_via_learning_to_generate_dynamic_che.md)**
+
+:   P-Check 把个性化奖励建模从“给用户历史塞进 judge”改成“先为当前用户和当前问题生成带权重的动态评价 checklist，再用它指导奖励打分”，在 PRISM、Arena、BESPOKE 的个性化偏好预测和下游生成任务上都显著优于 persona、记忆检索和微调奖励模型基线。
+
+**[PERSA: Reinforcement Learning for Professor-Style Personalized Feedback with LLMs](persa_reinforcement_learning_for_professor-style_personalized_feedback_with_llms.md)**
+
+:   PERSA 用“教授示范 + 教授偏好奖励 + 只更新高层 LoRA 的 PPO”把通用 LLM 调成特定教师的编程反馈风格，在 APPS、PyFiXV、CodeReviewQA 上显著提升风格一致性，同时基本保持 100% 诊断正确率。
+
+**[Pref-CTRL: Preference Driven LLM Alignment using Representation Editing](pref-ctrl_preference_driven_llm_alignment_using_representation_editing.md)**
+
+:   Pref-CTRL 在不更新大模型参数的测试时对齐框架 RE-Control 上，引入面向成对偏好数据的 margin loss 和 regularizer loss 来训练轻量价值函数，使表示编辑更符合人类偏好并在 SHP、HH-RLHF 与跨域数据上稳定优于 RE-Control。
+
+**[RbtAct: Rebuttal as Supervision for Actionable Review Feedback Generation](rbtact_rebuttal_as_supervision_for_actionable_review_feedback_generation.md)**
+
+:   RbtAct 把作者 rebuttal 视为“哪些评审意见真的促成修改”的隐式监督，构建 7.5 万条 review-rebuttal 段级映射，并用 SFT+DPO 训练 8B 模型生成更具体、更可执行的论文评审反馈。
 
 **[SFTMix: Elevating Language Model Instruction Tuning with Mixup Recipe](sftmix_elevating_language_model_instruction_tuning_with_mixup_recipe.md)**
 
 :   本文提出 SFTMix，一种基于 Mixup 的指令微调方法，通过训练动态将 SFT 数据集分为高置信度和低置信度子集，在隐表示空间对两者进行线性插值并施加 Mixup 正则化，在不依赖高质量数据集的情况下，跨 LLM 家族和数据集规模一致性地提升指令遵循能力。
 
-**[STAR-Teaming: A Strategy-Response Multiplex Network Approach to Automated LLM Red Teaming](star-teaming_a_strategy-response_multiplex_network_approach_to_automated_llm_red.md)**
+**[Student Guides Teacher: Weak-to-Strong Inference via Spectral Orthogonal Exploration](student_guides_teacher_weak-to-strong_inference_via_spectral_orthogonal_explorat.md)**
 
-:   本文提出 STAR-Teaming，一种基于策略-响应多路复用网络（Multiplex Network）的自动化红队测试框架，通过将攻击策略选择建模为逆 Ising 问题的概率优化，在 HarmBench 上达到平均 74.5% 的攻击成功率，比最强基线高 13.5%，同时显著降低计算开销。
+:   这篇论文把 LLM 推理失败解释为隐藏状态落入低秩 bias manifold，并提出 SOE：用弱学生模型生成与教师主导子空间正交的短 probe，再拼接回教师上下文，从而比普通 self-consistency 更有效地探索正确推理路径。
+
+**[Taming Extreme Tokens: Covariance-Aware GRPO with Gaussian-Kernel Advantage Reweighting](taming_extreme_tokens_covariance-aware_grpo_with_gaussian-kernel_advantage_rewei.md)**
+
+:   这篇论文把 GRPO 训练中的熵不稳定归因于少量极端 token 的“log 概率-优势”协方差贡献，并用无额外超参的高斯核对这些 token 的 advantage 做软抑制，从而在 1.5B 和 7B 数学推理模型上稳定提升性能。
+
+**[Teaching LLM to be Persuasive: Reward-Enhanced Policy Optimization for Alignment from Heterogeneous Rewards](teaching_llm_to_be_persuasive_reward-enhanced_policy_optimization_for_alignment_.md)**
+
+:   这篇论文面向在线旅游平台的酒店降价谈判场景，提出 REPO 用偏好奖励模型、LLM 评审和规则函数三类奖励共同训练 Qwen3-32B，使模型在专家评价和 9653 场真实 A/B 对话中同时提升说服力、SOP 合规和坏例修复质量。
+
+**[Team-Based Self-Play With Dual Adaptive Weighting for Fine-Tuning LLMs](team-based_self-play_with_dual_adaptive_weighting_for_fine-tuning_llms.md)**
+
+:   TPAW 将 LLM 自训练改造成“当前模型与历史模型组队博弈”的对齐过程，并用目标响应权重与主玩家权重两套自适应机制稳定偏好优化，在不额外引入人工偏好标注的情况下提升 Open LLM Leaderboard 与 GSM8K 表现。
+
+**[Too Correct to Learn: Reinforcement Learning on Saturated Reasoning Data](too_correct_to_learn_reinforcement_learning_on_saturated_reasoning_data.md)**
+
+:   这篇论文指出强推理模型在“太容易、几乎全对”的训练集上做 GRPO 会因为组内奖励方差消失而停止学习，并提出 Mixed-CUTS 用受限 Top-K 均匀采样混合标准 rollout，重新制造有意义的探索差异，在 Qwen3-4B 上把 AIME25 Pass@1 相比标准 GRPO 提高 15.1%。
+
+**[Topology-Enhanced Alignment for Large Language Models: Trajectory Topology Loss and Topological Preference Optimization](topology-enhanced_alignment_for_large_language_models_trajectory_topology_loss_a.md)**
+
+:   这篇论文把 LLM 对齐看成隐藏空间中的“语义轨迹”塑形问题，在 SFT 阶段用 0 维持久同调抽取 prompt-answer 拓扑桥并加入 TTL，在 DPO 阶段用主题偏好方向加入 TPO，使 UltraChat 和 HH-RLHF 上的奖励、胜率和无害性指标都稳定优于非拓扑基线。
 
 **[Towards Bridging the Reward-Generation Gap in Direct Alignment Algorithms](towards_bridging_the_reward-generation_gap_in_direct_alignment_algorithms.md)**
 
 :   本文识别了直接对齐算法（DAAs）中的"奖励-生成鸿沟"——训练目标与自回归解码动态之间的不匹配，提出 POET（Prefix-Oriented Equal-length Training），通过将偏好响应对截断为较短者长度来隐式约束 token 级 MDP 在所有时间步上收敛，在 AlpacaEval 2 上最高提升 11.8 个百分点。
 
-**[TrajGuard: Streaming Hidden-state Trajectory Detection for Decoding-time Jailbreak Defense](trajguard_streaming_hidden-state_trajectory_detection_for_decoding-time_jailbrea.md)**
+**[What Makes Good Instruction-Tuning Data? An In-Context Learning Perspective](what_makes_good_instruction-tuning_data_an_in-context_learning_perspective.md)**
 
-:   本文提出 TrajGuard，一种无需训练的解码时越狱防御框架，通过滑动窗口聚合关键层隐藏状态轨迹实时量化风险，仅在风险持续超过阈值时触发轻量级语义裁判，在 12 种越狱攻击上实现 95% 平均防御率，检测延迟仅 5.2ms/token，误报率低于 1.5%。
+:   本文提出 weighted In-Context Influence (wICI)，用候选样本作为 one-shot demonstration 后能否降低相关困难 probe 的 instruction-following difficulty 来衡量指令数据价值，在 10% 数据预算下优于或匹配 IFD、DEITA、NUGGETS、SelectIT 等选择方法。
+
+**[Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models](why_supervised_fine-tuning_fails_to_learn_a_systematic_study_of_incomplete_learn.md)**
+
+:   本文首次系统研究了 SFT 中的"不完全学习现象"（ILP）——即模型收敛后仍无法正确复现部分训练数据，识别了五种反复出现的原因（知识缺失、知识冲突、数据内部矛盾、左侧遗忘、不充分优化），并提出诊断框架和针对性缓解策略。
+
+**[WildFeedback: Aligning LLMs With In-situ User Interactions And Feedback](wildfeedback_aligning_llms_with_in-situ_user_interactions_and_feedback.md)**
+
+:   WildFeedback 从真实用户与 ChatGPT 的多轮对话中自动识别满意/不满意反馈，把自然发生的用户偏好转成偏好训练样本和逐例 checklist 评估标准，使小型开源指令模型在通用 benchmark 与真实用户偏好测试上都比 UltraFeedback 训练更贴近用户需求。

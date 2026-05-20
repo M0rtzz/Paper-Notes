@@ -20,7 +20,7 @@ tags:
 
 **🧠 NeurIPS2025** · **70** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (2)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (26)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/ai_safety/index.md) · [📹 ICCV2025 (21)](../../ICCV2025/ai_safety/index.md) · [🧪 ICML2025 (33)](../../ICML2025/ai_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/ai_safety/index.md) · [💬 ACL2026 (2)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (26)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/ai_safety/index.md) · [📹 ICCV2025 (21)](../../ICCV2025/ai_safety/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×16 · 联邦学习 ×7 · 对齐/RLHF ×2 · 图神经网络 ×2 · 语音 ×2
 

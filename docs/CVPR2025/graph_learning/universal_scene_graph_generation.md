@@ -123,8 +123,8 @@ USG-Par 是一个模块化的端到端架构，输入可以是任意模态组合
 - [\[CVPR 2025\] Unbiased Video Scene Graph Generation via Visual and Semantic Dual Debiasing](unbiased_video_scene_graph_generation_via_visual_and_semantic_dual_debiasing.md)
 - [\[NeurIPS 2025\] ESCA: Contextualizing Embodied Agents via Scene-Graph Generation](../../NeurIPS2025/graph_learning/esca_contextualizing_embodied_agents_via_scene-graph_generation.md)
 - [\[NeurIPS 2025\] Interaction-Centric Knowledge Infusion and Transfer for Open-Vocabulary Scene Graph Generation](../../NeurIPS2025/graph_learning/interaction-centric_knowledge_infusion_and_transfer_for_open-vocabulary_scene_gr.md)
-- [\[ECCV 2024\] Fine-Grained Scene Graph Generation via Sample-Level Bias Prediction](../../ECCV2024/graph_learning/fine-grained_scene_graph_generation_via_sample-level_bias_prediction.md)
 - [\[CVPR 2026\] WSGG: Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](../../CVPR2026/graph_learning/wsgg_spatiotemporal_world_scene_graph.md)
+- [\[AAAI 2026\] MUG: Meta-path-aware Universal Heterogeneous Graph Pre-Training](../../AAAI2026/graph_learning/mug_meta-path-aware_universal_heterogeneous_graph_pre-training.md)
 
 </div>
 

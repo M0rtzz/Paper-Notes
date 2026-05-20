@@ -170,9 +170,9 @@ $$W(N, d, \rho) = \Omega\left(N \cdot d \cdot \rho^2\right) \quad \text{当} \qu
 
 - [\[NeurIPS 2025\] The Computational Complexity of Counting Linear Regions in ReLU Neural Networks](the_computational_complexity_of_counting_linear_regions_in_relu_neural_networks.md)
 - [\[NeurIPS 2025\] Impact of Layer Norm on Memorization and Generalization in Transformers](impact_of_layer_norm_on_memorization_and_generalization_in_transformers.md)
-- [\[NeurIPS 2025\] Kernel Conditional Tests from Learning-Theoretic Bounds](kernel_conditional_tests_from_learning-theoretic_bounds.md)
-- [\[NeurIPS 2025\] Depth-Bounds for Neural Networks via the Braid Arrangement](depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
 - [\[NeurIPS 2025\] The Structural Complexity of Matrix-Vector Multiplication](the_structural_complexity_of_matrix-vector_multiplication.md)
+- [\[NeurIPS 2025\] The Parameterized Complexity of Computing the VC-Dimension](the_parameterized_complexity_of_computing_the_vc-dimension.md)
+- [\[NeurIPS 2025\] Kernel Conditional Tests from Learning-Theoretic Bounds](kernel_conditional_tests_from_learning-theoretic_bounds.md)
 
 </div>
 

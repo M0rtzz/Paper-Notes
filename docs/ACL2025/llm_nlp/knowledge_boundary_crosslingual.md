@@ -145,10 +145,10 @@ $$\Delta\boldsymbol{\mu} = \boldsymbol{\mu}_{\text{in}} - \boldsymbol{\mu}_{\tex
 ## 相关论文
 
 - [\[ACL 2025\] Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
-- [\[ACL 2025\] CaLMQA: Exploring Culturally Specific Long-Form Question Answering across 23 Languages](calmqa_cultural_multilingual_qa.md)
 - [\[ACL 2025\] Enhancing Character-Level Understanding in LLMs through Token Internal Structure Learning](character_level_understanding.md)
 - [\[ACL 2025\] GenKnowSub: Improving Modularity and Reusability of LLMs through General Knowledge Subtraction](genknowsub_improving_modularity_and_reusability_of_llms_through_general_knowledg.md)
 - [\[ACL 2025\] Improving Preference Extraction In LLMs By Identifying Latent Knowledge Through Classifying Probes](improving_preference_extraction_in_llms_by_identifying_latent_knowledge_through_.md)
+- [\[ACL 2025\] Self-Tuning: Instructing LLMs to Effectively Acquire New Knowledge through Self-Teaching](self-tuning_instructing_llms_to_effectively_acquire_new_knowledge_through_self-t.md)
 
 </div>
 

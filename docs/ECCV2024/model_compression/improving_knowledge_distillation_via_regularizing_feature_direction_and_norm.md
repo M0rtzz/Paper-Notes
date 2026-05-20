@@ -133,11 +133,11 @@ tags:
 
 ## 相关论文
 
-- [\[ECCV 2024\] SiLC: Improving Vision Language Pretraining with Self-Distillation](silc_improving_vision_language_pretraining_with_self-distillation.md)
 - [\[ACL 2025\] Beyond Logits: Aligning Feature Dynamics for Effective Knowledge Distillation](../../ACL2025/model_compression/beyond_logits_aligning_feature_dynamics_for_effective_knowledge_distillation.md)
 - [\[ECCV 2024\] Simple Unsupervised Knowledge Distillation With Space Similarity](simple_unsupervised_knowledge_distillation_with_space_similarity.md)
 - [\[ECCV 2024\] Improving Zero-Shot Generalization for CLIP with Variational Adapter](improving_zero-shot_generalization_for_clip_with_variational_adapter.md)
 - [\[ECCV 2024\] Leveraging Hierarchical Feature Sharing for Efficient Dataset Condensation](leveraging_hierarchical_feature_sharing_for_efficient_dataset_condensation.md)
+- [\[ICCV 2025\] Knowledge Distillation with Refined Logits](../../ICCV2025/model_compression/knowledge_distillation_with_refined_logits.md)
 
 </div>
 

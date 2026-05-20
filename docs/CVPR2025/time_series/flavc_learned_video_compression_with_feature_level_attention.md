@@ -130,8 +130,8 @@ FLAVC 的编码流程：当前帧的特征通过 Transformer-CNN 混合编码器
 - [\[CVPR 2025\] DejaVid: Encoder-Agnostic Learned Temporal Matching for Video Classification](dejavid_encoder-agnostic_learned_temporal_matching_for_video_classification.md)
 - [\[NeurIPS 2025\] AttentionPredictor: Temporal Patterns Matter for KV Cache Compression](../../NeurIPS2025/time_series/attentionpredictor_temporal_patterns_matter_for_kv_cache_com.md)
 - [\[ICML 2025\] Customizing the Inductive Biases of Softmax Attention using Structured Matrices](../../ICML2025/time_series/customizing_the_inductive_biases_of_softmax_attention_using_structured_matrices.md)
-- [\[NeurIPS 2025\] Learning Time-Scale Invariant Population-Level Neural Representations](../../NeurIPS2025/time_series/learning_time-scale_invariant_population-level_neural_representations.md)
 - [\[NeurIPS 2025\] MAESTRO: Adaptive Sparse Attention and Robust Learning for Multimodal Dynamic Time Series](../../NeurIPS2025/time_series/maestro_adaptive_sparse_attention_and_robust_learning_for_multimodal_dynamic_tim.md)
+- [\[NeurIPS 2025\] Learning Time-Scale Invariant Population-Level Neural Representations](../../NeurIPS2025/time_series/learning_time-scale_invariant_population-level_neural_representations.md)
 
 </div>
 

@@ -157,11 +157,11 @@ ViT-Base 在 ImageNet-1k 微调：1p-frac（1 张图）达到 82.1%，超越 Ima
 
 ## 相关论文
 
-- [\[ECCV 2024\] Formula-Supervised Visual-Geometric Pre-training (FSVGP)](formula-supervised_visual-geometric_pre-training.md)
-- [\[ECCV 2024\] DreamLIP: Language-Image Pre-training with Long Captions](dreamlip_language-image_pre-training_with_long_captions.md)
-- [\[ECCV 2024\] POA: Pre-training Once for Models of All Sizes](poa_pre-training_once_for_models_of_all_sizes.md)
 - [\[ECCV 2024\] PreLAR: World Model Pre-training with Learnable Action Representation](prelar_world_model_pre-training_with_learnable_action_representation.md)
 - [\[NeurIPS 2025\] Power Lines: Scaling Laws for Weight Decay and Batch Size in LLM Pre-training](../../NeurIPS2025/llm_pretraining/power_lines_scaling_laws_for_weight_decay_and_batch_size_in_llm_pre-training.md)
+- [\[ICML 2025\] Metadata Conditioning Accelerates Language Model Pre-training](../../ICML2025/llm_pretraining/metadata_conditioning_accelerates_language_model_pre-training.md)
+- [\[ACL 2025\] AsyncLM: Efficient and Adaptive Async Pre-training of Language Models](../../ACL2025/llm_pretraining/asynclm_efficient_and_adaptive_async_pre-training_of_language_models.md)
+- [\[ACL 2025\] Towards Effective and Efficient Continual Pre-training of Large Language Models](../../ACL2025/llm_pretraining/towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
 
 </div>
 

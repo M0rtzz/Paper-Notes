@@ -136,11 +136,11 @@ tags:
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Decomposition of Small Transformer Models](decomposition_of_small_transformer_models.md)
 - [\[NeurIPS 2025\] In-Context Learning of Stochastic Differential Equations with Foundation Inference Models](in-context_learning_of_stochastic_differential_equations_with_foundation_inferen.md)
+- [\[NeurIPS 2025\] Decomposition of Small Transformer Models](decomposition_of_small_transformer_models.md)
+- [\[ACL 2026\] CoMeT: Collaborative Memory Transformer for Efficient Long Context Modeling](../../ACL2026/time_series/comet_collaborative_memory_transformer_for_efficient_long_context_modeling.md)
 - [\[ICLR 2026\] Relational Transformer: Toward Zero-Shot Foundation Models for Relational Data](../../ICLR2026/time_series/relational_transformer_toward_zero-shot_foundation_models_for_relational_data.md)
 - [\[NeurIPS 2025\] Universal Spectral Tokenization via Self-Supervised Panchromatic Representation Learning](universal_spectral_tokenization_via_self-supervised_panchromatic_representation_.md)
-- [\[NeurIPS 2025\] BubbleFormer: Forecasting Boiling with Transformers](bubbleformer_forecasting_boiling_with_transformers.md)
 
 </div>
 

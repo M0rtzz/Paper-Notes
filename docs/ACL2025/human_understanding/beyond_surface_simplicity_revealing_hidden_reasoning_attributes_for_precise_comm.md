@@ -120,11 +120,11 @@ tags:
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Mechanistic Interpretability of RNNs Emulating Hidden Markov Models](../../NeurIPS2025/human_understanding/mechanistic_interpretability_of_rnns_emulating_hidden_markov_models.md)
+- [\[NeurIPS 2025\] Foundation Cures Personalization: Improving Personalized Models' Prompt Consistency via Hidden Foundation Knowledge](../../NeurIPS2025/human_understanding/foundation_cures_personalization_improving_personalized_models_prompt_consistenc.md)
 - [\[CVPR 2026\] 4DSurf: High-Fidelity Dynamic Scene Surface Reconstruction](../../CVPR2026/human_understanding/textit4dsurf_high-fidelity_dynamic_scene_surface_reconstruction.md)
 - [\[NeurIPS 2025\] K-DeCore: Facilitating Knowledge Transfer in Continual Structured Knowledge Reasoning](../../NeurIPS2025/human_understanding/k-decore_facilitating_knowledge_transfer_in_continual_structured_knowledge_reaso.md)
 - [\[CVPR 2025\] PoseBH: Prototypical Multi-Dataset Training Beyond Human Pose Estimation](../../CVPR2025/human_understanding/posebh_prototypical_multi-dataset_training_beyond_human_pose_estimation.md)
-- [\[NeurIPS 2025\] Foundation Cures Personalization: Improving Personalized Models' Prompt Consistency via Hidden Foundation Knowledge](../../NeurIPS2025/human_understanding/foundation_cures_personalization_improving_personalized_models_prompt_consistenc.md)
+- [\[ICCV 2025\] AR-VRM: Imitating Human Motions for Visual Robot Manipulation with Analogical Reasoning](../../ICCV2025/human_understanding/ar-vrm_imitating_human_motions_for_visual_robot_manipulation_with_analogical_rea.md)
 
 </div>
 

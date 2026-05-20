@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 推荐系统方向13篇论文解读
+  ACL2026 推荐系统方向19篇论文解读
 description: >-
-  13篇ACL2026的推荐系统方向论文解读，涵盖个性化生成、推荐系统、对话系统、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  19篇ACL2026的推荐系统方向论文解读，涵盖推荐系统、个性化生成、对话系统、推理、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "推荐系统"
@@ -11,28 +11,33 @@ tags:
   - "个性化生成"
   - "对话系统"
   - "推理"
+  - "LLM"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎁 推荐系统
 
-**💬 ACL2026** · **13** 篇论文解读
+**💬 ACL2026** · **19** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🔬 ICLR2026 (10)](../../ICLR2026/recommender/index.md) · [🤖 AAAI2026 (26)](../../AAAI2026/recommender/index.md) · [🧠 NeurIPS2025 (24)](../../NeurIPS2025/recommender/index.md) · [🧪 ICML2025 (17)](../../ICML2025/recommender/index.md) · [💬 ACL2025 (7)](../../ACL2025/recommender/index.md) · [📷 CVPR2025 (1)](../../CVPR2025/recommender/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/recommender/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/recommender/index.md) · [🤖 AAAI2026 (26)](../../AAAI2026/recommender/index.md) · [🧠 NeurIPS2025 (24)](../../NeurIPS2025/recommender/index.md) · [🧪 ICML2025 (17)](../../ICML2025/recommender/index.md) · [💬 ACL2025 (7)](../../ACL2025/recommender/index.md)
 
-🔥 **高频主题：** 个性化生成 ×4 · 推荐系统 ×4 · 对话系统 ×3 · 推理 ×2
+🔥 **高频主题：** 推荐系统 ×11 · 个性化生成 ×4 · 对话系统 ×4 · 推理 ×3 · LLM ×2
 
-**[Beyond Itinerary Planning: A Real-World Benchmark for Multi-Turn and Tool-Using Travel Tasks](beyond_itinerary_planning-a_real-world_benchmark_for_multi-turn_and_tool-using_t.md)**
+**[Bridging Language and Items for Retrieval and Recommendation: Benchmarking LLMs as Semantic Encoders](bridging_language_and_items_for_retrieval_and_recommendation_benchmarking_llms_a.md)**
 
-:   提出 TravelBench，首个融合真实用户查询、隐式用户偏好、多轮交互、不可解任务识别和10种真实工具的旅行规划基准，通过沙箱环境实现可复现评估，揭示前沿模型在不同能力维度上表现不均衡。
+:   本文发布 Amazon Reviews 2023 大规模数据集（570M reviews / 48M items）并基于它构建 BLaIR 基准，覆盖序列推荐 / 协同过滤 / 商品搜索 (短 query + 复杂 query) 三大场景，benchmark 了 11 个顶尖 LLM 作为语义编码器，发现它们在 BLaIR 上的排名与 MTEB 几乎不相关（Spearman -0.476），并指出推荐场景对语义编码器有独特要求。
 
-**[Content Fuzzing for Escaping Information Cocoons on Social Media](content_fuzzing_for_escaping_information_cocoons_on_digital_social_media.md)**
+**[Culinary Crossroads: A RAG Framework for Enhancing Diversity in Cross-Cultural Recipe Adaptation](culinary_crossroads_a_rag_framework_for_enhancing_diversity_in_cross-cultural_re.md)**
 
-:   提出 ContentFuzz，一个从内容创作者视角出发的置信度引导模糊测试框架，通过 LLM 改写帖子使其在保持人类解读含义不变的前提下改变机器推断的立场标签，从而突破社交媒体信息茧房。
+:   作者发现标准 RAG 在创意任务上"给了多样上下文也产出不多样"，于是设计 plug-and-play 的 CARRIAGE：查询重写 + diversity-aware MMR 重排 + sliding-window 动态上下文 + 对比性上下文注入，把"上下文多样性"真正传导到"输出多样性"，在西班牙语跨国菜谱适配上同时改善 lexical/semantic/ingredient diversity 与 CultureScore，对 closed-book LLM 达到 Pareto efficiency。
 
 **[Decisive: Guiding User Decisions with Optimal Preference Elicitation from Unstructured Documents](decisive_guiding_user_decisions_with_optimal_preference_elicitation_from_unstruc.md)**
 
 :   提出 DECISIVE 交互式决策框架，通过从非结构化文档中提取客观选项评分矩阵，结合贝叶斯偏好推断自适应选择成对比较问题高效学习用户潜在偏好向量，在最小化用户交互负担的同时实现透明个性化推荐，决策准确率比强基线提升最高 20%。
+
+**[From Past To Path: Masked History Learning for Next-Item Prediction in Generative Recommendation](from_past_to_path_masked_history_learning_for_next-item_prediction_in_generative.md)**
+
+:   提出掩码历史学习（MHL）训练框架，通过在生成式推荐的自回归训练中加入掩码历史重建辅助任务，结合熵引导的自适应掩码策略和课程学习调度器，使模型从仅预测"下一个是什么"转向理解"为什么形成这条路径"，在三个数据集上显著超越SOTA。
 
 **[From Recall to Forgetting: Benchmarking Long-Term Memory for Personalized Agents](from_recall_to_forgetting_benchmarking_long-term_memory_for_personalized_agents.md)**
 
@@ -46,21 +51,41 @@ tags:
 
 :   本文提出 HORIZON，首个全开源的大规模跨领域长期推荐基准，基于 Amazon Reviews 合并构建包含 54M 用户和 35M 商品的统一交互历史，设计了沿时间轴和用户维度解耦的四象限评估协议，揭示了 BERT4Rec 等模型在分布内表现强劲但在时序外推和未见用户场景下显著退化的现象，且 LLM 在用户行为建模上并未一致优于专用架构。
 
+**[HSUGA: LLM-Enhanced Recommendation with Hierarchical Semantic Understanding and Group-Aware Alignment](hsuga_llm-enhanced_recommendation_with_hierarchical_semantic_understanding_and_g.md)**
+
+:   HSUGA 把 LLM 增强序列推荐的两个核心环节拆开来打补丁：用"阶段式 + 四类原子编辑（Add/Delete/Update/Retain）"的 HSU 模块把长交互序列的语义抽取做稳，再用按活跃度分组（20% 头部 / 80% 长尾）的 GAA 自蒸馏对齐解决长尾用户欠监督、活跃用户过对齐的问题，在 Steam/Fashion/Beauty 三个数据集 + GRU4Rec/BERT4Rec/SASRec 三个 backbone 上即插即用都涨点。
+
 **[IceBreaker for Conversational Agents: Breaking the First-Message Barrier with Personalized Starters](icebreaker_for_conversational_agents_breaking_the_first-message_barrier_with_per.md)**
 
 :   本文提出 IceBreaker，通过两步"握手"——共鸣感知兴趣蒸馏捕获触发兴趣 + 交互导向启动语生成配合个性化偏好对齐——解决对话智能体的"首条消息壁垒"，在全球最大对话产品之一的 A/B 测试中提升用户活跃天数 +1.84‰ 和点击率 +94.25‰。
+
+**[Intent-Driven Semantic ID Generation for Grounded Conversational News Recommendation](intent-driven_semantic_id_generation_for_grounded_conversational_news_recommenda.md)**
+
+:   本文提出 NewsRec-Chat，把对话式新闻推荐从"先检索再生成"反转为"先生成 SID 再模糊匹配"，靠两阶段 SID 对齐 + GPT-4 CoT 蒸馏让 7B 模型直接生成层级 Semantic ID 前缀并与当日新闻池模糊匹配，腾讯新闻平台上 152K 开放生成空间里取得 12.4% L1（4× 随机）、0% 幻觉，并通过 Profile-Aware Dual-Signal Reasoning 让 0 历史用户达到 18.0% L1（其他基线 0%）。
 
 **[Learning to Retrieve User History and Generate User Profiles for Personalized Persuasiveness Prediction](learning_to_retrieve_user_history_and_generate_user_profiles_for_personalized_pe.md)**
 
 :   本文提出 ReCAP 框架，通过可训练的查询生成器和用户画像生成器，从用户历史记录中检索与说服相关的信息并构建上下文感知的用户画像，显著提升个性化说服力预测的效果。
 
-**[Personalized Benchmarking: Evaluating LLMs by Individual Preferences](personalized_benchmarking_evaluating_llms_by_individual_preferences.md)**
+**[MemRec: Collaborative Memory-Augmented Agentic Recommender System](memrec_collaborative_memory-augmented_agentic_recommender_system.md)**
 
-:   本文对 Chatbot Arena 的 115 名活跃用户进行个性化排名分析，发现 Bradley-Terry 个性化排名与全局排名的平均 Spearman 相关仅 ρ=0.04（57% 用户近零或负相关），证明聚合基准无法反映大多数用户的个体偏好，并通过话题+风格特征成功预测了用户特定的模型排名。
+:   MemRec 用一个**轻量级 LLM 专门管理一张动态"协同记忆图"**（把多个 user 与 item 的语义记忆通过交互边相连），然后把蒸馏后的"协同记忆面（facets）"喂给重量级推理 LLM 做最终推荐；通过"Curate-then-Synthesize"压噪 + 异步 $O(1)$ 标签传播更新，在 4 个 benchmark 上 H@1 相对 SOTA i2Agent 提升 **+15% 到 +29%**，数据稀疏用户上更是相对 Vanilla LLM 提升 **+91.4%**。
 
-**[Scripts Through Time: A Survey of the Evolving Role of Transliteration in NLP](scripts_through_time_a_survey_of_the_evolving_role_of_transliteration_in_nlp.md)**
+**[Mirroring Users: Towards Building Preference-aligned User Simulator with User Feedback in Recommendation](mirroring_users_towards_building_preference-aligned_user_simulator_with_user_fee.md)**
 
-:   本文系统综述了音译（transliteration）在跨语言 NLP 中的演变角色，提出五大动机分类（命名实体/OOV处理、代码混合、跨文字相似性利用、英语中心迁移、统一预处理），比较了六种整合方式的优劣，并在现代 LLM 语境下讨论了音译是否仍然必要。
+:   作者把推荐系统里的"用户反馈日志"重写成一个 LLM 能理解的"用户记忆 + 曝光列表"统一仿真场景，再用 EKB 消费者决策模型生成显式的 chain-of-thought 决策过程作为"clarification"，通过不确定性分解 + 拒绝采样蒸馏出 10K 高质量 SFT/DPO 数据，让 3B 的 Llama 用户模拟器在 8 个领域的真实用户行为预测上超过 GPT-5 和 Gemini-2.5-Flash。
+
+**[Personalizing LLMs with Binary Feedback: A Preference-Corrected Optimization Framework](personalizing_llms_with_binary_feedback_a_preference-corrected_optimization_fram.md)**
+
+:   这篇论文提出 C-BPO，把目标用户历史当作正反馈、其他用户历史当作带噪未标注负反馈，并用 PU 学习校正“偏好重叠”带来的误惩罚，从而让 LLM 学到用户独特偏好而不压制通用任务能力。
+
+**[Quality Over Clicks: Intrinsic Quality-Driven Iterative RL for Cold-Start E-Commerce Query Suggestion](quality_over_clicks_intrinsic_quality-driven_iterative_reinforcement_learning_fo.md)**
+
+:   提出 Cold-EQS，一个面向冷启动电商场景的查询建议框架，利用可回答性、事实准确性和信息增益作为内在质量奖励，通过迭代强化学习持续优化查询建议质量，在线 chatUV 提升 6.81%。
+
+**[ReRec: Reasoning-Augmented LLM-based Recommendation Assistant via Reinforcement Fine-tuning](rerec_reasoning-augmented_llm-based_recommendation_assistant_via_reinforcement_f.md)**
+
+:   本文提出 ReRec，一个基于强化微调（RFT）的推荐助手框架，通过双图增强的奖励塑形提供细粒度奖励信号、推理感知的优势估计对推理步骤进行差异化监督、以及在线课程调度器动态调整训练难度，使 LLM 能处理复杂的多步推理推荐查询，在 RecBench+ 基准上显著超越现有方法。
 
 **[What Makes an Ideal Quote? Recommending "Unexpected yet Rational" Quotations via Novelty](what_makes_an_ideal_quote_recommending_34unexpected_yet_rational34_quotations_vi.md)**
 

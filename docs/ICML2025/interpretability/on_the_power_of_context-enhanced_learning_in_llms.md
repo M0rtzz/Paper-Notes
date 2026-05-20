@@ -157,8 +157,8 @@ CEL 在小样本场景下优势尤为显著。
 - [\[ICML 2025\] Evolving Prompts In-Context: An Open-ended, Self-replicating Perspective](evolving_prompts_in-context_an_open-ended_self-replicating_perspective.md)
 - [\[NeurIPS 2025\] Beyond Accuracy: Dissecting Mathematical Reasoning for LLMs Under Reinforcement Learning](../../NeurIPS2025/interpretability/beyond_accuracy_dissecting_mathematical_reasoning_for_llms_u.md)
 - [\[ICML 2025\] LANTERN: Modeling User Behavior from Adaptive Surveys with Supplemental Context](modeling_user_behavior_from_adaptive_surveys_with_supplemental_context.md)
+- [\[ICML 2026\] Optimal Attention Temperature Improves the Robustness of In-Context Learning under Distribution Shift in High Dimensions](../../ICML2026/interpretability/optimal_attention_temperature_improves_the_robustness_of_in-context_learning_und.md)
 - [\[ACL 2025\] Safety is Not Only About Refusal: Reasoning-Enhanced Fine-tuning for Interpretable LLM Safety](../../ACL2025/interpretability/safety_is_not_only_about_refusal_reasoning-enhanced_fine-tuning_for_interpretabl.md)
-- [\[ICLR 2026\] ZeroTuning: Unlocking the Initial Token's Power to Enhance Large Language Models Without Training](../../ICLR2026/interpretability/zerotuning_unlocking_the_initial_tokens_power_to_enhance_large_language_models_w.md)
 
 </div>
 

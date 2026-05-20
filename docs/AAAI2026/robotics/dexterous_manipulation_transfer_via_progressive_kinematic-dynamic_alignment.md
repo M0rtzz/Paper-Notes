@@ -173,8 +173,8 @@ $$T_t = o_t \cdot (T_{grasp}^{-1} \cdot o_{grasp})^{-1}$$
 - [\[NeurIPS 2025\] DexFlyWheel: A Scalable Self-Improving Data Generation Framework for Dexterous Manipulation](../../NeurIPS2025/robotics/dexflywheel_a_scalable_and_self-improving_data_generation_framework_for_dexterou.md)
 - [\[AAAI 2026\] To Align or Not to Align: Strategic Multimodal Representation Alignment for Optimal Performance](to_align_or_not_to_align_strategic_multimodal_representation_alignment_for_optim.md)
 - [\[AAAI 2026\] Cross Modal Fine-Grained Alignment via Granularity-Aware and Region-Uncertain Modeling](cross_modal_fine-grained_alignment_via_granularity-aware_and_region-uncertain_mo.md)
-- [\[CVPR 2025\] ASAP: Advancing Semantic Alignment for Multi-Modal Manipulation Detection](../../CVPR2025/robotics/asap_advancing_semantic_alignment_promotes_multi-modal_manipulation_detecting_an.md)
 - [\[AAAI 2026\] EvoEmpirBench: Dynamic Spatial Reasoning with Agent-ExpVer](evoempirbench_dynamic_spatial_reasoning_with_agent-expver.md)
+- [\[CVPR 2025\] ASAP: Advancing Semantic Alignment for Multi-Modal Manipulation Detection](../../CVPR2025/robotics/asap_advancing_semantic_alignment_promotes_multi-modal_manipulation_detecting_an.md)
 
 </div>
 

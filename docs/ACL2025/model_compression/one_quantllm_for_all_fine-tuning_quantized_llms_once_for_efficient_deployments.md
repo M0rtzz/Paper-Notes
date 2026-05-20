@@ -132,8 +132,8 @@ $$E[Bit(s,t)] = (b_N - b_1) \cdot |2 \cdot \frac{t}{SL} - 1|$$
 - [\[ACL 2025\] GSQ-Tuning: Group-Shared Exponents Integer in Fully Quantized Training for LLMs On-Device Fine-tuning](gsq-tuning_group-shared_exponents_integer_in_fully_quantized_training_for_llms_o.md)
 - [\[ACL 2025\] Quaff: Quantized Parameter-Efficient Fine-Tuning under Outlier Spatial Stability Hypothesis](quaff_quantized_peft.md)
 - [\[NeurIPS 2025\] All You Need is One: Capsule Prompt Tuning with a Single Vector](../../NeurIPS2025/model_compression/all_you_need_is_one_capsule_prompt_tuning_with_a_single_vector.md)
-- [\[NeurIPS 2025\] Uni-LoRA: One Vector is All You Need](../../NeurIPS2025/model_compression/uni-lora_one_vector_is_all_you_need.md)
 - [\[ACL 2025\] C3A: Parameter-Efficient Fine-Tuning via Circular Convolution](parameter-efficient_fine-tuning_via_circular_convolution.md)
+- [\[NeurIPS 2025\] Uni-LoRA: One Vector is All You Need](../../NeurIPS2025/model_compression/uni-lora_one_vector_is_all_you_need.md)
 
 </div>
 

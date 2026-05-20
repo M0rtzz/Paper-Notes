@@ -133,7 +133,7 @@ $$\left\| \frac{\partial \text{RMSNorm}(X + \eta \Delta X)}{\partial X} \right\|
 - [\[NeurIPS 2025\] Revisiting Agnostic Boosting](revisiting_agnostic_boosting.md)
 - [\[NeurIPS 2025\] Dense Associative Memory with Epanechnikov Energy](dense_associative_memory_with_epanechnikov_energy.md)
 - [\[NeurIPS 2025\] On Agnostic PAC Learning in the Small Error Regime](on_agnostic_pac_learning_in_the_small_error_regime.md)
-- [\[NeurIPS 2025\] A Generalized Label Shift Perspective for Cross-Domain Gaze Estimation](a_generalized_label_shift_perspective_for_crossdomain_gaze_e.md)
+- [\[NeurIPS 2025\] Learning Dynamics of RNNs in Closed-Loop Environments](learning_dynamics_of_rnns_in_closed-loop_environments.md)
 
 </div>
 

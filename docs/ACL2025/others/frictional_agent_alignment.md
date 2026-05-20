@@ -169,7 +169,7 @@ FAAF 的核心是一个双策略（two-player）对抗优化目标：
 - [\[ACL 2025\] Unifying Language Agent Algorithms with Graph-based Orchestration Engine for Reproducible Agent Research](unifying_language_agent_algorithms_with_graph-based_orchestration_engine_for_rep.md)
 - [\[ACL 2025\] Model Extrapolation Expedites Alignment](expo_model_extrapolation.md)
 - [\[ACL 2025\] Towards Style Alignment in Cross-Cultural Translation](towards_style_alignment_in_cross-cultural_translation.md)
-- [\[ACL 2025\] SudoLM: Learning Access Control of Parametric Knowledge with Authorization Alignment](sudolm_authorization_alignment.md)
+- [\[ACL 2025\] A Multi-Persona Framework for Argument Quality Assessment](a_multi-persona_framework_for_argument_quality_assessment.md)
 
 </div>
 

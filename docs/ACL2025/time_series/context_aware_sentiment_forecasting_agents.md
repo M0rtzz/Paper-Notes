@@ -142,7 +142,7 @@ tags:
 - [\[ICML 2025\] Event-Aware Sentiment Factors from LLM-Augmented Financial Tweets: A Transparent Framework for Interpretable Quant Trading](../../ICML2025/time_series/event-aware_sentiment_factors_from_llm-augmented_financial_tweets_a_transparent_.md)
 - [\[ICML 2025\] Context is Key: A Benchmark for Forecasting with Essential Textual Information](../../ICML2025/time_series/context_is_key_a_benchmark_for_forecasting_with_essential_textual_information.md)
 - [\[ICLR 2026\] HiVid: LLM-Guided Video Saliency For Content-Aware VOD And Live Streaming](../../ICLR2026/time_series/hivid_llm-guided_video_saliency_for_content-aware_vod_and_live_streaming.md)
-- [\[CVPR 2025\] Competition-Aware CPC Forecasting with Near-Market Coverage](../../CVPR2025/time_series/competition-aware_cpc_forecasting_with_near-market_coverage.md)
+- [\[CVPR 2025\] Reasoning in Visual Navigation of End-to-end Trained Agents: A Dynamical Systems Approach](../../CVPR2025/time_series/reasoning_in_visual_navigation_of_end-to-end_trained_agents_a_dynamical_systems_.md)
 
 </div>
 

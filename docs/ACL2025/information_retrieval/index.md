@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 信息检索/RAG方向86篇论文解读
+  ACL2025 信息检索/RAG方向85篇论文解读
 description: >-
-  86篇ACL2025的信息检索/RAG 方向论文解读，涵盖 RAG、LLM、对抗鲁棒、问答、对齐/RLHF、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  85篇ACL2025的信息检索/RAG 方向论文解读，涵盖 RAG、LLM、问答、对抗鲁棒、推理、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2025"
   - "信息检索/RAG"
@@ -10,20 +10,20 @@ tags:
   - "论文笔记"
   - "RAG"
   - "LLM"
-  - "对抗鲁棒"
   - "问答"
-  - "对齐/RLHF"
+  - "对抗鲁棒"
   - "推理"
+  - "对齐/RLHF"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔍 信息检索/RAG
 
-**💬 ACL2025** · **86** 篇论文解读
+**💬 ACL2025** · **85** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (43)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (7)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (28)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/information_retrieval/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/information_retrieval/index.md) · [💬 ACL2026 (60)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (7)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (28)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (31)](../../NeurIPS2025/information_retrieval/index.md)
 
-🔥 **高频主题：** RAG ×56 · LLM ×13 · 对抗鲁棒 ×6 · 问答 ×5 · 对齐/RLHF ×4
+🔥 **高频主题：** RAG ×55 · LLM ×13 · 问答 ×5 · 对抗鲁棒 ×5 · 推理 ×3
 
 **[A Reality Check on Context Utilisation for Retrieval-Augmented Generation](a_reality_check_on_context_utilisation_for_retrieval-augmented_generation.md)**
 
@@ -211,6 +211,10 @@ tags:
 
 :   提出 NS-IR，通过将自然语言查询和文档转换为一阶逻辑（FOL），利用逻辑对齐和连接词约束两项技术优化稠密检索嵌入，显著提升了负约束查询等复杂逻辑检索场景的性能。
 
+**[MAIN-RAG: Multi-Agent Filtering Retrieval-Augmented Generation](main-rag_multi-agent_filtering_retrieval-augmented_generation.md)**
+
+:   提出 MAIN-RAG，一个无需训练的多 Agent RAG 过滤框架，通过 Predictor→Judge→Final-Predictor 三个 LLM Agent 协作评估检索文档的相关性，并设计自适应阈值（基于分数均值和标准差）动态过滤噪声文档，在 4 个 QA 基准上实现 2-11% 的准确率提升。
+
 **[Maximal Matching Matters: Preventing Representation Collapse for Robust Cross-Modal Retrieval](maximal_matching_matters_preventing_representation_collapse_for_robust_cross-mod.md)**
 
 :   提出 MaxMatch 方法，通过基于匈牙利算法的最大配对相似度和两个新损失函数，解决集合嵌入方法中的稀疏监督和集合坍塌问题，在 MS-COCO 和 Flickr30k 上取得 SOTA 性能。
@@ -294,14 +298,6 @@ tags:
 **[Reranking-based Generation for Unbiased Perspective Summarization](reranking-based_generation_for_unbiased_perspective_summarization.md)**
 
 :   针对政治视角摘要任务，构建了受控测试集验证现有评估指标的可靠性，发现 LLM-based 指标远优于传统指标，并证明基于重排序（Reranking）的方法及在重排序数据上的 DPO 训练能显著提升摘要的覆盖性和忠实性。
-
-**[Retrieval-Augmented Fine-Tuning With Preference Optimization For Visual Program Generation](retrieval-augmented_fine-tuning_with_preference_optimization_for_visual_program_.md)**
-
-:   本文针对工业视觉编程语言（Ladder Diagram）的自动生成任务，提出了一种两阶段训练策略：先通过检索增强微调（Retrieval-Augmented Fine-Tuning）利用子程序复用特性，再通过基于图编辑操作构造偏好对的 DPO 训练进一步提升准确性，在真实 LD 数据上将程序级准确率提升超过 10%。
-
-**[RPO: Retrieval Preference Optimization for Robust Retrieval-Augmented Generation](rpo_retrieval_preference_optimization_for_robust_retrieval-augmented_generation.md)**
-
-:   提出 Retrieval Preference Optimization (RPO)，一种专为 RAG 设计的轻量级偏好对齐方法，通过将检索质量评估隐式地集成到生成过程中，使 LLM 能够自适应地在参数知识和检索知识之间做出选择，无需额外组件即可缓解知识冲突导致的幻觉问题。
 
 **[SafeRAG: Benchmarking Security in Retrieval-Augmented Generation of Large Language Model](saferag_benchmarking_security_in_retrieval-augmented_generation_of_large_languag.md)**
 

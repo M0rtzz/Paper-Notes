@@ -119,11 +119,11 @@ MonoPlace3D在两个检测器上均大幅领先。注意Lift3D在GUPNet上反而
 
 ## 相关论文
 
+- [\[CVPR 2026\] Towards Intrinsic-Aware Monocular 3D Object Detection](../../CVPR2026/3d_vision/towards_intrinsic-aware_monocular_3d_object_detection.md)
+- [\[CVPR 2025\] Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection](learning_class_prototypes_for_unified_sparse-supervised_3d_object_detection.md)
 - [\[ICCV 2025\] PlaceIt3D: Language-Guided Object Placement in Real 3D Scenes](../../ICCV2025/3d_vision/placeit3d_language-guided_object_placement_in_real_3d_scenes.md)
+- [\[CVPR 2026\] MonoSAOD: Monocular 3D Object Detection with Sparsely Annotated Label](../../CVPR2026/3d_vision/monosaod_monocular_3d_object_detection_with_sparsely_annotated_label.md)
 - [\[CVPR 2026\] SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection](../../CVPR2026/3d_vision/span_spatial_projection_alignment_mono3d.md)
-- [\[CVPR 2025\] FASTer: Focal Token Acquiring-and-Scaling Transformer for Long-term 3D Object Detection](faster_focal_token_acquiring-and-scaling_transformer_for_long-term_3d_objection_.md)
-- [\[CVPR 2025\] UniK3D: Universal Camera Monocular 3D Estimation](unik3d_universal_camera_monocular_3d_estimation.md)
-- [\[CVPR 2025\] Symmetry Strikes Back: From Single-Image Symmetry Detection to 3D Generation](symmetry_strikes_back_from_single-image_symmetry_detection_to_3d_generation.md)
 
 </div>
 

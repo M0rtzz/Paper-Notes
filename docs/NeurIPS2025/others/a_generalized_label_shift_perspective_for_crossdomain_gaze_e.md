@@ -114,7 +114,7 @@ GLSGE框架分三步：(1) 估计重要性权重函数ω(y)，用重加权后的
 - [\[ECCV 2024\] De-confounded Gaze Estimation](../../ECCV2024/others/de-confounded_gaze_estimation.md)
 - [\[CVPR 2025\] Open Set Label Shift with Test Time Out-of-Distribution Reference](../../CVPR2025/others/open_set_label_shift_with_test_time_out-of-distribution_reference.md)
 - [\[NeurIPS 2025\] Generalized Linear Mode Connectivity for Transformers](generalized_linear_mode_connectivity_for_transformers.md)
-- [\[NeurIPS 2025\] How Many Domains Suffice for Domain Generalization? A Tight Characterization via the Domain Shattering Dimension](how_many_domains_suffice_for_domain_generalization_a_tight_characterization_via_.md)
+- [\[ACL 2025\] Understanding Cross-Domain Adaptation in Low-Resource Topic Modeling](../../ACL2025/others/understanding_cross-domain_adaptation_in_low-resource_topic_modeling.md)
 
 </div>
 

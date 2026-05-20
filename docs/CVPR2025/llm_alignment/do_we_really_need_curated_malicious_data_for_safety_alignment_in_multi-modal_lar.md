@@ -128,8 +128,8 @@ tags:
 - [\[ACL 2025\] PKU-SafeRLHF: Towards Multi-Level Safety Alignment for LLMs with Human Preference](../../ACL2025/llm_alignment/pku-saferlhf_towards_multi-level_safety_alignment_for_llms_with_human_preference.md)
 - [\[ACL 2025\] MTSA: Multi-Turn Safety Alignment for LLMs through Multi-Round Red-Teaming](../../ACL2025/llm_alignment/mtsa_multi-turn_safety_alignment_for_llms_through_multi-round_red-teaming.md)
 - [\[ACL 2025\] AutoMixAlign: Adaptive Data Mixing for Multi-Task Preference Optimization in LLMs](../../ACL2025/llm_alignment/automixalign_adaptive_data_mixing.md)
-- [\[ICML 2025\] Diverging Preferences: When do Annotators Disagree and do Models Know?](../../ICML2025/llm_alignment/diverging_preferences_when_do_annotators_disagree_and_do_models_know.md)
 - [\[NeurIPS 2025\] Towards Understanding Safety Alignment: A Mechanistic Perspective from Safety Neurons](../../NeurIPS2025/llm_alignment/towards_understanding_safety_alignment_a_mechanistic_perspective_from_safety_neu.md)
+- [\[ACL 2025\] SEA: Low-Resource Safety Alignment for Multimodal Large Language Models via Synthetic Embeddings](../../ACL2025/llm_alignment/sea_lowresource_safety_alignment_for_multimodal.md)
 
 </div>
 

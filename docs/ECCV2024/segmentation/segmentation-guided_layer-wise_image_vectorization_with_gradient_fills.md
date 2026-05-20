@@ -179,7 +179,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{SG}} + \lambda\mathcal{L}_{\text{Xing}}, \qua
 - [\[ECCV 2024\] VISAGE: Video Instance Segmentation with Appearance-Guided Enhancement](visage_video_instance_segmentation_with_appearance-guided_enhancement.md)
 - [\[ICCV 2025\] LayerAnimate: Layer-level Control for Animation](../../ICCV2025/segmentation/layeranimate_layer-level_control_for_animation.md)
 - [\[ECCV 2024\] ReMamber: Referring Image Segmentation with Mamba Twister](remamber_referring_image_segmentation_with_mamba_twister.md)
-- [\[AAAI 2026\] CtrlFuse: Mask-Prompt Guided Controllable Infrared and Visible Image Fusion](../../AAAI2026/segmentation/ctrlfuse_mask-prompt_guided_controllable_infrared_and_visible_image_fusion.md)
+- [\[CVPR 2026\] SemLayer: Semantic-aware Generative Segmentation and Layer Construction for Abstract Icons](../../CVPR2026/segmentation/semlayer_semantic-aware_generative_segmentation_and_layer_construction_for_abstr.md)
 
 </div>
 

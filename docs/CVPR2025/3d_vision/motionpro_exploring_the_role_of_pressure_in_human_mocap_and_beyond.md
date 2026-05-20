@@ -144,7 +144,7 @@ FRAPPE 在 RTE 上较 WHAM 降低 **96%**，WBCE 降低 **91%**。
 - [\[CVPR 2025\] Gaussian Eigen Models for Human Heads](gaussian_eigen_models_for_human_heads.md)
 - [\[NeurIPS 2025\] Gaze Beyond the Frame: Forecasting Egocentric 3D Visual Span](../../NeurIPS2025/3d_vision/gaze_beyond_the_frame_forecasting_egocentric_3d_visual_span.md)
 - [\[NeurIPS 2025\] Cue3D: Quantifying the Role of Image Cues in Single-Image 3D Generation](../../NeurIPS2025/3d_vision/cue3d_quantifying_the_role_of_image_cues_in_single-image_3d_generation.md)
-- [\[CVPR 2025\] Reconstructing Close Human Interaction with Appearance and Proxemics Reasoning](reconstructing_close_human_interaction_with_appearance_and_proxemics_reasoning.md)
+- [\[AAAI 2026\] PressTrack-HMR: Pressure-Based Top-Down Multi-Person Global Human Mesh Recovery](../../AAAI2026/3d_vision/presstrack-hmr_pressure-based_top-down_multi-person_global_human_mesh_recovery.md)
 
 </div>
 

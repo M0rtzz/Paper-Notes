@@ -128,11 +128,11 @@ tags:
 
 ## 相关论文
 
+- [\[ICML 2026\] Reward Modeling from Natural Language Human Feedback](../../ICML2026/audio_speech/reward_modeling_from_natural_language_human_feedback.md)
 - [\[ACL 2025\] SpeechWeave: Diverse Multilingual Synthetic Text & Audio Data Generation Pipeline for Training Text to Speech Models](speechweave_diverse_multilingual_synthetic_text_audio_data_generation_pipeline_f.md)
-- [\[ACL 2026\] Towards Fine-Grained and Multi-Granular Contrastive Language-Speech Pre-training](../../ACL2026/audio_speech/towards_fine-grained_and_multi-granular_contrastive_language-speech_pre-training.md)
+- [\[ICML 2026\] MECAT: A Multi-Experts Constructed Benchmark for Fine-Grained Audio Understanding Tasks](../../ICML2026/audio_speech/mecat_a_multi-experts_constructed_benchmark_for_fine-grained_audio_understanding.md)
 - [\[ACL 2025\] In-the-wild Audio Spatialization with Flexible Text-guided Localization](tas_audio_spatialization.md)
 - [\[ACL 2025\] Double Entendre: Robust Audio-Based AI-Generated Lyrics Detection via Multi-View Fusion](double_entendre_robust_audio-based_ai-generated_lyrics_detection_via_multi-view_.md)
-- [\[NeurIPS 2025\] Node-Based Editing for Multimodal Generation of Text, Audio, Image, and Video](../../NeurIPS2025/audio_speech/node-based_editing_for_multimodal_generation_of_text_audio_image_and_video.md)
 
 </div>
 

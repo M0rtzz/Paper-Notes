@@ -143,9 +143,9 @@ $$\text{emb}(\langle p \rangle) = c_p \cdot \text{emb}(\langle 66 \rangle)$$
 ## 相关论文
 
 - [\[ACL 2025\] JoPA: Explaining Large Language Model's Generation via Joint Prompt Attribution](jopa_explaining_large_language_models_generation_via_joint_prompt_attribution.md)
-- [\[ACL 2025\] Odysseus Navigates the Sirens' Song: Dynamic Focus Decoding for Factual and Diverse Open-Ended Text Generation](odysseus_dynamic_focus_decoding.md)
 - [\[ACL 2025\] An Empirical Study of Large Language Models for Automated Review Generation](an_empirical_study_of_large_language_models_for_automated_review_generation.md)
 - [\[ACL 2025\] Representation Bending for Large Language Model Safety](repbend_representation_bending_safety.md)
+- [\[ACL 2025\] Contrastive Perplexity for Controlled Generation: An Application in Detoxifying Large Language Models](contrastive_perplexity_controlled_gen.md)
 - [\[ACL 2025\] Binary Classifier Optimization for Large Language Model Alignment](bco_binary_classifier_alignment.md)
 
 </div>

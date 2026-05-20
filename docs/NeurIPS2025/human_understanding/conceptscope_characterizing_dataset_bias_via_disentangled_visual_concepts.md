@@ -125,8 +125,8 @@ $$\mathcal{L} = \|z - \text{SAE}(z)\|_2^2 + \lambda \|z\|_1$$
 
 ## 相关论文
 
-- [\[CVPR 2025\] Design2GarmentCode: Turning Design Concepts to Tangible Garments Through Program Synthesis](../../CVPR2025/human_understanding/design2garmentcode_turning_design_concepts_to_tangible_garments_through_program_.md)
 - [\[CVPR 2025\] D3-Human: Dynamic Disentangled Digital Human from Monocular Video](../../CVPR2025/human_understanding/d3-human_dynamic_disentangled_digital_human_from_monocular_video.md)
+- [\[CVPR 2025\] Design2GarmentCode: Turning Design Concepts to Tangible Garments Through Program Synthesis](../../CVPR2025/human_understanding/design2garmentcode_turning_design_concepts_to_tangible_garments_through_program_.md)
 - [\[ICCV 2025\] What's Making That Sound Right Now? Video-centric Audio-Visual Localization](../../ICCV2025/human_understanding/whats_making_that_sound_right_now_video-centric_audio-visual_localization.md)
 - [\[ICCV 2025\] HUMOTO: A 4D Dataset of Mocap Human Object Interactions](../../ICCV2025/human_understanding/humoto_a_4d_dataset_of_mocap_human_object_interactions.md)
 - [\[ICCV 2025\] AR-VRM: Imitating Human Motions for Visual Robot Manipulation with Analogical Reasoning](../../ICCV2025/human_understanding/ar-vrm_imitating_human_motions_for_visual_robot_manipulation_with_analogical_rea.md)

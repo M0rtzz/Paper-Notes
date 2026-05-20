@@ -144,7 +144,7 @@ PAMM 分两阶段工作：(1) 前向时将 $X$ 压缩为少量生成点和辅助
 - [\[ICLR 2026\] LightMem: Lightweight and Efficient Memory-Augmented Generation](lightmem_lightweight_and_efficient_memory-augmented_generation.md)
 - [\[ICCV 2025\] A Good Teacher Adapts Their Knowledge for Distillation](../../ICCV2025/model_compression/a_good_teacher_adapts_their_knowledge_for_distillation.md)
 - [\[ACL 2026\] Mem^p: Exploring Agent Procedural Memory](../../ACL2026/model_compression/memp_exploring_agent_procedural_memory.md)
-- [\[AAAI 2026\] Sharp Eyes and Memory for VideoLLMs: Information-Aware Visual Token Pruning for Efficient and Reliable VideoLLM Reasoning](../../AAAI2026/model_compression/sharp_eyes_and_memory_for_videollms_information-aware_visual_token_pruning_for_e.md)
+- [\[ICML 2026\] Stochastic Sparse Attention for Memory-Bound Inference](../../ICML2026/model_compression/stochastic_sparse_attention_for_memory-bound_inference.md)
 
 </div>
 

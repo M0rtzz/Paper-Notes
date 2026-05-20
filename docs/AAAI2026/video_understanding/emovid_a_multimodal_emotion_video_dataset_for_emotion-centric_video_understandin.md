@@ -153,7 +153,7 @@ EmoVid 的构建和应用包括三个部分：
 - [\[NeurIPS 2025\] egoEMOTION: Egocentric Vision and Physiological Signals for Emotion and Personality Recognition in Real-World Tasks](../../NeurIPS2025/video_understanding/egoemotion_egocentric_vision_and_physiological_signals_for_emotion_and_personali.md)
 - [\[CVPR 2026\] OpenMarcie: Dataset for Multimodal Action Recognition in Industrial Environments](../../CVPR2026/video_understanding/openmarcie_dataset_for_multimodal_action_recognition_in_industrial_environments.md)
 - [\[NeurIPS 2025\] SmartWilds: Multimodal Wildlife Monitoring Dataset](../../NeurIPS2025/video_understanding/smartwilds_multimodal_wildlife_monitoring_dataset.md)
-- [\[AAAI 2026\] Rethinking Progression of Memory State in Robotic Manipulation: An Object-Centric Perspective](rethinking_progression_of_memory_state_in_robotic_manipulation_an_object-centric.md)
+- [\[ACL 2026\] DualFact: A Multimodal Fact Verification Framework for Procedural Video Understanding](../../ACL2026/video_understanding/dualfact_a_multimodal_fact_verification_framework_for_procedural_video_understan.md)
 
 </div>
 

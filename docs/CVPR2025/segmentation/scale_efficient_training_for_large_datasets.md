@@ -136,8 +136,8 @@ SeTa 不修改任何任务特定的损失函数，仅改变每个 epoch 参与�
 
 - [\[ICCV 2025\] RAGNet: Large-scale Reasoning-based Affordance Segmentation Benchmark towards General Grasping](../../ICCV2025/segmentation/ragnet_large-scale_reasoning-based_affordance_segmentation_benchmark_towards_gen.md)
 - [\[CVPR 2026\] Data Warmup: Complexity-Aware Curricula for Efficient Diffusion Training](../../CVPR2026/segmentation/data_warmup_complexity-aware_curricula_for_efficient_diffusion_training.md)
-- [\[CVPR 2026\] Making Training-Free Diffusion Segmentors Scale with the Generative Power](../../CVPR2026/segmentation/making_training-free_diffusion_segmentors_scale_with_the_generative_power.md)
 - [\[CVPR 2025\] F-LMM: Grounding Frozen Large Multimodal Models](f-lmm_grounding_frozen_large_multimodal_models.md)
+- [\[CVPR 2026\] Making Training-Free Diffusion Segmentors Scale with the Generative Power](../../CVPR2026/segmentation/making_training-free_diffusion_segmentors_scale_with_the_generative_power.md)
 - [\[CVPR 2025\] ShiftwiseConv: Small Convolutional Kernel with Large Kernel Effect](shiftwiseconv_small_convolutional_kernel_with_large_kernel_effect.md)
 
 </div>

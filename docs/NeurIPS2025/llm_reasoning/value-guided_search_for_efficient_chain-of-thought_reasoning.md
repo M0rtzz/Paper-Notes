@@ -13,7 +13,7 @@ tags:
   - "置信度估计"
 ---
 
-# 笔记6：Self-Evaluating LLMs - 多步任务的步级置信度估计
+# Value-Guided Search for Efficient Chain-of-Thought Reasoning
 
 **会议**: NeurIPS 2025  
 **arXiv**: [2505.17373](https://arxiv.org/abs/2505.17373)  
@@ -127,11 +127,11 @@ $$\mathcal{F}(R_i|C,Q_{[1:i]},\hat{R}_{[1:i-1]}) \rightarrow \mathbb{I}\{R_i≠\
 
 ## 相关论文
 
-- [\[ACL 2025\] Understanding the Dark Side of LLMs' Intrinsic Self-Correction](../../ACL2025/llm_reasoning/understanding_the_dark_side_of_llms_intrinsic_self-correction.md)
-- [\[ACL 2025\] FineReason: Evaluating and Improving LLMs' Deliberate Reasoning through Reflective Puzzle Solving](../../ACL2025/llm_reasoning/finereason_evaluating_and_improving_llms_deliberate_reasoning_through_reflective.md)
-- [\[ACL 2025\] Self-Error-Instruct: Generalizing from Errors for LLMs Mathematical Reasoning](../../ACL2025/llm_reasoning/self-error-instruct_generalizing_from_errors_for_llms_mathematical_reasoning.md)
-- [\[NeurIPS 2025\] The Hawthorne Effect in Reasoning Models: Evaluating and Steering Test Awareness](the_hawthorne_effect_in_reasoning_models_evaluating_and_steering_test_awareness.md)
-- [\[NeurIPS 2025\] RealMath: A Continuous Benchmark for Evaluating Language Models on Research-Level Mathematics](realmath_a_continuous_benchmark_for_evaluating_language_models_on_research-level.md)
+- [\[NeurIPS 2025\] Re-FORC: Adaptive Reward Prediction for Efficient Chain-of-Thought Reasoning](re-forc_adaptive_reward_prediction_for_efficient_chain-of-thought_reasoning.md)
+- [\[AAAI 2026\] Jupiter: Enhancing LLM Data Analysis Capabilities via Notebook and Inference-Time Value-Guided Search](../../AAAI2026/llm_reasoning/jupiter_enhancing_llm_data_analysis_capabilities_via_notebook_and_inference-time.md)
+- [\[NeurIPS 2025\] SolverLLM: Leveraging Test-Time Scaling for Optimization Problem via LLM-Guided Search](solverllm_leveraging_test-time_scaling_for_optimization_problem_via_llm-guided_s.md)
+- [\[NeurIPS 2025\] SQL-of-Thought: Multi-agentic Text-to-SQL with Guided Error Correction](sql-of-thought_multi-agentic_text-to-sql_with_guided_error_correction.md)
+- [\[NeurIPS 2025\] Latent Chain-of-Thought for Visual Reasoning](latent_chain-of-thought_for_visual_reasoning.md)
 
 </div>
 

@@ -132,7 +132,7 @@ LIBERO-Long (最难子集): 88.8% → **92.8%** (+4.0%)
 - [\[CVPR 2026\] QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
 - [\[ICLR 2026\] Real-Time Robot Execution with Masked Action Chunking](../../ICLR2026/robotics/real-time_robot_execution_with_masked_action_chunking.md)
 - [\[CVPR 2026\] Boosting Vision-Language-Action Finetuning with Feasible Action Neighborhood Prior](boosting_vision-language-action_finetuning_with_feasible_action_neighborhood_pri.md)
-- [\[AAAI 2026\] 10 Open Challenges Steering the Future of Vision-Language-Action Models](../../AAAI2026/robotics/10_open_challenges_steering_the_future_of_vision-language-ac.md)
+- [\[CVPR 2026\] MergeVLA: Cross-Skill Model Merging Toward a Generalist Vision-Language-Action Agent](mergevla_cross-skill_model_merging_toward_a_generalist_vision-language-action_ag.md)
 
 </div>
 

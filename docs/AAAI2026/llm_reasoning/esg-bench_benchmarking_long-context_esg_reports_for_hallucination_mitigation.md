@@ -125,11 +125,11 @@ ESG-Bench 构建：94 份真实 ESG 报告 → GPT-4o 生成问题 → 人工标
 
 ## 相关论文
 
-- [\[ICLR 2026\] Is In-Context Learning Learning?](../../ICLR2026/llm_reasoning/is_in-context_learning_learning.md)
+- [\[ACL 2026\] DELTA: Dynamic Layer-Aware Token Attention for Efficient Long-Context Reasoning](../../ACL2026/llm_reasoning/delta_dynamic_layer-aware_token_attention_for_efficient_long-context_reasoning.md)
 - [\[AAAI 2026\] LLMs for Game Theory: Entropy-Guided In-Context Learning and Adaptive CoT Reasoning](llms_for_game_theory_entropy-guided_in-context_learning_and_adaptive_cot_reasoni.md)
 - [\[ACL 2026\] Generating Effective CoT Traces for Mitigating Causal Hallucination](../../ACL2026/llm_reasoning/generating_effective_cot_traces_for_mitigating_causal_hallucination.md)
+- [\[ICLR 2026\] Is In-Context Learning Learning?](../../ICLR2026/llm_reasoning/is_in-context_learning_learning.md)
 - [\[ICLR 2026\] HeurekaBench: A Benchmarking Framework for AI Co-scientist](../../ICLR2026/llm_reasoning/heurekabench_a_benchmarking_framework_for_ai_co-scientist.md)
-- [\[ICLR 2026\] TopoBench: Benchmarking LLMs on Hard Topological Reasoning](../../ICLR2026/llm_reasoning/topobench_benchmarking_llms_on_hard_topological_reasoning.md)
 
 </div>
 

@@ -127,8 +127,8 @@ CAT embedding优化使用Adam优化器，学习率0.005，最多30个epoch，每
 
 - [\[ICML 2025\] Broadband Ground Motion Synthesis by Diffusion Model with Minimal Condition](broadband_ground_motion_synthesis_by_diffusion_model_with_minimal_condition.md)
 - [\[CVPR 2025\] Using Powerful Prior Knowledge of Diffusion Model in Deep Unfolding Networks for Image Compressive Sensing](../../CVPR2025/image_generation/using_powerful_prior_knowledge_of_diffusion_model_in_deep_unfolding_networks_for.md)
-- [\[CVPR 2025\] See Further When Clear: Curriculum Consistency Model](../../CVPR2025/image_generation/see_further_when_clear_curriculum_consistency_model.md)
 - [\[ICML 2025\] Stealix: Model Stealing via Prompt Evolution](stealix_model_stealing_via_prompt_evolution.md)
+- [\[CVPR 2025\] See Further When Clear: Curriculum Consistency Model](../../CVPR2025/image_generation/see_further_when_clear_curriculum_consistency_model.md)
 - [\[ICML 2025\] Towards a Mechanistic Explanation of Diffusion Model Generalization](towards_a_mechanistic_explanation_of_diffusion_model_generalization.md)
 
 </div>

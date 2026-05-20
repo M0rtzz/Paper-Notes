@@ -122,11 +122,11 @@ ms-HMR、轨迹预测器和脚部滑动优化器在AMASS、3DPW、Human3.6M和BE
 
 ## 相关论文
 
-- [\[ECCV 2024\] Multi-HMR: Multi-Person Whole-Body Human Mesh Recovery in a Single Shot](../../ECCV2024/human_understanding/multi-hmr_multi-person_whole-body_human_mesh_recovery_in_a_single_shot.md)
-- [\[CVPR 2025\] PromptHMR: Promptable Human Mesh Recovery](prompthmr_promptable_human_mesh_recovery.md)
-- [\[ECCV 2024\] TRAM: Global Trajectory and Motion of 3D Humans from in-the-wild Videos](../../ECCV2024/human_understanding/tram_global_trajectory_and_motion_of_3d_humans_from_in-the-wild_videos.md)
-- [\[CVPR 2025\] HeatFormer: A Neural Optimizer for Multiview Human Mesh Recovery](heatformer_a_neural_optimizer_for_multiview_human_mesh_recovery.md)
-- [\[CVPR 2025\] MEGA: Masked Generative Autoencoder for Human Mesh Recovery](mega_masked_generative_autoencoder_for_human_mesh_recovery.md)
+- [\[CVPR 2025\] RePerformer: Immersive Human-centric Volumetric Videos from Playback to Photoreal Reperformance](reperformer_immersive_human-centric_volumetric_videos_from_playback_to_photoreal.md)
+- [\[CVPR 2025\] Human Motion Instruction Tuning](human_motion_instruction_tuning.md)
+- [\[ICCV 2025\] GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation](../../ICCV2025/human_understanding/genm3_generative_pretrained_multi-path_motion_model_for_text_conditional_human_m.md)
+- [\[CVPR 2025\] SimMotionEdit: Text-Based Human Motion Editing with Motion Similarity Prediction](simmotionedit_text-based_human_motion_editing_with_motion_similarity_prediction.md)
+- [\[CVPR 2025\] PoseBH: Prototypical Multi-Dataset Training Beyond Human Pose Estimation](posebh_prototypical_multi-dataset_training_beyond_human_pose_estimation.md)
 
 </div>
 

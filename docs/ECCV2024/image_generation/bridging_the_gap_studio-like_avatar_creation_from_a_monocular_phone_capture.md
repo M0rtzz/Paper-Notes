@@ -135,8 +135,8 @@ GMug 的输出虽然具有均匀光照和完整覆盖，但分辨率受限于 St
 - [\[ICLR 2026\] Bridging Generalization Gap of Heterogeneous Federated Clients Using Generative Models](../../ICLR2026/image_generation/bridging_generalization_gap_of_heterogeneous_federated_clients_using_generative_.md)
 - [\[ECCV 2024\] RodinHD: High-Fidelity 3D Avatar Generation with Diffusion Models](rodinhd_high-fidelity_3d_avatar_generation_with_diffusion_models.md)
 - [\[ICCV 2025\] Bridging the Skeleton-Text Modality Gap: Diffusion-Powered Modality Alignment for Zero-shot Skeleton-based Action Recognition](../../ICCV2025/image_generation/bridging_the_skeleton_text_modality_gap_diffusion_powered_modality_alignment_for.md)
+- [\[ICML 2026\] SpatialReward: Bridging the Perception Gap in Online RL for Image Editing via Explicit Spatial Reasoning](../../ICML2026/image_generation/spatialreward_bridging_the_perception_gap_in_online_rl_for_image_editing_via_exp.md)
 - [\[CVPR 2025\] HOI-IDiff: An Image-like Diffusion Method for Human-Object Interaction Detection](../../CVPR2025/image_generation/an_image-like_diffusion_method_for_human-object_interaction_detection.md)
-- [\[CVPR 2025\] VLOGGER: Multimodal Diffusion for Embodied Avatar Synthesis](../../CVPR2025/image_generation/vlogger_multimodal_diffusion_for_embodied_avatar_synthesis.md)
 
 </div>
 

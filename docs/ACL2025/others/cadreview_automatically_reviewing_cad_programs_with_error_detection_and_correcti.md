@@ -169,8 +169,8 @@ $$\mathcal{L}_{sgo} = w_i \cdot \mathcal{L}_i, \quad w_i = \begin{cases} 2, & \t
 
 - [\[ACL 2025\] LegalReasoner: Step-wised Verification-Correction for Legal Judgment Reasoning](legalreasoner_step-wised_verification-correction_for_legal_judgment_reasoning.md)
 - [\[NeurIPS 2025\] On Agnostic PAC Learning in the Small Error Regime](../../NeurIPS2025/others/on_agnostic_pac_learning_in_the_small_error_regime.md)
-- [\[ACL 2025\] LADDER: Language-Driven Slice Discovery and Error Rectification in Vision Classifiers](ladder_language-driven_slice_discovery_and_error_rectification_in_vision_classif.md)
 - [\[ICML 2025\] How Do Transformers Learn Variable Binding in Symbolic Programs?](../../ICML2025/others/how_do_transformers_learn_variable_binding_in_symbolic_programs.md)
+- [\[ACL 2025\] LADDER: Language-Driven Slice Discovery and Error Rectification in Vision Classifiers](ladder_language-driven_slice_discovery_and_error_rectification_in_vision_classif.md)
 - [\[ACL 2025\] Zero-Shot Conversational Stance Detection: Dataset and Approaches](zero-shot_conversational_stance_detection_dataset_and_approaches.md)
 
 </div>

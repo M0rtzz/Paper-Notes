@@ -1,0 +1,134 @@
+---
+title: >-
+  ACL2026 NLP 理解方向27篇论文解读
+description: >-
+  27篇ACL2026的 NLP 理解方向论文解读，涵盖 LLM、信息抽取、问答、推理、情感分析、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+tags:
+  - "ACL2026"
+  - "NLP 理解"
+  - "论文解读"
+  - "论文笔记"
+  - "LLM"
+  - "信息抽取"
+  - "问答"
+  - "推理"
+  - "情感分析"
+  - "少样本学习"
+---
+
+<!-- 由 src/gen_blog_index.py 自动生成 -->
+# 📖 NLP 理解
+
+**💬 ACL2026** · **27** 篇论文解读
+
+📌 **同领域跨会议浏览：** [🤖 AAAI2026 (2)](../../AAAI2026/nlp_understanding/index.md) · [🧠 NeurIPS2025 (2)](../../NeurIPS2025/nlp_understanding/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/nlp_understanding/index.md) · [🧪 ICML2025 (1)](../../ICML2025/nlp_understanding/index.md) · [💬 ACL2025 (30)](../../ACL2025/nlp_understanding/index.md) · [🎞️ ECCV2024 (1)](../../ECCV2024/nlp_understanding/index.md)
+
+🔥 **高频主题：** LLM ×5 · 信息抽取 ×4 · 问答 ×3 · 推理 ×2 · 情感分析 ×2
+
+**[A Computational Method for Measuring "Open Codes" in Qualitative Analysis](a_computational_method_for_measuring_34open_codes34_in_qualitative_analysis.md)**
+
+:   提出一种基于理论的计算方法，通过LLM增强的代码合并算法和四个无需ground truth的指标（Coverage, Overlap, Novelty, Divergence），系统评估人类和AI在归纳定性编码中的表现。
+
+**[Accurate and Efficient Statistical Testing for Word Semantic Breadth](accurate_and_efficient_statistical_testing_for_word_semantic_breadth.md)**
+
+:   本文指出"在上下文嵌入空间用置换检验直接比较两个词的语义广度"会因均值方向差异而严重虚高 Type-I 错误，提出用 Householder 反射先对齐均值方向再做置换的方法，把 Type-I 错误降低 32.5%，并给出 GPU 批量化实现实现 23 倍加速。
+
+**[AdapTime: Enabling Adaptive Temporal Reasoning in Large Language Models](adaptime_enabling_adaptive_temporal_reasoning_in_large_language_models.md)**
+
+:   本文提出 AdapTime，把"时间推理"抽象为 reformulate / rewrite / review 三个可复用的原子动作，由 LLM Planner 根据问题与上下文自适应决定执行哪几步、按什么顺序执行，无需任何外部工具、手工规则或微调即可显著提升 LLM 在时序 QA 上的表现，在 DeepSeek-V3 上把 TimeQA-Easy 推到 85.4 EM。
+
+**[Agree, Disagree, Explain: Decomposing Human Label Variation in NLI through the Lens of Explanations](agree_disagree_explain_decomposing_human_label_variation_in_nli_through_the_lens.md)**
+
+:   将LiTEx推理分类法从"标签一致下的解释变异"扩展到"标签不一致"场景，发现标注者可能标签不同但推理类似，推理类别的一致性比标签一致性更好地反映解释的语义相似度。
+
+**[Beyond Chunking: Discourse-Aware Hierarchical Retrieval for Long Document Question Answering](beyond_chunking_discourse-aware_hierarchical_retrieval_for_long_document_questio.md)**
+
+:   用修辞结构理论（RST）解析长文档的篇章结构，构建一棵句子级层级树并对中间节点做 LLM 摘要增强，最后在树上做结构感知的多粒度检索，使长文档 QA 在 QASPER / QuALITY / NarrativeQA / MultiFieldQA-zh 四个 benchmark 一致超越固定切块和 RAPTOR 语义聚类。
+
+**[BoundRL: Efficient Structured Text Segmentation through Reinforced Boundary Generation](boundrl_efficient_structured_text_segmentation_through_reinforced_boundary_gener.md)**
+
+:   BoundRL 将结构化文本分割重新定义为边界生成任务——仅生成每个片段的起始 token 而非完整文本，减少 90% 的输出 token 并消除幻觉风险，结合双目标奖励函数和选择性扰动策略的 RLVR 训练，使 1.7B 小模型超越了 Claude-4 Sonnet 的 few-shot 表现。
+
+**[Commonsense Knowledge with Negation: A Resource to Enhance Negation Understanding](commonsense_knowledge_with_negation_a_resource_to_enhance_negation_understanding.md)**
+
+:   提出自动为现有常识知识库增添否定的方法，构建超过 200 万三元组的否定常识语料库（¬Atomic 和 ¬Anion），并证明在其上预训练可以提升 LLM 的否定理解能力。
+
+**[Creating ConLangs to Probe the Metalinguistic Grammatical Knowledge of LLMs](creating_conlangs_to_probe_the_metalinguistic_grammatical_knowledge_of_llms.md)**
+
+:   本文提出 IASC（Interactive Agentic System for ConLangs），一个模块化的人造语言构建系统，通过让 LLM 按语言学规格执行形态句法变换来探测其元语言知识，发现 LLM 处理常见语言类型模式远优于罕见模式，且不同 LLM 之间能力差异悬殊。
+
+**[DimABSA: Building Multilingual and Multidomain Datasets for Dimensional Aspect-Based Sentiment Analysis](dimabsa_building_multilingual_and_multidomain_datasets_for_dimensional_aspect-ba.md)**
+
+:   作者构建了首个多语言（6 种语言）多领域（4 个领域）的维度型方面级情感分析数据集 DimABSA（76,958 个 aspect 实例 / 42,590 句），用连续的 valence–arousal 分数取代传统的「正/负/中」三分类，并设计 3 个新子任务和统一指标 cF1，对 6 个开/闭源 LLM 进行了系统评测。
+
+**[DiZiNER: Disagreement-guided Instruction Refinement via Pilot Annotation Simulation for Zero-shot Named Entity Recognition](diziner_disagreement-guided_instruction_refinement_via_pilot_annotation_simulati.md)**
+
+:   DiZiNER 通过模拟人工标注中的"预标注"流程，利用多个异构 LLM 作为标注员、一个监督 LLM 分析模型间分歧并迭代优化任务指令，在18个NER基准上实现了14个数据集的零样本SOTA，平均提升+8.0 F1，且超越了作为监督者的GPT-5 mini。
+
+**[EXCEEDS: Extracting Complex Events via Nugget-based Grid Modeling in Scientific Domain](exceeds_extracting_complex_events_via_nugget-based_grid_modeling_in_scientific_d.md)**
+
+:   作者发现"科学文献摘要"这种 EE 场景同时存在**信息密度高**（每 100 token 5.54 个事件 + 12.82 个 argument）和**事件结构复杂**（重叠/不连续/逆序 nugget + 子事件）两个老 EE 数据集都没碰过的痛点，于是 (a) 标注了 2,508 文档/24,381 事件的 SciEvents 数据集，(b) 提出 EXCEEDS——把 EE 重构成"在 $l \times l$ word-word 网格上做多标签关系分类"的端到端框架，用 HTL/THL/EAL 三种边把 trigger/argument/sub-event 全部统一建模，在主指标和复杂场景上都打过 9 个 SOTA baseline。
+
+**[Exploring Concreteness Through a Figurative Lens](exploring_concreteness_through_a_figurative_lens.md)**
+
+:   作者用 prompt-based probing + DiffMean + SVD 拆解四个 LLM（Llama-3.1-8B / Qwen3-8B / Gemma2-9B / GPT-OSS-20B）内部的"具体性"（concreteness）表示，发现：早期层就已经能区分名词的字面用法（高 concrete）vs 比喻用法（低 concrete），中后期层把整个 concreteness 信息压缩到**一条一维方向**上，并展示这条 axis 既能做几乎和有监督 4096 维分类器持平的零样本 figurative text 分类、又能直接被加到 hidden state 上对生成做"字面 ↔ 比喻"的可控改写。
+
+**[Filling the Gap: Is Commonsense Knowledge Generation useful for Natural Language Inference?](filling_the_gap_is_commonsense_knowledge_generation_useful_for_natural_language_.md)**
+
+:   论文让 LLM 自己生成连接 premise 和 hypothesis 的自然语言"常识公理"，再用一个"factuality 判官"过滤掉不靠谱的公理只留下高质量的注入回 NLI 提示，结果 Llama-3.1-70B 和 gpt-oss-120b 在 SNLI/ANLI 上准确率提升 1.99-6.88%，并显著减弱了"宁可选 Neutral"的安全偏好。
+
+**[HCRE: LLM-based Hierarchical Classification for Cross-Document Relation Extraction](hcre_llm-based_hierarchical_classification_for_cross-document_relation_extractio.md)**
+
+:   提出 HCRE 模型，通过构建层次化关系树将跨文档关系抽取从大规模关系集的直接分类转化为逐层层次化分类，并设计预测-验证推理策略缓解层间错误传播，在 CodRED 数据集上显著超越 SLM 和 LLM 基线。
+
+**[It's High Time: A Survey of Temporal Question Answering](it39s_high_time_a_survey_of_temporal_question_answering.md)**
+
+:   本文提供了时序问答（TQA）的全面综述，提出了基于语料时间性、问题时间性和模型时间能力三个维度的统一分析框架，系统梳理了从规则管道到 Transformer/LLM 时代的 TQA 方法演进、基准数据集和评估策略，并识别了未来挑战。
+
+**[LexRel: Benchmarking Legal Relation Extraction for Chinese Civil Cases](lexrel_benchmarking_legal_relation_extraction_for_chinese_civil_cases.md)**
+
+:   构建了首个中国民事法律关系的结构化分类体系（9 大领域、265 种关系类型），并基于此提出 LexRel 基准（1,140 个专家标注样本），评估了主流 LLM 在法律关系抽取任务上的能力，发现当前模型在该任务上存在显著局限，同时证明了法律关系信息对下游法律 AI 任务的增益效果。
+
+**[LLM-Guided Semantic Bootstrapping for Interpretable Text Classification with Tsetlin Machines](llm-guided_semantic_bootstrapping_for_interpretable_text_classification_with_tse.md)**
+
+:   本文提出 LLM 引导的语义引导框架，通过 LLM 生成子意图和三阶段课程式合成数据训练非否定 Tsetlin Machine（NTM），提取高置信度符号特征注入真实数据，使标准 TM 在保持完全可解释性的同时逼近 BERT 的分类性能。
+
+**[Lost in the Prompt Order: Revealing the Limitations of Causal Attention in Language Models](lost_in_the_prompt_order_revealing_the_limitations_of_causal_attention_in_langua.md)**
+
+:   本文深入研究了大语言模型在多选题问答中对提示组件顺序的敏感性，通过系统性实验排除了训练偏差和记忆衰退假说，揭示了因果注意力掩码是导致 QOC（问题-选项-上下文）顺序性能大幅下降的根本机制。
+
+**[MADE: A Living Benchmark for Multi-Label Text Classification with Uncertainty Quantification](made_a_living_benchmark_for_multi-label_text_classification_with_uncertainty_qua.md)**
+
+:   本文提出 MADE——一个基于 FDA 医疗设备不良事件报告的"活"多标签文本分类基准，包含 1,154 个层次化标签和严格的时间分割，系统评估了 20+ 编码器/解码器模型在判别式微调、生成式微调和 few-shot 提示下的预测性能和不确定性量化（UQ）能力，揭示了关键权衡：小型判别式微调解码器在头到尾准确率上最优，生成式微调的 UQ 最可靠，大型推理模型提升稀有标签但 UQ 意外较弱。
+
+**[MetFuse: Figurative Fusion between Metonymy and Metaphor](metfuse_figurative_fusion_between_metonymy_and_metaphor.md)**
+
+:   作者提出一个三阶段（候选生成 → MLM 打分挑选 → LLM 润色）流水线，把一句字面句子同时改写成转喻 / 隐喻 / 混合（hybrid）三种 figurative 变体，构造出首个 1000 quadruplet × 4000 句的 MetFuse 数据集，并实证发现"隐喻动词的出现会让同句中的转喻名词变得更显性"，在 8 个 metonymy/metaphor 分类基准上做数据增强一致涨点。
+
+**[MSMO-ABSA: Multi-Scale and Multi-Objective Optimization for Cross-Lingual Aspect-Based Sentiment Analysis](msmo-absa_multi-scale_and_multi-objective_optimization_for_cross-lingual_aspect-.md)**
+
+:   针对跨语言 aspect-based 情感分析提出 MSMO 框架——句级用 Wasserstein 对抗训练 + 代码切换数据做语言判别器对齐，aspect 级用双向 KL 一致性训练对齐同情感 aspect 的预测分布，再叠加多教师知识蒸馏，在 SemEval-2016 4 个目标语言 + mBERT/XLM-R 上稳定刷出新 SOTA，并显著超过 GPT-4o / Qwen2.5-7B-LoRA 等 LLM 方案。
+
+**[MTSQL-R1: Towards Long-Horizon Multi-Turn Text-to-SQL via Agentic Training](mtsql-r1_towards_long-horizon_multi-turn_text-to-sql_via_agentic_training.md)**
+
+:   MTSQL-R1把多轮 Text-to-SQL 从“一次性翻译”改造成可与数据库和对话记忆交互的长程智能体训练问题，通过自教式 warm-start SFT 与多层级 GRPO 奖励，让小规模 Qwen3 模型在 CoSQL 和 SParC 上超过强闭源提示基线与短程 SFT/RL 基线。
+
+**[Reasoning-Based Refinement of Unsupervised Text Clusters with LLMs](reasoning-based_refinement_of_unsupervised_text_clusters_with_llms.md)**
+
+:   提出基于推理的聚类精炼框架，将 LLM 作为语义判官（而非嵌入生成器）验证和重构无监督聚类的输出，通过一致性验证、冗余裁决和标签接地三个推理阶段，在社交媒体语料上显著提升聚类一致性和人类对齐的标注质量。
+
+**[SAM-NER: Semantic Archetype Mediation for Zero-Shot Named Entity Recognition](sam-ner_semantic_archetype_mediation_for_zero-shot_named_entity_recognition.md)**
+
+:   SAM-NER 用“实体发现 → 14 类通用语义原型 → 目标类型定义校准”的三阶段中介框架缓解零样本 NER 的 schema drift，在 CrossNER 上取得 66.3 平均 micro-F1，超过一系列强基线。
+
+**[Table Question Answering in the Era of Large Language Models: A Comprehensive Survey](table_question_answering_in_the_era_of_large_language_models_a_comprehensive_sur.md)**
+
+:   全面综述了 LLM 时代表格问答（TQA）研究，从五个维度（表格格式、问题复杂度、答案格式、模态、领域）系统化分类任务设置，按核心挑战（表格理解、复杂查询、大输入、数据异构、知识集成）组织建模方法，覆盖 277 篇论文，并前瞻性讨论了强化学习、可解释性等新兴方向。
+
+**[Test-Time Reasoners Are Strategic Multiple-Choice Test-Takers](test-time_reasoners_are_strategic_multiple-choice_test-takers.md)**
+
+:   这篇论文系统比较 12 个推理 LLM 在完整多选题和只看选项的多选题上的表现，发现测试时推理确实会让模型在 choices-only 场景中高于随机，但推理轨迹显示其中不全是浅层作弊，也包含推断缺失问题、排除错误选项和调用事实知识等更像“策略性应试”的行为。
+
+**[The Imperfective Paradox in Large Language Models](the_imperfective_paradox_in_large_language_models.md)**
+
+:   这篇论文用新构造的 ImperfectiveNLI 诊断集检验 LLM 是否理解“正在做某事”不一定意味着“已经完成某事”，发现开源 LLM 普遍会把有目标事件误判为已完成，提示工程只能在减少完成幻觉和保留合法蕴含之间摇摆，真正问题在于推理阶段被目的论先验主导。

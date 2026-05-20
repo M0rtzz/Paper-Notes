@@ -147,7 +147,7 @@ tags:
 - [\[CVPR 2025\] SortScrews: A Dataset and Baseline for Real-time Screw Classification](sortscrews_a_dataset_and_baseline_for_real-time_screw_classification.md)
 - [\[CVPR 2025\] ASAP: Advancing Semantic Alignment for Multi-Modal Manipulation Detection](asap_advancing_semantic_alignment_promotes_multi-modal_manipulation_detecting_an.md)
 - [\[CVPR 2025\] UniGoal: Towards Universal Zero-shot Goal-oriented Navigation](unigoal_towards_universal_zero-shot_goal-oriented_navigation.md)
-- [\[CVPR 2025\] Towards Long-Horizon Vision-Language Navigation: Platform, Benchmark and Method](towards_long-horizon_vision-language_navigation_platform_benchmark_and_method.md)
+- [\[ICLR 2026\] Real-Time Robot Execution with Masked Action Chunking](../../ICLR2026/robotics/real-time_robot_execution_with_masked_action_chunking.md)
 
 </div>
 

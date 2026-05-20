@@ -137,8 +137,8 @@ tags:
 - [\[ECCV 2024\] HYDRA: A Hyper Agent for Dynamic Compositional Visual Reasoning](../../ECCV2024/llm_agent/hydra_a_hyper_agent_for_dynamic_compositional_visual_reasoning.md)
 - [\[CVPR 2025\] SceneAssistant: A Visual Feedback Agent for Open-Vocabulary 3D Scene Generation](sceneassistant_a_visual_feedback_agent_for_open-vocabulary_3d_scene_generation.md)
 - [\[CVPR 2025\] Feature4X: Bridging Any Monocular Video to 4D Agentic AI with Versatile Gaussian Feature Fields](feature4x_bridging_any_monocular_video_to_4d_agentic_ai_with_versatile_gaussian_.md)
-- [\[ACL 2025\] Towards Safety Reasoning in LLMs: AI-agentic Deliberation for Policy-embedded CoT Data Creation](../../ACL2025/llm_agent/towards_safety_reasoning_in_llms_ai-agentic_deliberation_for_policy-embedded_cot.md)
 - [\[ACL 2025\] Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools](../../ACL2025/llm_agent/agentic_reasoning_tools.md)
+- [\[CVPR 2025\] TANGO: Training-free Embodied AI Agents for Open-world Tasks](tango_training-free_embodied_ai_agents_for_open-world_tasks.md)
 
 </div>
 

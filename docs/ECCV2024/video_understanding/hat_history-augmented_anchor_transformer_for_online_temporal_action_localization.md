@@ -171,7 +171,7 @@ AFL参数：$\lambda_b = 0.025$，$s = 0.05$。
 - [\[ECCV 2024\] Bayesian Evidential Deep Learning for Online Action Detection](bayesian_evidential_deep_learning_for_online_action_detection.md)
 - [\[ECCV 2024\] Exploring the Feature Extraction and Relation Modeling For Light-Weight Transformer Tracking](exploring_the_feature_extraction_and_relation_modeling_for_light-weight_transfor.md)
 - [\[ECCV 2024\] Leveraging Temporal Contextualization for Video Action Recognition](leveraging_temporal_contextualization_for_video_action_recognition.md)
-- [\[ECCV 2024\] Rethinking Video-Text Understanding: Retrieval from Counterfactually Augmented Data](rethinking_video-text_understanding_retrieval_from_counterfactually_augmented_da.md)
+- [\[ECCV 2024\] Spherical World-Locking for Audio-Visual Localization in Egocentric Videos](spherical_world-locking_for_audio-visual_localization_in_egocentric_videos.md)
 
 </div>
 

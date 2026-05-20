@@ -116,17 +116,18 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，数学表述严谨
 - 价值: ⭐⭐⭐⭐⭐ 解决了 AI 治理中的关键信任问题，有直接的监管应用价值
 
-## 亮点与洞察
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 局限性 / 可改进方向
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 相关工作与启发
-待深读论文后补充
+## 相关论文
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+- [\[AAAI 2026\] PSM: Prompt Sensitivity Minimization via LLM-Guided Black-Box Optimization](../../AAAI2026/llm_safety/psm_prompt_sensitivity_minimization_via_llm-guided_black-box_optimization.md)
+- [\[AAAI 2026\] GraphTextack: A Realistic Black-Box Node Injection Attack on LLM-Enhanced GNNs](../../AAAI2026/llm_safety/graphtextack_a_realistic_black-box_node_injection_attack_on_llm-enhanced_gnns.md)
+- [\[ACL 2026\] Rethinking Jailbreak Detection of Large Vision Language Models with Representational Contrastive Scoring](rethinking_jailbreak_detection_of_large_vision_language_models_with_representati.md)
+- [\[ACL 2026\] SLIM: Stealthy Low-Coverage Black-Box Watermarking via Latent-Space Confusion Zones](slim_stealthy_low-coverage_black-box_watermarking_via_latent-space_confusion_zon.md)
+- [\[ACL 2026\] Rethinking Evaluation for LLM Hallucination Detection: A Desiderata, A New RAG-based Benchmark, New Insights](rethinking_evaluation_for_llm_hallucination_detection_a_desiderata_a_new_rag-bas.md)
+
+</div>
+
+<!-- RELATED:END -->

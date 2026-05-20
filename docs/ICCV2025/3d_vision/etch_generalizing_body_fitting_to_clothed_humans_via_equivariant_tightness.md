@@ -147,8 +147,8 @@ $$\mathcal{L} = w_d \mathcal{L}_d + w_b \mathcal{L}_b + w_l \mathcal{L}_l + w_c 
 
 ## 相关论文
 
+- [\[ICCV 2025\] PHD: Personalized 3D Human Body Fitting with Point Diffusion](phd_personalized_3d_human_body_fitting_with_point_diffusion.md)
 - [\[ICCV 2025\] Event-Driven Storytelling with Multiple Lifelike Humans in a 3D Scene](event-driven_storytelling_with_multiple_lifelike_humans_in_a_3d_scene.md)
-- [\[CVPR 2025\] Reconstructing Humans with a Biomechanically Accurate Skeleton](../../CVPR2025/3d_vision/reconstructing_humans_with_a_biomechanically_accurate_skeleton.md)
 - [\[ICCV 2025\] GUAVA: Generalizable Upper Body 3D Gaussian Avatar](guava_generalizable_upper_body_3d_gaussian_avatar.md)
 - [\[ICCV 2025\] VolumetricSMPL: A Neural Volumetric Body Model for Efficient Interactions, Contacts, and Collisions](volumetricsmpl_a_neural_volumetric_body_model_for_efficient_interactions_contact.md)
 - [\[ICCV 2025\] RapVerse: Coherent Vocals and Whole-Body Motion Generation from Text](rapverse_coherent_vocals_and_whole-body_motion_generation_from_text.md)

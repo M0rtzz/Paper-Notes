@@ -167,8 +167,8 @@ tags:
 - [\[ICCV 2025\] Training-Free Personalization via Retrieval and Reasoning on Fingerprints](training-free_personalization_via_retrieval_and_reasoning_on_fingerprints.md)
 - [\[ICCV 2025\] ReasonVQA: A Multi-hop Reasoning Benchmark with Structural Knowledge for Visual Question Answering](reasonvqa_a_multi-hop_reasoning_benchmark_with_structural_knowledge_for_visual_q.md)
 - [\[ICCV 2025\] ChartPoint: Guiding MLLMs with Grounding Reflection for Chart Reasoning](chartpoint_guiding_mllms_with_grounding_reflection_for_chart_reasoning.md)
-- [\[ACL 2025\] Progressive Multimodal Reasoning via Active Retrieval](../../ACL2025/multimodal_vlm/progressive_multimodal_reasoning_via_active_retrieval.md)
 - [\[ICCV 2025\] Visual-Oriented Fine-Grained Knowledge Editing for MultiModal Large Language Models](visual-oriented_fine-grained_knowledge_editing_for_multimodal_large_language_mod.md)
+- [\[ACL 2025\] Progressive Multimodal Reasoning via Active Retrieval](../../ACL2025/multimodal_vlm/progressive_multimodal_reasoning_via_active_retrieval.md)
 
 </div>
 

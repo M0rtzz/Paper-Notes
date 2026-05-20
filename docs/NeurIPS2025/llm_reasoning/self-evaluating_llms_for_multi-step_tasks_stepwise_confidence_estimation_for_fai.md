@@ -13,7 +13,7 @@ tags:
   - "思考长度"
 ---
 
-# 笔记8：PolyMath - 多语言背景下的数学推理评估
+# Self-Evaluating LLMs for Multi-Step Tasks: Stepwise Confidence Estimation for Failure Detection
 
 **会议**: NeurIPS 2025  
 **arXiv**: [2511.07364](https://arxiv.org/abs/2511.07364)  
@@ -126,11 +126,11 @@ $$\text{Difficulty-Weighted Accuracy} = \frac{1}{N}\sum_{i=1}^N\frac{\text{acc}_
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Does Thinking More Always Help? Mirage of Test-Time Scaling in Reasoning Models](does_thinking_more_always_help_mirage_of_test-time_scaling_in_reasoning_models.md)
-- [\[NeurIPS 2025\] TTS-VAR: A Test-Time Scaling Framework for Visual Auto-Regressive Generation](tts-var_a_test-time_scaling_framework_for_visual_auto-regressive_generation.md)
-- [\[NeurIPS 2025\] Transformers Provably Learn Chain-of-Thought Reasoning with Length Generalization](transformers_provably_learn_chain-of-thought_reasoning_with_length_generalizatio.md)
+- [\[ACL 2025\] Enhancing Mathematical Reasoning in LLMs by Stepwise Correction](../../ACL2025/llm_reasoning/enhancing_mathematical_reasoning_in_llms_by_stepwise_correction.md)
+- [\[ACL 2025\] Entropy-based Exploration Conduction for Multi-step Reasoning](../../ACL2025/llm_reasoning/entropy-based_exploration_conduction_for_multi-step_reasoning.md)
 - [\[NeurIPS 2025\] TimE: A Multi-level Benchmark for Temporal Reasoning of LLMs in Real-World Scenarios](time_a_multilevel_benchmark_for_temporal_reasoning_of_llms_i.md)
-- [\[NeurIPS 2025\] ReasonFlux-PRM: Trajectory-Aware PRMs for Long Chain-of-Thought Reasoning in LLMs](reasonfluxprm_trajectoryaware_prms_for_long_chainofthought_r.md)
+- [\[NeurIPS 2025\] Reasoning Models Better Express Their Confidence](reasoning_models_better_express_their_confidence.md)
+- [\[ACL 2025\] Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks](../../ACL2025/llm_reasoning/self-correction_is_more_than_refinement_a_learning_framework_for_visual_and_lang.md)
 
 </div>
 

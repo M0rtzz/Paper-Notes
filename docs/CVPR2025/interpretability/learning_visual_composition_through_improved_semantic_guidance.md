@@ -128,11 +128,11 @@ tags:
 
 ## 相关论文
 
-- [\[ECCV 2024\] DetailSemNet: Elevating Signature Verification through Detail-Semantic Integration](../../ECCV2024/interpretability/detailsemnet_elevating_signature_verification_through_detail-semantic_integratio.md)
 - [\[CVPR 2025\] Open Ad-Hoc Categorization with Contextualized Feature Learning](open_ad-hoc_categorization_with_contextualized_feature_learning.md)
+- [\[ECCV 2024\] DetailSemNet: Elevating Signature Verification through Detail-Semantic Integration](../../ECCV2024/interpretability/detailsemnet_elevating_signature_verification_through_detail-semantic_integratio.md)
 - [\[NeurIPS 2025\] Time-Evolving Dynamical System for Learning Latent Representations of Mouse Visual Cortex](../../NeurIPS2025/interpretability/time-evolving_dynamical_system_for_learning_latent_representations_of_mouse_visu.md)
 - [\[ACL 2026\] NOSE: Neural Olfactory-Semantic Embedding with Tri-Modal Orthogonal Contrastive Learning](../../ACL2026/interpretability/nose_neural_olfactory-semantic_embedding_with_tri-modal_orthogonal_contrastive_l.md)
-- [\[NeurIPS 2025\] SynBrain: Enhancing Visual-to-fMRI Synthesis via Probabilistic Representation Learning](../../NeurIPS2025/interpretability/synbrain_enhancing_visual-to-fmri_synthesis_via_probabilistic_representation_lea.md)
+- [\[ICCV 2025\] SVIP: Semantically Contextualized Visual Patches for Zero-Shot Learning](../../ICCV2025/interpretability/svip_semantically_contextualized_visual_patches_for_zero-shot_learning.md)
 
 </div>
 

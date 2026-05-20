@@ -13,7 +13,7 @@ tags:
   - "草图编辑"
 ---
 
-# Sketch-HARP: 分层自回归草图生成实现灵活笔画级绘制操控
+# Generating Sketches in a Hierarchical Auto-Regressive Process for Flexible Sketch Drawing Manipulation at Stroke-Level
 
 **会议**: AAAI 2026  
 **arXiv**: [2511.07889](https://arxiv.org/abs/2511.07889)  
@@ -128,11 +128,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICML 2025\] Sketch-Plan-Generalize: Learning and Planning with Neuro-Symbolic Programmatic Representations for Inductive Spatial Concepts](../../ICML2025/robotics/sketch-plan-generalize_learning_and_planning_with_neuro-symbolic_programmatic_re.md)
-- [\[AAAI 2026\] GRIM: Task-Oriented Grasping with Conditioning on Generative Examples](grim_task-oriented_grasping_with_conditioning_on_generative_examples.md)
-- [\[AAAI 2026\] When Hallucination Costs Millions: Benchmarking AI Agents in High-Stakes Adversarial Financial Markets](when_hallucination_costs_millions_benchmarking_ai_agents_in_high-stakes_adversar.md)
-- [\[AAAI 2026\] TouchFormer: A Robust Transformer-based Framework for Multimodal Material Perception](touchformer_a_robust_transformer-based_framework_for_multimodal_material_percept.md)
-- [\[AAAI 2026\] From Passive Perception to Active Memory: A Weakly Supervised Image Manipulation Localization Framework Driven by Coarse-Grained Annotations](from_passive_perception_to_active_memory_a_weakly_supervised_image_manipulation_.md)
+- [\[AAAI 2026\] H-GAR: A Hierarchical Interaction Framework via Goal-Driven Observation-Action Refinement for Robotic Manipulation](h-gar_a_hierarchical_interaction_framework_via_goal-driven_observation-action_re.md)
+- [\[NeurIPS 2025\] HiMaCon: Discovering Hierarchical Manipulation Concepts from Unlabeled Multi-Modal Data](../../NeurIPS2025/robotics/himacon_discovering_hierarchical_manipulation_concepts_from_unlabeled_multi-moda.md)
+- [\[ECCV 2024\] GraspXL: Generating Grasping Motions for Diverse Objects at Scale](../../ECCV2024/robotics/graspxl_generating_grasping_motions_for_diverse_objects_at_scale.md)
+- [\[ICLR 2026\] THOR: Tool-Integrated Hierarchical Optimization via RL for Mathematical Reasoning](../../ICLR2026/robotics/thor_tool-integrated_hierarchical_optimization_via_rl_for_mathematical_reasoning.md)
+- [\[CVPR 2026\] Pixel-level Scene Understanding in One Token: Visual States Need What-is-Where Composition](../../CVPR2026/robotics/pixel-level_scene_understanding_in_one_token_visual_states_need_what-is-where_co.md)
 
 </div>
 

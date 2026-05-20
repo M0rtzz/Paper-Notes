@@ -19,7 +19,7 @@ tags:
 
 **🧪 ICML2025** · **7** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/remote_sensing/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/remote_sensing/index.md) · [🔬 ICLR2026 (6)](../../ICLR2026/remote_sensing/index.md) · [🤖 AAAI2026 (8)](../../AAAI2026/remote_sensing/index.md) · [🧠 NeurIPS2025 (11)](../../NeurIPS2025/remote_sensing/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/remote_sensing/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (15)](../../CVPR2026/remote_sensing/index.md) · [🔬 ICLR2026 (6)](../../ICLR2026/remote_sensing/index.md) · [🤖 AAAI2026 (8)](../../AAAI2026/remote_sensing/index.md) · [🧠 NeurIPS2025 (11)](../../NeurIPS2025/remote_sensing/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/remote_sensing/index.md) · [📷 CVPR2025 (10)](../../CVPR2025/remote_sensing/index.md)
 
 **[Causal Foundation Models: Disentangling Physics from Instrument Properties](causal_foundation_models_disentangling_physics_from_instrument_properties.md)**
 

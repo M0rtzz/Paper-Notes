@@ -134,7 +134,7 @@ tags:
 - [\[NeurIPS 2025\] Neural Deprojection of Galaxy Stellar Mass Profiles](../../NeurIPS2025/physics/neural_deprojection_of_galaxy_stellar_mass_profiles.md)
 - [\[ICML 2025\] Gravity-Bench-v1: A Benchmark on Gravitational Physics Discovery for Agents](gravity-bench-v1_a_benchmark_on_gravitational_physics_discovery_for_agents.md)
 - [\[ICML 2025\] Teaching LLMs to Speak Spectroscopy](teaching_llms_to_speak_spectroscopy.md)
-- [\[NeurIPS 2025\] Transfer Learning Beyond the Standard Model](../../NeurIPS2025/physics/transfer_learning_beyond_the_standard_model.md)
+- [\[ICML 2026\] Softplus Attention with Re-weighting Boosts Length Extrapolation in Large Language Models](../../ICML2026/physics/softplus_attention_with_re-weighting_boosts_length_extrapolation_in_large_langua.md)
 
 </div>
 

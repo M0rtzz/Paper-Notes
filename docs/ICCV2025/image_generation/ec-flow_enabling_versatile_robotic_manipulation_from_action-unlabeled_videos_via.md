@@ -151,7 +151,7 @@ EC-Flow 以 16.4% 的优势超越最强基线。特别在 btn-top-press（1.00 v
 - [\[ICCV 2025\] Contrastive Flow Matching (ΔFM)](contrastive_flow_matching.md)
 - [\[NeurIPS 2025\] Equivariant Flow Matching for Symmetry-Breaking Bifurcation Problems](../../NeurIPS2025/image_generation/equivariant_flow_matching_for_symmetry-breaking_bifurcation_problems.md)
 - [\[CVPR 2026\] Image Generation as a Visual Planner for Robotic Manipulation](../../CVPR2026/image_generation/image_generation_as_a_visual_planner_for_robotic_manipulation.md)
-- [\[NeurIPS 2025\] High-order Equivariant Flow Matching for Density Functional Theory Hamiltonian Prediction](../../NeurIPS2025/image_generation/high-order_equivariant_flow_matching_for_density_functional_theory_hamiltonian_p.md)
+- [\[CVPR 2025\] VideoWorld: Exploring Knowledge Learning from Unlabeled Videos](../../CVPR2025/image_generation/videoworld_exploring_knowledge_learning_from_unlabeled_videos.md)
 
 </div>
 

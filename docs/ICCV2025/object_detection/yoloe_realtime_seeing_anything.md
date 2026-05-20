@@ -109,7 +109,7 @@ YOLOE基于标准YOLO架构（backbone + PAN + 回归头 + 分割头），将分
 - [\[AAAI 2026\] YOLO-IOD: Towards Real Time Incremental Object Detection](../../AAAI2026/object_detection/yolo-iod_towards_real_time_incremental_object_detection.md)
 - [\[CVPR 2025\] TornadoNet: Real-Time Building Damage Detection with Ordinal Supervision](../../CVPR2025/object_detection/tornadonet_real-time_building_damage_detection_with_ordinal_supervision.md)
 - [\[AAAI 2026\] An Overall Real-Time Mechanism for Classification and Quality Evaluation of Rice](../../AAAI2026/object_detection/an_overall_real-time_mechanism_for_classification_and_quality_evaluation_of_rice.md)
-- [\[AAAI 2026\] Real-Time 3D Object Detection with Inference-Aligned Learning](../../AAAI2026/object_detection/real-time_3d_object_detection_with_inference-aligned_learning.md)
+- [\[ICCV 2025\] Diffusion Curriculum: Synthetic-to-Real Data Curriculum via Image-Guided Diffusion](diffusion_curriculum_synthetic-to-real_data_curriculum_via_image-guided_diffusio.md)
 
 </div>
 

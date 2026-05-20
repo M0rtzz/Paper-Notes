@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 LLM / NLP方向38篇论文解读
+  AAAI2026 LLM / NLP方向32篇论文解读
 description: >-
-  38篇AAAI2026的 LLM / NLP 方向论文解读，涵盖 LLM、推理、对抗鲁棒、对齐/RLHF、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  32篇AAAI2026的 LLM / NLP 方向论文解读，涵盖 LLM、推理、对抗鲁棒、对齐/RLHF、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "LLM / NLP"
@@ -18,11 +18,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 LLM / NLP
 
-**🤖 AAAI2026** · **38** 篇论文解读
+**🤖 AAAI2026** · **32** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (35)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (53)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/llm_nlp/index.md) · [🧪 ICML2025 (28)](../../ICML2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (50)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (35)](../../ICLR2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
 
-🔥 **高频主题：** LLM ×17 · 推理 ×7 · 对抗鲁棒 ×2 · 对齐/RLHF ×2 · 少样本学习 ×2
+🔥 **高频主题：** LLM ×15 · 推理 ×5 · 对抗鲁棒 ×2 · 对齐/RLHF ×2 · 少样本学习 ×2
 
 **[A Content-Preserving Secure Linguistic Steganography](a_content-preserving_secure_linguistic_steganography.md)**
 
@@ -32,17 +32,9 @@ tags:
 
 :   提出不变潜空间假说(ILSH)，将LLM反演问题重新建模为复用LLM自身潜空间，设计Inv²A框架通过轻量级逆编码器将输出映射到去噪伪表示，再由冻结的LLM解码恢复隐藏prompt，在9个数据集上BLEU平均提升4.77%且仅需20%数据量即可达到可比性能。
 
-**[AutoMalDesc: Large-Scale Script Analysis for Cyber Threat Research](automaldesc_large-scale_script_analysis_for_cyber_threat_research.md)**
-
-:   提出 AutoMalDesc 自动化静态分析框架，通过迭代自步学习流水线——从 900 个专家标注种子样本出发，经 LoRA 微调 Llama-3.3-70B 生成伪标签，多阶段质量过滤后进行 V2 训练——实现 5 种脚本语言的恶意软件自动分类和行为描述，Batch 脚本检测准确率从 52.7% 提升到 82.4%。
-
 **[Blue Teaming Function-Calling Agents](blue_teaming_function-calling_agents.md)**
 
 :   系统评估了四个开源function-calling LLM在三种攻击下的鲁棒性，并测试了八种防御方案的效果，揭示了当前模型默认不安全、防御方案在实际场景中仍难以部署的现状。
-
-**[C3TG: Conflict-aware, Composite, and Collaborative Controlled Text Generation](c3tg_conflict-aware_composite_and_collaborative_controlled_text_generation.md)**
-
-:   提出 C3TG 框架，通过两阶段方法实现多维度细粒度可控文本生成：生成阶段用加权 KL 散度融合属性分布调整 token 概率，优化阶段用能量函数（分类器分数 + 冲突惩罚项）结合 Feedback Agent 迭代重写，在 17 个属性子类上达到 90.4% 属性准确率且大幅降低毒性。
 
 **[CoEvo: Continual Evolution of Symbolic Solutions Using Large Language Models](coevo_continual_evolution_of_symbolic_solutions_using_large_language_models.md)**
 
@@ -59,10 +51,6 @@ tags:
 **[Conversational Learning Diagnosis via Reasoning Multi-Turn Interactive Learning](conversational_learning_diagnosis_via_reasoning_multi-turn_interactive_learning.md)**
 
 :   提出 ParLD（Preview-Analyze-Reason 框架），通过多 Agent 协作实现对话式学习过程中学生认知状态的细粒度逐轮诊断，在性能预测上超越传统知识追踪方法 10%，并显著提升辅导效果。
-
-**[Do Large Language Models Think Like the Brain? Sentence-Level Evidences from Layer-Wise Embeddings and fMRI](do_large_language_models_think_like_the_brain_sentence-level_evidences_from_laye.md)**
-
-:   本文通过对比14个公开LLM的逐层表示与人类被试听自然叙事时的fMRI数据，在句子级别系统地研究了LLM与人脑语言处理的对齐程度，发现中间层最对齐、指令微调显著增强对齐、且存在与经典神经语言学理论一致的半球偏侧化模式。
 
 **[Do Not Merge My Model! Safeguarding Open-Source LLMs Against Unauthorized Model Merging](do_not_merge_my_model_safeguarding_open-source_llms_against_unauthorized_model_m.md)**
 
@@ -91,10 +79,6 @@ tags:
 **[IROTE: Human-like Traits Elicitation of Large Language Model via In-Context Self-Reflective Optimization](irote_human-like_traits_elicitation_of_large_language_model_via_in-context_self-.md)**
 
 :   提出 IROTE，一种基于信息瓶颈理论的上下文自我反思优化方法，通过迭代生成并优化紧凑且富有唤起力的文本"自我反思"（self-reflection），无需微调即可稳定地激发 LLM 在多种下游任务中表现出目标人类特质（价值观、道德、人格），一致性超越现有基线。
-
-**[Language Models and Logic Programs for Trustworthy Tax Reasoning](language_models_and_logic_programs_for_trustworthy_tax_reasoning.md)**
-
-:   将税法推理重新定义为语义解析任务，让LLM将法规文本和纳税案例翻译为Prolog逻辑程序，由符号求解器执行计算，通过金标准法规+智能检索案例示例+自一致性检查，在SARA数据集上实现86/100的正确率，并将预计部署成本降至15.78美元/人（低于美国人均报税成本的6%）。
 
 **[Learning Spatial Decay for Vision Transformers](learning_spatial_decay_for_vision_transformers.md)**
 
@@ -140,10 +124,6 @@ tags:
 
 :   提出一个由5个角色化GPT-4o Agent组成的零样本多Agent流水线，对学习者反思文本进行公平的量表评分并生成偏差感知的对话式反馈，在336篇反思上实现MAE=0.467、QWK=0.459的评分一致性和Q(g)=3.967的反馈质量。
 
-**[Smart: 基于 GNN 与 LLM 融合的 Dragonfly 系统应用运行时代理模型](smart_a_surrogate_model_for_predicting_application_runtime_in_dragonfly_systems.md)**
-
-:   提出 Smart（Surrogate Model for Predicting Application RunTime），首次将 GNN 和 LLM（Time-LLM）融合用于 Dragonfly 互连网络中的应用迭代运行时预测，在 1,056 节点系统上 MAPE 最低达 1.78%（LAMMPS），推理时间仅 0.515 秒，相比原始仿真实现数量级加速。
-
 **[Soft Filtering: Guiding Zero-Shot Composed Image Retrieval with Prescriptive and Proscriptive Prompts](soft_filtering_guiding_zero-shot_composed_image_retrieval_with_prescriptive_and_.md)**
 
 :   提出 SoFT，一个无需训练的即插即用重排序模块，利用多模态 LLM 从参考图像和修改文本中提取"必须包含"（prescriptive）和"必须避免"（proscriptive）双重文本约束，对零样本组合图像检索的候选结果进行软过滤重排序，同时构建了多目标三元组数据集流水线以改善评估。
@@ -163,10 +143,6 @@ tags:
 **[Uncertainty Under the Curve: A Sequence-Level Entropy Area Metric for Reasoning LLMs](uncertainty_under_the_curve_a_sequence-level_entropy_area_metric_for_reasoning_l.md)**
 
 :   提出 Entropy Area Score (EAS)——通过单次前向传播积分 token 级预测熵来量化推理 LLM 的不确定性。EAS 无需外部模型或重复采样，与答案熵强相关（Pearson r=0.82），用于训练数据选择时比 Pass Rate 过滤多提升 1.2-2.3% Pass@1，是高效可解释的 LLM 不确定性工具。
-
-**[Understanding Syllogistic Reasoning in LLMs from Formal and Natural Language Perspectives](understanding_syllogistic_reasoning_in_llms_from_formal_and_natural_language_per.md)**
-
-:   系统评估14个LLM在160个三段论上的推理表现，通过双维度ground truth框架（句法有效性+NLU可信度）揭示顶级模型在形式逻辑上接近完美(99.6%)但自然语言可信度判断仅为随机水平(~52%)——与人类推理模式恰好相反；12/14模型存在显著信念偏差，且few-shot提示反而降低形式推理性能。
 
 **[Vision Transformers are Circulant Attention Learners](vision_transformers_are_circulant_attention_learners.md)**
 

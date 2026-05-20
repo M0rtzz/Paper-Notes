@@ -125,7 +125,7 @@ MCTS 四阶段：
 ## 相关论文
 
 - [\[ICLR 2026\] ToolTree: Efficient LLM Agent Tool Planning via Dual-Feedback Monte Carlo Tree Search and Bidirectional Pruning](../../ICLR2026/llm_agent/tooltree_efficient_llm_agent_tool_planning_via_dual-feedback_monte_carlo_tree_se.md)
-- [\[ACL 2026\] MATA: Multi-Agent Framework for Reliable and Flexible Table Question Answering](../../ACL2026/llm_agent/mata_multi-agent_framework_for_reliable_and_flexible_table_question_answering.md)
+- [\[ACL 2025\] A Multi-Agent Framework for Mitigating Dialect Biases in Privacy Policy Question-Answering Systems](../../ACL2025/llm_agent/multi_agent_dialect_bias_privacy_qa.md)
 - [\[ICML 2025\] GuardAgent: Safeguard LLM Agents via Knowledge-Enabled Reasoning](guardagent_safeguard_llm_agents_by_a_guard_agent_via_knowledge-enabled_reasoning.md)
 - [\[ACL 2025\] SynWorld: Virtual Scenario Synthesis for Agentic Action Knowledge Refinement](../../ACL2025/llm_agent/synworld_agentic_action_knowledge.md)
 - [\[ICML 2025\] xChemAgents: Agentic AI for Explainable Quantum Chemistry](xchemagents_agentic_ai_for_explainable_quantum_chemistry.md)

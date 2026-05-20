@@ -128,9 +128,9 @@ $$\mathcal{L} = w_{ph}\ell_{ph} + w_{sz}\ell_{sz} + w_{sm}\ell_{sm} + \lambda_{d
 
 - [\[CVPR 2025\] P-SLCR: Unsupervised Point Cloud Semantic Segmentation via Prototypes Structure Learning and Consistent Reasoning](p-slcr_unsupervised_point_cloud_semantic_segmentation_via_prototypes_structure_l.md)
 - [\[CVPR 2025\] Floxels: Fast Unsupervised Voxel Based Scene Flow Estimation](floxels_fast_unsupervised_voxel_based_scene_flow_estimation.md)
-- [\[CVPR 2025\] Open-World Amodal Appearance Completion](open-world_amodal_appearance_completion.md)
 - [\[ICCV 2025\] CL-Splats: Continual Learning of Gaussian Splatting with Local Optimization](../../ICCV2025/3d_vision/cl-splats_continual_learning_of_gaussian_splatting_with_local_optimization.md)
 - [\[ICCV 2025\] GaussianUpdate: Continual 3D Gaussian Splatting Update for Changing Environments](../../ICCV2025/3d_vision/gaussianupdate_continual_3d_gaussian_splatting_update_for_changing_environments.md)
+- [\[CVPR 2025\] Open-World Amodal Appearance Completion](open-world_amodal_appearance_completion.md)
 
 </div>
 

@@ -130,11 +130,11 @@ tags:
 
 ## 相关论文
 
+- [\[ACL 2026\] LLM-XTM: Enhancing Cross-Lingual Topic Models with Large Language Models](../../ACL2026/multilingual_mt/llm-xtm_enhancing_cross-lingual_topic_models_with_large_language_models.md)
 - [\[AAAI 2026\] Bridging the Multilingual Safety Divide: Efficient, Culturally-Aware Alignment for Global South Languages](bridging_the_multilingual_safety_divide_efficient_culturally-aware_alignment_for.md)
 - [\[ACL 2026\] Efficient Training for Cross-lingual Speech Language Models](../../ACL2026/multilingual_mt/efficient_training_for_cross-lingual_speech_language_models.md)
-- [\[ACL 2025\] Cross-Lingual Pitfalls: Automatic Probing Cross-Lingual Weakness of Multilingual Large Language Models](../../ACL2025/multilingual_mt/crosslingual_pitfalls.md)
-- [\[ACL 2025\] The Hidden Space of Safety: Understanding Preference-Tuned LLMs in Multilingual Contexts](../../ACL2025/multilingual_mt/the_hidden_space_of_safety_understanding_preference-tuned_llms_in_multilingual_c.md)
 - [\[ACL 2025\] CCHall: A Novel Benchmark for Joint Cross-Lingual and Cross-Modal Hallucinations Detection in Large Language Models](../../ACL2025/multilingual_mt/cchall_a_novel_benchmark_for_joint_cross-lingual_and_cross-modal_hallucinations_.md)
+- [\[ACL 2026\] IndoTabVQA: A Benchmark for Cross-Lingual Table Understanding in Bahasa Indonesia Documents](../../ACL2026/multilingual_mt/indotabvqa_a_benchmark_for_cross-lingual_table_understanding_in_bahasa_indonesia.md)
 
 </div>
 

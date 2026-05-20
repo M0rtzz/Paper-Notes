@@ -246,7 +246,7 @@ Rui Min, Tianyu Pang, Chao Du, Qian Liu, Minhao Cheng, Min Lin. **Improving Your
 - [\[ACL 2025\] Improving Model Factuality with Fine-grained Critique-based Evaluator](../../ACL2025/llm_safety/improving_model_factuality_with_fine-grained_critique-based_evaluator.md)
 - [\[ICML 2025\] Improving Continual Learning Performance and Efficiency with Auxiliary Classifiers](improving_continual_learning_performance_and_efficiency_with_auxiliary_classifie.md)
 - [\[NeurIPS 2025\] Music Arena: Live Evaluation for Text-to-Music](../../NeurIPS2025/llm_safety/music_arena_live_evaluation_for_text-to-music.md)
-- [\[ICML 2025\] Watch Out Your Album! On the Inadvertent Privacy Memorization in Multi-Modal Large Language Models](watch_out_your_album_on_the_inadvertent_privacy_memorization_in_multi-modal_larg.md)
+- [\[NeurIPS 2025\] Attention! Your Vision Language Model Could Be Maliciously Manipulated](../../NeurIPS2025/llm_safety/attention_your_vision_language_model_could_be_maliciously_manipulated.md)
 
 </div>
 

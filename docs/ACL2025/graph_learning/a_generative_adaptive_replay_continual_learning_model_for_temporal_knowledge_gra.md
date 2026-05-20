@@ -135,8 +135,8 @@ DGAR 由三个核心组件组成：历史上下文提示构建（HCP Building）
 
 ## 相关论文
 
-- [\[ACL 2025\] Beyond Completion: A Foundation Model for General Knowledge Graph Reasoning](beyond_completion_a_foundation_model_for_general_knowledge_graph_reasoning.md)
 - [\[NeurIPS 2025\] Elastic Weight Consolidation for Knowledge Graph Continual Learning: An Empirical Evaluation](../../NeurIPS2025/graph_learning/elastic_weight_consolidation_for_knowledge_graph_continual_learning_an_empirical.md)
+- [\[ACL 2025\] Beyond Completion: A Foundation Model for General Knowledge Graph Reasoning](beyond_completion_a_foundation_model_for_general_knowledge_graph_reasoning.md)
 - [\[ACL 2025\] FiDeLiS: Faithful Reasoning in Large Language Model for Knowledge Graph Question Answering](fidelis_faithful_reasoning_in_large_language_model_for_knowledge_graph_question_.md)
 - [\[ACL 2025\] Disentangled Multi-span Evolutionary Network against Temporal Knowledge Graph Reasoning](disentangled_multi-span_evolutionary_network_against_temporal_knowledge_graph_re.md)
 - [\[ICML 2025\] From RAG to Memory: Non-Parametric Continual Learning for Large Language Models](../../ICML2025/graph_learning/from_rag_to_memory_non-parametric_continual_learning_for_large_language_models.md)

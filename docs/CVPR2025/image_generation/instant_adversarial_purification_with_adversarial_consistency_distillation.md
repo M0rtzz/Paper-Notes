@@ -169,7 +169,7 @@ OSCP 由两个组件构成：
 - [\[CVPR 2025\] Detecting Adversarial Data Using Perturbation Forgery](detecting_adversarial_data_using_perturbation_forgery.md)
 - [\[CVPR 2025\] IDProtector: An Adversarial Noise Encoder to Protect Against ID-Preserving Image Generation](idprotector_an_adversarial_noise_encoder_to_protect_against_id-preserving_image_.md)
 - [\[ECCV 2024\] Learning Differentially Private Diffusion Models via Stochastic Adversarial Distillation](../../ECCV2024/image_generation/learning_differentially_private_diffusion_models_via_stochastic_adversarial_dist.md)
-- [\[CVPR 2025\] Enhancing Facial Privacy Protection via Weakening Diffusion Purification](enhancing_facial_privacy_protection_via_weakening_diffusion_purification.md)
+- [\[ICML 2026\] Adversarial Flow Models](../../ICML2026/image_generation/adversarial_flow_models.md)
 
 </div>
 

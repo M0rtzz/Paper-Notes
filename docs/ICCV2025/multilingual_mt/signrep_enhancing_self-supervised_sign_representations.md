@@ -208,9 +208,9 @@ $$\mathcal{L}_{\text{final}} = \mathcal{L}_{\text{recon}} + w_{\text{var}} \math
 ## 相关论文
 
 - [\[NeurIPS 2025\] Enhancing Multilingual LLM Pretraining with Model-Based Data Selection](../../NeurIPS2025/multilingual_mt/enhancing_multilingual_llm_pretraining_with_model-based_data_selection.md)
-- [\[ACL 2025\] ShifCon: Enhancing Non-Dominant Language Capabilities with a Shift-based Multilingual Contrastive Framework](../../ACL2025/multilingual_mt/shifcon_nondominant_language.md)
 - [\[ACL 2025\] Trans-Zero: Self-Play Incentivizes Large Language Models for Multilingual Translation](../../ACL2025/multilingual_mt/trans-zero_self-play_incentivizes_large_language_models_for_multilingual_transla.md)
 - [\[NeurIPS 2025\] Reflective Translation: Improving Low-Resource Machine Translation via Structured Self-Reflection](../../NeurIPS2025/multilingual_mt/reflective_translation_improving_low-resource_machine_translation_via_structured.md)
+- [\[ACL 2025\] ShifCon: Enhancing Non-Dominant Language Capabilities with a Shift-based Multilingual Contrastive Framework](../../ACL2025/multilingual_mt/shifcon_nondominant_language.md)
 - [\[ACL 2025\] CC-Tuning: A Cross-Lingual Connection Mechanism for Improving Joint Multilingual Supervised Fine-Tuning](../../ACL2025/multilingual_mt/cc-tuning_a_cross-lingual_connection_mechanism_for_improving_joint_multilingual_.md)
 
 </div>

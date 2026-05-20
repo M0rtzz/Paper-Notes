@@ -134,7 +134,7 @@ BiCo在主观Overall Quality上比前作DualReal提升 **+54.67%**（3.00→4.64
 - [\[NeurIPS 2025\] Composing Linear Layers from Irreducibles](../../NeurIPS2025/llm_nlp/composing_linear_layers_from_irreducibles.md)
 - [\[ICLR 2026\] Is the Reversal Curse a Binding Problem? Uncovering Limitations of Transformers from a Basic Generalization Failure](../../ICLR2026/llm_nlp/is_the_reversal_curse_a_binding_problem_uncovering_limitations_of_transformers_f.md)
 - [\[CVPR 2026\] CoPS: Conditional Prompt Synthesis for Zero-Shot Anomaly Detection](cops_conditional_prompt_synthesis_for_zero-shot_anomaly_detection.md)
-- [\[ACL 2025\] Why Prompt Design Matters and Works: A Complexity Analysis of Prompt Search Space in LLMs](../../ACL2025/llm_nlp/why_prompt_design_matters_and_works_a_complexity_analysis_of_prompt_search_space.md)
+- [\[ECCV 2024\] FreestyleRet: Retrieving Images from Style-Diversified Queries](../../ECCV2024/llm_nlp/freestyleret_retrieving_images_from_style-diversified_queries.md)
 - [\[ECCV 2024\] Propose, Assess, Search: Harnessing LLMs for Goal-Oriented Planning in Instructional Videos](../../ECCV2024/llm_nlp/propose_assess_search_harnessing_llms_for_goal-oriented_planning_in_instructiona.md)
 
 </div>

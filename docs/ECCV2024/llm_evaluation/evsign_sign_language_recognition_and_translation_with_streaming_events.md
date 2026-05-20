@@ -188,10 +188,10 @@ tags:
 ## 相关论文
 
 - [\[ACL 2026\] Think in Latent Thoughts: A New Paradigm for Gloss-Free Sign Language Translation](../../ACL2026/llm_evaluation/think_in_latent_thoughts_a_new_paradigm_for_gloss-free_sign_language_translation.md)
-- [\[ECCV 2024\] SignAvatars: A Large-scale 3D Sign Language Holistic Motion Dataset and Benchmark](signavatars_a_large-scale_3d_sign_language_holistic_motion_dataset_and_benchmark.md)
 - [\[ACL 2025\] SwiLTra-Bench: The Swiss Legal Translation Benchmark](../../ACL2025/llm_evaluation/swiltra-bench_the_swiss_legal_translation_benchmark.md)
 - [\[CVPR 2025\] On the Generalization of Handwritten Text Recognition Models](../../CVPR2025/llm_evaluation/on_the_generalization_of_handwritten_text_recognition_models.md)
 - [\[CVPR 2026\] Free-Grained Hierarchical Visual Recognition](../../CVPR2026/llm_evaluation/free-grained_hierarchical_visual_recognition.md)
+- [\[AAAI 2026\] TRACE: A Generalizable Drift Detector for Streaming Data-Driven Optimization](../../AAAI2026/llm_evaluation/trace_a_generalizable_drift_detector_for_streaming_data-driven_optimization.md)
 
 </div>
 

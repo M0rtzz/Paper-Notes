@@ -172,7 +172,7 @@ tags:
 - [\[ACL 2025\] CoAM: Corpus of All-Type Multiword Expressions](coam_corpus_of_all-type_multiword_expressions.md)
 - [\[ACL 2025\] Graph-Structured Trajectory Extraction from Travelogues](graph-structured_trajectory_extraction_from_travelogues.md)
 - [\[ACL 2025\] DRS: Deep Question Reformulation With Structured Output](drs_deep_question_reformulation_with_structured_output.md)
-- [\[NeurIPS 2025\] 笔记5：ReSearch - 学习通过搜索推理](../../NeurIPS2025/others/research_learning_to_reason_with_search_for_llms_via_reinforcement_learning.md)
+- [\[ACL 2025\] Barec: A Large and Balanced Corpus for Fine-grained Arabic Readability Assessment](a_large_and_balanced_corpus_for_fine-grained_arabic_readability_assessment.md)
 
 </div>
 

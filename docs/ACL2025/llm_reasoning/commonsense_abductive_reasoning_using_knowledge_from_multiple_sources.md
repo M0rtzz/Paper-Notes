@@ -126,8 +126,8 @@ tags:
 
 - [\[ACL 2025\] Complex Reasoning with Natural Language Contexts and Background Knowledge](complex_reasoning_with_natural_language_contexts_and_background_knowledge.md)
 - [\[NeurIPS 2025\] Curriculum Abductive Learning](../../NeurIPS2025/llm_reasoning/curriculum_abductive_learning.md)
-- [\[ACL 2025\] Correcting Hallucinations in News Summaries: Exploration of Self-Correcting LLM Methods with External Knowledge](correcting_hallucinations_in_news_summaries_exploration_of_self-correcting_llm_m.md)
 - [\[ICLR 2026\] LingOly-TOO: Disentangling Reasoning from Knowledge with Templatised Orthographic Obfuscation](../../ICLR2026/llm_reasoning/lingoly-too_disentangling_reasoning_from_knowledge_with_templatised_orthographic.md)
+- [\[ACL 2026\] Does Self-Consistency Improve the Recall of Encyclopedic Knowledge?](../../ACL2026/llm_reasoning/does_self-consistency_improve_the_recall_of_encyclopedic_knowledge.md)
 - [\[ACL 2025\] Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models via a Multi-Paradigm Perspective](chain_of_reasoning_unified_math.md)
 
 </div>

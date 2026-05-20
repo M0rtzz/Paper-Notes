@@ -157,8 +157,8 @@ YOLO-Count 在可微分模型中全面 SOTA，在 LVIS/OpenImg7/Obj365 的开放
 
 - [\[CVPR 2025\] MCCD: Multi-Agent Collaboration-based Compositional Diffusion for Complex Text-to-Image Generation](../../CVPR2025/object_detection/mccd_multi-agent_collaboration-based_compositional_diffusion_for_complex_text-to.md)
 - [\[AAAI 2026\] SAGA: Learning Signal-Aligned Distributions for Improved Text-to-Image Generation](../../AAAI2026/object_detection/saga_learning_signal-aligned_distributions_for_improved_text-to-image_generation.md)
+- [\[ECCV 2024\] Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](../../ECCV2024/object_detection/be_yourself_bounded_attention_for_multisubject_texttoimage_g.md)
 - [\[NeurIPS 2025\] OverLayBench: A Benchmark for Layout-to-Image Generation with Dense Overlaps](../../NeurIPS2025/object_detection/overlaybench_a_benchmark_for_layout-to-image_generation_with_dense_overlaps.md)
-- [\[NeurIPS 2025\] InstanceAssemble: Layout-Aware Image Generation via Instance Assembling Attention](../../NeurIPS2025/object_detection/instanceassemble_layoutaware_image_generation_via_instance_a.md)
 - [\[ICCV 2025\] Large-scale Pre-training for Grounded Video Caption Generation](large-scale_pre-training_for_grounded_video_caption_generation.md)
 
 </div>

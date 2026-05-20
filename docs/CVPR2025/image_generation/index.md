@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 图像生成方向305篇论文解读
+  CVPR2025 图像生成方向304篇论文解读
 description: >-
-  305篇CVPR2025的图像生成方向论文解读，涵盖扩散模型、文生图、个性化生成、对抗鲁棒、布局/合成、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  304篇CVPR2025的图像生成方向论文解读，涵盖扩散模型、文生图、个性化生成、对抗鲁棒、布局/合成、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "图像生成"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**📷 CVPR2025** · **305** 篇论文解读
+**📷 CVPR2025** · **304** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (208)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (247)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (2)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (209)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (149)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (244)](../../NeurIPS2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×111 · 文生图 ×21 · 个性化生成 ×19 · 对抗鲁棒 ×13 · 布局/合成 ×11
+🔥 **高频主题：** 扩散模型 ×112 · 文生图 ×21 · 个性化生成 ×19 · 对抗鲁棒 ×13 · 布局/合成 ×11
 
 **[3DTopia-XL: Scaling High-Quality 3D Asset Generation via Primitive Diffusion](3dtopia-xl_scaling_high-quality_3d_asset_generation_via_primitive_diffusion.md)**
 
@@ -605,10 +605,6 @@ tags:
 
 :   本文提出两种低成本的后置方法——概念瓶颈自编码器(CB-AE)和概念控制器(CC)——将预训练生成模型转化为可解释且可操控的模型，无需从头训练或真实标注数据，在 CelebA/CelebA-HQ/CUB 上的可操控性(steerability)平均超过先前 CBGM 方法约25%，训练速度快4-15倍。
 
-**[IterIS: Iterative Inference-Solving Alignment for LoRA Merging](iteris_iterative_inference-solving_alignment_for_lora_merging.md)**
-
-:   IterIS提出了一种迭代推理-求解的LoRA合并方法，通过直接提取统一适配器的输入特征（而非近似）来建立更准确的优化目标，配合正则化减少样本需求至先前方法的1-5%，并引入自适应权重平衡优化，在文本到图像扩散模型、视觉语言模型和大语言模型的LoRA合并中显著超越基线。
-
 **[JanusFlow: Harmonizing Autoregression and Rectified Flow for Unified Multimodal Understanding and Generation](janusflow_harmonizing_autoregression_and_rectified_flow_for_unified_multimodal_u.md)**
 
 :   提出 JanusFlow，将 rectified flow 直接嵌入自回归 LLM 框架，通过解耦理解/生成编码器 + 表征对齐正则化，在 1.3B 参数下同时达到多模态理解和图像生成的 SOTA。
@@ -917,10 +913,6 @@ tags:
 
 :   提出 Re-HOLD，首个以人为中心的手物交互(HOI)视频重演框架，通过分离式布局表示解耦手和物体建模，结合交互纹理增强模块和自适应布局调整策略，实现跨物体高保真 HOI 视频生成。
 
-**[Reanimating Images using Neural Representations of Dynamic Stimuli](reanimating_images_using_neural_representations_of_dynamic_stimuli.md)**
-
-:   提出 BrainNRDS 框架，将静态图像表征与运动生成解耦，利用 fMRI 脑活动解码光流信息，结合运动条件扩散模型从初始帧生成视频，同时发现视频编码器（VideoMAE）在预测脑活动方面优于图像编码器。
-
 **[Rectified Diffusion Guidance for Conditional Generation](rectified_diffusion_guidance_for_conditional_generation.md)**
 
 :   ReCFG 从理论上揭示了标准 Classifier-Free Guidance (CFG) 中两个系数求和为 1 的约束导致生成分布的期望偏移问题，通过放松系数约束并给出 $\gamma_0$ 的闭式解，提供了一种无需重训练、几乎不增加推理开销的后处理方案来校正 CFG 的引导效果。
@@ -1004,6 +996,10 @@ tags:
 **[ShowHowTo: Generating Scene-Conditioned Step-by-Step Visual Instructions](showhowto_generating_scene-conditioned_step-by-step_visual_instructions.md)**
 
 :   本文提出 ShowHowTo，一个视频扩散模型，能够根据用户提供的初始场景图像和分步文字指令，生成与场景一致的逐步视觉指令序列；同时构建了包含57.8万条序列的大规模教学数据集，通过全自动管线从网络教学视频中采集。
+
+**[SIR-DIFF: Sparse Image Sets Restoration with Multi-View Diffusion Model](sir-diff_sparse_image_sets_restoration_with_multi-view_diffusion_model.md)**
+
+:   提出 SIR-Diff，一种多视角扩散模型，通过联合去噪多张同场景退化图像来实现跨视角一致的图像修复，利用 Spatial-3D ResNet 和 3D 自注意力 Transformer 融合多视角互补信息，在去模糊和超分辨率任务上超越单视角和视频修复方法。
 
 **[Six-CD: Benchmarking Concept Removals for Text-to-Image Diffusion Models](six-cd_benchmarking_concept_removals_for_text-to-image_diffusion_models.md)**
 

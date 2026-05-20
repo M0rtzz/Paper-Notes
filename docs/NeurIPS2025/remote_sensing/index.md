@@ -17,7 +17,7 @@ tags:
 
 **🧠 NeurIPS2025** · **11** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/remote_sensing/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/remote_sensing/index.md) · [🔬 ICLR2026 (6)](../../ICLR2026/remote_sensing/index.md) · [🤖 AAAI2026 (8)](../../AAAI2026/remote_sensing/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/remote_sensing/index.md) · [🧪 ICML2025 (7)](../../ICML2025/remote_sensing/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (15)](../../CVPR2026/remote_sensing/index.md) · [🔬 ICLR2026 (6)](../../ICLR2026/remote_sensing/index.md) · [🤖 AAAI2026 (8)](../../AAAI2026/remote_sensing/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/remote_sensing/index.md) · [🧪 ICML2025 (7)](../../ICML2025/remote_sensing/index.md) · [📷 CVPR2025 (10)](../../CVPR2025/remote_sensing/index.md)
 
 🔥 **高频主题：** 时序预测 ×2 · 遥感 ×2
 

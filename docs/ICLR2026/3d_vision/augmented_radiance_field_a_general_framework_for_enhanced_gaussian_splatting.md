@@ -155,7 +155,7 @@ tags:
 - [\[CVPR 2025\] 3D Convex Splatting: Radiance Field Rendering with 3D Smooth Convexes](../../CVPR2025/3d_vision/3d_convex_splatting_radiance_field_rendering_with_3d_smooth_convexes.md)
 - [\[ICLR 2026\] Einstein Fields: A Neural Perspective To Computational General Relativity](einstein_fields_a_neural_perspective_to_computational_general_relativity.md)
 - [\[CVPR 2026\] Neural Gabor Splatting: Enhanced Gaussian Splatting with Neural Gabor for High-frequency Surface Reconstruction](../../CVPR2026/3d_vision/neural_gabor_splatting.md)
-- [\[CVPR 2025\] Geometry Field Splatting with Gaussian Surfels](../../CVPR2025/3d_vision/geometry_field_splatting_with_gaussian_surfels.md)
+- [\[ECCV 2024\] Omni-Recon: Harnessing Image-Based Rendering for General-Purpose Neural Radiance Fields](../../ECCV2024/3d_vision/omni-recon_harnessing_image-based_rendering_for_general-purpose_neural_radiance_.md)
 
 </div>
 

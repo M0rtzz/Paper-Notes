@@ -141,8 +141,8 @@ tags:
 - [\[NeurIPS 2025\] Part-Aware Bottom-Up Group Reasoning for Fine-Grained Social Interaction Detection](part-aware_bottom-up_group_reasoning_for_fine-grained_social_interaction_detecti.md)
 - [\[CVPR 2025\] SocialGesture: Delving into Multi-Person Gesture Understanding](../../CVPR2025/human_understanding/socialgesture_delving_into_multi-person_gesture_understanding.md)
 - [\[ICCV 2025\] KinMo: Kinematic-Aware Human Motion Understanding and Generation](../../ICCV2025/human_understanding/kinmo_kinematic-aware_human_motion_understanding_and_generation.md)
-- [\[ICCV 2025\] HIS-GPT: Towards 3D Human-In-Scene Multimodal Understanding](../../ICCV2025/human_understanding/his-gpt_towards_3d_human-in-scene_multimodal_understanding.md)
-- [\[ECCV 2024\] EgoExo-Fitness: Towards Egocentric and Exocentric Full-Body Action Understanding](../../ECCV2024/human_understanding/egoexo-fitness_towards_egocentric_and_exocentric_full-body_action_understanding.md)
+- [\[ICML 2026\] MotionGRPO: Overcoming Low Intra-Group Diversity in GRPO-Based Egocentric Motion Recovery](../../ICML2026/human_understanding/motiongrpo_overcoming_low_intra-group_diversity_in_grpo-based_egocentric_motion_.md)
+- [\[NeurIPS 2025\] ConceptScope: Characterizing Dataset Bias via Disentangled Visual Concepts](conceptscope_characterizing_dataset_bias_via_disentangled_visual_concepts.md)
 
 </div>
 

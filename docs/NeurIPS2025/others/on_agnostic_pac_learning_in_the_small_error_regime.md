@@ -157,7 +157,7 @@ ERM 最小化经验风险：$\hat{h}_{\text{ERM}} = \arg\min_{h \in \mathcal{H}}
 - [\[ICML 2025\] PAC Learning with Improvements](../../ICML2025/others/pac_learning_with_improvements.md)
 - [\[NeurIPS 2025\] Recurrent Self-Attention Dynamics: An Energy-Agnostic Perspective from Jacobians](recurrent_self-attention_dynamics_an_energy-agnostic_perspective_from_jacobians.md)
 - [\[NeurIPS 2025\] Product Distribution Learning with Imperfect Advice](product_distribution_learning_with_imperfect_advice.md)
-- [\[ACL 2025\] LADDER: Language-Driven Slice Discovery and Error Rectification in Vision Classifiers](../../ACL2025/others/ladder_language-driven_slice_discovery_and_error_rectification_in_vision_classif.md)
+- [\[CVPR 2025\] Task-Agnostic Guided Feature Expansion for Class-Incremental Learning](../../CVPR2025/others/task-agnostic_guided_feature_expansion_for_class-incremental_learning.md)
 
 </div>
 

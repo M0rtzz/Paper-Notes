@@ -167,10 +167,10 @@ vs **AIRiskDilemmas** (Chiu 2025b)：后者也用Bradley-Terry但仅MCQ评估+�
 ## 相关论文
 
 - [\[ACL 2025\] Generative Psycho-Lexical Approach for Constructing Value Systems in Large Language Models](../../ACL2025/llm_nlp/generative_psycholexical_approach_for_constructing_value.md)
+- [\[ACL 2026\] Generative Interfaces for Language Models](../../ACL2026/llm_nlp/generative_interfaces_for_language_models.md)
 - [\[ICML 2025\] Taming Knowledge Conflicts in Language Models](../../ICML2025/llm_nlp/taming_knowledge_conflicts_in_language_models.md)
 - [\[CVPR 2026\] PhysVid: Physics Aware Local Conditioning for Generative Video](../../CVPR2026/llm_nlp/physvid_physics_aware_local_conditioning_for_generative_video_models.md)
 - [\[ICLR 2026\] How Catastrophic is Your LLM? Certifying Risk in Conversation](how_catastrophic_is_your_llm_certifying_risk_in_conversation.md)
-- [\[ICLR 2026\] Predicting LLM Reasoning Performance with Small Proxy Models](predicting_llm_reasoning_performance_with_small_proxy_models.md)
 
 </div>
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 LLM 效率方向34篇论文解读
+  NeurIPS2025 LLM 效率方向35篇论文解读
 description: >-
-  34篇NeurIPS2025的 LLM 效率方向论文解读，涵盖 LLM、布局/合成、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  35篇NeurIPS2025的 LLM 效率方向论文解读，涵盖 LLM、布局/合成、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "LLM 效率"
@@ -16,9 +16,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚡ LLM 效率
 
-**🧠 NeurIPS2025** · **34** 篇论文解读
+**🧠 NeurIPS2025** · **35** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (8)](../../ACL2026/llm_efficiency/index.md) · [📷 CVPR2026 (4)](../../CVPR2026/llm_efficiency/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/llm_efficiency/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/llm_efficiency/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/llm_efficiency/index.md) · [🧪 ICML2025 (11)](../../ICML2025/llm_efficiency/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (11)](../../ICML2026/llm_efficiency/index.md) · [💬 ACL2026 (20)](../../ACL2026/llm_efficiency/index.md) · [📷 CVPR2026 (4)](../../CVPR2026/llm_efficiency/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/llm_efficiency/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/llm_efficiency/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/llm_efficiency/index.md)
 
 🔥 **高频主题：** LLM ×5
 
@@ -58,6 +58,10 @@ tags:
 
 :   提出首个无需训练的在线 LLM 路由算法 PORT，通过近似最近邻搜索估计查询特征，并在少量初始查询上一次性优化对偶变量作为路由权重，在有限 token 预算下实现接近离线最优 ($1-o(1)$ 竞争比) 的路由性能，平均较基线提升 3.55× 性能、1.85× 成本效率和 4.25× 吞吐量。
 
+**[FlowMoE: A Scalable Pipeline Scheduling Framework for Distributed Mixture-of-Experts Training](flowmoe_a_scalable_pipeline_scheduling_framework_for_distributed_mixture-of-expe.md)**
+
+:   FlowMoE提出统一的流水线调度框架，将MHA计算、门控、专家计算和A2A通信纳入一体化流水线，并使用优先级驱动的all-reduce张量分块机制最大化通信与计算的重叠，在多种真实MoE模型上实现1.13×-1.82×加速、10-39%能耗降低和7-32%内存节省。
+
 **[From Shortcut to Induction Head: How Data Diversity Shapes Algorithm Selection in Transformers](from_shortcut_to_induction_head_how_data_diversity_shapes_algorithm_selection_in.md)**
 
 :   通过严格的理论分析证明了预训练数据的多样性（由"max-sum ratio"刻画）决定了单层Transformer学到的是可泛化的induction head还是无法OOD泛化的位置捷径，并给出了使模型学会induction head的最优预训练分布。
@@ -90,7 +94,7 @@ tags:
 
 :   构建覆盖法律/金融/游戏/代码四大真实领域、长度16K-2M token的长依赖推理基准LooGLE v2，设计10类领域特定任务共1,934个QA实例，评估10个LLM发现最强模型GPT-4.1仅59.2%，揭示当前LLM在真实长依赖场景下的根本不足。
 
-**[MoESD: 揭示投机解码加速稀疏MoE的潜力](moesd_unveil_speculative_decodings_potential_for_accelerating_sparse_moe.md)**
+**[MoESD: Unveil Speculative Decoding's Potential for Accelerating Sparse MoE](moesd_unveil_speculative_decodings_potential_for_accelerating_sparse_moe.md)**
 
 :   挑战"投机解码对MoE无效"的传统认知，理论与实验证明在中等batch size下MoE反而比稠密模型更受益于投机解码，提出target efficiency这一系统级指标来量化加速瓶颈，并构建了可靠的性能预测模型，在Qwen2-57B-A14B上实现最高2.29×加速。
 

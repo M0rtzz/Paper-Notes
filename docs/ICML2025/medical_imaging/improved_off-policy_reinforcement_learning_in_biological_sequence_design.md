@@ -203,8 +203,8 @@ $$\delta(x; \sigma) = g(\sigma(x))$$
 - [\[ICML 2025\] Leveraging Partial SMILES Validation Scheme for Enhanced Drug Design in Reinforcement Learning Frameworks](leveraging_partial_smiles_validation_scheme_for_enhanced_drug_design_in_reinforc.md)
 - [\[NeurIPS 2025\] CrossNovo: Bidirectional Representations Augmented Autoregressive Biological Sequence Generation](../../NeurIPS2025/medical_imaging/bidirectional_representations_augmented_autoregressive_biological_sequence_gener.md)
 - [\[ICLR 2026\] Controllable Sequence Editing for Biological and Clinical Trajectories](../../ICLR2026/medical_imaging/controllable_sequence_editing_for_biological_and_clinical_trajectories.md)
-- [\[NeurIPS 2025\] Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design](../../NeurIPS2025/medical_imaging/uncertainty-aware_multi-objective_reinforcement_learning-guided_diffusion_models.md)
 - [\[ICML 2025\] Reliable Algorithm Selection for Machine Learning-Guided Design](reliable_algorithm_selection_for_machine_learning-guided_design.md)
+- [\[NeurIPS 2025\] Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design](../../NeurIPS2025/medical_imaging/uncertainty-aware_multi-objective_reinforcement_learning-guided_diffusion_models.md)
 
 </div>
 

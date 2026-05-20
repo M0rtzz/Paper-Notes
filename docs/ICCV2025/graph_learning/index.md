@@ -15,7 +15,7 @@ tags:
 
 **📹 ICCV2025** · **1** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (8)](../../ACL2026/graph_learning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/graph_learning/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/graph_learning/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/graph_learning/index.md) · [🧠 NeurIPS2025 (52)](../../NeurIPS2025/graph_learning/index.md) · [🧪 ICML2025 (31)](../../ICML2025/graph_learning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (9)](../../ICML2026/graph_learning/index.md) · [💬 ACL2026 (21)](../../ACL2026/graph_learning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/graph_learning/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/graph_learning/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/graph_learning/index.md) · [🧠 NeurIPS2025 (52)](../../NeurIPS2025/graph_learning/index.md)
 
 **[PASTA: Part-Aware Sketch-to-3D Shape Generation with Text-Aligned Prior](pasta_part-aware_sketch-to-3d_shape_generation_with_text-aligned_prior.md)**
 

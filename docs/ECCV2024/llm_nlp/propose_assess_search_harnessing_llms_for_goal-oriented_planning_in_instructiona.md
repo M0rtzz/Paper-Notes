@@ -168,11 +168,11 @@ VidAssist是零/少样本框架，**不需要训练**。核心是prompt设计和
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Planning without Search: Refining Frontier LLMs with Offline Goal-Conditioned RL](../../NeurIPS2025/llm_nlp/planning_without_search_refining_frontier_llms_with_offline_goal-conditioned_rl.md)
-- [\[ECCV 2024\] Cultural Value Differences of LLMs: Prompt, Language, and Model Size](cultural_value_differences_llms.md)
-- [\[ECCV 2024\] TextDiffuser-2: Unleashing the Power of Language Models for Text Rendering](textdiffuser-2_unleashing_the_power_of_language_models_for_text_rendering.md)
 - [\[ACL 2025\] LLMs Can Be Easily Confused by Instructional Distractions](../../ACL2025/llm_nlp/llms_can_be_easily_confused_by_instructional_distractions.md)
-- [\[ECCV 2024\] Towards Open-Ended Visual Recognition with Large Language Model](towards_open-ended_visual_recognition_with_large_language_models.md)
+- [\[ECCV 2024\] Cultural Value Differences of LLMs: Prompt, Language, and Model Size](cultural_value_differences_llms.md)
+- [\[CVPR 2026\] Composing Concepts from Images and Videos via Concept-prompt Binding](../../CVPR2026/llm_nlp/composing_concepts_from_images_and_videos_via_concept-prompt_binding.md)
+- [\[ACL 2025\] PlanGenLLMs: A Modern Survey of LLM Planning Capabilities](../../ACL2025/llm_nlp/plangenllms_planning_survey.md)
+- [\[ACL 2025\] Efficient Universal Goal Hijacking with Semantics-guided Prompt Organization](../../ACL2025/llm_nlp/goal_hijacking_attack.md)
 
 </div>
 

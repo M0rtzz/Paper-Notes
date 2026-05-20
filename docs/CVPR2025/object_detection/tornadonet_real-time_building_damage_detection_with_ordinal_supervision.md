@@ -123,7 +123,7 @@ TornadoNet 不是提出全新的模型架构，而是一个系统性 benchmark �
 - [\[CVPR 2025\] Test-Time Backdoor Detection for Object Detection Models](test-time_backdoor_detection_for_object_detection_models.md)
 - [\[AAAI 2026\] YOLO-IOD: Towards Real Time Incremental Object Detection](../../AAAI2026/object_detection/yolo-iod_towards_real_time_incremental_object_detection.md)
 - [\[CVPR 2025\] MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism](mi-detr_an_object_detection_model_with_multi-time_inquiries_mechanism.md)
-- [\[AAAI 2026\] Real-Time 3D Object Detection with Inference-Aligned Learning](../../AAAI2026/object_detection/real-time_3d_object_detection_with_inference-aligned_learning.md)
+- [\[CVPR 2025\] Efficient Test-Time Adaptive Object Detection via Sensitivity-Guided Pruning](efficient_test-time_adaptive_object_detection_via_sensitivity-guided_pruning.md)
 
 </div>
 

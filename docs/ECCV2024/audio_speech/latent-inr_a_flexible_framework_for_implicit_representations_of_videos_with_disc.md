@@ -161,10 +161,10 @@ $\lambda=0.01$ 为最佳平衡点：PSNR 仅从 30.03 降至 29.46（-0.57 dB）
 ## 相关论文
 
 - [\[ECCV 2024\] Action2Sound: Ambient-Aware Generation of Action Sounds from Egocentric Videos](action2sound_ambientaware_generation_of_action_sounds_from_e.md)
-- [\[ECCV 2024\] Spherical World-Locking for Audio-Visual Localization in Egocentric Videos](spherical_world-locking_for_audio-visual_localization_in_egocentric_videos.md)
 - [\[ECCV 2024\] CoLeaF: A Contrastive-Collaborative Learning Framework for Weakly Supervised Audio-Visual Video Parsing](coleaf_a_contrastive-collaborative_learning_framework_for_weakly_supervised_audi.md)
-- [\[ACL 2026\] Splits! Flexible Sociocultural Linguistic Investigation at Scale](../../ACL2026/audio_speech/splits_flexible_sociocultural_linguistic_investigation_at_scale.md)
 - [\[ICCV 2025\] Latent Swap Joint Diffusion for 2D Long-Form Latent Generation](../../ICCV2025/audio_speech/latent_swap_joint_diffusion_for_2d_long-form_latent_generation.md)
+- [\[ACL 2026\] Splits! Flexible Sociocultural Linguistic Investigation at Scale](../../ACL2026/audio_speech/splits_flexible_sociocultural_linguistic_investigation_at_scale.md)
+- [\[CVPR 2025\] Towards Lossless Implicit Neural Representation via Bit Plane Decomposition](../../CVPR2025/audio_speech/towards_lossless_implicit_neural_representation_via_bit_plane_decomposition.md)
 
 </div>
 

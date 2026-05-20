@@ -165,10 +165,10 @@ GLIP 和 SAM 均冻结，仅训练权重预测网络（per category，few-shot 8
 ## 相关论文
 
 - [\[ECCV 2024\] General and Task-Oriented Video Segmentation](general_and_task-oriented_video_segmentation.md)
-- [\[ACL 2025\] InstructPart: Task-Oriented Part Segmentation with Instruction Reasoning](../../ACL2025/segmentation/instructpart_task-oriented_part_segmentation_with_instruction_reasoning.md)
 - [\[ICCV 2025\] PartField: Learning 3D Feature Fields for Part Segmentation and Beyond](../../ICCV2025/segmentation/partfield_learning_3d_feature_fields_for_part_segmentation_and_beyond.md)
-- [\[ECCV 2024\] Part2Object: Hierarchical Unsupervised 3D Instance Segmentation](part2object_hierarchical_unsupervised_3d_instance_segmentation.md)
-- [\[ICCV 2025\] WildSeg3D: Segment Any 3D Objects in the Wild from 2D Images](../../ICCV2025/segmentation/wildseg3d_segment_any_3d_objects_in_the_wild_from_2d_images.md)
+- [\[ACL 2025\] InstructPart: Task-Oriented Part Segmentation with Instruction Reasoning](../../ACL2025/segmentation/instructpart_task-oriented_part_segmentation_with_instruction_reasoning.md)
+- [\[CVPR 2025\] Leveraging 3D Geometric Priors in 2D Rotation Symmetry Detection](../../CVPR2025/segmentation/leveraging_3d_geometric_priors_in_2d_rotation_symmetry_detection.md)
+- [\[ECCV 2024\] LASS3D: Language-Assisted Semi-Supervised 3D Semantic Segmentation with Progressive Unreliable Data Exploitation](lass3d_language-assisted_semi-supervised_3d_semantic_segmentation_with_progressi.md)
 
 </div>
 

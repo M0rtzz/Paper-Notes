@@ -126,11 +126,11 @@ tags:
 
 ## 相关论文
 
+- [\[ACL 2026\] CoMeT: Collaborative Memory Transformer for Efficient Long Context Modeling](../../ACL2026/time_series/comet_collaborative_memory_transformer_for_efficient_long_context_modeling.md)
 - [\[ICCV 2025\] I²-World: Intra-Inter Tokenization for Efficient Dynamic 4D Scene Forecasting](../../ICCV2025/time_series/i2-world_intra-inter_tokenization_for_efficient_dynamic_4d_scene_forecasting.md)
 - [\[ICLR 2026\] T1: One-to-One Channel-Head Binding for Multivariate Time-Series Imputation](../../ICLR2026/time_series/t1_one-to-one_channel-head_binding_for_multivariate_time-series_imputation.md)
+- [\[ACL 2026\] Jacobian Scopes: Token-Level Causal Attributions in LLMs](../../ACL2026/time_series/jacobian_scopes_token-level_causal_attributions_in_llms.md)
 - [\[CVPR 2026\] PFGNet: A Fully Convolutional Frequency-Guided Peripheral Gating Network for Efficient Spatiotemporal Predictive Learning](pfgnet_a_fully_convolutional_frequency-guided_peripheral_gating_network_for_effi.md)
-- [\[AAAI 2026\] GAICo: A Deployed and Extensible Framework for Evaluating Diverse and Multimodal Generative AI Outputs](../../AAAI2026/time_series/gaico_a_deployed_and_extensible_framework_for_evaluating_diverse_and_multimodal_.md)
-- [\[ICLR 2026\] Delta-XAI: A Unified Framework for Explaining Prediction Changes in Online Time Series Monitoring](../../ICLR2026/time_series/delta-xai_a_unified_framework_for_explaining_prediction_changes_in_online_time_s.md)
 
 </div>
 

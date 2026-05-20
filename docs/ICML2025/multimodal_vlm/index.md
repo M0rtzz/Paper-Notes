@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 多模态 VLM方向52篇论文解读
+  ICML2025 多模态 VLM方向50篇论文解读
 description: >-
-  52篇ICML2025的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对齐/RLHF、机器人、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  50篇ICML2025的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对齐/RLHF、机器人、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2025"
   - "多模态 VLM"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**🧪 ICML2025** · **52** 篇论文解读
+**🧪 ICML2025** · **50** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (50)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (240)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (90)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (91)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (153)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (151)](../../ICCV2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (30)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (83)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (230)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (88)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (88)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (149)](../../NeurIPS2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×33 · 推理 ×6 · LLM ×4 · 对齐/RLHF ×4 · 机器人 ×2
+🔥 **高频主题：** 多模态 ×32 · 推理 ×6 · LLM ×4 · 对齐/RLHF ×4 · 机器人 ×2
 
 **[Bring Reason to Vision: Understanding Perception and Reasoning through Model Merging](bring_reason_to_vision_understanding_perception_and_reasoning_through_model_merg.md)**
 
@@ -181,10 +181,6 @@ tags:
 
 :   提出 ProxyV，通过引入少量代理视觉 token（proxy vision tokens）替代原始视觉 token 参与 LLM 解码层中的重计算操作（自注意力、FFN），在保留全部视觉信息的前提下大幅压缩计算冗余，甚至在部分设定下提升性能。
 
-**[Targeted Unlearning with Single Layer Unlearning Gradient](targeted_unlearning_with_single_layer_unlearning_gradient.md)**
-
-:   提出 SLUG (Single Layer Unlearning Gradient) 方法，通过层重要性和梯度对齐指标识别最优单层，仅需一次梯度计算和单层参数更新即可实现高效精准的定向遗忘，可应用于 CLIP、Stable Diffusion 和 VLM。
-
 **[The Devil Is in the Details: Tackling Unimodal Spurious Correlations for Generalizable Multimodal Reward Models](the_devil_is_in_the_details_tackling_unimodal_spurious_correlations_for_generali.md)**
 
 :   发现多模态奖励模型 (MM-RM) 在训练时会过度依赖文本单模态捷径 (shortcuts)，导致分布外泛化能力差，提出 Shortcut-aware MM-RM 学习算法通过动态样本重加权来减少对单模态伪相关性的依赖，OOD 准确率从 68.1% 提升至 78.5%。
@@ -208,10 +204,6 @@ tags:
 **[Universal Retrieval for Multimodal Trajectory Modeling](universal_retrieval_for_multimodal_trajectory_modeling.md)**
 
 :   首次系统定义多模态轨迹检索任务，构建统一代理轨迹数据集 UATD（7,747 个演示、82,793 个状态）和 GAE-Bench 基准（714,628 正样本对），提出基于 VLM2Vec 的 GAE-Retriever 框架，在 5 个 GUI 环境上相比最强基线 VLM2Vec-V2.2 平均提升 10.22 个百分点。
-
-**[Unlocking the Capabilities of Large Vision-Language Models for Generalizable and Explainable Deepfake Detection](unlocking_the_capabilities_of_large_vision-language_models_for_generalizable_and.md)**
-
-:   提出基于 LVLM 的 deepfake 检测框架，通过知识引导伪造检测器（KFD）计算图像特征与真/假描述文本的相关性实现分类和定位，再通过伪造提示学习器（FPL）将细粒度伪造特征注入 LLM 生成可解释的检测结果，在 FF++/CDF2/DFDC/DF40 等多个基准上超越 SOTA 泛化性能。
 
 **[Vision-Language Model Selection and Reuse for Downstream Adaptation](vision-language_model_selection_and_reuse_for_downstream_adaptation.md)**
 

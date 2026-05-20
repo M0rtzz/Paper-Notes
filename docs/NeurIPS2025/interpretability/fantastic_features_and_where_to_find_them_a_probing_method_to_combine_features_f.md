@@ -145,7 +145,7 @@ ComBo Top-2（78.6）超越了需要昂贵蒸馏的 RADIOv2.5+Adapter+，且不�
 - [\[CVPR 2026\] Language Models Can Explain Visual Features via Steering](../../CVPR2026/interpretability/language_models_can_explain_visual_features_via_steering.md)
 - [\[AAAI 2026\] Probing Preference Representations: A Multi-Dimensional Evaluation and Analysis Method for Reward Models](../../AAAI2026/interpretability/probing_preference_representations_a_multi-dimensional_evaluation_and_analysis_m.md)
 - [\[ICML 2025\] Foundation Molecular Grammar: Multi-Modal Foundation Models Induce Interpretable Molecular Grammar](../../ICML2025/interpretability/foundation_molecular_grammar_multi-modal_foundation_models_induce_interpretable_.md)
-- [\[ACL 2025\] Probing Subphonemes in Morphology Models](../../ACL2025/interpretability/probing_subphonemes_in_morphology_models.md)
+- [\[ACL 2026\] Constructing Interpretable Features from Compositional Neuron Groups](../../ACL2026/interpretability/constructing_interpretable_features_from_compositional_neuron_groups.md)
 
 </div>
 

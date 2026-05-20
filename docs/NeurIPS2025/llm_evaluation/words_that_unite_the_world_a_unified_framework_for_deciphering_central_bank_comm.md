@@ -134,10 +134,10 @@ PLM 使用标准微调流程（分类头 + 交叉熵损失）。LLM 基于 promp
 ## 相关论文
 
 - [\[NeurIPS 2025\] A Unified Framework for Provably Efficient Algorithms to Estimate Shapley Values](a_unified_framework_for_provably_efficient_algorithms_to_estimate_shapley_values.md)
+- [\[ICML 2026\] iWorld-Bench: A Benchmark for Interactive World Models with a Unified Action Generation Framework](../../ICML2026/llm_evaluation/iworld-bench_a_benchmark_for_interactive_world_models_with_a_unified_action_gene.md)
 - [\[ICCV 2025\] Discontinuity-aware Normal Integration for Generic Central Camera Models](../../ICCV2025/llm_evaluation/discontinuity-aware_normal_integration_for_generic_central_camera_models.md)
 - [\[NeurIPS 2025\] Unlocking Transfer Learning for Open-World Few-Shot Recognition](unlocking_transfer_learning_for_open-world_few-shot_recognition.md)
 - [\[ACL 2025\] READoc: A Unified Benchmark for Realistic Document Structured Extraction](../../ACL2025/llm_evaluation/readoc_a_unified_benchmark_for_realistic_document_structured_extraction.md)
-- [\[ACL 2025\] TUMLU: A Unified and Native Language Understanding Benchmark for Turkic Languages](../../ACL2025/llm_evaluation/tumlu_a_unified_and_native_language_understanding_benchmark_for_turkic_languages.md)
 
 </div>
 

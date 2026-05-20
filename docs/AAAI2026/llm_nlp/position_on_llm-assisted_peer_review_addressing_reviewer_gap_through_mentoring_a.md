@@ -138,11 +138,11 @@ tags:
 
 ## 相关论文
 
-- [\[ACL 2025\] AIMSCheck: Leveraging LLMs for AI-Assisted Review of Modern Slavery Statements Across Jurisdictions](../../ACL2025/llm_nlp/aimscheck_modern_slavery.md)
+- [\[ACL 2026\] Can AI Be a Good Peer Reviewer? A Survey of Peer Review Process, Evaluation, and the Future](../../ACL2026/llm_nlp/can_ai_be_a_good_peer_reviewer_a_survey_of_peer_review_process_evaluation_and_th.md)
+- [\[ICML 2026\] Stop Automating Peer Review Without Rigorous Evaluation](../../ICML2026/llm_nlp/stop_automating_peer_review_without_rigorous_evaluation.md)
 - [\[AAAI 2026\] Scaling Equitable Reflection Assessment in Education via Large Language Models and Role-Based Feedback Agents](scaling_equitable_reflection_assessment_in_education_via_large_language_models_a.md)
-- [\[ACL 2025\] Computation Mechanism Behind LLM Position Generalization](../../ACL2025/llm_nlp/computation_mechanism_behind_llm_position_generalization.md)
-- [\[ICML 2025\] Position: LLM Social Simulations Are a Promising Research Method](../../ICML2025/llm_nlp/llm_social_simulations_are_a_promising_research_method.md)
 - [\[AAAI 2026\] STEM: Efficient Relative Capability Evaluation of LLMs through Structured Transitive Evaluation Model](stem_efficient_relative_capability_evaluation_of_llms_through_structured_transit.md)
+- [\[AAAI 2026\] PERSIST: Persistent Instability in LLM's Personality Measurements](persistent_instability_in_llms_personality_measurements_effects_of_scale_reasoni.md)
 
 </div>
 

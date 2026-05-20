@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 时间序列方向58篇论文解读
+  NeurIPS2025 时间序列方向57篇论文解读
 description: >-
-  58篇NeurIPS2025的时间序列方向论文解读，涵盖时序预测、扩散模型、推理、图神经网络、对抗鲁棒、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  57篇NeurIPS2025的时间序列方向论文解读，涵盖时序预测、扩散模型、推理、图神经网络、对抗鲁棒、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "时间序列"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📈 时间序列
 
-**🧠 NeurIPS2025** · **58** 篇论文解读
+**🧠 NeurIPS2025** · **57** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🔬 ICLR2026 (37)](../../ICLR2026/time_series/index.md) · [🤖 AAAI2026 (35)](../../AAAI2026/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md) · [🧪 ICML2025 (26)](../../ICML2025/time_series/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (10)](../../ICML2026/time_series/index.md) · [💬 ACL2026 (6)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/time_series/index.md) · [🤖 AAAI2026 (35)](../../AAAI2026/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md)
 
-🔥 **高频主题：** 时序预测 ×31 · 扩散模型 ×3 · 推理 ×3 · 图神经网络 ×2 · 对抗鲁棒 ×2
+🔥 **高频主题：** 时序预测 ×32 · 扩散模型 ×3 · 推理 ×3 · 图神经网络 ×2 · 对抗鲁棒 ×2
 
 **[A Graph Neural Network Approach for Localized and High-Resolution Temperature Forecasting](a_graph_neural_network_approach_for_localized_and_high-resolution_temperature_fo.md)**
 
@@ -61,7 +61,7 @@ tags:
 
 :   提出 Channel-wise Influence (ChInf)——首个能量化多变量时间序列中不同通道对模型性能影响的影响函数方法，将 TracIn 从整体样本级分解到通道级，衍生出通道级异常检测和通道剪枝两个应用，在 5 个异常检测基准上排名第一。
 
-**[Connecting the Dots: 面向电离层预测的机器学习数据集](connecting_the_dots_a_machine_learning_ready_dataset_for_ionospheric_forecasting.md)**
+**[Connecting the Dots: A Machine Learning Ready Dataset for Ionospheric Forecasting Models](connecting_the_dots_a_machine_learning_ready_dataset_for_ionospheric_forecasting.md)**
 
 :   本文构建了一个开放的、机器学习就绪的电离层预测数据集，融合了8种异构数据源（太阳观测、地磁指数、TEC地图等），覆盖2010-2024年约14年时间，并基于此训练了LSTM、SFNO、GraphCast三种时空模型作为基准，实现了最长12小时的TEC预测。
 
@@ -220,10 +220,6 @@ tags:
 **[SynTSBench: Rethinking Temporal Pattern Learning in Deep Learning Models for Time Series](syntsbench_rethinking_temporal_pattern_learning_in_deep_learning_models_for_time.md)**
 
 :   提出SynTSBench合成数据驱动评估范式，通过可编程的特征配置和理论最优基准，系统评估时间序列预测模型在趋势、周期、依赖性、噪声鲁棒性等维度的实际建模能力。
-
-**[The Human Brain as a Combinatorial Complex](the_human_brain_as_a_combinatorial_complex.md)**
-
-:   提出一种数据驱动的框架，利用 S-信息和 O-信息等信息论度量从 fMRI 时间序列中直接构建组合复形（Combinatorial Complexes），将脑区间的高阶协同交互编码到拓扑结构中，为拓扑深度学习应用于脑网络分析奠定基础。
 
 **[Time-IMM: A Dataset and Benchmark for Irregular Multimodal Multivariate Time Series](time-imm_a_dataset_and_benchmark_for_irregular_multimodal_multivariate_time_seri.md)**
 

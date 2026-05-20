@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 图像生成方向110篇论文解读
+  ICML2025 图像生成方向109篇论文解读
 description: >-
-  110篇ICML2025的图像生成方向论文解读，涵盖扩散模型、语音、对齐/RLHF、时序预测、对抗鲁棒、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  109篇ICML2025的图像生成方向论文解读，涵盖扩散模型、语音、对齐/RLHF、时序预测、对抗鲁棒、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2025"
   - "图像生成"
@@ -19,9 +19,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🧪 ICML2025** · **110** 篇论文解读
+**🧪 ICML2025** · **109** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (11)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (208)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (154)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (247)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (2)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (209)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (149)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (244)](../../NeurIPS2025/image_generation/index.md)
 
 🔥 **高频主题：** 扩散模型 ×45 · 语音 ×6 · 对齐/RLHF ×3 · 时序预测 ×3 · 对抗鲁棒 ×3
 
@@ -448,10 +448,6 @@ tags:
 **[Visual Generation Without Guidance](visual_generation_without_guidance.md)**
 
 :   提出 Guidance-Free Training (GFT)，通过重新参数化条件模型为采样网络与无条件网络的线性插值，直接从数据训练出无需引导的视觉生成模型，在 DiT/VAR/LlamaGen/MAR/LDM 五种模型上匹配 CFG 性能的同时将采样计算量减半。
-
-**[Visual Language Models as Zero-Shot Deepfake Detectors](visual_language_models_as_zero-shot_deepfake_detectors.md)**
-
-:   提出基于 VLM token 概率归一化的图像分类框架，将 deepfake 检测从二元判断升级为概率估计，在零样本设置下用 InstructBLIP 超越多数专用 deepfake 检测器，微调后在 DFDC-P 上接近完美。
 
 **[When Diffusion Models Memorize: Inductive Biases in Probability Flow of Minimum-Norm Shallow Neural Nets](when_diffusion_models_memorize_inductive_biases_in_probability_flow_of_minimum-n.md)**
 

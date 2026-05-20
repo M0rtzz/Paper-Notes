@@ -146,7 +146,7 @@ RoboMaster基于预训练CogVideoX-5B架构。给定初始帧 $\mathbf{I}$、文
 - [\[CVPR 2025\] PoseTraj: Pose-Aware Trajectory Control in Video Diffusion](../../CVPR2025/video_generation/posetraj_pose-aware_trajectory_control_in_video_diffusion.md)
 - [\[ICLR 2026\] Frame Guidance: Training-Free Guidance for Frame-Level Control in Video Diffusion Models](frame_guidance_training-free_guidance_for_frame-level_control_in_video_diffusion.md)
 - [\[CVPR 2026\] FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](../../CVPR2026/video_generation/flashmotion_fewstep_controllable_video_generation.md)
-- [\[CVPR 2025\] ManiVideo: Generating Hand-Object Manipulation Video with Dexterous and Generalizable Grasping](../../CVPR2025/video_generation/manivideo_generating_hand-object_manipulation_video_with_dexterous_and_generaliz.md)
+- [\[ICML 2026\] From Imagined Futures to Executable Actions: Mixture of Latent Actions for Robot Manipulation](../../ICML2026/video_generation/from_imagined_futures_to_executable_actions_mixture_of_latent_actions_for_robot_.md)
 
 </div>
 

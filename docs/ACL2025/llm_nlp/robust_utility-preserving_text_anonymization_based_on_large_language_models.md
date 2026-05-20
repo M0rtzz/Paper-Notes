@@ -132,10 +132,10 @@ RUPTA框架包含三个基于LLM的核心组件，形成迭代优化循环：
 ## 相关论文
 
 - [\[ACL 2025\] GradOT: Training-free Gradient-preserving Offsite-tuning for Large Language Models](gradot_offsite_tuning.md)
-- [\[ACL 2025\] MergePrint: Merge-Resistant Fingerprints for Robust Black-box Ownership Verification of Large Language Models](mergeprint_fingerprint_ownership.md)
 - [\[ACL 2025\] Automated CAD Modeling Sequence Generation from Text Descriptions via Transformer-Based Large Language Models](cadllm_cad_modeling_from_text.md)
+- [\[ACL 2025\] MergePrint: Merge-Resistant Fingerprints for Robust Black-box Ownership Verification of Large Language Models](mergeprint_fingerprint_ownership.md)
 - [\[ACL 2025\] Beyond Demographics: Fine-tuning Large Language Models to Predict Individuals' Subjective Text Perceptions](beyond_demographics_fine-tuning_large_language_models_to_predict_individuals_sub.md)
-- [\[ACL 2025\] ELI-Why: Evaluating the Pedagogical Utility of Language Model Explanations](eli-why_evaluating_the_pedagogical_utility_of_language_model_explanations.md)
+- [\[ACL 2025\] EdiText: Controllable Coarse-to-Fine Text Editing with Diffusion Language Models](editext_diffusion_text_editing.md)
 
 </div>
 

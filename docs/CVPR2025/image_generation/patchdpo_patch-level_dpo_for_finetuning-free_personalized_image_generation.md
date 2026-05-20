@@ -127,7 +127,7 @@ PatchDPO在IP-Adapter和ELITE两个基线上均带来显著提升。
 - [\[CVPR 2025\] BootComp: Controllable Human Image Generation with Personalized Multi-Garments](controllable_human_image_generation_with_personalized_multi-garments.md)
 - [\[CVPR 2025\] PersonaBooth: Personalized Text-to-Motion Generation](personabooth_personalized_text-to-motion_generation.md)
 - [\[CVPR 2025\] ConceptGuard: Continual Personalized Text-to-Image Generation with Forgetting and Confusion Mitigation](conceptguard_continual_personalized_text-to-image_generation_with_forgetting_and.md)
-- [\[CVPR 2025\] Yo'Chameleon: Personalized Vision and Language Generation](yochameleon_personalized_vision_and_language_generation.md)
+- [\[NeurIPS 2025\] Aligning Compound AI Systems via System-level DPO](../../NeurIPS2025/image_generation/aligning_compound_ai_systems_via_system-level_dpo.md)
 
 </div>
 

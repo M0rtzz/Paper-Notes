@@ -101,9 +101,9 @@ tags:
 
 - [\[CVPR 2025\] Improving Accuracy and Calibration via Differentiated Deep Mutual Learning](improving_accuracy_and_calibration_via_differentiated_deep_mutual_learning.md)
 - [\[NeurIPS 2025\] Conformal Online Learning of Deep Koopman Linear Embeddings](../../NeurIPS2025/llm_evaluation/conformal_online_learning_of_deep_koopman_linear_embeddings.md)
+- [\[ICML 2026\] Possibilistic Predictive Uncertainty for Deep Learning](../../ICML2026/llm_evaluation/possibilistic_predictive_uncertainty_for_deep_learning.md)
 - [\[ICML 2025\] AAAR-1.0: Assessing AI's Potential to Assist Research](../../ICML2025/llm_evaluation/aaar-10_assessing_ais_potential_to_assist_research.md)
 - [\[ICML 2025\] Improving the Effective Receptive Field of Message-Passing Neural Networks](../../ICML2025/llm_evaluation/improving_the_effective_receptive_field_of_message-passing_neural_networks.md)
-- [\[CVPR 2025\] Sufficient Invariant Learning for Distribution Shift](sufficient_invariant_learning_for_distribution_shift.md)
 
 </div>
 

@@ -143,7 +143,7 @@ $$\mathcal{L}(\theta^T) = \mathcal{L}_T(\theta^T) + \sum_{i \in I} \bar{\mathcal
 - [\[ACL 2025\] Aligned but Blind: Alignment Increases Implicit Bias by Reducing Awareness of Race](../../ACL2025/others/aligned_but_blind_implicit_bias.md)
 - [\[NeurIPS 2025\] Graph Alignment via Birkhoff Relaxation](graph_alignment_via_birkhoff_relaxation.md)
 - [\[NeurIPS 2025\] The Persistence of Neural Collapse Despite Low-Rank Bias](the_persistence_of_neural_collapse_despite_low-rank_bias.md)
-- [\[NeurIPS 2025\] Sign-In to the Lottery: Reparameterized Sparse Training from Scratch](sign-in_to_the_lottery_reparameterizing_sparse_training_from_scratch.md)
+- [\[NeurIPS 2025\] DPA: A One-Stop Metric to Measure Bias Amplification in Classification Datasets](dpa_a_one-stop_metric_to_measure_bias_amplification_in_classification_datasets.md)
 
 </div>
 

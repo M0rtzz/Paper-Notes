@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 可解释性方向33篇论文解读
+  ICML2025 可解释性方向32篇论文解读
 description: >-
-  33篇ICML2025的可解释性方向论文解读，涵盖 LLM、推理、知识蒸馏、域适应、代码智能、生物分子等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  32篇ICML2025的可解释性方向论文解读，涵盖 LLM、推理、知识蒸馏、域适应、代码智能、生物分子等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "可解释性"
@@ -19,9 +19,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**🧪 ICML2025** · **33** 篇论文解读
+**🧪 ICML2025** · **32** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (34)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (56)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (86)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (21)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (51)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (84)](../../NeurIPS2025/interpretability/index.md)
 
 🔥 **高频主题：** LLM ×3 · 推理 ×2
 
@@ -112,10 +112,6 @@ tags:
 **[Rethinking Explainable Machine Learning as Applied Statistics](rethinking_explainable_machine_learning_as_applied_statistics.md)**
 
 :   本文是一篇立场论文，提出可解释机器学习应被视为"高维函数的应用统计学"——解释算法本质上是函数的统计量（functionals），应当像传统统计量（如 p 值、置信区间）一样关注其**解释**（interpretation）问题，而非仅研究数学性质；当前文献最大的缺陷正是忽视了"解释算法的输出到底回答了哪个直觉问题"这一核心议题。
-
-**[SAEBench: A Comprehensive Benchmark for Sparse Autoencoders in Language Model Interpretability](saebench_a_comprehensive_benchmark_for_sparse_autoencoders_in_language_model_int.md)**
-
-:   提出 SAEBench——一个包含 8 项评估指标的综合基准，系统评测稀疏自编码器（SAE）在语言模型可解释性中的表现，揭示了代理指标（稀疏-保真度）与下游任务性能之间的严重脱节。
 
 **[SafetyAnalyst: Interpretable, Transparent, and Steerable Safety Moderation for AI Behavior](safetyanalyst_interpretable_transparent_and_steerable_safety_moderation_for_ai_b.md)**
 

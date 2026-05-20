@@ -128,8 +128,8 @@ OneTrack基于标准的查询式3D检测+跟踪框架。输入是多视角相机
 
 - [\[CVPR 2025\] WiLoR: End-to-end 3D Hand Localization and Reconstruction in-the-wild](../../CVPR2025/video_understanding/wilor_end-to-end_3d_hand_localization_and_reconstruction_in-the-wild.md)
 - [\[CVPR 2026\] STORM: End-to-End Referring Multi-Object Tracking in Videos](../../CVPR2026/video_understanding/storm_referring_multi_object_tracking.md)
-- [\[ECCV 2024\] TAPTR: Tracking Any Point with Transformers as Detection](taptr_tracking_any_point_with_transformers_as_detection.md)
 - [\[ECCV 2024\] Boosting 3D Single Object Tracking with 2D Matching Distillation and 3D Pre-training](boosting_3d_single_object_tracking_with_2d_matching_distillation_and_3d_pre-trai.md)
+- [\[ICML 2026\] Towards Resource-Efficient LLMs: End-to-End Energy Accounting of Distillation Pipelines](../../ICML2026/video_understanding/towards_resource-efficient_llms_end-to-end_energy_accounting_of_distillation_pip.md)
 - [\[ECCV 2024\] SPAMming Labels: Efficient Annotations for the Trackers of Tomorrow](spamming_labels_efficient_annotations_for_the_trackers_of_tomorrow.md)
 
 </div>

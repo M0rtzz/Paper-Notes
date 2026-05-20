@@ -143,11 +143,11 @@ Pipeline:
 
 ## 相关论文
 
-- [\[ICCV 2025\] Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction](boosting_multiview_indoor_3d_object_detection_via_adaptive_3.md)
-- [\[AAAI 2026\] MonoCLUE: Object-Aware Clustering Enhances Monocular 3D Object Detection](../../AAAI2026/object_detection/monoclue_object-aware_clustering_enhances_monocular_3d_object_detection.md)
-- [\[CVPR 2026\] Towards Intrinsic-Aware Monocular 3D Object Detection](../../CVPR2026/object_detection/towards_intrinsic-aware_monocular_3d_object_detection.md)
-- [\[ICCV 2025\] Accelerate 3D Object Detection Models via Zero-Shot Attention Key Pruning](accelerate_3d_object_detection_models_via_zero-shot_attention_key_pruning.md)
-- [\[ECCV 2024\] Approaching Outside: Scaling Unsupervised 3D Object Detection from 2D Scene](../../ECCV2024/object_detection/approaching_outside_scaling_unsupervised_3d_object_detection_from_2d_scene.md)
+- [\[ICCV 2025\] VOccl3D: A Video Benchmark Dataset for 3D Human Pose and Shape Estimation under Real Occlusions](voccl3d_a_video_benchmark_dataset_for_3d_human_pose_and_shape_estimation_under_r.md)
+- [\[AAAI 2026\] REXO: Indoor Multi-View Radar Object Detection via 3D Bounding Box Diffusion](../../AAAI2026/object_detection/rexo_indoor_multi-view_radar_object_detection_via_3d_bounding_box_diffusion.md)
+- [\[ICCV 2025\] OpenRSD: Towards Open-prompts for Object Detection in Remote Sensing Images](openrsd_towards_open-prompts_for_object_detection_in_remote_sensing_images.md)
+- [\[ICCV 2025\] Dynamic-DINO: Fine-Grained Mixture of Experts Tuning for Real-time Open-Vocabulary Object Detection](dynamicdino_finegrained_mixture_of_experts_tuning_for_realti.md)
+- [\[ICML 2025\] Open-Det: An Efficient Learning Framework for Open-Ended Detection](../../ICML2025/object_detection/open-det_an_efficient_learning_framework_for_open-ended_detection.md)
 
 </div>
 

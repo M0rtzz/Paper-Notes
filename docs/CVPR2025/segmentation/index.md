@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 语义分割方向98篇论文解读
+  CVPR2025 语义分割方向96篇论文解读
 description: >-
-  98篇CVPR2025的语义分割方向论文解读，涵盖语义分割、多模态、语音、目标检测、对齐/RLHF、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  96篇CVPR2025的语义分割方向论文解读，涵盖语义分割、多模态、语音、目标检测、对齐/RLHF、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2025"
   - "语义分割"
@@ -18,11 +18,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**📷 CVPR2025** · **98** 篇论文解读
+**📷 CVPR2025** · **96** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (85)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/segmentation/index.md) · [📹 ICCV2025 (74)](../../ICCV2025/segmentation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/segmentation/index.md) · [💬 ACL2026 (1)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/segmentation/index.md)
 
-🔥 **高频主题：** 语义分割 ×41 · 多模态 ×6 · 语音 ×5 · 目标检测 ×5 · 对齐/RLHF ×4
+🔥 **高频主题：** 语义分割 ×39 · 多模态 ×6 · 语音 ×5 · 目标检测 ×5 · 对齐/RLHF ×4
 
 **[2DMamba: Efficient State Space Model for Image Representation with Applications on Giga-Pixel Whole Slide Image Classification](2dmamba_efficient_state_space_model_for_image_representation_with_applications_o.md)**
 
@@ -222,10 +222,6 @@ tags:
 
 :   提出 MatAnyone 框架，通过区域自适应记忆融合机制在记忆空间中实现一致性传播（核心区域保持语义稳定，边界区域捕获精细 alpha 细节），配合新数据集 VM800 和利用分割数据直接监督 matting head 的训练策略，实现了鲁棒且高质量的目标指定视频抠图。
 
-**[Mosaic3D: Foundation Dataset and Model for Open-Vocabulary 3D Segmentation](mosaic3d_foundation_dataset_and_model_for_open-vocabulary_3d_segmentation.md)**
-
-:   提出自动化数据生成管线构建大规模3D mask-text数据集Mosaic3D-5.6M（5.6M对、30K场景），训练语言对齐3D编码器+mask decoder，实现首个单阶段开放词汇3D实例分割。
-
 **[MV-SSM: Multi-View State Space Modeling for 3D Human Pose Estimation](mv-ssm_multi-view_state_space_modeling_for_3d_human_pose_estimation.md)**
 
 :   MV-SSM 首次将状态空间模型（Mamba）引入多视图 3D 人体姿态估计，通过投影状态空间块 (PSS) 和网格 token 引导的双向扫描 (GTBS) 显式建模关节空间序列，在 CMU Panoptic 上达到 93.5 AP25 且在跨相机、跨场景泛化测试中大幅超越 SOTA。
@@ -309,10 +305,6 @@ tags:
 **[Scene-Centric Unsupervised Panoptic Segmentation](scene-centric_unsupervised_panoptic_segmentation.md)**
 
 :   CUPS 是首个直接在场景中心图像（如自动驾驶场景）上训练的无监督全景分割方法，通过融合自监督视觉特征、立体深度和光流运动线索生成高质量伪标签，在 Cityscapes 上的 PQ 超越此前 SOTA U2Seg 9.4 个点。
-
-**[SCOPE: Scene-Contextualized Incremental Few-Shot 3D Segmentation](scope_scene-contextualized_incremental_few-shot_3d_segmentation.md)**
-
-:   SCOPE 提出一个即插即用的背景引导原型富化框架，在基类训练后用类无关分割模型从背景区域挖掘伪实例建立 Instance Prototype Bank (IPB)，当新类别以少样本方式出现时，通过 Contextual Prototype Retrieval (CPR) 和 Attention-Based Prototype Enrichment (APE) 融合背景原型与少样本原型，在 ScanNet/S3DIS 上新类 IoU 提升最高 6.98%。
 
 **[GleSAM: Segment Any-Quality Images with Generative Latent Space Enhancement](segment_any-quality_images_with_generative_latent_space_enhancement.md)**
 

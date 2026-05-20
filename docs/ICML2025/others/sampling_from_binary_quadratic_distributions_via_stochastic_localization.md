@@ -148,9 +148,9 @@ $$P_q\left[\left|\frac{1}{n}\sum_{i=1}^n X_i - \mathbb{E}_{\nu_{\beta,h}}[X]\rig
 
 - [\[ICML 2025\] Scalable Equilibrium Sampling with Sequential Boltzmann Generators](scalable_equilibrium_sampling_with_sequential_boltzmann_generators.md)
 - [\[ICML 2025\] Principled Algorithms for Optimizing Generalized Metrics in Binary Classification](principled_algorithms_for_optimizing_generalized_metrics_in_binary_classificatio.md)
-- [\[NeurIPS 2025\] OrthoLoC: UAV 6-DoF Localization and Calibration Using Orthographic Geodata](../../NeurIPS2025/others/ortholoc_uav_6-dof_localization_and_calibration_using_orthographic_geodata.md)
 - [\[AAAI 2026\] Provably Data-Driven Projection Method for Quadratic Programming](../../AAAI2026/others/provably_data-driven_projection_method_for_quadratic_programming.md)
-- [\[CVPR 2025\] Less is More: Efficient Model Merging with Binary Task Switch](../../CVPR2025/others/less_is_more_efficient_model_merging_with_binary_task_switch.md)
+- [\[NeurIPS 2025\] Sample-Adaptivity Tradeoff in On-Demand Sampling](../../NeurIPS2025/others/sample-adaptivity_tradeoff_in_on-demand_sampling.md)
+- [\[NeurIPS 2025\] Robust Sampling for Active Statistical Inference](../../NeurIPS2025/others/robust_sampling_for_active_statistical_inference.md)
 
 </div>
 

@@ -185,11 +185,11 @@ MOSA 对通用能力的影响极小，与原始模型基本持平。
 
 ## 相关论文
 
-- [\[AAAI 2026\] Formal Verification of Diffusion Auctions](formal_verification_of_diffusion_auctions.md)
+- [\[ICML 2026\] Break the Block: Dynamic-size Reasoning Blocks for Diffusion Large Language Models via Monotonic Entropy Descent with Reinforcement Learning](../../ICML2026/reinforcement_learning/break_the_block_dynamic-size_reasoning_blocks_for_diffusion_large_language_model.md)
+- [\[ACL 2026\] d-TreeRPO: Towards More Reliable Policy Optimization for Diffusion Language Models](../../ACL2026/reinforcement_learning/d-treerpo_towards_more_reliable_policy_optimization_for_diffusion_language_model.md)
 - [\[AAAI 2026\] Language Model Distillation: A Temporal Difference Imitation Learning Perspective](language_model_distillation_a_temporal_difference_imitation_learning_perspective.md)
-- [\[ICLR 2026\] VerifyBench: Benchmarking Reference-based Reward Systems for Large Language Models](../../ICLR2026/reinforcement_learning/verifybench_benchmarking_reference-based_reward_systems_for_large_language_model.md)
-- [\[ICLR 2026\] Robust Multi-Objective Controlled Decoding of Large Language Models](../../ICLR2026/reinforcement_learning/robust_multi-objective_controlled_decoding_of_large_language_models.md)
-- [\[ICLR 2026\] AWM: Accurate Weight-Matrix Fingerprint for Large Language Models](../../ICLR2026/reinforcement_learning/awm_accurate_weight-matrix_fingerprint_for_large_language_models.md)
+- [\[AAAI 2026\] Formal Verification of Diffusion Auctions](formal_verification_of_diffusion_auctions.md)
+- [\[AAAI 2026\] Where and What Matters: Sensitivity-Aware Task Vectors for Many-Shot Multimodal In-Context Learning](where_and_what_matters_sensitivity-aware_task_vectors_for_many-shot_multimodal_i.md)
 
 </div>
 

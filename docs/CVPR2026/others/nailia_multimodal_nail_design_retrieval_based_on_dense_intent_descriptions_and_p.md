@@ -161,9 +161,9 @@ $$\mathcal{L}_{\text{CRC}} = \mathcal{L}_P + \lambda_{UP} \mathcal{L}_{UP} + \la
 
 - [\[CVPR 2026\] SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](sldprtnet_a_large-scale_multimodal_dataset_for_cad_generation_in_language-driven.md)
 - [\[CVPR 2026\] Shoe Style-Invariant and Ground-Aware Learning for Dense Foot Contact Estimation](shoe_style-invariant_and_ground-aware_learning_for_dense_foot_contact_estimation.md)
+- [\[ACL 2026\] ROSE: An Intent-Centered Evaluation Metric for NL2SQL](../../ACL2026/others/rose_an_intent-centered_evaluation_metric_for_nl2sql.md)
 - [\[ICLR 2026\] Beyond Linearity in Attention Projections: The Case for Nonlinear Queries](../../ICLR2026/others/beyond_linearity_in_attention_projections_the_case_for_nonlinear_queries.md)
 - [\[AAAI 2026\] Description Logics with Two Types of Definite Descriptions: Complexity, Expressiveness, and Automated Deduction](../../AAAI2026/others/description_logics_with_two_types_of_definite_descriptions_complexity_expressive.md)
-- [\[ACL 2025\] Towards Text-Image Interleaved Retrieval](../../ACL2025/others/towards_text-image_interleaved_retrieval.md)
 
 </div>
 

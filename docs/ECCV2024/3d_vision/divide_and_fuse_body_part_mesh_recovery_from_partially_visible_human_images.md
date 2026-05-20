@@ -161,11 +161,11 @@ $$\mathcal{L}_{fu} = \lambda_{ol} \mathcal{L}_{ol} + \lambda_{dc} \mathcal{L}_{d
 
 ## 相关论文
 
-- [\[CVPR 2026\] Fall Risk and Gait Analysis using World-Spaced 3D Human Mesh Recovery](../../CVPR2026/3d_vision/fall_risk_gait_analysis_hmr.md)
+- [\[ECCV 2024\] Multi-HMR: Multi-Person Whole-Body Human Mesh Recovery in a Single Shot](multi-hmr_multi-person_whole-body_human_mesh_recovery_in_a_single_shot.md)
+- [\[ECCV 2024\] Global-to-Pixel Regression for Human Mesh Recovery](global-to-pixel_regression_for_human_mesh_recovery.md)
+- [\[CVPR 2025\] PromptHMR: Promptable Human Mesh Recovery](../../CVPR2025/3d_vision/prompthmr_promptable_human_mesh_recovery.md)
+- [\[ECCV 2024\] CanonicalFusion: Generating Drivable 3D Human Avatars from Multiple Images](canonicalfusion_generating_drivable_3d_human_avatars_from_multiple_images.md)
 - [\[ECCV 2024\] 3×2: 3D Object Part Segmentation by 2D Semantic Correspondences](3x2_3d_object_part_segmentation_by_2d_semantic_correspondenc.md)
-- [\[ECCV 2024\] Sapiens: Foundation for Human Vision Models](sapiens_foundation_for_human_vision_models.md)
-- [\[ECCV 2024\] Human Hair Reconstruction with Strand-Aligned 3D Gaussians](human_hair_reconstruction_with_strand-aligned_3d_gaussians.md)
-- [\[ECCV 2024\] Differentiable Convex Polyhedra Optimization from Multi-view Images](differentiable_convex_polyhedra_optimization_from_multi-view_images.md)
 
 </div>
 

@@ -175,9 +175,9 @@ FacET（可变chunks + predicted translator）显著优于所有消融变体。�
 
 - [\[ECCV 2024\] Generalizable Facial Expression Recognition](generalizable_facial_expression_recognition.md)
 - [\[CVPR 2026\] How to Take a Memorable Picture? Empowering Users with Actionable Feedback](../../CVPR2026/human_understanding/how_to_take_a_memorable_picture_empowering_users_with_actionable_feedback.md)
-- [\[ECCV 2024\] ReLoo: Reconstructing Humans Dressed in Loose Garments from Monocular Video in the Wild](reloo_reconstructing_humans_dressed_in_loose_garments_from_monocular_video_in_th.md)
-- [\[ICCV 2025\] Bring Your Rear Cameras for Egocentric 3D Human Pose Estimation](../../ICCV2025/human_understanding/bring_your_rear_cameras_for_egocentric_3d_human_pose_estimation.md)
-- [\[ECCV 2024\] Interleaving One-Class and Weakly-Supervised Models with Adaptive Thresholding for Unsupervised Video Anomaly Detection](interleaving_one-class_and_weakly-supervised_models_with_adaptive_thresholding_f.md)
+- [\[ICCV 2025\] SynFER: Towards Boosting Facial Expression Recognition with Synthetic Data](../../ICCV2025/human_understanding/synfer_towards_boosting_facial_expression_recognition_with_synthetic_data.md)
+- [\[CVPR 2026\] A Two-Stage Dual-Modality Model for Facial Expression Recognition](../../CVPR2026/human_understanding/a_two_stage_dual_modality_model_for_facial_expression_recognition.md)
+- [\[CVPR 2025\] ShowMak3r++: Compositional Entertainment Video Reconstruction](../../CVPR2025/human_understanding/showmak3r_compositional_tv_show_reconstruction.md)
 
 </div>
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 时间序列方向37篇论文解读
+  ICLR2026 时间序列方向36篇论文解读
 description: >-
-  37篇ICLR2026的时间序列方向论文解读，涵盖时序预测、LLM、少样本学习、异常检测、推理、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  36篇ICLR2026的时间序列方向论文解读，涵盖时序预测、LLM、少样本学习、推理、异常检测、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICLR2026"
   - "时间序列"
@@ -11,27 +11,23 @@ tags:
   - "时序预测"
   - "LLM"
   - "少样本学习"
-  - "异常检测"
   - "推理"
+  - "异常检测"
   - "布局/合成"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📈 时间序列
 
-**🔬 ICLR2026** · **37** 篇论文解读
+**🔬 ICLR2026** · **36** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🤖 AAAI2026 (35)](../../AAAI2026/time_series/index.md) · [🧠 NeurIPS2025 (58)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md) · [🧪 ICML2025 (26)](../../ICML2025/time_series/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (10)](../../ICML2026/time_series/index.md) · [💬 ACL2026 (6)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🤖 AAAI2026 (35)](../../AAAI2026/time_series/index.md) · [🧠 NeurIPS2025 (57)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md)
 
-🔥 **高频主题：** 时序预测 ×27 · LLM ×4 · 少样本学习 ×4 · 异常检测 ×2 · 推理 ×2
+🔥 **高频主题：** 时序预测 ×28 · LLM ×4 · 少样本学习 ×4 · 推理 ×3 · 异常检测 ×2
 
 **[Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)**
 
 :   提出TATO框架，通过自动优化数据预处理 pipeline（包括上下文裁切、尺度归一化、异常值校正），让冻结的大型时序模型（LTM）在不微调的情况下适配不同下游领域，平均降低MSE 13.6%，最高65.4%。
-
-**[Brain-Semantoks: Learning Semantic Tokens of Brain Dynamics with a Self-Distilled Foundation Model](brain-semantoks_learning_semantic_tokens_of_brain_dynamics_with_a_self-distilled.md)**
-
-:   提出 Brain-Semantoks，一种基于语义分词器和自蒸馏目标的 fMRI 基础模型，将大脑功能网络聚合为鲁棒的语义 token，并通过跨时间视角的一致性学习抽象的脑动态表征，在线性探测设置下即可达到 SOTA 性能。
 
 **[Contextual and Seasonal LSTMs for Time Series Anomaly Detection](contextual_and_seasonal_lstms_for_time_series_anomaly_detection.md)**
 
@@ -161,14 +157,14 @@ tags:
 
 :   TSRating 利用 LLM 的先验知识从趋势、频率、幅度、模式四个维度成对评判时间序列数据块的质量，再通过 Bradley-Terry 模型转换为标量分数，并用元学习训练跨域泛化的 TSRater 模型，实现高效、准确的时间序列数据质量评估。
 
-**[调节 RNN 训练中的 Burn-in 阶段可提升性能](tuning_the_burn-in_phase_in_training_recurrent_neural_networks_improves_their_pe.md)**
+**[Tuning the burn-in phase in training recurrent neural networks improves their performance](tuning_the_burn-in_phase_in_training_recurrent_neural_networks_improves_their_pe.md)**
 
 :   从理论上证明了 RNN 训练中 burn-in 阶段长度 $m$ 对截断反向传播时间（TBPTT）训练性能的关键影响，建立了训练遗憾的上界估计，并通过系统辨识和时间序列预测实验验证，合理调节 burn-in 可将预测误差降低超过 60%。
 
-**[VoT: 事件驱动推理与多层对齐解锁文本价值用于时间序列预测](unlocking_the_value_of_text_event-driven_reasoning_and_multi-level_alignment_for.md)**
+**[Unlocking the Value of Text: Event-Driven Reasoning and Multi-Level Alignment for Time Series Forecasting](unlocking_the_value_of_text_event-driven_reasoning_and_multi-level_alignment_for.md)**
 
 :   提出 VoT，一种通过事件驱动推理（利用 LLM 对外生文本进行结构化推理获取数值预测）和多层对齐（表征级内生文本对齐 + 预测级自适应频率融合）充分挖掘文本信息价值的多模态时间序列预测方法，在 10 个领域的真实数据集上全面超越现有方法。
 
-**[WARP: 权重空间线性循环神经网络](weight-space_linear_recurrent_neural_networks.md)**
+**[Weight-Space Linear Recurrent Neural Networks](weight-space_linear_recurrent_neural_networks.md)**
 
 :   提出 WARP（Weight-space Adaptive Recurrent Prediction），将线性 RNN 的隐状态显式参数化为辅助 MLP 的权重和偏置，利用输入差分驱动线性递推来更新权重，结合非线性解码实现高效序列建模，在分类、预测和动力系统重建等任务上达到 SOTA。

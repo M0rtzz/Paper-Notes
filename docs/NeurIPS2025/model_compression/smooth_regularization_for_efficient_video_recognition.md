@@ -130,8 +130,8 @@ MoViNet-A3-GRW以56.4 GFLOPs达到85.6%准确率，与MViTv2-B-32×3相当但后
 ## 相关论文
 
 - [\[NeurIPS 2025\] Recurrent Attention-based Token Selection for Efficient Streaming Video-LLMs](recurrent_attention-based_token_selection_for_efficient_streaming_video-llms.md)
-- [\[NeurIPS 2025\] Hankel Singular Value Regularization for Highly Compressible State Space Models](hankel_singular_value_regularization_for_highly_compressible_state_space_models.md)
 - [\[NeurIPS 2025\] 4DGCPro: Efficient Hierarchical 4D Gaussian Compression for Progressive Volumetric Video Streaming](4dgcpro_efficient_hierarchical_4d_gaussian_compression_for_p.md)
+- [\[NeurIPS 2025\] Hankel Singular Value Regularization for Highly Compressible State Space Models](hankel_singular_value_regularization_for_highly_compressible_state_space_models.md)
 - [\[NeurIPS 2025\] Eyes Wide Open: Ego Proactive Video-LLM for Streaming Video](eyes_wide_open_ego_proactive_videollm_for_streaming_video.md)
 - [\[AAAI 2026\] Towards Test-time Efficient Visual Place Recognition via Asymmetric Query Processing](../../AAAI2026/model_compression/towards_test-time_efficient_visual_place_recognition_via_asymmetric_query_proces.md)
 

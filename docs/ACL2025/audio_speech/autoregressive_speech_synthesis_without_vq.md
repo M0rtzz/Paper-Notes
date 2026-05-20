@@ -154,7 +154,7 @@ MELLE 是一个 decoder-only 的自回归语言模型，输入是 BPE 文本 tok
 - [\[ACL 2025\] Distilling an End-to-End Voice Assistant Without Instruction Training Data](distilling_an_end-to-end_voice_assistant_without_instruction_training_data.md)
 - [\[NeurIPS 2025\] E2E-VGuard: Adversarial Prevention for Production LLM-based End-To-End Speech Synthesis](../../NeurIPS2025/audio_speech/e2e-vguard_adversarial_prevention_for_production_llm-based_end-to-end_speech_syn.md)
 - [\[ACL 2026\] Affectron: Emotional Speech Synthesis with Affective and Contextually Aligned Nonverbal Vocalizations](../../ACL2026/audio_speech/affectron_emotional_speech_synthesis_with_affective_and_contextually_aligned_non.md)
-- [\[ACL 2025\] Zero-Shot Text-to-Speech for Vietnamese](zero-shot_text-to-speech_for_vietnamese.md)
+- [\[ACL 2025\] TCSinger 2: Customizable Multilingual Zero-shot Singing Voice Synthesis](tcsinger_2_customizable_multilingual_zero-shot_singing_voice_synthesis.md)
 
 </div>
 

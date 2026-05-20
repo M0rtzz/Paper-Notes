@@ -1,17 +1,17 @@
 ---
 title: >-
-  ICCV2025 人体理解方向46篇论文解读
+  ICCV2025 人体理解方向38篇论文解读
 description: >-
-  46篇ICCV2025的人体理解方向论文解读，涵盖人体姿态、人脸/视线、扩散模型、重识别、语音、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  38篇ICCV2025的人体理解方向论文解读，涵盖人脸/视线、人体姿态、重识别、扩散模型、语音、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "人体理解"
   - "论文解读"
   - "论文笔记"
-  - "人体姿态"
   - "人脸/视线"
-  - "扩散模型"
+  - "人体姿态"
   - "重识别"
+  - "扩散模型"
   - "语音"
   - "对抗鲁棒"
 ---
@@ -19,19 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧑 人体理解
 
-**📹 ICCV2025** · **46** 篇论文解读
+**📹 ICCV2025** · **38** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (56)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (7)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (19)](../../NeurIPS2025/human_understanding/index.md) · [🧪 ICML2025 (2)](../../ICML2025/human_understanding/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (1)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (53)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (7)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (15)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (18)](../../NeurIPS2025/human_understanding/index.md)
 
-🔥 **高频主题：** 人体姿态 ×11 · 人脸/视线 ×7 · 扩散模型 ×6 · 重识别 ×4 · 语音 ×3
-
-**[AdaHuman: Animatable Detailed 3D Human Generation with Compositional Multiview Diffusion](adahuman_animatable_detailed_3d_human_generation_with_compositional_multiview_di.md)**
-
-:   提出AdaHuman框架，通过姿态条件化的3D联合扩散模型和组合式3DGS细化模块，从单张图片生成高精度、可动画化的3D人体虚拟人。
-
-**[AJAHR: Amputated Joint Aware 3D Human Mesh Recovery](ajahr_amputated_joint_aware_3d_human_mesh_recovery.md)**
-
-:   首个面向截肢者的3D人体网格恢复框架——通过合成100万+截肢者图像(A3D)、设计BPAC-Net截肢分类器区分截肢与遮挡、以及双Tokenizer切换策略分别编码截肢/正常位姿先验，在截肢者数据上大幅领先(ITW-amputee上MVE比TokenHMR低16.87)，非截肢者数据上也保持竞争力。
+🔥 **高频主题：** 人脸/视线 ×7 · 人体姿态 ×7 · 重识别 ×4 · 扩散模型 ×3 · 语音 ×3
 
 **[AR-VRM: Imitating Human Motions for Visual Robot Manipulation with Analogical Reasoning](ar-vrm_imitating_human_motions_for_visual_robot_manipulation_with_analogical_rea.md)**
 
@@ -44,10 +36,6 @@ tags:
 **[Bi-Level Optimization for Self-Supervised AI-Generated Face Detection](bi-level_optimization_for_self-supervised_ai-generated_face_detection.md)**
 
 :   提出BLADES方法，通过双层优化（bi-level optimization）将自监督预训练与AI生成人脸检测目标显式对齐：内层优化视觉编码器学习EXIF分类/排序和人脸篡改检测等前置任务，外层优化各任务权重以提升代理检测任务性能，实现不依赖合成人脸的跨生成器泛化检测。
-
-**[Bring Your Rear Cameras for Egocentric 3D Human Pose Estimation](bring_your_rear_cameras_for_egocentric_3d_human_pose_estimation.md)**
-
-:   首次研究HMD后置相机对自中心3D全身姿态估计的价值，提出基于Transformer的多视图热图细化方法，结合不确定性感知掩码机制，在新建的Ego4View数据集上实现>10% MPJPE提升。
 
 **[CarGait: Cross-Attention based Re-ranking for Gait Recognition](cargait_cross_attention_based_re_ranking_for_gait_recognition.md)**
 
@@ -81,10 +69,6 @@ tags:
 
 :   提出EgoAgent，一个统一的预测式智能体模型，在单个Transformer中同时学习表征第一人称视觉观测、预测未来世界状态和生成3D人体动作。
 
-**[Fish2Mesh Transformer: 3D Human Mesh Recovery from Egocentric Vision](fish2mesh_transformer_3d_human_mesh_recovery_from_egocentric_vision.md)**
-
-:   本文提出Fish2Mesh，一个鱼眼感知的Transformer模型，通过等距矩形投影的自我中心位置编码（EPE）将鱼眼图像的球面几何信息嵌入Swin Transformer，实现从头戴鱼眼相机的第一人称视角准确恢复3D人体mesh。
-
 **[GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation](genm3_generative_pretrained_multi-path_motion_model_for_text_conditional_human_m.md)**
 
 :   提出 GenM3 框架，通过 Multi-Expert VQ-VAE (MEVQ-VAE) 学习统一的离散运动表示，以及 Multi-path Motion Transformer (MMT) 处理模态内变异和跨模态对齐，整合 11 个运动数据集（约 220 小时），在 HumanML3D 上达到 SOTA FID 0.035。
@@ -108,10 +92,6 @@ tags:
 **[High-Resolution Spatiotemporal Modeling with Global-Local State Space Models for Video-Based Human Pose Estimation](high-resolution_spatiotemporal_modeling_with_global-local_state_space_models_for.md)**
 
 :   提出 GLSMamba，首个纯 Mamba 的视频人体姿态估计框架，通过 Global Spatiotemporal Mamba（6D 选择性时空扫描 + 时空调制融合）和 Local Refinement Mamba（窗口化时空扫描）分别建模全局动态上下文和局部关键点细节，在四个基准上以线性复杂度达到 SOTA。
-
-**[HIS-GPT: Towards 3D Human-In-Scene Multimodal Understanding](his-gpt_towards_3d_human-in-scene_multimodal_understanding.md)**
-
-:   提出 HIS-GPT，首个面向3D人-场景联合理解的多模态大语言模型，通过辅助交互模块(AInt)和布局-轨迹位置编码(LTP)捕获人场交互线索，并构建首个系统性基准 HIS-Bench，在HIS-QA任务上大幅超越GPT-4o等基线。
 
 **[HUMOTO: A 4D Dataset of Mocap Human Object Interactions](humoto_a_4d_dataset_of_mocap_human_object_interactions.md)**
 
@@ -161,14 +141,6 @@ tags:
 
 :   > 本文开发了 OpenAnimals 开源框架，系统回顾行人重识别方法在动物重识别中的迁移效果，提出面向动物的强基线模型 ARBase，在多个基准上大幅超越现有行人 ReID 方法。
 
-**[PersPose: 3D Human Pose Estimation with Perspective Encoding and Perspective Rotation](perspose_3d_human_pose_estimation_with_perspective_encoding_and_perspective_rota.md)**
-
-:   提出PersPose框架，通过透视编码(PE)将裁剪后相机内参编码为2D映射、透视旋转(PR)将人体居中以消除透视畸变，解决了现有方法忽略FOV信息导致深度估计不准确的问题。
-
-**[PHD: Personalized 3D Human Body Fitting with Point Diffusion](phd_personalized_3d_human_body_fitting_with_point_diffusion.md)**
-
-:   提出个性化3D人体姿态估计范式PHD——先通过SHAPify校准用户体型，再用体型条件化的点扩散模型PointDiT作为3D先验，结合Point Distillation Sampling损失迭代优化姿态，在绝对姿态精度上达到EMDB数据集SOTA。
-
 **[PoseSyn: Synthesizing Diverse 3D Pose Data from In-the-Wild 2D Data](posesyn_synthesizing_diverse_3d_pose_data_from_in-the-wild_2d_data.md)**
 
 :   提出 PoseSyn 框架，通过误差提取模块（EEM）从野外 2D 姿态数据中识别目标估计器的困难样本，再通过运动合成模块（MSM）将不准确的伪标签扩展为多样化的运动序列，最终借助人体动画模型生成带有准确 3D 标注的合成训练数据，在多个真实场景基准上将 3D 姿态估计精度提升最多 14%。
@@ -192,10 +164,6 @@ tags:
 **[SynFER: Towards Boosting Facial Expression Recognition with Synthetic Data](synfer_towards_boosting_facial_expression_recognition_with_synthetic_data.md)**
 
 :   提出 SynFER，一个基于扩散模型的面部表情合成框架，通过文本描述 + 面部动作单元 (FAU) 的双重控制实现细粒度表情生成，并引入 FERAnno 标签校准器确保标注可靠性，在自监督、监督、零样本和少样本四种学习范式下均证明合成数据对 FER 的有效性。
-
-**[TriDi: Trilateral Diffusion of 3D Humans, Objects, and Interactions](tridi_trilateral_diffusion_of_3d_humans_objects_and_interactions.md)**
-
-:   提出 TriDi，首个建模人体(H)、物体(O)和交互(I)三变量联合分布的统一扩散模型，一个网络覆盖 7 种条件生成模式，超越各专用单向基线。
 
 **[UDC-VIT: A Real-World Video Dataset for Under-Display Cameras](udc-vit_a_real-world_video_dataset_for_under-display_cameras.md)**
 

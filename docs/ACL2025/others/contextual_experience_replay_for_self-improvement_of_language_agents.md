@@ -138,9 +138,9 @@ CER 在 WebArena 上达到 36.7%，相对 GPT-4o baseline 提升了 **51.0%**。
 
 - [\[ICML 2025\] Truly Self-Improving Agents Require Intrinsic Metacognitive Learning](../../ICML2025/others/truly_self-improving_agents_require_intrinsic_metacognitive_learning.md)
 - [\[ACL 2025\] Cooperating and Competing Through Natural Language](cooperating_and_competing_through_natural_language.md)
-- [\[ACL 2025\] Learning to Reason Over Time: Timeline Self-Reflection for Temporal Reasoning](tiser_timeline_self_reflection_temporal.md)
-- [\[ACL 2025\] Improve Rule Retrieval and Reasoning with Self-Induction and Relevance ReEstimate](improve_rule_retrieval_and_reasoning_with_self-induction_and_relevance_reestimat.md)
-- [\[ACL 2025\] SDD: Self-Degraded Defense against Malicious Fine-tuning](sdd_self-degraded_defense_against_malicious_fine-tuning.md)
+- [\[NeurIPS 2025\] Contextual Dynamic Pricing with Heterogeneous Buyers](../../NeurIPS2025/others/contextual_dynamic_pricing_with_heterogeneous_buyers.md)
+- [\[ACL 2025\] ACT: Knowledgeable Agents to Design and Perform Complex Tasks](act_knowledgeable_agents_to_design_and_perform_complex_tasks.md)
+- [\[ACL 2025\] Substance over Style: Evaluating Proactive Conversational Coaching Agents](proactive_conversational_coaching.md)
 
 </div>
 

@@ -2,14 +2,14 @@
 title: >-
   ACL2026 人体理解方向1篇论文解读
 description: >-
-  1篇ACL2026的人体理解方向论文解读，涵盖人脸/视线、机器人等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  1篇ACL2026的人体理解方向论文解读，涵盖重识别、联邦学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "人体理解"
   - "论文解读"
   - "论文笔记"
-  - "人脸/视线"
-  - "机器人"
+  - "重识别"
+  - "联邦学习"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
@@ -17,8 +17,8 @@ tags:
 
 **💬 ACL2026** · **1** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (56)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (7)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (19)](../../NeurIPS2025/human_understanding/index.md) · [📹 ICCV2025 (46)](../../ICCV2025/human_understanding/index.md) · [🧪 ICML2025 (2)](../../ICML2025/human_understanding/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/human_understanding/index.md) · [📷 CVPR2026 (53)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (7)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (15)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (18)](../../NeurIPS2025/human_understanding/index.md) · [📹 ICCV2025 (38)](../../ICCV2025/human_understanding/index.md)
 
-**[ForgeryTalker: Generating Attribution Reports for Manipulated Facial Images](generating_attribution_reports_for_manipulated_facial_images_a_dataset_and_basel.md)**
+**[CO-EVO: Co-evolving Semantic Anchoring and Style Diversification for Federated DG-ReID](co-evo_co-evolving_semantic_anchoring_and_style_diversification_for_federated_dg.md)**
 
-:   本文提出伪造归因报告生成（Forgery Attribution Report Generation）这一新任务，构建了包含 152,217 个样本的 MMTT 数据集（首个同时提供像素级掩码和人工文本描述的大规模面部伪造数据集），并提出 ForgeryTalker 端到端基线，通过共享编码器和双解码器（掩码+语言模型）联合生成定位掩码和归因报告，达到 59.3 CIDEr 和 73.67 IoU。
+:   CO-EVO 针对联邦域泛化行人重识别（FedDG-ReID）中的"语义-风格冲突"，提出 CSA（相机不变语义锚定）学习冻结的身份级文本原型作为"引力中心"+ GSD（全局风格多样化）用轻量 GCSB（全局相机风格库）合成真实跨域扰动，二者耦合优化在 Market-1501/MSMT17/CUHK03 leave-one-out 上 ViT mAP 平均比 SOTA 提升 14 个点（34.1→48.1）。

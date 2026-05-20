@@ -143,7 +143,7 @@ tags:
 - [\[ICLR 2026\] SEED-SET: Scalable Evolving Experimental Design for System-level Ethical Testing](../../ICLR2026/interpretability/seed-set_scalable_evolving_experimental_design_for_system-level_ethical_testing.md)
 - [\[ICLR 2026\] ZeroTuning: Unlocking the Initial Token's Power to Enhance Large Language Models Without Training](../../ICLR2026/interpretability/zerotuning_unlocking_the_initial_tokens_power_to_enhance_large_language_models_w.md)
 - [\[ICML 2025\] MIB: A Mechanistic Interpretability Benchmark](../../ICML2025/interpretability/mib_a_mechanistic_interpretability_benchmark.md)
-- [\[ACL 2025\] Position-aware Automatic Circuit Discovery](position-aware_automatic_circuit_discovery.md)
+- [\[ICML 2025\] Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](../../ICML2025/interpretability/towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
 
 </div>
 

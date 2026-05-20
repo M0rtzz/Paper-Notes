@@ -123,11 +123,11 @@ ActiShade是一个迭代式多轮检索框架，每轮包含三个模块：
 
 ## 相关论文
 
+- [\[ACL 2026\] NovBench: Evaluating Large Language Models on Academic Paper Novelty Assessment](../../ACL2026/aigc_detection/novbench_evaluating_large_language_models_on_academic_paper_novelty_assessment.md)
+- [\[ACL 2026\] ChartDiff: A Large-Scale Benchmark for Comprehending Pairs of Charts](../../ACL2026/aigc_detection/chartdiff_a_large-scale_benchmark_for_comprehending_pairs_of_charts.md)
 - [\[ACL 2026\] Reasoning-Based Refinement of Unsupervised Text Clusters with LLMs](../../ACL2026/aigc_detection/reasoning-based_refinement_of_unsupervised_text_clusters_with_llms.md)
-- [\[NeurIPS 2025\] ASCIIBench: Evaluating Language-Model-Based Understanding of Visually-Oriented Text](../../NeurIPS2025/aigc_detection/asciibench_evaluating_language-model-based_understanding_of_visually-oriented_te.md)
-- [\[NeurIPS 2025\] Reasoning Compiler: LLM-Guided Optimizations for Efficient Model Serving](../../NeurIPS2025/aigc_detection/reasoning_compiler_llm-guided_optimizations_for_efficient_model_serving.md)
+- [\[ACL 2026\] Evaluating Legal Reasoning Traces with Legal Issue Tree Rubrics](../../ACL2026/aigc_detection/evaluating_legal_reasoning_traces_with_legal_issue_tree_rubrics.md)
 - [\[AAAI 2026\] Optimized Algorithms for Text Clustering with LLM-Generated Constraints](optimized_algorithms_for_text_clustering_with_llm-generated_constraints.md)
-- [\[AAAI 2026\] BAID: A Benchmark for Bias Assessment of AI Detectors](baid_a_benchmark_for_bias_assessment_of_ai_detectors.md)
 
 </div>
 

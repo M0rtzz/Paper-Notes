@@ -131,11 +131,11 @@ $$\mathcal{L}(\boldsymbol{\pi}(\lambda)) = \mathcal{L}_c(\boldsymbol{\pi}(\lambd
 
 ## 相关论文
 
-- [\[ACL 2026\] Bayesian Social Deduction with Graph-Informed Language Models](../../ACL2026/llm_agent/bayesian_social_deduction_with_graph-informed_language_models.md)
+- [\[ICML 2026\] Probabilistic Modeling of Latent Agentic Substructures in Deep Neural Networks](../../ICML2026/llm_agent/probabilistic_modeling_of_latent_agentic_substructures_in_deep_neural_networks.md)
 - [\[AAAI 2026\] Structured Personalization: Modeling Constraints as Matroids for Data-Minimal LLM Agents](structured_personalization_modeling_constraints_as_matroids_for_data-minimal_llm.md)
-- [\[ICML 2025\] From Debate to Equilibrium: Belief-Driven Multi-Agent LLM Reasoning via Bayesian Nash Equilibrium](../../ICML2025/llm_agent/from_debate_to_equilibrium_belief-driven_multi-agent_llm_reasoning_via_bayesian_.md)
-- [\[ACL 2025\] Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools](../../ACL2025/llm_agent/agentic_reasoning_tools.md)
+- [\[ACL 2026\] Bayesian Social Deduction with Graph-Informed Language Models](../../ACL2026/llm_agent/bayesian_social_deduction_with_graph-informed_language_models.md)
 - [\[AAAI 2026\] History-Aware Reasoning for GUI Agents](history-aware_reasoning_for_gui_agents.md)
+- [\[ICML 2026\] Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs](../../ICML2026/llm_agent/systematic_failures_in_collective_reasoning_under_distributed_information_in_mul.md)
 
 </div>
 

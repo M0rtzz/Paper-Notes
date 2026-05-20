@@ -127,7 +127,7 @@ HiVU 基准：在 L3（困难推理）上 Overall Winner 77.13% vs baseline 22.8
 - [\[CVPR 2025\] DrVideo: Document Retrieval Based Long Video Understanding](../../CVPR2025/video_understanding/drvideo_document_retrieval_based_long_video_understanding.md)
 - [\[CVPR 2026\] AdaSpark: Adaptive Sparsity for Efficient Long-Video Understanding](../../CVPR2026/video_understanding/adaspark_adaptive_sparsity_for_efficient_long_video_understanding.md)
 - [\[NeurIPS 2025\] VideoLucy: Deep Memory Backtracking for Long Video Understanding](videolucy_deep_memory_backtracking_for_long_video_understanding.md)
-- [\[ECCV 2024\] Rethinking Video-Text Understanding: Retrieval from Counterfactually Augmented Data](../../ECCV2024/video_understanding/rethinking_video-text_understanding_retrieval_from_counterfactually_augmented_da.md)
+- [\[NeurIPS 2025\] Unleashing Hour-Scale Video Training for Long Video-Language Understanding](unleashing_hour-scale_video_training_for_long_video-language_understanding.md)
 
 </div>
 

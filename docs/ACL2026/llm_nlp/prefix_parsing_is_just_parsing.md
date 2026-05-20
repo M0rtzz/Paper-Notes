@@ -15,10 +15,10 @@ tags:
 
 # Prefix Parsing is Just Parsing
 
-**会议**: ACL 2026
-**arXiv**: [2604.21191](https://arxiv.org/abs/2604.21191)
-**代码**: 无
-**领域**: LLM/NLP
+**会议**: ACL 2026  
+**arXiv**: [2604.21191](https://arxiv.org/abs/2604.21191)  
+**代码**: 无  
+**领域**: LLM/NLP  
 **关键词**: 前缀解析, 文法变换, 上下文无关语言模型, 前缀概率, 约束生成
 
 ## 一句话总结

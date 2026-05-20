@@ -146,11 +146,11 @@ CASL 仅用 832 个样本预训练，在 OBJ-BG（92.08%）和 OBJ-ONLY（91.05%
 
 ## 相关论文
 
+- [\[ECCV 2024\] Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection](../../ECCV2024/others/self-supervised_feature_adaptation_for_3d_industrial_anomaly_detection.md)
 - [\[NeurIPS 2025\] Semi-supervised Graph Anomaly Detection via Robust Homophily Learning](../../NeurIPS2025/others/semi-supervised_graph_anomaly_detection_via_robust_homophily_learning.md)
-- [\[CVPR 2025\] Distribution Prototype Diffusion Learning for Open-set Supervised Anomaly Detection](../../CVPR2025/others/distribution_prototype_diffusion_learning_for_open-set_supervised_anomaly_detect.md)
 - [\[AAAI 2026\] RcAE: Recursive Reconstruction Framework for Unsupervised Industrial Anomaly Detection](rcae_recursive_reconstruction_framework_for_unsupervised_industrial_anomaly_dete.md)
+- [\[CVPR 2025\] Distribution Prototype Diffusion Learning for Open-set Supervised Anomaly Detection](../../CVPR2025/others/distribution_prototype_diffusion_learning_for_open-set_supervised_anomaly_detect.md)
 - [\[ECCV 2024\] Decoupling Common and Unique Representations for Multimodal Self-supervised Learning](../../ECCV2024/others/decoupling_common_and_unique_representations_for_multimodal_self-supervised_lear.md)
-- [\[ECCV 2024\] Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection](../../ECCV2024/others/learning_anomalies_with_normality_prior_for_unsupervised_video_anomaly_detection.md)
 
 </div>
 

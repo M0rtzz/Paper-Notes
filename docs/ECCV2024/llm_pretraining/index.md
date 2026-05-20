@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 预训练方向11篇论文解读
+  ECCV2024 预训练方向8篇论文解读
 description: >-
-  11篇ECCV2024的预训练方向论文解读，涵盖少样本学习、异常检测、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  8篇ECCV2024的预训练方向论文解读，涵盖少样本学习、异常检测、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
   - "预训练"
@@ -16,9 +16,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📚 预训练
 
-**🎞️ ECCV2024** · **11** 篇论文解读
+**🎞️ ECCV2024** · **8** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/llm_pretraining/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/llm_pretraining/index.md) · [🔬 ICLR2026 (26)](../../ICLR2026/llm_pretraining/index.md) · [🤖 AAAI2026 (6)](../../AAAI2026/llm_pretraining/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/llm_pretraining/index.md) · [📹 ICCV2025 (9)](../../ICCV2025/llm_pretraining/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/llm_pretraining/index.md) · [💬 ACL2026 (10)](../../ACL2026/llm_pretraining/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/llm_pretraining/index.md) · [🔬 ICLR2026 (26)](../../ICLR2026/llm_pretraining/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/llm_pretraining/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/llm_pretraining/index.md)
 
 🔥 **高频主题：** 少样本学习 ×2
 
@@ -29,14 +29,6 @@ tags:
 **[DragAPart: Learning a Part-Level Motion Prior for Articulated Objects](dragapart_learning_a_part-level_motion_prior_for_articulated_objects.md)**
 
 :   DragAPart 提出了一种以拖拽为交互接口的图像生成器，能够响应部件级别的交互（如开关抽屉/门），而非仅仅移动整个物体。通过新的合成数据集 Drag-a-Move、多分辨率拖拽编码和域随机化策略，模型在仅用合成数据训练的情况下能良好泛化到真实图像和未见类别。
-
-**[DreamLIP: Language-Image Pre-training with Long Captions](dreamlip_language-image_pre-training_with_long_captions.md)**
-
-:   通过 MLLM 为 30M 图像生成长文本描述，提出动态子描述采样的多正样本对比学习和子描述特定分组损失，实现细粒度视觉-语言对齐，仅用 30M 数据在检索和语义分割上达到甚至超越 CLIP 400M 的性能。
-
-**[Formula-Supervised Visual-Geometric Pre-training (FSVGP)](formula-supervised_visual-geometric_pre-training.md)**
-
-:   提出FSVGP，利用分形几何的数学公式自动生成对齐的合成图像和点云，通过公式监督一致性标签在统一Transformer上实现跨模态视觉-几何预训练，在图像和3D物体的分类、检测、分割六项任务上均超越单模态FDSL方法。
 
 **[I Can't Believe It's Not Scene Flow!](i_canapost_believe_itaposs_not_scene_flow.md)**
 
@@ -49,10 +41,6 @@ tags:
 **[Plan, Posture and Go: Towards Open-Vocabulary Text-to-Motion Generation](plan_posture_and_go_towards_open-vocabulary_text-to-motion_generation.md)**
 
 :   本文提出 PRO-Motion 分治框架，将文本到动作生成分解为三个阶段：LLM 驱动的动作规划（Plan）、基于脚本的姿态扩散生成（Posture）、以及全身平移旋转估计（Go），通过降低各阶段的复杂度实现了开放词汇的高质量动作生成。
-
-**[POA: Pre-training Once for Models of All Sizes](poa_pre-training_once_for_models_of_all_sizes.md)**
-
-:   POA 提出在自监督自蒸馏框架中引入**弹性学生分支**，通过参数共享和随机子网络采样，**一次预训练即可同时产出上百个不同大小的预训练模型**（如从 ViT-L 直接提取 ViT-S/B），各子网络在 k-NN、线性探测和下游任务上均达到 SOTA 水平。
 
 **[PreLAR: World Model Pre-training with Learnable Action Representation](prelar_world_model_pre-training_with_learnable_action_representation.md)**
 

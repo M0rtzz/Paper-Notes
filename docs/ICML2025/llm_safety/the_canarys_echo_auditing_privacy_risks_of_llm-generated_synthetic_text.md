@@ -172,10 +172,10 @@ LLM 微调
 ## 相关论文
 
 - [\[ACL 2026\] Who Gets Which Message? Auditing Demographic Bias in LLM-Generated Targeted Text](../../ACL2026/llm_safety/who_gets_which_message_auditing_demographic_bias_in_llm-generated_targeted_text.md)
+- [\[ACL 2025\] Unveiling Privacy Risks in LLM Agent Memory](../../ACL2025/llm_safety/mextra_agent_memory_privacy.md)
 - [\[ICML 2025\] Robust Multi-bit Text Watermark with LLM-based Paraphrasers](robust_multi-bit_text_watermark_with_llm-based_paraphrasers.md)
-- [\[NeurIPS 2025\] MaskSQL: Safeguarding Privacy for LLM-Based Text-to-SQL via Abstraction](../../NeurIPS2025/llm_safety/masksql_safeguarding_privacy_for_llm-based_text-to-sql_via_abstraction.md)
+- [\[ICML 2025\] TAMAS: Benchmarking Adversarial Risks in Multi-Agent LLM Systems](tamas_benchmarking_adversarial_risks_in_multi-agent_llm_systems.md)
 - [\[ICML 2025\] Cape: Context-Aware Prompt Perturbation Mechanism with Differential Privacy](cape_context-aware_prompt_perturbation_mechanism_with_differential_privacy.md)
-- [\[CVPR 2025\] Neural Gate: Mitigating Privacy Risks in LVLMs via Neuron-Level Gradient Gating](../../CVPR2025/llm_safety/neural_gate_mitigating_privacy_risks_in_lvlms_via_neuron-level_gradient_gating.md)
 
 </div>
 

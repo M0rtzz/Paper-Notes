@@ -130,7 +130,7 @@ Danceba沿用Bailando的VQ-VAE + 自回归框架：先用预训练的Pose VQ-VAE
 - [\[CVPR 2026\] SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](../../CVPR2026/audio_speech/save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
 - [\[CVPR 2025\] ImViD: Immersive Volumetric Videos for Enhanced VR Engagement](../../CVPR2025/audio_speech/imvid_immersive_volumetric_videos_for_enhanced_vr_engagement.md)
 - [\[ICML 2025\] One Wave To Explain Them All: A Unifying Perspective On Feature Attribution](../../ICML2025/audio_speech/one_wave_to_explain_them_all_a_unifying_perspective_on_feature_attribution.md)
-- [\[CVPR 2025\] Towards Lossless Implicit Neural Representation via Bit Plane Decomposition](../../CVPR2025/audio_speech/towards_lossless_implicit_neural_representation_via_bit_plane_decomposition.md)
+- [\[ICML 2025\] OmniAudio: Generating Spatial Audio from 360-Degree Video](../../ICML2025/audio_speech/omniaudio_generating_spatial_audio_from_360-degree_video.md)
 
 </div>
 

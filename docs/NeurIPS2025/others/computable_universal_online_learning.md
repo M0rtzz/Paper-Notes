@@ -137,7 +137,7 @@ Separation 证明构造了一个"evil sequence"类：对每个 total 学习器 $
 - [\[NeurIPS 2025\] Prediction-Powered Semi-Supervised Learning with Online Power Tuning](prediction-powered_semi-supervised_learning_with_online_power_tuning.md)
 - [\[ICML 2025\] Avoiding Catastrophe in Online Learning by Asking for Help](../../ICML2025/others/avoiding_catastrophe_in_online_learning_by_asking_for_help.md)
 - [\[NeurIPS 2025\] FlashMD: Long-Stride, Universal Prediction of Molecular Dynamics](flashmd_long-stride_universal_prediction_of_molecular_dynamics.md)
-- [\[ICML 2025\] Near-Optimal Consistency-Robustness Trade-Offs for Learning-Augmented Online Knapsack Problems](../../ICML2025/others/near-optimal_consistency-robustness_trade-offs_for_learning-augmented_online_kna.md)
+- [\[ICLR 2026\] AnyUp: Universal Feature Upsampling](../../ICLR2026/others/anyup_universal_feature_upsampling.md)
 
 </div>
 

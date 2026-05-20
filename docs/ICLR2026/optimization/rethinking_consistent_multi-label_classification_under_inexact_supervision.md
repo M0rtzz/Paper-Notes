@@ -150,7 +150,7 @@ $$R_R^\ell(\boldsymbol{g}) = \sum_{1 \leq j < k \leq q}\left((1-\pi_j)\mathbb{E}
 - [\[AAAI 2026\] Cost-Minimized Label-Flipping Poisoning Attack to LLM Alignment](../../AAAI2026/optimization/cost-minimized_label-flipping_poisoning_attack_to_llm_alignment.md)
 - [\[ICLR 2026\] MT-DAO: Multi-Timescale Distributed Adaptive Optimizers with Local Updates](mt-dao_multi-timescale_distributed_adaptive_optimizers_with_local_updates.md)
 - [\[AAAI 2026\] On the Learning Dynamics of Two-Layer Linear Networks with Label Noise SGD](../../AAAI2026/optimization/on_the_learning_dynamics_of_two-layer_linear_networks_with_label_noise_sgd.md)
-- [\[ICCV 2025\] Cooperative Pseudo Labeling for Unsupervised Federated Classification](../../ICCV2025/optimization/cooperative_pseudo_labeling_for_unsupervised_federated_classification.md)
+- [\[ICML 2025\] Nearly Optimal Sample Complexity for Learning with Label Proportions](../../ICML2025/optimization/nearly_optimal_sample_complexity_for_learning_with_label_proportions.md)
 
 </div>
 

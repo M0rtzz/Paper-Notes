@@ -127,8 +127,8 @@ tags:
 - [\[CVPR 2025\] Towards In-the-Wild 3D Plane Reconstruction from a Single Image](towards_in-the-wild_3d_plane_reconstruction_from_a_single_image.md)
 - [\[CVPR 2025\] MagicArticulate: Make Your 3D Models Articulation-Ready](magicarticulate_make_your_3d_models_articulation-ready.md)
 - [\[ACL 2025\] Revisiting 3D LLM Benchmarks: Are We Really Testing 3D Capabilities?](../../ACL2025/llm_evaluation/revisiting_3d_llm_benchmarks_are_we_really_testing_3d_capabilities.md)
-- [\[ICCV 2025\] Combinative Matching for Geometric Shape Assembly](../../ICCV2025/llm_evaluation/combinative_matching_for_geometric_shape_assembly.md)
 - [\[ICCV 2025\] 3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark](../../ICCV2025/llm_evaluation/3dsrbench_a_comprehensive_3d_spatial_reasoning_benchmark.md)
+- [\[CVPR 2025\] Enhancing 3D Gaze Estimation in the Wild Using Weak Supervision with Gaze Following Labels](enhancing_3d_gaze_estimation_in_the_wild_using_weak_supervision_with_gaze_follow.md)
 
 </div>
 

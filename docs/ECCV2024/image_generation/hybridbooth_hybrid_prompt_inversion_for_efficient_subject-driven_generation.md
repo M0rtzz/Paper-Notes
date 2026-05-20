@@ -195,9 +195,9 @@ $$\mathcal{L}_{\boldsymbol{M}} = \frac{1}{n}\sum_{i=1}^{n}\text{mean}(\boldsymbo
 
 - [\[ECCV 2024\] Source Prompt Disentangled Inversion for Boosting Image Editability with Diffusion Models](source_prompt_disentangled_inversion_for_boosting_image_editability_with_diffusi.md)
 - [\[ECCV 2024\] Soft Prompt Generation for Domain Generalization](soft_prompt_generation_for_domain_generalization.md)
-- [\[ECCV 2024\] Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](be_yourself_bounded_attention_for_multisubject_texttoimage_g.md)
 - [\[ECCV 2024\] Prompting Future Driven Diffusion Model for Hand Motion Prediction](prompting_future_driven_diffusion_model_for_hand_motion_prediction.md)
 - [\[ECCV 2024\] The Fabrication of Reality and Fantasy: Scene Generation with LLM-Assisted Prompt Interpretation](the_fabrication_of_reality_and_fantasy_scene_generation_with_llm-assisted_prompt.md)
+- [\[NeurIPS 2025\] Mind-the-Glitch: Visual Correspondence for Detecting Inconsistencies in Subject-Driven Generation](../../NeurIPS2025/image_generation/mind-the-glitch_visual_correspondence_for_detecting_inconsistencies_in_subject-d.md)
 
 </div>
 

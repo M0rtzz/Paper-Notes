@@ -1,0 +1,136 @@
+---
+title: >-
+  [论文解读] Quantifying and Improving the Robustness of Retrieval-Augmented Language Models Against Spurious Features in Grounding Data
+description: >-
+  [ACL2026][信息检索/RAG][RAG] 本文提出 SURE 框架，系统评估 RAG 生成端对检索文档中风格、来源、逻辑、格式、元数据等语义无关虚假特征的敏感性，并用 SURE 生成的合成数据通过 SFT/DPO 显著提升 RALM 鲁棒性。
+tags:
+  - "ACL2026"
+  - "信息检索/RAG"
+  - "RAG"
+  - "虚假特征"
+  - "鲁棒性评估"
+  - "扰动基准"
+  - "SFT与DPO"
+---
+
+# Quantifying and Improving the Robustness of Retrieval-Augmented Language Models Against Spurious Features in Grounding Data
+
+**会议**: ACL2026  
+**arXiv**: [2503.05587](https://arxiv.org/abs/2503.05587)  
+**代码**: https://github.com/maybenotime/RAG-SpuriousFeatures  
+**领域**: 信息检索 / RAG鲁棒性  
+**关键词**: RAG, 虚假特征, 鲁棒性评估, 扰动基准, SFT与DPO
+
+## 一句话总结
+本文提出 SURE 框架，系统评估 RAG 生成端对检索文档中风格、来源、逻辑、格式、元数据等语义无关虚假特征的敏感性，并用 SURE 生成的合成数据通过 SFT/DPO 显著提升 RALM 鲁棒性。
+
+## 研究背景与动机
+**领域现状**：RAG 通过检索外部文档缓解 LLM 幻觉，已经成为事实问答和知识密集型应用的常见范式。现有鲁棒性研究多关注显式噪声，例如检索到语义错误、无关、矛盾或位置不佳的文档。
+
+**现有痛点**：真实互联网检索结果不仅包含语义噪声，还包含大量语义无关但会影响模型行为的特征：HTML/Markdown/YAML/JSON 格式、句子顺序、来源域名、时间戳、文风复杂度、LLM 改写痕迹等。已有 benchmark 很少系统度量这些“虚假特征”在 RAG 场景下的影响。
+
+**核心矛盾**：同一条 golden document 只要换一种格式或元数据，正确答案并没有变，但 RAG reader 的输出可能从正确变错误。传统 dataset-level accuracy 往往只看总体变化，无法捕捉单个实例在扰动前后的翻转。
+
+**本文目标**：建立一个自动化框架，能在保持文档因果语义不变的前提下批量注入虚假特征，给出实例级鲁棒性指标，并进一步生成可用于训练的鲁棒性数据。
+
+**切入角度**：作者把 RAG 输入拆成 instruction、grounding data 和 query，只改变 grounding data 中与答案语义无关的表面属性，再对比原始与扰动输入下的模型输出。
+
+**核心 idea**：用“扰动-保持-评估”的可控实验框架把虚假特征从 RAG 中显式分离出来，既量化模型敏感性，也把不鲁棒样本转化为训练信号。
+
+## 方法详解
+SURE 的完整流程包括四个部分：虚假特征分类体系、扰动注入、因果特征保持、鲁棒性评估。随后作者基于该流程构造 SURE_Wiki 与 SIG_Wiki/SIG_Trivial，并探索 scaling、Chain-of-Note、reasoning model、SFT、DPO 等缓解方式。
+
+### 整体框架
+给定 query，retriever 返回若干文档，reader LLM 接收 prompt $P=(I,G,Q)$ 并生成答案。SURE 定义扰动函数 $g(.)$，把 grounding data $G$ 改成 $g(G)$，构造反事实输入 $\hat{P}=(I,g(G),Q)$。如果 $G$ 与 $g(G)$ 的答案语义一致，而模型输出正确性发生变化，就说明 RALM 对该虚假特征不鲁棒。
+
+### 关键设计
+1. **五类虚假特征 taxonomy**:
+
+	- 功能：覆盖 RAG 中常见但不应改变答案的表面属性。
+	- 核心思路：定义 Style、Source、Logic、Format、Metadata 五大类，共 13 种扰动。Style 包括 simple/complex；Source 包括 LLM-generated/self-generated；Logic 包括 reverse/random/LLM-reranked；Format 包括 JSON/HTML/YAML/Markdown；Metadata 包括 timestamp pre/post 和 datasource wiki/twitter。
+	- 设计动机：互联网检索文档天然异质，RAG 系统在部署时无法保证文档格式、来源、写作风格统一，因此这些特征是实际风险而非玩具扰动。
+
+2. **因果特征保持机制**:
+
+	- 功能：保证扰动只改变虚假特征，不改变答案所依赖的语义内容。
+	- 核心思路：对于模型生成式扰动，直接要求保持语义等价；然后用双向 entailment 检查 $G$ 是否蕴含 $g(G)$ 且 $g(G)$ 是否蕴含 $G$。同时用字符串匹配确保 golden document 中的 ground truth 仍在扰动文档里，noise document 也不会意外获得正确答案。
+	- 设计动机：如果扰动改变了答案事实，就无法判断模型出错是因为虚假特征还是因果内容变化。双向 NLI 和答案字符串检查让评估更接近可控实验。
+
+3. **实例级鲁棒性指标与训练数据生成**:
+
+	- 功能：同时评估单例翻转和支持后续训练。
+	- 核心思路：对原始输出 $y$ 和扰动输出 $\hat{y}$ 分别判断正确性，统计 Win Rate、Lose Rate 和 Robustness Rate。对于不鲁棒实例，SURE 记录 query、正确答案、错误答案、原始 golden passage 和扰动 golden passage，用于 SFT 或 DPO。
+	- 设计动机：dataset accuracy 可能掩盖“同一题前后翻转”的不稳定性；而实例级配对天然适合构造偏好训练或一致性训练样本。
+
+### 损失函数 / 训练策略
+SURE 的评估阶段不训练模型，主要通过 perturb-then-evaluate 得到 RR/WR/LR。缓解阶段作者使用两种训练策略：SFT 把原始和扰动 golden passage 都配上正确答案，训练模型稳定输出正确答案；DPO 把正确答案作为 preferred、错误答案作为 rejected，分别结合原始和扰动 passage 构造偏好样本。实验以 Llama-3.1-8B-Instruct 为 backbone，在超过 30k 样本上训练 2 个 epoch，并在 SIG_Wiki 和跨域 SIG_Trivial 上评估。
+
+## 实验关键数据
+
+### 主实验
+
+| 数据 / 模型 | Style RR | Source RR | Logic RR | Format RR | Meta RR | 说明 |
+|-------------|----------|-----------|----------|-----------|---------|------|
+| SIG_Trivial Mistral-7B | 88.0 | 94.0 | 94.5 | 94.0 | 99.0 | Bing + TrivialQA，字符串评估 |
+| SIG_Trivial Mistral-7B Judge | 90.5 | 91.5 | 92.0 | 93.8 | 96.0 | LLM-as-Judge 结果接近 |
+| SIG_Trivial Llama-3.1-8B | 87.5 | 93.5 | 93.0 | 90.8 | 97.0 | 开源 reader |
+| SIG_Trivial Llama-3.1-8B Judge | 85.0 | 92.0 | 91.0 | 90.8 | 93.3 | 验证字符串指标可靠性 |
+
+### 消融实验
+
+| 方法 | Style | Source | Logic | Format | Meta | 数据集 |
+|------|-------|--------|-------|--------|------|--------|
+| Llama3.1-8B | 10.0 | 15.5 | 20.0 | 24.0 | 94.0 | SIG_Wiki |
+| + SFT | 96.5 | 94.5 | 99.0 | 99.5 | 99.7 | SIG_Wiki |
+| + DPO | 96.5 | 96.0 | 96.0 | 98.0 | 98.0 | SIG_Wiki |
+| Llama3.1-8B | 87.5 | 93.5 | 93.0 | 90.8 | 97.0 | SIG_Trivial |
+| + SFT | 88.5 | 91.5 | 95.0 | 96.3 | 99.0 | SIG_Trivial |
+| + DPO | 94.5 | 94.5 | 97.3 | 95.8 | 98.0 | SIG_Trivial |
+
+### 关键发现
+- 在 SURE_Wiki 上，不同扰动类别的影响差异明显；同一类别内部的 RR 较接近，但 WR/LR 可显著不同，说明某些虚假特征有时反而会纠正模型。
+- 对 Mistral-7B-Instruct，格式扰动中的 HTML 对 Known-Golden 的 Lose Rate 达到 9.30，高于 JSON/YAML/Markdown，说明结构格式会显著影响 reader。
+- 六个 SOTA 模型在 SIG_Wiki 上都存在特定敏感点，即使 GPT-4o 在 datasource(twitter) 上也只有约 89% RR。
+- Chain-of-Note 和 DeepSeek-R1 并不能可靠解决问题：DeepSeek-V3 的 Style RR 为 96.5，而 DeepSeek-R1 降到 84.5，说明更强推理不等价于对虚假特征更稳。
+- 注意力分析显示，输出改变的 Win/Lose 样本比 Robust 样本有更大的答案 span 注意力变化；Robust 的 $\Delta A$ 为 6.52e-5，Lose 为 1.15e-4，Welch t-test 得到 p=0.046。
+
+## 亮点与洞察
+- 论文把“语义不变但表面变化”系统引入 RAG 评估，这比单纯添加无关文档更贴近真实搜索环境。
+- RR/WR/LR 的实例级配对指标很实用：它不只告诉模型准确率变了多少，还能区分扰动让答案变好还是变坏。
+- 训练数据复用设计很自然。SURE 不是只做 benchmark，而是把评估中发现的不鲁棒样本转成 SFT/DPO 数据，形成闭环。
+- 结果提醒我们：RAG pipeline 中的文档清洗、格式保留和元数据处理不是中性预处理，它们可能直接改变模型输出。
+
+## 局限与展望
+- 作者承认 taxonomy 无法穷尽所有虚假特征，真实网页还可能包含广告、模板、导航栏、表格布局、脚注等更复杂因素。
+- 当前评估主要聚焦 QA 任务和英文 Wikipedia / open web，长文档、多跳推理、跨语言 RAG 和企业私有文档仍需验证。
+- 字符串匹配虽然高效，但对别名、释义式回答和数值格式可能不够灵活；LLM-as-Judge 只做了补充验证。
+- SFT 在 in-domain SIG_Wiki 上极强，但在 SIG_Trivial 上部分指标不如 DPO，说明训练式缓解仍有域泛化问题。
+- 训练缓解需要全参数微调和 A100 级资源，轻量 adapter 或推理时标准化策略值得继续研究。
+
+## 相关工作与启发
+- **vs 显式噪声 RAG benchmark**: 过去常研究无关文档、矛盾文档和文档位置，本文关注的是不改变语义的 spurious feature，更像对 prompt sensitivity 的 RAG 化扩展。
+- **vs prompt format sensitivity**: Sclar、He 等工作证明 LLM 对 prompt 格式敏感；本文把这种敏感性移动到 grounding data 层面，发现检索文档的格式同样关键。
+- **vs Chain-of-Note**: CoN 针对显式噪声设计，要求模型先写 rationale；本文实验显示 COT-style 方法对虚假特征不一定有效。
+- **vs DPO/SFT 鲁棒训练**: 本文不是泛泛地做偏好优化，而是用成对原始/扰动 passage 构造数据，目标更明确地对齐“同一事实不同表面”的一致性。
+
+## 评分
+- 新颖性: ⭐⭐⭐⭐ 将 spurious feature 系统化到 RAG grounding data 中，很有问题定义价值。
+- 实验充分度: ⭐⭐⭐⭐⭐ taxonomy、两套 benchmark、多模型、prompting、scaling、训练缓解和注意力分析都很完整。
+- 写作质量: ⭐⭐⭐⭐ 框架清晰，表格密集但信息充分。
+- 价值: ⭐⭐⭐⭐⭐ 对真实 RAG 部署、文档预处理和鲁棒训练都有直接参考意义。
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ECCV 2024\] Grounding Language Models for Visual Entity Recognition](../../ECCV2024/information_retrieval/grounding_language_models_for_visual_entity_recognition.md)
+- [\[ACL 2025\] When Claims Evolve: Evaluating and Enhancing the Robustness of Embedding Models Against Misinformation Edits](../../ACL2025/information_retrieval/when_claims_evolve_evaluating_and_enhancing_the_robustness_of_embedding_models_a.md)
+- [\[ACL 2026\] Conjecture and Inquiry: Quantifying Software Performance Requirements via Interactive Retrieval-Augmented Preference Elicitation](conjecture_and_inquiry_quantifying_software_performance_requirements_via_interac.md)
+- [\[AAAI 2026\] Do Retrieval Augmented Language Models Know When They Don't Know?](../../AAAI2026/information_retrieval/do_retrieval_augmented_language_models_know_when_they_dont_know.md)
+- [\[ACL 2026\] Why Mean Pooling Works: Quantifying Second-Order Collapse in Text Embeddings](why_mean_pooling_works_quantifying_second-order_collapse_in_text_embeddings.md)
+
+</div>
+
+<!-- RELATED:END -->

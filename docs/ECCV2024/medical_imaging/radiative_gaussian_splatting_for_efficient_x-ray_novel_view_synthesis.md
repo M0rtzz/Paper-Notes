@@ -162,8 +162,8 @@ X-Gaussian 比最佳 NeRF 方法 NAF **高 6.5 dB**，推理速度是其 **73 �
 - [\[ICCV 2025\] InsideOut: Integrated RGB-Radiative Gaussian Splatting for Comprehensive 3D Object Representation](../../ICCV2025/medical_imaging/insideout_integrated_rgb-radiative_gaussian_splatting_for_comprehensive_3d_objec.md)
 - [\[AAAI 2026\] PINGS-X: Physics-Informed Normalized Gaussian Splatting with Axes Alignment for Efficient Super-Resolution of 4D Flow MRI](../../AAAI2026/medical_imaging/pings-x_physics-informed_normalized_gaussian_splatting_with_axes_alignment_for_e.md)
 - [\[ECCV 2024\] A Cephalometric Landmark Regression Method Based on Dual-Encoder for High-Resolution X-Ray Image](a_cephalometric_landmark_regression_method_based_on_dual-encoder_for_high-resolu.md)
-- [\[ECCV 2024\] Co-synthesis of Histopathology Nuclei Image-Label Pairs using a Context-Conditioned Joint Diffusion Model](co-synthesis_of_histopathology_nuclei_image-label_pairs_using_a_context-conditio.md)
 - [\[CVPR 2026\] GaussianPile: A Unified Sparse Gaussian Splatting Framework for Slice-based Volumetric Reconstruction](../../CVPR2026/medical_imaging/gaussianpile_a_unified_sparse_gaussian_splatting_framework_for_slice-based_volum.md)
+- [\[ECCV 2024\] Co-synthesis of Histopathology Nuclei Image-Label Pairs using a Context-Conditioned Joint Diffusion Model](co-synthesis_of_histopathology_nuclei_image-label_pairs_using_a_context-conditio.md)
 
 </div>
 

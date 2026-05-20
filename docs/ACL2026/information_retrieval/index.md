@@ -1,29 +1,41 @@
 ---
 title: >-
-  ACL2026 信息检索/RAG方向43篇论文解读
+  ACL2026 信息检索/RAG方向60篇论文解读
 description: >-
-  43篇ACL2026的信息检索/RAG 方向论文解读，涵盖 RAG、LLM、问答、对抗鲁棒、推理、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  60篇ACL2026的信息检索/RAG 方向论文解读，涵盖 RAG、问答、推理、LLM、强化学习、对话系统等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "信息检索/RAG"
   - "论文解读"
   - "论文笔记"
   - "RAG"
-  - "LLM"
   - "问答"
-  - "对抗鲁棒"
   - "推理"
-  - "Agent"
+  - "LLM"
+  - "强化学习"
+  - "对话系统"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔍 信息检索/RAG
 
-**💬 ACL2026** · **43** 篇论文解读
+**💬 ACL2026** · **60** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (7)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (28)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/information_retrieval/index.md) · [🧪 ICML2025 (5)](../../ICML2025/information_retrieval/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/information_retrieval/index.md) · [📷 CVPR2026 (7)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (28)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (31)](../../NeurIPS2025/information_retrieval/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/information_retrieval/index.md)
 
-🔥 **高频主题：** RAG ×16 · LLM ×5 · 问答 ×4 · 对抗鲁棒 ×3 · 推理 ×3
+🔥 **高频主题：** RAG ×25 · 问答 ×8 · 推理 ×6 · LLM ×6 · 强化学习 ×5
+
+**[A Picture is Worth a Thousand Words? An Empirical Study of Aggregation Strategies for Visual Financial Document Retrieval](a_picture_is_worth_a_thousand_words_an_empirical_study_of_aggregation_strategies.md)**
+
+:   通过精心设计的金融文档诊断 benchmark（单数字扰动 + 文本掩码），实证证明「把 VLM 的 patch tokens 聚合成单向量」会让 $1.2M vs $7.2M 这种语义巨大差异坍缩成 cosine 相似度 > 0.99 的几乎相同向量，根因是「全局纹理主导」，多种缓解策略和 retrieval-tuned embedding 都救不回来。
+
+**[A Survey of Reasoning-Intensive Retrieval: Progress and Challenges](a_survey_of_reasoning-intensive_retrieval_progress_and_challenges.md)**
+
+:   本文系统梳理了"推理密集型检索 (Reasoning-Intensive Retrieval, RIR)"这一新方向，按 query/index/retriever/reranker/迭代 这条流水线给出了第一份完整的 benchmark-方法-挑战 三段式综述，并指出现有评测过度依赖 nDCG 等传统 IR 指标。
+
+**[Agentic Conversational Search with Contextualized Reasoning via Reinforcement Learning](agentic_conversational_search_with_contextualized_reasoning_via_reinforcement_le.md)**
+
+:   提出ConvAgent，通过将RL训练奖励分解为结果奖励、信息增益奖励和混合主动行为奖励三个互补组件，训练对话式搜索智能体在多轮交互中交替进行搜索和推理。
 
 **[All Languages Matter: Understanding and Mitigating Language Bias in Multilingual RAG](all_languages_matter_understanding_and_mitigating_language_bias_in_multilingual_.md)**
 
@@ -33,6 +45,10 @@ tags:
 
 :   受Schutz哲学相关性理论启发，提出ITEM迭代效用判断框架，通过让RAG中的三个组件（相关性排序、效用判断、答案生成）动态交互增强，在检索、效用判断和QA任务上均优于基线。
 
+**[AuthorityBench: Benchmarking LLM Authority Perception for Reliable Retrieval-Augmented Generation](authoritybench_benchmarking_llm_authority_perception_for_reliable_retrieval-augm.md)**
+
+:   AuthorityBench 用 10K 网页域名（PageRank 真值）+22K 实体（Wikipedia 跨语言 sitelink 真值）+120 RAG 问题构造首个 LLM「权威感知」基准，发现 ListJudge / PairJudge + PointScore 输出最准，加入网页文本反而拖后腿，且把权威信号用作 RAG 过滤能把答案准确率最多提 14 个百分点。
+
 **[Bayesian Active Learning with Gaussian Processes Guided by LLM Relevance Scoring](bayesian_active_learning_with_gaussian_processes_guided_by_llm_relevance_scoring.md)**
 
 :   提出 BAGEL，一个基于高斯过程（GP）的贝叶斯主动学习框架，在有限 LLM 预算下通过探索-利用平衡策略传播稀疏 LLM 相关性信号，实现全局嵌入空间的段落检索，显著超越传统 LLM 重排序方法。
@@ -41,21 +57,29 @@ tags:
 
 :   提出 ProbeRAG，通过发现 LLM 隐空间中冲突/对齐知识的线性可分性，设计三阶段框架（细粒度知识剪枝→隐空间冲突探测→冲突感知注意力），从模型内部机制解决 RAG 忠实性问题。
 
-**[Beyond Explicit Refusals: Soft-Failure Attacks on Retrieval-Augmented Generation](beyond_explicit_refusals_soft-failure_attacks_on_retrieval-augmented_generation.md)**
+**[BRIEF-Pro: Universal Context Compression with Short-to-Long Synthesis for Fast and Accurate Multi-Hop Reasoning](brief-pro_universal_context_compression_with_short-to-long_synthesis_for_fast_an.md)**
 
-:   形式化定义 RAG 系统的"软失败"威胁（生成流畅但无信息量的回答），提出 DEJA 黑箱进化攻击框架，通过对抗性文档诱导模型利用安全对齐机制产生模棱两可的回答，SASR 超过 79% 且高度隐蔽。
+:   针对 RAG 在 10k+ 词长上下文下推理慢、信息淹没的问题，作者用「短上下文种子数据 → 维基扩张 → 头尾迭代裁剪」合成多跳长上下文训练数据，微调一个 3B 的 Llama-3.2 抽取式摘要器 BRIEF-Pro，在四个多跳 QA 数据集上以 32× 压缩率反超 LongLLMLingua 的 9× 压缩，并支持用户用句数指令直接控制摘要长度。
 
-**[CarO: Chain-of-Analogy Reasoning Optimization for Robust Content Moderation](caro_chain-of-analogy_reasoning_optimization_for_robust_content_moderation.md)**
+**[Can Compact Language Models Search Like Agents? Distillation-Guided Policy Optimization for Preserving Agentic RAG Capabilities](can_compact_language_models_search_like_agents_distillation-guided_policy_optimi.md)**
 
-:   提出 CarO（Chain-of-Analogy Reasoning Optimization），一个两阶段训练框架，通过 RAG 引导生成类比推理链 + SFT + 定制 DPO 优化，使 LLM 在推理时自主生成类比参考案例进行内容审核，在模糊审核基准上 F1 平均提升 24.9%，显著超越推理模型（DeepSeek R1）和专用审核模型（LLaMA Guard）。
+:   本文提出 DGPO：用教师 demonstration 做冷启动 KD 初始化，再在 PPO 阶段对"错误样本"施加 KL 蒸馏惩罚，让 0.5B 紧凑模型获得 Agentic RAG 能力，在 7 个 QA benchmark 上平均 EM 从 0.006 提升到 0.329，部分数据集甚至反超 3B 教师。
 
-**[ChAIRO: Contextual Hierarchical Analogical Induction and Reasoning Optimization for LLMs](chairo_contextual_hierarchical_analogical_induction_and_reasoning_optimization_f.md)**
+**[ChatR1: Reinforcement Learning for Conversational Reasoning and Retrieval Augmented Question Answering](chatr1_reinforcement_learning_for_conversational_reasoning_and_retrieval_augment.md)**
 
-:   提出 ChAIRO，一个上下文层次化类比归纳与推理优化框架，通过三阶段 pipeline（类比案例生成→规则归纳→规则注入微调）让 LLM 在内容审核中自主生成类比案例并归纳显式审核规则，比单实例规则生成提升 F1 4.5%，比静态 RAG 提升 2.3%。
+:   作者把 Search-R1 / R1-Searcher 这类"搜索 + 推理"RL 框架从单轮问答扩展到**多轮对话问答**，提出 ChatR1：用 PPO 端到端联合优化 reasoning / search / answer，并设计"intent-aware reward"——用历史人工 rewrite 与模型自发 search query 的 token-F1 作为 turn-level dense reward，在 5 个 CQA 数据集上以 3B 主干击败 ChatGPT/Claude，并大幅提升域外迁移能力。
 
 **[ChunQiuTR: Time-Keyed Temporal Retrieval in Classical Chinese Annals](chunqiutr_time-keyed_temporal_retrieval_in_classical_chinese_annals.md)**
 
 :   提出 ChunQiuTR，首个基于非格里历的时间键检索基准，从《春秋》及其注疏传统中构建，并设计了 CTD（历法时间双编码器），通过傅里叶绝对历法上下文和相对偏移偏置实现时间感知检索，显著优于纯语义基线。
+
+**[CiteGuard: Faithful Citation Attribution for LLMs via Retrieval-Augmented Validation](citeguard_faithful_citation_attribution_for_llms_via_retrieval-augmented_validat.md)**
+
+:   CiteGuard 提出了一个检索增强的智能体框架，通过扩展的检索动作（包括全文搜索和上下文检索）为科学引用归属提供更忠实的基础，在 CiteME 基准上相对基线提升 10 个百分点，达到 68.1% 准确率，接近人类表现（69.2%）。
+
+**[Code-Switching Information Retrieval: Benchmarks, Analysis, and the Limits of Current Retrievers](code-switching_information_retrieval_benchmarks_analysis_and_the_limits_of_curre.md)**
+
+:   论文首次系统评估"代码混用查询"对现代 IR 系统的冲击，提出人工标注的 CSR-L 基准和 LLM 生成的 11 任务 CS-MTEB 套件，发现即使 8B 多语言强模型在 query-side code-switching 下也会掉 4–13 个 nDCG@10、reranker 甚至从 60 暴跌到 25；并证明 lexicon-based 词表扩展能缓解但无法补齐单语基线的差距。
 
 **[CodePromptZip: Code-specific Prompt Compression for Retrieval-Augmented Generation in Coding Tasks with LMs](codepromptzip_code-specific_prompt_compression_for_retrieval-augmented_generatio.md)**
 
@@ -69,6 +93,10 @@ tags:
 
 :   本文提出 CAMAB，将 RAG 中的上下文归因（识别哪些上下文片段对生成答案有贡献）建模为组合多臂赌博机（CMAB）问题，使用线性 Thompson 采样自适应地探索上下文子集空间，在 HotpotQA、CNN/DM、TyDi QA 上比 SHAP 和 ContextCite 减少最多 30% 的模型查询次数同时匹配或超越归因质量。
 
+**[CORAL: Adaptive Retrieval Loop for Culturally-Aligned Multilingual RAG](coral_adaptive_retrieval_loop_for_culturally-aligned_multilingual_rag.md)**
+
+:   CORAL 把多语言 RAG 失败重新定位成"retrieval condition misalignment"——不仅要改写 query，更要动态切换检索的语料库——通过 planner + critic 两个 agent 形成"选语料 → 检索 → 评分过滤 → 充分性检查 → 改语料 + 改 query"的闭环，在两个文化基准上对低资源语言相对最强 baseline 提升 3.58pp，对 CLIcK 韩国文化 QA 提升 3.91pp。
+
 **[CounterRefine: Answer-Conditioned Counterevidence Retrieval for Inference-Time Knowledge Repair in Factual Question Answering](counterrefine_answer-conditioned_counterevidence_retrieval_for_inference-time_kn.md)**
 
 :   本文提出 CounterRefine，一个轻量级推理时修复层：先用标准 RAG 产生初步答案，再通过答案条件化的反证检索收集支持/反对证据，最后通过受限的 KEEP/REVISE 决策和确定性验证修复错误答案，在 SimpleQA 上将 GPT-5 的正确率从 67.3% 提升至 73.1%。
@@ -77,13 +105,9 @@ tags:
 
 :   本文提出 CRAFT，一个无需数据集特定训练的三阶段级联表格检索框架（SPLADE 稀疏过滤 → 语义 mini-table 排序 → 神经重排序），通过 Gemini 生成的表格标题和描述增强表格表示，在 NQ-Tables 上达到 SOTA（R@1 49.84），在 OTT-QA 上展现强零样本泛化能力，且对查询改写具有显著鲁棒性。
 
-**[CURaTE: Continual Unlearning in Real Time with Ensured Preservation of LLM Knowledge](curate_continual_unlearning_in_real_time_with_ensured_preservation_of_llm_knowle.md)**
+**[Disco-RAG: Discourse-Aware Retrieval-Augmented Generation](disco-rag_discourse-aware_retrieval-augmented_generation.md)**
 
-:   CURaTE 提出一种基于句子嵌入匹配的行为遗忘框架：预部署时训练一个通用的遗忘嵌入器（不使用任何遗忘集），部署后实时将新遗忘请求嵌入存入数据库，推理时通过余弦相似度决定是回答还是拒绝，完全不修改 LLM 权重从而实现近乎完美的知识保留。
-
-**[Detecting RAG Extraction Attack via Dual-Path Runtime Integrity Game](detecting_rag_extraction_attack_via_dual-path_runtime_integrity_game.md)**
-
-:   提出 CanaryRAG，一个受软件安全中栈金丝雀启发的 RAG 运行时防御机制，通过在检索块中注入非语义金丝雀 token 并设计双路径完整性博弈（目标路径不应泄露金丝雀 + Oracle 路径应能引出金丝雀），实时检测知识库提取攻击，在不影响任务性能和推理延迟的前提下实现最强防护。
+:   作者提出 Disco-RAG，把修辞结构理论（RST）显式注入 RAG pipeline——对每个 chunk 解析 intra-chunk RST 树（局部层级）+ 跨 chunk 构建 inter-chunk 修辞图（全局连贯）+ 生成 discourse-aware blueprint 引导回答，在 Loong / ASQA / SciNews 三个长文档基准上 training-free 即拿下 SOTA（Loong overall +12.74 LLM Score）。
 
 **[Domain-Specific Data Generation Framework for RAG Adaptation](domain-specific_data_generation_framework_for_rag_adaptation.md)**
 
@@ -105,13 +129,13 @@ tags:
 
 :   本文发现多语言 RAG 系统中"英语偏好"主要是评估基准中结构性先验（gold 证据集中于英语、文化先验）的伪影而非模型固有偏差，提出去偏语言偏好指标 DeLP 揭示检索器实际偏好单语对齐，并基于此设计 DELTA 查询增强框架，在多语言 RAG 上一致超越英语枢轴策略。
 
-**[FAITH: Factuality Alignment through Integrating Trustworthiness and Honestness](faith_factuality_alignment_through_integrating_trustworthiness_and_honestness.md)**
-
-:   本文提出FAITH框架，通过将LLM的不确定性信号（一致性+语义熵）映射到自然语言描述的知识状态象限（可信度×诚实度），设计考虑不确定性的细粒度奖励函数进行PPO训练，再用RAG模块纠正潜在错误，系统性提升LLM的事实准确性。
-
 **[Feedback Adaptation for Retrieval-Augmented Generation](feedback_adaptation_for_retrieval-augmented_generation.md)**
 
 :   本文提出"反馈适应"作为RAG系统的新问题设定——研究纠正性反馈多快、多有效地传播到未来查询，定义了纠正延迟和反馈后性能两个评估轴，并提出PatchRAG作为免训练的推理时反馈整合方案，实现即时纠正和强泛化。
+
+**[FinRAG-12B: A Production-Validated Recipe for Grounded Question Answering in Banking](finrag-12b_a_production-validated_recipe_for_grounded_question_answering_in_bank.md)**
+
+:   Kasisto 团队基于 Gemma 3 12B-IT，用 143M token 的数据高效配方 (LLM-as-Judge 过滤 + 引用标注 + 22% 不可回答样本 + 两阶段 curriculum) 训出 FinRAG-12B，并通过 W4A16 量化压到 8.4 GB 单卡部署——答案质量 (JudgeLM 6.21) 和引用质量 (73.1) 都超过 GPT-4.1，refusal 比例 12% 介于 base 的不安全 4.3% 和 GPT-4.1 的过度拒绝 20.2% 之间，在 40+ 家金融机构上线后查询解决率显著提升 +7.1pp ($p<0.001$)，延迟和成本相比 GPT-4.1 分别便宜 3–5× 和 20–50×。
 
 **[FLARE: Task-Agnostic Embedding Model Evaluation via Normalizing Flows](flare_task-agnostic_embedding_model_evaluation_through_a_normalization_process.md)**
 
@@ -121,6 +145,14 @@ tags:
 
 :   本文提出AuthGR，首个将文档权威性系统性整合到生成式检索中的框架，通过VLM多模态权威评分、三阶段渐进式训练（CPT→SFT→GRPO）和混合集成部署管线，在Naver商业搜索引擎的大规模A/B测试中验证了显著的用户参与度提升。
 
+**[GLIER: Generative Legal Inference and Evidence Ranking for Legal Case Retrieval](glier_generative_legal_inference_and_evidence_ranking_for_legal_case_retrieval.md)**
+
+:   本文提出 **GLIER**：把法律案例检索（LCR）从"直接文本相似度匹配"重写为"先用 seq2seq 联合生成 *罪名 + 构成要件* 这一隐变量、再用多视图（生成置信 + 结构匹配 + 词项 BM25）MLP 融合"的两阶段框架，在 LeCaRD/LeCaRDv2 上超越 SAILER、KELLER，且只用 10% 数据训练就能击败强基线的全量结果。
+
+**[How Large Language Models Balance Internal Knowledge with User and Document Assertions](how_large_language_models_balance_internal_knowledge_with_user_and_document_asse.md)**
+
+:   本文跳出"参数知识 vs 单一外部源"的二元冲突范式，提出"参数 / 用户主张 / 文档主张"三源交互评测框架，在 27 个 LLM × 2 数据集上发现：大多数模型对文档比对用户更轻信，后训练进一步强化这一偏好，且大部分模型属于"impressionable"——分不清外部信息是帮还是害。
+
 **[How Retrieved Context Shapes Internal Representations in RAG](how_retrieved_context_shapes_internal_representations_in_rag.md)**
 
 :   本文从隐藏表示的角度系统分析 RAG 中检索文档如何影响 LLM 内部状态，发现了五个关键模式：随机文档引发大表示漂移并触发拒绝行为、相关文档主要确认而非改变参数化知识、单个相关文档能锚定多文档场景中的表示、后层逐步强调参数化知识从而限制检索证据的影响、以及 LLM 在早期层就能区分随机文档但到最后层仍无法可靠区分干扰文档和相关文档。
@@ -129,13 +161,25 @@ tags:
 
 :   HEAVEN 提出了一种即插即用的两阶段混合向量框架，通过视觉摘要页（VS-Pages）加速单向量粗检索 + 基于词性的查询 token 过滤减少多向量重排序计算，在四个基准上保持 99.87% 的多向量 Recall@1 同时减少 99.82% 的每查询 FLOPs。
 
+**[HyperMem: Hypergraph Memory for Long-Term Conversations](hypermem_hypergraph_memory_for_long-term_conversations.md)**
+
+:   HyperMem 用"超图（hyperedge 连接 ≥3 个节点）"代替传统 RAG 的 pairwise 边，把长期对话记忆组织成"主题 → 情节 → 事实"三层结构，通过粗到细检索 + 超图嵌入传播解决多 episode 跨时间相关性的检索碎片化问题，在 LoCoMo benchmark 上 LLM-as-judge 准确率打到 92.73%（前 SOTA 86.49%）。
+
+**[IF-GEO: Conflict-Aware Instruction Fusion for Multi-Query Generative Engine Optimization](if-geo_conflict-aware_instruction_fusion_for_multi-query_generative_engine_optim.md)**
+
+:   本文把"为多条潜在查询同时优化一篇文档"视为受限多目标优化问题，提出 IF-GEO："先发散后收敛"——先用 LLM 反向挖掘代表性 query 并生成结构化编辑请求，再通过 **优先级×必要性打分 + 去重 + 冲突解决 + Global Revision Blueprint** 把多个互相打架的编辑指令融合成一份可执行的修改蓝图，并配套引入 WCP/DR/WTR 三项 risk-aware 稳定性指标；在 GEO-Bench 上把 objective overall 从 Auto-GEO 的 7.59 推到 11.03，同时把最坏单查询跌幅从 -0.0511 降至 -0.0090。
+
 **[Is Agentic RAG Worth It? An Experimental Comparison of RAG Approaches](is_agentic_rag_worth_it_an_experimental_comparison_of_rag_approaches.md)**
 
 :   本文在四个数据集上从用户意图处理、查询重写、文档精炼和底层 LLM 选择四个维度系统对比了 Enhanced RAG 和 Agentic RAG，发现两者各有优势——Agentic RAG 在意图路由和查询重写上更灵活，Enhanced RAG 在文档重排上更有效，而 Agentic RAG 的成本高达 3.3 倍。
 
-**[KoCo-Bench: Can Large Language Models Leverage Domain Knowledge in Software Development?](koco-bench_can_large_language_models_leverage_domain_knowledge_in_software_devel.md)**
+**[Language-Coupled Reinforcement Learning for Multilingual Retrieval-Augmented Generation](language-coupled_reinforcement_learning_for_multilingual_retrieval-augmented_gen.md)**
 
-:   KoCo-Bench 提出首个包含显式领域知识语料库的代码基准，覆盖 6 个新兴领域（RL、Agent、RAG 等）的 11 个框架和 25 个项目，评估 LLM 从知识语料库中获取和应用领域知识进行代码生成和知识理解的能力，揭示即使最强 coding agent Claude Code 也仅达 34.2%。
+:   本文提出 LcRL 框架，通过语言耦合的 GRPO 策略优化和反一致性惩罚奖励，解决多语言 RAG 中的知识偏差和知识冲突问题，在多语言问答任务上取得显著提升。
+
+**[Learning to Extract Rational Evidence via Reinforcement Learning for Retrieval-Augmented Generation](learning_to_extract_rational_evidence_via_reinforcement_learning_for_retrieval-a.md)**
+
+:   提出 EviOmni，通过"先推理再提取"的范式学习从检索文档中提取理性证据：将证据推理和证据提取整合为统一轨迹，用知识 token 掩码避免信息泄露，通过 GRPO 以可验证奖励优化，在 5 个基准上以极高压缩比（~38x）取得优于全文检索的准确率。
 
 **[MAB-DQA: Addressing Query Aspect Importance in Document Question Answering with Multi-Armed Bandits](mab-dqa_addressing_query_aspect_importance_in_document_question_answering_with_m.md)**
 
@@ -149,21 +193,41 @@ tags:
 
 :   本文提出 MSPA-CQR，通过从改写、检索、回复三个维度构建自一致性偏好数据，并使用前缀引导的多维度 DPO 优化来训练查询改写模型，在分布内外场景均显著超越现有方法。
 
-**[RACER: Retrieval-Augmented Contextual Rapid Speculative Decoding](racer_retrieval-augmented_contextual_rapid_speculative_decoding.md)**
+**[Navigating Large-Scale Document Collections: MuDABench for Multi-Document Analytical QA](navigating_large-scale_document_collections_mudabench_for_multi-document_analyti.md)**
 
-:   RACER 提出了一种无需训练的推测解码方法，将基于检索的精确模式匹配与基于 logits 的未来预测统一起来，通过 copy-logit 策略构建 Logits Tree、LRU 驱逐的 AC 自动机构建 Retrieval Tree，在多个基准上实现了超过 2 倍的推理加速。
+:   这篇论文提出 MuDABench，把多文档问答从“找几个相关片段回答问题”推进到“在大规模半结构化文档集合上做抽取、聚合和定量分析”，并证明普通 RAG 即使扩大召回也很难完成这类任务，而元数据感知的多 Agent 工作流能显著提高结果但仍远落后于人类专家。
+
+**[Optimizing User Profiles via Contextual Bandits for Retrieval-Augmented LLM Personalization](optimizing_user_profiles_via_contextual_bandits_for_retrieval-augmented_llm_pers.md)**
+
+:   提出 PURPLE 框架，将检索增强 LLM 个性化中的用户画像构建问题建模为上下文老虎机问题，通过 Plackett-Luce 排序模型捕捉记录间依赖关系，以 LLM 对参考回复的 log-likelihood 作为奖励信号，直接优化检索以匹配生成质量。
+
+**[Quantifying and Improving the Robustness of Retrieval-Augmented Language Models Against Spurious Features in Grounding Data](quantifying_and_improving_the_robustness_of_retrieval-augmented_language_models_.md)**
+
+:   本文提出 SURE 框架，系统评估 RAG 生成端对检索文档中风格、来源、逻辑、格式、元数据等语义无关虚假特征的敏感性，并用 SURE 生成的合成数据通过 SFT/DPO 显著提升 RALM 鲁棒性。
+
+**[RARE: Redundancy-Aware Retrieval Evaluation Framework for High-Similarity Corpora](rare_redundancy-aware_retrieval_evaluation_framework_for_high-similarity_corpora.md)**
+
+:   本文提出 RARE 框架，通过将文档分解为原子事实来追踪跨文档冗余，并设计 CRRF（基于独立准则排序的倒数排名融合）稳定 LLM 多准则判断，在金融/法律/专利等高冗余企业语料上构建了 RedQA 基准，揭示主流检索器在 4-hop 高重叠设置下 PerfRecall@10 从 66.4% 暴跌至 5.0-27.9%。
 
 **[ReasonEmbed: Enhanced Text Embeddings for Reasoning-Intensive Document Retrieval](reasonembed_enhanced_text_embeddings_for_reasoning-intensive_document_retrieval.md)**
 
 :   ReasonEmbed 提出三项技术创新——ReMixer 非平凡合成数据方法（82K 高质量样本）、Redapter 自适应推理强度加权训练和多骨干实现——在 BRIGHT 基准上以 38.1 的 nDCG@10 显著超越所有现有文本嵌入模型约 10 个点。
 
-**[Region-R1: Reinforcing Query-Side Region Cropping for Multi-Modal Re-Ranking](region-r1_reinforcing_query-side_region_cropping_for_multi-modal_re-ranking.md)**
+**[Reliable Evaluation Protocol for Low-Precision Retrieval](reliable_evaluation_protocol_for_low-precision_retrieval.md)**
 
-:   本文提出 Region-R1，将多模态重排序中的查询图像区域裁剪建模为决策问题，通过强化学习（r-GRPO）学习何时以及如何裁剪查询图像中与问题相关的区域，在 E-VQA 和 InfoSeek 上将 CondRecall@1 分别提升 20% 和 8%。
+:   揭示低精度（如二值化/量化嵌入）检索系统在评估时因分数粒度降低产生大量虚假并列（spurious ties），导致评估结果高度不稳定，提出 HPS（高精度打分）和 TRM（并列感知指标）两种互补策略，使低精度检索的评估更可靠一致。
 
-**[RepoShapley: Shapley-Enhanced Context Filtering for Repository-Level Code Completion](reposhapley_shapley-enhanced_context_filtering_for_repository-level_code_complet.md)**
+**[Retrieval-Augmented Tutoring for Algorithm Tracing and Problem-Solving in AI Education](retrieval-augmented_tutoring_for_algorithm_tracing_and_problem-solving_in_ai_edu.md)**
 
-:   提出 RepoShapley，一种基于 Shapley 值的联盟感知上下文过滤框架，通过估计检索代码片段在组合中的交互贡献来决定保留/丢弃，显著提升仓库级代码补全质量。
+:   本文提出 KITE，一个面向算法追踪和问题求解的课程材料 RAG 辅导系统，通过意图感知的苏格拉底式反馈和多阶段检索，在自动指标、模拟学生和专家评审中显示出较好的 grounding 与教学支架效果。
+
+**[REZE: Representation Regularization for Domain-adaptive Text Embedding Pre-finetuning](reze_representation_regularization_for_domain-adaptive_text_embedding_pre-finetu.md)**
+
+:   REZE 在领域 embedding 预微调中对 anchor-positive 关系表示做 eigenspace 分解，用鲁棒统计识别任务特异偏移并软收缩，从而吸收共享领域知识、抑制异构任务带来的表示漂移。
+
+**[S2G-RAG: Structured Sufficiency and Gap Judging for Iterative Retrieval-Augmented QA](s2g-rag_structured_sufficiency_and_gap_judging_for_iterative_retrieval-augmented.md)**
+
+:   S2G-RAG 把迭代 RAG 中“证据够不够”和“下一步缺什么”显式建模成结构化控制器 S2G-Judge，再用 gap-guided query 和句子级证据抽取减少噪声，在 HotpotQA BM25 设置下把 F1 从 SIM-RAG 的 43.3 提升到 56.5。
 
 **[Prune-then-Merge: Towards Efficient Multi-Vector Visual Document Retrieval](sculpting_the_vector_space_towards_efficient_multi-vector_visual_document_retrie.md)**
 
@@ -173,25 +237,29 @@ tags:
 
 :   揭示 RAG 系统对检索文档排列顺序高度敏感的问题，提出 Stable-RAG：通过对文档排列产生的隐状态做谱聚类识别主导推理模式，再用 DPO 对齐将幻觉输出引导向正确答案，在三个 QA 数据集上实现准确率和推理一致性的双重提升。
 
-**[TaxPraBen: A Scalable Benchmark for Structured Evaluation of LLMs in Chinese Real-World Tax Practice](taxpraben_a_scalable_benchmark_for_structured_evaluation_of_llms_in_chinese_real.md)**
+**[UnIte: Uncertainty-based Iterative Document Sampling for Domain Adaptation in Information Retrieval](unite_uncertainty-based_iterative_document_sampling_for_domain_adaptation_in_inf.md)**
 
-:   本文提出 TaxPraBen，首个面向中国税务实践的 LLM 评测基准，包含 14 个数据集共 7.3K 样本，覆盖税务风险防控、稽查分析和税务筹划三大真实场景，并设计了"结构化解析—字段对齐提取—数值与文本匹配"的可扩展评估范式，评测 19 个 LLM 后发现闭源大模型和中文优化模型表现更优，而税务领域微调模型 YaYi2 改进有限。
+:   UnIte 把神经检索器的无监督领域适配瓶颈从“生成更多伪查询”转向“更聪明地选文档”，先用 aleatoric uncertainty 过滤低密度噪声文档，再用随模型训练动态变化的 epistemic uncertainty 迭代采样高价值文档，在 BEIR 大语料上用更少伪查询稳定超过 DUQGen。
 
-**[To Lie or Not to Lie? Investigating The Biased Spread of Global Lies by LLMs](to_lie_or_not_to_lie_investigating_the_biased_spread_of_global_lies_by_llms.md)**
+**[Utility-Oriented Visual Evidence Selection for Multimodal Retrieval-Augmented Generation](utility-oriented_visual_evidence_selection_for_multimodal_retrieval-augmented_ge.md)**
 
-:   本文提出 GlobalLies——一个包含 440 个虚假信息生成模板和 6,867 个实体的多语言平行数据集（8 种语言、195 个国家），揭示了 LLM 在传播虚假信息时存在系统性的国家和语言偏差：对低 HDI 国家的虚假信息生成率显著更高（统计相关 $\rho=-0.355$, $p=5\times10^{-7}$），低资源语言的合规率高出英语 30% 以上，且现有安全分类器和 RAG 防护措施提供不均匀的保护。
+:   本文把多模态 RAG 的图像选择从“语义相似度排序”改成“对最终回答是否有用”的效用估计，并用轻量多模态代理模型高效预测证据 helpfulness，在 MRAG-Bench 和 Visual-RAG 上同时提升回答质量和推理效率。
 
-**[TPA: Next Token Probability Attribution for Detecting Hallucinations in RAG](tpa_next_token_probability_attribution_for_detecting_hallucinations_in_rag.md)**
+**[Verbal-R3: Verbal Reranker as the Missing Bridge between Retrieval and Reasoning](verbal-r3_verbal_reranker_as_the_missing_bridge_between_retrieval_and_reasoning.md)**
 
-:   本文提出 TPA 框架，通过数学方法将 LLM 每个 token 的生成概率精确分解为七个来源（Query、RAG Context、Past Token、Self Token、FFN、Final LayerNorm、Initial Embedding）的贡献，结合词性标注聚合特征，实现 RAG 场景下的 SOTA 幻觉检测。
-
-**[Understanding Structured Financial Data with LLMs: A Case Study on Fraud Detection](understanding_structured_financial_data_with_llms_a_case_study_on_fraud_detectio.md)**
-
-:   本文提出 FinFRE-RAG，一种两阶段框架，通过重要性引导的特征降维将高维表格交易数据序列化为自然语言，并结合标签感知的检索增强上下文学习，使开源 LLM 在金融欺诈检测上的 F1/MCC 大幅提升，缩小了与专用表格分类器的性能差距。
+:   Verbal-R3 把传统 reranker 从“只给相关性分数”的模块升级为“给分数并生成解释性 Verbal Annotation”的桥接模块，再用它训练和引导 RAG 推理器，在多跳问答中同时提升答案准确率和测试时扩展效率。
 
 **[VideoStir: Understanding Long Videos via Spatio-Temporally Structured and Intent-Aware RAG](videostir_understanding_long_videos_via_spatio-temporally_structured_and_intent-.md)**
 
 :   VideoStir 提出了一种结构化且意图感知的长视频 RAG 框架，通过将视频建模为时空图进行多跳 clip 检索 + 训练意图相关性评分器进行帧级筛选，在不依赖辅助文本工具的前提下达到了与 SOTA 长视频 RAG 方法可比的性能。
+
+**[VisRet: Visualization Improves Knowledge-Intensive Text-to-Image Retrieval](visret_visualization_improves_knowledge-intensive_text-to-image_retrieval.md)**
+
+:   本文提出 Visualize-then-Retrieve (VisRet)，一种将文本查询先通过 T2I 生成模型可视化为图像、再在图像模态内进行检索的新范式，在四个基准上平均提升 nDCG@30 0.125（CLIP）和 0.121（E5-V），下游 VQA 准确率在 Visual-RAG-ME 上提升 15.7%。
+
+**[Why Mean Pooling Works: Quantifying Second-Order Collapse in Text Embeddings](why_mean_pooling_works_quantifying_second-order_collapse_in_text_embeddings.md)**
+
+:   本文指出 mean pooling 理论上会丢失 token embedding 的二阶结构，并提出 SOCM 指标量化这种二阶坍缩；实验证明现代对比微调文本编码器的 token embedding 更集中，因此比基座模型更不容易发生坍缩，且低 SOCM 与更高 MTEB 表现相关。
 
 **[Why These Documents? Explainable Generative Retrieval with Hierarchical Category Paths](why_these_documents_explainable_generative_retrieval_with_hierarchical_category_.md)**
 

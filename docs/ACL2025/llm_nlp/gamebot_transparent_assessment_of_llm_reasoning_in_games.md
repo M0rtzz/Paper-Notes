@@ -152,7 +152,7 @@ CoT 提示的影响（GPT-4o，Othello）:
 - [\[ACL 2025\] Knockout LLM Assessment: Using Large Language Models for Evaluations through Iterative Pairwise Comparisons](knockout_llm_assessment_using_large_language_models_for_evaluations_through_iter.md)
 - [\[ACL 2025\] Theory of Mind in Large Language Models: Assessment and Enhancement](theory_of_mind_llm.md)
 - [\[ACL 2025\] Conversational Quality Assessment: A Large-Scale Corpus and Comprehensive Study](conversational_quality_assessment_a_large-scale_corpus_and_comprehensive_study.md)
-- [\[ACL 2025\] Dynamic Parallel Tree Search for Efficient LLM Reasoning](dynamic_parallel_tree_search_for_efficient_llm_reasoning.md)
+- [\[ACL 2025\] Reason from Future: Reverse Thought Chain Enhances LLM Reasoning](reason_from_future_reverse_thought_chain_enhances_llm_reasoning.md)
 
 </div>
 

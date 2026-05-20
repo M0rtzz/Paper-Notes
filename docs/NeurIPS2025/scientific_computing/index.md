@@ -16,7 +16,7 @@ tags:
 
 **🧠 NeurIPS2025** · **23** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (4)](../../CVPR2026/scientific_computing/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/scientific_computing/index.md) · [🤖 AAAI2026 (8)](../../AAAI2026/scientific_computing/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/scientific_computing/index.md) · [🧪 ICML2025 (8)](../../ICML2025/scientific_computing/index.md) · [📷 CVPR2025 (3)](../../CVPR2025/scientific_computing/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (19)](../../ICML2026/scientific_computing/index.md) · [📷 CVPR2026 (4)](../../CVPR2026/scientific_computing/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/scientific_computing/index.md) · [🤖 AAAI2026 (8)](../../AAAI2026/scientific_computing/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/scientific_computing/index.md) · [🧪 ICML2025 (8)](../../ICML2025/scientific_computing/index.md)
 
 **[A Regularized Newton Method for Nonconvex Optimization with Global and Local Complexity Guarantees](a_regularized_newton_method_for_nonconvex_optimization_with.md)**
 

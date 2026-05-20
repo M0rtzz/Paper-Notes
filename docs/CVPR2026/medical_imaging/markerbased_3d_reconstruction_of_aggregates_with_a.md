@@ -143,8 +143,8 @@ tags:
 
 - [\[CVPR 2026\] NeuroSeg Meets DINOv3: Transferring 2D Self-Supervised Visual Priors to 3D Neuron Segmentation via DINOv3 Initialization](neuroseg_meets_dinov3_transferring_2d_self-supervised_visual_priors_to_3d_neuron.md)
 - [\[NeurIPS 2025\] PolyPose: Deformable 2D/3D Registration via Polyrigid Transformations](../../NeurIPS2025/medical_imaging/polypose_deformable_2d3d_registration_via_polyrigid_transformations.md)
-- [\[CVPR 2025\] CrossSDF: 3D Reconstruction of Thin Structures From Cross-Sections](../../CVPR2025/medical_imaging/crosssdf_3d_reconstruction_of_thin_structures_from_cross-sections.md)
 - [\[ICLR 2026\] Improving 2D Diffusion Models for 3D Medical Imaging with Inter-Slice Consistent Stochasticity](../../ICLR2026/medical_imaging/improving_2d_diffusion_models_for_3d_medical_imaging_with_inter-slice_consistent.md)
+- [\[CVPR 2025\] CrossSDF: 3D Reconstruction of Thin Structures From Cross-Sections](../../CVPR2025/medical_imaging/crosssdf_3d_reconstruction_of_thin_structures_from_cross-sections.md)
 - [\[CVPR 2026\] Learning Generalizable 3D Medical Image Representations from Mask-Guided Self-Supervision](learning_generalizable_3d_medical_image_representations_from_mask-guided_self-su.md)
 
 </div>

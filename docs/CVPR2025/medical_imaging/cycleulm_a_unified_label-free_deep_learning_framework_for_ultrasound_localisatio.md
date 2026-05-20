@@ -132,7 +132,7 @@ CycleULM 包含三个模块化神经网络：MB-DT（Microbubble Domain Translat
 - [\[CVPR 2025\] UniVAD: A Training-free Unified Model for Few-shot Visual Anomaly Detection](univad_a_training-free_unified_model_for_few-shot_visual_anomaly_detection.md)
 - [\[CVPR 2025\] Deep Learning-based Assessment of the Relation Between the Third Molar and Mandibular Canal on Panoramic Radiographs using Local, Centralized, and Federated Learning](deep_learning-based_assessment_of_the_relation_between_the_third_molar_and_mandi.md)
 - [\[CVPR 2025\] VISTA3D: A Unified Segmentation Foundation Model For 3D Medical Imaging](vista3d_a_unified_segmentation_foundation_model_for_3d_medical_imaging.md)
-- [\[CVPR 2025\] Knowledge Bridger: Towards Training-Free Missing Modality Completion](knowledge_bridger_towards_training-free_missing_modality_completion.md)
+- [\[CVPR 2025\] CARL: A Framework for Equivariant Image Registration](carl_a_framework_for_equivariant_image_registration.md)
 
 </div>
 

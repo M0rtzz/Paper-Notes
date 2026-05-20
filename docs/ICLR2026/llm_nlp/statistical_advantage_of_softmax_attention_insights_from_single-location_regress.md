@@ -216,11 +216,11 @@ $$\mathsf{E}_{\text{softmax}} = e^{-c_L \nu + o(\nu)} \quad \text{（指数衰�
 
 ## 相关论文
 
-- [\[ICLR 2026\] Rethinking Uncertainty Estimation in LLMs: A Principled Single-Sequence Measure](rethinking_uncertainty_estimation_in_llms_a_principled_single-sequence_measure.md)
 - [\[ICML 2025\] Binary Hypothesis Testing for Softmax Models and Leverage Score Models](../../ICML2025/llm_nlp/binary_hypothesis_testing_for_softmax_models_and_leverage_score_models.md)
-- [\[NeurIPS 2025\] Post Hoc Regression Refinement via Pairwise Rankings](../../NeurIPS2025/llm_nlp/post_hoc_regression_refinement_via_pairwise_rankings.md)
 - [\[ACL 2025\] Mitigate Position Bias in LLMs via Scaling a Single Hidden States Channel](../../ACL2025/llm_nlp/mitigate_position_bias_in_large_language_models_via_scaling_a_single_dimension.md)
+- [\[NeurIPS 2025\] Post Hoc Regression Refinement via Pairwise Rankings](../../NeurIPS2025/llm_nlp/post_hoc_regression_refinement_via_pairwise_rankings.md)
 - [\[ACL 2025\] A Survey on Foundation Language Models for Single-cell Biology](../../ACL2025/llm_nlp/foundation_lm_single_cell_survey.md)
+- [\[ECCV 2024\] Reprojection Errors as Prompts for Efficient Scene Coordinate Regression](../../ECCV2024/llm_nlp/reprojection_errors_as_prompts_for_efficient_scene_coordinate_regression.md)
 
 </div>
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 LLM 推理方向30篇论文解读
+  AAAI2026 LLM 推理方向29篇论文解读
 description: >-
-  30篇AAAI2026的 LLM 推理方向论文解读，涵盖推理、LLM、对抗鲁棒、代码智能、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  29篇AAAI2026的 LLM 推理方向论文解读，涵盖推理、LLM、对抗鲁棒、代码智能、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "LLM 推理"
@@ -18,11 +18,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💡 LLM 推理
 
-**🤖 AAAI2026** · **30** 篇论文解读
+**🤖 AAAI2026** · **29** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (37)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (12)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (65)](../../ICLR2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (65)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md) · [🧪 ICML2025 (15)](../../ICML2025/llm_reasoning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (20)](../../ICML2026/llm_reasoning/index.md) · [💬 ACL2026 (64)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (12)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (63)](../../ICLR2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (66)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
 
-🔥 **高频主题：** 推理 ×17 · LLM ×5 · 对抗鲁棒 ×3 · 代码智能 ×2 · 强化学习 ×2
+🔥 **高频主题：** 推理 ×16 · LLM ×4 · 对抗鲁棒 ×2 · 代码智能 ×2 · 强化学习 ×2
 
 **[A Reasoning Paradigm for Named Entity Recognition](a_reasoning_paradigm_for_named_entity_recognition.md)**
 
@@ -35,10 +35,6 @@ tags:
 **[ARCHE: A Novel Task to Evaluate LLMs on Latent Reasoning Chain Extraction](arche_a_novel_task_to_evaluate_llms_on_latent_reasoning_chai.md)**
 
 :   提出潜在推理链提取 (ARCHE) 任务，要求 LLM 将科学论文中的论证分解为基于 Peirce 三种推理范式的推理逻辑树 (RLT)，并通过 Entity Coverage 和 Reasoning Edge Accuracy 两个指标揭示了 10 个主流 LLM 在内容完整性与逻辑正确性之间的本质权衡。
-
-**[BadThink: Triggered Overthinking Attacks on Chain-of-Thought Reasoning in Large Language Models](badthink_triggered_overthinking_attacks_on_chain-of-thought_reasoning_in_large_l.md)**
-
-:   提出 BadThink——首个针对 CoT 推理效率的训练时后门攻击，通过 LLM 迭代优化生成自然的冗长推理模板进行数据投毒，触发后模型生成膨胀 17× 以上的推理链（MATH-500），同时保持最终答案正确和良好隐蔽性。
 
 **[BLM-Guard: Explainable Multimodal Ad Moderation with Chain-of-Thought and Policy-Aligned Rewards](blm-guard_explainable_multimodal_ad_moderation_with_chain-of.md)**
 

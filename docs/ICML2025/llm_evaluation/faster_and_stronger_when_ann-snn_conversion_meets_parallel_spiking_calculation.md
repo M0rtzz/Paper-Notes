@@ -136,7 +136,7 @@ $$\mathbf{r}_{\text{DA}}^{l,\tilde{T}} = \frac{\theta^l + \phi_{\text{DA}}^l}{\t
 - [\[NeurIPS 2025\] Model-Behavior Alignment under Flexible Evaluation: When the Best-Fitting Model Isn't the Right One](../../NeurIPS2025/llm_evaluation/model-behavior_alignment_under_flexible_evaluation_when_the_best-fitting_model_i.md)
 - [\[ICLR 2026\] When Priors Backfire: On the Vulnerability of Unlearnable Examples to Pretraining](../../ICLR2026/llm_evaluation/when_priors_backfire_on_the_vulnerability_of_unlearnable_examples_to_pretraining.md)
 - [\[AAAI 2026\] SpikCommander: A High-Performance Spiking Transformer with Multi-View Learning for Efficient Speech Command Recognition](../../AAAI2026/llm_evaluation/spikcommander_a_high-performance_spiking_transformer_with_multi-view_learning_fo.md)
-- [\[ICLR 2026\] When to Ensemble: Identifying Token-Level Points for Stable and Fast LLM Ensembling](../../ICLR2026/llm_evaluation/when_to_ensemble_identifying_token-level_points_for_stable_and_fast_llm_ensembli.md)
+- [\[ICML 2025\] Function Encoders: A Principled Approach to Transfer Learning in Hilbert Spaces](function_encoders_a_principled_approach_to_transfer_learning_in_hilbert_spaces.md)
 
 </div>
 

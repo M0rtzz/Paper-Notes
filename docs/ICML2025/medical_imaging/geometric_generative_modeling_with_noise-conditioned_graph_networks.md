@@ -135,8 +135,8 @@ $$r_t, s_t = f(t, r_0, r_1, s_0, s_1)$$
 - [\[NeurIPS 2025\] Generative Modeling of Full-Atom Protein Conformations using Latent Diffusion on Graph Embeddings](../../NeurIPS2025/medical_imaging/generative_modeling_of_full-atom_protein_conformations_using_latent_diffusion_on.md)
 - [\[ICML 2025\] UniMoMo: Unified Generative Modeling of 3D Molecules for De Novo Binder Design](unimomo_unified_generative_modeling_of_3d_molecules_for_de_novo_binder_design.md)
 - [\[NeurIPS 2025\] Towards Multiscale Graph-based Protein Learning with Geometric Secondary Structural Motifs](../../NeurIPS2025/medical_imaging/towards_multiscale_graph-based_protein_learning_with_geometric_secondary_structu.md)
+- [\[NeurIPS 2025\] Random Search Neural Networks for Efficient and Expressive Graph Learning](../../NeurIPS2025/medical_imaging/random_search_neural_networks_for_efficient_and_expressive_graph_learning.md)
 - [\[ICML 2025\] Flexibility-conditioned Protein Structure Design with Flow Matching](flexibility-conditioned_protein_structure_design_with_flow_matching.md)
-- [\[ICML 2025\] Efficient Noise Calculation in Deep Learning-based MRI Reconstructions](efficient_noise_calculation_in_deep_learning-based_mri_reconstructions.md)
 
 </div>
 

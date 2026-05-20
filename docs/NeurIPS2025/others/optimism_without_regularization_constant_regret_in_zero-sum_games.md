@@ -150,9 +150,9 @@ $$\Psi(y^{T+1}) \leq 8a_{\max}\left(1 + 2\frac{a_{\max}}{a_{\text{gap}}}\right)^
 
 - [\[NeurIPS 2025\] Efficient Kernelized Learning in Polyhedral Games Beyond Full-Information: From Colonel Blotto to Congestion Games](efficient_kernelized_learning_in_polyhedral_games_beyond_full-information_from_c.md)
 - [\[NeurIPS 2025\] Evolutionary Prediction Games](evolutionary_prediction_games.md)
-- [\[NeurIPS 2025\] Gaussian Process Upper Confidence Bound Achieves Nearly-Optimal Regret in Noise-Free Gaussian Process Bandits](gaussian_process_upper_confidence_bound_achieves_nearly-optimal_regret_in_noise-.md)
 - [\[NeurIPS 2025\] MAS-ZERO: Designing Multi-Agent Systems with Zero Supervision](maszero_designing_multiagent_systems_with_zero_supervision.md)
-- [\[NeurIPS 2025\] Zebra: Towards Zero-Shot Cross-Subject Generalization for Universal Brain Visual Decoding](zebra_towards_zero-shot_cross-subject_generalization_for_universal_brain_visual_.md)
+- [\[NeurIPS 2025\] Gaussian Process Upper Confidence Bound Achieves Nearly-Optimal Regret in Noise-Free Gaussian Process Bandits](gaussian_process_upper_confidence_bound_achieves_nearly-optimal_regret_in_noise-.md)
+- [\[ICML 2026\] Complexity as Advantage: A Regret-Based Perspective on Emergent Structure](../../ICML2026/others/complexity_as_advantage_a_regret-based_perspective_on_emergent_structure.md)
 
 </div>
 

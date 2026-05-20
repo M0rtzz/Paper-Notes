@@ -15,10 +15,10 @@ tags:
 
 # When Misinformation Speaks and Converses: Rethinking Fact-Checking in Audio Platforms
 
-**会议**: ACL 2026
-**arXiv**: [2604.16767](https://arxiv.org/abs/2604.16767)
-**代码**: 无
-**领域**: 音频语音
+**会议**: ACL 2026  
+**arXiv**: [2604.16767](https://arxiv.org/abs/2604.16767)  
+**代码**: 无  
+**领域**: 音频语音  
 **关键词**: 音频虚假信息, 事实核查, 播客, 口语特性, 对话性
 
 ## 一句话总结
@@ -121,10 +121,10 @@ N/A（Position Paper）
 ## 相关论文
 
 - [\[ACL 2026\] TellWhisper: Tell Whisper Who Speaks When](tellwhisper_tell_whisper_who_speaks_when.md)
-- [\[ACL 2026\] SEPT: Semantically Expanded Prompt Tuning for Audio-Language Models](generalizable_prompt_tuning_for_audio-language_models_via_semantic_expansion.md)
-- [\[ACL 2026\] Beyond Transcription: Unified Audio Schema for Perception-Aware AudioLLMs](beyond_transcription_unified_audio_schema_for_perception-aware_audiollms.md)
-- [\[ACL 2026\] MCGA: A Multi-task Classical Chinese Literary Genre Audio Corpus](mcga_a_multi-task_classical_chinese_literary_genre_audio_corpus.md)
-- [\[ACL 2026\] HalluAudio: A Comprehensive Benchmark for Hallucination Detection in Large Audio-Language Models](halluaudio_a_comprehensive_benchmark_for_hallucination_detection_in_large_audio-.md)
+- [\[ICML 2026\] Multimodal Fact-Level Attribution for Verifiable Reasoning](../../ICML2026/audio_speech/multimodal_fact-level_attribution_for_verifiable_reasoning.md)
+- [\[ACL 2026\] Omni-Embed-Audio: Leveraging Multimodal LLMs for Robust Audio-Text Retrieval](omni-embed-audio_leveraging_multimodal_llms_for_robust_audio-text_retrieval.md)
+- [\[ACL 2026\] HCFD: A Benchmark for Audio Deepfake Detection in Healthcare](hcfd_a_benchmark_for_audio_deepfake_detection_in_healthcare.md)
+- [\[ACL 2026\] Protecting Bystander Privacy via Selective Hearing in Audio LLMs](protecting_bystander_privacy_via_selective_hearing_in_audio_llms.md)
 
 </div>
 

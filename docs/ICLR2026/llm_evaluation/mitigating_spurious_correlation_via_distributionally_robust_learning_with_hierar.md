@@ -111,8 +111,8 @@ Algorithm 1：z'的PGD + β的mirror descent + θ的SGD。ε的选择使用启�
 - [\[ICLR 2026\] Breaking the Correlation Plateau: On the Optimization and Capacity Limits of Attention-Based Regressors](breaking_the_correlation_plateau_on_the_optimization_and_capacity_limits_of_atte.md)
 - [\[NeurIPS 2025\] Aggregation Hides OOD Generalization Failures from Spurious Correlations](../../NeurIPS2025/llm_evaluation/aggregation_hides_out-of-distribution_generalization_failures_from_spurious_corr.md)
 - [\[CVPR 2026\] Free-Grained Hierarchical Visual Recognition](../../CVPR2026/llm_evaluation/free-grained_hierarchical_visual_recognition.md)
+- [\[ACL 2026\] CLARITY: A Framework and Benchmark for Conversational Language Ambiguity and Unanswerability in Interactive NL2SQL Systems](../../ACL2026/llm_evaluation/clarity_a_framework_and_benchmark_for_conversational_language_ambiguity_and_unan.md)
 - [\[NeurIPS 2025\] SPROD: Spurious-Aware Prototype Refinement for Reliable Out-of-Distribution Detection](../../NeurIPS2025/llm_evaluation/spurious-aware_prototype_refinement_for_reliable_out-of-distribution_detection.md)
-- [\[NeurIPS 2025\] Risk Management for Mitigating Benchmark Failure Modes: BenchRisk](../../NeurIPS2025/llm_evaluation/risk_management_for_mitigating_benchmark_failure_modes_benchrisk.md)
 
 </div>
 

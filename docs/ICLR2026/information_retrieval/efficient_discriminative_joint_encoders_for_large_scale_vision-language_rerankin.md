@@ -121,8 +121,8 @@ EDJE分为离线和在线两个阶段：
 
 ## 相关论文
 
-- [\[ACL 2025\] Re-ranking Using Large Language Models for Mitigating Exposure to Harmful Content on Social Media Platforms](../../ACL2025/information_retrieval/llm_reranking_harmful_content.md)
 - [\[CVPR 2025\] Joint Vision-Language Social Bias Removal for CLIP](../../CVPR2025/information_retrieval/joint_vision-language_social_bias_removal_for_clip.md)
+- [\[ACL 2025\] Re-ranking Using Large Language Models for Mitigating Exposure to Harmful Content on Social Media Platforms](../../ACL2025/information_retrieval/llm_reranking_harmful_content.md)
 - [\[ICLR 2026\] TokMem: One-Token Procedural Memory for Large Language Models](tokmem_one-token_procedural_memory_for_large_language_models.md)
 - [\[ACL 2026\] Region-R1: Reinforcing Query-Side Region Cropping for Multi-Modal Re-Ranking](../../ACL2026/information_retrieval/region-r1_reinforcing_query-side_region_cropping_for_multi-modal_re-ranking.md)
 - [\[ICLR 2026\] Query-Level Uncertainty in Large Language Models](query-level_uncertainty_in_large_language_models.md)

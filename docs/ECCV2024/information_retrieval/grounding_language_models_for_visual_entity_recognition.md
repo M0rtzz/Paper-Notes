@@ -128,11 +128,11 @@ AutoVER = MLLM（基于 LLaVA/Vicuna）+ 多模态实体编码器 + 检索增强
 
 ## 相关论文
 
+- [\[ECCV 2024\] Towards Open-Ended Visual Recognition with Large Language Model](towards_open-ended_visual_recognition_with_large_language_models.md)
 - [\[ECCV 2024\] ArtVLM: Attribute Recognition Through Vision-Based Prefix Language Modeling](artvlm_attribute_recognition_through_vision-based_prefix_language_modeling.md)
+- [\[ACL 2026\] Quantifying and Improving the Robustness of Retrieval-Augmented Language Models Against Spurious Features in Grounding Data](../../ACL2026/information_retrieval/quantifying_and_improving_the_robustness_of_retrieval-augmented_language_models_.md)
+- [\[ECCV 2024\] Multi-Label Cluster Discrimination for Visual Representation Learning](multi-label_cluster_discrimination_for_visual_representation_learning.md)
 - [\[CVPR 2025\] EZSR: Event-based Zero-Shot Recognition](../../CVPR2025/information_retrieval/ezsr_event-based_zero-shot_recognition.md)
-- [\[ACL 2025\] GaRAGe: A Benchmark with Grounding Annotations for RAG Evaluation](../../ACL2025/information_retrieval/garage_a_benchmark_with_grounding_annotations_for_rag_evaluation.md)
-- [\[ICLR 2026\] Query-Level Uncertainty in Large Language Models](../../ICLR2026/information_retrieval/query-level_uncertainty_in_large_language_models.md)
-- [\[ACL 2025\] Enhancing Lexicon-Based Text Embeddings with Large Language Models](../../ACL2025/information_retrieval/enhancing_lexicon-based_text_embeddings_with_large_language_models.md)
 
 </div>
 

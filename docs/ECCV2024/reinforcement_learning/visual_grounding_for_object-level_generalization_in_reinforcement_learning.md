@@ -126,9 +126,9 @@ Focal reward 是唯一能掌握全部四个困难技能的方法。
 
 - [\[AAAI 2026\] Start Small, Think Big: Curriculum-based Relative Policy Optimization for Visual Grounding](../../AAAI2026/reinforcement_learning/start_small_think_big_curriculum-based_relative_policy_optimization_for_visual_g.md)
 - [\[NeurIPS 2025\] Learning Interactive World Model for Object-Centric Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/learning_interactive_world_model_for_object-centric_reinforcement_learning.md)
-- [\[NeurIPS 2025\] Human-Inspired Multi-Level Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/human-inspired_multi-level_reinforcement_learning.md)
 - [\[AAAI 2026\] Object-Centric Latent Action Learning](../../AAAI2026/reinforcement_learning/object-centric_latent_action_learning.md)
 - [\[AAAI 2026\] Object-Centric World Models for Causality-Aware Reinforcement Learning](../../AAAI2026/reinforcement_learning/object-centric_world_models_for_causality-aware_reinforcement_learning.md)
+- [\[NeurIPS 2025\] Human-Inspired Multi-Level Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/human-inspired_multi-level_reinforcement_learning.md)
 
 </div>
 

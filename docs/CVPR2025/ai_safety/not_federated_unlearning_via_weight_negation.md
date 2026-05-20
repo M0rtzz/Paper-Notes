@@ -139,8 +139,8 @@ Caltech-101 / ViT，Dirichlet β=0.1：
 
 - [\[ICML 2025\] Do Not Mimic My Voice: Speaker Identity Unlearning for Zero-Shot Text-to-Speech](../../ICML2025/ai_safety/do_not_mimic_my_voice_speaker_identity_unlearning_for_zero-shot_text-to-speech.md)
 - [\[CVPR 2025\] Towards Source-Free Machine Unlearning](towards_source-free_machine_unlearning.md)
-- [\[ICLR 2026\] Dataless Weight Disentanglement in Task Arithmetic via Kronecker-Factored Approximate Curvature](../../ICLR2026/ai_safety/dataless_weight_disentanglement_in_task_arithmetic_via_kronecker-factored_approx.md)
 - [\[NeurIPS 2025\] Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](../../NeurIPS2025/ai_safety/rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
+- [\[ICLR 2026\] Dataless Weight Disentanglement in Task Arithmetic via Kronecker-Factored Approximate Curvature](../../ICLR2026/ai_safety/dataless_weight_disentanglement_in_task_arithmetic_via_kronecker-factored_approx.md)
 - [\[NeurIPS 2025\] Efficient Verified Machine Unlearning for Distillation](../../NeurIPS2025/ai_safety/efficient_verified_machine_unlearning_for_distillation.md)
 
 </div>

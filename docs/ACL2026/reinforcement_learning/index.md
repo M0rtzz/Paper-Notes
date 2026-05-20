@@ -2,7 +2,7 @@
 title: >-
   ACL2026 强化学习方向34篇论文解读
 description: >-
-  34篇ACL2026的强化学习方向论文解读，涵盖 LLM、强化学习、推理、Agent、对话系统、RAG等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  34篇ACL2026的强化学习方向论文解读，涵盖强化学习、LLM、推理、对抗鲁棒、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "强化学习"
@@ -10,9 +10,8 @@ tags:
   - "论文笔记"
   - "LLM"
   - "推理"
-  - "Agent"
-  - "对话系统"
-  - "RAG"
+  - "对抗鲁棒"
+  - "多模态"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
@@ -20,9 +19,13 @@ tags:
 
 **💬 ACL2026** · **34** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (19)](../../CVPR2026/reinforcement_learning/index.md) · [🔬 ICLR2026 (138)](../../ICLR2026/reinforcement_learning/index.md) · [🤖 AAAI2026 (71)](../../AAAI2026/reinforcement_learning/index.md) · [🧠 NeurIPS2025 (171)](../../NeurIPS2025/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md) · [🧪 ICML2025 (80)](../../ICML2025/reinforcement_learning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (20)](../../ICML2026/reinforcement_learning/index.md) · [📷 CVPR2026 (19)](../../CVPR2026/reinforcement_learning/index.md) · [🔬 ICLR2026 (138)](../../ICLR2026/reinforcement_learning/index.md) · [🤖 AAAI2026 (71)](../../AAAI2026/reinforcement_learning/index.md) · [🧠 NeurIPS2025 (172)](../../NeurIPS2025/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md)
 
-🔥 **高频主题：** LLM ×10 · 强化学习 ×10 · 推理 ×8 · Agent ×3 · 对话系统 ×3
+🔥 **高频主题：** 强化学习 ×16 · LLM ×8 · 推理 ×8 · 对抗鲁棒 ×2 · 多模态 ×2
+
+**[A Goal Without a Plan Is Just a Wish: Efficient and Effective Global Planner Training for Long-Horizon Agent Tasks (EAGLET)](a_goal_without_a_plan_is_just_a_wish_efficient_and_effective_global_planner_trai.md)**
+
+:   EAGLET 把长程 agent 任务拆成「全局 planner + 局部 executor」两个模块，通过「同源共识过滤合成 SFT 冷启动 + 用执行器能力增益作奖励的 GRPO 微调」两步训练出一个即插即用的 planner，三个长程任务上刷新 SOTA 且训练成本仅为 RL baseline 的 1/8。
 
 **[A Survey of Reinforcement Learning for Large Language Models under Data Scarcity: Challenges and Solutions](a_survey_of_reinforcement_learning_for_large_language_models_under_data_scarcity.md)**
 
@@ -32,61 +35,53 @@ tags:
 
 :   提出 Adaptive Instruction Composition (AIC) 框架，利用 Neural Thompson Sampling 在众包有害查询和越狱策略的组合空间中自适应地选择攻击指令，同时优化攻击成功率和多样性，在 Harmbench 上大幅超越已有方法。
 
-**[AJ-Bench: Benchmarking Agent-as-a-Judge for Environment-Aware Evaluation](aj-bench_benchmarking_agent-as-a-judge_for_environment-aware_evaluation.md)**
+**[ARGUS: Policy-Adaptive Ad Governance via Evolving Reinforcement with Adversarial Umpiring](argus_policy-adaptive_ad_governance_via_evolving_reinforcement_with_adversarial_.md)**
 
-:   提出 AJ-Bench，首个系统评估 Agent-as-a-Judge 能力的基准，覆盖搜索、数据系统和 GUI 三个领域共 155 个任务和 516 条标注轨迹，实验表明 Agent-as-a-Judge 比 LLM-as-a-Judge 平均 F1 提升约 13 个百分点。
+:   ARGUS 用 Prosecutor–Defender–Umpire 三智能体辩论 + GRPO 强化学习，让广告审核 VLM 在政策不断更新时既能纠正历史「过时标签」、又能挖出灰区潜在违规，工业 A/B 把违规漏放率（VLR）相对降低 35.2%。
 
 **[AttnPO: Attention-Guided Process Supervision for Efficient Reasoning](attnpo_attention-guided_process_supervision_for_efficient_reasoning.md)**
 
 :   提出 AttnPO，一个利用模型内在注意力信号进行步级信用分配的低开销过程监督 RL 框架，通过识别 Key-Focus Heads（KFH）区分冗余和关键推理步骤，在大幅缩短推理长度的同时显著提升准确率。
 
-**[Bootstrapping Code Translation with Weighted Multilanguage Exploration](bootstrapping_code_translation_with_weighted_multilanguage_exploration.md)**
+**[Beyond Majority Voting: Towards Fine-grained and More Reliable Reward Signal for Test-Time Reinforcement Learning](beyond_majority_voting_towards_fine-grained_and_more_reliable_reward_signal_for_.md)**
 
-:   BootTrans 提出了一种自举式多语言代码翻译方法，通过利用单一枢纽语言（Python）的测试用例作为跨语言验证预言，结合双池架构进行经验收集扩展训练数据，并设计语言感知加权机制动态优先处理困难的翻译方向，在 HumanEval-X 和 TransCoder-Test 上显著超越基线。
+:   针对 TTRL 用 majority voting 做伪标签带来的「确认偏差 + 稀疏奖励」两大痛点，SCOPE 提出步级置信度加权投票（不再唯频次是从）+ Pareto-optimal subgroup 动态划分（每子组独立 bootstrap 出局部共识），在 Qwen3-8B 上把 AIME 2024 从 47.13 → 52.70、AIME 2025 从 27.40 → 31.00。
+
+**[Breaking the Impasse: Dual-Scale Evolutionary Policy Training for Social Language Agents](breaking_the_impasse_dual-scale_evolutionary_policy_training_for_social_language.md)**
+
+:   针对自博弈 RLVR 在开放式社交语言博弈（谈判 / 不许说 / 两美元分配）中出现的"进化僵局"——agent 行为同质化导致比赛结果分布退化为确定性、梯度信号消失——本文提出 DEPT 用 fast/slow 双时间尺度 EMA baseline 检测 stagnation，再用 asymmetric advantage reshaping 抑制 dominant outcome、放大 rare trajectory，在 Qwen3-4B/8B-Base 上把谈判任务胜率从 16-20% 拉到 32%，并在 OOD 数学/推理 benchmark 上同步受益。
 
 **[Bridging SFT and RL: Dynamic Policy Optimization for Robust Reasoning](bridging_sft_and_rl_dynamic_policy_optimization_for_robust_reasoning.md)**
 
 :   提出 DYPO（Dynamic Policy Optimization），通过动态难度分级将样本路由到不同优化路径——Hard样本用多教师蒸馏降低SFT偏差、Mid样本用Group Alignment Loss降低RL方差，在数学推理benchmark上平均提升4.8%，OOD任务提升13.3%。
 
-**[CAP: Controllable Alignment Prompting for Unlearning in LLMs](cap_controllable_alignment_prompting_for_unlearning_in_llms.md)**
-
-:   提出 CAP 框架，通过训练轻量 SLM 生成可控的提示前缀来引导冻结的 LLM 选择性遗忘目标知识，无需修改模型参数，实现了可逆、可迁移的 LLM 知识遗忘。
-
 **[CE-GPPO: Coordinating Entropy via Gradient-Preserving Clipping Policy Optimization in Reinforcement Learning](ce-gppo_coordinating_entropy_via_gradient-preserving_clipping_policy_optimizatio.md)**
 
 :   提出 CE-GPPO 算法，通过 stop-gradient 操作重新引入 PPO 裁剪区间外低概率 token 的梯度信号，实现对策略熵的精细化协调控制，在探索-利用之间取得更好平衡。
-
-**[ChipSeek: Optimizing Verilog Generation via EDA-Integrated Reinforcement Learning](chipseek_optimizing_verilog_generation_via_eda-integrated_reinforcement_learning.md)**
-
-:   ChipSeek 提出了一个将 EDA 工具链直接集成到训练循环中的分层奖励 RL 框架，通过课程引导的动态策略优化（CDPO）使 LLM 能够生成同时满足功能正确性和 PPA（功耗-性能-面积）优化的 RTL 代码，在标准基准上达到 SOTA。
 
 **[Controlling Multimodal Conversational Agents with Coverage-Enhanced Latent Actions](controlling_multimodal_conversational_agents_with_coverage-enhanced_latent_actio.md)**
 
 :   提出为多模态对话智能体（MCA）构建紧凑的潜在动作空间来替代巨大的 token 动作空间进行 RL 微调，通过跨模态投影器和循环一致性损失利用配对图文数据和纯文本数据共同构建码本，将动作空间从 152K（词表大小）压缩到 128（码本大小），在两个对话任务上全面超越 token 级 RL 基线。
 
-**[Data Mixing Agent: Learning to Re-weight Domains for Continual Pre-training](data_mixing_agent_learning_to_re-weight_domains_for_continual_pre-training.md)**
+**[d-TreeRPO: Towards More Reliable Policy Optimization for Diffusion Language Models](d-treerpo_towards_more_reliable_policy_optimization_for_diffusion_language_model.md)**
 
-:   本文提出 Data Mixing Agent，首个基于模型的端到端领域重加权框架，通过在大量数据混合轨迹上使用 CQL 强化学习训练小型代理来学习可泛化的数据混合启发式，在数学推理持续预训练中平衡源领域和目标领域性能，且可泛化到未见过的源领域、目标模型和领域空间。
+:   针对扩散语言模型（dLLM）RL 的两大可靠性瓶颈 —— 奖励稀疏 / 概率估计偏差 —— 作者提出 d-TreeRPO：把 rollout 组织成树，用叶子节点的可验证奖励自下而上算出步级 advantage；同时理论证明「模型越自信，单步前向概率估计越准」，并设计时间调度的自蒸馏 loss 在训练后期收紧策略，最终在 LLaDA-8B-Instruct 上 Sudoku +86.2% / Countdown +51.6% / GSM8K +4.5% / Math500 +5.3%。
 
 **[Deliberative Searcher: Improving LLM Reliability via Reinforcement Learning with Constraints](deliberative_searcher_improving_llm_reliability_via_reinforcement_learning_with_.md)**
 
 :   本文提出 Deliberative Searcher，一个推理优先的框架，将搜索操作集成到 CoT 生成中并保持显式置信度校准，使用自适应拉格朗日乘子的约束 RL 联合优化正确性和可靠性，将 7B 模型的平均"错误-确定"率从基线的 54% 降至 2%。
 
-**[FaithLens: Detecting and Explaining Faithfulness Hallucination](faithlens_detecting_and_explaining_faithfulness_hallucination.md)**
+**[DPEPO: Diverse Parallel Exploration Policy Optimization for LLM-based Agents](dpepo_diverse_parallel_exploration_policy_optimization_for_llm-based_agents.md)**
 
-:   本文提出 FaithLens，一个 8B 参数的忠实性幻觉检测模型，通过高质量数据合成+三维过滤（标签正确性、解释质量、数据多样性）进行冷启动 SFT，再用基于规则的强化学习（预测正确性奖励+解释质量奖励）进一步优化，在 12 个任务上超越 GPT-5.2 和 o3，同时提供高质量的解释性输出。
+:   作者提出"并行探索"新范式——agent 同步与 $K$ 个 environment 交互、跨轨迹共享经验，并给出对应的 RL 算法 **DPEPO**：先 SFT 冷启动学会并行 reasoning，再用"轨迹级成功 + 步级 Diverse Action / Diverse State Transition"分层奖励的 GRPO 训练，在 ALFWorld 与 ScienceWorld 全部 split 上拿下 SOTA（Qwen2.5-7B 上分别 98.2% / 61.4%），且在更大 $K$ 时 token 增长远低于"多采样"基线。
 
-**[Feedback-Driven Tool-Use Improvements in Large Language Models via Automated Build Environments](feedback-driven_tool-use_improvements_in_large_language_models_via_automated_bui.md)**
+**[EvoCoT: Overcoming the Exploration Bottleneck in Reinforcement Learning for LLMs](evocot_overcoming_the_exploration_bottleneck_in_reinforcement_learning.md)**
 
-:   本文提出 FTRL 框架，通过五阶段自动化管线构建稳定可控的工具使用训练环境，并设计结合工具调用精度和任务完成度的可验证奖励机制，与偏好优化 RL 算法结合后，在 7B-14B 模型上实现平均超 10% 的工具使用性能提升，甚至超越最强闭源模型。
+:   本文提出 EvoCoT，一个两阶段自我进化的课程学习框架：先用最终答案约束 LLM 自生成可验证的 CoT 轨迹，再渐进地从尾部删除推理步骤，逐步扩大探索空间，从而在 sparse reward 的硬题上稳定训练 RLVR，不依赖任何教师模型或人写 CoT，就让 R1-Qwen-1.5B 在 MATH 训练集上的硬题正确率从 55.7 飙升到 87.8。
 
-**[Frame of Reference: Addressing the Challenges of Common Ground Representation in Dialogue](frame_of_reference_addressing_the_challenges_of_common_ground_representation_in_.md)**
+**[Free Energy-Driven Reinforcement Learning with Adaptive Advantage Shaping for Unsupervised Reasoning in LLMs](free_energy-driven_reinforcement_learning_with_adaptive_advantage_shaping_for_un.md)**
 
-:   本文提出 IndiRef 基准测试，用于评估对话系统通过"关系指代"（如"昨天我们去的那个公园旁边的咖啡馆"）建立和利用持久共识（common ground）的能力，发现现有 LLM 在全上下文条件下准确率不超过 50%，并通过合成数据 + GRPO 强化学习训练将性能提升 15-20%。
-
-**[From Passive Metric to Active Signal: The Evolving Role of Uncertainty Quantification in Large Language Models](from_passive_metric_to_active_signal_the_evolving_role_of_uncertainty_quantifica.md)**
-
-:   本文系统综述了 LLM 中不确定性量化从"被动诊断指标"到"主动控制信号"的功能演化，覆盖三大前沿领域：高级推理（引导计算分配和自我纠正）、自主代理（驱动工具使用和信息获取的元认知决策）、以及强化学习（缓解奖励黑客并通过内在奖励实现自我改进）。
+:   FREIA 把自由能原理 (FEP) 引入无标签 RL 微调，用「共识 + 探索」自适应奖励 (FER) 和基于奖励分布偏度的自适应优势整形 (AAS) 同时解决传统多数投票 / 自信度 reward 的过早收敛和 advantage 估计在训练阶段错配两个问题，在 3 个推理任务、9 个数据集上达到与 supervised GRPO 持平甚至更好的水平。
 
 **[GeoRA: Geometry-Aware Low-Rank Adaptation for RLVR](geora_geometry-aware_low-rank_adaptation_for_rlvr.md)**
 
@@ -96,29 +91,25 @@ tags:
 
 :   ImpRIF 将复杂指令中的隐式推理结构形式化为可验证的显式推理图（ERG），基于此构建大规模单轮/多轮数据并通过 SFT+过程验证 RL 训练，使 4B-32B 模型在五个指令遵循基准上显著超越基座模型，32B 模型甚至超越部分大型商用模型。
 
-**[Language-Coupled Reinforcement Learning for Multilingual Retrieval-Augmented Generation](language-coupled_reinforcement_learning_for_multilingual_retrieval-augmented_gen.md)**
+**[KnowRL: Exploring Knowledgeable Reinforcement Learning for Factuality](knowrl_exploring_knowledgeable_reinforcement_learning_for_factuality.md)**
 
-:   本文提出 LcRL 框架，通过语言耦合的 GRPO 策略优化和反一致性惩罚奖励，解决多语言 RAG 中的知识偏差和知识冲突问题，在多语言问答任务上取得显著提升。
+:   KnowRL 把"原子事实校验"作为过程级奖励直接塞进 GRPO 训练循环，对慢思考模型的 CoT 每一步进行事实判定，同时用"拒答给正奖励"教模型识别自己的知识边界，在 SimpleQA Incorrect Rate 上直降 20.3% 的同时不损失（甚至略升）GPQA / AIME 等推理能力，并展现出英文知识 → 中文 QA 的跨语言迁移。
+
+**[LearnAlign: Data Selection for LLM Reinforcement Learning with Improved Gradient Alignment](learnalign_data_selection_for_llm_reinforcement_learning_with_improved_gradient_.md)**
+
+:   针对 RLVR 后训练的数据选择问题，提出 LearnAlign——把"梯度对齐"作为代表性指标，再用"成功率 $V(\xi)=p(1-p)$"作为可学习性权重消除响应长度偏置，仅用 1000 条数据（约 6%）就在 5 个推理 benchmark 上做到接近全量训练（42.4% vs 44.9%），且 GSM8K 上以 13.4% 数据 (77.5%) 超过全量 (77.0%)。
 
 **[LENS: Less Noise, More Voice — Reinforcement Learning for Reasoning via Instruction Purification](less_noise_more_voice_reinforcement_learning_for_reasoning_via_instruction_purif.md)**
 
 :   LENS 发现 RLVR 中许多探索失败并非因为问题难度，而是因为 prompt 中少量（<5%）干扰 token，通过识别和删除这些 token 来提升 rollout 成功率，并将净化 rollout 的学习信号转移到原始噪声 prompt 的策略优化中，平均提升 3.88% 并加速 1.6 倍。
 
-**[Optimizing User Profiles via Contextual Bandits for Retrieval-Augmented LLM Personalization](optimizing_user_profiles_via_contextual_bandits_for_retrieval-augmented_llm_pers.md)**
+**[LoVeC: Reinforcement Learning for Better Verbalized Confidence in Long-Form Generations](lovec_reinforcement_learning_for_better_verbalized_confidence_in_long-form_gener.md)**
 
-:   提出 PURPLE 框架，将检索增强 LLM 个性化中的用户画像构建问题建模为上下文老虎机问题，通过 Plackett-Luce 排序模型捕捉记录间依赖关系，以 LLM 对参考回复的 log-likelihood 作为奖励信号，直接优化检索以匹配生成质量。
+:   LoVeC 教 LLM 在长文本生成过程中每写完一句就追加一个 0–10 的 `<confidence>` 数字标签，用 GRPO（在线，需 oracle fact-checker）或 DPO（离线偏好对）训练让该标签与 GPT-4o 判定的事实性对齐，单次解码即可输出可校准、可机器解析的置信度，比 SOTA LUQ 在 Brier/ECE/Spearman 上全面更好且推理速度快 20 倍。
 
-**[Quality Over Clicks: Intrinsic Quality-Driven Iterative RL for Cold-Start E-Commerce Query Suggestion](quality_over_clicks_intrinsic_quality-driven_iterative_reinforcement_learning_fo.md)**
+**[NaviMaster: Learning a Unified Policy for GUI and Embodied Navigation Tasks](navimaster_learning_a_unified_policy_for_gui_and_embodied_navigation_tasks.md)**
 
-:   提出 Cold-EQS，一个面向冷启动电商场景的查询建议框架，利用可回答性、事实准确性和信息增益作为内在质量奖励，通过迭代强化学习持续优化查询建议质量，在线 chatUV 提升 6.81%。
-
-**[ReRec: Reasoning-Augmented LLM-based Recommendation Assistant via Reinforcement Fine-tuning](rerec_reasoning-augmented_llm-based_recommendation_assistant_via_reinforcement_f.md)**
-
-:   本文提出 ReRec，一个基于强化微调（RFT）的推荐助手框架，通过双图增强的奖励塑形提供细粒度奖励信号、推理感知的优势估计对推理步骤进行差异化监督、以及在线课程调度器动态调整训练难度，使 LLM 能处理复杂的多步推理推荐查询，在 RecBench+ 基准上显著超越现有方法。
-
-**[Right at My Level: A Unified Multilingual Framework for Proficiency-Aware Text Simplification](right_at_my_level_a_unified_multilingual_framework_for_proficiency-aware_text_si.md)**
-
-:   提出 Re-RIGHT 框架，通过三模块奖励（词汇覆盖率+语义保持+连贯性）的 GRPO 训练，用 4B 策略模型在英日韩中四种语言上实现按学习者熟练度等级（CEFR/JLPT/TOPIK/HSK）精确简化文本，超越 GPT-5.2 和 Gemini 2.5 等大模型。
+:   NaviMaster 把 GUI 操作和具身导航都改写成“视觉目标定位 + 动作执行”的统一 MDP，并用混合轨迹上的 GRPO 与距离感知密集奖励训练一个 Qwen2.5-VL-7B 策略，在 OOD GUI、空间可供性预测和 ObjectNav 上都超过单域训练与主流基线。
 
 **[RL-PLUS: Countering Capability Boundary Collapse of LLMs in Reinforcement Learning with Hybrid-policy Optimization](rl-plus_countering_capability_boundary_collapse_of_llms_in_reinforcement_learnin.md)**
 
@@ -140,13 +131,9 @@ tags:
 
 :   本文提出 SpiralThinker，通过在潜在表示空间中进行迭代更新、并与文本推理步骤交替进行的框架实现隐式推理，引入渐进对齐目标确保潜在表示在迭代过程中保持与显式推理的一致性，在数学、逻辑和常识推理任务上超越所有潜在推理基线。
 
-**[STRIDE-ED: A Strategy-Grounded Stepwise Reasoning Framework for Empathetic Dialogue Systems](stride-ed_a_strategy-grounded_stepwise_reasoning_framework_for_empathetic_dialog.md)**
+**[Targeted Exploration via Unified Entropy Control for Reinforcement Learning](targeted_exploration_via_unified_entropy_control_for_reinforcement_learning.md)**
 
-:   本文提出 STRIDE-ED 框架，通过构建覆盖正/中/负情绪的全面共情策略体系，设计任务对齐的多阶段认知CoT推理，结合策略感知数据精炼和SFT+PPO两阶段训练，在多个开源LLM上实现共情对话SOTA，情感准确率达57.25%，BLEU-4达4.67。
-
-**[Table Question Answering in the Era of Large Language Models: A Comprehensive Survey](table_question_answering_in_the_era_of_large_language_models_a_comprehensive_sur.md)**
-
-:   全面综述了 LLM 时代表格问答（TQA）研究，从五个维度（表格格式、问题复杂度、答案格式、模态、领域）系统化分类任务设置，按核心挑战（表格理解、复杂查询、大输入、数据异构、知识集成）组织建模方法，覆盖 277 篇论文，并前瞻性讨论了强化学习、可解释性等新兴方向。
+:   本文提出 UEC-RL，一个统一的双向熵控制框架，通过对困难 prompt 进行高温定向探索（增大熵）和通过经验回放稳定器巩固高质量轨迹（减小熵），解决 GRPO 中普遍存在的熵坍塌和训练不稳定问题，在 Geometry3K 上实现 37.9% 的相对提升。
 
 **[Understanding Generalization in Role-Playing Models via Information Theory](understanding_generalization_in_role-playing_models_via_information_theory.md)**
 
@@ -156,6 +143,18 @@ tags:
 
 :   本文提出 UniCreative 框架，通过自适应约束偏好优化（ACPO）和自适应标准生成式奖励模型（AC-GenRM），在无需 SFT 和参考答案的条件下统一长文本（规划→写作）和短文本（直接生成）两种创意写作模式，模型涌现出自主区分任务类型的元认知能力。
 
+**[Verifier-Free RL for LLMs via Intrinsic Gradient-Norm Reward](verifier-free_rl_for_llms_via_intrinsic_gradient-norm_reward.md)**
+
+:   VIGOR 用每个 completion 在当前模型参数下的 teacher-forced NLL 梯度范数作为内在奖励，偏好低梯度范数输出，并通过 $\sqrt{T}$ 长度校正和组内 rank shaping 稳定 GRPO，从而在无需 gold answer 或外部 verifier 的情况下提升数学与代码推理。
+
+**[Visually-Guided Policy Optimization for Multimodal Reasoning](visually-guided_policy_optimization_for_multimodal_reasoning.md)**
+
+:   VGPO 在 RLVR 训练中用隐藏状态相似度定位视觉相关 token，再通过后段视觉补偿和轨迹内/轨迹间优势重加权强化视觉关注，使 Qwen2.5-VL-7B 在数学多模态推理和视觉依赖任务上超过 GRPO/DAPO 及已有视觉增强 RL 方法。
+
 **[SCRL: What If Consensus Lies? Selective-Complementary Reinforcement Learning at Test Time](what_if_consensus_lies_selective-complementary_reinforcement_learning_at_test_ti.md)**
 
 :   本文提出 SCRL（Selective-Complementary Reinforcement Learning），一个鲁棒的测试时强化学习框架，通过选择性正伪标签（严格共识标准过滤不可靠多数）和熵门控负伪标签（首次在 TTRL 中引入负监督信号来修剪错误轨迹）缓解标签噪声放大问题，在 AIME25 上比 TTRL 提升高达 10.1 个百分点。
+
+**[Why Does Reinforcement Learning Generalize? A Feature-Level Mechanistic Study of Post-Training in Large Language Models](why_does_reinforcement_learning_generalize_a_feature-level_mechanistic_study_of_.md)**
+
+:   本文用严格受控的 SFT/RL 后训练对比和 Sparse Crosscoder 特征对齐发现：SFT 会快速形成大量专门化特征，而 RL 更像是在保留基座表示的同时逐步增强少量跨任务泛化特征，且这些特征被置零会显著伤害 RL 泛化、被放大则能提升基座模型表现。

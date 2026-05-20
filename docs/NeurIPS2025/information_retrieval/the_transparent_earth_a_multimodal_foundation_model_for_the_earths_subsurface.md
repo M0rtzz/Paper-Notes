@@ -138,11 +138,11 @@ Transparent Earth采用编码器-解码器Transformer架构，核心流程为：
 
 ## 相关论文
 
+- [\[ACL 2026\] EVE: A Domain-Specific LLM Framework for Earth Intelligence](../../ACL2026/information_retrieval/eve_a_domain-specific_llm_framework_for_earth_intelligence.md)
 - [\[CVPR 2025\] LamRA: Large Multimodal Model as Your Advanced Retrieval Assistant](../../CVPR2025/information_retrieval/lamra_large_multimodal_model_as_your_advanced_retrieval_assistant.md)
-- [\[CVPR 2026\] MuCo: Multi-turn Contrastive Learning for Multimodal Embedding Model](../../CVPR2026/information_retrieval/muco_multi-turn_contrastive_learning_for_multimodal_embedding_model.md)
 - [\[NeurIPS 2025\] Generalized Contrastive Learning for Universal Multimodal Retrieval](generalized_contrastive_learning_for_universal_multimodal_re.md)
-- [\[NeurIPS 2025\] MuRating: A High Quality Data Selecting Approach to Multilingual Large Language Model Pretraining](murating_a_high_quality_data_selecting_approach_to_multilingual_large_language_m.md)
 - [\[NeurIPS 2025\] Windsock is Dancing: Adaptive Multimodal Retrieval-Augmented Generation](windsock_is_dancing_adaptive_multimodal_retrieval-augmented_generation.md)
+- [\[NeurIPS 2025\] MuRating: A High Quality Data Selecting Approach to Multilingual Large Language Model Pretraining](murating_a_high_quality_data_selecting_approach_to_multilingual_large_language_m.md)
 
 </div>
 

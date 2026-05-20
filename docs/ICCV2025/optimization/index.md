@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 优化/理论方向8篇论文解读
+  ICCV2025 优化/理论方向7篇论文解读
 description: >-
-  8篇ICCV2025的优化/理论方向论文解读，涵盖联邦学习、模型压缩、个性化生成、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  7篇ICCV2025的优化/理论方向论文解读，涵盖联邦学习、模型压缩、个性化生成、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "优化/理论"
@@ -17,11 +17,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**📹 ICCV2025** · **8** 篇论文解读
+**📹 ICCV2025** · **7** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/optimization/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (45)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (23)](../../AAAI2026/optimization/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/optimization/index.md) · [🧪 ICML2025 (57)](../../ICML2025/optimization/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/optimization/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (44)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (22)](../../AAAI2026/optimization/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/optimization/index.md) · [🧪 ICML2025 (56)](../../ICML2025/optimization/index.md)
 
-🔥 **高频主题：** 联邦学习 ×4
+🔥 **高频主题：** 联邦学习 ×3
 
 **[Addressing Representation Collapse in Vector Quantized Models with One Linear Layer](addressing_representation_collapse_in_vector_quantized_models_with_one_linear_la.md)**
 
@@ -30,10 +30,6 @@ tags:
 **[Class-Wise Federated Averaging for Efficient Personalization](class-wise_federated_averaging_for_efficient_personalization.md)**
 
 :   cwFedAvg 将 FedAvg 从"按客户端聚合"扩展为"按类别聚合"，为每个类别创建专属全局模型，再根据各客户端的类别分布加权组合成个性化模型，配合权重分布正则化（WDR）增强类别分布与权重范数的关联，在保持 FedAvg 通信开销的同时显著提升非 IID 场景下的个性化性能。
-
-**[Cooperative Pseudo Labeling for Unsupervised Federated Classification](cooperative_pseudo_labeling_for_unsupervised_federated_classification.md)**
-
-:   FedCoPL 首次将无监督联邦学习扩展到分类任务，通过协作伪标签策略（全局分配伪标签确保类别平衡）和部分 prompt 聚合协议（仅聚合视觉 prompt、保留文本 prompt 本地化）有效应对 CLIP 固有偏差和标签偏移挑战。
 
 **[Federated Continual Instruction Tuning](federated_continual_instruction_tuning.md)**
 

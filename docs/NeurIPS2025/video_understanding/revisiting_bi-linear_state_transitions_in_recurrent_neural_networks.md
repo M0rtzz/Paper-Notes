@@ -171,8 +171,8 @@ $$\mathcal{A}_x = \mathcal{W}^{(h_1)} \text{diag}((\mathcal{W}^{(x)})^\top x) (\
 - [\[NeurIPS 2025\] DeltaProduct: Improving State-Tracking in Linear RNNs via Householder Products](deltaproduct_improving_state-tracking_in_linear_rnns_via_householder_products.md)
 - [\[ICML 2025\] FastCAV: Efficient Computation of Concept Activation Vectors for Explaining Deep Neural Networks](../../ICML2025/video_understanding/fastcav_efficient_computation_of_concept_activation_vectors_for_explaining_deep_.md)
 - [\[NeurIPS 2025\] Structured Sparse Transition Matrices to Enable State Tracking in State-Space Models](structured_sparse_transition_matrices_to_enable_state_tracking_in_state-space_mo.md)
+- [\[ICML 2026\] Learning-Augmented Scalable Linear Assignment Problem Optimization via Neural Dual Warm-Starts](../../ICML2026/video_understanding/learning-augmented_scalable_linear_assignment_problem_optimization_via_neural_du.md)
 - [\[NeurIPS 2025\] Neural Stochastic Flows: Solver-Free Modelling and Inference for SDE Solutions](neural_stochastic_flows_solver-free_modelling_and_inference_for_sde_solutions.md)
-- [\[NeurIPS 2025\] PASS: Path-Selective State Space Model for Event-Based Recognition](pass_path-selective_state_space_model_for_event-based_recognition.md)
 
 </div>
 

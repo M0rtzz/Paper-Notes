@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 视频生成方向19篇论文解读
+  ICLR2026 视频生成方向18篇论文解读
 description: >-
-  19篇ICLR2026的视频生成方向论文解读，涵盖视频生成、扩散模型、机器人、语音、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  18篇ICLR2026的视频生成方向论文解读，涵盖视频生成、扩散模型、机器人、语音、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICLR2026"
   - "视频生成"
@@ -17,11 +17,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎬 视频生成
 
-**🔬 ICLR2026** · **19** 篇论文解读
+**🔬 ICLR2026** · **18** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (3)](../../ACL2026/video_generation/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/video_generation/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/video_generation/index.md) · [🧠 NeurIPS2025 (23)](../../NeurIPS2025/video_generation/index.md) · [📹 ICCV2025 (49)](../../ICCV2025/video_generation/index.md) · [🧪 ICML2025 (7)](../../ICML2025/video_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/video_generation/index.md) · [💬 ACL2026 (4)](../../ACL2026/video_generation/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/video_generation/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/video_generation/index.md) · [🧠 NeurIPS2025 (22)](../../NeurIPS2025/video_generation/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/video_generation/index.md)
 
-🔥 **高频主题：** 视频生成 ×11 · 扩散模型 ×6 · 机器人 ×2 · 语音 ×2 · 压缩/编码 ×2
+🔥 **高频主题：** 视频生成 ×10 · 扩散模型 ×6 · 机器人 ×2 · 语音 ×2 · 压缩/编码 ×2
 
 **[Arbitrary Generative Video Interpolation](arbitrary_generative_video_interpolation.md)**
 
@@ -90,10 +90,6 @@ tags:
 **[Target-Aware Video Diffusion Models](target-aware_video_diffusion_models.md)**
 
 :   提出 target-aware 视频扩散模型，仅需一张输入图像和目标物体的分割 mask，即可生成演员与指定目标交互的视频；核心创新是引入 [TGT] 特殊 token 并设计选择性交叉注意力损失，使模型关注目标的空间位置，在目标对齐和视频质量上全面超越基线。
-
-**[Text-to-3D by Stitching a Multi-view Reconstruction Network to a Video Generator](text-to-3d_by_stitching_a_multi-view_reconstruction_network_to_a_video_generator.md)**
-
-:   提出VIST3A框架——通过模型拼接(model stitching)将预训练视频生成器的latent空间与前馈3D重建模型(如AnySplat/MVDUSt3R/VGGT)无缝对接，再用直接奖励微调(direct reward finetuning)对齐生成模型与拼接后的3D解码器，实现高质量端到端text-to-3DGS和text-to-pointmap生成，在T3Bench/SceneBench/DPG-Bench上全面超越现有方法。
 
 **[TTOM: Test-Time Optimization and Memorization for Compositional Video Generation](ttom_test-time_optimization_and_memorization_for_compositional_video_generation.md)**
 

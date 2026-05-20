@@ -132,7 +132,7 @@ SynShot 采用两阶段方案：(1) 在大规模合成头部数据集（约 2000
 - [\[CVPR 2025\] Vid2Avatar-Pro: Authentic Avatar from Videos in the Wild via Universal Prior](vid2avatar-pro_authentic_avatar_from_videos_in_the_wild_via_universal_prior.md)
 - [\[CVPR 2025\] GASP: Gaussian Avatars with Synthetic Priors](gasp_gaussian_avatars_with_synthetic_priors.md)
 - [\[ICCV 2025\] MoGA: 3D Generative Avatar Prior for Monocular Gaussian Avatar Reconstruction](../../ICCV2025/3d_vision/moga_3d_generative_avatar_prior_for_monocular_gaussian_avatar_reconstruction.md)
-- [\[CVPR 2026\] EmoTaG: Emotion-Aware Talking Head Synthesis on Gaussian Splatting with Few-Shot Personalization](../../CVPR2026/3d_vision/emotag_emotion-aware_talking_head_synthesis_on_gaussian_splatting_with_few-shot_.md)
+- [\[CVPR 2025\] SCOPE: Scene-Contextualized Incremental Few-Shot 3D Segmentation](scope_scene-contextualized_incremental_few-shot_3d_segmentation.md)
 
 </div>
 
