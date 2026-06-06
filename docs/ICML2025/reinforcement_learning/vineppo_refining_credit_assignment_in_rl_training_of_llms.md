@@ -157,7 +157,7 @@ K 越大方差越小，且计算效率反而更高（更少迭代次数收敛）
 - [\[ICML 2025\] The Challenge of Teaching Reasoning to LLMs Without RL or Distillation](the_challenge_of_teaching_reasoning_to_llms_without_rl_or_distillation.md)
 - [\[ICCV 2025\] mDP3: A Training-free Approach for List-wise Frame Selection in Video-LLMs](../../ICCV2025/reinforcement_learning/mdp3_a_training-free_approach_for_list-wise_frame_selection_in_video-llms.md)
 - [\[ICML 2025\] EVOLvE: Evaluating and Optimizing LLMs For In-Context Exploration](evolve_evaluating_and_optimizing_llms_for_in-context_exploration.md)
-- [\[ICML 2025\] Online Pre-Training for Offline-to-Online Reinforcement Learning](online_pre-training_for_offline-to-online_reinforcement_learning.md)
+- [\[ACL 2026\] Verifier-Free RL for LLMs via Intrinsic Gradient-Norm Reward](../../ACL2026/reinforcement_learning/verifier-free_rl_for_llms_via_intrinsic_gradient-norm_reward.md)
 
 </div>
 

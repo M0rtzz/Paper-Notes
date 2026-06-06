@@ -2,10 +2,10 @@
 title: >-
   [论文解读] PolarAnything: Diffusion-based Polarimetric Image Synthesis
 description: >-
-  [ICCV 2025][3D视觉][偏振图像合成] 提出 PolarAnything，首个基于单张 RGB 图像生成偏振图像的扩散模型框架，通过对编码后的 AoLP 和 DoLP 进行去噪扩散，实现了物理准确且逼真的偏振属性合成，无需 3D 资产或偏振相机。
+  [ICCV 2025][图像生成][偏振图像合成] 提出 PolarAnything，首个基于单张 RGB 图像生成偏振图像的扩散模型框架，通过对编码后的 AoLP 和 DoLP 进行去噪扩散，实现了物理准确且逼真的偏振属性合成，无需 3D 资产或偏振相机。
 tags:
   - "ICCV 2025"
-  - "3D视觉"
+  - "图像生成"
   - "偏振图像合成"
   - "扩散模型"
   - "AoLP"

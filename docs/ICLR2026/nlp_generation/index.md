@@ -16,7 +16,7 @@ tags:
 
 **🔬 ICLR2026** · **3** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (15)](../../ACL2026/nlp_generation/index.md) · [🤖 AAAI2026 (2)](../../AAAI2026/nlp_generation/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/nlp_generation/index.md) · [💬 ACL2025 (26)](../../ACL2025/nlp_generation/index.md) · [📷 CVPR2025 (1)](../../CVPR2025/nlp_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/nlp_generation/index.md) · [💬 ACL2026 (17)](../../ACL2026/nlp_generation/index.md) · [🤖 AAAI2026 (2)](../../AAAI2026/nlp_generation/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/nlp_generation/index.md) · [💬 ACL2025 (26)](../../ACL2025/nlp_generation/index.md) · [📷 CVPR2025 (1)](../../CVPR2025/nlp_generation/index.md)
 
 **[AP-OOD: Attention Pooling for Out-of-Distribution Detection](ap-ood_attention_pooling_for_out-of-distribution_detection.md)**
 

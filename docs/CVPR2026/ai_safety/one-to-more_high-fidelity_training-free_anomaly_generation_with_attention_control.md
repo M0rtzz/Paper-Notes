@@ -126,11 +126,11 @@ O2MAG 在所有指标上全面领先，分类准确率比最佳训练方法高 1
 
 ## 相关论文
 
+- [\[ICML 2026\] Training-Free Coverless Multi-Image Steganography with Access Control](../../ICML2026/ai_safety/training-free_coverless_multi-image_steganography_with_access_control.md)
 - [\[AAAI 2026\] Matrix-Free Two-to-Infinity and One-to-Two Norms Estimation](../../AAAI2026/ai_safety/matrix-free_two-to-infinity_and_one-to-two_norms_estimation.md)
 - [\[ICLR 2026\] Less is More: Towards Simple Graph Contrastive Learning](../../ICLR2026/ai_safety/less_is_more_towards_simple_graph_contrastive_learning.md)
 - [\[AAAI 2026\] Towards Multiple Missing Values-Resistant Unsupervised Graph Anomaly Detection](../../AAAI2026/ai_safety/towards_multiple_missing_values-resistant_unsupervised_graph_anomaly_detection.md)
 - [\[ICLR 2026\] Efficient Resource-Constrained Training of Transformers via Subspace Optimization](../../ICLR2026/ai_safety/efficient_resource-constrained_training_of_transformers_via_subspace_optimizatio.md)
-- [\[ICLR 2026\] Adaptive Methods Are Preferable in High Privacy Settings: An SDE Perspective](../../ICLR2026/ai_safety/adaptive_methods_are_preferable_in_high_privacy_settings_an_sde_perspective.md)
 
 </div>
 

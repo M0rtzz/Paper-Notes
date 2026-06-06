@@ -194,7 +194,7 @@ VLM 推理性能随微调迭代逐步提升：Iteration 0 → 5，ER 从 -13 提
 - [\[AAAI 2026\] Reflection-Driven Control for Trustworthy Code Agents](reflection-driven_control_for_trustworthy_code_agents.md)
 - [\[AAAI 2026\] EcoAgent: An Efficient Device-Cloud Collaborative Multi-Agent Framework for Mobile Automation](ecoagent_an_efficient_device-cloud_collaborative_multi-agent.md)
 - [\[AAAI 2026\] COACH: Collaborative Agents for Contextual Highlighting -- A Multi-Agent Framework for Sports Video Analysis](coach_collaborative_agents_for_contextual_highlighting_--_a_multi-agent_framewor.md)
-- [\[CVPR 2025\] RL-RC-DoT: A Block-level RL Agent for Task-Aware Video Compression](../../CVPR2025/llm_agent/rl-rc-dot_a_block-level_rl_agent_for_task-aware_video_compression.md)
+- [\[AAAI 2026\] DEPO: Dual-Efficiency Preference Optimization for LLM Agents](depo_dual-efficiency_preference_optimization_for_llm_agents.md)
 
 </div>
 

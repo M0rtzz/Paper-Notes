@@ -2,11 +2,15 @@
 title: >-
   [论文解读] S2H-DPO: Hardness-Aware Preference Optimization for Vision-Language Models
 description: >-
-  [ACL 2026][LLM对齐][待补充] 待深读论文后补充
+  [ACL 2026][LLM对齐][多图推理] 提出 Simple-to-Hard（S2H）DPO 框架，通过构建三个递进难度级别的多图偏好数据（定点推理→跨图比较→全局视觉搜索），系统性地提升 VLM 的多图推理能力，同时保持单图性能。
 tags:
   - "ACL 2026"
   - "LLM对齐"
-  - "待补充"
+  - "多图推理"
+  - "DPO偏好优化"
+  - "视觉搜索"
+  - "难度分级"
+  - "VLM对齐"
 ---
 
 # S2H-DPO: Hardness-Aware Preference Optimization for Vision-Language Models
@@ -115,33 +119,19 @@ S2H-DPO 将现有单图数据转化为三个级别的多图偏好数据，每个
 - 新颖性: ⭐⭐⭐⭐ 三级能力层次的定义有洞察力，但方法本身（DPO + 合成数据）不算新
 - 实验充分度: ⭐⭐⭐⭐ 3个多图+2个单图基准，3个模型，消融充分
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，能力层次可视化好，但部分描述冗长
-**代码**: 待确认  
-**领域**: llm_alignment  
-**关键词**: 待补充
 
-## 一句话总结
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 研究背景与动机
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 方法详解
-待深读论文后补充
+## 相关论文
 
-## 实验关键数据
-待深读论文后补充
+- [\[ACL 2026\] Mitigating Selection Bias in Large Language Models via Permutation-Aware GRPO](mitigating_selection_bias_in_large_language_models_via_permutation-aware_grpo.md)
+- [\[ICML 2025\] MMedPO: Aligning Medical Vision-Language Models with Clinical-Aware Multimodal Preference Optimization](../../ICML2025/llm_alignment/mmedpo_aligning_medical_vision-language_models_with_clinical-aware_multimodal_pr.md)
+- [\[ACL 2025\] LPOI: Listwise Preference Optimization for Vision Language Models](../../ACL2025/llm_alignment/lpoi_listwise_preference_optimization_for_vision_language_models.md)
+- [\[ACL 2026\] ConsistRM: Improving Generative Reward Models via Consistency-Aware Self-Training](consistrm_improving_generative_reward_models_via_consistency-aware_self-training.md)
+- [\[CVPR 2025\] Debiasing Multimodal Large Language Models via Noise-Aware Preference Optimization](../../CVPR2025/llm_alignment/debiasing_multimodal_large_language_models_via_noise-aware_preference_optimizati.md)
 
-## 亮点与洞察
-待深读论文后补充
+</div>
 
-## 局限性 / 可改进方向
-待深读论文后补充
-
-## 相关工作与启发
-待深读论文后补充
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+<!-- RELATED:END -->

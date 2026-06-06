@@ -152,7 +152,7 @@ $$L^{\text{entropy}} = -\frac{1}{n} \sum_{v=1}^{n} \sum_{i=1}^{k} C_{vi} \log(C_
 - [\[NeurIPS 2025\] H-SPLID: HSIC-based Saliency Preserving Latent Information Decomposition](h-splid_hsic-based_saliency_preserving_latent_information_decomposition.md)
 - [\[ICML 2025\] Sum-of-Parts: Self-Attributing Neural Networks with End-to-End Learning of Feature Groups](../../ICML2025/interpretability/sum-of-parts_self-attributing_neural_networks_with_end-to-end_learning_of_featur.md)
 - [\[ICLR 2026\] Modal Logical Neural Networks for Financial AI](../../ICLR2026/interpretability/modal_logical_neural_networks_for_financial_ai.md)
-- [\[ACL 2026\] StructKV: Preserving the Structural Skeleton for Scalable Long-Context Inference](../../ACL2026/interpretability/structkv_preserving_the_structural_skeleton_for_scalable_long-context_inference.md)
+- [\[ICLR 2026\] Initialization Schemes for Kolmogorov-Arnold Networks: An Empirical Study](../../ICLR2026/interpretability/initialization_schemes_for_kolmogorov-arnold_networks_an_empirical_study.md)
 
 </div>
 

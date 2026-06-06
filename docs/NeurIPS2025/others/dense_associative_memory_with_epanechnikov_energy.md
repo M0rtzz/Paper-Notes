@@ -129,7 +129,7 @@ tags:
 - [\[NeurIPS 2025\] Recurrent Self-Attention Dynamics: An Energy-Agnostic Perspective from Jacobians](recurrent_self-attention_dynamics_an_energy-agnostic_perspective_from_jacobians.md)
 - [\[ACL 2025\] If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?](../../ACL2025/others/if_attention_serves_as_a_cognitive_model_of_human_memory_retrieval_what_is_the_p.md)
 - [\[ACL 2025\] Hierarchical Memory Organization for Wikipedia Generation](../../ACL2025/others/hierarchical_memory_wikipedia_gen.md)
-- [\[ACL 2025\] EpMAN: Episodic Memory AttentioN for Generalizing to Longer Contexts](../../ACL2025/others/epman_episodic_memory_attention_for_generalizing_to_longer_contexts.md)
+- [\[CVPR 2025\] EDM: Equirectangular Projection-Oriented Dense Kernelized Feature Matching](../../CVPR2025/others/edm_equirectangular_projection-oriented_dense_kernelized_feature_matching.md)
 
 </div>
 

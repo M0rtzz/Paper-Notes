@@ -161,10 +161,10 @@ tags:
 ## 相关论文
 
 - [\[ACL 2025\] DiffuseDef: Improved Robustness to Adversarial Attacks via Iterative Denoising](../../ACL2025/image_restoration/diffusedef_adversarial_defense.md)
+- [\[ICML 2026\] DAPD: Dependency-Aware Parallel Decoding via Attention for Diffusion LLMs](../../ICML2026/image_restoration/dapd_dependency-aware_parallel_decoding_via_attention_for_diffusion_llms.md)
 - [\[ICLR 2026\] Skip to the Good Part: Representation Structure & Inference-Time Layer Skipping in Diffusion vs. Autoregressive LLMs](../../ICLR2026/image_restoration/skip_to_the_good_part_representation_structure_inference-time_layer_skipping_in_.md)
 - [\[NeurIPS 2025\] Rethinking Circuit Completeness in Language Models: AND, OR, and ADDER Gates](rethinking_circuit_completeness_in_language_models_and_or_and_adder_gates.md)
 - [\[NeurIPS 2025\] MoE-Gyro: Self-Supervised Over-Range Reconstruction and Denoising for MEMS Gyroscopes](moe-gyro_self-supervised_over-range_reconstruction_and_denoising_for_mems_gyrosc.md)
-- [\[NeurIPS 2025\] Enhancing Infrared Vision: Progressive Prompt Fusion Network and Benchmark](enhancing_infrared_vision_progressive_prompt_fusion_network_and_benchmark.md)
 
 </div>
 

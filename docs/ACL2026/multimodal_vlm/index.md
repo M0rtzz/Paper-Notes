@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 多模态 VLM方向83篇论文解读
+  ACL2026 多模态 VLM方向99篇论文解读
 description: >-
-  83篇ACL2026的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、Agent、对齐/RLHF、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  99篇ACL2026的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、Agent、对齐/RLHF、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2026"
   - "多模态 VLM"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**💬 ACL2026** · **83** 篇论文解读
+**💬 ACL2026** · **99** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (30)](../../ICML2026/multimodal_vlm/index.md) · [📷 CVPR2026 (230)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (88)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (88)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (149)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (148)](../../ICCV2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (106)](../../ICML2026/multimodal_vlm/index.md) · [📷 CVPR2026 (217)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (88)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (88)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (148)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (149)](../../ICCV2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×48 · 推理 ×24 · LLM ×9 · Agent ×4 · 对齐/RLHF ×3
+🔥 **高频主题：** 多模态 ×57 · 推理 ×27 · LLM ×10 · Agent ×4 · 对齐/RLHF ×3
 
 **[A Survey of Multimodal Mathematical Reasoning: From Perception, Alignment to Reasoning](a_survey_of_multimodal_mathematical_reasoning_from_perception_alignment_to_reaso.md)**
 
@@ -53,6 +53,10 @@ tags:
 
 :   提出RepMD方法，通过构建设计概念图（DCG）——借鉴攻击树思想描述恶意用户设计有害梗图的步骤和逻辑——来引导MLLM检测不断变化的有害梗图，在GOAT-Bench上达81.1%准确率。
 
+**[Almieyar-Oryx-BloomBench: A Bilingual Multimodal Benchmark for Cognitively Informed Evaluation of Vision-Language Models](almieyar-oryx-bloombench_a_bilingual_multimodal_benchmark_for_cognitively_inform.md)**
+
+:   BloomBench 用 Bloom 认知分类法重构 VLM 评测，将 7,747 个英阿双语图文问答样本组织为 6 个认知层级和 106 个任务类型，并发现当前 VLM 的高分往往掩盖了事实回忆、创造性综合和跨语言推理上的明显短板。
+
 **[Automatic Slide Updating with User-Defined Dynamic Templates and Natural Language Instructions](automatic_slide_updating_with_user-defined_dynamic_templates_and_natural_languag.md)**
 
 :   定义了"基于自然语言指令在用户自定义模板上进行动态幻灯片更新"的新任务，构建了包含 20,036 个指令-执行三元组的 DynaSlide 基准，并提出了 SlideAgent 作为强参考基线。
@@ -64,6 +68,14 @@ tags:
 **[Beyond Screenshots: Evaluating VLMs' Understanding of UI Animations](beyond_screenshots_evaluating_vlms_understanding_of_ui_animations.md)**
 
 :   构建首个 UI 动画理解评测集 AniMINT（300 段密集标注的动画视频 + 3 位专家 + 300 用户标注），系统测试 9 个 SOTA VLM 后发现：基础运动效果能识别，但动画用途分类和高层语义解读与人类差距巨大，进一步用 Motion-Context-Perceptual Cue (MCPC) 增强能在 Gemini-2.5-Flash 上同时提升分类和解读性能。
+
+**[Can MLLMs Reason Beyond Language? VisReason: A Comprehensive Benchmark for Vision-Centric Reasoning](can_mllms_reason_beyond_language_visreason_a_comprehensive_benchmark_for_vision-.md)**
+
+:   VisReason 构建了一个包含 1,505 道日常视觉推理题的多模态 benchmark，专门测试模型是否能直接基于视觉证据推理，结果显示最强模型平均准确率也只有 47.5%，显著低于人类 71.4%，且 CoT 与更大推理预算只能带来有限提升。
+
+**[CARES: Context-Aware Resolution Selector for VLMs](cares_context-aware_resolution_selector_for_vlms.md)**
+
+:   CARES 在目标 VLM 前增加一个轻量 query-aware 分辨率选择器，用低分辨率图像和文本问题预测“足够回答”的最小输入分辨率，在 9 个多模态 benchmark 上基本保持准确率，同时平均节省约 65–85% 的 prefill 计算成本。
 
 **[CArtBench: Evaluating Vision-Language Models on Chinese Art Understanding, Interpretation, and Authenticity](cartbench_evaluating_vision-language_models_on_chinese_art_understanding_interpr.md)**
 
@@ -97,6 +109,14 @@ tags:
 
 :   SPUR 是首个针对生物医学实验图像（多面板染色图/Western blot/统计图）"感知 → 理解 → 推理"三阶段评测的 benchmark，包含 4264 道专家审定 MCQ，揭示当今 MLLM 仅 Gemini 3 Pro Preview 勉强突破 60%，定量推理普遍比定性推理低 12.76%–31.41%。
 
+**[DMN: A Compositional Framework for Jailbreaking Multimodal LLMs with Multi-Image Inputs](dmn_a_compositional_framework_for_jailbreaking_multimodal_llms_with_multi-image_.md)**
+
+:   这篇论文提出 DMN，用分布式指令、多模态证据和数字链辅助任务组合成多图越狱评测框架，证明当前支持多图输入的 MLLM 在跨图安全对齐上存在明显弱点，同时给出一个 multi-image-aware filter 作为初步防御。
+
+**[Do MLLMs Capture How Interfaces Guide User Behavior? A Benchmark for Multimodal UI/UX Design Understanding](do_mllms_capture_how_interfaces_guide_user_behavior_a_benchmark_for_multimodal_u.md)**
+
+:   这篇论文提出 WiserUI-Bench，用 300 组真实 A/B 测试验证过的 UI 图片对和 684 条专家解释评测 MLLM 是否理解界面设计如何影响用户行为，结果显示现有模型在选择赢家时接近随机、在解释原因时也明显未达专家水平。
+
 **[Do MLLMs Understand Pointing? Benchmarking and Enhancing Referential Reasoning in Egocentric Vision](do_mllms_understand_pointing_benchmarking_and_enhancing_referential_reasoning_in.md)**
 
 :   作者构建了首个真实+物理仿真混合的第一人称"手指指点"问答基准 EgoPoint-Bench（11.7k QA / 5 维度 / 3 级语义指代），证实当前 SOTA MLLM 普遍依赖"视觉邻近 / 显著性"伪相关而非真正解析指尖射线，并通过在仿真数据上 LoRA 微调获得平均最高 +25 点的提升与稳健的 sim-to-real 泛化。
@@ -104,6 +124,10 @@ tags:
 **[Doc-PP: Document Policy Preservation Benchmark for Large Vision-Language Models](doc-pp_document_policy_preservation_benchmark_for_large_vision-language_models.md)**
 
 :   本文提出 Doc-PP 基准，揭示大型视觉-语言模型（LVLM）在多模态文档问答中存在"推理诱导的安全缺口"——模型在需要跨模态推理时会绕过显式非披露策略泄露敏感信息，并提出 DVA（Decompose–Verify–Aggregation）结构化推理框架来显著降低泄露率。
+
+**[DraDDP: A Multimodal Multi-Party Dialogue Discourse Parsing Dataset](draddp_a_multimodal_multi-party_dialogue_discourse_parsing_dataset.md)**
+
+:   DraDDP 构建了首个公开的英文多模态多方对话话语解析数据集，并用传统解析器、LLM 与多模态 LLM 系统评测了文本、音频、视频线索对依存边和话语关系识别的不同贡献。
 
 **[DRIFT: Transferring Reasoning Priors for Efficient MLLM Fine-Tuning](drift_transferring_reasoning_priors_for_efficient_mllm_fine-tuning.md)**
 
@@ -145,6 +169,10 @@ tags:
 
 :   提出 HONES 框架，通过先定位任务关键注意力头再以其为条件引导 FFN 神经元归因，实现了多任务 VLM 中跨异构任务的统一、无梯度的神经元级因果分析和轻量级任务性能提升。
 
+**[From Inheritance to Saturation: Disentangling the Evolution of Visual Redundancy for Architecture-Aware MLLM Inference Acceleration](from_inheritance_to_saturation_disentangling_the_evolution_of_visual_redundancy_.md)**
+
+:   揭示 MLLM 推理中视觉冗余的两种来源——ViT 密集 tokenization 导致的固有冗余（IVR）和深层语义饱和导致的次生冗余（SSR，且其表现形式因骨干架构不同而异），提出 HalfV 框架分别处理两类冗余，在 Qwen2.5-VL 上实现4.1倍 FLOPs 加速且保留96.8%性能。
+
 **[From Verbatim to Gist: Distilling Pyramidal Multimodal Memory via Semantic Information Bottleneck](from_verbatim_to_gist_distilling_pyramidal_multimodal_memory_via_semantic_inform.md)**
 
 :   本文提出 MM-Mem，一种受模糊痕迹理论启发的金字塔式多模态记忆架构——将记忆分为感知缓冲层（视觉为主）、情景流层（事件级摘要）和符号图式层（知识图谱）三个层级，通过 SIB-GRPO（语义信息瓶颈+强化学习）自底向上压缩冗余、通过熵驱动自顶向下检索，在 4 个长视频 benchmark 上实现 SOTA。
@@ -156,6 +184,10 @@ tags:
 **[GeoRC: A Benchmark for Geolocation Reasoning Chains](georc_a_benchmark_for_geolocation_reasoning_chains.md)**
 
 :   提出 GeoRC，首个由GeoGuessr冠军级专家撰写的地理定位推理链基准（800条推理链，500个场景），评估VLM生成可审计推理链的能力，发现闭源VLM虽能匹敌人类定位准确率但推理链质量仍大幅落后，开源VLM则几乎等同于纯幻觉基线。
+
+**[GroupToM-Bench: Benchmarking Group Theory of Mind and Nonlinear Social Emergence in MLLMs](grouptom-bench_benchmarking_group_theory_of_mind_and_nonlinear_social_emergence_.md)**
+
+:   这篇论文提出 GroupToM-Bench，用 240 个专家设计的多模态群体互动场景和 7 层认知审计框架评测 MLLM 是否能从个体信念/欲望/意图推理到群体张力、结构约束和非线性集体结果，结果显示当前模型普遍存在明显的 group cognitive gap。
 
 **[GuideDog: A Real-World Egocentric Multimodal Dataset for Blind and Low-Vision Accessibility-Aware Guidance](guidedog_a_real-world_egocentric_multimodal_dataset_for_blind_and_low-vision_acc.md)**
 
@@ -177,6 +209,14 @@ tags:
 
 :   本文提出 MultiPun——首个带"对抗性 non-pun 干扰项"的多模态双关语 benchmark（445 个 pun + 890 个 non-pun，覆盖同音/同形两类），系统评测了 11 个 VLM 在双关检测/定位/解释三类任务上的表现，发现**所有模型都倾向于把 non-pun 也当作 pun**（TNR 普遍 < 0.4），并提出 Pun-CoT 提示策略 + Pun-Tuning 微调策略，平均 F1 提升 16.5%。
 
+**[iReasoner: Trajectory-Aware Intrinsic Reasoning Supervision for Self-Evolving Large Multimodal Models](ireasoner_trajectory-aware_intrinsic_reasoning_supervision_for_self-evolving_lar.md)**
+
+:   iReasoner在无标注图像上让LMM自问自答，并把最终答案一致性扩展为中间CoT步骤的一致性奖励，从而在Qwen2.5-VL-7B上带来最高约+2.13点的多模态推理提升。
+
+**[Jailbreaking Multimodal Large Language Models using Multi-Clip Video](jailbreaking_multimodal_large_language_models_using_multi-clip_video.md)**
+
+:   这篇论文构建MCV SafetyBench来评估视频MLLM安全性，发现多clip、多上下文的视频输入会系统性提高攻击成功率，而简单的抽帧图像过滤能显著降低这种风险。
+
 **[LaMI: Augmenting Large Language Models via Late Multi-Image Fusion](lami_augmenting_large_language_models_via_late_multi-image_fusion.md)**
 
 :   提出 LaMI，通过后融合架构在预测最后阶段融合视觉特征与 LLM 输出，并在推理时从文本生成多张图像进行基于置信度的聚合，在不损害文本推理能力的前提下显著提升 LLM 的视觉常识推理能力。
@@ -188,10 +228,6 @@ tags:
 **[Leave My Images Alone: Preventing Multi-Modal Large Language Models from Analyzing Unauthorized Images](leave_my_images_alone_preventing_multi-modal_large_language_models_from_analyzin.md)**
 
 :   提出 ImageProtector，通过在图像中嵌入近不可察觉的对抗扰动作为视觉提示注入攻击，使 MLLM 对被保护图像生成拒绝响应，从而阻止恶意分析者利用开放权重 MLLM 大规模提取图像中的隐私信息。
-
-**[Libra-VLA: Achieving Learning Equilibrium via Asynchronous Coarse-to-Fine Dual-System](libra-vla_achieving_learning_equilibrium_via_asynchronous_coarse-to-fine_dual-sy.md)**
-
-:   Libra-VLA 把机器人动作分解为"离散宏方向（macro-intent）+ 连续微姿态（micro-pose）"的混合动作空间，再用 System 2（VLM + 并行 coarse-action head）低频规划、System 1（diffusion transformer + 独立 SigLIP 编码器）高频精修，通过 intent buffer 实现真正异步执行，在 LIBERO 上拿到 97.2% SoTA、LIBERO-Plus 零样本 79.5%（比之前 OpenVLA-OFT+ 高 10 个点）。
 
 **[Long Story Short: Disentangling Compositionality and Long-Caption Understanding in Contrastive VLMs](long_story_short_disentangling_compositionality_and_long-caption_understanding_i.md)**
 
@@ -241,6 +277,14 @@ tags:
 
 :   本文是一篇立场论文（position paper），主张多模态大语言模型（MLLM）可以显著推进跨学科科学推理，提出了四阶段研究路线图（广泛知识识别→类比推理泛化→洞察性推理→创造性假设生成），系统综述了 MLLM 在数学、物理、化学和生物四个领域的应用现状、五大挑战和八个未来方向。
 
+**[PRISM: Self-Pruning Intrinsic Selection Method for Training-Free Multimodal Data Selection](prism_self-pruning_intrinsic_selection_method_for_training-free_multimodal_data_.md)**
+
+:   PRISM 发现 MLLM 视觉特征的非零均值会造成 Global Semantic Drift，从而污染基于相似度的数据选择，并用训练免的均值重中心化和低相关样本筛选，在只保留约 30% 视觉样本的情况下达到 101.7% 相对性能，同时把端到端 GPU 时间降低约 70%。
+
+**[PROGRESSLM: Towards Progress Reasoning in Vision-Language Models](progresslm_towards_progress_reasoning_in_vision-language_models.md)**
+
+:   本文把“从单帧观察判断任务完成到哪一步”定义为 VLM 的进度推理能力，构建 Progress-Bench 和 ProgressLM-45K，并证明显式学习“情景检索 + 心理模拟”比单纯提示推理更稳定。
+
 **[Reducing Peak Memory Usage for Modern Multimodal Large Language Model Pipelines](reducing_peak_memory_usage_for_modern_multimodal_large_language_model_pipelines.md)**
 
 :   论文把多模态大模型的显存瓶颈从“解码阶段的长上下文缓存”前移到“prefill 阶段的视觉 token 峰值缓存”，提出在 prefill 过程中边计算边压缩的结构感知 KV-cache 框架，在固定缓存预算下把峰值显存控制住，同时尽量保留图像和视频理解能力。
@@ -265,13 +309,25 @@ tags:
 
 :   ShredBench 构造了一个“把文档撕碎后让多模态大模型复原内容”的评测基准，证明当前 MLLM 即使在常规 OCR 上很强，也普遍缺乏把视觉碎片、阅读顺序和语义上下文合在一起推理的能力。
 
+**[SlideAgent: Hierarchical Agentic Framework for Multi-Page Visual Document Understanding](slideagent_hierarchical_agentic_framework_for_multi-page_visual_document_underst.md)**
+
+:   提出 SlideAgent，一个层次化智能体框架，通过全局、页面、元素三级专用 agent 构建结构化知识表示，显著提升多页视觉文档（尤其是幻灯片）的细粒度理解能力。
+
 **[Spotlight and Shadow: Attention-Guided Dual-Anchor Introspective Decoding for MLLM Hallucination Mitigation](spotlight_and_shadow_attention-guided_dual-anchor_introspective_decoding_for_mll.md)**
 
 :   提出 DaID (Dual-Anchor Introspective Decoding)，通过挖掘 MLLM 内部不同层的视觉感知差异——Spotlight 层放大视觉信号、Shadow 层抑制语言惯性——在单次前向传播内实现幻觉缓解。
 
+**[Stability Implies Redundancy: Delta Attention Selective Halting for Efficient Long-Context Prefilling](stability_implies_redundancy_delta_attention_selective_halting_for_efficient_lon.md)**
+
+:   提出 DASH（Delta Attention Selective Halting），一种无需训练的推理加速方法，通过监测自注意力层的逐层更新幅度 Δ_attn 来识别已"语义固化"的 token 并停止其后续计算，在长上下文文本和视觉-语言基准上实现显著的 prefill 加速且几乎不损失精度。
+
 **[STELLA: A Multimodal LLM for Protein Functional Annotation via Unified Sequence-Structure Encoding](stella_a_multimodal_llm_for_protein_functional_annotation_via_unified_sequence-s.md)**
 
 :   STELLA 将 ESM3 的统一序列-结构蛋白表示接入 Llama-3.1-8B-Instruct，通过两阶段多模态指令调优完成蛋白功能描述和酶催化反应预测，并在 OPI-Struc 系列基准上刷新多项功能注释指标。
+
+**[StructBreak: Structural Cognitive Overload-Induced Safety Failures in MLLMs](structbreak_structural_cognitive_overload-induced_safety_failures_in_mllms.md)**
+
+:   StructBreak 提出"结构认知过载"（SCO）攻击范式，利用视觉知识图谱（VKG）的拓扑复杂性诱发多模态 LLM 的安全失效——在黑盒设置下对 6 个前沿 MLLM 实现平均 92% 的攻击成功率（Gemini 2.5 高达 97%），并从注意力耗散、隐空间拓扑和几何分析三个层面揭示安全崩塌机制。
 
 **[Structured and Abstractive Reasoning on Multi-modal Relational Knowledge Images](structured_and_abstractive_reasoning_on_multi-modal_relational_knowledge_images.md)**
 
@@ -293,6 +349,10 @@ tags:
 
 :   这篇论文提出 FreqAdapter：先把 CLIP/LLaVA 的视觉和文本嵌入变换到 DCT 频域，再用文本引导的多尺度全局适配与跨模态调制微调视觉频率表示，以约 0.11% 额外参数在图文检索和 VQA 上稳定优于常见 prompt/adapter 方法。
 
+**[Thinking Like a Botanist: Challenging Multimodal Language Models with Intent-Driven Chain-of-Inquiry](thinking_like_a_botanist_challenging_multimodal_language_models_with_intent-driv.md)**
+
+:   本文提出PlantInquiryVQA基准和Chain-of-Inquiry（CoI）框架，包含24,950张植物图像和138,068个问答对，模拟植物学家的适应性诊断提问策略，评估18个MLLM在植物病理诊断中的多步视觉推理能力，发现结构化提问显著提升诊断准确性并减少幻觉，但即使最强模型的临床实用性得分仅0.188。
+
 **[Through the Magnifying Glass: Adaptive Perception Magnification for Hallucination-Free VLM Decoding](through_the_magnifying_glass_adaptive_perception_magnification_for_hallucination.md)**
 
 :   本文提出 Perception Magnifier (PM)，一种视觉解码方法，在每个自回归解码步基于多层注意力迭代识别关键视觉区域并自适应放大，通过提升关键区域的有效分辨率来缓解 VLM 的视觉幻觉，同时保持空间结构完整性和推理能力。
@@ -308,6 +368,10 @@ tags:
 **[Tree-of-Evidence: Efficient "System 2" Search for Faithful Multimodal Grounding](tree-of-evidence_efficient_34system_234_search_for_faithful_multimodal_grounding.md)**
 
 :   本文提出 Tree-of-Evidence（ToE），一种推理时离散束搜索算法，将多模态模型的可解释性形式化为在粗粒度证据单元（生命体征时间窗口、放射报告片段）上的离散优化问题，仅用 5 个证据单元即可保留全输入模型 98% 以上的 AUROC，同时生成可审计的证据追踪路径。
+
+**[UniversalRAG: 多模态语料库的检索增强生成](universalrag_retrieval-augmented_generation_over_corpora_of_diverse_modalities_a.md)**
+
+:   UniversalRAG 提出一个通用的任意到任意 RAG 框架，通过模态感知路由和粒度感知检索，动态地从异构多模态语料库（文本、图像、视频，不同粒度）中选择最合适的知识源进行检索和生成，避免统一嵌入空间中的模态间隙问题，在 10 个基准上大幅超越单一模态和统一方法。
 
 **[TRACE: Unleashing Spatial Reasoning in Multimodal Large Language Models via Textual Representation Guided Reasoning](unleashing_spatial_reasoning_in_multimodal_large_language_models_via_textual_rep.md)**
 

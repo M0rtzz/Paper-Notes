@@ -129,11 +129,11 @@ tags:
 
 ## 相关论文
 
-- [\[ACL 2026\] Evaluating Reasoning Models for Queries with Presuppositions](../../ACL2026/llm_reasoning/evaluating_reasoning_models_for_queries_with_presuppositions.md)
+- [\[ICML 2026\] Evaluating Relational Reasoning in LLMs with REL](../../ICML2026/llm_reasoning/evaluating_relational_reasoning_in_llms_with_rel.md)
 - [\[AAAI 2026\] CMMCoT: Enhancing Complex Multi-Image Comprehension via Multi-Modal Chain-of-Thought and Memory Augmentation](cmmcot_enhancing_complex_multi-image_comprehension_via_multi.md)
 - [\[AAAI 2026\] Jupiter: Enhancing LLM Data Analysis Capabilities via Notebook and Inference-Time Value-Guided Search](jupiter_enhancing_llm_data_analysis_capabilities_via_notebook_and_inference-time.md)
-- [\[ACL 2026\] MARCH: Evaluating the Intersection of Ambiguity Interpretation and Multi-hop Inference](../../ACL2026/llm_reasoning/march_evaluating_the_intersection_of_ambiguity_interpretation_and_multi-hop_infe.md)
 - [\[ACL 2025\] MM-Verify: Enhancing Multimodal Reasoning with Chain-of-Thought Verification](../../ACL2025/llm_reasoning/mm-verify_enhancing_multimodal_reasoning_with_chain-of-thought_verification.md)
+- [\[ACL 2025\] Enhancing Mathematical Reasoning in LLMs by Stepwise Correction](../../ACL2025/llm_reasoning/enhancing_mathematical_reasoning_in_llms_by_stepwise_correction.md)
 
 </div>
 

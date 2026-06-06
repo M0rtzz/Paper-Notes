@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 多语言/翻译方向52篇论文解读
+  ACL2026 多语言/翻译方向63篇论文解读
 description: >-
-  52篇ACL2026的多语言/翻译方向论文解读，涵盖翻译、LLM、语音、Agent、情感分析、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  63篇ACL2026的多语言/翻译方向论文解读，涵盖翻译、LLM、语音、Agent、情感分析、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "多语言/翻译"
@@ -13,17 +13,17 @@ tags:
   - "语音"
   - "Agent"
   - "情感分析"
-  - "强化学习"
+  - "推理"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🌐 多语言/翻译
 
-**💬 ACL2026** · **52** 篇论文解读
+**💬 ACL2026** · **63** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/multilingual_mt/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/multilingual_mt/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/multilingual_mt/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/multilingual_mt/index.md) · [🧠 NeurIPS2025 (14)](../../NeurIPS2025/multilingual_mt/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/multilingual_mt/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (3)](../../ICML2026/multilingual_mt/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/multilingual_mt/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/multilingual_mt/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/multilingual_mt/index.md) · [🧠 NeurIPS2025 (14)](../../NeurIPS2025/multilingual_mt/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/multilingual_mt/index.md)
 
-🔥 **高频主题：** 翻译 ×19 · LLM ×7 · 语音 ×3 · Agent ×3 · 情感分析 ×2
+🔥 **高频主题：** 翻译 ×20 · LLM ×8 · 语音 ×3 · Agent ×3 · 情感分析 ×2
 
 **[A Multilingual Dataset and Empirical Validation for the Mutual Reinforcement Effect in Information Extraction](a_multilingual_dataset_and_empirical_validation_for_the_mutual_reinforcement_eff.md)**
 
@@ -53,6 +53,10 @@ tags:
 
 :   在 4 语种 / 2 平台 / 2 资产类的 1 亿条金融微博上系统比较 emoji 的频率、语义和情感极性，发现 emoji 频率因语言/平台差异大但语义和极性高度稳定，并据此在零样本情感迁移上验证：把 emoji 加入文本能稳定地把 cross-platform transfer gap 从最高 21% 降到接近 0%。
 
+**[DFKI-MLT at SemEval-2026 TASK 7: Steering Multilingual Models Towards Cultural Knowledge](dfki-mlt_at_semeval-2026_task_7_steering_multilingual_models_towards_cultural_kn.md)**
+
+:   这篇 SemEval 系统论文用 FLORES 平行语料提取语言方向，在推理时向多语言 LLM 的 residual stream 注入 language steering vector，最终 MCQ 官方成绩为 86.96% accuracy、17 队第 7，但后验分析显示增益高度依赖层、prompt、模型和 locale。
+
 **[Digitizing Nepal's Written Heritage: A Comprehensive HTR Pipeline for Old Nepali Manuscripts](digitizing_nepals_written_heritage_a_comprehensive_htr_pipeline_for_old_nepali_m.md)**
 
 :   首个端到端的**古尼泊尔语手写文本识别 (HTR)** 完整 pipeline：用 "合成 Devanagari → 印刷 Nagari → 古尼泊尔手稿" 三阶段迁移学习 + 20 种数据增强 + 字节级 BPE + script-aware decoder，把 CER 从 fine-tuned TrOCR baseline 的 9.6% 降到 **4.9%**，并开源代码、模型与 Streamlit web 应用。
@@ -64,6 +68,14 @@ tags:
 **[Efficient Training for Cross-lingual Speech Language Models](efficient_training_for_cross-lingual_speech_language_models.md)**
 
 :   本文提出CSLM，一种高效训练跨语言语音LLM的方法，通过新颖的对齐策略实现跨模态和跨语言对齐，并引入语音-文本交织链式模态生成来提升质量和降低延迟，无需大规模语音数据即可扩展到新语言。
+
+**[EMCEE: Improving Multilingual Capability of LLMs via Bridging Knowledge and Reasoning with Extracted Synthetic Multilingual Context](emcee_improving_multilingual_capability_of_llms_via_bridging_knowledge_and_reaso.md)**
+
+:   EMCEE 让 LLM 先从自身参数中抽取与非英语 query 相关的合成多语言上下文，再把上下文增强回答与 CoT 推理回答交给 LLM-as-a-Judge 合并，在四个多语言任务上显著提升低资源语言表现。
+
+**[Enhancing BiGRU with a KAN Block for Legal Document Classification and Summarization](enhancing_bigru_with_a_kan_block_for_legal_document_classification_and_summariza.md)**
+
+:   本文在低资源多语言孟加拉法律文档上，把 KAN block 加到 BiGRU 分类器和 attention-based GRU 摘要模型中，使分类准确率达到 67.96%、ROUGE-1/2/L 达到 0.38/0.23/0.31，并在消融中把 BiGRU 准确率从 57.34% 提升到 67.96%。
 
 **[Evaluating Robustness of Large Language Models Against Multilingual Typographical Errors](evaluating_robustness_of_large_language_models_against_multilingual_typographica.md)**
 
@@ -80,6 +92,10 @@ tags:
 **[FairQE: Multi-Agent Framework for Mitigating Gender Bias in Translation Quality Estimation](fairqe_multi-agent_framework_for_mitigating_gender_bias_in_translation_quality_e.md)**
 
 :   提出 FairQE 多智能体框架，通过性别线索检测、性别翻转变体生成和动态偏见感知分数聚合机制，在不牺牲翻译质量评估准确性的前提下有效缓解 QE 模型中的系统性性别偏见。
+
+**[From Fragments to Facts: A Curriculum-Driven DPO Approach for Generating Hindi News Veracity Explanations](from_fragments_to_facts_a_curriculum-driven_dpo_approach_for_generating_hindi_ne.md)**
+
+:   本文提出 DeFactoX，用课程学习组织 Hindi 新闻偏好数据，并在 DPO 中加入 Actuality 和 Finesse 两个事实性/稳定性信号，使模型能同时预测新闻真伪并生成更接近人工事实核查解释的 Hindi rationale。
 
 **[From Traditional Taggers to LLMs: A Comparative Study of POS Tagging for Medieval Romance Languages](from_traditional_taggers_to_llms_a_comparative_study_of_pos_tagging_for_medieval.md)**
 
@@ -113,6 +129,10 @@ tags:
 
 :   LaoBench 是首个大规模、多维度的老挝语 LLM 评测基准，包含 17000+ 条专家精选样本，覆盖文化-知识应用 / 老挝 K12 课纲 / 老-中-英三语翻译三大维度，并独创"开源 7k + 黑盒 10k + 开放式 500"三段式设计——其中 10k 黑盒子集通过受控服务发分数防污染，主流闭源模型（GPT-5-High、Gemini-2.5-Pro 等）仍落后人类专家 ~10-20 个百分点，老挝语文化推理与翻译保真度依然是远未解决的难题。
 
+**[Lingo_Research_Group at SemEval-2026 Task 9: Evaluating Prompt Variants for Polarization Detection](lingo_research_group_at_semeval-2026_task_9_evaluating_prompt_variants_for_polar.md)**
+
+:   这篇 SemEval-2026 Task 9 系统论文用 Gemma3-27B 和 12 类英文 prompt 变体做 22 种语言的在线极化检测，发现 prompt-only 方法能较好完成粗粒度二分类，但在极化目标和表现形式等细粒度多标签任务上明显退化。
+
 **[LLM-XTM: Enhancing Cross-Lingual Topic Models with Large Language Models](llm-xtm_enhancing_cross-lingual_topic_models_with_large_language_models.md)**
 
 :   在已训练好的跨语言主题模型外面套一层"LLM 精炼 + 自一致性投票 + MMD 词分布对齐 + QA 式文档语义对齐"的两段式增强模块，可作为插件挂到 NMTM / InfoCTM / XTRA 等多种 backbone 上，在 EC News、Amazon Review、Rakuten Amazon 三个双语语料上把 CNPMI 涨了 9%–51%、TQ 涨了 6%–44%，同时把 LLM 调用次数降到了"每隔 $f$ 个 epoch 才一次"。
@@ -129,6 +149,10 @@ tags:
 
 :   提出LQM（Linguistically Motivated Multidimensional Quality Metrics），一个六层语言学驱动的机器翻译错误分类体系（社会语言学→语用学→语义→形态句法→正字法→字形），并在7种阿拉伯方言上构建3850句双向平行语料库，通过专家标注6113个错误跨度揭示现有MT系统在方言和文化感知翻译上的系统性不足。
 
+**[Mitigating Catastrophic Forgetting in Target Language Adaptation of LLMs via Source-Shielded Updates](mitigating_catastrophic_forgetting_in_target_language_adaptation_of_llms_via_sou.md)**
+
+:   提出 Source-Shielded Updates (SSU)，一种基于源数据驱动参数重要性评分的列级冻结策略，在仅使用无标签目标语言数据进行持续预训练时，将源语言性能退化从全量微调的 20.3% 降低至 3.4%，同时保持与全量微调相当甚至更优的目标语言性能。
+
 **[Mitigating Extrinsic Gender Bias for Bangla Classification Tasks](mitigating_extrinsic_gender_bias_for_bangla_classification_tasks.md)**
 
 :   针对孟加拉语预训练模型在下游分类任务中的外在性别偏见，提出 RandSymKL 方法，通过随机化交叉熵损失和对称 KL 散度联合优化，在保持分类准确率的同时有效缩小性别间预测差异。
@@ -137,9 +161,17 @@ tags:
 
 :   本文提出 MORPHOGEN，一个涵盖法语/阿拉伯语/印地语的大规模性别感知形态学生成基准（共 20,328 句对），定义了 GENFORM 任务（将第一人称句子改写为相反性别），并提出 SGA/GIoU/CGA 三个评估指标，对 15 个多语言 LLM 的基准测试揭示了模型在复杂形态推理、性别偏差和多实体干扰方面的系统性不足。
 
+**[MultiHaluDet: Multilingual Hallucination Detection via LLM Hidden State Probing](multihaludet_multilingual_hallucination_detection_via_llm_hidden_state_probing.md)**
+
+:   MultiHaluDet 用冻结 LLM 的全层隐状态轨迹做多尺度序列建模，再通过 out-of-fold 表征和集成元学习器判别幻觉，在 HaluEval / TriviaQA 上达到约 98% AUROC，并能迁移到法语、孟加拉语和阿姆哈拉语。
+
 **[Multilingual Language Models Encode Script Over Linguistic Structure](multilingual_language_models_encode_script_over_linguistic_structure.md)**
 
 :   本文通过 LAPE 指标和稀疏自编码器系统分析多语言 LM 中的语言关联单元，发现这些单元主要由正字法（书写系统）驱动而非抽象语言结构：罗马化转写激活几乎完全不重叠的神经元集合，词序打乱影响甚微，类型学信息仅在深层逐渐可访问，因果干预表明功能重要性与表面形式不变性相关。
+
+**[Multilingual Steering by Design: Multilingual Sparse Autoencoders and Principled Layer Selection](multilingual_steering_by_design_multilingual_sparse_autoencoders_and_principled_.md)**
+
+:   这篇论文证明，多语言 sparse autoencoder 和“多语言对齐-语言可分性”交叉点层选择可以让 SAE 语言 steering 更稳定，把原先靠经验选层的多语言控制问题转成可预测的表征诊断问题。
 
 **[NeoAMT: Neologism-Aware Agentic Machine Translation with Reinforcement Learning](neoamt_neologism-aware_agentic_machine_translation_with_reinforcement_learning.md)**
 
@@ -153,9 +185,13 @@ tags:
 
 :   本文证明没有一种提示策略在所有语言和任务上普遍最优，提出将策略选择建模为学习决策问题，用轻量级分类器为每个实例预测最优策略，在四个基准上显著优于固定策略。
 
-**[PL-MTEB: Polish Massive Text Embedding Benchmark](pl-mteb_polish_massive_text_embedding_benchmark.md)**
+**[PEAR: Pairwise Evaluation for Automatic Relative Scoring in Machine Translation](pear_pairwise_evaluation_for_automatic_relative_scoring_in_machine_translation.md)**
 
-:   PL-MTEB 为波兰语文本嵌入构建了覆盖分类、聚类、句对分类、检索和语义相似度的 30 任务评测集，并系统评测 30 个波兰语和多语言 embedding 模型，显示大模型整体领先但任务类型、训练数据泄漏和模型规模都会显著影响结论。
+:   PEAR 将无参考机器翻译质量估计从“给单个译文打绝对分”改成“直接比较两个候选译文的相对差值”，在 WMT24 MQM 评测中以更小模型超过匹配的单候选 QE 基线和部分大规模指标。
+
+**[PluRule: A Benchmark for Moderating Pluralistic Communities on Social Media](plurule_a_benchmark_for_moderating_pluralistic_communities_on_social_media.md)**
+
+:   PluRule 把 Reddit 社区审核建模为“给定评论和上下文，选择违反了哪条本社区规则或没有违规”的多选题，构建了覆盖 1,989 个社区、2,885 条规则和 9 种语言的基准，并显示 GPT-5.2 high reasoning 全上下文也只有约 57.6% 准确率。
 
 **[Prosody as Supervision: Bridging the Non-Verbal–Verbal for Multilingual Speech Emotion Recognition](prosody_as_supervision_bridging_the_non-verbal--verbal_for_multilingual_speech_e.md)**
 
@@ -184,6 +220,10 @@ tags:
 **[SteerEval: Inference-time Interventions Strengthen Multilingual Generalization in Neural Summarization Metrics](steereval_inference-time_interventions_strengthen_multilingual_generalization_in.md)**
 
 :   SteerEval 研究在推理时把多语种评测模型的隐藏表示向高资源枢轴语言对齐，发现向英语或法语方向 steering 能普遍提高多语种摘要自动指标与人工评分的相关性，尤其能改善低基线语言和 encoder-based COMET 指标。
+
+**[Structure-Guided Entity Resolution: Fine-Tuning LLMs for Robust Name Matching in Complex Linguistic Contexts](structure-guided_entity_resolution_fine-tuning_llms_for_robust_name_matching_in_.md)**
+
+:   SGER 提出两阶段课程学习框架微调 Llama 3 8B 进行人名实体匹配：Phase 1 训练模型解析姓名结构（输出 JSON），Phase 2 从 Phase 1 checkpoint 训练二分类匹配器，在 5 万对印度 KYC 数据上达到 99.02% 准确率和 0.994 F1，已在 Dream11（2.5 亿用户）生产环境部署。
 
 **[Syntax as a Rosetta Stone: Universal Dependencies for In-Context Coptic Translation](syntax_as_a_rosetta_stone_universal_dependencies_for_in-context_coptic_translati.md)**
 
@@ -224,6 +264,10 @@ tags:
 **[What Factors Affect LLMs and RLLMs in Financial Question Answering?](what_factors_affect_llms_and_rllms_in_financial_question_answering.md)**
 
 :   本文系统研究了提示方法、Agent 框架和多语言对齐方法对 LLM 和 RLLM（推理型大模型）在金融问答任务上的影响，发现现有方法本质上是通过模拟 Long CoT 来提升 LLM 性能，但对已具备 Long CoT 能力的 RLLM 效果有限。
+
+**[Why Do Multilingual Reasoning Gaps Emerge in Reasoning Language Models?](why_do_multilingual_reasoning_gaps_emerge_in_reasoning_language_models.md)**
+
+:   本文首次系统分析了推理语言模型(RLMs)中多语言推理差距的来源，发现**语言理解失败**是主要原因，并提出通过检测理解失败后进行选择性翻译(Selective Translation)来高效弥补差距。
 
 **[Why Low-Resource NLP Needs More Than Cross-Lingual Transfer: Lessons Learned from Luxembourgish](why_low-resource_nlp_needs_more_than_cross-lingual_transfer_lessons_learned_from.md)**
 

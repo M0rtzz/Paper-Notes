@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ResQ: A Novel Framework to Implement Residual Neural Networks on Analog Rydberg Atom Quantum Computers
 description: >-
-  [ICCV 2025][物理学][量子机器学习] 提出 ResQ——首个利用模拟 Rydberg 原子量子计算机的连续时间哈密顿演化来原生实现残差神经网络（ResNet）的框架，通过分段参数化激光脉冲编码输入特征和训练参数…
+  [ICCV 2025][物理/科学计算][量子机器学习] 提出 ResQ——首个利用模拟 Rydberg 原子量子计算机的连续时间哈密顿演化来原生实现残差神经网络（ResNet）的框架，通过分段参数化激光脉冲编码输入特征和训练参数…
 tags:
   - "ICCV 2025"
-  - "物理学"
+  - "物理/科学计算"
   - "量子机器学习"
   - "残差网络"
   - "Rydberg原子"
@@ -178,8 +178,8 @@ $$H(t) = \frac{\Omega(t)}{2}\sum_i(e^{i\phi(t)}|g\rangle_i\langle r|_i + h.c.) -
 - [\[ICML 2025\] Compact Matrix Quantum Group Equivariant Neural Networks](../../ICML2025/physics/compact_matrix_quantum_group_equivariant_neural_networks.md)
 - [\[CVPR 2025\] ATP: Adaptive Threshold Pruning for Efficient Data Encoding in Quantum Neural Networks](../../CVPR2025/physics/atp_adaptive_threshold_pruning_for_efficient_data_encoding_in_quantum_neural_net.md)
 - [\[NeurIPS 2025\] Exoplanet Formation Inference Using Conditional Invertible Neural Networks](../../NeurIPS2025/physics/exoplanet_formation_inference_using_conditional_invertible_neural_networks.md)
-- [\[ICLR 2026\] Feedback-driven Recurrent Quantum Neural Network Universality](../../ICLR2026/physics/feedback-driven_recurrent_quantum_neural_network_universality.md)
-- [\[NeurIPS 2025\] Knowledge is Overrated: A Zero-Knowledge ML and Cryptographic Hashing-Based Framework for Verifiable, Low Latency Inference at the LHC](../../NeurIPS2025/physics/knowledge_is_overrated_a_zero-knowledge_machine_learning_and_cryptographic_hashi.md)
+- [\[NeurIPS 2025\] DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving](../../NeurIPS2025/physics/deltaphi_physical_states_residual_learning_for_neural_operators_in_data-limited_.md)
+- [\[NeurIPS 2025\] From Black Hole to Galaxy: Neural Operator Framework for Accretion and Feedback Dynamics](../../NeurIPS2025/physics/from_black_hole_to_galaxy_neural_operator_framework_for_accretion_and_feedback_d.md)
 
 </div>
 

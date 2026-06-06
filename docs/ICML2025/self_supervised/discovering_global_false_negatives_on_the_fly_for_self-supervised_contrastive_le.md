@@ -158,9 +158,9 @@ GloFND 可直接扩展到 CLIP 式的图像-文本对比学习：为每个实例
 
 - [\[ICML 2025\] Collapse-Proof Non-Contrastive Self-Supervised Learning](collapse-proof_non-contrastive_self-supervised_learning.md)
 - [\[ICML 2025\] Generalization Analysis for Supervised Contrastive Representation Learning under Non-IID Settings](generalization_analysis_for_supervised_contrastive_representation_learning_under.md)
-- [\[ICML 2025\] Global Context-aware Representation Learning for Spatially Resolved Transcriptomics](global_context-aware_representation_learning_for_spatially_resolved_transcriptom.md)
 - [\[ACL 2025\] WhiSPA: Semantically and Psychologically Aligned Whisper with Self-Supervised Contrastive and Student-Teacher Learning](../../ACL2025/self_supervised/whispa_semantically_and_psychologically_aligned_whisper_with_self-supervised_con.md)
 - [\[ICML 2025\] ReSA: Clustering Properties of Self-Supervised Learning](clustering_properties_of_self-supervised_learning.md)
+- [\[ECCV 2024\] ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders](../../ECCV2024/self_supervised/vic-mae_self-supervised_representation_learning_from_images_and_video_with_contr.md)
 
 </div>
 

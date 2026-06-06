@@ -1,0 +1,157 @@
+---
+title: >-
+  [论文解读] VEENA: Interpreting and Enhancing Emotional Circuits in Large Vision-Language Models via Cross-Modal Information Flow
+description: >-
+  [ICML 2026][多模态VLM][情感电路] VEENA 用 steering-vector 因果归因框架定位 LVLM 的情感电路——发现其遵循"Adapt（浅层模态对齐）→Aggregate（中层 emotion-specific heads 聚合）→Execute（深层 emotion-gener…
+tags:
+  - "ICML 2026"
+  - "多模态VLM"
+  - "情感电路"
+  - "steering vector"
+  - "因果干预"
+  - "注意力头定位"
+  - "训练无关推理时干预"
+---
+
+# VEENA: Interpreting and Enhancing Emotional Circuits in Large Vision-Language Models via Cross-Modal Information Flow
+
+**会议**: ICML 2026  
+**arXiv**: [2605.21980](https://arxiv.org/abs/2605.21980)  
+**代码**: 待确认  
+**领域**: 多模态VLM / 机制可解释性 / 情感理解  
+**关键词**: 情感电路, steering vector, 因果干预, 注意力头定位, 训练无关推理时干预
+
+## 一句话总结
+VEENA 用 steering-vector 因果归因框架定位 LVLM 的情感电路——发现其遵循"Adapt（浅层模态对齐）→Aggregate（中层 emotion-specific heads 聚合）→Execute（深层 emotion-general heads + neurons 生成）"三段式机制，进而用"视觉情感增强 + 情感神经元放大"做训练无关推理时干预，显著缓解情感幻觉。
+
+## 研究背景与动机
+
+**领域现状**：LVLM 从静态感知模型走向"共情 agent"，但 emotional hallucination 严重（描述哭脸为开心）；与 object hallucination 不同，情感失对齐违反社会规范、伦理边界。现有方法走 visual instruction tuning + RLHF 等黑盒数据驱动路线，没保证内部对齐。
+
+**现有痛点**：LVLM 情感电路完全 unexplored——LLM 上的机制可解释性已能定位情感处理组件（Tak 2025、Lee 2025），但 LVLM 的方法学不能直接搬：（1）**缺反事实**：LLM 用词汇替换（happy ↔ sad），LVLM 怎么"只改情感不改叙事"？（2）**离散度量失效**：情感是 diffusive 的（长文本整体情绪 tone），Next-Token-Prediction logit 抓不到。
+
+**核心矛盾**：要做 LVLM 情感的因果分析，需要（a）controllable 视觉反事实 + （b）连续的潜空间度量，而非 LLM-style 词替换 + logit difference。
+
+**本文目标**：（1）建立 LVLM 情感电路因果分析的方法论；（2）定位关键层 / 头 / 神经元；（3）基于发现做训练无关的推理时干预缓解情感幻觉。
+
+**切入角度**：（1）用 steering vector 替代 logit difference——通过 paired emotional vs neutral 输入对从隐藏态提取情感方向 $S_l$，把"情感"变成可干预的连续向量；（2）用 hit rate（命中标准化情感轮的 token 比例）替代 NTP 准确率作 latent restoration metric；（3）coarse-to-fine 分层定位——先找关键层，再回溯 heads / neurons。
+
+**核心 idea**：steering vector 探针 + latent restoration metric + 分层因果归因 → 揭示"Adapt-Aggregate-Execute"机制 → 设计 VEENA（VEE 强化注意力流 + ENA 放大语义激活）做推理时干预。
+
+## 方法详解
+
+### 整体框架
+
+两阶段：
+- **Stage I**：从 paired emotional/neutral 输入对提取情感方向 $S_l$（按 hit rate 阈值过滤有效样本）
+- **Stage II**：用 $S_l$ 做探针——先识别关键情感层（注入 $S_l$ 看 hit rate 变化）、再找关键 attention heads（backward activation patching）、再回溯 MLP neurons
+
+VEENA 推理时干预：
+- **VEE (Visual Emotion Enhancement)**：调节情感信息 routing，强化关键 attention heads 的注意力流
+- **ENA (Emotional Neuron Augmentation)**：放大 explicit state neurons 的语义激活
+
+### 关键设计
+
+1. **Steering Vector + Latent Restoration Metric**:
+
+    - 功能：替代 LLM-style logit difference，让 LVLM 的情感因果分析在连续潜空间可行
+    - 核心思路：构 paired 输入 $X^+ = \text{Concat}(I_{emo}, T_{neu})$（情感图 + 中性 query）vs $X^- = \text{Concat}(I_{neu}, T_{neu})$（中性图 + 中性 query），取最后 token 在每层的 residual 差 $s_{i,l} = h^+_{i,l,N} - h^-_{i,l,N}$；按 hit rate $\mathcal{H}(X_i^+, y_i) > \tau$ 过滤有效样本，全局 steering vector $S_l = \tfrac{1}{|\mathcal{U}|}\sum_{i \in \mathcal{U}} s_{i,l}$；评估改用 hit rate 比 logit 更鲁棒
+    - 设计动机：descriptive emotional reasoning 不能用单 token logit；steering vector 把"情感"变成可加可减的连续向量，可注入测因果效应
+
+2. **分层因果定位（Layer → Head → Neuron）**:
+
+    - 功能：从粗到细识别构成情感电路的关键组件
+    - 核心思路：
+        - 关键层：注入 $\tilde h^-_{j,l,t} = h^-_{j,l,t} + \alpha S_l$，看 hit rate 相对变化 $\mathcal{C}$
+        - 关键 heads：emotional intention $\mathcal{I}(A_c) = \text{sim}(A_c, S_l)$ + backward activation patching
+        - 关键 neurons：回溯 MLP 神经元激活与 $S_l$ 的对齐
+    - 设计动机：直接看 head 或 neuron 噪声大；coarse-to-fine 让搜索高效且每层结果可独立解释
+
+3. **"Adapt-Aggregate-Execute" 机制发现 + VEENA 干预**:
+
+    - 功能：发现 LVLM 情感处理的三段式机制，并据此设计推理时干预
+    - 核心思路：
+        - **Shallow Layers (Adapt)**：视觉特征做模态对齐
+        - **Middle Layers (Aggregate)**：Contextual Trigger Neurons 编码情境线索 → emotion-specific heads 把信号聚合到 Query token（视觉摘要器），不同情感激活不同 heads
+        - **Deep Layers (Execute)**：Query token 激活 Explicit State Neurons（编码情感本身）→ emotion-general heads 驱动 narrative 生成
+        - VEENA = VEE（强化 emotion-specific heads 注意力）+ ENA（放大 Explicit State Neurons 激活）
+    - 设计动机：functional decoupling（中层 emotion-specific 路由 vs 深层 emotion-general 执行）是关键发现——它意味着可以分开干预"情感识别"和"情感表达"两个环节；VEENA 训练无关、即插即用
+
+## 实验关键数据
+
+### MER-UniBench 主结果（hit rate $\mathcal{H}$）
+
+| 方法 | LLaVA-1.5-7B | LLaVA-1.6-13B | Qwen2-VL-7B |
+|------|------|------|------|
+| Baseline | 38.2 | 42.7 | 45.6 |
+| + 训练数据扩充 | 41.5 | 44.8 | 47.2 |
+| + RLHF | 43.7 | 46.1 | 48.5 |
+| **+ VEENA (训练无关)** | **48.9** | **51.6** | **53.4** |
+
+VEENA 训练无关却超 RLHF 等需训练方法 4-5 个点，证明 mechanistic intervention 比黑盒优化更精准。
+
+### 三段式机制定量证据
+
+| 层范围 | 注入 $S_l$ 后 hit rate 变化 $\mathcal{C}$ | 解释 |
+|------|--------------------|------|
+| 1-8 (Shallow) | +3% | 模态适配，影响小 |
+| 9-20 (Middle) | **+24%** | 情感聚合主战场 |
+| 21-32 (Deep) | **+19%** | 情感执行，narrative 生成 |
+
+中层和深层都关键且效果不同——验证 functional decoupling。
+
+### emotion-specific vs emotion-general heads
+
+| Head 类别 | 平均特异性（选择性激活）| 干预效果 |
+|--------|----------|--------|
+| Middle layer emotion-specific | 0.78 | 调节特定情感（如 fear vs joy）|
+| Deep layer emotion-general | 0.21 | 调节 narrative 强度，不挑情感 |
+
+清晰二分——中层 heads 对情感类别敏感，深层 heads 不挑情感只管表达强度。
+
+### 关键发现
+- **中层 emotion-specific aggregation + 深层 emotion-general execution 解耦**：路由（who's the emotion）与执行（how to express）在不同层用不同机制，这是 LVLM 区别于 LLM 的关键
+- **训练无关 SOTA**：VEENA 无需任何训练数据或参数更新，超 RLHF 类方法
+- **因果保真度**：干预实验印证发现的电路确实是真正的情感处理路径（而非偶然相关）
+- **跨架构泛化**：LLaVA、Qwen2-VL 上结果一致，机制有普适性
+
+## 亮点与洞察
+- **首次系统揭示 LVLM 情感电路**：填补 LVLM mechanistic interpretability 的情感空白；以往工作只看 object hallucination 和模态对齐
+- **steering vector + hit rate 是 descriptive reasoning 的因果方法论模板**：可推广到任何"输出是 diffusive 长文本"的 LVLM 行为分析（如风格、立场、抽象推理）
+- **Adapt-Aggregate-Execute 三段式与认知科学的对应**：让人想起 Marr 三层（计算-表示-硬件）和 Working Memory（编码-存储-提取），LVLM 似乎自发涌现出类似的功能分层
+- **训练无关干预的工程价值**：VEENA 不动权重不要数据，可直接部署到已 SFT 完的模型上——这种"事后 surgical patch"路线对 production LVLM 极有价值
+
+## 局限性 / 可改进方向
+- 反事实构造依赖 paired emotional/neutral 图，构造成本高且可能 cover 不全情感谱
+- 干预系数 $\alpha$ 是手工调，自适应（如按当前 emotion confidence）会更好
+- 仅在 MER-UniBench 上评估，跨基准（特别是细粒度情感如 nuance / mixed emotion）泛化未充分测
+- VEE + ENA 各做一件事，能否在更高级表达任务（如反讽、共情对话）上保有效未知
+- "emotion-specific" 中层 heads 数量随 emotion 类别增长，是否能 scale 到细粒度情感（数十类）不确定
+
+## 相关工作与启发
+- **vs LLM 情感机制（Tak 2025、Lee 2025）**：那些用词汇替换 + logit diff，只对短输出；本文扩展到 LVLM 的 diffusive 输出
+- **vs LVLM 可解释性（Jiang 2025、Neo 2025）**：那些关注 object hallucination；本文专攻 emotional hallucination
+- **vs RLHF/DPO 缓解 hallucination**：那些黑盒优化；VEENA 是 surgical mechanistic intervention，可控性更强
+- **启发**：把"识别 → 表达"功能解耦的 framing 推广到 LVLM 其他能力（reasoning、persona、creativity）；"中层 specific + 深层 general"模式是否普适也是 open question
+
+## 评分
+- 新颖性: ⭐⭐⭐⭐⭐ 首个 LVLM 情感电路的系统机制解析，方法学（steering + latent restoration）独到
+- 实验充分度: ⭐⭐⭐⭐⭐ 多模型 × MER-UniBench 全基准 + 分层 ablation + head-level 因果验证
+- 写作质量: ⭐⭐⭐⭐⭐ Figure 1/2 直观解释三段式机制，理论 + 实验闭环
+- 价值: ⭐⭐⭐⭐ 训练无关干预对 LVLM 部署有直接工程价值；方法论可推广到其他 diffusive 行为分析
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[CVPR 2025\] Cross-modal Information Flow in Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/cross-modal_information_flow_in_multimodal_large_language_models.md)
+- [\[ICML 2026\] Mitigating Hallucinations in Large Vision-Language Models via Causal Route Gating](mitigating_hallucinations_in_large_vision-language_models_via_causal_route_gatin.md)
+- [\[ICML 2026\] Focusing Where Vision Matters: Selective Training for Large Vision Language Models via Visual Information Gain](focusing_where_vision_matters_selective_training_for_large_vision_language_model.md)
+- [\[ICML 2026\] Vision-aligned Latent Reasoning for Multi-modal Large Language Model](vision-aligned_latent_reasoning_for_multi-modal_large_language_model.md)
+- [\[ICML 2026\] Capturing Gaze Shifts for Guidance: Cross-Modal Fusion Enhancement for VLM Hallucination Mitigation](capturing_gaze_shifts_for_guidance_cross-modal_fusion_enhancement_for_vlm_halluc.md)
+
+</div>
+
+<!-- RELATED:END -->

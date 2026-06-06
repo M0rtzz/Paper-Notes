@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Towards Open-Ended Visual Recognition with Large Language Model
 description: >-
-  [ECCV 2024][LLM/NLP][开放式视觉识别] 提出 OmniScient Model (OSM)——一个基于冻结 CLIP-ViT + 可训练 MaskQ-Former + 冻结 LLM (Vicuna-7B) 的生成式 mask 分类器…
+  [ECCV 2024][信息检索/RAG][开放式视觉识别] 提出 OmniScient Model (OSM)——一个基于冻结 CLIP-ViT + 可训练 MaskQ-Former + 冻结 LLM (Vicuna-7B) 的生成式 mask 分类器…
 tags:
   - "ECCV 2024"
-  - "LLM/NLP"
+  - "信息检索/RAG"
   - "开放式视觉识别"
   - "大语言模型"
   - "mask分类"
@@ -234,10 +234,10 @@ OSM 在6个数据集上评估 mask 分类准确率（Acc）和词表外预测比
 ## 相关论文
 
 - [\[ECCV 2024\] Grounding Language Models for Visual Entity Recognition](grounding_language_models_for_visual_entity_recognition.md)
-- [\[ECCV 2024\] ArtVLM: Attribute Recognition Through Vision-Based Prefix Language Modeling](artvlm_attribute_recognition_through_vision-based_prefix_language_modeling.md)
+- [\[ECCV 2024\] Multi-Label Cluster Discrimination for Visual Representation Learning](multi-label_cluster_discrimination_for_visual_representation_learning.md)
 - [\[ACL 2025\] SafeRAG: Benchmarking Security in Retrieval-Augmented Generation of Large Language Model](../../ACL2025/information_retrieval/saferag_benchmarking_security_in_retrieval-augmented_generation_of_large_languag.md)
 - [\[ICML 2026\] Understand and Accelerate Memory Processing Pipeline for Large Language Model Inference](../../ICML2026/information_retrieval/understand_and_accelerate_memory_processing_pipeline_for_disaggregated_llm_infer.md)
-- [\[ECCV 2024\] Multi-Label Cluster Discrimination for Visual Representation Learning](multi-label_cluster_discrimination_for_visual_representation_learning.md)
+- [\[CVPR 2025\] LamRA: Large Multimodal Model as Your Advanced Retrieval Assistant](../../CVPR2025/information_retrieval/lamra_large_multimodal_model_as_your_advanced_retrieval_assistant.md)
 
 </div>
 

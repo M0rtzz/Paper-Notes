@@ -137,7 +137,7 @@ $$(J_t^T J_t + \mathbf{W}_{\text{gen}} + \mathbf{W}_{\text{vel}} + \mathbf{W}_{\
 - [\[ICLR 2026\] EgoHandICL: Egocentric 3D Hand Reconstruction with In-Context Learning](egohandicl_egocentric_3d_hand_reconstruction_with_in-context_learning.md)
 - [\[ICLR 2026\] Spatial-DISE: A Unified Benchmark for Evaluating Spatial Reasoning in Vision-Language Models](spatial-dise_a_unified_benchmark_for_evaluating_spatial_reasoning_in_vision-lang.md)
 - [\[ICLR 2026\] Enhanced Continual Learning of Vision-Language Models with Model Fusion](enhanced_continual_learning_of_vision-language_models_with_model_fusion.md)
-- [\[CVPR 2025\] One Token, Two Fates: A Unified Framework via Vision Token Manipulation Against MLLMs Hallucination](../../CVPR2025/multimodal_vlm/one_token_two_fates_a_unified_framework_via_vision_token_manipulation_against_ml.md)
+- [\[ECCV 2024\] Uni3DL: Unified Model for 3D and Language Understanding](../../ECCV2024/multimodal_vlm/uni3dl_a_unified_model_for_3d_vision-language_understanding.md)
 
 </div>
 

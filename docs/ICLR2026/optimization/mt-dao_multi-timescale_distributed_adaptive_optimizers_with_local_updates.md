@@ -165,9 +165,9 @@ Worker 对齐度（余弦相似度）：
 
 - [\[ICLR 2026\] A Convergence Analysis of Adaptive Optimizers under Floating-Point Quantization](a_convergence_analysis_of_adaptive_optimizers_under_floating-point_quantization.md)
 - [\[ICLR 2026\] The Affine Divergence: Aligning Activation Updates Beyond Normalisation](the_affine_divergence_aligning_activation_updates_beyond_normalisation.md)
-- [\[ICLR 2026\] Adaptive Rollout Allocation for Online RL with Verifiable Rewards (VIP)](adaptive_rollout_allocation_for_online_reinforcement_learning_with_verifiable_re.md)
+- [\[ICML 2026\] Multi-Objective Bayesian Optimization via Adaptive ε-Constraints Decomposition](../../ICML2026/optimization/multi-objective_bayesian_optimization_via_adaptive_varepsilon-constraints_decomp.md)
 - [\[ICLR 2026\] Rethinking Consistent Multi-Label Classification Under Inexact Supervision](rethinking_consistent_multi-label_classification_under_inexact_supervision.md)
-- [\[AAAI 2026\] A Distributed Asynchronous Generalized Momentum Algorithm Without Delay Bounds](../../AAAI2026/optimization/a_distributed_asynchronous_generalized_momentum_algorithm_wi.md)
+- [\[ICLR 2026\] Adaptive Rollout Allocation for Online RL with Verifiable Rewards (VIP)](adaptive_rollout_allocation_for_online_reinforcement_learning_with_verifiable_re.md)
 
 </div>
 

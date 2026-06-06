@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 LLM 评测方向79篇论文解读
+  ACL2026 LLM 评测方向91篇论文解读
 description: >-
-  79篇ACL2026的 LLM 评测方向论文解读，涵盖 LLM、推理、多模态、个性化生成、对话系统、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  91篇ACL2026的 LLM 评测方向论文解读，涵盖 LLM、推理、多模态、个性化生成、对话系统、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "LLM 评测"
@@ -13,17 +13,17 @@ tags:
   - "多模态"
   - "个性化生成"
   - "对话系统"
-  - "Agent"
+  - "对抗鲁棒"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📊 LLM 评测
 
-**💬 ACL2026** · **79** 篇论文解读
+**💬 ACL2026** · **91** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (8)](../../ICML2026/llm_evaluation/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/llm_evaluation/index.md) · [🔬 ICLR2026 (53)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (39)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (79)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (27)](../../ICML2026/llm_evaluation/index.md) · [🔬 ICLR2026 (53)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (39)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (76)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md) · [🧪 ICML2025 (48)](../../ICML2025/llm_evaluation/index.md)
 
-🔥 **高频主题：** LLM ×25 · 推理 ×11 · 多模态 ×4 · 个性化生成 ×3 · 对话系统 ×3
+🔥 **高频主题：** LLM ×32 · 推理 ×13 · 多模态 ×4 · 个性化生成 ×3 · 对话系统 ×3
 
 **[AgentEval: DAG-Structured Step-Level Evaluation for Agentic Workflows with Error Propagation Tracking](agenteval_dag-structured_step-level_evaluation_for_agentic_workflows_with_error_.md)**
 
@@ -45,9 +45,9 @@ tags:
 
 :   提出 arXiv2Table 基准（1,957 张表、7,158 篇论文），通过引入干扰论文、模式无关的用户需求和基于 QA 的无标注评估框架，实现更真实的 LLM 文献综述表格生成评估，并提出迭代批处理生成方法。
 
-**[AutoReproduce: Automatic AI Experiment Reproduction with Paper Lineage](autoreproduce_automatic_ai_experiment_reproduction_with_paper_lineage.md)**
+**[Attribution, Citation, and Quotation: A Survey of Evidence-based Text Generation with Large Language Models](attribution_citation_and_quotation_a_survey_of_evidence-based_text_generation_wi.md)**
 
-:   AutoReproduce 提出了一个多智能体框架，通过"论文谱系"算法从引用文献中挖掘隐式领域知识，实现端到端的论文实验自动复现，在自建基准 ReproduceBench 上的代码执行率达 94.87%，性能差距仅 19.72%。
+:   本文系统综述了 134 篇关于 LLM 证据基础文本生成的论文，首次提出统一分类学（归因方式 × 引用特征 × 任务），分析了 300 个评估指标并归纳为七大维度六种方法，为该碎片化领域提供了全景式参考框架。
 
 **[BenchMarker: An Education-Inspired Toolkit for Highlighting Flaws in Multiple-Choice Benchmarks](benchmarker_an_education-inspired_toolkit_for_highlighting_flaws_in_multiple-cho.md)**
 
@@ -109,6 +109,10 @@ tags:
 
 :   针对长文本生成中"遗漏关键信息"难以量化的问题，作者提出三种 comprehensiveness 度量——NLI 分解 + 图分析、QA 对比、端到端 LLM 直接识别——以参考语料 $\mathcal{C}$ 为基准计算覆盖率 $S = |\mathcal{A}_{in}| / (|\mathcal{A}_{in}| + |\mathcal{A}_{out}|)$；在 WikiContradict / ConflictBank 上 meta-evaluation 发现最简单的 E2E 方法平均最强（最佳 LMR=0.85），但 Q&A 鲁棒性更好（跨模型 std 仅 0.009 vs E2E 的 0.044），三者各有适用场景。
 
+**[Contrastive Decoding Mitigates Score Range Bias in LLM-as-a-Judge](contrastive_decoding_mitigates_score_range_bias_in_llm-as-a-judge.md)**
+
+:   本文揭示了LLM评判器在直接评估任务中存在**分数范围偏差**（score range bias），即模型输出对预定义分数范围高度敏感，并提出利用**对比解码**（contrastive decoding）方法，通过同一模型家族内相似偏差的相互抵消来缓解该问题，在Spearman相关性上平均实现高达11.3%的相对提升。
+
 **[CUB: Benchmarking Context Utilisation Techniques for Language Models](cub_benchmarking_context_utilisation_techniques_for_language_models.md)**
 
 :   作者把 7 类主流"上下文利用调控技术"（CMTs）放到统一基准 CUB 上，覆盖 3 个数据集（CounterFact / NQ / DRUID）× 3 类上下文（gold / conflicting / irrelevant）× 11 个 LLM 共 ~800 个实验点，证明所有现有 CMT 都存在"对相关上下文敏感 vs 对无关上下文鲁棒"的根本权衡，且在合成数据上效果普遍被高估。
@@ -120,6 +124,10 @@ tags:
 **[Do LLMs Overthink Basic Math Reasoning? Benchmarking the Accuracy-Efficiency Tradeoff](do_llms_overthink_basic_math_reasoning_benchmarking_the_accuracy-efficiency_trad.md)**
 
 :   本文提出 LLMThinkBench，一个系统性评估 LLM 基础数学推理效率的基准，引入 Overthinking Score（准确率和 token 效率的调和平均），通过动态生成的 14 个确定性数学任务评估 53 个 LLM，发现推理模型平均生成约 18× 更多 token 但有时准确率更低，且扩展推理预算呈现收益递减。
+
+**[Dynamic Infilling Anchors for Format-Constrained Generation in Diffusion Large Language Models](dynamic_infilling_anchors_for_format-constrained_generation_in_diffusion_large_l.md)**
+
+:   DIA 是一种无需训练的扩散大语言模型格式约束生成方法，通过先预测结束锚点位置再在锚点间迭代填充，显著提升 reasoning template 和 JSON 输出的格式正确率，并缓解固定锚点导致的截断或冗余。
 
 **[E2EDev: Benchmarking Large Language Models in End-to-End Software Development Task](e2edev_benchmarking_large_language_models_in_end-to-end_software_development_tas.md)**
 
@@ -193,6 +201,10 @@ tags:
 
 :   本文提出 IF-RewardBench：第一个同时覆盖单轮 / 多轮 / 系统提示三类指令、由 16 个 LLM 生成响应、由人工严格标注 (Cohen's $\kappa$=0.87) 的 judge 元评测基准；它把传统的 pairwise / BoN 评测范式升级为基于 **Pareto-dominance 偏好图**的 listwise 评测，对 22 个 SOTA judge（含 Gemini-3-Pro / GPT-5.1 / 各类 reward model）一通跑后发现：最强 judge 的 Kendall $\tau_b$ 也只有 0.609（远低于人类 0.755），所有专用 RM 均不超过 0.2，且本榜与下游 BoN 性能的相关性显著高于 RewardBench-2、PPE-IF 等现有 benchmark。
 
+**[Inverting the Shield: Systematically Generating Safety Tests from Policy Specifications](inverting_the_shield_systematically_generating_safety_tests_from_policy_specific.md)**
+
+:   POLARIS把自然语言安全策略先编译成一阶逻辑规约，再构造语义策略图并系统遍历生成测试查询，从而让LLM安全评测从启发式红队转向可追踪、可覆盖、可复现的规约驱动测试。
+
 **[K-MetBench: A Multi-Dimensional Benchmark for Fine-Grained Evaluation of Expert Reasoning, Locality, and Multimodality in Meteorology](k-metbench_a_multi-dimensional_benchmark_for_fine-grained_evaluation_of_expert_r.md)**
 
 :   作者基于韩国国家气象工程师认证考试 25 届真题构造了 1,774 题的 K-MetBench，沿"多模态视觉 / 专家推理 / 地理文化 / 子领域细粒度"四个正交维度评测了 55 个 LLM/MLLM，发现现有模型存在普遍的 modality gap（视觉气象图准确率较纯文本平均掉 18.6%）、reasoning gap（答案对但 rationale 幻觉）、geo-cultural gap（小韩国模型 A.X-4.0 在韩特题上 78.9 反超 235B 的 Qwen3-VL 的 72.6），证明纯参数规模不能解决文化本地化问题。
@@ -249,6 +261,14 @@ tags:
 
 :   PolitNuggets 提出一个面向 400 位全球政治人物、超过 1 万条政治履历事实的多语言 agentic discovery benchmark，并用 FactNet 动态证据验证协议发现：当前 agent 高精度但低召回，真正瓶颈是长尾事实发现、非英语证据和高效工具使用。
 
+**[Pressure-Testing Deception Probes in LLMs: Scaling, Robustness, and the Geometry of Deceptive Representations](pressure-testing_deception_probes_in_llms_scaling_robustness_and_the_geometry_of.md)**
+
+:   这篇论文系统压力测试 LLM 内部激活上的欺骗探针，发现干净数据上的近满分 AUROC 并不等于可部署鲁棒性：单方向和熵代理解释都站不住脚，欺骗信号更像分散在多维弱特征中，而风格增强训练能把 27B 模型上接近随机的探针恢复到 0.983 的 held-out style AUROC。
+
+**[Presupposition and Reasoning in Conditionals: A Theory-Based Study of Humans and LLMs](presupposition_and_reasoning_in_conditionals_a_theory-based_study_of_humans_and_.md)**
+
+:   这篇论文用基于语言学理论的条件句预设投射任务对比人类和四个 LLM，发现人类会联合使用概率、前件-预设相关性和上下文线索，而 LLM 的评分相似性与理论化推理质量明显脱钩，很多看似贴近人类的判断可能来自表层模式匹配。
+
 **[Question Difficulty Estimation for Large Language Models via Answer Plausibility Scoring](question_difficulty_estimation_for_large_language_models_via_answer_plausibility.md)**
 
 :   Q-Daps 通过生成多个候选答案并计算去流行度偏置后的 plausibility 分布熵来估计 LLM 问答难度，在 TriviaQA、NQ、MuSiQue、QASC 上系统优于可读性、检索复杂度、prompt 打分和不确定性基线。
@@ -272,6 +292,10 @@ tags:
 **[ReTraceQA: Evaluating Reasoning Traces of Small Language Models in Commonsense Question Answering](retraceqa_evaluating_reasoning_traces_of_small_language_models_in_commonsense_qu.md)**
 
 :   本文提出 ReTraceQA，首个面向常识推理任务的推理过程评测基准，包含 2421 条由专家标注的步骤级错误定位和错误分类标注，揭示 14-24% 的 SLM 虽给出正确答案但推理过程有误，当采用推理感知评估替代仅答案评估时，SLM 性能最多下降 25 个百分点。
+
+**[Revisiting a Pain in the Neck: A Semantic Reasoning Benchmark for Language Models](revisiting_a_pain_in_the_neck_a_semantic_reasoning_benchmark_for_language_models.md)**
+
+:   这篇论文提出 SEMANTICQA，把习语、词汇搭配、名词复合词和动词多词表达统一到分类、抽取、解释及顺序组合任务中，发现强 LLM 在开放解释上看似不错，但在结构化抽取、细粒度语义分类和级联工作流中仍明显不稳。
 
 **[Revisiting the Reliability of Language Models in Instruction-Following](revisiting_the_reliability_of_language_models_in_instruction-following.md)**
 
@@ -297,6 +321,10 @@ tags:
 
 :   SCAN 将大模型评测从单一排行榜推进到可导航的能力画像：它自动构建层级能力标签、用 RealMix 生成覆盖长尾能力的真实感查询，并用 PC2 judge 提升自动评分可靠性，从而在 21 个主流 LLM 上揭示总分掩盖的细粒度强弱项。
 
+**[SciCustom: A Framework for Custom Evaluation of Scientific Capabilities in Large Language Models](scicustom_a_framework_for_custom_evaluation_of_scientific_capabilities_in_large_.md)**
+
+:   SciCustom 将科学评测需求拆成可复用的本体知识单元，并通过 tagger、multi-model voting、binary-search relevance filtering 和 proxy subset selection 自动构建领域定制 benchmark，在 10/11 个化学与医疗子任务上取得最高 Spearman 排名一致性。
+
 **[SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction](sciimpact_a_multi-dimensional_multi-field_benchmark_for_scientific_impact_predic.md)**
 
 :   本文构建 SciImpact——首个跨 19 个学科领域、涵盖 7 个影响力维度（引用、奖项、专利、媒体、代码、数据集、模型）的大规模科学影响力预测基准，包含 215,928 个对比论文对，通过多任务微调使 4B 模型超越 o4-mini 等大模型。
@@ -308,6 +336,14 @@ tags:
 **[SPENCE: A Syntactic Probe for Detecting Contamination in NL2SQL Benchmarks](spence_a_syntactic_probe_for_detecting_contamination_in_nl2sql_benchmarks.md)**
 
 :   SPENCE 通过对 NL2SQL 基准查询进行系统性句法改写并测量执行准确率随句法距离的衰减程度，检测和量化 LLM 在 NL2SQL 基准上的数据污染行为，发现越老的基准（如 Spider）污染信号越强，而较新的 BIRD 基准几乎不受影响。
+
+**[Stability vs. Manipulability: Evaluating Robustness Under Post-Decision Interaction in LLM Judges](stability_vs_manipulability_evaluating_robustness_under_post-decision_interactio.md)**
+
+:   本文揭示了 LLM 评估器的关键脆弱性：虽然在重复评估下高度稳定，但在后续对话质询下会产生大幅反转（49% 翻转率，权威框架下 74%），表明稳定性不等于鲁棒性，且置信度无法预测真实可靠性。
+
+**[Statistically Reliable LLM-Based Ranking Evaluation via Prediction-Powered Inference](statistically_reliable_llm-based_ranking_evaluation_via_prediction-powered_infer.md)**
+
+:   PRECISE 将 Prediction-Powered Inference (PPI) 扩展到排名评估指标，通过少量人工标注 + 大量 LLM 判断的组合，在纠正 LLM 系统性偏差的同时降低指标估计方差，实现统计可靠的排名系统评估。
 
 **[StratMem-Bench: Evaluating Strategic Memory Use in Virtual Character Conversation Beyond Factual Recall](stratmem-bench_evaluating_strategic_memory_use_in_virtual_character_conversation.md)**
 
@@ -325,6 +361,14 @@ tags:
 
 :   本文提出 TaxPraBen，首个面向中国税务实践的 LLM 评测基准，包含 14 个数据集共 7.3K 样本，覆盖税务风险防控、稽查分析和税务筹划三大真实场景，并设计了"结构化解析—字段对齐提取—数值与文本匹配"的可扩展评估范式，评测 19 个 LLM 后发现闭源大模型和中文优化模型表现更优，而税务领域微调模型 YaYi2 改进有限。
 
+**[Teaching Language Models to Check Grounded Claim Factuality with Human Test-Taking Strategies](teaching_language_models_to_check_grounded_claim_factuality_with_human_test-taki.md)**
+
+:   将接地声明事实性检验重新表述为真/假阅读理解任务，通过融入人类考试答题策略设计结构化提示，使LLM能以最少的推理步骤高效准确地检验声明，同时通过监督微调与直接偏好优化训练小型语言模型替代大模型实现80%以上的推理成本节省。
+
+**[Teaching Language Models to Forecast Research Success Through Comparative Idea Evaluation](teaching_language_models_to_forecast_research_success_through_comparative_idea_e.md)**
+
+:   本文研究语言模型能否学会预测研究想法的经验成功，通过构建含 11,488 个想法对的数据集（基于 PapersWithCode 客观成果），用 SFT 和 RLVR 训练 8B 模型达到 77.1% 准确率，超过 GPT-5 的 61.1%，成为自动科研发现中的有效想法验证器。
+
 **[The Silent Vote: Improving Zero-Shot LLM Reliability by Aggregating Semantic Neighborhoods](the_silent_vote_improving_zero-shot_llm_reliability_by_aggregating_semantic_neig.md)**
 
 :   这篇论文指出零样本 LLM 分类中的 constrained softmax 会丢掉标签同义词附近的概率质量，提出无需训练的 Semantic Softmax，把 top-K 词表 token 的“沉默投票”聚合回目标标签，从而显著降低 ECE 和 Brier Score 并提升 AUROC/F1。
@@ -332,6 +376,10 @@ tags:
 **[VC-Inspector: Advancing Reference-free Evaluation of Video Captions with Factual Analysis](vc-inspector_advancing_reference-free_evaluation_of_video_captions_with_factual_.md)**
 
 :   本文提出 VC-Inspector，一个基于开源轻量级多模态模型（Qwen2.5-VL 3B/7B）的无参考视频字幕评估指标，通过可控事实错误合成流水线生成训练数据，在 VATEX-Eval 上达到 $\tau_b$=42.58 的人类判断相关性，超越依赖 GPT-4o 的 G-VEval（$\tau_b$=39.40），且在幻觉检测基准上达到 99.6% 准确率。
+
+**[正确信念的瓦解：临床压力下 LLM 的认知韧性研究](when_correct_beliefs_collapse_epistemic_resilience_of_llms_under_clinical_pressu.md)**
+
+:   通过设计多轮对抗压力评估框架 Med-Stress，本文发现高医学知识不能保证 LLM 的信念稳定性，并提出推理时 RBED 和训练时 R-FT 两种防御策略来提升 LLM 在临床对话中的认知韧性。
 
 **[When Vision-Language Models Judge Without Seeing: Exposing Informativeness Bias](when_vision-language_models_judge_without_seeing_exposing_informativeness_bias.md)**
 

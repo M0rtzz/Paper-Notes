@@ -146,7 +146,7 @@ $$L \approx \frac{1}{n \cdot m} \sum_{i=1}^{n} \sum_{j=1}^{m} [-\log q(A_i | X_V
 - [\[AAAI 2026\] MacVQA: Adaptive Memory Allocation and Global Noise Filtering for Continual Visual Question Answering](macvqa_adaptive_memory_allocation_and_global_noise_filtering_for_continual_visua.md)
 - [\[ICLR 2026\] How Do Medical MLLMs Fail? A Study on Visual Grounding in Medical Images](../../ICLR2026/multimodal_vlm/how_do_medical_mllms_fail_a_study_on_visual_grounding_in_medical_images.md)
 - [\[AAAI 2026\] AbductiveMLLM: Boosting Visual Abductive Reasoning Within MLLMs](abductivemllm_boosting_visual_abductive_reasoning_within_mll.md)
-- [\[AAAI 2026\] When Eyes and Ears Disagree: Can MLLMs Discern Audio-Visual Confusion?](when_eyes_and_ears_disagree_can_mllms_discern_audio-visual_confusion.md)
+- [\[ICML 2026\] 通用骨架理解：可微渲染与 MLLMs](../../ICML2026/multimodal_vlm/universal_skeleton_understanding_via_differentiable_rendering_and_mllms.md)
 
 </div>
 

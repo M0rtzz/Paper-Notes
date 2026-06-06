@@ -152,9 +152,9 @@ $$\text{Reg}_T \leq \widetilde{\mathcal{O}}\!\left(d\, T^{\frac{1-\varepsilon}{2
 
 - [\[NeurIPS 2025\] Infrequent Exploration in Linear Bandits](../../NeurIPS2025/others/infrequent_exploration_in_linear_bandits.md)
 - [\[ACL 2025\] One for All: Update Parameterized Knowledge Across Multiple Models with Once Edit](../../ACL2025/others/one_for_all_update_parameterized_knowledge_across_multiple_models_with_once_edit.md)
+- [\[ICML 2026\] A Perturbation Approach to Unconstrained Linear Bandits](../../ICML2026/others/a_perturbation_approach_to_unconstrained_linear_bandits.md)
 - [\[ICML 2025\] Regression for the Mean: Auto-Evaluation and Inference with Few Labels through Post-hoc Regression](regression_for_the_mean_auto-evaluation_and_inference_with_few_labels_through_po.md)
 - [\[ICML 2025\] Continuous-Time Analysis of Heavy Ball Momentum in Min-Max Games](continuous-time_analysis_of_heavy_ball_momentum_in_min-max_games.md)
-- [\[ICML 2025\] Near Optimal Best Arm Identification for Clustered Bandits](near_optimal_best_arm_identification_for_clustered_bandits.md)
 
 </div>
 

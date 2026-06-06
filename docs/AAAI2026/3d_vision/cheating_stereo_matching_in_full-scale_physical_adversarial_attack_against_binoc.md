@@ -179,7 +179,7 @@ SAR是有效攻击SM的基础（无SAR则 $\mathcal{E}_{cover}$ 极低），Merg
 - [\[CVPR 2025\] DEFOM-Stereo: Depth Foundation Model Based Stereo Matching](../../CVPR2025/3d_vision/defom-stereo_depth_foundation_model_based_stereo_matching.md)
 - [\[AAAI 2026\] Domain Generalized Stereo Matching with Uncertainty-guided Data Augmentation](domain_generalized_stereo_matching_with_uncertainty-guided_data_augmentation.md)
 - [\[CVPR 2026\] Lite Any Stereo: Efficient Zero-Shot Stereo Matching](../../CVPR2026/3d_vision/lite_any_stereo_efficient_zero-shot_stereo_matching.md)
-- [\[CVPR 2026\] PIP-Stereo: Progressive Iterations Pruner for Iterative Optimization based Stereo Matching](../../CVPR2026/3d_vision/pip-stereo_progressive_iterations_pruner_for_iterative_optimization_based_stereo.md)
+- [\[CVPR 2025\] Spectral Defense Against Resource-Targeting Attack in 3D Gaussian Splatting](../../CVPR2025/3d_vision/spectral_defense_against_resource-targeting_attack_in_3d_gaussian_splatting.md)
 
 </div>
 

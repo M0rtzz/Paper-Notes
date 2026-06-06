@@ -2,11 +2,15 @@
 title: >-
   [论文解读] Understanding and Mitigating Spurious Signal Amplification in Test-Time Reinforcement Learning for Math Reasoning
 description: >-
-  [ACL 2026][LLM推理][待补充] 待深读论文后补充
+  [ACL 2026][LLM推理][测试时强化学习] 系统分析测试时强化学习（TTRL）中虚假信号的来源和放大机制——中频答案构成模糊区域是主要噪声源，GRPO 的组内归一化会放大这些虚假信号——提出 DDRL 框架通过均衡采样、固定优势值和共识离线精炼三管齐下缓解问题…
 tags:
   - "ACL 2026"
   - "LLM推理"
-  - "待补充"
+  - "测试时强化学习"
+  - "伪标签噪声"
+  - "GRPO偏差"
+  - "去噪去偏"
+  - "数学推理"
 ---
 
 # Understanding and Mitigating Spurious Signal Amplification in Test-Time Reinforcement Learning for Math Reasoning
@@ -116,33 +120,19 @@ RL 阶段使用修改后的 GRPO（固定优势值 + 均衡采样），精炼阶
 - 新颖性: ⭐⭐⭐⭐ 虚假信号的系统分析有洞察力，但解决方案（固定优势+采样过滤）技术上不算复杂
 - 实验充分度: ⭐⭐⭐⭐ 三个模型+多个基准+逐步消融，较充分
 - 写作质量: ⭐⭐⭐⭐⭐ 问题分析（频率-可靠性+GRPO偏差）的逻辑链非常清晰
-**代码**: 待确认  
-**领域**: image_restoration  
-**关键词**: 待补充
 
-## 一句话总结
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 研究背景与动机
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 方法详解
-待深读论文后补充
+## 相关论文
 
-## 实验关键数据
-待深读论文后补充
+- [\[ACL 2026\] Revisiting Entropy in Reinforcement Learning for Large Reasoning Models](revisiting_entropy_in_reinforcement_learning_for_large_reasoning_models.md)
+- [\[CVPR 2026\] Understanding and Mitigating Hallucinations in Multimodal Chain-of-Thought Models](../../CVPR2026/llm_reasoning/understanding_and_mitigating_hallucinations_in_multimodal_chain-of-thought_model.md)
+- [\[ICLR 2026\] Understanding the Role of Training Data in Test-Time Scaling](../../ICLR2026/llm_reasoning/understanding_the_role_of_training_data_in_test-time_scaling.md)
+- [\[ACL 2026\] TemplateRL: Structured Template-Guided Reinforcement Learning for LLM Reasoning](templaterl_structured_template-guided_reinforcement_learning_for_llm_reasoning.md)
+- [\[ACL 2026\] Efficient Test-Time Scaling via Temporal Reasoning Aggregation](efficient_test-time_scaling_via_temporal_reasoning_aggregation.md)
 
-## 亮点与洞察
-待深读论文后补充
+</div>
 
-## 局限性 / 可改进方向
-待深读论文后补充
-
-## 相关工作与启发
-待深读论文后补充
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+<!-- RELATED:END -->

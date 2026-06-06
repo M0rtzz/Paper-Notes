@@ -144,7 +144,7 @@ CT-Flow-8B 在 3D-RAD 上 ACC 比同底 Qwen3-VL-8B 提升 +20.40，比所有医
 - [\[ACL 2026\] MARCH: Multi-Agent Radiology Clinical Hierarchy for CT Report Generation](march_multi-agent_radiology_clinical_hierarchy_for_ct_report_generation.md)
 - [\[CVPR 2026\] Robust Fair Disease Diagnosis in CT Images](../../CVPR2026/medical_imaging/robust_fair_disease_diagnosis_in_ct_images.md)
 - [\[NeurIPS 2025\] Surf2CT: Cascaded 3D Flow Matching Models for Torso 3D CT Synthesis from Skin Surface](../../NeurIPS2025/medical_imaging/surf2ct_cascaded_3d_flow_matching_models_for_torso_3d_ct_synthesis_from_skin_sur.md)
-- [\[CVPR 2026\] Robust Multi-Source Covid-19 Detection in CT Images](../../CVPR2026/medical_imaging/robust_multi-source_covid-19_detection_in_ct_images.md)
+- [\[ICML 2026\] Foundation VAEs for 3D CT Reconstruction, Augmentation, and Generation](../../ICML2026/medical_imaging/foundation_vaes_for_3d_ct_reconstruction_augmentation_and_generation.md)
 
 </div>
 

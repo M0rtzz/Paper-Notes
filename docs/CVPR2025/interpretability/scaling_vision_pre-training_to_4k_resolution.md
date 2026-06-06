@@ -129,9 +129,9 @@ VILA-HD-4K比GPT-4o高16.1%，比Qwen2.5-VL高7.5%且速度快1.67倍。
 
 - [\[NeurIPS 2025\] Dataset Distillation for Pre-Trained Self-Supervised Vision Models](../../NeurIPS2025/interpretability/dataset_distillation_for_pre-trained_self-supervised_vision_models.md)
 - [\[ICLR 2026\] Evolution of Concepts in Language Model Pre-Training](../../ICLR2026/interpretability/evolution_of_concepts_in_language_model_pre-training.md)
-- [\[NeurIPS 2025\] Towards Scaling Laws for Symbolic Regression](../../NeurIPS2025/interpretability/towards_scaling_laws_for_symbolic_regression.md)
 - [\[ECCV 2024\] POA: Pre-training Once for Models of All Sizes](../../ECCV2024/interpretability/poa_pre-training_once_for_models_of_all_sizes.md)
 - [\[CVPR 2025\] Prompt-CAM: Making Vision Transformers Interpretable for Fine-Grained Analysis](prompt-cam_making_vision_transformers_interpretable_for_fine-grained_analysis.md)
+- [\[CVPR 2025\] Probing the Mid-Level Vision Capabilities of Self-Supervised Learning](probing_the_mid-level_vision_capabilities_of_self-supervised_learning.md)
 
 </div>
 

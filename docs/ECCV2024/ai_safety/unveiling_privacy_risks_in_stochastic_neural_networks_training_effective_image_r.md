@@ -127,7 +127,7 @@ ISG（Inverting Stochasticity from Gradients）框架分为两个阶段。第一
 - [\[ECCV 2024\] Resilience of Entropy Model in Distributed Neural Networks](resilience_of_entropy_model_in_distributed_neural_networks.md)
 - [\[ICLR 2026\] Membership Privacy Risks of Sharpness Aware Minimization](../../ICLR2026/ai_safety/sam_membership_privacy_risks.md)
 - [\[ECCV 2024\] Noise-Assisted Prompt Learning for Image Forgery Detection and Localization](noise-assisted_prompt_learning_for_image_forgery_detection_and_localization.md)
-- [\[ICML 2025\] FicGCN: Unveiling the Homomorphic Encryption Efficiency from Irregular Graph Convolutional Networks](../../ICML2025/ai_safety/ficgcn_unveiling_the_homomorphic_encryption_efficiency_from_irregular_graph_conv.md)
+- [\[ICML 2026\] Singular Bayesian Neural Networks](../../ICML2026/ai_safety/singular_bayesian_neural_networks.md)
 
 </div>
 

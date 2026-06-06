@@ -124,9 +124,9 @@ tags:
 ## 相关论文
 
 - [\[ACL 2025\] MoQAE: Mixed-Precision Quantization for Long-Context LLM Inference via Mixture of Quantization-Aware Experts](moqae_mixed_precision_kv_cache.md)
-- [\[ACL 2026\] MAESTRO: Meta-learning Adaptive Estimation of Scalarization Trade-offs for Reward Optimization](../../ACL2026/model_compression/maestro_meta-learning_adaptive_estimation_of_scalarization_trade-offs_for_reward.md)
 - [\[ICML 2025\] FlatQuant: Flatness Matters for LLM Quantization](../../ICML2025/model_compression/flatquant_flatness_matters_for_llm_quantization.md)
 - [\[ACL 2025\] Compression in Transformer Language Models Has a Surprising Relationship with Performance](compression_in_transformer_language_models_has_a_surprising_relationship_with_pe.md)
+- [\[ICLR 2026\] Multi-View Encoders for Performance Prediction in LLM-Based Agentic Workflows](../../ICLR2026/model_compression/multi-view_encoders_for_performance_prediction_in_llm-based_agentic_workflows.md)
 - [\[ACL 2025\] EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
 
 </div>

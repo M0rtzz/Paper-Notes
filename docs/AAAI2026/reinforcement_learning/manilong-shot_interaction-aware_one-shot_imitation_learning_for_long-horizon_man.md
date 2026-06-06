@@ -224,7 +224,7 @@ $$\mathbf{T}_j = \arg\min_{\mathbf{T} \in SE(3)} \|\mathbf{T} \mathbf{T}_i^{-1} 
 - [\[AAAI 2026\] Actor-Critic for Continuous Action Chunks: A Reinforcement Learning Framework for Long-Horizon Robotic Manipulation with Sparse Reward](actor-critic_for_continuous_action_chunks_a_reinforcement_le.md)
 - [\[AAAI 2026\] Learning to Generate and Extract: A Multi-Agent Collaboration Framework for Zero-shot Document-level Event Arguments Extraction](learning_to_generate_and_extract_a_multi-agent_collaboration_framework_for_zero-.md)
 - [\[ICML 2026\] Unlocking Zero-Shot Geospatial Reasoning via Indirect Rewards](../../ICML2026/reinforcement_learning/unlocking_zero-shot_geospatial_reasoning_via_indirect_rewards.md)
-- [\[AAAI 2026\] One-Step Generative Policies with Q-Learning: A Reformulation of MeanFlow](one-step_generative_policies_with_q-learning_a_reformulation_of_meanflow.md)
+- [\[ICML 2026\] Learning to Bet for Horizon-Aware Anytime-Valid Testing](../../ICML2026/reinforcement_learning/learning_to_bet_for_horizon-aware_anytime-valid_testing.md)
 
 </div>
 

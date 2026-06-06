@@ -2,11 +2,15 @@
 title: >-
   [论文解读] DASH-KV: Accelerating Long-Context LLM Inference via Asymmetric KV Cache Hashing
 description: >-
-  [ACL 2026][模型压缩][待补充] 待深读论文后补充
+  [ACL 2026][模型压缩][KV缓存] 提出 DASH-KV 框架，将注意力机制重构为近似最近邻搜索问题，通过非对称深度哈希将高维浮点相似度计算替换为高效的汉明距离比特操作，配合动态混合精度机制，将长上下文推理复杂度从 $O(N^2)$ 降至 $O(N)$ 且性能匹配全注意力。
 tags:
   - "ACL 2026"
   - "模型压缩"
-  - "待补充"
+  - "KV缓存"
+  - "深度哈希"
+  - "非对称编码"
+  - "注意力加速"
+  - "长上下文推理"
 ---
 
 # DASH-KV: Accelerating Long-Context LLM Inference via Asymmetric KV Cache Hashing
@@ -116,33 +120,19 @@ DASH-KV 包含三个核心组件：（1）非对称哈希——Query 通过3层 
 - 新颖性: ⭐⭐⭐⭐⭐ 将深度哈希引入注意力机制是首创，非对称设计和三级混合精度都很有思路
 - 实验充分度: ⭐⭐⭐⭐ 3个模型+LongBench+详细消融，但基准覆盖有限
 - 写作质量: ⭐⭐⭐⭐ 方法描述系统详尽，但公式较多，部分描述冗长
-**代码**: 待确认  
-**领域**: model_compression  
-**关键词**: 待补充
 
-## 一句话总结
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 研究背景与动机
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 方法详解
-待深读论文后补充
+## 相关论文
 
-## 实验关键数据
-待深读论文后补充
+- [\[ACL 2026\] HeteroCache: A Dynamic Retrieval Approach to Heterogeneous KV Cache Compression for Long-Context LLM Inference](heterocache_a_dynamic_retrieval_approach_to_heterogeneous_kv_cache_compression_f.md)
+- [\[ICML 2025\] RocketKV: Accelerating Long-Context LLM Inference via Two-Stage KV Cache Compression](../../ICML2025/model_compression/rocketkv_accelerating_long-context_llm_inference_via_two-stage_kv_cache_compress.md)
+- [\[ACL 2026\] FastKV: Decoupling of Context Reduction and KV Cache Compression for Prefill-Decoding Acceleration](fastkv_decoupling_of_context_reduction_and_kv_cache_compression_for_prefill-deco.md)
+- [\[ACL 2026\] The Pitfalls of KV Cache Compression](the_pitfalls_of_kv_cache_compression.md)
+- [\[NeurIPS 2025\] ChunkKV: Semantic-Preserving KV Cache Compression for Efficient Long-Context LLM Inference](../../NeurIPS2025/model_compression/chunkkv_semanticpreserving_kv_cache_compression_for_efficien.md)
 
-## 亮点与洞察
-待深读论文后补充
+</div>
 
-## 局限性 / 可改进方向
-待深读论文后补充
-
-## 相关工作与启发
-待深读论文后补充
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+<!-- RELATED:END -->

@@ -140,9 +140,9 @@ D-CeLR 的整体架构包含三个主要模块：(1) 特征提取模块：从高
 
 ## 相关论文
 
+- [\[CVPR 2026\] Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](../../CVPR2026/medical_imaging/modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)
 - [\[AAAI 2026\] MAISI-v2: Accelerated 3D High-Resolution Medical Image Synthesis with Rectified Flow and Region-specific Contrastive Loss](../../AAAI2026/medical_imaging/maisi-v2_accelerated_3d_high-resolution_medical_image_synthesis_with_rectified_f.md)
 - [\[AAAI 2026\] A Disease-Aware Dual-Stage Framework for Chest X-ray Report Generation](../../AAAI2026/medical_imaging/a_disease-aware_dual-stage_framework_for_chest_x-ray_report_.md)
-- [\[CVPR 2026\] Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](../../CVPR2026/medical_imaging/modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)
 - [\[ECCV 2024\] Radiative Gaussian Splatting for Efficient X-ray Novel View Synthesis](radiative_gaussian_splatting_for_efficient_x-ray_novel_view_synthesis.md)
 - [\[CVPR 2026\] EquivAnIA: A Spectral Method for Rotation-Equivariant Anisotropic Image Analysis](../../CVPR2026/medical_imaging/equivania_a_spectral_method_for_rotation-equivariant_anisotropic_image_analysis.md)
 

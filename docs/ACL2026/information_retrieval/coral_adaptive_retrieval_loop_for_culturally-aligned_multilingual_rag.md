@@ -134,12 +134,6 @@ CORAL 是 test-time agent 框架，无任何训练，仅靠两个 LLM agent（pl
 - 写作质量: ⭐⭐⭐⭐ 故事清晰、消融充分；但部分 prompt 细节和算法步骤偏附录化
 - 价值: ⭐⭐⭐⭐⭐ 对低资源语言 RAG 部署立刻可用，且不需训练，对国际化产品团队有直接价值
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">

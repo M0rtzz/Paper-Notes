@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 优化/理论方向22篇论文解读
+  AAAI2026 优化/理论方向21篇论文解读
 description: >-
-  22篇AAAI2026的优化/理论方向论文解读，涵盖联邦学习、LLM、对抗鲁棒、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  21篇AAAI2026的优化/理论方向论文解读，涵盖联邦学习、LLM、对抗鲁棒、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "优化/理论"
@@ -17,9 +17,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**🤖 AAAI2026** · **22** 篇论文解读
+**🤖 AAAI2026** · **21** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/optimization/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (44)](../../ICLR2026/optimization/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (56)](../../ICML2025/optimization/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (60)](../../ICML2026/optimization/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (44)](../../ICLR2026/optimization/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (57)](../../ICML2025/optimization/index.md)
 
 🔥 **高频主题：** 联邦学习 ×5 · LLM ×4 · 对抗鲁棒 ×2 · 个性化生成 ×2
 
@@ -30,10 +30,6 @@ tags:
 **[A Unified Convergence Analysis for Semi-Decentralized Learning: Sampled-to-Sampled vs. Sampled-to-All Communication](a_unified_convergence_analysis_for_semi-decentralized_learni.md)**
 
 :   本文在统一的收敛分析框架下，首次系统比较了半去中心化联邦学习中两种服务器-设备通信原语（S2S仅返回被采样设备 vs. S2A广播给所有设备），揭示了S2S在高组间异质性下更优、S2A在低异质性下更优的不同regime，并给出了实用的系统配置指南。
-
-**[BeeRNA: Tertiary Structure-Based RNA Inverse Folding Using Artificial Bee Colony](beerna_tertiary_structure-based_rna_inverse_folding_using_artificial_bee_colony.md)**
-
-:   提出 BeeRNA，将人工蜂群（ABC）优化算法应用于 RNA 三级结构逆折叠问题，通过碱基对距离预筛选 + RMSD 两阶段适应度评估，在短/中长度 RNA（<100 nt）上超越深度学习方法 gRNAde 和 RiboDiffusion。
 
 **[Beyond the Mean: Fisher-Orthogonal Projection for Natural Gradient Descent in Large Batch Training](beyond_the_mean_fisher-orthogonal_projection_for_natural_gradient_descent_in_lar.md)**
 

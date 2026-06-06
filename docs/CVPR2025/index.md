@@ -2,7 +2,7 @@
 title: >-
   1819 篇 CVPR2025 论文解读 · 每篇 5 分钟读懂
 description: >-
-  1819篇CVPR2025论文解读，涵盖 3D 视觉(367篇)、图像生成(303篇)、多模态 VLM(147篇)、语义分割(96篇)、自动驾驶(94篇)、医学图像(84篇)、视频生成(81篇)、视频理解(77篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1819篇CVPR2025论文解读，涵盖 3D 视觉(365篇)、图像生成(303篇)、多模态 VLM(147篇)、语义分割(95篇)、自动驾驶(94篇)、医学图像(83篇)、视频生成(81篇)、视频理解(77篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "AI顶会"
@@ -21,7 +21,7 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📷 CVPR2025 论文笔记
 
-1819篇CVPR2025论文解读，涵盖 3D 视觉(367篇)、图像生成(303篇)、多模态 VLM(147篇)、语义分割(96篇)、自动驾驶(94篇)、医学图像(84篇)、视频生成(81篇)、视频理解(77篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1819篇CVPR2025论文解读，涵盖 3D 视觉(365篇)、图像生成(303篇)、多模态 VLM(147篇)、语义分割(95篇)、自动驾驶(94篇)、医学图像(83篇)、视频生成(81篇)、视频理解(77篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -478,10 +478,6 @@ tags:
 **[Functionality Understanding and Segmentation in 3D Scenes](3d_vision/functionality_understanding_and_segmentation_in_3d_scenes.md)**
 
 :   Fun3DU 首次提出针对 3D 场景功能性理解的方法，通过 LLM 链式思维解析任务描述 + VLM 多视角分割功能性物体 + 2D-3D 投票聚合，在 SceneFun3D 上大幅超越开放词汇 3D 分割基线（mIoU +13.2）。
-
-**[GA3CE: Unconstrained 3D Gaze Estimation with Gaze-Aware 3D Context Encoding](3d_vision/ga3ce_unconstrained_3d_gaze_estimation_with_gaze-aware_3d_context_encoding.md)**
-
-:   提出 GA3CE 方法，通过将主体 3D 姿态和场景物体位置编码到以主体为中心的自我中心空间中，并设计方向-距离分解的 D3 位置编码，在 Transformer 中学习 3D 注视方向与场景上下文的空间关系，在无约束设置下将 3D 注视角度误差降低 13%–37%。
 
 **[GASP: Gaussian Avatars with Synthetic Priors](3d_vision/gasp_gaussian_avatars_with_synthetic_priors.md)**
 
@@ -1394,10 +1390,6 @@ tags:
 **[Towards Realistic Example-Based Modeling via 3D Gaussian Stitching](3d_vision/towards_realistic_example-based_modeling_via_3d_gaussian_stitching.md)**
 
 :   提出首个基于 3D 高斯表示的真实感示例建模方法，通过采样式克隆（S-phase）和聚类式调优（T-phase）实现多个 3D 高斯场的无缝拼接与和谐外观融合，支持交互式实时编辑。
-
-**[Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](3d_vision/towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)**
-
-:   本文提出 World Scene Graph Generation (WSGG) 任务和 ActionGenome4D 数据集，将视频场景图从以帧为中心的 2D 表示升级为以世界为中心的 4D 表示，要求模型对所有物体（包括被遮挡或离开视野的不可见物体）在世界坐标系中进行 3D 定位和关系预测，并提出三种互补方法（PWG/MWAE/4DST）探索不同的不可见物体推理归纳偏置。
 
 **[TreeMeshGPT: Artistic Mesh Generation with Autoregressive Tree Sequencing](3d_vision/treemeshgpt_artistic_mesh_generation_with_autoregressive_tree_sequencing.md)**
 
@@ -3133,6 +3125,10 @@ tags:
 
 :   将对比随机游走（CRW）框架扩展到跨模态像素级对应问题，通过同时学习模态内和模态间的循环一致性特征表示，在无需配对标注的情况下实现 RGB-Depth、RGB-Thermal、Photo-Sketch 等跨模态密集匹配，显著超越现有方法。
 
+**[Semantic and Expressive Variation in Image Captions Across Languages](multimodal_vlm/semantic_and_expressive_variations_in_image_captions_across_languages.md)**
+
+:   系统性证明了不同语言的图像描述在语义内容（对象、关系、属性）和表达方式（具象度、语调、真实性）上存在显著的分布差异，多语言描述集相比单语言提供更丰富的视觉信息（+46% 对象、+66.1% 关系、+66.8% 属性），为多语言数据训练视觉模型提供了实证支撑。
+
 **[SeqAfford: Sequential 3D Affordance Reasoning via Multimodal Large Language Model](multimodal_vlm/seqafford_sequential_3d_affordance_reasoning_via_multimodal_large_language_model.md)**
 
 :   提出 Sequential 3D Affordance Reasoning 任务，构建180K指令-点云对基准，通过在3D MLLM中引入 `<SEG>` token 和多粒度语言-点云融合模块，从复杂人类指令中推理并分割出序列化的affordance区域。
@@ -3192,10 +3188,6 @@ tags:
 **[Synthetic Data is an Elegant GIFT for Continual Vision-Language Models](multimodal_vlm/synthetic_data_is_an_elegant_gift_for_continual_vision-language_models.md)**
 
 :   用 Stable Diffusion 从类名生成合成图像，通过对比蒸馏 + 图文对齐约束 + 自适应权重固化进行知识蒸馏，仅用每任务 1K 合成图像就超越使用 100K 真实 ImageNet 图像的持续学习方法 ZSCL。
-
-**[Synthetic Visual Genome](multimodal_vlm/synthetic_visual_genome.md)**
-
-:   提出**SVG**（Synthetic Visual Genome）数据引擎，通过GPT-4在已有人工标注基础上**补全缺失关系**（Stage 1）和**Robin自蒸馏+GPT-4编辑**（Stage 2/SG-Edit）两阶段管道，生成146K图像、2.6M物体、5.6M关系的密集场景图数据集，训练的**Robin-3B**模型仅用<3M实例即超越300M实例训练的同尺寸模型，在指代表达理解上达到88.9的SOTA。
 
 **[Taxonomy-Aware Evaluation of Vision-Language Models](multimodal_vlm/taxonomy-aware_evaluation_of_vision-language_models.md)**
 
@@ -3414,10 +3406,6 @@ tags:
 **[Foveated Instance Segmentation](segmentation/foveated_instance_segmentation.md)**
 
 :   FSNet 提出一种模拟人眼中央凹视觉机制的实例分割框架，通过可学习的显著性图引导非均匀下采样，在注视目标区域保持高分辨率细节、在外围降低分辨率，实现了在不同预训练分割网络上的即插即用式效率提升。
-
-**[Fractal Calibration for Long-Tailed Object Detection](segmentation/fractal_calibration_for_long-tailed_object_detection.md)**
-
-:   提出 FRACAL（FRActal CALibration），一种无需训练的后处理方法，首次将分形维数引入长尾目标检测的后校准中，通过对称校准频率轴（类别频率）和空间轴（类别位置均匀度），在 LVIS 数据集上将稀有类 mask AP 提升高达 8.6%，并在 COCO、V3Det、OpenImages 上展示泛化性。
 
 **[Frequency Dynamic Convolution for Dense Image Prediction](segmentation/frequency_dynamic_convolution_for_dense_image_prediction.md)**
 
@@ -4240,10 +4228,6 @@ tags:
 **[Multimodal Classification of Radiation-Induced Contrast Enhancements and Tumor Recurrence Using Deep Learning](medical_imaging/multimodal_classification_of_radiation-induced_contrast_enhancements_and_tumor_r.md)**
 
 :   提出 RICE-NET，一个多模态 3D 深度学习模型，融合纵向 MRI 数据与放疗剂量分布图，用于区分胶质母细胞瘤术后放射性对比增强（RICE）与肿瘤复发，在独立测试集上达到 F1=0.92。
-
-**[Multimodal Protein Language Models for Enzyme Kinetic Parameters: From Substrate Recognition to Conformational Adaptation](medical_imaging/multimodal_protein_language_models_for_enzyme_kinetic_parameters_from_substrate_.md)**
-
-:   提出 ERBA 适配器，将酶动力学预测建模为"底物识别→构象适应"的分阶段条件化过程，通过 MRCA 注入底物语义、G-MoE 融合活性位点3D几何、ESDA 保持 PLM 先验，在 kcat/Km/Ki 三个动力学端点上一致超越现有方法。
 
 **[MultiMorph: On-demand Atlas Construction](medical_imaging/multimorph_on-demand_atlas_construction.md)**
 
@@ -5112,6 +5096,10 @@ tags:
 **[FSFM: A Generalizable Face Security Foundation Model via Self-Supervised Facial Representation Learning](human_understanding/fsfm_a_generalizable_face_security_foundation_model_via_self-supervised_facial_r.md)**
 
 :   FSFM 提出首个面向人脸安全任务的自监督预训练框架，通过 CRFR-P 面部掩码策略 + MIM/ID 双任务协同学习真实人脸的 3C 表示（区域内一致性、区域间连贯性、局部到全局对应性），在深伪检测、活体检测和扩散伪造检测三大任务上超越任务专用 SOTA。
+
+**[GA3CE: Unconstrained 3D Gaze Estimation with Gaze-Aware 3D Context Encoding](human_understanding/ga3ce_unconstrained_3d_gaze_estimation_with_gaze-aware_3d_context_encoding.md)**
+
+:   提出 GA3CE 方法，通过将主体 3D 姿态和场景物体位置编码到以主体为中心的自我中心空间中，并设计方向-距离分解的 D3 位置编码，在 Transformer 中学习 3D 注视方向与场景上下文的空间关系，在无约束设置下将 3D 注视角度误差降低 13%–37%。
 
 **[GaussianIP: Identity-Preserving Realistic 3D Human Generation via Human-Centric Diffusion Prior](human_understanding/gaussianip_identity-preserving_realistic_3d_human_generation_via_human-centric_d.md)**
 
@@ -5997,10 +5985,6 @@ tags:
 
 :   通过两个简单改进加速 DETR 训练收敛——Dense O2O（用数据增强增加每图目标数实现稠密一对一匹配）和 MAL（替代 VFL 更好地优化低质量匹配），训练 epoch 减半同时性能提升（COCO AP 56.5 with D-FINE-X）。
 
-**[DiffVsgg: Diffusion-Driven Online Video Scene Graph Generation](object_detection/diffvsgg_diffusion-driven_online_video_scene_graph_generation.md)**
-
-:   提出 DiffVsgg 将视频场景图生成（VSGG）建模为沿时间轴的迭代去噪问题——用共享特征嵌入统一目标分类、框回归和关系预测三个任务，通过潜在扩散模型做空间推理+用前帧预测作条件做时序推理，首次实现在线VSGG且在 Action Genome 三个评估协议上全面 SOTA，R@10 超越 DSG-DETR 3.3 个点。
-
 **[Efficient Event-Based Object Detection: A Hybrid Neural Network with Spatial and Temporal Attention](object_detection/efficient_event-based_object_detection_a_hybrid_neural_network_with_spatial_and_.md)**
 
 :   提出首个面向大规模基准的混合 SNN-ANN 目标检测模型，设计注意力桥接模块（ASAB）将 SNN 的稀疏脉冲表示通过时空注意力转换为 ANN 可处理的密集特征，在 Gen1/Gen4 数据集上以仅 6.6M 参数大幅超越 SNN 方法并接近 ANN/RNN 方法的精度，同时 SNN 部分可部署在 Intel Loihi 2 神经形态芯片上实现低功耗推理。
@@ -6008,6 +5992,10 @@ tags:
 **[Efficient Test-Time Adaptive Object Detection via Sensitivity-Guided Pruning](object_detection/efficient_test-time_adaptive_object_detection_via_sensitivity-guided_pruning.md)**
 
 :   提出一种高效的持续测试时自适应目标检测（CTTA-OD）方法，发现源模型中某些特征通道对域偏移敏感且会损害跨域性能，通过在图像级和实例级度量通道敏感性来引导加权稀疏正则化实现选择性剪枝，辅以随机通道重激活机制防止误剪，在减少 12% 计算量的同时超越 SOTA 方法的自适应精度。
+
+**[Fractal Calibration for Long-Tailed Object Detection](object_detection/fractal_calibration_for_long-tailed_object_detection.md)**
+
+:   提出 FRACAL（FRActal CALibration），一种无需训练的后处理方法，首次将分形维数引入长尾目标检测的后校准中，通过对称校准频率轴（类别频率）和空间轴（类别位置均匀度），在 LVIS 数据集上将稀有类 mask AP 提升高达 8.6%，并在 COCO、V3Det、OpenImages 上展示泛化性。
 
 **[Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](object_detection/generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)**
 
@@ -7097,6 +7085,30 @@ tags:
 
 ---
 
+## 🧬 计算生物 { #computational_biology }
+
+**[DiffVsgg: Diffusion-Driven Online Video Scene Graph Generation](computational_biology/diffvsgg_diffusion-driven_online_video_scene_graph_generation.md)**
+
+:   提出 DiffVsgg 将视频场景图生成（VSGG）建模为沿时间轴的迭代去噪问题——用共享特征嵌入统一目标分类、框回归和关系预测三个任务，通过潜在扩散模型做空间推理+用前帧预测作条件做时序推理，首次实现在线VSGG且在 Action Genome 三个评估协议上全面 SOTA，R@10 超越 DSG-DETR 3.3 个点。
+
+**[Multimodal Protein Language Models for Enzyme Kinetic Parameters: From Substrate Recognition to Conformational Adaptation](computational_biology/multimodal_protein_language_models_for_enzyme_kinetic_parameters_from_substrate_.md)**
+
+:   提出 ERBA 适配器，将酶动力学预测建模为"底物识别→构象适应"的分阶段条件化过程，通过 MRCA 注入底物语义、G-MoE 融合活性位点3D几何、ESDA 保持 PLM 先验，在 kcat/Km/Ki 三个动力学端点上一致超越现有方法。
+
+**[SHREC: A Spectral Embedding-Based Approach for Ab-Initio Reconstruction of Helical Molecules](computational_biology/shrec_a_spectral_embedding-based_approach_for_ab-initio_reconstruction_of_helica.md)**
+
+:   提出 SHREC 算法，利用图拉普拉斯算子的谱嵌入技术，从冷冻电镜二维投影图像中直接恢复螺旋分子的投影角度，无需预知螺旋对称参数（rise/twist），仅需已知轴对称群 $C_n$，在多个公开数据集上实现了接近原子分辨率的从头螺旋结构重建。
+
+**[Synthetic Visual Genome](computational_biology/synthetic_visual_genome.md)**
+
+:   提出**SVG**（Synthetic Visual Genome）数据引擎，通过GPT-4在已有人工标注基础上**补全缺失关系**（Stage 1）和**Robin自蒸馏+GPT-4编辑**（Stage 2/SG-Edit）两阶段管道，生成146K图像、2.6M物体、5.6M关系的密集场景图数据集，训练的**Robin-3B**模型仅用<3M实例即超越300M实例训练的同尺寸模型，在指代表达理解上达到88.9的SOTA。
+
+**[Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](computational_biology/towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)**
+
+:   本文提出 World Scene Graph Generation (WSGG) 任务和 ActionGenome4D 数据集，将视频场景图从以帧为中心的 2D 表示升级为以世界为中心的 4D 表示，要求模型对所有物体（包括被遮挡或离开视野的不可见物体）在世界坐标系中进行 3D 定位和关系预测，并提出三种互补方法（PWG/MWAE/4DST）探索不同的不可见物体推理归纳偏置。
+
+---
+
 ## 👥 社会计算 { #social_computing }
 
 **[As Language Models Scale, Low-order Linear Depth Dynamics Emerge](social_computing/as_language_models_scale_low-order_linear_depth_dynamics_emerge.md)**
@@ -7118,6 +7130,26 @@ tags:
 **[Project-Probe-Aggregate: Efficient Fine-Tuning for Group Robustness](social_computing/project-probe-aggregate_efficient_fine-tuning_for_group_robustness.md)**
 
 :   提出 PPA（Project-Probe-Aggregate）三步方法，通过投影去除类代理信息放大偏差、以组先验校正探测组标签、聚合组权重，仅需不到 0.01% 可训练参数即可在无组标注情况下提升基础模型的群组鲁棒性。
+
+---
+
+## ⚛️ 物理/科学计算 { #physics }
+
+**[Accurate Differential Operators for Hybrid Neural Fields](physics/accurate_differential_operators_for_hybrid_neural_fields.md)**
+
+:   揭示混合神经场（如 Instant NGP）中自动微分产生的梯度和曲率存在严重高频噪声问题，提出基于局部多项式拟合的后处理微分算子和自监督微调方法，将梯度误差降低 4 倍、曲率误差降低 4 倍，在渲染和物理模拟中显著消除伪影。
+
+**[ATP: Adaptive Threshold Pruning for Efficient Data Encoding in Quantum Neural Networks](physics/atp_adaptive_threshold_pruning_for_efficient_data_encoding_in_quantum_neural_net.md)**
+
+:   提出 ATP（Adaptive Threshold Pruning），在量子数据编码前自适应地剪除低信息量的数据特征，通过 L-BFGS-B 优化阈值，在 MNIST/FashionMNIST/CIFAR/PneumoniaMNIST 四个数据集的二分类任务上取得最高准确率的同时显著降低纠缠熵。
+
+**[Improve Representation for Imbalanced Regression through Geometric Constraints](physics/improve_representation_for_imbalanced_regression_through_geometric_constraints.md)**
+
+:   本文首次研究深度不平衡回归（DIR）中的表征空间均匀性问题，提出包络损失（enveloping loss）和同质性损失（homogeneity loss）两种几何约束来确保回归表征在超球面上均匀分布，并设计代理驱动表征学习（SRL）框架将全局几何约束整合到mini-batch训练中，在年龄估计等多个DIR任务上达到SOTA。
+
+**[Learning Phase Distortion with Selective State Space Models for Video Turbulence Mitigation](physics/learning_phase_distortion_with_selective_state_space_models_for_video_turbulence.md)**
+
+:   提出 MambaTM——首个基于 Mamba 的视频大气湍流消除网络，通过 VAE 将传统 Zernike 多项式表示的相位畸变重参数化为潜在相位畸变（LPD），用 LPD 引导 SSM 的状态转移；在保持线性复杂度和全局感受野的同时，实现了 SOTA 恢复质量和接近 2× 的推理加速（55.4 FPS vs 32.7 FPS）。
 
 ---
 
@@ -7143,29 +7175,9 @@ tags:
 
 :   提出一种新的视觉-语言对齐框架：冻结预训练好的单模态视觉编码器（DINOv2）和语言编码器（All-Roberta-Large），仅训练轻量MLP投影层实现多模态对齐，以20倍数据缩减和65倍计算缩减达到了CLIP级别甚至超越的性能。
 
-**[Semantic and Expressive Variation in Image Captions Across Languages](multilingual_mt/semantic_and_expressive_variations_in_image_captions_across_languages.md)**
-
-:   系统性证明了不同语言的图像描述在语义内容（对象、关系、属性）和表达方式（具象度、语调、真实性）上存在显著的分布差异，多语言描述集相比单语言提供更丰富的视觉信息（+46% 对象、+66.1% 关系、+66.8% 属性），为多语言数据训练视觉模型提供了实证支撑。
-
 **[SMTPD: A New Benchmark for Temporal Prediction of Social Media Popularity](multilingual_mt/smtpd_a_new_benchmark_for_temporal_prediction_of_social_media_popularity.md)**
 
 :   构建首个时间对齐的社交媒体流行度时序预测基准SMTPD（282K YouTube样本，30天连续观测），并提出基于多模态特征提取+LSTM时序回归的baseline框架，发现早期流行度（EP）是准确预测后续流行度的关键。
-
----
-
-## 🧮 科学计算 { #scientific_computing }
-
-**[Accurate Differential Operators for Hybrid Neural Fields](scientific_computing/accurate_differential_operators_for_hybrid_neural_fields.md)**
-
-:   揭示混合神经场（如 Instant NGP）中自动微分产生的梯度和曲率存在严重高频噪声问题，提出基于局部多项式拟合的后处理微分算子和自监督微调方法，将梯度误差降低 4 倍、曲率误差降低 4 倍，在渲染和物理模拟中显著消除伪影。
-
-**[Improve Representation for Imbalanced Regression through Geometric Constraints](scientific_computing/improve_representation_for_imbalanced_regression_through_geometric_constraints.md)**
-
-:   本文首次研究深度不平衡回归（DIR）中的表征空间均匀性问题，提出包络损失（enveloping loss）和同质性损失（homogeneity loss）两种几何约束来确保回归表征在超球面上均匀分布，并设计代理驱动表征学习（SRL）框架将全局几何约束整合到mini-batch训练中，在年龄估计等多个DIR任务上达到SOTA。
-
-**[Learning Phase Distortion with Selective State Space Models for Video Turbulence Mitigation](scientific_computing/learning_phase_distortion_with_selective_state_space_models_for_video_turbulence.md)**
-
-:   提出 MambaTM——首个基于 Mamba 的视频大气湍流消除网络，通过 VAE 将传统 Zernike 多项式表示的相位畸变重参数化为潜在相位畸变（LPD），用 LPD 引导 SSM 的状态转移；在保持线性复杂度和全局感受野的同时，实现了 SOTA 恢复质量和接近 2× 的推理加速（55.4 FPS vs 32.7 FPS）。
 
 ---
 
@@ -7182,14 +7194,6 @@ tags:
 **[ArtFormer: Controllable Generation of Diverse 3D Articulated Objects](nlp_generation/artformer_controllable_generation_of_diverse_3d_articulated_objects.md)**
 
 :   提出ArtFormer框架，通过树结构参数化和条件扩散Shape Prior，从文本/图像描述生成高质量、多样化且运动学关系准确的3D关节物体，在生成质量和多样性上显著超越现有方法。
-
----
-
-## ⚛️ 物理学 { #physics }
-
-**[ATP: Adaptive Threshold Pruning for Efficient Data Encoding in Quantum Neural Networks](physics/atp_adaptive_threshold_pruning_for_efficient_data_encoding_in_quantum_neural_net.md)**
-
-:   提出 ATP（Adaptive Threshold Pruning），在量子数据编码前自适应地剪除低信息量的数据特征，通过 L-BFGS-B 优化阈值，在 MNIST/FashionMNIST/CIFAR/PneumoniaMNIST 四个数据集的二分类任务上取得最高准确率的同时显著降低纠缠熵。
 
 ---
 
@@ -7364,10 +7368,6 @@ tags:
 **[SDF-Net: Structure-Aware Disentangled Feature Learning for Optical–SAR Ship Re-Identification](others/sdf-net_structure-aware_disentangled_feature_learning_for_opticall-sar_ship_re-i.md)**
 
 :   提出 SDF-Net，利用船舶作为刚体的物理先验，在 ViT 中间层提取尺度不变的梯度能量统计量作为跨模态几何锚点，并在终端层将特征解耦为模态不变共享特征和模态特定特征后通过加性残差融合，实现光学-SAR 船舶重识别 SOTA。
-
-**[SHREC: A Spectral Embedding-Based Approach for Ab-Initio Reconstruction of Helical Molecules](others/shrec_a_spectral_embedding-based_approach_for_ab-initio_reconstruction_of_helica.md)**
-
-:   提出 SHREC 算法，利用图拉普拉斯算子的谱嵌入技术，从冷冻电镜二维投影图像中直接恢复螺旋分子的投影角度，无需预知螺旋对称参数（rise/twist），仅需已知轴对称群 $C_n$，在多个公开数据集上实现了接近原子分辨率的从头螺旋结构重建。
 
 **[SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](others/sldprtnet_a_large-scale_multimodal_dataset_for_cad_generation_in_language-driven.md)**
 

@@ -150,7 +150,7 @@ $$\mathbf{X}^{(l)} = \text{FFN}(\text{LN}(\mathbf{X}'^{(l)})) + \mathbf{X}'^{(l)
 - [\[NeurIPS 2025\] Unifying and Enhancing Graph Transformers via a Hierarchical Mask Framework](../../NeurIPS2025/graph_learning/unifying_and_enhancing_graph_transformers_via_a_hierarchical_mask_framework.md)
 - [\[ICLR 2026\] Graph Tokenization for Bridging Graphs and Transformers](../../ICLR2026/graph_learning/graph_tokenization_for_bridging_graphs_and_transformers.md)
 - [\[ACL 2025\] Fast-and-Frugal Text-Graph Transformers are Effective Link Predictors](../../ACL2025/graph_learning/fast-and-frugal_text-graph_transformers_are_effective_link_predictors.md)
-- [\[NeurIPS 2025\] From Sequence to Structure: Uncovering Substructure Reasoning in Transformers](../../NeurIPS2025/graph_learning/from_sequence_to_structure_uncovering_substructure_reasoning_in_transformers.md)
+- [\[NeurIPS 2025\] Generalizable Insights for Graph Transformers in Theory and Practice](../../NeurIPS2025/graph_learning/generalizable_insights_for_graph_transformers_in_theory_and_practice.md)
 
 </div>
 

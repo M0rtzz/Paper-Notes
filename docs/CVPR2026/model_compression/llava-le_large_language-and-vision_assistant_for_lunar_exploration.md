@@ -121,7 +121,7 @@ LLaVA-LE Stage 2 相对 Base LLaVA 实现 3.3× 整体提升，推理维度得�
 
 ## 相关论文
 
-- [\[CVPR 2026\] QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+- [\[CVPR 2026\] Quant Experts: Token-aware Adaptive Error Reconstruction with Mixture of Experts for Large Vision-Language Models Quantization](quant_experts_token_aware_vlm_quantization.md)
 - [\[ACL 2025\] Pre-training Distillation for Large Language Models: A Design Space Exploration](../../ACL2025/model_compression/pre-training_distillation_for_large_language_models_a_design_space_exploration.md)
 - [\[NeurIPS 2025\] Vision-centric Token Compression in Large Language Model](../../NeurIPS2025/model_compression/vision-centric_token_compression_in_large_language_model.md)
 - [\[CVPR 2026\] BinaryAttention: One-Bit QK-Attention for Vision and Diffusion Transformers](binaryattention_one-bit_qk-attention_for_vision_and_diffusion_transformers.md)

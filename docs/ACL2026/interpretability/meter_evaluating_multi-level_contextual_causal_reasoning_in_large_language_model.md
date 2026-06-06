@@ -181,12 +181,6 @@ METER 包含两大块：(A) **Benchmark 构造** —— 从 4 个源数据集（
 - 写作质量: ⭐⭐⭐⭐⭐ 三层因果定义清晰、benchmark 流水线一目了然、机制分析 narrative 完整；表格图清晰，case study 有说服力；几乎没有冗余。
 - 价值: ⭐⭐⭐⭐⭐ 公开 code + dataset，提供 4145 高质量样本，对因果推理研究社区是 indispensable resource；揭示的"高层因果靠 internal knowledge 而非 context"是个对 RAG / agent 设计有直接指导意义的核心发现。
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">

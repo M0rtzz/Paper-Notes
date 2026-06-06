@@ -118,11 +118,11 @@ REINFORCE 算法 + Adam 优化器，3 层神经网络 [8, 32, 8]，GELU 激活 +
 
 ## 相关论文
 
+- [\[ICML 2025\] Beyond CVaR: Leveraging Static Spectral Risk Measures for Enhanced Decision-Making in Distributional Reinforcement Learning](../../ICML2025/reinforcement_learning/beyond_cvar_leveraging_static_spectral_risk_measures_for_enhanced_decision-makin.md)
 - [\[ICML 2025\] Diving into Self-Evolving Training for Multimodal Reasoning](../../ICML2025/reinforcement_learning/diving_into_self-evolving_training_for_multimodal_reasoning.md)
 - [\[ICLR 2026\] SPELL: Self-Play Reinforcement Learning for Evolving Long-Context Language Models](../../ICLR2026/reinforcement_learning/spell_self-play_reinforcement_learning_for_evolving_long-context_language_models.md)
-- [\[ICML 2025\] Beyond CVaR: Leveraging Static Spectral Risk Measures for Enhanced Decision-Making in Distributional Reinforcement Learning](../../ICML2025/reinforcement_learning/beyond_cvar_leveraging_static_spectral_risk_measures_for_enhanced_decision-makin.md)
-- [\[ACL 2025\] TreeRL: LLM Reinforcement Learning with On-Policy Tree Search](treerl_tree_search_rl.md)
 - [\[NeurIPS 2025\] Multi-Agent Collaboration via Evolving Orchestration](../../NeurIPS2025/reinforcement_learning/multi-agent_collaboration_via_evolving_orchestration.md)
+- [\[ACL 2025\] TreeRL: LLM Reinforcement Learning with On-Policy Tree Search](treerl_tree_search_rl.md)
 
 </div>
 

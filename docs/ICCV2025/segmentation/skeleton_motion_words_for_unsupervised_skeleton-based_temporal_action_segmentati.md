@@ -149,9 +149,9 @@ $$L_{commit} = \sum_{\mathbf{p}_i} \|\text{sg}[\mathbf{c}_{k_i}] - \mathbf{p}_i\
 
 - [\[ICCV 2025\] Temporal Rate Reduction Clustering for Human Motion Segmentation](temporal_rate_reduction_clustering_for_human_motion_segmentation.md)
 - [\[ICCV 2025\] CLOT: Closed Loop Optimal Transport for Unsupervised Action Segmentation](clot_closed_loop_optimal_transport_for_unsupervised_action_segmentation.md)
+- [\[ECCV 2024\] Long-Tail Temporal Action Segmentation with Group-wise Temporal Logit Adjustment](../../ECCV2024/segmentation/long-tail_temporal_action_segmentation_with_group-wise_temporal_logit_adjustment.md)
 - [\[ICCV 2025\] MOVE: Motion-Guided Few-Shot Video Object Segmentation](move_motion-guided_few-shot_video_object_segmentation.md)
 - [\[ECCV 2024\] Un-EVIMO: Unsupervised Event-based Independent Motion Segmentation](../../ECCV2024/segmentation/un-evimo_unsupervised_event-based_independent_motion_segmentation.md)
-- [\[ECCV 2024\] Long-Tail Temporal Action Segmentation with Group-wise Temporal Logit Adjustment](../../ECCV2024/segmentation/long-tail_temporal_action_segmentation_with_group-wise_temporal_logit_adjustment.md)
 
 </div>
 

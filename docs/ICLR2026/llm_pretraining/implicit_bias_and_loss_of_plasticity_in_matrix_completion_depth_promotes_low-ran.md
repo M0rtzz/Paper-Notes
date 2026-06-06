@@ -150,11 +150,11 @@ tags:
 
 ## 相关论文
 
+- [\[ICML 2026\] FlexRank: Nested Low-Rank Knowledge Decomposition for Adaptive Model Deployment](../../ICML2026/llm_pretraining/flexrank_nested_low-rank_knowledge_decomposition_for_adaptive_model_deployment.md)
 - [\[ICCV 2025\] ETA: Energy-based Test-time Adaptation for Depth Completion](../../ICCV2025/llm_pretraining/eta_energy-based_test-time_adaptation_for_depth_completion.md)
 - [\[ICML 2025\] Inductive Gradient Adjustment for Spectral Bias in Implicit Neural Representations](../../ICML2025/llm_pretraining/inductive_gradient_adjustment_for_spectral_bias_in_implicit_neural_representatio.md)
 - [\[NeurIPS 2025\] Breaking the Frozen Subspace: Importance Sampling for Low-Rank Optimization in LLM Pretraining](../../NeurIPS2025/llm_pretraining/breaking_the_frozen_subspace_importance_sampling_for_low-rank_optimization_in_ll.md)
-- [\[NeurIPS 2025\] Global Minimizers of Sigmoid Contrastive Loss](../../NeurIPS2025/llm_pretraining/global_minimizers_of_sigmoid_contrastive_loss.md)
-- [\[NeurIPS 2025\] The Curse of Depth in Large Language Models](../../NeurIPS2025/llm_pretraining/the_curse_of_depth_in_large_language_models.md)
+- [\[ICML 2026\] Inverse Depth Scaling From Most Layers Being Similar](../../ICML2026/llm_pretraining/inverse_depth_scaling_from_most_layers_being_similar.md)
 
 </div>
 

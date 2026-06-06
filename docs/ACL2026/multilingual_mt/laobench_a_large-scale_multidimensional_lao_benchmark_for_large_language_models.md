@@ -133,12 +133,6 @@ GPT-5-High K12 上和人类的 gap 仍有 ~9 分；Knowledge Application 上的 
 - 写作质量: ⭐⭐⭐⭐ Pipeline 图 + table 1 与已有 benchmark 对比一目了然；附录把 prompt、tokenizer、judge JSON 协议全列出，复现性极佳。
 - 价值: ⭐⭐⭐⭐⭐ 对老挝语 NLP 社区是从 0 到 1 的基础设施，对其它东南亚 / 低资源语言提供了可直接套用的 benchmark 工程模板，长期价值高。
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">

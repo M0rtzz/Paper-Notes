@@ -181,7 +181,7 @@ tags:
 - [\[ACL 2025\] SpeechFake: A Large-Scale Multilingual Speech Deepfake Dataset Incorporating Cutting-Edge Generation Methods](speechfake_a_largescale_multilingual_speech_deepfake.md)
 - [\[ACL 2025\] Gender Inclusivity Fairness Index (GIFI): A Multilevel Framework](gifi_gender_fairness.md)
 - [\[ACL 2025\] FairI Tales: Evaluation of Fairness in Indian Contexts with a Focus on Bias and Stereotypes](fairi_tales_evaluation_of_fairness_in_indian_contexts_with_a_focus_on_bias_and_s.md)
-- [\[ACL 2026\] RTCFake: Speech Deepfake Detection in Real-Time Communication](../../ACL2026/ai_safety/rtcfake_speech_deepfake_detection_in_real-time_communication.md)
+- [\[ACL 2025\] Quantifying Misattribution Unfairness in Authorship Attribution](quantifying_misattribution_unfairness_in_authorship_attribution.md)
 
 </div>
 

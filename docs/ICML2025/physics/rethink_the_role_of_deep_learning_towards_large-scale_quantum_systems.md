@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Rethink the Role of Deep Learning towards Large-scale Quantum Systems
 description: >-
-  [ICML2025][物理学][量子系统学习] 在统一量子资源约束下系统性地对比 ML 与 DL 在量子系统学习 (QSL) 任务中的表现，发现传统 ML（Lasso/Ridge/核方法）往往匹配甚至超越 DL，挑战了"大规模量子系统必须用深度学习"的直觉。
+  [ICML2025][物理/科学计算][量子系统学习] 在统一量子资源约束下系统性地对比 ML 与 DL 在量子系统学习 (QSL) 任务中的表现，发现传统 ML（Lasso/Ridge/核方法）往往匹配甚至超越 DL，挑战了"大规模量子系统必须用深度学习"的直觉。
 tags:
   - "ICML2025"
-  - "物理学"
+  - "物理/科学计算"
   - "量子系统学习"
   - "基态性质估计"
   - "量子相分类"
@@ -144,11 +144,11 @@ $$n_{\text{pre}} \times M_{\text{pre}} + n_{\text{sft}} \times M_{\text{sft}} = 
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] TITAN: A Trajectory-Informed Technique for Adaptive Parameter Freezing in Large-Scale VQE](../../NeurIPS2025/physics/titan_a_trajectory-informed_technique_for_adaptive_parameter_freezing_in_large-s.md)
+- [\[ICML 2025\] Erwin: A Tree-based Hierarchical Transformer for Large-scale Physical Systems](erwin_a_tree-based_hierarchical_transformer_for_large-scale_physical_systems.md)
 - [\[NeurIPS 2025\] Toward Complete Merger Identification at Cosmic Noon with Deep Learning](../../NeurIPS2025/physics/toward_complete_merger_identification_at_cosmic_noon_with_deep_learning.md)
-- [\[NeurIPS 2025\] Transfer Learning Beyond the Standard Model](../../NeurIPS2025/physics/transfer_learning_beyond_the_standard_model.md)
+- [\[NeurIPS 2025\] TITAN: A Trajectory-Informed Technique for Adaptive Parameter Freezing in Large-Scale VQE](../../NeurIPS2025/physics/titan_a_trajectory-informed_technique_for_adaptive_parameter_freezing_in_large-s.md)
+- [\[ICLR 2026\] Deep Learning for Subspace Regression](../../ICLR2026/physics/deep_learning_for_subspace_regression.md)
 - [\[ICML 2025\] Compact Matrix Quantum Group Equivariant Neural Networks](compact_matrix_quantum_group_equivariant_neural_networks.md)
-- [\[CVPR 2026\] QKD: Quantum-Gated Task-interaction Knowledge Distillation for Class-Incremental Learning](../../CVPR2026/physics/qkd_quantum_gated_incremental_learning.md)
 
 </div>
 

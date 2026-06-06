@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ShapeFusion: A 3D Diffusion Model for Localized Shape Editing
 description: >-
-  [ECCV 2024][图像生成] 提出一种基于掩码扩散训练策略的3D网格局部编辑方法ShapeFusion，通过在顶点空间直接操作实现完全局部化、可解释的3D形状编辑，无需潜在空间优化。
+  [ECCV 2024][3D视觉] 提出一种基于掩码扩散训练策略的3D网格局部编辑方法ShapeFusion，通过在顶点空间直接操作实现完全局部化、可解释的3D形状编辑，无需潜在空间优化。
 tags:
   - "ECCV 2024"
-  - "图像生成"
+  - "3D视觉"
 ---
 
 # ShapeFusion: A 3D Diffusion Model for Localized Shape Editing
@@ -124,10 +124,10 @@ $$\mathcal{L}_t = \|\epsilon_t - \epsilon_\theta(\mathbf{x}, t, \mathbf{M})\|_2$
 ## 相关论文
 
 - [\[ECCV 2024\] Transferable 3D Adversarial Shape Completion using Diffusion Models](transferable_3d_adversarial_shape_completion_using_diffusion_models.md)
-- [\[ECCV 2024\] Diffusion Model is a Good Pose Estimator from 3D RF-Vision](diffusion_model_is_a_good_pose_estimator_from_3d_rf-vision.md)
 - [\[ECCV 2024\] UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
-- [\[ICCV 2025\] Blended Point Cloud Diffusion for Localized Text-guided Shape Editing](../../ICCV2025/3d_vision/blended_point_cloud_diffusion_for_localized_textguided_shape.md)
-- [\[ECCV 2024\] MVDD: Multi-View Depth Diffusion Models](mvdd_multi-view_depth_diffusion_models.md)
+- [\[ECCV 2024\] WaSt-3D: Wasserstein-2 Distance for Scene-to-Scene Stylization on 3D Gaussians](wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)
+- [\[ECCV 2024\] Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
+- [\[ECCV 2024\] TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)
 
 </div>
 

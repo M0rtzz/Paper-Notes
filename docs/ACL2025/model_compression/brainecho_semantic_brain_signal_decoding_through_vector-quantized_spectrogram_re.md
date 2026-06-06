@@ -177,7 +177,7 @@ $$L_2 = \|m - Dec(Q(z_\varepsilon))\|_2^2 + \gamma\|z_m - z_\varepsilon\|_2^2 + 
 - [\[ACL 2025\] IAM: Efficient Inference through Attention Mapping between Different-scale LLMs](iam_efficient_inference_through_attention_mapping_between_different-scale_llms.md)
 - [\[ACL 2025\] TaDA: Training-free recipe for Decoding with Adaptive KV Cache Compression and Mean-centering](tada_training-free_recipe_for_decoding_with_adaptive_kv_cache_compression_and_me.md)
 - [\[ACL 2025\] Beyond Text Compression: Evaluating Tokenizers Across Scales](beyond_text_compression_tokenizers.md)
-- [\[ICML 2025\] Semantic Shift Estimation via Dual-Projection and Classifier Reconstruction for Exemplar-Free Class-Incremental Learning](../../ICML2025/model_compression/semantic_shift_estimation_via_dual-projection_and_classifier_reconstruction_for_.md)
+- [\[ACL 2025\] Flipping Knowledge Distillation: Leveraging Small Models' Expertise to Enhance LLMs in Text Matching](flipping_kd_small_to_large.md)
 
 </div>
 

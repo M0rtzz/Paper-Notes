@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 对齐 / RLHF方向19篇论文解读
+  AAAI2026 对齐 / RLHF方向18篇论文解读
 description: >-
-  19篇AAAI2026的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、LLM、对抗鲁棒、推理、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  18篇AAAI2026的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、LLM、对抗鲁棒、推理、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "对齐 / RLHF"
@@ -18,11 +18,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐 / RLHF
 
-**🤖 AAAI2026** · **19** 篇论文解读
+**🤖 AAAI2026** · **18** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (7)](../../ICML2026/llm_alignment/index.md) · [💬 ACL2026 (26)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (41)](../../ICLR2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/llm_alignment/index.md) · [💬 ACL2026 (30)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (40)](../../ICLR2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md)
 
-🔥 **高频主题：** 对齐/RLHF ×12 · LLM ×7 · 对抗鲁棒 ×2 · 推理 ×2 · 扩散模型 ×2
+🔥 **高频主题：** 对齐/RLHF ×11 · LLM ×7 · 对抗鲁棒 ×2 · 推理 ×2 · 扩散模型 ×2
 
 **[Align to Structure: Aligning Large Language Models with Structural Information](align_to_structure_aligning_large_language_models_with_struc.md)**
 
@@ -55,10 +55,6 @@ tags:
 **[Enhancing Uncertainty Estimation in LLMs with Expectation of Aggregated Internal States](enhancing_uncertainty_estimation_in_llms_with_expectation_of_aggregated_internal.md)**
 
 :   提出EAGLE方法，通过聚合LLM多个中间层隐藏状态的logits并计算置信度分布的期望值来估计不确定性，无需训练额外参数，在多个数据集和模型上ECE从12.6%降至3.2%，AUROC从59.0%提升至61.6%。
-
-**[EPO: Diverse and Realistic Protein Ensemble Generation via Energy Preference Optimization](epo_diverse_and_realistic_protein_ensemble_generation_via_energy_preference_opti.md)**
-
-:   提出EPO（Energy Preference Optimization），将反向SDE采样与listwise能量排序偏好优化结合，用能量信号对齐预训练蛋白质生成器与目标Boltzmann分布，在Tetrapeptides/ATLAS/Fast-Folding三个基准9个指标上达到SOTA，完全消除了昂贵的分子动力学（MD）模拟需求。
 
 **[Exploring the Effects of Alignment on Numerical Bias in Large Language Models](exploring_the_effects_of_alignment_on_numerical_bias_in_large_language_models.md)**
 

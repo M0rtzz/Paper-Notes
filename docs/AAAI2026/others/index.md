@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 其他方向124篇论文解读
+  AAAI2026 其他方向122篇论文解读
 description: >-
-  124篇AAAI2026的其他方向论文解读，涵盖 Agent、对抗鲁棒、扩散模型、对齐/RLHF、推理、异常检测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  122篇AAAI2026的其他方向论文解读，涵盖 Agent、对抗鲁棒、扩散模型、对齐/RLHF、推理、异常检测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "其他"
@@ -19,9 +19,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🤖 AAAI2026** · **124** 篇论文解读
+**🤖 AAAI2026** · **122** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (27)](../../ICML2026/others/index.md) · [📷 CVPR2026 (44)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🧠 NeurIPS2025 (145)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/others/index.md) · [🧪 ICML2025 (92)](../../ICML2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (91)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🧠 NeurIPS2025 (142)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (47)](../../ICCV2025/others/index.md)
 
 🔥 **高频主题：** Agent ×10 · 对抗鲁棒 ×5 · 扩散模型 ×5 · 对齐/RLHF ×3 · 推理 ×2
 
@@ -120,10 +120,6 @@ tags:
 **[CAT-Net: A Cross-Attention Tone Network for Cross-Subject EEG-EMG Fusion Tone Decoding](cat-net_a_cross-attention_tone_network_for_cross-subject_eeg-emg_fusion_tone_dec.md)**
 
 :   提出 CAT-Net（Cross-Attention Tone Network），通过空间-时间特征提取分支 + 交叉注意力融合机制 + 域对抗训练，仅用 20 个 EEG 通道和 5 个 EMG 通道实现中文四声调分类，在有声/无声语音条件下分别达到 87.83%/88.08% 准确率，跨被试评估下达到 83.27%/85.10%，全面超越 8 种基线方法。
-
-**[CellStream: Dynamical Optimal Transport Informed Embeddings for Reconstructing Cellular Trajectories from Snapshots Data](cellstream_dynamical_optimal_transport_informed_embeddings_for_reconstructing_ce.md)**
-
-:   提出 CellStream，一种将自编码器与非平衡动态最优传输（unbalanced dynamical OT）联合学习的深度学习框架，从离散时间点的单细胞快照数据中同时学习低维嵌入和连续细胞动态轨迹，在时间一致性和速度一致性上显著优于现有方法。
 
 **[Center-Outward q-Dominance: A Sample-Computable Proxy for Strong Stochastic Dominance in Multi-Objective Optimisation](center-outward_q-dominance_a_sample-computable_proxy_for_strong_stochastic_domin.md)**
 
@@ -356,10 +352,6 @@ tags:
 **[On the Edge of Core (Non-)Emptiness: An Automated Reasoning Approach to Approval-Based Multi-Winner Voting](on_the_edge_of_core_non-emptiness_an_automated_reasoning_approach_to_approval-ba.md)**
 
 :   针对基于认可的多赢者投票中核稳定性（core stability）是否总存在这一重大开放问题，提出基于混合整数线性规划（MILP）的自动推理框架，证明了新的存在性结果，发现了核稳定性与其他公理（如 Lindahl 可定价性）之间此前未知的关系，并推翻了一个已有猜想。
-
-**[On the Information Processing of One-Dimensional Wasserstein Distances with Finite Samples](on_the_information_processing_of_one-dimensional_wasserstein_distances_with_fini.md)**
-
-:   本文通过Poisson过程框架，解析刻画了一维Wasserstein距离在有限样本下同时编码概率密度函数的逐点密度差异（rate difference）和支撑差异（support difference）的能力，并在神经脉冲数据和氨基酸接触频率数据上验证了其实际价值。
 
 **[On the Variability of Concept Activation Vectors](on_the_variability_of_concept_activation_vectors.md)**
 

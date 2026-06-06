@@ -1,6 +1,6 @@
 ---
 title: >-
-  [论文解读] PriorDrive: 用统一向量先验增强在线HD地图构建
+  [论文解读] PriorDrive: Enhancing Online HD Mapping with Unified Vector Priors
 description: >-
   [AAAI 2026][自动驾驶][HD Map] 提出 PriorDrive 框架，通过 Unified Vector Encoder (UVE) 和 Hybrid Prior Representation (HPQuery) 将多种向量化先验地图（SD地图、旧HD地图、历史预测地图）统一编码并集成到各种在…
 tags:

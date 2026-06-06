@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Evaluation of Vision-LLMs in Surveillance Video
 description: >-
-  [NeurIPS 2025][3D视觉][Vision-LLM] 提出一个无训练的两阶段框架，利用小型 Vision-LLM 生成视频文本描述 + NLI 分类器零样本评分，系统评估了提示策略和隐私保护滤镜对监控视频异常行为识别的影响。
+  [NeurIPS 2025][LLM安全][Vision-LLM] 提出一个无训练的两阶段框架，利用小型 Vision-LLM 生成视频文本描述 + NLI 分类器零样本评分，系统评估了提示策略和隐私保护滤镜对监控视频异常行为识别的影响。
 tags:
   - "NeurIPS 2025"
-  - "3D视觉"
+  - "LLM安全"
   - "Vision-LLM"
   - "零样本异常检测"
   - "监控视频"
@@ -138,7 +138,7 @@ tags:
 - [\[CVPR 2025\] Protecting Your Video Content: Disrupting Automated Video-Based LLM Annotations](../../CVPR2025/llm_safety/protecting_your_video_content_disrupting_automated_video-based_llm_annotations.md)
 - [\[NeurIPS 2025\] A Systematic Evaluation of Preference Aggregation in Federated RLHF for Pluralistic Alignment of LLMs](a_systematic_evaluation_of_preference_aggregation_in_federated_rlhf_for_pluralis.md)
 - [\[NeurIPS 2025\] Music Arena: Live Evaluation for Text-to-Music](music_arena_live_evaluation_for_text-to-music.md)
-- [\[ICML 2025\] Is Your Model Fairly Certain? Uncertainty-Aware Fairness Evaluation for LLMs](../../ICML2025/llm_safety/is_your_model_fairly_certain_uncertainty-aware_fairness_evaluation_for_llms.md)
+- [\[NeurIPS 2025\] AgentDAM: Privacy Leakage Evaluation for Autonomous Web Agents](agentdam_privacy_leakage_evaluation_for_autonomous_web_agent.md)
 
 </div>
 

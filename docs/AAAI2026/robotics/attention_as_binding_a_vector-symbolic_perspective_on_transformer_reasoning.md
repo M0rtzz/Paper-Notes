@@ -158,7 +158,7 @@ $$\mathbf{s}^{(t+1)} = \mathbf{s}^{(t)} \oplus \sum_k \mathbf{r}_k^{(t)} \otimes
 - [\[ICCV 2025\] TransiT: Transient Transformer for Non-line-of-sight Videography](../../ICCV2025/robotics/transit_transient_transformer_for_non-line-of-sight_videography.md)
 - [\[CVPR 2025\] Solving Instance Detection from an Open-World Perspective](../../CVPR2025/robotics/solving_instance_detection_from_an_open-world_perspective.md)
 - [\[AAAI 2026\] EvoEmpirBench: Dynamic Spatial Reasoning with Agent-ExpVer](evoempirbench_dynamic_spatial_reasoning_with_agent-expver.md)
-- [\[CVPR 2026\] Influence Malleability in Linearized Attention: Dual Implications of Non-Convergent NTK Dynamics](../../CVPR2026/robotics/influence_malleability_in_linearized_attention_dual_implications_of_non-converge.md)
+- [\[ICLR 2026\] PERSONA: Dynamic and Compositional Inference-Time Personality Control via Activation Vector Algebra](../../ICLR2026/robotics/persona_dynamic_and_compositional_inference-time_personality_control_via_activat.md)
 
 </div>
 

@@ -134,7 +134,7 @@ MAS-Verify 是最关键组件——去掉后性能暴跌 21.70%。Oracle verifie
 - [\[CVPR 2025\] Zero-Shot Head Swapping in Real-World Scenarios](../../CVPR2025/others/zero-shot_head_swapping_in_real-world_scenarios.md)
 - [\[ACL 2025\] Zero-Shot Conversational Stance Detection: Dataset and Approaches](../../ACL2025/others/zero-shot_conversational_stance_detection_dataset_and_approaches.md)
 - [\[ACL 2025\] I0T: Embedding Standardization Method Towards Zero Modality Gap](../../ACL2025/others/i0t_embedding_standardization_method_towards_zero_modality_gap.md)
-- [\[AAAI 2026\] Designing Incident Reporting Systems for Harms from General-Purpose AI](../../AAAI2026/others/designing_incident_reporting_systems_for_harms_from_general-purpose_ai.md)
+- [\[ICML 2026\] Mapping Human Anti-collusion Mechanisms to Multi-agent AI Systems](../../ICML2026/others/mapping_human_anti-collusion_mechanisms_to_multi-agent_ai_systems.md)
 
 </div>
 

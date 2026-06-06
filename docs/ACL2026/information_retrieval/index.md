@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 信息检索/RAG方向60篇论文解读
+  ACL2026 信息检索/RAG方向74篇论文解读
 description: >-
-  60篇ACL2026的信息检索/RAG 方向论文解读，涵盖 RAG、问答、推理、LLM、强化学习、对话系统等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  74篇ACL2026的信息检索/RAG 方向论文解读，涵盖 RAG、问答、推理、LLM、对话系统、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "信息检索/RAG"
@@ -12,18 +12,18 @@ tags:
   - "问答"
   - "推理"
   - "LLM"
-  - "强化学习"
   - "对话系统"
+  - "强化学习"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔍 信息检索/RAG
 
-**💬 ACL2026** · **60** 篇论文解读
+**💬 ACL2026** · **74** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/information_retrieval/index.md) · [📷 CVPR2026 (7)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (28)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (31)](../../NeurIPS2025/information_retrieval/index.md) · [📹 ICCV2025 (8)](../../ICCV2025/information_retrieval/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/information_retrieval/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (28)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (31)](../../NeurIPS2025/information_retrieval/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/information_retrieval/index.md)
 
-🔥 **高频主题：** RAG ×25 · 问答 ×8 · 推理 ×6 · LLM ×6 · 强化学习 ×5
+🔥 **高频主题：** RAG ×27 · 问答 ×8 · 推理 ×7 · LLM ×7 · 对话系统 ×5
 
 **[A Picture is Worth a Thousand Words? An Empirical Study of Aggregation Strategies for Visual Financial Document Retrieval](a_picture_is_worth_a_thousand_words_an_empirical_study_of_aggregation_strategies.md)**
 
@@ -52,6 +52,10 @@ tags:
 **[Bayesian Active Learning with Gaussian Processes Guided by LLM Relevance Scoring](bayesian_active_learning_with_gaussian_processes_guided_by_llm_relevance_scoring.md)**
 
 :   提出 BAGEL，一个基于高斯过程（GP）的贝叶斯主动学习框架，在有限 LLM 预算下通过探索-利用平衡策略传播稀疏 LLM 相关性信号，实现全局嵌入空间的段落检索，显著超越传统 LLM 重排序方法。
+
+**[Benchmarking and Enabling Efficient Chinese Medical Retrieval via Asymmetric Encoders](benchmarking_and_enabling_efficient_chinese_medical_retrieval_via_asymmetric_enc.md)**
+
+:   提出 CMedTEB（中文医学文本嵌入基准）和 CARE（非对称检索框架），前者通过多 LLM 投票+专家验证构建高质量的中文医学检索/重排/STS 基准，后者用轻量 BERT 编码查询+大型 LLM 编码文档的非对称架构，通过两阶段渐进对齐策略实现 LLM 级检索精度+BERT 级在线延迟。
 
 **[Beyond Black-Box Interventions: Latent Probing for Faithful Retrieval-Augmented Generation](beyond_black-box_interventions_latent_probing_for_faithful_retrieval-augmented_g.md)**
 
@@ -121,6 +125,10 @@ tags:
 
 :   本文提出 MHGPO（Multi-Agent Heterogeneous Group Policy Optimization），一种无需 critic 的多智能体 RL 方法，通过异构组相对优势估计和反向奖励传播，在三智能体搜索系统（Rewriter→Reranker→Answerer）中实现端到端优化，捕获隐式跨智能体依赖和跨轨迹关联，在 HotpotQA 等多跳 QA 基准上显著优于 MAPPO 和 GRPO 基线。
 
+**[Enhancing Factuality through Consensus and Consistency in Summarization Using Minimum Bayes Risk Decoding](enhancing_factuality_through_consensus_and_consistency_in_summarization_using_mi.md)**
+
+:   本文提出 ConSUM，在摘要生成候选中同时考察候选对源文档的事实一致性和候选之间的共识，用 MBR decoding 结合 FENICE/FIZZ 等事实性指标重排序，在 CNN/DailyMail、XSum 和人工评估中提升摘要事实可靠性。
+
 **[Enhancing LLM-based Search Agents via Contribution Weighted Group Relative Policy Optimization](enhancing_llm-based_search_agents_via_contribution_weighted_group_relative_polic.md)**
 
 :   CW-GRPO 将过程监督重新定义为"优势重分配"：用 LLM 判断器评估每轮搜索的检索有用性和推理正确性，计算贡献分数来缩放基于结果的优势，实现轮级别信用分配而不引入不稳定的价值函数，在 Qwen3-8B 上超越标准 GRPO 5.0%。
@@ -128,6 +136,10 @@ tags:
 **[Enhancing Multilingual RAG Systems with Debiased Language Preference-Guided Query Fusion](enhancing_multilingual_rag_systems_with_debiased_language_preference-guided_quer.md)**
 
 :   本文发现多语言 RAG 系统中"英语偏好"主要是评估基准中结构性先验（gold 证据集中于英语、文化先验）的伪影而非模型固有偏差，提出去偏语言偏好指标 DeLP 揭示检索器实际偏好单语对齐，并基于此设计 DELTA 查询增强框架，在多语言 RAG 上一致超越英语枢轴策略。
+
+**[eTracer: Towards Traceable Text Generation via Claim-Level Grounding](etracer_towards_traceable_text_generation_via_claim-level_grounding.md)**
+
+:   eTracer 把 RAG 响应拆成原子 claim 再去上下文里搜支持/反驳的句级证据，用三步流水线（分解 → 嵌入检索 → 蕴含判定）输出带符号分数矩阵，从而在生物医学场景下既能精确反查每条事实的出处、又能定量评估响应的忠实度。
 
 **[Feedback Adaptation for Retrieval-Augmented Generation](feedback_adaptation_for_retrieval-augmented_generation.md)**
 
@@ -144,6 +156,10 @@ tags:
 **[From Relevance to Authority: Authority-aware Generative Retrieval in Web Search Engines](from_relevance_to_authority_authority-aware_generative_retrieval_in_web_search_e.md)**
 
 :   本文提出AuthGR，首个将文档权威性系统性整合到生成式检索中的框架，通过VLM多模态权威评分、三阶段渐进式训练（CPT→SFT→GRPO）和混合集成部署管线，在Naver商业搜索引擎的大规模A/B测试中验证了显著的用户参与度提升。
+
+**[GIFT: Guided Fine-Tuning and Transfer for Enhancing Instruction-Tuned Language Models](gift_guided_fine-tuning_and_transfer_for_enhancing_instruction-tuned_language_mo.md)**
+
+:   GIFT 让 instruction-tuned 模型不再只是最终 merge 的被动目标，而是先用它给训练 token 标注置信度，再用这些置信度指导 base model 的 LoRA 微调，最后把 adapter 合并回 instruction model，在数学、医学和指令任务上稳定超过直接微调与 Shadow-FT 等迁移基线。
 
 **[GLIER: Generative Legal Inference and Evidence Ranking for Legal Case Retrieval](glier_generative_legal_inference_and_evidence_ranking_for_legal_case_retrieval.md)**
 
@@ -189,6 +205,18 @@ tags:
 
 :   本文提出 MASS-RAG，一个免训练的多 Agent 综合 RAG 框架，通过 Summarizer/Extractor/Reasoner 三个专门化过滤 Agent 从互补视角处理检索文档，再通过 Synthesis Agent 整合多视角证据或候选答案，在四个基准上持续超越强基线。
 
+**[MM-BizRAG: Rethinking Multimodal Retrieval-Augmented Generation for General Purpose Enterprise Q&A](mm-bizrag_rethinking_multimodal_retrieval-augmented_generation_for_general_purpo.md)**
+
+:   MM-BizRAG 证明企业多模态 RAG 不能只依赖页面截图和视觉 embedding，而应先按文档结构区分报告与幻灯片，再显式解析文本、表格和图片，并在推理时组装多模态上下文，从而在 SlideVQA、FinRAGBench-V 和内部企业数据上显著超过视觉中心 baseline。
+
+**[More Than Efficiency: Embedding Compression Improves Domain Adaptation in Dense Retrieval](more_than_efficiency_embedding_compression_improves_domain_adaptation_in_dense_r.md)**
+
+:   这篇论文证明 PCA 向量压缩不只是为了提速，还能作为一种零训练的 dense retriever 域适配方法，其中只用目标域 query 拟合 PCA 在 75.4% 的模型-数据集组合上提升 NDCG@10。
+
+**[MTR-Suite: A Framework for Evaluating and Synthesizing Conversational Retrieval Benchmarks](mtr-suite_a_framework_for_evaluating_and_synthesizing_conversational_retrieval_b.md)**
+
+:   MTR-Suite 提出一套从 benchmark 审计、对话数据合成到检索评测的完整框架，用 MTR-Eval 诊断标注质量，用 MTR-Pipeline 以约 1/400 人工成本生成高难度多轮检索基准 MTR-Bench。
+
 **[Multi-Faceted Self-Consistent Preference Alignment for Query Rewriting in Conversational Search](multi-faceted_self-consistent_preference_alignment_for_query_rewriting_in_conver.md)**
 
 :   本文提出 MSPA-CQR，通过从改写、检索、回复三个维度构建自一致性偏好数据，并使用前缀引导的多维度 DPO 优化来训练查询改写模型，在分布内外场景均显著超越现有方法。
@@ -200,6 +228,10 @@ tags:
 **[Optimizing User Profiles via Contextual Bandits for Retrieval-Augmented LLM Personalization](optimizing_user_profiles_via_contextual_bandits_for_retrieval-augmented_llm_pers.md)**
 
 :   提出 PURPLE 框架，将检索增强 LLM 个性化中的用户画像构建问题建模为上下文老虎机问题，通过 Plackett-Luce 排序模型捕捉记录间依赖关系，以 LLM 对参考回复的 log-likelihood 作为奖励信号，直接优化检索以匹配生成质量。
+
+**[PL-MTEB: Polish Massive Text Embedding Benchmark](pl-mteb_polish_massive_text_embedding_benchmark.md)**
+
+:   PL-MTEB 为波兰语文本嵌入构建了覆盖分类、聚类、句对分类、检索和语义相似度的 30 任务评测集，并系统评测 30 个波兰语和多语言 embedding 模型，显示大模型整体领先但任务类型、训练数据泄漏和模型规模都会显著影响结论。
 
 **[Quantifying and Improving the Robustness of Retrieval-Augmented Language Models Against Spurious Features in Grounding Data](quantifying_and_improving_the_robustness_of_retrieval-augmented_language_models_.md)**
 
@@ -217,13 +249,25 @@ tags:
 
 :   揭示低精度（如二值化/量化嵌入）检索系统在评估时因分数粒度降低产生大量虚假并列（spurious ties），导致评估结果高度不稳定，提出 HPS（高精度打分）和 TRM（并列感知指标）两种互补策略，使低精度检索的评估更可靠一致。
 
+**[Rerank Before You Reason: Analyzing Reranking Tradeoffs through Effective Token Cost in Deep Search Agents](rerank_before_you_reason_analyzing_reranking_tradeoffs_through_effective_token_c.md)**
+
+:   本文系统研究了深度搜索智能体中 listwise 重排序的效率-效果权衡，提出 Effective Token Cost (ETC) 指标，发现中等深度重排序通常比增加搜索时推理预算更具成本效益，在更低 token 开销下达到相当甚至更高的端到端准确率。
+
 **[Retrieval-Augmented Tutoring for Algorithm Tracing and Problem-Solving in AI Education](retrieval-augmented_tutoring_for_algorithm_tracing_and_problem-solving_in_ai_edu.md)**
 
 :   本文提出 KITE，一个面向算法追踪和问题求解的课程材料 RAG 辅导系统，通过意图感知的苏格拉底式反馈和多阶段检索，在自动指标、模拟学生和专家评审中显示出较好的 grounding 与教学支架效果。
 
+**[Retrieve Only Relevant Tables Whether Few or Many: Adaptive Table Retrieval Method](retrieve_only_relevant_tables_whether_few_or_many_adaptive_table_retrieval_metho.md)**
+
+:   这篇论文提出 Adaptive Table Retrieval (ATR)，用查询自适应阈值代替固定 top-k 表格检索，并结合相关性校准、表间语义分组和滑动窗口重排，在 Spider、BIRD、Spider 2.0 上同时提升检索召回、text-to-SQL 执行准确率和推理效率。
+
 **[REZE: Representation Regularization for Domain-adaptive Text Embedding Pre-finetuning](reze_representation_regularization_for_domain-adaptive_text_embedding_pre-finetu.md)**
 
 :   REZE 在领域 embedding 预微调中对 anchor-positive 关系表示做 eigenspace 分解，用鲁棒统计识别任务特异偏移并软收缩，从而吸收共享领域知识、抑制异构任务带来的表示漂移。
+
+**[RiTeK: A Dataset for Large Language Models Complex Reasoning over Textual Knowledge Graphs in Medicine](ritek_a_dataset_for_large_language_models_complex_reasoning_over_textual_knowled.md)**
+
+:   RiTeK 构建了两个大规模医学文本知识图谱（TKG）和对应的复杂推理 QA 数据集，涵盖 6 种拓扑结构和丰富的文本描述，评估了 11 种检索方法并揭示了现有 LLM 驱动检索系统在医学 TKG 推理上的严重不足。
 
 **[S2G-RAG: Structured Sufficiency and Gap Judging for Iterative Retrieval-Augmented QA](s2g-rag_structured_sufficiency_and_gap_judging_for_iterative_retrieval-augmented.md)**
 
@@ -236,6 +280,14 @@ tags:
 **[Stable-RAG: Mitigating Retrieval-Permutation-Induced Hallucinations in Retrieval-Augmented Generation](stable-rag_mitigating_retrieval-permutation-induced_hallucinations_in_retrieval-.md)**
 
 :   揭示 RAG 系统对检索文档排列顺序高度敏感的问题，提出 Stable-RAG：通过对文档排列产生的隐状态做谱聚类识别主导推理模式，再用 DPO 对齐将幻觉输出引导向正确答案，在三个 QA 数据集上实现准确率和推理一致性的双重提升。
+
+**[Test-Time Training for Zero-Resource Dense Retrieval Reranking](test-time_training_for_zero-resource_dense_retrieval_reranking.md)**
+
+:   提出 DART，通过在推理时用双线性矩阵自适应地调整密集检索器的评分函数，利用检索结果本身作为伪标签实现零样本无标注重排序，在 BEIR 基准上平均提升 2.1% NDCG@10，延迟控制在 10ms 以内。
+
+**[多语言检索中的低资源语言困境：Amharic 语言证据](the_multilingual_curse_at_the_retrieval_layer_evidence_from_amharic.md)**
+
+:   本文以 Amharic 语言为诊断案例，揭示了强势多语言检索模型在零样本设置下无法有效迁移到形态丰富的低资源语言，相对 MRR@10 性能下降 23%；而语言特定微调虽能改进 32-60%，但仍无法达到单语言检索器水平，表明多语言检索不足以保证低资源语言的信息公平获取。
 
 **[UnIte: Uncertainty-based Iterative Document Sampling for Domain Adaptation in Information Retrieval](unite_uncertainty-based_iterative_document_sampling_for_domain_adaptation_in_inf.md)**
 
@@ -256,6 +308,10 @@ tags:
 **[VisRet: Visualization Improves Knowledge-Intensive Text-to-Image Retrieval](visret_visualization_improves_knowledge-intensive_text-to-image_retrieval.md)**
 
 :   本文提出 Visualize-then-Retrieve (VisRet)，一种将文本查询先通过 T2I 生成模型可视化为图像、再在图像模态内进行检索的新范式，在四个基准上平均提升 nDCG@30 0.125（CLIP）和 0.121（E5-V），下游 VQA 准确率在 Visual-RAG-ME 上提升 15.7%。
+
+**[生物医学 RAG 中检索何时无效：大规模实证研究](when_retrieval_doesnt_help_a_large-scale_study_of_biomedical_rag.md)**
+
+:   这项大规模实证研究横跨 5 个模型、10 个数据集、4 种检索方法和 4 个检索库，发现生物医学 RAG 仅带来 1-2 个点的小幅不稳定改进，真正的瓶颈是模型有效利用检索证据的能力而非检索质量本身。
 
 **[Why Mean Pooling Works: Quantifying Second-Order Collapse in Text Embeddings](why_mean_pooling_works_quantifying_second-order_collapse_in_text_embeddings.md)**
 

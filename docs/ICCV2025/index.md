@@ -2,7 +2,7 @@
 title: >-
   1319 篇 ICCV2025 论文解读 · 每篇 5 分钟读懂
 description: >-
-  1319篇ICCV2025论文解读，涵盖 3D 视觉(263篇)、图像生成(213篇)、多模态 VLM(148篇)、自动驾驶(93篇)、语义分割(73篇)、视频理解(57篇)、模型压缩(48篇)、视频生成(48篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1319篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(213篇)、多模态 VLM(149篇)、自动驾驶(93篇)、语义分割(74篇)、视频理解(57篇)、模型压缩(49篇)、视频生成(48篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICCV2025"
   - "AI顶会"
@@ -21,7 +21,7 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📹 ICCV2025 论文笔记
 
-1319篇ICCV2025论文解读，涵盖 3D 视觉(263篇)、图像生成(213篇)、多模态 VLM(148篇)、自动驾驶(93篇)、语义分割(73篇)、视频理解(57篇)、模型压缩(48篇)、视频生成(48篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1319篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(213篇)、多模态 VLM(149篇)、自动驾驶(93篇)、语义分割(74篇)、视频理解(57篇)、模型压缩(49篇)、视频生成(48篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -556,6 +556,10 @@ tags:
 **[Image as an IMU: Estimating Camera Motion from a Single Motion-Blurred Image](3d_vision/image_as_an_imu_estimating_camera_motion_from_a_single_motion-blurred_image.md)**
 
 :   本文将运动模糊从"不需要的伪影"转变为"有价值的运动线索"，通过从单张模糊图像预测稠密光流场和单目深度图，再用可微分最小二乘求解器恢复相机6DoF瞬时速度，实现媲美甚至超越IMU的运动估计精度和30FPS实时性能。
+
+**[InsideOut: Integrated RGB-Radiative Gaussian Splatting for Comprehensive 3D Object Representation](3d_vision/insideout_integrated_rgb-radiative_gaussian_splatting_for_comprehensive_3d_objec.md)**
+
+:   InsideOut 将 3D Gaussian Splatting 从仅建模 RGB 表面扩展到同时建模 X 射线内部结构，通过层次化拟合和 X 射线参考损失实现了 RGB 外观与内部辐射结构的联合表示。
 
 **[InstaScene: Towards Complete 3D Instance Decomposition and Reconstruction from Cluttered Scenes](3d_vision/instascene_towards_complete_3d_instance_decomposition_and_reconstruction_from_cl.md)**
 
@@ -2145,6 +2149,10 @@ tags:
 
 :   揭示了 VLM 中早期视觉 token 剪枝存在系统性位置偏差（RoPE 导致倾向保留图像底部 token），并提出 FEATHER 方法通过去除 RoPE + 均匀采样 + 多阶段剪枝解决该问题，在定位任务上实现 5× 以上性能提升。
 
+**[FedMVP: Federated Multimodal Visual Prompt Tuning for Vision-Language Models](multimodal_vlm/fedmvp_federated_multimodal_visual_prompt_tuning_for_vision-language_models.md)**
+
+:   提出FedMVP，在联邦学习场景下通过PromptFormer网络融合图像视觉特征和LLM生成的类别属性文本特征，生成动态多模态视觉提示注入CLIP的视觉编码器，在20个数据集、三种泛化设置下显著超越现有联邦提示学习方法1.57%-2.26%。
+
 **[Fine-Grained Evaluation of Large Vision-Language Models in Autonomous Driving](multimodal_vlm/fine-grained_evaluation_of_large_vision-language_models_in_autonomous_driving.md)**
 
 :   本文提出 VLADBench，一个面向自动驾驶场景的细粒度视觉语言模型评测基准，涵盖 5 大领域、11 个二级维度和 29 个三级任务，采用封闭式 QA 形式从静态知识到动态推理逐步递进评估 VLM 能力，并基于 1.4M 领域特定 QA 数据训练小规模 DS 模型验证领域间认知交互。
@@ -2313,10 +2321,6 @@ tags:
 
 :   提出 MMOne 通用框架，通过模态建模模块（含模态指示器）和多模态分解机制解决多模态场景表示中的属性差异和粒度差异问题，在单一 3DGS 表示中同时建模 RGB、热成像和语言等多种模态并均获提升。
 
-**[MolParser: End-to-end Visual Recognition of Molecule Structures in the Wild](multimodal_vlm/molparser_end-to-end_visual_recognition_of_molecule_structures_in_the_wild.md)**
-
-:   提出 MolParser，一个端到端的光学化学结构识别 (OCSR) 方法，通过扩展 SMILES 表示（E-SMILES）处理 Markush 结构、构建 700 万级大规模训练集 MolParser-7M，并利用主动学习引入真实文献数据，在 WildMol 基准上以 76.9% 准确率显著超越现有方法。
-
 **[Multi-Cache Enhanced Prototype Learning for Test-Time Generalization of Vision-Language Models](multimodal_vlm/multi-cache_enhanced_prototype_learning_for_test-time_generalization_of_vision-l.md)**
 
 :   提出 MCP/MCP++ 多缓存增强的原型学习框架，通过 entropy cache、align cache 和 negative cache 三种互补缓存机制构建紧致的类内分布，并引入跨模态残差学习进一步优化视觉和文本原型对齐，在 15 个下游任务上实现了 SOTA 的零样本泛化性能。
@@ -2336,6 +2340,10 @@ tags:
 **[NegRefine: Refining Negative Label-Based Zero-Shot OOD Detection](multimodal_vlm/negrefine_refining_negative_label-based_zero-shot_ood_detection.md)**
 
 :   本文提出 NegRefine，通过 LLM 过滤负标签集中的专有名词和子类别标签，并设计多标签匹配评分函数来处理图像同时匹配分布内和负标签的情况，在 ImageNet-1K 基准上平均 AUROC 提升 1.82%、FPR95 降低 4.35%，刷新了零样本 OOD 检测 SOTA。
+
+**[Oasis: One Image is All You Need for Multimodal Instruction Data Synthesis](multimodal_vlm/oasis_one_image_is_all_you_need_for_multimodal_instruction_data_synthesis.md)**
+
+:   提出Oasis方法，仅需输入图像（无需任何文本提示）即可诱导MLLM自回归生成高质量多模态指令跟随数据，配合精细的指令质量控制机制，合成50万数据给LLaVA-NeXT带来平均3.1%的全面性能提升，且超越其他合成方法。
 
 **[On Large Multimodal Models as Open-World Image Classifiers](multimodal_vlm/on_large_multimodal_models_as_open-world_image_classifiers.md)**
 
@@ -2969,6 +2977,10 @@ tags:
 
 :   提出DeRIS框架，将指代图像分割任务解耦为感知（perception）和认知（cognition）两个分支，通过回环协同（Loopback Synergy）机制迭代增强两分支的交互，并引入非指代样本转换增强策略，在RefCOCO/+/g和gRefCOCO数据集上取得SOTA。
 
+**[DictAS: A Framework for Class-Generalizable Few-Shot Anomaly Segmentation via Dictionary Lookup](segmentation/dictas_a_framework_for_class-generalizable_few-shot_anomaly_segmentation_via_dic.md)**
+
+:   受人类检查员"查字典"直觉启发，提出 DictAS 框架，将少样本异常分割重新定义为字典查询任务——若查询特征无法从正常样本字典中检索到则判定为异常——通过自监督训练获得类别无关的字典查询能力，在 7 个工业和医学数据集上的 FSAS 性能和推理速度均达到 SOTA。
+
 **[Dynamic Dictionary Learning for Remote Sensing Image Segmentation](segmentation/dynamic_dictionary_learning_for_remote_sensing_image_segmentation.md)**
 
 :   本文提出动态字典学习框架 D2LS，通过多阶段交替交叉注意力迭代更新类别感知语义嵌入（字典），并引入对比约束增强类间可分性，在遥感图像粗粒度和细粒度分割任务上均超越 SOTA。
@@ -3585,6 +3597,10 @@ tags:
 
 :   提出 PLAN 框架，通过为每个任务前瞻性地分配正交低秩子空间并使用扰动策略最小化任务间干扰，在持续学习场景下实现了高效且无遗忘的大模型微调，在标准 CL 基准上建立了新的 SOTA。
 
+**[Representation Shift: Unifying Token Compression with FlashAttention](model_compression/representation_shift_unifying_token_compression_with_flashattention.md)**
+
+:   提出 Representation Shift，一种无需训练、模型无关的 token 重要性度量方法，通过计算 token 在网络层前后的表征变化量来衡量重要性，从而首次实现 token 压缩与 FlashAttention 的兼容，在视频理解和图像分类上取得高达 5.5× 的加速。
+
 **[SAMO: A Lightweight Sharpness-Aware Approach for Multi-Task Optimization with Joint Global-Local Perturbation](model_compression/samo_a_lightweight_sharpness-aware_approach_for_multi-task_optimization_with_joi.md)**
 
 :   提出 SAMO，一种轻量级锐度感知多任务优化方法，通过全局-局部联合扰动缓解任务梯度冲突，并利用零阶梯度近似和层级归一化大幅降低计算开销。
@@ -3937,6 +3953,10 @@ tags:
 
 :   提出一种从单目头部旋转视频重建面部外观属性（漫反射反照率、高光强度、高光粗糙度）的方法，通过提出遮挡感知的 split-sum 近似着色模型，在不对光照环境做任何简化假设的情况下实现了逼近工作室级别的面部外观捕捉质量。
 
+**[Multi-view Gaze Target Estimation](human_understanding/multi-view_gaze_target_estimation.md)**
+
+:   本文首次将注视目标估计（GTE）从单视角扩展到多视角，通过头部信息聚合（HIA）、基于不确定性的注视选择（UGS）和基于极线的场景注意力（ESA）三个模块融合多相机信息，在自建 MVGT 数据集上显著超越单视角 SOTA，并实现了单视角方法无法处理的跨视角估计。
+
 **[NGD: Neural Gradient Based Deformation for Monocular Garment Reconstruction](human_understanding/ngd_neural_gradient_based_deformation_for_monocular_garment_reconstruction.md)**
 
 :   提出 NGD，一种基于神经梯度的变形方法，通过将 Jacobian 场分解为帧不变的静态分量和帧相关的动态分量，结合自适应重网格化策略，从单目视频重建高保真动态纺织品几何与纹理，在宽松服装等困难场景上显著优于现有 SOTA。
@@ -4021,21 +4041,9 @@ tags:
 
 :   本文提出一种高效的自监督联合重建方法，通过将声速（SOS）参数化为像素网格或神经场，并通过可微成像前向模型反向传播梯度来恢复SOS和高质量光声图像，在精度上超越现有SOTA的同时实现35倍加速（40秒 vs 23分钟）。
 
-**[CryoFastAR: Fast Cryo-EM Ab initio Reconstruction Made Easy](medical_imaging/cryofastar_fast_cryoem_ab_initio_reconstruction_made_easy.md)**
-
-:   首个将DUSt3R式的几何基础模型范式引入冷冻电镜(cryo-EM)领域的工作，通过ViT编码器+跨视图注意力解码器直接从大量含噪粒子图像前馈预测姿态（无需迭代优化），实现了比传统方法快10-33倍的ab initio蛋白质三维重建。
-
 **[CuMPerLay: Learning Cubical Multiparameter Persistence Vectorizations](medical_imaging/cumperlay_learning_cubical_multiparameter_persistence_vectorizations.md)**
 
 :   提出 CuMPerLay，一个可微的立方多参数持久同调 (Cubical Multiparameter Persistence, CMP) 向量化层，将 CMP 分解为多条可学习的单参数持久同调线，通过联合学习双滤过 (bifiltration) 函数实现端到端训练，嵌入 Swin Transformer 后在医学图像分类和语义分割任务上（尤其小数据场景）取得显著提升。
-
-**[DictAS: A Framework for Class-Generalizable Few-Shot Anomaly Segmentation via Dictionary Lookup](medical_imaging/dictas_a_framework_for_class-generalizable_few-shot_anomaly_segmentation_via_dic.md)**
-
-:   受人类检查员"查字典"直觉启发，提出 DictAS 框架，将少样本异常分割重新定义为字典查询任务——若查询特征无法从正常样本字典中检索到则判定为异常——通过自监督训练获得类别无关的字典查询能力，在 7 个工业和医学数据集上的 FSAS 性能和推理速度均达到 SOTA。
-
-**[G2PDiffusion: Cross-Species Genotype-to-Phenotype Prediction via Evolutionary Diffusion](medical_imaging/g2pdiffusion_cross-species_genotype-to-phenotype_prediction_via_evolutionary_dif.md)**
-
-:   提出G2PDiffusion，首个基于扩散模型的跨物种基因型到表型预测框架，通过进化信号（多序列比对MSA和环境上下文）条件化生成形态学图像，实现从DNA序列预测物种外观。
 
 **[GDKVM: Echocardiography Video Segmentation via Spatiotemporal Key-Value Memory with Gated Delta Rule](medical_imaging/gdkvm_echocardiography_video_segmentation_via_spatiotemporal_key-value_memory_wi.md)**
 
@@ -4048,18 +4056,6 @@ tags:
 **[GEMeX: A Large-Scale, Groundable, and Explainable Medical VQA Benchmark for Chest X-ray Diagnosis](medical_imaging/gemex_a_large-scale_groundable_and_explainable_medical_vqa_benchmark_for_chest_x.md)**
 
 :   构建了当前最大的胸部X光 VQA 数据集 GEMeX（151K 图像、1.6M 问题），首次同时提供文本推理解释和视觉区域定位，涵盖四种问题类型，并系统评估了 12 个代表性大视觉语言模型。
-
-**[IDF: Iterative Dynamic Filtering Networks for Generalizable Image Denoising](medical_imaging/idf_iterative_dynamic_filtering_networks_for_generalizable_image_denoising.md)**
-
-:   提出迭代动态滤波网络 (IDF)，仅用约 0.04M 参数，通过逐像素动态核预测 + 自适应迭代精炼策略，仅在单一级别高斯噪声上训练即可泛化到各种未见噪声类型（高斯/泊松/椒盐/蒙特卡洛渲染/真实噪声），实现出色的 OOD 去噪性能。
-
-**[InsideOut: Integrated RGB-Radiative Gaussian Splatting for Comprehensive 3D Object Representation](medical_imaging/insideout_integrated_rgb-radiative_gaussian_splatting_for_comprehensive_3d_objec.md)**
-
-:   InsideOut 将 3D Gaussian Splatting 从仅建模 RGB 表面扩展到同时建模 X 射线内部结构，通过层次化拟合和 X 射线参考损失实现了 RGB 外观与内部辐射结构的联合表示。
-
-**[Integrating Biological Knowledge for Robust Microscopy Image Profiling on De Novo Cell Lines](medical_imaging/integrating_biological_knowledge_for_robust_microscopy_image_profiling_on_de_nov.md)**
-
-:   提出将外部生物知识（蛋白质互作图谱+单细胞基础模型的转录组特征）整合到显微图像预训练中，显式解耦扰动特异性和细胞系特异性表征，提升模型在未见细胞系上的扰动筛查泛化能力。
 
 **[M-Net: MRI Brain Tumor Sequential Segmentation Network via Mesh-Cast](medical_imaging/m-net_mri_brain_tumor_sequential_segmentation_network_via_mesh-cast.md)**
 
@@ -4120,10 +4116,6 @@ tags:
 **[TeethGenerator: A Two-Stage Framework for Paired Pre- and Post-Orthodontic 3D Dental Data Generation](medical_imaging/teethgenerator_a_two-stage_framework_for_paired_pre-_and_post-orthodontic_3d_den.md)**
 
 :   提出 TeethGenerator，一个两阶段框架用于生成配对的正畸前后 3D 牙齿点云模型，Stage I 用 VQ-VAE+扩散模型生成矫正后牙齿形态，Stage II 用 Transformer 根据风格模型生成对应的矫正前牙齿排列。
-
-**[Toward Long-Tailed Online Anomaly Detection through Class-Agnostic Concepts](medical_imaging/toward_long-tailed_online_anomaly_detection_through_class-agnostic_concepts.md)**
-
-:   本文提出长尾在线异常检测（LTOAD）新任务和benchmark，核心创新是用可学习的"类无关概念集"替代传统的类标签依赖，结合Concept VQ-VAE和综合prompt学习框架，在不需要类标签的情况下于offline和online场景下均达到SOTA。
 
 **[UKBOB: One Billion MRI Labeled Masks for Generalizable 3D Medical Image Segmentation](medical_imaging/ukbob_one_billion_mri_labeled_masks_for_generalizable_3d_medical_image_segmentat.md)**
 
@@ -4204,6 +4196,10 @@ tags:
 **[Generic Event Boundary Detection via Denoising Diffusion (DiffGEBD)](image_restoration/generic_event_boundary_detection_via_denoising_diffusion.md)**
 
 :   DiffGEBD 首次将扩散模型引入通用事件边界检测（GEBD），通过将边界预测建模为从随机噪声到合理边界分布的去噪过程，利用 Classifier-Free Guidance 控制预测多样性，并提出了对称 F1 和 Diversity Score 两项新评估指标来衡量多预测场景下的质量与多样性。
+
+**[IDF: Iterative Dynamic Filtering Networks for Generalizable Image Denoising](image_restoration/idf_iterative_dynamic_filtering_networks_for_generalizable_image_denoising.md)**
+
+:   提出迭代动态滤波网络 (IDF)，仅用约 0.04M 参数，通过逐像素动态核预测 + 自适应迭代精炼策略，仅在单一级别高斯噪声上训练即可泛化到各种未见噪声类型（高斯/泊松/椒盐/蒙特卡洛渲染/真实噪声），实现出色的 OOD 去噪性能。
 
 **[IM-LUT: Interpolation Mixing Look-Up Tables for Image Super-Resolution](image_restoration/im-lut_interpolation_mixing_look-up_tables_for_image_super-resolution.md)**
 
@@ -4449,6 +4445,10 @@ tags:
 
 :   首次揭示文本查询与视频背景帧之间的虚假相关性是时刻检索性能瓶颈的根本原因，提出 TD-DETR 框架通过动态上下文视频合成和文本-动态交互增强两个策略来缓解该问题，在 QVHighlights 和 Charades-STA 上达到 SOTA。
 
+**[Toward Long-Tailed Online Anomaly Detection through Class-Agnostic Concepts](object_detection/toward_long-tailed_online_anomaly_detection_through_class-agnostic_concepts.md)**
+
+:   本文提出长尾在线异常检测（LTOAD）新任务和benchmark，核心创新是用可学习的"类无关概念集"替代传统的类标签依赖，结合Concept VQ-VAE和综合prompt学习框架，在不需要类标签的情况下于offline和online场景下均达到SOTA。
+
 **[Uncertainty-Aware Gradient Stabilization for Small Object Detection](object_detection/uncertainty-aware_gradient_stabilization_for_small_object_detection.md)**
 
 :   揭示了传统目标定位方法在小目标上存在因损失曲率陡峭导致的梯度不稳定问题，提出 UGS（不确定性感知梯度稳定化）框架，通过分类式定位 + 不确定性最小化 + 不确定性引导精炼三个组件来稳定梯度，显著提升小目标检测性能。
@@ -4679,62 +4679,6 @@ tags:
 
 ---
 
-## 🔒 LLM 安全 { #llm_safety }
-
-**[Adversarial Robust Memory-Based Continual Learner](llm_safety/adversarial_robust_memory-based_continual_learner.md)**
-
-:   揭示持续学习与对抗训练结合时的双重挑战（加速遗忘 + 梯度混淆），提出抗遗忘 Logit 校准（AFLC）和鲁棒感知经验回放（RAER）两个即插即用模块，在 Split-CIFAR10/100 和 Split-Tiny-ImageNet 上有效提升对抗鲁棒性达 8.13%。
-
-**[Asynchronous Event Error-Minimizing Noise for Safeguarding Event Dataset](llm_safety/asynchronous_event_error-minimizing_noise_for_safeguarding_event_dataset.md)**
-
-:   提出首个面向异步事件数据的不可学习样本生成方法（UEvs），设计了事件误差最小化噪声（E²MN）及自适应投影机制，使事件数据集在保持合法使用功能的同时阻止未授权模型从中学习。
-
-**[ChartCap: Mitigating Hallucination of Dense Chart Captioning](llm_safety/chartcap_mitigating_hallucination_of_dense_chart_captioning.md)**
-
-:   构建了包含56.5万张真实图表-描述对的大规模数据集ChartCap，通过类型特定的描述模式排除无关信息、强调结构与关键洞察，并提出无参考的Visual Consistency Score评估指标，有效减少VLM在图表描述中的幻觉问题。
-
-**[Cooperative Pseudo Labeling for Unsupervised Federated Classification](llm_safety/cooperative_pseudo_labeling_for_unsupervised_federated_classification.md)**
-
-:   FedCoPL 首次将无监督联邦学习扩展到分类任务，通过协作伪标签策略（全局分配伪标签确保类别平衡）和部分 prompt 聚合协议（仅聚合视觉 prompt、保留文本 prompt 本地化）有效应对 CLIP 固有偏差和标签偏移挑战。
-
-**[Enhancing Adversarial Transferability by Balancing Exploration and Exploitation with Gradient-Guided Sampling](llm_safety/enhancing_adversarial_transferability_by_balancing_exploration_and_exploitation_.md)**
-
-:   提出Gradient-Guided Sampling (GGS)内迭代采样策略，通过使用上一内迭代的梯度方向引导采样，在平衡Exploitation（攻击强度/损失极大值）和Exploration（跨模型泛化/平坦损失面）的困境中取得突破，在CNN/ViT/MLLM等多架构上显著超越现有迁移攻击方法。
-
-**[FedMVP: Federated Multimodal Visual Prompt Tuning for Vision-Language Models](llm_safety/fedmvp_federated_multimodal_visual_prompt_tuning_for_vision-language_models.md)**
-
-:   提出FedMVP，在联邦学习场景下通过PromptFormer网络融合图像视觉特征和LLM生成的类别属性文本特征，生成动态多模态视觉提示注入CLIP的视觉编码器，在20个数据集、三种泛化设置下显著超越现有联邦提示学习方法1.57%-2.26%。
-
-**[Forgetting Through Transforming: Enabling Federated Unlearning via Class-Aware Representation Transformation](llm_safety/forgetting_through_transforming_enabling_federated_unlearning_via_class-aware_re.md)**
-
-:   提出 FUCRT 方法，通过类感知表征变换实现联邦遗忘：将遗忘类的表征“变换”到语义最近的保留类，而非直接消除，配合双重对比学习对齐跨客户端的变换一致性，在四个数据集上实现 100% 遗忘保障的同时保持甚至提升剩余类性能。
-
-**[Geminio: Language-Guided Gradient Inversion Attacks in Federated Learning](llm_safety/geminio_language-guided_gradient_inversion_attacks_in_federated_learning.md)**
-
-:   本文提出Geminio，首个利用视觉语言模型（VLM）实现自然语言引导的梯度反转攻击（GIA），使联邦学习中的恶意服务器可以用自然语言描述想要窃取的数据类型，并从大batch梯度中精准定位和重建匹配的隐私样本，同时不影响正常的FL模型训练。
-
-**[LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning](llm_safety/latte_collaborative_test-time_adaptation_of_vision-language_models_in_federated_.md)**
-
-:   提出 Latte 框架，在联邦学习的去中心化场景下，通过本地记忆与外部记忆的协同机制，实现视觉语言模型（如 CLIP）的协作式测试时自适应，兼顾跨客户端知识共享与个性化。
-
-**[MUNBa: Machine Unlearning via Nash Bargaining](llm_safety/munba_machine_unlearning_via_nash_bargaining.md)**
-
-:   将机器遗忘（Machine Unlearning）建模为双玩家合作博弈问题，利用 Nash 讨价还价理论推导闭式解来同时解决遗忘目标与保留目标之间的梯度冲突和梯度支配问题，在分类和生成任务上实现遗忘与保留的最优平衡。
-
-**[Oasis: One Image is All You Need for Multimodal Instruction Data Synthesis](llm_safety/oasis_one_image_is_all_you_need_for_multimodal_instruction_data_synthesis.md)**
-
-:   提出Oasis方法，仅需输入图像（无需任何文本提示）即可诱导MLLM自回归生成高质量多模态指令跟随数据，配合精细的指令质量控制机制，合成50万数据给LLaVA-NeXT带来平均3.1%的全面性能提升，且超越其他合成方法。
-
-**[SAUCE: Selective Concept Unlearning in Vision-Language Models with Sparse Autoencoders](llm_safety/sauce_selective_concept_unlearning_in_vision-language_models_with_sparse_autoenc.md)**
-
-:   SAUCE 利用稀疏自编码器（SAE）在 VLM 的中间表征中识别并选择性抑制与目标概念相关的特征，实现了无需权重更新的细粒度概念遗忘，在 60 个概念的测试中遗忘质量超越 SOTA 18%。
-
-**[Temporal Unlearnable Examples: Preventing Personal Video Data from Unauthorized Exploitation](llm_safety/temporal_unlearnable_examples_preventing_personal_video_data_from_unauthorized_e.md)**
-
-:   本文首次研究防止视频数据被深度跟踪器未授权使用的问题，提出基于 DiT 的生成式框架生成时序不可学习样本（TUE），通过时间对比损失使跟踪器依赖扰动噪声进行时序匹配而非学习真实数据结构，实现了跨模型、跨数据集和跨任务的强可迁移性。
-
----
-
 ## 🎵 音频/语音 { #audio_speech }
 
 **[2.5 Years in Class: A Multimodal Textbook for Vision-Language Pretraining](audio_speech/25_years_in_class_a_multimodal_textbook_for_visionlanguage_p.md)**
@@ -4780,6 +4724,54 @@ tags:
 **[Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](audio_speech/zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)**
 
 :   提出 Zero-AVSR 框架，通过将语音转写为语言无关的罗马化文本（Roman text），再利用 LLM 将罗马文本转换为目标语言文字，实现无需目标语言语音数据的零样本视听语音识别，并构建了覆盖 82 种语言、2916 小时的 MARC 数据集。
+
+---
+
+## 🔒 LLM 安全 { #llm_safety }
+
+**[Adversarial Robust Memory-Based Continual Learner](llm_safety/adversarial_robust_memory-based_continual_learner.md)**
+
+:   揭示持续学习与对抗训练结合时的双重挑战（加速遗忘 + 梯度混淆），提出抗遗忘 Logit 校准（AFLC）和鲁棒感知经验回放（RAER）两个即插即用模块，在 Split-CIFAR10/100 和 Split-Tiny-ImageNet 上有效提升对抗鲁棒性达 8.13%。
+
+**[Asynchronous Event Error-Minimizing Noise for Safeguarding Event Dataset](llm_safety/asynchronous_event_error-minimizing_noise_for_safeguarding_event_dataset.md)**
+
+:   提出首个面向异步事件数据的不可学习样本生成方法（UEvs），设计了事件误差最小化噪声（E²MN）及自适应投影机制，使事件数据集在保持合法使用功能的同时阻止未授权模型从中学习。
+
+**[ChartCap: Mitigating Hallucination of Dense Chart Captioning](llm_safety/chartcap_mitigating_hallucination_of_dense_chart_captioning.md)**
+
+:   构建了包含56.5万张真实图表-描述对的大规模数据集ChartCap，通过类型特定的描述模式排除无关信息、强调结构与关键洞察，并提出无参考的Visual Consistency Score评估指标，有效减少VLM在图表描述中的幻觉问题。
+
+**[Cooperative Pseudo Labeling for Unsupervised Federated Classification](llm_safety/cooperative_pseudo_labeling_for_unsupervised_federated_classification.md)**
+
+:   FedCoPL 首次将无监督联邦学习扩展到分类任务，通过协作伪标签策略（全局分配伪标签确保类别平衡）和部分 prompt 聚合协议（仅聚合视觉 prompt、保留文本 prompt 本地化）有效应对 CLIP 固有偏差和标签偏移挑战。
+
+**[Enhancing Adversarial Transferability by Balancing Exploration and Exploitation with Gradient-Guided Sampling](llm_safety/enhancing_adversarial_transferability_by_balancing_exploration_and_exploitation_.md)**
+
+:   提出Gradient-Guided Sampling (GGS)内迭代采样策略，通过使用上一内迭代的梯度方向引导采样，在平衡Exploitation（攻击强度/损失极大值）和Exploration（跨模型泛化/平坦损失面）的困境中取得突破，在CNN/ViT/MLLM等多架构上显著超越现有迁移攻击方法。
+
+**[Forgetting Through Transforming: Enabling Federated Unlearning via Class-Aware Representation Transformation](llm_safety/forgetting_through_transforming_enabling_federated_unlearning_via_class-aware_re.md)**
+
+:   提出 FUCRT 方法，通过类感知表征变换实现联邦遗忘：将遗忘类的表征“变换”到语义最近的保留类，而非直接消除，配合双重对比学习对齐跨客户端的变换一致性，在四个数据集上实现 100% 遗忘保障的同时保持甚至提升剩余类性能。
+
+**[Geminio: Language-Guided Gradient Inversion Attacks in Federated Learning](llm_safety/geminio_language-guided_gradient_inversion_attacks_in_federated_learning.md)**
+
+:   本文提出Geminio，首个利用视觉语言模型（VLM）实现自然语言引导的梯度反转攻击（GIA），使联邦学习中的恶意服务器可以用自然语言描述想要窃取的数据类型，并从大batch梯度中精准定位和重建匹配的隐私样本，同时不影响正常的FL模型训练。
+
+**[LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning](llm_safety/latte_collaborative_test-time_adaptation_of_vision-language_models_in_federated_.md)**
+
+:   提出 Latte 框架，在联邦学习的去中心化场景下，通过本地记忆与外部记忆的协同机制，实现视觉语言模型（如 CLIP）的协作式测试时自适应，兼顾跨客户端知识共享与个性化。
+
+**[MUNBa: Machine Unlearning via Nash Bargaining](llm_safety/munba_machine_unlearning_via_nash_bargaining.md)**
+
+:   将机器遗忘（Machine Unlearning）建模为双玩家合作博弈问题，利用 Nash 讨价还价理论推导闭式解来同时解决遗忘目标与保留目标之间的梯度冲突和梯度支配问题，在分类和生成任务上实现遗忘与保留的最优平衡。
+
+**[SAUCE: Selective Concept Unlearning in Vision-Language Models with Sparse Autoencoders](llm_safety/sauce_selective_concept_unlearning_in_vision-language_models_with_sparse_autoenc.md)**
+
+:   SAUCE 利用稀疏自编码器（SAE）在 VLM 的中间表征中识别并选择性抑制与目标概念相关的特征，实现了无需权重更新的细粒度概念遗忘，在 60 个概念的测试中遗忘质量超越 SOTA 18%。
+
+**[Temporal Unlearnable Examples: Preventing Personal Video Data from Unauthorized Exploitation](llm_safety/temporal_unlearnable_examples_preventing_personal_video_data_from_unauthorized_e.md)**
+
+:   本文首次研究防止视频数据被深度跟踪器未授权使用的问题，提出基于 DiT 的生成式框架生成时序不可学习样本（TUE），通过时间对比损失使跟踪器依赖扰动噪声进行时序匹配而非学习真实数据结构，实现了跨模型、跨数据集和跨任务的强可迁移性。
 
 ---
 
@@ -4989,10 +4981,6 @@ tags:
 
 :   提出 OHRBench——首个评估 OCR 对 RAG 系统级联影响的基准，包含 7 个领域的 8561 张文档图像和 8498 个 QA 对，系统性地揭示了 OCR 产生的语义噪声（Semantic Noise）和格式噪声（Formatting Noise）对检索和生成两阶段的不同影响模式。
 
-**[Representation Shift: Unifying Token Compression with FlashAttention](information_retrieval/representation_shift_unifying_token_compression_with_flashattention.md)**
-
-:   提出 Representation Shift，一种无需训练、模型无关的 token 重要性度量方法，通过计算 token 在网络层前后的表征变化量来衡量重要性，从而首次实现 token 压缩与 FlashAttention 的兼容，在视频理解和图像分类上取得高达 5.5× 的加速。
-
 **[ViLU: Learning Vision-Language Uncertainties for Failure Prediction](information_retrieval/vilu_learning_vision-language_uncertainties_for_failure_prediction.md)**
 
 :   提出 ViLU，一个针对 VLM 零样本预测的后验不确定性量化框架，通过交叉注意力融合视觉嵌入、预测文本嵌入和图像条件文本表示，构建不确定性感知的多模态表征，在 13 个分类数据集和大规模图文数据集上显著超越现有失败预测方法。
@@ -5088,6 +5076,26 @@ tags:
 **[VIM: Versatile Interactive Motion-Language Model](llm_nlp/vim_versatile_interactive_motion_language_model.md)**
 
 :   提出 VIM，首个能在统一框架内同时理解和生成双人交互运动与文本的多模态大模型，配合82.7K多轮交互运动指令数据集 Inter-MT²，支持文本到运动、运动到文本、反应生成、运动编辑和运动推理等多种任务。
+
+---
+
+## 🧬 计算生物 { #computational_biology }
+
+**[CryoFastAR: Fast Cryo-EM Ab initio Reconstruction Made Easy](computational_biology/cryofastar_fast_cryoem_ab_initio_reconstruction_made_easy.md)**
+
+:   首个将DUSt3R式的几何基础模型范式引入冷冻电镜(cryo-EM)领域的工作，通过ViT编码器+跨视图注意力解码器直接从大量含噪粒子图像前馈预测姿态（无需迭代优化），实现了比传统方法快10-33倍的ab initio蛋白质三维重建。
+
+**[G2PDiffusion: Cross-Species Genotype-to-Phenotype Prediction via Evolutionary Diffusion](computational_biology/g2pdiffusion_cross-species_genotype-to-phenotype_prediction_via_evolutionary_dif.md)**
+
+:   提出G2PDiffusion，首个基于扩散模型的跨物种基因型到表型预测框架，通过进化信号（多序列比对MSA和环境上下文）条件化生成形态学图像，实现从DNA序列预测物种外观。
+
+**[Integrating Biological Knowledge for Robust Microscopy Image Profiling on De Novo Cell Lines](computational_biology/integrating_biological_knowledge_for_robust_microscopy_image_profiling_on_de_nov.md)**
+
+:   提出将外部生物知识（蛋白质互作图谱+单细胞基础模型的转录组特征）整合到显微图像预训练中，显式解耦扰动特异性和细胞系特异性表征，提升模型在未见细胞系上的扰动筛查泛化能力。
+
+**[MolParser: End-to-end Visual Recognition of Molecule Structures in the Wild](computational_biology/molparser_end-to-end_visual_recognition_of_molecule_structures_in_the_wild.md)**
+
+:   提出 MolParser，一个端到端的光学化学结构识别 (OCSR) 方法，通过扩展 SMILES 表示（E-SMILES）处理 Markush 结构、构建 700 万级大规模训练集 MolParser-7M，并利用主动学习引入真实文献数据，在 WildMol 基准上以 76.9% 准确率显著超越现有方法。
 
 ---
 
@@ -5207,6 +5215,18 @@ tags:
 
 ---
 
+## ⚛️ 物理/科学计算 { #physics }
+
+**[JPEG Processing Neural Operator for Backward-Compatible Coding](physics/jpeg_processing_neural_operator_for_backward-compatible_coding.md)**
+
+:   提出JPNeO，一个完全后向兼容JPEG格式的下一代编解码器，通过在编码和解码阶段分别引入神经算子(JENO和JDNO)以及可训练量化矩阵，显著提升JPEG重建质量（尤其是色度分量），同时保持低内存和少参数量的优势。
+
+**[ResQ: A Novel Framework to Implement Residual Neural Networks on Analog Rydberg Atom Quantum Computers](physics/resq_a_novel_framework_to_implement_residual_neural_networks_on_analog_rydberg_a.md)**
+
+:   提出 ResQ——首个利用模拟 Rydberg 原子量子计算机的连续时间哈密顿演化来原生实现残差神经网络（ResNet）的框架，通过分段参数化激光脉冲编码输入特征和训练参数，在 MNIST/FashionMNIST/医疗数据集的分类任务上相比同等规模经典模型平均提升50%。
+
+---
+
 ## 💻 代码智能 { #code_intelligence }
 
 **[TikZero: Zero-Shot Text-Guided Graphics Program Synthesis](code_intelligence/tikzero_zero-shot_text-guided_graphics_program_synthesis.md)**
@@ -5252,22 +5272,6 @@ tags:
 **[Balancing Task-Invariant Interaction and Task-Specific Adaptation for Unified Image Fusion](nlp_understanding/balancing_task-invariant_interaction_and_task-specific_adaptation_for_unified_im.md)**
 
 :   TITA 提出了一种无需任务标识的统一图像融合框架，通过交互增强像素注意力（IPA）模块探索任务不变的互补信息提取，并通过基于操作的自适应融合（OAF）模块动态适配任务特定需求，同时采用 FAMO 策略缓解多任务梯度冲突。
-
----
-
-## ⚛️ 物理学 { #physics }
-
-**[ResQ: A Novel Framework to Implement Residual Neural Networks on Analog Rydberg Atom Quantum Computers](physics/resq_a_novel_framework_to_implement_residual_neural_networks_on_analog_rydberg_a.md)**
-
-:   提出 ResQ——首个利用模拟 Rydberg 原子量子计算机的连续时间哈密顿演化来原生实现残差神经网络（ResNet）的框架，通过分段参数化激光脉冲编码输入特征和训练参数，在 MNIST/FashionMNIST/医疗数据集的分类任务上相比同等规模经典模型平均提升50%。
-
----
-
-## 🧮 科学计算 { #scientific_computing }
-
-**[JPEG Processing Neural Operator for Backward-Compatible Coding](scientific_computing/jpeg_processing_neural_operator_for_backward-compatible_coding.md)**
-
-:   提出JPNeO，一个完全后向兼容JPEG格式的下一代编解码器，通过在编码和解码阶段分别引入神经算子(JENO和JDNO)以及可训练量化矩阵，显著提升JPEG重建质量（尤其是色度分量），同时保持低内存和少参数量的优势。
 
 ---
 
@@ -5400,10 +5404,6 @@ tags:
 **[Membership Inference Attacks with False Discovery Rate Control](others/membership_inference_attacks_with_false_discovery_rate_control.md)**
 
 :   提出MIAFdR，首个能提供错误发现率（FDR）理论保证的成员推理攻击方法，通过设计新颖的非成员一致性分数函数和基于调整的成员判定策略来控制FDR，可作为即插即用的wrapper无缝集成到现有MIA方法中，在保持攻击性能的同时提供FDR控制。
-
-**[Multi-view Gaze Target Estimation](others/multi-view_gaze_target_estimation.md)**
-
-:   本文首次将注视目标估计（GTE）从单视角扩展到多视角，通过头部信息聚合（HIA）、基于不确定性的注视选择（UGS）和基于极线的场景注意力（ESA）三个模块融合多相机信息，在自建 MVGT 数据集上显著超越单视角 SOTA，并实现了单视角方法无法处理的跨视角估计。
 
 **[NAPPure: Adversarial Purification for Robust Image Classification under Non-Additive Perturbations](others/nappure_adversarial_purification_for_robust_image_classification_under_non-addit.md)**
 

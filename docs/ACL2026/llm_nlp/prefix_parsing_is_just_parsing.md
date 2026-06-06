@@ -118,17 +118,18 @@ tags:
 - **写作质量**: ⭐⭐⭐⭐ — 标题即点题，核心思想表达清晰
 - **价值**: ⭐⭐⭐⭐ — 对形式语言理论和LLM约束生成都有重要价值，简化了工程实现
 
-## 亮点与洞察
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 局限性 / 可改进方向
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 相关工作与启发
-待深读论文后补充
+## 相关论文
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+- [\[ACL 2025\] Dolphin: Document Image Parsing via Heterogeneous Anchor Prompting](../../ACL2025/llm_nlp/dolphin_document_image_parsing_via_heterogeneous_anchor_prompting.md)
+- [\[ACL 2025\] STEM-PoM: Evaluating Language Models Math-Symbol Reasoning in Document Parsing](../../ACL2025/llm_nlp/stem-pom_evaluating_language_models_math-symbol_reasoning_in_document_parsing.md)
+- [\[ACL 2026\] 等等，还有出路：一个对话脱轨预测的决策机制](wait_theres_a_way_out_a_decision_mechanism_for_forecasting_conversational_derail.md)
+- [\[ACL 2025\] Is It JUST Semantics? A Case Study of Discourse Particle Understanding in LLMs](../../ACL2025/llm_nlp/is_it_just_semantics_a_case_study_of_discourse_particle_understanding_in_llms.md)
+- [\[ACL 2026\] Can AI Be a Good Peer Reviewer? A Survey of Peer Review Process, Evaluation, and the Future](can_ai_be_a_good_peer_reviewer_a_survey_of_peer_review_process_evaluation_and_th.md)
+
+</div>
+
+<!-- RELATED:END -->

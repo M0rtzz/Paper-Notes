@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 语义分割方向21篇论文解读
+  ICML2025 语义分割方向20篇论文解读
 description: >-
-  21篇ICML2025的语义分割方向论文解读，涵盖语义分割、推荐系统、少样本学习、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  20篇ICML2025的语义分割方向论文解读，涵盖语义分割、推荐系统、少样本学习、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "语义分割"
@@ -16,9 +16,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**🧪 ICML2025** · **21** 篇论文解读
+**🧪 ICML2025** · **20** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/segmentation/index.md) · [💬 ACL2026 (1)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/segmentation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (13)](../../ICML2026/segmentation/index.md) · [💬 ACL2026 (1)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/segmentation/index.md)
 
 🔥 **高频主题：** 语义分割 ×6 · 推荐系统 ×2 · 少样本学习 ×2 · 遥感 ×2
 
@@ -93,10 +93,6 @@ tags:
 **[SpikeVideoFormer: An Efficient Spike-Driven Video Transformer with Hamming Attention and $\mathcal{O}(T)$ Complexity](spikevideoformer_an_efficient_spike-driven_video_transformer_with_hamming_attent.md)**
 
 :   提出 SpikeVideoFormer，首个面向视频任务的脉冲驱动 Transformer，通过 Hamming 注意力替代点积注意力实现 spike 特征相似性的准确度量，结合联合时空注意力保持 $\mathcal{O}(T)$ 线性时间复杂度，在三个视频任务上达到 SNN SOTA，同时效率比 ANN 高 5-16 倍。
-
-**[SToFM: a Multi-scale Foundation Model for Spatial Transcriptomics](stofm_a_multi-scale_foundation_model_for_spatial_transcriptomics.md)**
-
-:   提出 SToFM，首个多尺度空间转录组学基础模型，通过基因尺度域适应、微观尺度子切片划分和宏观尺度虚拟细胞注入，结合 SE(2) Transformer 和 88M 细胞的大规模预训练语料库，在组织区域语义分割和细胞类型标注等任务上显著超越现有方法。
 
 **[unMORE: Unsupervised Multi-Object Segmentation via Center-Boundary Reasoning](unmore_unsupervised_multi-object_segmentation_via_center-boundary_reasoning.md)**
 

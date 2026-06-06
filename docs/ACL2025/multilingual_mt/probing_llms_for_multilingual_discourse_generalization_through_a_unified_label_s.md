@@ -149,7 +149,7 @@ tags:
 - [\[ACL 2025\] Cross-Lingual Pitfalls: Automatic Probing Cross-Lingual Weakness of Multilingual Large Language Models](crosslingual_pitfalls.md)
 - [\[ACL 2025\] Cross-Lingual Representation Alignment Through Contrastive Image-Caption Tuning](cross-lingual_representation_alignment_through_contrastive_image-caption_tuning.md)
 - [\[ACL 2025\] Cross-Lingual Generalization and Compression: From Language-Specific to Shared Neurons](cross_lingual_neurons_compression.md)
-- [\[ACL 2025\] The Hidden Space of Safety: Understanding Preference-Tuned LLMs in Multilingual Contexts](the_hidden_space_of_safety_understanding_preference-tuned_llms_in_multilingual_c.md)
+- [\[ACL 2026\] MultiHaluDet: Multilingual Hallucination Detection via LLM Hidden State Probing](../../ACL2026/multilingual_mt/multihaludet_multilingual_hallucination_detection_via_llm_hidden_state_probing.md)
 
 </div>
 

@@ -112,10 +112,10 @@ $$\ddot{\varphi} - \beta(s(\varphi)\cdot\dot{\varphi})\dot{\varphi} + \beta s(\v
 ## 相关论文
 
 - [\[ICML 2025\] Score Matching with Missing Data](score_matching_with_missing_data.md)
-- [\[ICML 2025\] WGFormer: An SE(3)-Transformer Driven by Wasserstein Gradient Flows for Molecular Generation](wgformer_an_se3-transformer_driven_by_wasserstein_gradient_flows_for_molecular_g.md)
 - [\[ICML 2025\] Diversity By Design: Leveraging Distribution Matching for Offline Model-Based Optimization](diversity_by_design_leveraging_distribution_matching_for_offline_model-based_opt.md)
 - [\[ICML 2025\] Fully Dynamic Euclidean Bi-Chromatic Matching in Sublinear Update Time](fully_dynamic_euclidean_bi-chromatic_matching_in_sublinear_update_time.md)
 - [\[ICML 2025\] Curvature Enhanced Data Augmentation for Regression](curvature_enhanced_data_augmentation_for_regression.md)
+- [\[NeurIPS 2025\] Stable Matching with Ties: Approximation Ratios and Learning](../../NeurIPS2025/others/stable_matching_with_ties_approximation_ratios_and_learning.md)
 
 </div>
 

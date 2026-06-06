@@ -153,9 +153,9 @@ SRA 在高分辨率和文本到图像场景同样有效，512×512 上 IS 和 sF
 ## 相关论文
 
 - [\[CVPR 2026\] DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers](../../CVPR2026/self_supervised/diversedit_towards_diverse_representation_learning_in_diffusion_transformers.md)
+- [\[ICML 2026\] FLAG: Foundation Model Representation with Latent Diffusion Alignment via Graph for Spatial Gene Expression Prediction](../../ICML2026/self_supervised/flag_foundation_model_representation_with_latent_diffusion_alignment_via_graph_f.md)
 - [\[CVPR 2026\] Vision Transformers Need More Than Registers](../../CVPR2026/self_supervised/vision_transformers_need_more_than_registers.md)
 - [\[CVPR 2026\] Zero-Ablation Overstates Register Content Dependence in DINO Vision Transformers](../../CVPR2026/self_supervised/zero_ablation_overstates_register_content_dependence_in_dino_vision_transformers.md)
-- [\[CVPR 2025\] Transformers without Normalization](../../CVPR2025/self_supervised/transformers_without_normalization.md)
 - [\[CVPR 2026\] Representation Learning for Spatiotemporal Physical Systems](../../CVPR2026/self_supervised/representation_learning_for_spatiotemporal_physica.md)
 
 </div>

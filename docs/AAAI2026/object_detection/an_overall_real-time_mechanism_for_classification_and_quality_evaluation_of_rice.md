@@ -169,7 +169,7 @@ tags:
 - [\[ICCV 2025\] YOLOE: Real-Time Seeing Anything](../../ICCV2025/object_detection/yoloe_realtime_seeing_anything.md)
 - [\[CVPR 2025\] MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism](../../CVPR2025/object_detection/mi-detr_an_object_detection_model_with_multi-time_inquiries_mechanism.md)
 - [\[CVPR 2025\] TornadoNet: Real-Time Building Damage Detection with Ordinal Supervision](../../CVPR2025/object_detection/tornadonet_real-time_building_damage_detection_with_ordinal_supervision.md)
-- [\[CVPR 2026\] PaQ-DETR: Learning Pattern and Quality-Aware Dynamic Queries for Object Detection](../../CVPR2026/object_detection/paq-detr_learning_pattern_and_quality-aware_dynamic_queries_for_object_detection.md)
+- [\[CVPR 2026\] RC-NF: Robot-Conditioned Normalizing Flow for Real-Time Anomaly Detection in Robotic Manipulation](../../CVPR2026/object_detection/rc-nf_robot-conditioned_normalizing_flow_for_real-time_anomaly_detection_in_robo.md)
 
 </div>
 

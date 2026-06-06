@@ -123,8 +123,8 @@ tags:
 ## 相关论文
 
 - [\[NeurIPS 2025\] Generalized Contrastive Learning for Universal Multimodal Retrieval](../../NeurIPS2025/information_retrieval/generalized_contrastive_learning_for_universal_multimodal_re.md)
-- [\[ACL 2026\] From Relevance to Authority: Authority-aware Generative Retrieval in Web Search Engines](../../ACL2026/information_retrieval/from_relevance_to_authority_authority-aware_generative_retrieval_in_web_search_e.md)
 - [\[ECCV 2024\] OneRestore: A Universal Restoration Framework for Composite Degradation](../../ECCV2024/information_retrieval/onerestore_a_universal_restoration_framework_for_composite_degradation.md)
+- [\[ACL 2026\] From Relevance to Authority: Authority-aware Generative Retrieval in Web Search Engines](../../ACL2026/information_retrieval/from_relevance_to_authority_authority-aware_generative_retrieval_in_web_search_e.md)
 - [\[CVPR 2025\] LamRA: Large Multimodal Model as Your Advanced Retrieval Assistant](lamra_large_multimodal_model_as_your_advanced_retrieval_assistant.md)
 - [\[CVPR 2025\] LotusFilter: Fast Diverse Nearest Neighbor Search via a Learned Cutoff Table](lotusfilter_fast_diverse_nearest_neighbor_search_via_a_learned_cutoff_table.md)
 

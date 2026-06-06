@@ -2,11 +2,15 @@
 title: >-
   [论文解读] Easy Samples Are All You Need: Self-Evolving LLMs via Data-Efficient Reinforcement Learning
 description: >-
-  [ACL 2026][强化学习][待补充] 待深读论文后补充
+  [ACL 2026][强化学习][数据高效RL] 提出 EasyRL 框架，受认知发展理论启发，仅用10%的简单标注数据通过知识迁移初始化模型，再通过分治伪标注和由难度递进的自训练逐步掌握困难未标注数据，一致性超越全量数据监督的 GRPO。
 tags:
   - "ACL 2026"
   - "强化学习"
-  - "待补充"
+  - "数据高效RL"
+  - "自进化LLM"
+  - "伪标签"
+  - "由简入难"
+  - "认知学习理论"
 ---
 
 # Easy Samples Are All You Need: Self-Evolving LLMs via Data-Efficient Reinforcement Learning
@@ -119,33 +123,19 @@ EasyRL 分三阶段：（1）知识迁移——在简单标注数据上用 GRPO 
 - 新颖性: ⭐⭐⭐⭐ 认知学习理论的引入有启发性，分治伪标注+递进自训练的组合设计巧妙
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个模型+数学和科学基准+多轮迭代消融+伪标签质量分析，非常充分
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，理论动机与方法设计的对应关系讲得好
-**代码**: 待确认  
-**领域**: reinforcement_learning  
-**关键词**: 待补充
 
-## 一句话总结
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 研究背景与动机
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 方法详解
-待深读论文后补充
+## 相关论文
 
-## 实验关键数据
-待深读论文后补充
+- [\[ICML 2026\] Metis: Learning to Jailbreak LLMs via Self-Evolving Metacognitive Policy Optimization](../../ICML2026/reinforcement_learning/metis_learning_to_jailbreak_llms_via_self-evolving_metacognitive_policy_optimiza.md)
+- [\[ICML 2026\] D$^2$Evo: Dual Difficulty-Aware Self-Evolution for Data-Efficient Reinforcement Learning](../../ICML2026/reinforcement_learning/d2evo_dual_difficulty-aware_self-evolution_for_data-efficient_reinforcement_lear.md)
+- [\[ICLR 2026\] SPELL: Self-Play Reinforcement Learning for Evolving Long-Context Language Models](../../ICLR2026/reinforcement_learning/spell_self-play_reinforcement_learning_for_evolving_long-context_language_models.md)
+- [\[ACL 2026\] EvoCoT: Overcoming the Exploration Bottleneck in Reinforcement Learning for LLMs](evocot_overcoming_the_exploration_bottleneck_in_reinforcement_learning.md)
+- [\[ACL 2026\] ARGUS: Policy-Adaptive Ad Governance via Evolving Reinforcement with Adversarial Umpiring](argus_policy-adaptive_ad_governance_via_evolving_reinforcement_with_adversarial_.md)
 
-## 亮点与洞察
-待深读论文后补充
+</div>
 
-## 局限性 / 可改进方向
-待深读论文后补充
-
-## 相关工作与启发
-待深读论文后补充
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+<!-- RELATED:END -->

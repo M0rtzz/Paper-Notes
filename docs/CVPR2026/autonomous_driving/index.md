@@ -1,16 +1,16 @@
 ---
 title: >-
-  CVPR2026 自动驾驶方向88篇论文解读
+  CVPR2026 自动驾驶方向90篇论文解读
 description: >-
-  88篇CVPR2026的自动驾驶方向论文解读，涵盖自动驾驶、对抗鲁棒、3D 目标检测、多模态、语义分割、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  90篇CVPR2026的自动驾驶方向论文解读，涵盖自动驾驶、对抗鲁棒、多模态、3D 目标检测、语义分割、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2026"
   - "自动驾驶"
   - "论文解读"
   - "论文笔记"
   - "对抗鲁棒"
-  - "3D 目标检测"
   - "多模态"
+  - "3D 目标检测"
   - "语义分割"
   - "自监督学习"
 ---
@@ -18,11 +18,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🚗 自动驾驶
 
-**📷 CVPR2026** · **88** 篇论文解读
+**📷 CVPR2026** · **90** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/autonomous_driving/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (57)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (49)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (11)](../../ICML2025/autonomous_driving/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/autonomous_driving/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (57)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (49)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (11)](../../ICML2025/autonomous_driving/index.md)
 
-🔥 **高频主题：** 自动驾驶 ×14 · 对抗鲁棒 ×8 · 3D 目标检测 ×7 · 多模态 ×7 · 语义分割 ×6
+🔥 **高频主题：** 自动驾驶 ×15 · 对抗鲁棒 ×8 · 多模态 ×8 · 3D 目标检测 ×7 · 语义分割 ×6
 
 **[A Prediction-as-Perception Framework for 3D Object Detection](a_prediction-as-perception_framework_for_3d_object_detection.md)**
 
@@ -39,6 +39,10 @@ tags:
 **[BEV-SLD: Self-Supervised Scene Landmark Detection for Global Localization with LiDAR Bird's-Eye View Images](bev-sld_self-supervised_scene_landmark_detection_for_global_localization_with_li.md)**
 
 :   提出BEV-SLD，一种基于自监督场景地标检测(Scene Landmark Detection)的LiDAR全局定位方法，将检测与对应关系预测解耦，仅需20MB即可在多种场景下实现高精度(x, y, azimuth)位姿估计。
+
+**[The Blind Spot of Adaptation: Quantifying and Mitigating Forgetting in Fine-tuned Driving Models](blind_spot_of_adaptation_quantifying_and_mitigating_forgetting_in_fine_tuned_driving_models.md)**
+
+:   系统研究 VLM 微调到自动驾驶场景时的灾难性遗忘问题，构建 180K 场景大规模基准 FidelityDrivingBench，并提出 Drive Expert Adapter (DEA) 通过提示空间路由在不腐蚀基础参数的前提下增强驾驶任务性能。
 
 **[BuildAnyPoint: 3D Building Structured Abstraction from Diverse Point Clouds](buildanypoint_3d_building_structured_abstraction_from_diverse_point_clouds.md)**
 
@@ -359,6 +363,10 @@ tags:
 **[U4D: Uncertainty-Aware 4D World Modeling from LiDAR Sequences](u4d_uncertainty-aware_4d_world_modeling_from_lidar_sequences.md)**
 
 :   提出 U4D，首个不确定性感知的 4D LiDAR 世界建模框架，通过"先难后易"的两阶段扩散生成策略，先重建高不确定性区域再条件补全整个场景，并设计 MoST 模块自适应融合时空特征以保证时序一致性。
+
+**[VGGDrive: Empowering Vision-Language Models with Cross-View Geometric Grounding for Autonomous Driving](vggdrive_empowering_vision-language_models_with_cross-view_geometric_grounding_f.md)**
+
+:   提出VGGDrive框架，通过冻结的3D视觉基础模型VGGT为VLM注入跨视图几何感知能力，设计插拔式CVGE模块分层自适应地将3D特征注入VLM各层的2D视觉嵌入中，在五个自动驾驶基准上实现显著性能提升。
 
 **[VIRD: View-Invariant Representation through Dual-Axis Transformation for Cross-View Pose Estimation](vird_view-invariant_representation_through_dual-axis_transformation_for_cross-vi.md)**
 

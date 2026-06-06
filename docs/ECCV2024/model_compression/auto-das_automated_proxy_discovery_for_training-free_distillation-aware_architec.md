@@ -134,10 +134,10 @@ Auto-DAS 的流程分为三个阶段：(1) **代理搜索空间构建**——定
 ## 相关论文
 
 - [\[ECCV 2024\] Category Adaptation Meets Projected Distillation in Generalized Continual Category Discovery](category_adaptation_meets_projected_distillation_in_generalized_continual_catego.md)
-- [\[ACL 2026\] ASTRA: An Automated Framework for Strategy Discovery, Retrieval, and Evolution for Jailbreaking LLMs](../../ACL2026/model_compression/astra_an_automated_framework_for_strategy_discovery_retrieval_and_evolution_for_.md)
 - [\[ECCV 2024\] PaPr: Training-Free One-Step Patch Pruning with Lightweight ConvNets for Faster Inference](papr_training-free_one-step_patch_pruning_with_lightweight_convnets_for_faster_i.md)
 - [\[ICCV 2025\] Cross-Architecture Distillation Made Simple with Redundancy Suppression](../../ICCV2025/model_compression/cross-architecture_distillation_made_simple_with_redundancy_suppression.md)
 - [\[ICCV 2025\] Time-Aware Auto White Balance in Mobile Photography](../../ICCV2025/model_compression/time-aware_auto_white_balance_in_mobile_photography.md)
+- [\[CVPR 2026\] Learning through Creation: A Hash-Free Framework for On-the-Fly Category Discovery](../../CVPR2026/model_compression/learning_through_creation_a_hash-free_framework_for_on-the-fly_category_discover.md)
 
 </div>
 

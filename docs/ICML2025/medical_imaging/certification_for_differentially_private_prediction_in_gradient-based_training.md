@@ -152,11 +152,11 @@ $$z \sim \text{Cauchy}\left(\frac{6 \exp(-\epsilon k'/6)}{\epsilon}\right)$$
 
 ## 相关论文
 
-- [\[ICML 2025\] Empower Structure-Based Molecule Optimization with Gradient Guided Bayesian Flow Networks](empower_structure-based_molecule_optimization_with_gradient_guided_bayesian_flow.md)
+- [\[ICML 2025\] DeltaSHAP: Explaining Prediction Evolutions in Online Patient Monitoring with Shapley Values](deltashap_explaining_prediction_evolutions_in_online_patient_monitoring_with_sha.md)
 - [\[CVPR 2026\] FedVG: Gradient-Guided Aggregation for Enhanced Federated Learning](../../CVPR2026/medical_imaging/fedvg_gradient-guided_aggregation_for_enhanced_federated_learning.md)
 - [\[ICML 2025\] SGD Jittering: A Training Strategy for Robust and Accurate Model-Based Architectures](sgd_jittering_a_training_strategy_for_robust_and_accurate_model-based_architectu.md)
-- [\[ICML 2025\] DeltaSHAP: Explaining Prediction Evolutions in Online Patient Monitoring with Shapley Values](deltashap_explaining_prediction_evolutions_in_online_patient_monitoring_with_sha.md)
-- [\[ICML 2025\] Training Flexible Models of Genetic Variant Effects from Functional Annotations using Accelerated Linear Algebra](training_flexible_models_of_genetic_variant_effects_from_functional_annotations_.md)
+- [\[AAAI 2026\] Personality-guided Public-Private Domain Disentangled Hypergraph-Former Network for Multimodal Depression Detection](../../AAAI2026/medical_imaging/personality-guided_public-private_domain_disentangled_hypergraph-former_network_.md)
+- [\[NeurIPS 2025\] Interpretable Next-token Prediction via the Generalized Induction Head](../../NeurIPS2025/medical_imaging/interpretable_next-token_prediction_via_the_generalized_induction_head.md)
 
 </div>
 

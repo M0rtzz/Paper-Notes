@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 LLM / NLP方向392篇论文解读
+  ACL2025 LLM / NLP方向389篇论文解读
 description: >-
-  392篇ACL2025的 LLM / NLP 方向论文解读，涵盖 LLM、推理、Agent、对齐/RLHF、对抗鲁棒、对话系统等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  389篇ACL2025的 LLM / NLP 方向论文解读，涵盖 LLM、推理、对齐/RLHF、Agent、对抗鲁棒、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2025"
   - "LLM / NLP"
@@ -10,20 +10,20 @@ tags:
   - "论文笔记"
   - "LLM"
   - "推理"
-  - "Agent"
   - "对齐/RLHF"
+  - "Agent"
   - "对抗鲁棒"
-  - "对话系统"
+  - "语音"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 LLM / NLP
 
-**💬 ACL2025** · **392** 篇论文解读
+**💬 ACL2025** · **389** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (50)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (35)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (32)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (49)](../../NeurIPS2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (58)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (35)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (32)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/llm_nlp/index.md)
 
-🔥 **高频主题：** LLM ×176 · 推理 ×30 · Agent ×16 · 对齐/RLHF ×16 · 对抗鲁棒 ×12
+🔥 **高频主题：** LLM ×175 · 推理 ×30 · 对齐/RLHF ×16 · Agent ×15 · 对抗鲁棒 ×12
 
 **[A Large-Scale Real-World Evaluation of an LLM-Based Virtual Teaching Assistant](a_large-scale_real-world_evaluation_of_llm-based_virtual_teaching_assistant.md)**
 
@@ -68,10 +68,6 @@ tags:
 **[Acquisition and Application of Novel Knowledge in Large Language Models](acquisition_and_application_of_novel_knowledge_in_large_language_models.md)**
 
 :   本文提出 PermAR 框架，通过排列式语言建模赋予自回归模型双向知识获取能力，同时构建了基于知识图谱生物进化模拟的新知识数据集 NovelHuman，发现知识在句子中的位置显著影响 LLM 的知识获取效果，PermAR 在新知识注入任务上比现有方法提升 3.3%-38%。
-
-**[Adaptive-VP: A Framework for LLM-Based Virtual Patients that Adapts to Trainees' Dialogue to Facilitate Nurse Communication Training](adaptive-vp_a_framework_for_llm-based_virtual_patients_that_adapts_to_trainees_d.md)**
-
-:   提出 Adaptive-VP 框架，利用 LLM 构建可根据护理学员沟通质量动态调整行为的虚拟病人（VP），通过多 Agent 评估→动态适应→对话生成→安全监控的四模块管线，在 28 名护理专家的 between-subjects 实验中显著提升了 VP 交互的感知真实感（角色保真度 $\eta_p^2 = 0.151$，对话真实感 $\eta_p^2 = 0.254$）。
 
 **[AfroBench: How Good are Large Language Models on African Languages?](afrobench_how_good_are_large_language_models_on_african_languages.md)**
 
@@ -631,10 +627,6 @@ tags:
 
 :   提出 AgoraBench 基准，系统评估 6 个 LLM 在 3 个领域×3 种数据生成方式下的数据生成能力，通过训练 99 个学生模型发现：LLM 的数据生成能力与问题求解能力不直接相关，GPT-4o 在实例生成上最强而 Claude-3.5-Sonnet 在质量增强上最强。
 
-**[LLMs Can Simulate Standardized Patients via Agent Coevolution](evopatient_standardized_patient.md)**
-
-:   EvoPatient 提出了一个多智能体协同进化框架，通过患者 Agent 和医生 Agent 之间的自主模拟对话，让 LLM 无需人工监督即可学会模拟标准化病人（SP），在需求对齐度上超过现有推理方法 10%+。
-
 **[ExpeTrans: LLMs Are Experiential Transfer Learners](expetrans_llms_are_experiential_transfer_learners.md)**
 
 :   ExpeTrans 提出了一个自主经验迁移框架，让 LLM 模仿人类认知智能，将已有源任务的解题经验自动迁移到新遇到的目标任务上，在 13 个数据集上有效提升了 LLM 性能，无需为每个新任务人工收集经验。
@@ -666,10 +658,6 @@ tags:
 **[FoodTaxo: Generating Food Taxonomies with Large Language Models](foodtaxo_generating_food_taxonomies_with_large_language_models.md)**
 
 :   提出 FoodTaxo，基于 Llama-3 的迭代自底向上分类法生成与补全算法，利用 CoT 提示 + RAG 检索 + NLI 验证三阶段流程，从已知叶节点概念出发逐步构建层次化 taxonomy；在五个基准数据集上与 TacoPrompt 等 SOTA 方法竞争，同时通过 reference-free 指标和消融实验揭示了非叶节点放置这一根本性瓶颈。
-
-**[A Survey on Foundation Language Models for Single-cell Biology](foundation_lm_single_cell_survey.md)**
-
-:   首篇从语言建模视角系统综述单细胞生物学基础语言模型，将现有工作划分为PLM（从头预训练）和LLM（利用已有大模型）两大类，全面分析tokenization策略、预训练/微调范式以及下游任务体系，并指出当前领域在数据质量、统一评测和scaling law方面的核心挑战。
 
 **[From Data to Knowledge: Evaluating How Efficiently Language Models Learn Facts](from_data_to_knowledge_evaluating_how_efficiently_language_models_learn_facts.md)**
 

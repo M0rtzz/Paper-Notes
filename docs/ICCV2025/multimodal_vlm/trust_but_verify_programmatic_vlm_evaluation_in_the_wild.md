@@ -173,9 +173,9 @@ $$\text{tscore}(\hat{\mathcal{A}}) = \frac{\sum_{t' \in g(\hat{\mathcal{A}})} \m
 
 - [\[NeurIPS 2025\] Generate, but Verify: Reducing Hallucination in Vision-Language Models with Retrospective Resampling](../../NeurIPS2025/multimodal_vlm/generate_but_verify_reducing_hallucination_in_visionlanguage.md)
 - [\[ICCV 2025\] SimpleVQA: Multimodal Factuality Evaluation for Multimodal Large Language Models](simplevqa_multimodal_factuality_evaluation_for_multimodal_large_language_models.md)
-- [\[ICCV 2025\] MolParser: End-to-end Visual Recognition of Molecule Structures in the Wild](molparser_end-to-end_visual_recognition_of_molecule_structures_in_the_wild.md)
 - [\[NeurIPS 2025\] Reading Recognition in the Wild](../../NeurIPS2025/multimodal_vlm/reading_recognition_in_the_wild.md)
 - [\[ICCV 2025\] Fine-Grained Evaluation of Large Vision-Language Models in Autonomous Driving](fine-grained_evaluation_of_large_vision-language_models_in_autonomous_driving.md)
+- [\[ICCV 2025\] GEOBench-VLM: Benchmarking Vision-Language Models for Geospatial Tasks](geobench-vlm_benchmarking_vision-language_models_for_geospatial_tasks.md)
 
 </div>
 

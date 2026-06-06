@@ -139,10 +139,10 @@ tags:
 ## 相关论文
 
 - [\[ICML 2025\] From Token to Rhythm: A Multi-Scale Approach for ECG-Language Pretraining](../../ICML2025/medical_imaging/from_token_to_rhythm_a_multi-scale_approach_for_ecg-language_pretraining.md)
-- [\[NeurIPS 2025\] Towards Unified and Lossless Latent Space for 3D Molecular Latent Diffusion Modeling](towards_unified_and_lossless_latent_space_for_3d_molecular_latent_diffusion_mode.md)
-- [\[NeurIPS 2025\] Pharmacophore-Guided Generative Design of Novel Drug-Like Molecules](pharmacophore-guided_generative_design_of_novel_drug-like_molecules.md)
 - [\[CVPR 2025\] Novel Architecture of RPA In Oral Cancer Lesion Detection](../../CVPR2025/medical_imaging/novel_architecture_of_rpa_in_oral_cancer_lesion_detection.md)
 - [\[NeurIPS 2025\] RAxSS: Retrieval-Augmented Sparse Sampling for Explainable Variable-Length Medical Time Series Classification](raxss_retrieval-augmented_sparse_sampling_for_explainable_variable-length_medica.md)
+- [\[NeurIPS 2025\] Dynamic Causal Discovery in Alzheimer's Disease through Latent Pseudotime Modelling](dynamic_causal_discovery_in_alzheimers_disease_through_latent_pseudotime_modelli.md)
+- [\[ICML 2025\] Boosting Masked ECG-Text Auto-Encoders as Discriminative Learners (D-BETA)](../../ICML2025/medical_imaging/boosting_masked_ecg-text_auto-encoders_as_discriminative_learners.md)
 
 </div>
 

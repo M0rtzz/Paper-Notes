@@ -137,12 +137,6 @@ LegalDrill 是 teacher–student 迭代框架，每轮 $t$ 三步：
 - 写作质量: ⭐⭐⭐⭐ 动机—方法—实验链条清晰，公式恰到好处不冗余
 - 价值: ⭐⭐⭐⭐⭐ 私有部署的法律 SLM 是真实工业刚需，方法可直接复用到医学、金融等高敏领域
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">
@@ -152,8 +146,8 @@ LegalDrill 是 teacher–student 迭代框架，每轮 $t$ 三步：
 - [\[ACL 2026\] Accurate Legal Reasoning at Scale: Neuro-Symbolic Offloading and Structural Auditability for Robust Legal Adjudication](accurate_legal_reasoning_at_scale_neuro-symbolic_offloading_and_structural_audit.md)
 - [\[ACL 2026\] TrigReason: Trigger-Based Collaboration between Small and Large Reasoning Models](trigreason_trigger-based_collaboration_between_small_and_large_reasoning_models.md)
 - [\[ACL 2026\] AIM-CoT: Active Information-driven Multimodal Chain-of-Thought for Vision-Language Reasoning](aim-cot_active_information-driven_multimodal_chain-of-thought_for_vision-languag.md)
+- [\[ICML 2026\] DenseSteer: Steering Small Language Models towards Dense Math Reasoning](../../ICML2026/llm_reasoning/densesteer_steering_small_language_models_towards_dense_math_reasoning.md)
 - [\[ACL 2026\] RSAT: Structured Attribution Makes Small Language Models Faithful Table Reasoners](rsat_structured_attribution_makes_small_language_models_faithful_table_reasoners.md)
-- [\[ICLR 2026\] Efficient Test-Time Scaling for Small Vision-Language Models](../../ICLR2026/llm_reasoning/efficient_test-time_scaling_for_small_vision-language_models.md)
 
 </div>
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 人体理解方向64篇论文解读
+  CVPR2025 人体理解方向65篇论文解读
 description: >-
-  64篇CVPR2025的人体理解方向论文解读，涵盖人体姿态、人脸/视线、虚拟人、语音、多模态、情感分析等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  65篇CVPR2025的人体理解方向论文解读，涵盖人体姿态、人脸/视线、虚拟人、语音、多模态、情感分析等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2025"
   - "人体理解"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧑 人体理解
 
-**📷 CVPR2025** · **64** 篇论文解读
+**📷 CVPR2025** · **65** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (1)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (53)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (7)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (15)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (18)](../../NeurIPS2025/human_understanding/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (3)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (60)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (7)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (15)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (18)](../../NeurIPS2025/human_understanding/index.md)
 
-🔥 **高频主题：** 人体姿态 ×14 · 人脸/视线 ×11 · 虚拟人 ×5 · 语音 ×4 · 多模态 ×3
+🔥 **高频主题：** 人体姿态 ×14 · 人脸/视线 ×12 · 虚拟人 ×5 · 语音 ×4 · 多模态 ×3
 
 **[3D Face Reconstruction From Radar Images](3d_face_reconstruction_from_radar_images.md)**
 
@@ -98,6 +98,10 @@ tags:
 **[FSFM: A Generalizable Face Security Foundation Model via Self-Supervised Facial Representation Learning](fsfm_a_generalizable_face_security_foundation_model_via_self-supervised_facial_r.md)**
 
 :   FSFM 提出首个面向人脸安全任务的自监督预训练框架，通过 CRFR-P 面部掩码策略 + MIM/ID 双任务协同学习真实人脸的 3C 表示（区域内一致性、区域间连贯性、局部到全局对应性），在深伪检测、活体检测和扩散伪造检测三大任务上超越任务专用 SOTA。
+
+**[GA3CE: Unconstrained 3D Gaze Estimation with Gaze-Aware 3D Context Encoding](ga3ce_unconstrained_3d_gaze_estimation_with_gaze-aware_3d_context_encoding.md)**
+
+:   提出 GA3CE 方法，通过将主体 3D 姿态和场景物体位置编码到以主体为中心的自我中心空间中，并设计方向-距离分解的 D3 位置编码，在 Transformer 中学习 3D 注视方向与场景上下文的空间关系，在无约束设置下将 3D 注视角度误差降低 13%–37%。
 
 **[GaussianIP: Identity-Preserving Realistic 3D Human Generation via Human-Centric Diffusion Prior](gaussianip_identity-preserving_realistic_3d_human_generation_via_human-centric_d.md)**
 

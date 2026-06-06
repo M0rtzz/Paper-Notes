@@ -180,9 +180,9 @@ $$\text{IG}(d, \theta) = H(Y) - \sum_{s \in \{L, R\}} \frac{|S_s|}{|S|} H(Y_s)$$
 
 - [\[ICML 2025\] WILTing Trees: Interpreting the Distance Between MPNN Embeddings](wilting_trees_interpreting_the_distance_between_mpnn_embeddings.md)
 - [\[ICML 2025\] Towards Graph Foundation Models: Learning Generalities Across Graphs via Task-Trees](towards_graph_foundation_models_learning_generalities_across_graphs_via_task-tre.md)
+- [\[ICML 2026\] RADE: Random Add-Drop Edge as a Regularizer](../../ICML2026/graph_learning/rade_random_add-drop_edge_as_a_regularizer.md)
+- [\[ACL 2026\] Evaluating LLMs on Large-Scale Graph Property Estimation via Random Walks](../../ACL2026/graph_learning/evaluating_llms_on_large-scale_graph_property_estimation_via_random_walks.md)
 - [\[ICML 2025\] TopInG: Topologically Interpretable Graph Learning via Persistent Rationale Filtration](toping_topologically_interpretable_graph_learning_via_persistent_rationale_filtr.md)
-- [\[ICML 2025\] TINED: GNNs-to-MLPs by Teacher Injection and Dirichlet Energy Distillation](tined_gnns-to-mlps_by_teacher_injection_and_dirichlet_energy_distillation.md)
-- [\[ICML 2025\] GlycanAA: Modeling All-Atom Glycan Structures via Hierarchical Message Passing and Multi-Scale Pre-training](modeling_all-atom_glycan_structures_via_hierarchical_message_passing_and_multi-s.md)
 
 </div>
 

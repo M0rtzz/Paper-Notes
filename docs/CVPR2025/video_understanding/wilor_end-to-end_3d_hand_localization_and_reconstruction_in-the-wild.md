@@ -115,9 +115,9 @@ WiLoR 分两个组件：(1) 实时全卷积无锚框手部检测器，基于 Dar
 
 - [\[ECCV 2024\] OneTrack: Demystifying the Conflict Between Detection and Tracking in End-to-End 3D Trackers](../../ECCV2024/video_understanding/onetrack_demystifying_the_conflict_between_detection_and_tracking_in_end-to-end_.md)
 - [\[CVPR 2026\] STORM: End-to-End Referring Multi-Object Tracking in Videos](../../CVPR2026/video_understanding/storm_referring_multi_object_tracking.md)
-- [\[ICML 2026\] Towards Resource-Efficient LLMs: End-to-End Energy Accounting of Distillation Pipelines](../../ICML2026/video_understanding/towards_resource-efficient_llms_end-to-end_energy_accounting_of_distillation_pip.md)
 - [\[CVPR 2025\] PlanarSplatting: Accurate Planar Surface Reconstruction in 3 Minutes](planarsplatting_accurate_planar_surface_reconstruction_in_3_minutes.md)
 - [\[ECCV 2024\] On the Utility of 3D Hand Poses for Action Recognition](../../ECCV2024/video_understanding/on_the_utility_of_3d_hand_poses_for_action_recognition.md)
+- [\[CVPR 2026\] SHOW3D: Capturing Scenes of 3D Hands and Objects in the Wild](../../CVPR2026/video_understanding/show3d_capturing_scenes_of_3d_hands_and_objects_in_the_wild.md)
 
 </div>
 

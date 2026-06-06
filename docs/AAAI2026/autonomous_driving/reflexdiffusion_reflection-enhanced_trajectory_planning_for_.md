@@ -1,6 +1,6 @@
 ---
 title: >-
-  [论文解读] ReflexDiffusion: 反思增强的高侧向加速度自动驾驶轨迹规划
+  [论文解读] ReflexDiffusion: Reflection-Enhanced Trajectory Planning for High-lateral-acceleration Scenarios in Autonomous Driving
 description: >-
   [AAAI 2026][自动驾驶][扩散规划] 提出 ReflexDiffusion，在扩散模型推理阶段引入物理感知的反思机制，通过梯度注入强化曲率-速度-加速度耦合约束（a_y = κv²），在 nuPlan 高侧向加速度长尾场景中驾驶分数提升 14.1%，架构无关可直接部署到现有扩散规划器。
 tags:

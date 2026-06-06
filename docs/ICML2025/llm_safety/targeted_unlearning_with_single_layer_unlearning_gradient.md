@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Targeted Unlearning with Single Layer Unlearning Gradient
 description: >-
-  [ICML 2025][多模态VLM][machine unlearning] 提出 SLUG (Single Layer Unlearning Gradient) 方法，通过层重要性和梯度对齐指标识别最优单层，仅需一次梯度计算和单层参数更新即可实现高效精准的定向遗忘…
+  [ICML 2025][LLM安全][machine unlearning] 提出 SLUG (Single Layer Unlearning Gradient) 方法，通过层重要性和梯度对齐指标识别最优单层，仅需一次梯度计算和单层参数更新即可实现高效精准的定向遗忘…
 tags:
   - "ICML 2025"
-  - "多模态VLM"
+  - "LLM安全"
   - "machine unlearning"
   - "CLIP"
   - "扩散模型"
@@ -143,9 +143,9 @@ $$\theta_l^* \leftarrow \theta_l^{(0)} - \lambda^* \nabla_{\theta_l}\mathcal{L}_
 
 - [\[CVPR 2026\] RAZOR: Ratio-Aware Layer Editing for Targeted Unlearning in Vision Transformers and Diffusion Models](../../CVPR2026/llm_safety/razor_ratio-aware_layer_editing_for_targeted_unlearning_in_vision_transformers_a.md)
 - [\[ICML 2025\] Align-then-Unlearn: Embedding Alignment for LLM Unlearning](align-then-unlearn_embedding_alignment_for_llm_unlearning.md)
-- [\[NeurIPS 2025\] Approximate Domain Unlearning for Vision-Language Models](../../NeurIPS2025/llm_safety/approximate_domain_unlearning_for_visionlanguage_models.md)
-- [\[ICCV 2025\] MUNBa: Machine Unlearning via Nash Bargaining](../../ICCV2025/llm_safety/munba_machine_unlearning_via_nash_bargaining.md)
+- [\[ACL 2025\] CLIPErase: Efficient Unlearning of Visual-Textual Associations in CLIP](../../ACL2025/llm_safety/cliperase_efficient_unlearning_of_visual-textual_associations_in_clip.md)
 - [\[ICML 2025\] NegMerge: Sign-Consensual Weight Merging for Machine Unlearning](negmerge_sign-consensual_weight_merging_for_machine_unlearning.md)
+- [\[ICCV 2025\] MUNBa: Machine Unlearning via Nash Bargaining](../../ICCV2025/llm_safety/munba_machine_unlearning_via_nash_bargaining.md)
 
 </div>
 

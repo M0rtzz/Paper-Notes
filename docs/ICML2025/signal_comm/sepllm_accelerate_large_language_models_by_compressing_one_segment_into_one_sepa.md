@@ -144,11 +144,11 @@ Training-from-scratch 模式使用标准的自回归交叉熵损失，但注意�
 
 ## 相关论文
 
-- [\[ACL 2026\] PolicyLLM: Towards Excellent Comprehension of Public Policy for Large Language Models](../../ACL2026/signal_comm/policyllm_towards_excellent_comprehension_of_public_policy_for_large_language_mo.md)
 - [\[ICML 2025\] Large Language Model (LLM)-enabled In-context Learning for Wireless Network Optimization](large_language_model_llm-enabled_in-context_learning_for_wireless_network_optimi.md)
 - [\[NeurIPS 2025\] Artificial Hivemind: The Open-Ended Homogeneity of Language Models (and Beyond)](../../NeurIPS2025/signal_comm/artificial_hivemind_the_open-ended_homogeneity_of_language_models_and_beyond.md)
+- [\[NeurIPS 2025\] The Last Vote: A Multi-Stakeholder Framework for Language Model Governance](../../NeurIPS2025/signal_comm/the_last_vote_a_multi-stakeholder_framework_for_language_model_governance.md)
+- [\[ECCV 2024\] Defect Spectrum: A Granular Look of Large-Scale Defect Datasets with Rich Semantics](../../ECCV2024/signal_comm/defect_spectrum_a_granular_look_of_large-scale_defect_datasets_with_rich_semanti.md)
 - [\[ICML 2025\] Fourier Position Embedding: Enhancing Attention's Periodic Extension for Length Generalization](fourier_position_embedding_enhancing_attentions_periodic_extension_for_length_ge.md)
-- [\[ICML 2025\] Deep Electromagnetic Structure Design Under Limited Evaluation Budgets](deep_electromagnetic_structure_design_under_limited_evaluation_budgets.md)
 
 </div>
 

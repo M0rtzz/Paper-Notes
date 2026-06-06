@@ -128,10 +128,10 @@ Proposition 3.1 证明：无论 pruning 还是 merging 都使 $\|H_f[SA(MX)]\|_F
 
 ## 相关论文
 
+- [\[ICML 2026\] Vision Transformer 微调中的非光滑分量优势](../../ICML2026/others/vision_transformer_finetuning_benefits_from_non-smooth_components.md)
 - [\[ACL 2025\] Verbosity-Aware Rationale Reduction: Effective Reduction of Redundant Rationale](../../ACL2025/others/verbosity-aware_rationale_reduction_effective_reduction_of_redundant_rationale_v.md)
 - [\[NeurIPS 2025\] UniFormer: Unified and Efficient Transformer for Reasoning Across General and Custom Computing](uniformer_unified_and_efficient_transformer_for_reasoning_across_general_and_cus.md)
 - [\[ECCV 2024\] AttnZero: Efficient Attention Discovery for Vision Transformers](../../ECCV2024/others/attnzero_efficient_attention_discovery_for_vision_transformers.md)
-- [\[ACL 2025\] LaTIM: Measuring Latent Token-to-Token Interactions in Mamba Models](../../ACL2025/others/latim_measuring_latent_token-to-token_interactions_in_mamba_models.md)
 - [\[NeurIPS 2025\] Active Measurement: Efficient Estimation at Scale](active_measurement_efficient_estimation_at_scale.md)
 
 </div>

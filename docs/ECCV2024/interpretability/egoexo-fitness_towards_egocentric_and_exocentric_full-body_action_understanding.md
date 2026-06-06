@@ -2,10 +2,10 @@
 title: >-
   [论文解读] EgoExo-Fitness: Towards Egocentric and Exocentric Full-Body Action Understanding
 description: >-
-  [ECCV 2024][人体理解][第一人称视觉] 提出 EgoExo-Fitness 数据集，包含同步的第一人称和第三人称健身视频，提供两级时间边界标注和创新性的可解释动作评判标注（技术关键点验证、自然语言评论、质量评分），并构建五个基准任务。
+  [ECCV 2024][可解释性][第一人称视觉] 提出 EgoExo-Fitness 数据集，包含同步的第一人称和第三人称健身视频，提供两级时间边界标注和创新性的可解释动作评判标注（技术关键点验证、自然语言评论、质量评分），并构建五个基准任务。
 tags:
   - "ECCV 2024"
-  - "人体理解"
+  - "可解释性"
   - "第一人称视觉"
   - "全身动作理解"
   - "健身数据集"
@@ -170,10 +170,10 @@ EgoExo-Fitness 是一个**数据集+基准**贡献，核心包含三个部分：
 ## 相关论文
 
 - [\[ICLR 2026\] Closing the Curvature Gap: Full Transformer Hessians and Their Implications for Scaling Laws](../../ICLR2026/interpretability/closing_the_curvature_gap_full_transformer_hessians_and_their_implications_for_s.md)
-- [\[ACL 2026\] Context-Value-Action Architecture for Value-Driven Large Language Model Agents](../../ACL2026/interpretability/context-value-action_architecture_for_value-driven_large_language_model_agents.md)
 - [\[AAAI 2026\] Attention Gathers, MLPs Compose: A Causal Analysis of an Action-Outcome Circuit in VideoViT](../../AAAI2026/interpretability/attention_gathers_mlps_compose_a_causal_analysis_of_an_action-outcome_circuit_in.md)
 - [\[CVPR 2026\] Geometry-Guided Camera Motion Understanding in VideoLLMs](../../CVPR2026/interpretability/geometry-guided_camera_motion_understanding_in_videollms.md)
 - [\[ICML 2025\] Position: We Need An Algorithmic Understanding of Generative AI](../../ICML2025/interpretability/position_we_need_an_algorithmic_understanding_of_generative_ai.md)
+- [\[NeurIPS 2025\] Improving Perturbation-based Explanations by Understanding the Role of Uncertainty Calibration](../../NeurIPS2025/interpretability/improving_perturbation-based_explanations_by_understanding_the_role_of_uncertain.md)
 
 </div>
 

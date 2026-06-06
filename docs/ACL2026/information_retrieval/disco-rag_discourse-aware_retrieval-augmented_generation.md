@@ -146,13 +146,6 @@ generic planning 只比 standard RAG 涨 1.3–2.0 分，而 discourse-aware pla
 - 写作质量: ⭐⭐⭐⭐ 公式化 pipeline 清晰，图 1 的反例说明 motivation 直观；附录 prompt 全公开
 - 价值: ⭐⭐⭐⭐⭐ Training-free 即可大幅提升长文档 RAG，且模块化解耦工程友好，直接可部署
 
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">

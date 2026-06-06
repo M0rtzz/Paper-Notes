@@ -190,8 +190,8 @@ MapTracker在两个数据集上均大幅领先：mAP提升**8%+**，C-mAP提升*
 - [\[ECCV 2024\] MapDistill: Boosting Efficient Camera-based HD Map Construction via Camera-LiDAR Fusion Model Distillation](mapdistill_boosting_efficient_camera-based_hd_map_construction_via_camera-lidar_.md)
 - [\[AAAI 2026\] PriorDrive: Enhancing Online HD Mapping with Unified Vector Priors](../../AAAI2026/autonomous_driving/priordrive_enhancing_online_hd_mapping_with_unified_vector_p.md)
 - [\[ECCV 2024\] Risk-Aware Self-Consistent Imitation Learning for Trajectory Planning in Autonomous Driving](risk-aware_self-consistent_imitation_learning_for_trajectory_planning_in_autonom.md)
+- [\[ECCV 2024\] Stream Query Denoising for Vectorized HD-Map Construction](stream_query_denoising_for_vectorized_hd-map_construction.md)
 - [\[ECCV 2024\] Accelerating Online Mapping and Behavior Prediction via Direct BEV Feature Attention](accelerating_online_mapping_and_behavior_prediction_via_dire.md)
-- [\[ECCV 2024\] LiDAR-Event Stereo Fusion with Hallucinations](lidar-event_stereo_fusion_with_hallucinations.md)
 
 </div>
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 LLM / NLP方向27篇论文解读
+  ICML2025 LLM / NLP方向28篇论文解读
 description: >-
-  27篇ICML2025的 LLM / NLP 方向论文解读，涵盖 LLM、少样本学习、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  28篇ICML2025的 LLM / NLP 方向论文解读，涵盖 LLM、少样本学习、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "LLM / NLP"
@@ -16,9 +16,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 LLM / NLP
 
-**🧪 ICML2025** · **27** 篇论文解读
+**🧪 ICML2025** · **28** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (50)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (35)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (32)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (49)](../../NeurIPS2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (58)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (35)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (32)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/llm_nlp/index.md)
 
 🔥 **高频主题：** LLM ×7 · 少样本学习 ×2 · 推理 ×2
 
@@ -97,6 +97,10 @@ tags:
 **[Regress, Don't Guess — A Regression-like Loss on Number Tokens for Language Models](regress_dont_guess_--_a_regression-like_loss_on_number_tokens_for_language_model.md)**
 
 :   提出 Number Token Loss (NTL)，一种纯 token 级别的回归式损失函数，通过最小化数值 token 之间的 $L_p$ 范数或 Wasserstein 距离，为 LLM 注入数值邻近性归纳偏置。
+
+**[Roll the Dice & Look Before You Leap: Going Beyond the Creative Limits of Next-Token Prediction](roll_the_dice_look_before_you_leap_going_beyond_the_creative_limits_of_next-toke.md)**
+
+:   本文设计了一套最小化算法任务来量化语言模型的"创造力极限"，证明 next-token 学习在需要"思维跳跃"的开放式任务中是近视的，而多 token 方法（teacherless 训练、离散扩散模型）以及输入层噪声注入（seed-conditioning）能显著提升生成的多样性与原创性。
 
 **[RULEBREAKERS: Challenging LLMs at the Crossroads between Formal Logic and Human-like Reasoning](rulebreakers_challenging_llms_at_the_crossroads_between_formal_logic_and_human-l.md)**
 

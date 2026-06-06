@@ -152,10 +152,10 @@ ChartCap测试集上各模型表现：
 ## 相关论文
 
 - [\[ACL 2025\] Monitoring Decoding: Mitigating Hallucination via Evaluating the Factuality of Partial Response during Generation](../../ACL2025/llm_safety/monitoring_decoding_mitigating_hallucination_via_evaluating_the_factuality_of_pa.md)
+- [\[ACL 2026\] Generating Effective CoT Traces for Mitigating Causal Hallucination](../../ACL2026/llm_safety/generating_effective_cot_traces_for_mitigating_causal_hallucination.md)
+- [\[CVPR 2026\] Mitigating Object Hallucination in LVLMs via Attention Imbalance Rectification](../../CVPR2026/llm_safety/mitigating_object_hallucinations_in_lvlms_via_attention_imbalance_rectification.md)
 - [\[ACL 2025\] Cracking the Code of Hallucination in LVLMs with Vision-aware Head Divergence](../../ACL2025/llm_safety/cracking_hallucination_vhd.md)
 - [\[ACL 2025\] Automated Explanation Generation and Hallucination Detection for Heritage Image Retrieval](../../ACL2025/llm_safety/automated_explanation_generation_and_hallucination_detection_for_heritage_image_.md)
-- [\[ACL 2025\] On-Policy Self-Alignment with Fine-grained Knowledge Feedback for Hallucination Mitigation](../../ACL2025/llm_safety/on-policy_self-alignment_with_fine-grained_knowledge_feedback_for_hallucination_.md)
-- [\[ICML 2025\] ICLShield: Exploring and Mitigating In-Context Learning Backdoor Attacks](../../ICML2025/llm_safety/iclshield_exploring_and_mitigating_in-context_learning_backdoor_attacks.md)
 
 </div>
 

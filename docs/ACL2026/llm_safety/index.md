@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 LLM 安全方向115篇论文解读
+  ACL2026 LLM 安全方向128篇论文解读
 description: >-
-  115篇ACL2026的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、水印/隐写、多模态、推理、RAG等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  128篇ACL2026的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、水印/隐写、推理、多模态、RAG等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "LLM 安全"
@@ -11,19 +11,19 @@ tags:
   - "LLM"
   - "对抗鲁棒"
   - "水印/隐写"
-  - "多模态"
   - "推理"
+  - "多模态"
   - "RAG"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM 安全
 
-**💬 ACL2026** · **115** 篇论文解读
+**💬 ACL2026** · **128** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (18)](../../ICML2026/llm_safety/index.md) · [📷 CVPR2026 (29)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (54)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (43)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (84)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (13)](../../ICCV2025/llm_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (47)](../../ICML2026/llm_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (54)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (43)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/llm_safety/index.md)
 
-🔥 **高频主题：** LLM ×43 · 对抗鲁棒 ×22 · 水印/隐写 ×10 · 多模态 ×9 · 推理 ×8
+🔥 **高频主题：** LLM ×47 · 对抗鲁棒 ×22 · 水印/隐写 ×10 · 推理 ×10 · 多模态 ×10
 
 **[STELA: A Linguistics-Aware LLM Watermarking via Syntactic Predictability](a_linguistics-aware_llm_watermarking_via_syntactic_predictability.md)**
 
@@ -48,6 +48,10 @@ tags:
 **[ADVICE: Answer-Dependent Verbalized Confidence Estimation](advice_answer-dependent_verbalized_confidence_estimation.md)**
 
 :   本文通过 JSD 与归因分析诊断出 LLM 口头置信度过自信的根因是「置信度几乎不依赖于自己生成的答案」，并提出基于对比答案对的轻量微调框架 ADVICE，用 JSD/Margin/Sum 三项损失强迫置信度分布对正确答案显著高于错误答案，在保持任务精度的同时把 Gemma2-9b 在 TriviaQA 的 ECE 从 21.9% 压到 6.2%。
+
+**[AgentCoMa: A Compositional Benchmark Mixing Commonsense and Mathematical Reasoning in Real-World Scenarios](agentcoma_a_compositional_benchmark_mixing_commonsense_and_mathematical_reasonin.md)**
+
+:   AgentCoMa 构造了一个把常识选择和单步数学运算强制组合起来的 agentic benchmark，并在 61 个 LLM 上发现：模型通常能分别做对两个子问题，但组合后平均准确率从“两个子步都能独立答对”的 80% 掉到 51%，暴露出混合类型组合推理中的显著脆弱性。
 
 **[AgentMark: Utility-Preserving Behavioral Watermarking for Agents](agentmark_utility-preserving_behavioral_watermarking_for_agents.md)**
 
@@ -89,6 +93,10 @@ tags:
 
 :   形式化定义 RAG 系统的"软失败"威胁（生成流畅但无信息量的回答），提出 DEJA 黑箱进化攻击框架，通过对抗性文档诱导模型利用安全对齐机制产生模棱两可的回答，SASR 超过 79% 且高度隐蔽。
 
+**[Calibration vs Decision Making: Revisiting the Reliability Paradox in Unlearned Language Models](calibration_vs_decision_making_revisiting_the_reliability_paradox_in_unlearned_l.md)**
+
+:   这篇论文说明机器遗忘后的 LLM 即使保持很低的校准误差，也可能更多依赖数据集捷径 token 做选择，因此只用 ECE/MCE/Brier 判断 unlearned model 是否可靠是不够的。
+
 **[Can Persona-Prompted LLMs Emulate Subgroup Values? An Empirical Analysis of Generalisability and Fairness in Cultural Alignment](can_persona-prompted_llms_emulate_subgroup_values_an_empirical_analysis_of_gener.md)**
 
 :   本文用新加坡的 World Values Survey 子集为案例，构造 20,877 个 (问题, 子群体) 样本，验证 LLM 是否能模拟细粒度人口子群的价值偏好——结果 GPT-4.1 zero-shot 仅 57.4% 准确率，简单 SFT 在 OOD 子群上平均涨 17.4%，但 NMAE 视角下子群差距反而扩大，模型对年轻/男性/华人/基督徒持续偏好。
@@ -109,13 +117,13 @@ tags:
 
 :   基于上下文完整性（Contextual Integrity）理论构建企业场景基准 CI-Work，揭示前沿 LLM 智能体在企业工作流中普遍存在隐私泄漏问题，且模型规模扩大反而加剧泄漏。
 
+**[CiPO: Counterfactual Unlearning for Large Reasoning Models through Iterative Preference Optimization](cipo_counterfactual_unlearning_for_large_reasoning_models_through_iterative_pref.md)**
+
+:   针对大型推理模型（LRM）的遗忘难题——需要同时从思维链（CoT）和最终答案中移除敏感知识——提出 CiPO 框架，通过让模型生成逻辑有效的反事实推理轨迹并用迭代偏好优化引导模型偏好反事实路径，实现有效遗忘同时保持推理能力。
+
 **[Compiling Activation Steering into Weights via Null-Space Constraints for Stealthy Backdoors](compiling_activation_steering_into_weights_via_null-space_constraints_for_stealt.md)**
 
 :   本文提出 STEEREDIT，将动态激活转向编译为静态权重修改的后门注入框架，通过提取顺从方向并利用零空间约束确保仅在触发词存在时激活，在多个安全对齐 LLM 上实现高攻击成功率同时保持非触发场景下的安全性和通用性。
-
-**[Conjunctive Prompt Attacks in Multi-Agent LLM Systems](conjunctive_prompt_attacks_in_multi-agent_llm_systems.md)**
-
-:   本文研究多智能体 LLM 系统中的联合提示攻击（conjunctive prompt attacks）：用户查询中嵌入的触发键和被入侵远程代理中的隐藏模板各自看起来无害，但当路由将它们带到同一代理时会激活有害行为，现有防御（PromptGuard、Llama-Guard 等）均无法可靠阻止。
 
 **[Context-Fidelity Boosting: Enhancing Faithful Generation through Watermark-Inspired Decoding](context-fidelity_boosting_enhancing_faithful_generation_through_watermark-inspir.md)**
 
@@ -132,6 +140,10 @@ tags:
 **[CURaTE: Continual Unlearning in Real Time with Ensured Preservation of LLM Knowledge](curate_continual_unlearning_in_real_time_with_ensured_preservation_of_llm_knowle.md)**
 
 :   CURaTE 提出一种基于句子嵌入匹配的行为遗忘框架：预部署时训练一个通用的遗忘嵌入器（不使用任何遗忘集），部署后实时将新遗忘请求嵌入存入数据库，推理时通过余弦相似度决定是回答还是拒绝，完全不修改 LLM 权重从而实现近乎完美的知识保留。
+
+**[DART: Mitigating Harm Drift in Difference-Aware LLMs via Distill-Audit-Repair Training](dart_mitigating_harm_drift_in_difference-aware_llms_via_distill-audit-repair_tra.md)**
+
+:   DART 发现并解决了"危害漂移"问题——微调 LLM 提高差异感知分类准确率（如识别合法的人口统计差异）的同时，模型生成的解释变得更有害。通过蒸馏-审计-修复三阶段管线，DART 将 Llama-3-8B 准确率从 39.0% 提升到 68.8%，同时减少 72.6% 的危害漂移案例。
 
 **[De-Anonymization at Scale via Tournament-Style Attribution](de-anonymization_at_scale_via_tournament-style_attribution.md)**
 
@@ -209,6 +221,10 @@ tags:
 
 :   本文提出 GAMBIT，一种游戏化多模态越狱框架，通过将有害查询分解为拼图图像+隐藏关键词，并嵌入竞争性游戏场景，利用模型的推理激励和认知负荷来绕过安全过滤器，在 Gemini 2.5 Flash 上达到 92.13%、GPT-4o 上达到 85.87% 的攻击成功率，对推理模型和非推理模型均有效。
 
+**[Gap-K%: Measuring Top-1 Prediction Gap for Detecting Pretraining Data](gap-k_measuring_top-1_prediction_gap_for_detecting_pretraining_data.md)**
+
+:   这篇论文提出 Gap-K%，用目标 token 与模型 top-1 预测之间的归一化 log probability gap 加上顺序滑窗平滑来检测文本是否出现在 LLM 预训练数据中，在 WikiMIA、MIMIR、近期模型和强 paraphrase 攻击下都超过 Min-K%++ 等基线。
+
 **[ForgeryTalker: Generating Attribution Reports for Manipulated Facial Images](generating_attribution_reports_for_manipulated_facial_images_a_dataset_and_basel.md)**
 
 :   本文提出伪造归因报告生成（Forgery Attribution Report Generation）这一新任务，构建了包含 152,217 个样本的 MMTT 数据集（首个同时提供像素级掩码和人工文本描述的大规模面部伪造数据集），并提出 ForgeryTalker 端到端基线，通过共享编码器和双解码器（掩码+语言模型）联合生成定位掩码和归因报告，达到 59.3 CIDEr 和 73.67 IoU。
@@ -233,6 +249,10 @@ tags:
 
 :   本文指出 LLM 的"高 self-consistency 不等于真实信念"——在 995 道全样一致答对的题上加一点点上下文干扰，准确率从 100% 直接掉到 33.8%。作者提出 **Neighbor-Consistency Belief (NCB)**：把目标事实和它的"概念邻居（前提/蕴含/主题）"做联合一致性估计，作为信念鲁棒性的结构化代理；并基于 Asch 从众实验与 Source Credibility 理论设计了 cognitive stress-test 协议，在 4 个 LLM 上证明高 NCB 数据明显更抗干扰；进一步提出 **Structure-Aware Training (SAT)**：用师生 KL 蒸馏强制学生模型在不同邻域上下文下输出一致，让新学知识的鲁棒性比 Ans/Know 增强基线再提升约 30%。
 
+**[Instant Personalized Large Language Model Adaptation via Hypernetwork](instant_personalized_large_language_model_adaptation_via_hypernetwork.md)**
+
+:   Profile-to-PEFT 用一个 hypernetwork 把用户画像直接映射成个性化 LoRA 参数，避免 OPPU 为每个用户重新训练 adapter，从而实现更快、更可扩展、可面向未见用户泛化的 LLM 个性化。
+
 **[Into the Gray Zone: Domain Contexts Can Blur LLM Safety Boundaries](into_the_gray_zone_domain_contexts_can_blur_llm_safety_boundaries.md)**
 
 :   本文发现领域特定上下文（如化学论文）会选择性放松 LLM 对相关有害知识的防护（纵向解锁），而安全研究上下文会触发跨所有有害类别的广泛防护放松（通用解锁），据此提出 Jargon 攻击框架，在包括 GPT-5.2、Claude-4.5 在内的七个前沿模型上实现超 93% 的攻击成功率。
@@ -244,6 +264,10 @@ tags:
 **[Know Thy Enemy: Securing LLMs Against Prompt Injection via Diverse Data Synthesis and Instruction-Level Chain-of-Thought Learning](know_thy_enemy_securing_llms_against_prompt_injection_via_diverse_data_synthesis.md)**
 
 :   本文提出 InstruCoT，通过合成覆盖多种注入向量和威胁场景的多样化训练数据，并引入基于情境感知模型的三阶段指令级思维链微调，使 LLM 在面对各类提示注入攻击时能有效识别并拒绝恶意指令，在行为偏离、隐私泄露和有害输出三个维度上大幅超越现有防御方法。
+
+**[Knowledge Poisoning Attacks on Medical Multi-Modal Retrieval-Augmented Generation](knowledge_poisoning_attacks_on_medical_multi-modal_retrieval-augmented_generatio.md)**
+
+:   作者提出 M3Att——首个面向医学多模态 RAG 的 **query-agnostic** 知识投毒框架，用"分布引导的视觉 PGD 触发"做检索劫持 + "临床歧义引导的文本改写"绕过 LVLM 自纠错，在 5 个 LVLM × 5 数据集 × 4 个医学任务上以 <1% 的投毒率（无需查询知识、视觉扰动 $\epsilon=16/255$）平均把下游效用拉低 8.78%，且对图聚类 / 文本聚类 / 图文一致性等 3 种 pre-retrieval 防御鲁棒。
 
 **[LeakDojo: Decoding the Leakage Threats of RAG Systems](leakdojo_decoding_the_leakage_threats_of_rag_systems.md)**
 
@@ -269,6 +293,10 @@ tags:
 
 :   首次系统性地对比扩散大语言模型（dLLM）与自回归（AR）对应模型的幻觉模式，揭示当前 dLLM 幻觉倾向更高，并识别出三种扩散特有的失败模式：过早终止、不完全去噪和上下文入侵。
 
+**[Lying with Truths: Open-Channel Multi-Agent Collusion for Belief Manipulation via Generative Montage](lying_with_truths_open-channel_multi-agent_collusion_for_belief_manipulation_via.md)**
+
+:   这篇论文提出认知合谋攻击这一安全问题：多个代理只公开发布真实但经过叙事编排的证据碎片，也能诱导 LLM 受害代理形成错误因果信念，并在下游验证层中继续传播。
+
 **[Making MLLMs Blind: Adversarial Smuggling Attacks in MLLM Content Moderation](making_mllms_blind_adversarial_smuggling_attacks_in_mllm_content_moderation.md)**
 
 :   本文揭示了多模态大模型内容审核中的"对抗走私攻击"（ASA）威胁——将有害内容编码为人可读但 AI 不可读的视觉格式来规避自动检测，构建了包含 1,700 个样本、9 种攻击技术的 SmuggleBench 基准，发现包括 GPT-5 在内的 SOTA 模型攻击成功率超过 90%。
@@ -292,6 +320,10 @@ tags:
 **[Modeling LLM Unlearning as an Asymmetric Two-Task Learning Problem](modeling_llm_unlearning_as_an_asymmetric_two-task_learning_problem.md)**
 
 :   把 LLM unlearning 显式建模为「retain 为主、forget 为辅」的非对称两任务问题，提出 SAGO——对 retain/forget 梯度做**元素级符号对齐门控**，在 WMDP 与 RWKU 上把 retention 性能逼近原模型，同时几乎不损失 forget 效果。
+
+**[Multi-component Causal Tracing in Large Language Models](multi-component_causal_tracing_in_large_language_models.md)**
+
+:   这篇论文把 causal tracing 从单组件分析扩展到多组件子集搜索，并提出 PGB-CT 用软干预、指标变换和稀疏二值惩罚高效找到共同影响 LLM 行为的 attention heads 与 MLP neurons。
 
 **[MUSE: A Run-Centric Platform for Multimodal Unified Safety Evaluation of Large Language Models](muse_a_run-centric_platform_for_multimodal_unified_safety_evaluation_of_large_la.md)**
 
@@ -344,6 +376,18 @@ tags:
 **[Reasoning Structure Matters for Safety Alignment of Reasoning Models](reasoning_structure_matters_for_safety_alignment_of_reasoning_models.md)**
 
 :   论文指出大型推理模型的安全问题根源在“先理解问题、再全力求解”的推理结构，并提出 AltTrain 用 1K 条 SFT 数据把推理结构改成“问题理解 → 有害性评估 → 条件推理”，显著降低有害响应同时基本保留推理能力。
+
+**[Red-Bandit: Test-Time Adaptation for LLM Red-Teaming via Bandit-Guided LoRA Experts](red-bandit_test-time_adaptation_for_llm_red-teaming_via_bandit-guided_lora_exper.md)**
+
+:   Red-Bandit 将自动化 LLM 红队建模为“多个攻击风格 LoRA 专家 + 测试时 bandit 路由”的在线适应问题，在多个开源和闭源目标模型上用更高 ASR@10 和更低困惑度展示了风格级自适应红队的有效性。
+
+**[Representation-Guided Parameter-Efficient LLM Unlearning](representation-guided_parameter-efficient_llm_unlearning.md)**
+
+:   提出 ReGLU 框架，将 LLM 遗忘从"参数重要性"范式转向"表示空间几何"范式——通过表示引导的 LoRA 初始化（RILA）将遗忘更新对齐到遗忘/保留集最具区分性的子空间，配合表示正交损失（ROL）约束更新不干扰保留集知识。
+
+**[Responsible Federated LLMs via Safety Filtering and Constitutional AI](responsible_federated_llms_via_safety_filtering_and_constitutional_ai.md)**
+
+:   这篇论文把安全过滤器和 Constitutional AI 接入 FedLLM 流程，证明有害客户端数据会显著损害全局模型安全，而在客户端过滤数据、在服务器端低成本 CAI 微调可以把 AdvBench 安全分数从约 72% 拉回到 96% 以上。
 
 **[Rethinking Evaluation for LLM Hallucination Detection: A Desiderata, A New RAG-based Benchmark, New Insights](rethinking_evaluation_for_llm_hallucination_detection_a_desiderata_a_new_rag-bas.md)**
 
@@ -409,6 +453,10 @@ tags:
 
 :   这篇论文把教育 LLM 的安全、帮助性和教学性统一到知识掌握图上，提出 SHAPE 基准评估模型在答案诱导压力下是否仍能按学生掌握状态选择“引导”或“直接作答”，并用图增强 gating pipeline 大幅提升鲁棒性。
 
+**[SharedRequest: Privacy-Preserving Model-Agnostic Inference for Large Language Models](sharedrequest_privacy-preserving_model-agnostic_inference_for_large_language_mod.md)**
+
+:   提出 SharedRequest，一种模型无关的隐私保护 LLM 推理框架，通过将隐私保护从单个 prompt 级提升到批次级——混合真实与噪声 prompt 并共享语义等价请求的推理开销——实现 >20% 的效用提升和最高 5.6× 的查询成本降低。
+
 **[SLIM: Stealthy Low-Coverage Black-Box Watermarking via Latent-Space Confusion Zones](slim_stealthy_low-coverage_black-box_watermarking_via_latent-space_confusion_zon.md)**
 
 :   SLIM 提出一种面向单个数据所有者的低覆盖数据水印思路：通过让模型在局部潜在空间学到相近前缀对应分歧续写的模式，最终在黑盒生成中表现出可统计检测的局部不稳定性。
@@ -464,6 +512,10 @@ tags:
 **[Unlearners Can Lie: Evaluating and Improving Honesty in LLM Unlearning](unlearners_can_lie_evaluating_and_improving_honesty_in_llm_unlearning.md)**
 
 :   这篇论文指出现有 LLM unlearning 方法即使“忘掉了”目标知识，也常会幻觉、伪装拒答或前后不一致，于是提出 honest unlearning 评测框架和 ReVa 表示对齐方法，让模型在遗忘后更稳定地承认自己不知道。
+
+**[VLA-Forget: Vision-Language-Action Unlearning for Embodied Foundation Models](vla-forget_vision-language-action_unlearning_for_embodied_foundation_models.md)**
+
+:   提出 VLA-Forget，首个面向视觉-语言-动作（VLA）模型的混合遗忘框架，通过 ratio-aware 选择性编辑处理感知/跨模态层、significance-based 选择性编辑处理推理/动作层，实现目标行为移除同时保持感知精确性（+22%）和任务成功率（+9%）。
 
 **[When Helpers Become Hazards: A Benchmark for Analyzing Multimodal LLM-Powered Safety in Daily Life](when_helpers_become_hazards_a_benchmark_for_analyzing_multimodal_llm-powered_saf.md)**
 

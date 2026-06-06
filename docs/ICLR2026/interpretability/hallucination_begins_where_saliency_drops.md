@@ -144,11 +144,11 @@ $\alpha$（SGRS）和 $\beta$（LocoRE）的超参数消融（LLaVA-1.5-7B）：
 
 ## 相关论文
 
-- [\[ACL 2026\] Reasoning Fails Where Step Flow Breaks](../../ACL2026/interpretability/reasoning_fails_where_step_flow_breaks.md)
 - [\[ACL 2026\] Mechanisms of Prompt-Induced Hallucination in Vision–Language Models](../../ACL2026/interpretability/mechanisms_of_prompt-induced_hallucination_in_vision-language_models.md)
 - [\[CVPR 2026\] Reallocating Attention Across Layers to Reduce Multimodal Hallucination](../../CVPR2026/interpretability/reallocating_attention_across_layers_to_reduce_multimodal_hallucination.md)
 - [\[NeurIPS 2025\] H-SPLID: HSIC-based Saliency Preserving Latent Information Decomposition](../../NeurIPS2025/interpretability/h-splid_hsic-based_saliency_preserving_latent_information_decomposition.md)
-- [\[ACL 2026\] The Reasoning Trap: How Enhancing LLM Reasoning Amplifies Tool Hallucination](../../ACL2026/interpretability/the_reasoning_trap_how_enhancing_llm_reasoning_amplifies_tool_hallucination.md)
+- [\[ICML 2026\] Finding the Correct Visual Evidence Without Forgetting: Mitigating Hallucination in LVLMs via Inter-Layer Visual Attention Discrepancy](../../ICML2026/interpretability/finding_the_correct_visual_evidence_without_forgetting_mitigating_hallucination_.md)
+- [\[CVPR 2025\] KVQ: Boosting Video Quality Assessment via Saliency-Guided Local Perception](../../CVPR2025/interpretability/kvq_boosting_video_quality_assessment_via_saliency-guided_local_perception.md)
 
 </div>
 

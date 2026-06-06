@@ -151,7 +151,7 @@ $ε \in \{1, 2, 4, 8, 16\}$，$δ = n^{-1.1}$，使用 LoRA 微调 + DP-Adam。
 - [\[NeurIPS 2025\] A Reliable Cryptographic Framework for Empirical Machine Unlearning Evaluation](../../NeurIPS2025/llm_safety/a_reliable_cryptographic_framework_for_empirical_machine_unl.md)
 - [\[ICML 2025\] Cape: Context-Aware Prompt Perturbation Mechanism with Differential Privacy](cape_context-aware_prompt_perturbation_mechanism_with_differential_privacy.md)
 - [\[ICML 2025\] The Canary's Echo: Auditing Privacy Risks of LLM-Generated Synthetic Text](the_canarys_echo_auditing_privacy_risks_of_llm-generated_synthetic_text.md)
-- [\[ACL 2025\] Estimating Privacy Leakage of Augmented Contextual Knowledge in Language Models](../../ACL2025/llm_safety/estimating_privacy_leakage_of_augmented_contextual_knowledge_in_language_models.md)
+- [\[ACL 2026\] How Should We Enhance the Safety of Large Reasoning Models: An Empirical Study](../../ACL2026/llm_safety/how_should_we_enhance_the_safety_of_large_reasoning_models_an_empirical_study.md)
 
 </div>
 

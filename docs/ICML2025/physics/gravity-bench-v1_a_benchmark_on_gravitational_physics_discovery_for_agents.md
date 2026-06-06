@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Gravity-Bench-v1: A Benchmark on Gravitational Physics Discovery for Agents
 description: >-
-  [ICML 2025][物理学][引力物理] 提出 **Gravity-Bench-v1**，一个基于引力动力学模拟的**环境交互式**基准测试，评估 AI Agent 在受限观测预算下进行科学发现（包括 OOD 物理场景）的能力，发现当前模型在观测规划和预算利用方面存在显著不足。
+  [ICML 2025][物理/科学计算][引力物理] 提出 **Gravity-Bench-v1**，一个基于引力动力学模拟的**环境交互式**基准测试，评估 AI Agent 在受限观测预算下进行科学发现（包括 OOD 物理场景）的能力，发现当前模型在观测规划和预算利用方面存在显著不足。
 tags:
   - "ICML 2025"
-  - "物理学"
+  - "物理/科学计算"
   - "引力物理"
   - "科学发现"
   - "AI Agent"
@@ -147,10 +147,10 @@ Gravity-Bench-v1 由三部分组成：
 ## 相关论文
 
 - [\[NeurIPS 2025\] Unsupervised Discovery of High-Redshift Galaxy Populations with Variational Autoencoders](../../NeurIPS2025/physics/unsupervised_discovery_of_high-redshift_galaxy_populations_with_variational_auto.md)
+- [\[ICLR 2026\] Empirical Stability Analysis of Kolmogorov-Arnold Networks in Hard-Constrained Recurrent Physics-Informed Discovery](../../ICLR2026/physics/empirical_stability_analysis_of_kolmogorov-arnold_networks_in_hard-constrained_r.md)
 - [\[NeurIPS 2025\] POLARIS: A High-contrast Polarimetric Imaging Benchmark Dataset for Exoplanetary Disk Representation Learning](../../NeurIPS2025/physics/polaris_a_high-contrast_polarimetric_imaging_benchmark_dataset_for_exoplanetary_.md)
-- [\[ICML 2025\] Finetuning Stellar Spectra Foundation Models with LoRA](finetuning_stellar_spectra_foundation_models_with_lora.md)
-- [\[ICML 2025\] Mixture-of-Expert Variational Autoencoders for Cross-Modality Embedding of Type Ia Supernova Data](mixture-of-expert_variational_autoencoders_for_cross-modality_embedding_of_type_.md)
-- [\[ICML 2025\] Compact Matrix Quantum Group Equivariant Neural Networks](compact_matrix_quantum_group_equivariant_neural_networks.md)
+- [\[ICML 2025\] Differentiable Stellar Atmospheres with Physics-Informed Neural Networks](differentiable_stellar_atmospheres_with_physics-informed_neural_networks.md)
+- [\[ICML 2025\] Causal-PIK: Causality-based Physical Reasoning with a Physics-Informed Kernel](causal-pik_causality-based_physical_reasoning_with_a_physics-informed_kernel.md)
 
 </div>
 

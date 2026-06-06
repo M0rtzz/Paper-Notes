@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 音频/语音方向47篇论文解读
+  ACL2026 音频/语音方向69篇论文解读
 description: >-
-  47篇ACL2026的音频/语音方向论文解读，涵盖语音、对话系统、对抗鲁棒、LLM、问答、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  69篇ACL2026的音频/语音方向论文解读，涵盖语音、对话系统、LLM、多模态、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "音频/语音"
@@ -10,20 +10,20 @@ tags:
   - "论文笔记"
   - "语音"
   - "对话系统"
-  - "对抗鲁棒"
   - "LLM"
-  - "问答"
   - "多模态"
+  - "推理"
+  - "对抗鲁棒"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎵 音频/语音
 
-**💬 ACL2026** · **47** 篇论文解读
+**💬 ACL2026** · **69** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (7)](../../ICML2026/audio_speech/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/audio_speech/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (30)](../../ICML2026/audio_speech/index.md) · [📷 CVPR2026 (14)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (32)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/audio_speech/index.md)
 
-🔥 **高频主题：** 语音 ×39 · 对话系统 ×5 · 对抗鲁棒 ×3 · LLM ×3 · 问答 ×3
+🔥 **高频主题：** 语音 ×51 · 对话系统 ×8 · LLM ×5 · 多模态 ×4 · 推理 ×3
 
 **[Affectron: Emotional Speech Synthesis with Affective and Contextually Aligned Nonverbal Vocalizations](affectron_emotional_speech_synthesis_with_affective_and_contextually_aligned_non.md)**
 
@@ -49,9 +49,17 @@ tags:
 
 :   揭示当前 AudioLLM 的感知弱点源于 ASR 中心的训练范式（系统性抑制副语言和非语言信息），提出 Unified Audio Schema（UAS）将音频信息结构化为转录、副语言和非语言事件三个维度的 JSON 格式，在 MMSU 基准上感知精度提升 10.9% 同时保持推理能力。
 
+**[Beyond Transcripts: A Renewed Perspective on Audio Chaptering](beyond_transcripts_a_renewed_perspective_on_audio_chaptering.md)**
+
+:   这篇论文系统重构长音频章节分段任务：把评测从依赖 transcript 的文本空间推进到 transcript-invariant 的时间空间，并证明直接用音频表示的 AudioSeg 在 YTSeg 上明显优于文本分段和现有 MLLM 方案。
+
 **[Closing the Modality Reasoning Gap for Speech Large Language Models](closing_the_modality_reasoning_gap_for_speech_large_language_models.md)**
 
 :   本文提出 TARS（Trajectory Alignment for Reasoning in Speech），一个基于强化学习的框架，通过表示对齐和行为对齐两种密集奖励信号，将语音条件下的推理轨迹与文本条件下的推理轨迹对齐，在 7B 规模模型中达到 SOTA，MRR（模态恢复率）接近甚至超过 100%。
+
+**[Comprehensive Benchmarking of Long-Form Speech Generation in Diverse Scenarios](comprehensive_benchmarking_of_long-form_speech_generation_in_diverse_scenarios.md)**
+
+:   本文提出 SwanBench-Speech，用 1,101 个样本、17 类真实下游场景和 7 个自动评测维度系统衡量长文本语音生成，结论是当前模型在内容准确性上已接近可用，但在混响一致性、长程韵律和表达层次上仍明显落后于真实录音。
 
 **[Computational Narrative Understanding for Expressive Text-to-Speech](computational_narrative_understanding_for_expressive_text-to-speech.md)**
 
@@ -69,9 +77,33 @@ tags:
 
 :   提出四种基于音频注意力的指标（AudioRatio、AudioConsistency、AudioEntropy、TextEntropy），训练轻量级逻辑回归分类器在推理时检测语音大模型（SpeechLLM）的幻觉，在域内数据上 PR-AUC 提升最高达 +0.23。
 
+**[Dial HEALTHDIAL for Advice: A Multilingual and Multi-Parallel Spoken Dialogue Dataset for Knowledge-Grounded Information Seeking](dial_healthdial_for_advice_a_multilingual_and_multi-parallel_spoken_dialogue_dat.md)**
+
+:   HEALTHDIAL 构建了一个包含 4 种 WHO 官方语言、6,000 个多平行健康信息寻求对话和 163 小时真实用户语音的数据集，并基于 ASR、TTS、检索、知识过滤和用户研究建立了多语言 spoken RAG benchmark。
+
 **[Do We Need Distinct Representations for Every Speech Token? Unveiling and Exploiting Redundancy in Large Speech Language Models](do_we_need_distinct_representations_for_every_speech_token_unveiling_and_exploit.md)**
 
 :   本文通过逐层oracle干预实验揭示了大语音语言模型（LSLM）中语音token表示的结构化冗余层次——浅层编码必要声学细节而深层极度冗余——并提出Affinity Pooling这一免训练的基于相似度的token合并机制，在减少27.48% FLOPs的同时保持竞争力的准确率。
+
+**[DRInQ: Evaluating Conversational Implicature with Controlled Context Variation](drinq_evaluating_conversational_implicature_with_controlled_context_variation.md)**
+
+:   DRInQ 用固定问题表面形式、系统变化上下文的方式构建会话含义评测集，发现 LLM 能生成看似合理的语用场景，却常在推理时过度解读上下文、低于人类判断一致性。
+
+**[DuIVRS-2: An LLM-based Interactive Voice Response System for Large-scale POI Attribute Acquisition](duivrs-2_an_llm-based_interactive_voice_response_system_for_large-scale_poi_attr.md)**
+
+:   DuIVRS-2 将百度地图大规模 POI 属性采集的模块化电话 IVR 系统改造成 LLM 驱动的端到端对话系统，通过 FSM 数据增强、选择式生成和双评估器迭代学习，在生产中达到 83.9% TSR、130ms 平均响应和每天 0.4M 通话能力。
+
+**[Exploration of Perceptual Speech Features for Clinical Decision-Support in Mental Health Care](exploration_of_perceptual_speech_features_for_clinical_decision-support_in_menta.md)**
+
+:   这篇论文提出一个面向心理健康临床辅助的可解释语音分析框架，用感知可理解的声学与语言特征结合 XGBoost、统计检验、SHAP 和 LIME，在压力、抑郁、焦虑、ADHD 等多个数据集上寻找稳定的语音行为线索，而不是追求黑盒端到端诊断。
+
+**[FC-TTS: Style and Timbre Control in Zero-Shot Text-to-Speech with Disentangled Speech Representations](fc-tts_style_and_timbre_control_in_zero-shot_text-to-speech_with_disentangled_sp.md)**
+
+:   FC-TTS 用 FACodec 的解耦语音表示作为条件来源，再通过两阶段谱图生成、VQ-VAE 风格编码和条件一致性损失，把零样本 TTS 中原本纠缠在同一 reference 里的音色和说话风格拆成两个可独立控制的输入。
+
+**[From Flat Language Labels to Typological Priors: Structured Language Conditioning for Multilingual Speech-to-Speech Translation](from_flat_language_labels_to_typological_priors_structured_language_conditioning.md)**
+
+:   本文提出 S2ST-Omni 2，把多语言语音翻译中的扁平 language label 改成结构化类型学先验，并在表示、声学调制和 LLM 解码三层注入这些先验，从而在 CVSS-C 上提升 BLEU、ASR-BLEU、COMET 和 BLASER 2.0，尤其改善低资源和类型差异较大的语言。
 
 **[Full-Duplex-Bench-v2: A Multi-Turn Evaluation Framework for Duplex Dialogue Systems with an Automated Examiner](full-duplex-bench-v2_a_multi-turn_evaluation_framework_for_duplex_dialogue_syste.md)**
 
@@ -97,6 +129,10 @@ tags:
 
 :   本文用三个音韵 probing 任务（rhyme / G2P / 音节数）证明 BPE 类 subword tokenization 既"粒度太粗"难以捕捉局部音韵，又"边界错位"难以捕捉韵律结构，并提出 STAD 度量 + IPA-augmented 轻量微调，让 Llama3.1-8B 在三个音韵任务全面提升而 GSM8K / MMLU 只掉 1.1% / 0.9%。
 
+**[ImmersiveTTS: Environment-Aware Text-to-Speech with Multimodal Diffusion Transformer and Domain-Specific Representation Alignment](immersivetts_environment-aware_text-to-speech_with_multimodal_diffusion_transfor.md)**
+
+:   ImmersiveTTS 用双流 MM-DiT 同时建模转写内容和环境描述，并用 WavLM 与 ATST-Frame 的双教师表征对齐稳定训练，从而在带背景声的 TTS 中提升语音自然度、可懂度和 speech-environment 融合质量。
+
 **[Indic-CodecFake meets SATYAM: Towards Detecting Neural Audio Codec Synthesized Speech Deepfakes in Indic Languages](indic-codecfake_meets_satyam_towards_detecting_neural_audio_codec_synthesized_sp.md)**
 
 :   本文构建了首个多印度语言的 CodecFake 检测基准 ICF，并提出 SATYAM——一个双曲音频大语言模型，通过在双曲空间中用 Bhattacharyya 距离对齐语义和副语言表示再与提示对齐，仅训练 3.75M 参数即达到 98.32% 的检测准确率。
@@ -104,6 +140,14 @@ tags:
 **[Jamendo-MT-QA: A Benchmark for Multi-Track Comparative Music Question Answering](jamendo-mt-qa_a_benchmark_for_multi-track_comparative_music_question_answering.md)**
 
 :   构建 Jamendo-MT-QA，一个包含 36,519 个比较问答对（覆盖 12,173 个音轨对）的多音轨比较音乐问答基准，首次系统评估音频-语言模型在跨音轨比较推理上的能力，揭示现有模型在句子级比较生成上的显著不足。
+
+**[LLM-MC-Affect: LLM-Based Monte Carlo Modeling of Affective Trajectories and Latent Ambiguity for Interpersonal Dynamic Insight](llm-mc-affect_llm-based_monte_carlo_modeling_of_affective_trajectories_and_laten.md)**
+
+:   这篇论文提出 LLM-MC-Affect，把对话中的情感从单点标签改写成由随机 LLM 解码近似的潜在分布，再用均值、方差、互相关和斜率指标分析师生对话里的情感同步与主导关系。
+
+**[MARQUIS: A Three-Stage Pipeline for Video Retrieval-Augmented Generation](marquis_a_three-stage_pipeline_for_video_retrieval-augmented_generation.md)**
+
+:   MARQUIS 将多视频检索增强文章生成拆成“查询分解与重排检索-校准式结构化证据抽取-带引用文章生成”三阶段，并可用 RLM 控制器做迭代证据管理，在 MAGMaR2026 上把检索 nDCG@10 从 0.195 提升到 0.759，生成侧 Iter-QA-Base 人类评分达到 3.83。
 
 **[MCGA: A Multi-task Classical Chinese Literary Genre Audio Corpus](mcga_a_multi-task_classical_chinese_literary_genre_audio_corpus.md)**
 
@@ -133,6 +177,14 @@ tags:
 
 :   本文提出 OEA（Omni-Embed-Audio），利用多模态 LLM 作为统一编码器构建检索导向的音频-文本嵌入空间，并引入 User-Intent Queries（UIQ）基准和硬负例区分指标（HNSR/TFR），发现 LLM 主干在 T2T 检索（+22%）和硬负例区分（+4.3%p HNSR@10）上显著优于 CLAP 系列方法。
 
+**[PlanRAG-Audio: Planning and Retrieval Augmented Generation for Long-form Audio Understanding](planrag-audio_planning_and_retrieval_augmented_generation_for_long-form_audio_un.md)**
+
+:   PlanRAG-Audio 将长音频理解改写为“先规划要查哪些模态和时间片，再从结构化音频数据库检索证据”的问题，从而把 60 分钟音频的 LLM 输入从约 115k tokens 降到约 1k tokens，并显著提升说话人计数、事件排序和 speaker-constrained QA。
+
+**[Privacy-preserving Prosody Representation Learning](privacy-preserving_prosody_representation_learning.md)**
+
+:   这篇论文提出一个以 glottal source 为输入的自监督 prosody encoder，通过 F0 说话人归一化和 adversarial speaker loss 减少身份泄露，在 phrase boundary、syllable prominence 和 pitch reconstruction 上优于 raw prosody/HuBERT baseline，同时把 VoxCeleb1 speaker identification accuracy 从 HuBERT 的 0.64 降到 0.14。
+
 **[Protecting Bystander Privacy via Selective Hearing in Audio LLMs](protecting_bystander_privacy_via_selective_hearing_in_audio_llms.md)**
 
 :   提出首个旁观者隐私基准 SH-Bench 和旁观者隐私微调（BPFT）方法，评估和提升音频 LLM 在多说话人环境中仅关注主说话人、拒绝泄漏旁观者信息的能力，BPFT 后 SE 指标比 Gemini 2.5 Pro 高 16%。
@@ -140,6 +192,10 @@ tags:
 **[Pseudo2Real: Task Arithmetic for Pseudo-Label Correction in Automatic Speech Recognition](pseudo2real_task_arithmetic_for_pseudo-label_correction_in_automatic_speech_reco.md)**
 
 :   本文提出 Pseudo2Real，一种参数空间校正方法，通过在源域中计算真实标签模型与伪标签模型的权重差得到"校正向量"，将其应用于目标域伪标签微调模型以纠正系统性伪标签偏差，在 AfriSpeech-200 的十种非洲口音上最高实现 35% 相对 WER 降低。
+
+**[Reference Games as a Testbed for the Alignment of Model Uncertainty and Clarification Requests](reference_games_as_a_testbed_for_the_alignment_of_model_uncertainty_and_clarific.md)**
+
+:   这篇论文用颜色网格 reference games 检验 VLM 能否把内部不确定性转化为恰当澄清请求，发现即便任务很受控，Qwen2.5-VL 和 GPT-5-mini 也仍存在过度自信、澄清行为不稳定和澄清问题低质量等交互能力缺口。
 
 **[ReStyle-TTS: Relative and Continuous Style Control for Zero-Shot Speech Synthesis](restyle-tts_relative_and_continuous_style_control_for_zero-shot_speech_synthesis.md)**
 
@@ -161,9 +217,25 @@ tags:
 
 :   SDiaReward 构建了面向多轮语音对话的成对偏好数据集与 ESDR-Bench，并训练端到端语音 reward model，让评测不再只看文本语义，而能同时判断韵律/情感等 modality gap 与自然口语风格的 colloquialness gap。
 
+**[SegTune: Structured and Fine-Grained Control for Song Generation](segtune_structured_and_fine-grained_control_for_song_generation.md)**
+
+:   提出 SegTune，一种基于 Diffusion Transformer 的歌曲生成框架，通过层次化文本条件（全局 + 分段级提示）和 LLM 时长预测器实现对歌曲结构和音乐属性的细粒度时序控制。
+
+**[SN-WER: Script-Normalized WER for Multi-Script Indic ASR Evaluation](sn-wer_script-normalized_wer_for_multi-script_indic_asr_evaluation.md)**
+
+:   提出 Script-Normalized WER (SN-WER)，一种无需训练的评估方法，通过将参考文本和假设文本音译到统一规范文字后再计算 WER，分离多文字 ASR 评估中的文字不匹配误差与真实识别误差。
+
+**[SpeakerSleuth: Can Large Audio-Language Models Judge Speaker Consistency across Multi-turn Dialogues?](speakersleuth_can_large_audio-language_models_judge_speaker_consistency_across_m.md)**
+
+:   SpeakerSleuth 构建了首个评估 LALM 多轮对话说话人一致性判断能力的基准（1,818 实例），系统评测 12 个 LALM 和 6 种嵌入方法后发现：模型在检测和定位声学不一致时表现挣扎，存在严重的文本优先于声学的模态偏差，但在比较/排序声学变体时表现较好。
+
 **[Speculative End-Turn Detector for Efficient Speech Chatbot Assistant](speculative_end-turn_detector_for_efficient_speech_chatbot_assistant.md)**
 
 :   论文构建首个公开 end-turn detection 数据集 OpenETD，并提出 SpeculativeETD，让端侧 GRU 持续检测 speaking/non-speaking，只有遇到 200 ms 静音时才调用服务端 Wav2Vec2 区分 Gap 与 Pause，从而在真实语音上以 38 倍更低 FLOPs 和亚毫秒端侧延迟换取接近大模型的实时 turn-taking 效果。
+
+**[Speech-Hands: A Self-Reflection Voice Agentic Approach to Speech Recognition and Audio Reasoning with Omni Perception](speech-hands_a_self-reflection_voice_agentic_approach_to_speech_recognition_and_.md)**
+
+:   提出 Speech-Hands，一个可学习的语音代理框架，通过在推理时生成显式动作 token（<internal>/<external>/<rewrite>）来决定信任自身感知还是外部 ASR 假设，在 OpenASR 排行榜 7 个基准上平均 WER 降低 12.1%，在音频 QA 上达到 77.37% 准确率。
 
 **[SpeechLLM-as-Judges: Towards General and Interpretable Speech Quality Evaluation](speechllm-as-judges_towards_general_and_interpretable_speech_quality_evaluation.md)**
 
@@ -181,6 +253,10 @@ tags:
 
 :   提出 StressTest 基准评估语音语言模型（SLMs）对句子重音含义的理解能力，发现现有模型几乎无法基于重音模式推理说话者意图，并通过合成数据管线 Stress-17k 训练的 StresSLM 在重音检测和推理任务上大幅超越前沿模型。
 
+**[Style Amnesia: Investigating Speaking Style Degradation and Mitigation in Multi-Turn Spoken Language Models](style_amnesia_investigating_speaking_style_degradation_and_mitigation_in_multi-t.md)**
+
+:   发现口语语言模型（SLMs）在多轮对话中无法维持初始指定的说话风格（情感、口音、音量、语速），称之为"风格遗忘"现象，并通过注意力分析揭示其成因（注意力衰减），提出显式回忆过程作为缓解手段。
+
 **[TellWhisper: Tell Whisper Who Speaks When](tellwhisper_tell_whisper_who_speaks_when.md)**
 
 :   本文提出TellWhisper，通过设计时间-说话人感知的旋转位置编码（TS-RoPE）将说话人身份和时间信息统一编码到语音编码器的自注意力中，配合双曲空间说话人日志模型（Hyper-SD），实现了对"谁在何时说了什么"的联合建模，在多说话人ASR任务上取得最优性能。
@@ -197,6 +273,14 @@ tags:
 
 :   UniSonate 用统一的 Instruction-Content 表示、动态 SFX token 注入和多阶段课程学习，把文本转语音、文本转音乐和文本转音效放进同一个 flow-matching MM-DiT 中，在 TTS 与 TTM 上达到或超过专用模型，同时在 TTA 上保持可用的音效生成能力。
 
+**[UniSRM：用于细粒度语音评估的统一语音奖励模型](unisrm_a_unified_speech_reward_model_for_reasoning-based_fine-grained_assessment.md)**
+
+:   本文提出 UniSRM，一个统一的语音奖励模型，通过两阶段训练（SFT+GRPO）和推理一致性奖励（RCR）机制，支持从话语级质量到对话级连贯性的多维度、可解释的语音评估，在多个评估任务上显著优于现有方法。
+
+**[UniVocal：统一的语音-歌唱代码混用合成](univocal_unified_speech-singing_code-switching_synthesis.md)**
+
+:   UniVocal 通过精细音高令牌和两阶段课程学习，训练模型从纯文本语义自动推断语音/歌唱切换点，无需显式标签，在新构建的 SCSBench 基准上达到 SOTA 性能。
+
 **[VAPO: End-to-end Slide-Enhanced Speech Recognition with Omni-modal Large Language Models](vapo_end-to-end_slide-enhanced_speech_recognition_with_omni-modal_large_language.md)**
 
 :   本文发现端到端全模态大模型做 SlideASR 时会把幻灯片文字误抄成语音内容，并提出 VAPO 用“先看后听”的结构化推理链和多目标强化学习，把幻灯片文字变成语音识别的语义锚点而不是干扰源。
@@ -208,6 +292,10 @@ tags:
 **[When Misinformation Speaks and Converses: Rethinking Fact-Checking in Audio Platforms](when_misinformation_speaks_and_converses_rethinking_fact-checking_in_audio_platf.md)**
 
 :   本文为Position Paper，论证音频平台上的虚假信息在本质上不同于文本虚假信息——它同时具有口语性（prosody、pacing、emotion）和对话性（多轮、多说话人、跨集节），现有以文本为中心的事实核查流水线无法有效处理，需要围绕音频特有属性重新设计验证框架。
+
+**[XLSR-MamBo: Scaling the Hybrid Mamba-Attention Backbone for Audio Deepfake Detection](xlsr-mambo_scaling_the_hybrid_mamba-attention_backbone_for_audio_deepfake_detect.md)**
+
+:   提出 XLSR-MamBo 框架，系统探索 Mamba-Attention 混合架构在音频深度伪造检测中的四种拓扑设计和多种 SSM 变体（Mamba2、Hydra、GDN），其中 MamBo-3-Hydra 利用 Hydra 的原生双向建模达到多个基准上的竞争性能，且增加骨干深度可有效缓解浅层模型的性能不稳定。
 
 **[ZipVoice-Dialog: Non-Autoregressive Spoken Dialogue Generation with Flow Matching](zipvoice-dialog_non-autoregressive_spoken_dialogue_generation_with_flow_matching.md)**
 

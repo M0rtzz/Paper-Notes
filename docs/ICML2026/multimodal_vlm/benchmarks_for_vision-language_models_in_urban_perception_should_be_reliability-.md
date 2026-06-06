@@ -1,0 +1,125 @@
+---
+title: >-
+  [论文解读] Benchmarks for Vision-Language Models in Urban Perception Should Be Reliability-Aware and Negotiated
+description: >-
+  [ICML2026][多模态VLM][VLM评估] 本文提出 VLM 城市感知评估应具备"可靠性感知"和"可协商"两大属性，通过 100 张蒙特利尔街景图像、12 名社区标注者、30 个维度的基准测试，揭示了模型对齐度与标注者一致性正相关，且在主观评价维度上模型与人类存在系统性分布偏差。
+tags:
+  - "ICML2026"
+  - "多模态VLM"
+  - "VLM评估"
+  - "城市感知"
+  - "标注者可靠性"
+  - "基准协商"
+  - "街景图像"
+---
+
+# Benchmarks for Vision-Language Models in Urban Perception Should Be Reliability-Aware and Negotiated
+
+**会议**: ICML2026  
+**arXiv**: [2606.00871](https://arxiv.org/abs/2606.00871)  
+**代码**: 无  
+**领域**: 多模态VLM  
+**关键词**: VLM评估, 城市感知, 标注者可靠性, 基准协商, 街景图像  
+
+## 一句话总结
+本文提出 VLM 城市感知评估应具备"可靠性感知"和"可协商"两大属性，通过 100 张蒙特利尔街景图像、12 名社区标注者、30 个维度的基准测试，揭示了模型对齐度与标注者一致性正相关，且在主观评价维度上模型与人类存在系统性分布偏差。
+
+## 研究背景与动机
+
+**领域现状**：视觉-语言模型（VLM）正被广泛用于生成街景图像的结构化描述，支撑城市审计、地图制作和公众咨询等任务。现有评估基准通常将标注共识视为稳定的"ground truth"，用点估计的准确率来衡量模型性能。
+
+**现有痛点**：城市感知任务混合了可观测属性（如是否有人行道）和评价性类别（如舒适度、安全感），后者的标注本质上是一个分布而非确定标签。不同标注者之间存在分歧和显式弃权（Not applicable），但传统基准将这些信号压扁为单一标签，掩盖了系统性分歧。
+
+**核心矛盾**：当基准将主观评价的标注分歧视为"标注噪声"而非有意义的测量结果时，模型评分实际上既反映了模型能力，也反映了标注过程的属性——二者被混为一谈。在城市治理等下游应用中，这种混淆可能误导决策。
+
+**本文目标**：(1) 在评估中同时报告标注者间可靠性和模型对齐度；(2) 将分歧和弃权作为测量结果而非误差；(3) 将标签空间和评分策略视为可通过社区协商修订的制品。
+
+**切入角度**：作者观察到，不同维度的标注一致性差异极大——描述可见物理属性的维度一致性高，而涉及主观评价的维度一致性低。如果模型对齐度与人类可靠性共变，那么宏观分数就是在混合不同测量质量的维度。
+
+**核心 idea**：城市感知 VLM 基准应当"可靠性感知"（报告标注可靠性以限定对齐分数的解释）且"可协商"（标签体系可被利益方修订和版本化）。
+
+## 方法详解
+
+### 整体框架
+本文不是提出新模型，而是提出一套评估框架：构建一个社区标注的小规模基准 → 用固定 zero-shot 协议评估 7 个 VLM → 同时计算标注可靠性与模型对齐度 → 分析二者的关系和分布偏差 → 提出基准协商与版本化机制。
+
+### 关键设计
+
+1. **可靠性感知评估协议**:
+
+    - 功能：在报告模型对齐分数的同时，逐维度报告标注者间可靠性
+    - 核心思路：使用 Krippendorff's $\alpha$（名义距离）作为维度级可靠性度量。对于单选维度计算准确率，对于多选维度计算 Jaccard 指数。弃权标签（Not applicable / Cannot judge）被视为非响应标签而非普通标签——共识标签为弃权的样本在计算准确率时被排除，多标签中弃权被移除后双方均为空集的情况记为缺失
+    - 设计动机：如果不区分"标注者分歧因为维度本身模糊"和"标注者分歧因为模型误识别"，评估分数就无法解释。可靠性数据让这两种情况变得可区分
+
+2. **社区标注基准数据集**:
+
+    - 功能：提供一个使分歧和弃权"可观测"的经验锚点
+    - 核心思路：100 张蒙特利尔街景（50 张真实照片 + 50 张 SDXL 合成图），由 7 个社区组织的 12 名标注者用法语标注 30 个维度（涵盖场景设定、人的存在与活动、建筑形式与美学、主观印象 4 大类）。每张图获 1-3 个独立标注（共 230 份），通过确定性法英映射归一化后用多数投票（单选）或 $\geq 50\%$ 选择阈值（多选）构建共识
+    - 设计动机：现有大规模基准追求覆盖但牺牲了标注可靠性的可观测性。小规模但精心设计的基准能展示评估中被忽视的结构性问题
+
+3. **基准协商与版本化机制**:
+
+    - 功能：将基准视为可修订的制品而非固定标准
+    - 核心思路：定义 6 项披露要素（标签规范、判断收集、可靠性报告、聚合评分、模型接口、修订记录），使基准假设对外部可审计。修订产生新版本的标签空间和评分策略，通过版本号追踪变更，不同版本的评估结果可并行报告而非互相替代
+    - 设计动机：在城市治理场景中，基准的标签选择直接影响政策决策。如果标签体系不可被利益方质疑和修订，基准就变成了一种隐性的权力结构
+
+### 评估协议
+采用确定性 zero-shot 评估：temperature=0、top_p=1，prompt 固定枚举 30 个维度及其定义，要求模型输出单行 CSV 格式的结构化回答。评估 7 个 VLM：Claude-Sonnet、OpenAI-o4-mini、GPT-4.1、Gemini-2.5-Pro、Grok-2-Vision、Qwen2.5-VL 和 LLaMA-4-Maverick。
+
+## 实验关键数据
+
+### 主实验
+
+| 指标 | 最低值 | 最高值 | 说明 |
+|------|--------|--------|------|
+| 宏观对齐分数 | 0.16 | 0.31 | 7 个 VLM 在 30 维度上的宏观平均（单选准确率 + 多选 Jaccard） |
+| 可观测维度 vs 评价维度 | — | — | 所有模型在可观测属性子集上的分数均高于评价子集 |
+| 照片 vs 合成图 | — | — | 所有模型在真实照片上的对齐度均高于合成图 |
+
+### 维度级分析
+
+| 维度类型 | Krippendorff's $\alpha$ 范围 | 模型对齐度趋势 | 关键发现 |
+|----------|------------------------------|----------------|----------|
+| 可观测属性（如人行道有无、植被存在） | 较高（$\alpha > 0.4$） | 模型对齐度高，排名靠前 | 低对齐 = 模型识别或 prompt 限制 |
+| 主观评价（如舒适度、整体印象） | 较低（$\alpha < 0.2$） | 模型对齐度低，排名靠后 | 低对齐可能因为维度本身模糊 |
+| Overall Impression 维度 | 低 | 分布偏差显著 | 模型选 Not applicable 比率远高于标注者；选 Accessible 比率远低于标注者 |
+
+### 关键发现
+- **可靠性-对齐正相关**：维度级人类可靠性（$\alpha$）与平均模型对齐度呈正相关——标注者越一致的维度，模型表现也越好。这意味着宏观分数实际上混合了不同"测量质量"的维度
+- **弃权行为系统性差异**：在 Overall Impression 维度上，多个模型将 Not applicable 用于表达不确定性，而标注者区分了 Cannot judge 和 Not applicable，造成分布偏差。这说明 prompt 语义和人类语义的对应关系不平凡
+- **合成图域偏移**：所有模型在合成渲染场景上的对齐度均低于真实照片，支持在使用合成数据时进行分层报告
+- **跨模型结构一致**：7 个模型在维度间的难度排序高度一致，说明难度主要由评估体系（维度定义 + 评分策略）决定，而非模型差异
+
+## 亮点与洞察
+- **将基准视为"制品"而非"事实"**：这是评估哲学层面的重要转向——基准不是测量仪器，而是一个承载价值判断、可被质疑和修订的社会技术制品。这种视角对所有涉及主观标签的 ML 基准（毒性检测、医学影像、内容审核）都有启示
+- **可靠性报告改变分数含义**：当我们知道一个维度的标注者 $\alpha = 0.1$ 时，该维度上 30% 的模型准确率就不再意味着"模型很差"，而是"这个维度的共识标签本身就不稳定"。这种条件化解读避免了误导性的模型排名
+- **弃权作为一阶信号**：将 Not applicable 的使用频率作为独立指标报告，揭示了模型和人类在不确定性处理上的系统性差异，这在传统准确率中完全不可见
+
+## 局限与展望
+- **规模限制**：100 张图像、12 名标注者的小规模基准无法支撑统计功效较高的模型排名，作者也声明这是经验锚点而非代表性样本
+- **地理和文化局限**：标注来自蒙特利尔特定社区，感知判断可能不具跨文化普遍性
+- **仅限 zero-shot**：未涉及微调、多轮交互或多图上下文，限制了对模型潜力的全面评估
+- **法英映射误差**：确定性的法语-英语归一化可能在边界案例上低估模型分数
+- **未来方向**：可在更大规模、更多城市的基准上验证可靠性-对齐共变关系是否普遍成立；可探索将协商版本化集成到 VLMEvalKit 等评估框架中
+
+## 相关工作与启发
+- Place Pulse 2.0 (Dubey et al., 2016) 用成对比较大规模量化城市感知，但未报告标注可靠性
+- UrbanCLIP / UrbanVLP 将对比学习扩展到城市任务，增加了评估实践的需求
+- CheXpert (Irvin et al., 2019) 在医学影像中引入不确定性标签和多专家参考标准，与本文的可靠性感知理念一脉相承
+- Datasheets for Datasets (Gebru et al., 2018) 的精神在本文的 6 项披露要素中得到延续
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICLR 2026\] CityLens: Evaluating Large Vision-Language Models for Urban Socioeconomic Sensing](../../ICLR2026/multimodal_vlm/citylens_evaluating_large_vision-language_models_for_urban_socioeconomic_sensing.md)
+- [\[NeurIPS 2025\] Scene-Aware Urban Design: A Human-AI Recommendation Framework Using Co-Occurrence Embeddings and Vision-Language Models](../../NeurIPS2025/multimodal_vlm/scene-aware_urban_design_a_human-ai_recommendation_framework_using_co-occurrence.md)
+- [\[ICML 2026\] From Seeing to Thinking: Decoupling Perception and Reasoning Improves Post-Training of Vision-Language Models](from_seeing_to_thinking_decoupling_perception_and_reasoning_improves_post-traini.md)
+- [\[CVPR 2025\] Taxonomy-Aware Evaluation of Vision-Language Models](../../CVPR2025/multimodal_vlm/taxonomy-aware_evaluation_of_vision-language_models.md)
+- [\[ICML 2026\] Bad Seeing or Bad Thinking? Rewarding Perception for Vision-Language Reasoning](bad_seeing_or_bad_thinking_rewarding_perception_for_vision-language_reasoning.md)
+
+</div>
+
+<!-- RELATED:END -->

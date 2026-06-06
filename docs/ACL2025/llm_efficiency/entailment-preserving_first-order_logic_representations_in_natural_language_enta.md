@@ -144,9 +144,9 @@ tags:
 
 - [\[ACL 2025\] Consistency-Preserving Contrastive Decoding for Faithful Document-Grounded Dialogue](consistency-preserving_contrastive_decoding_for_faithful_document-grounded_dial.md)
 - [\[AAAI 2026\] Connectivity-Guided Sparsification of 2-FWL GNNs Preserving Full Expressivity](../../AAAI2026/llm_efficiency/connectivity-guided_sparsification_of_2-fwl_gnns_preserving_full_expressivity_wi.md)
+- [\[ACL 2026\] StructKV: Preserving the Structural Skeleton for Scalable Long-Context Inference](../../ACL2026/llm_efficiency/structkv_preserving_the_structural_skeleton_for_scalable_long-context_inference.md)
 - [\[ACL 2025\] How to Train Long-Context Language Models (Effectively)](train_long_context_effectively.md)
 - [\[ACL 2025\] Literary Evidence Retrieval via Long-Context Language Models](literary_evidence_retrieval_via_long-context_language_models.md)
-- [\[ACL 2025\] LongSafety: Evaluating Long-Context Safety of Large Language Models](longsafety_evaluating_long-context_safety_of_large_language_models.md)
 
 </div>
 

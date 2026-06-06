@@ -146,11 +146,11 @@ FDR在不同显著性水平和不同MIA方法下均被有效控制。
 
 ## 相关论文
 
+- [\[ICML 2026\] How Does Bayesian Sampling Help Membership Inference Attacks?](../../ICML2026/others/how_does_bayesian_sampling_help_membership_inference_attacks.md)
 - [\[ICCV 2025\] A Hidden Stumbling Block in Generalized Category Discovery: Distracted Attention](a_hidden_stumbling_block_in_generalized_category_discovery_d.md)
-- [\[CVPR 2025\] Improving Transferable Targeted Attacks with Feature Tuning Mixup](../../CVPR2025/others/improving_transferable_targeted_attacks_with_feature_tuning_mixup.md)
-- [\[NeurIPS 2025\] Statistical Inference Under Performativity](../../NeurIPS2025/others/statistical_inference_under_performativity.md)
-- [\[CVPR 2025\] Towards Million-Scale Adversarial Robustness Evaluation With Stronger Individual Attacks](../../CVPR2025/others/towards_million-scale_adversarial_robustness_evaluation_with_stronger_individual.md)
 - [\[ICCV 2025\] Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery](intra-view_and_inter-view_correlation_guided_multi-view_novel_class_discovery.md)
+- [\[ICCV 2025\] Generate, Refine, and Encode: Leveraging Synthesized Novel Samples for On-the-Fly Fine-Grained Category Discovery](generate_refine_and_encode_leveraging_synthesized_novel_samples_for_on-the-fly_f.md)
+- [\[CVPR 2025\] Improving Transferable Targeted Attacks with Feature Tuning Mixup](../../CVPR2025/others/improving_transferable_targeted_attacks_with_feature_tuning_mixup.md)
 
 </div>
 

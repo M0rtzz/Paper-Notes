@@ -16,7 +16,7 @@ tags:
 
 **📷 CVPR2026** · **3** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (3)](../../ICML2026/causal_inference/index.md) · [💬 ACL2026 (6)](../../ACL2026/causal_inference/index.md) · [🔬 ICLR2026 (17)](../../ICLR2026/causal_inference/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/causal_inference/index.md) · [🧠 NeurIPS2025 (21)](../../NeurIPS2025/causal_inference/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/causal_inference/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/causal_inference/index.md) · [💬 ACL2026 (7)](../../ACL2026/causal_inference/index.md) · [🔬 ICLR2026 (17)](../../ICLR2026/causal_inference/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/causal_inference/index.md) · [🧠 NeurIPS2025 (21)](../../NeurIPS2025/causal_inference/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/causal_inference/index.md)
 
 🔥 **高频主题：** 扩散模型 ×2
 

@@ -157,11 +157,11 @@ $$\mathbf{h}_\theta = \mathbf{W}_O \text{LN}(\mathbf{h}_{\theta,0}(\mathbf{T})) 
 
 ## 相关论文
 
-- [\[ICLR 2026\] Provable and Practical In-Context Policy Optimization for Self-Improvement](../../ICLR2026/optimization/provable_and_practical_in-context_policy_optimization_for_self-improvement.md)
 - [\[ICML 2025\] On Understanding Attention-Based In-Context Learning for Categorical Data](on_understanding_attention-based_in-context_learning_for_categorical_data.md)
-- [\[ICML 2025\] Emergence in Non-Neural Models: Grokking Modular Arithmetic via Average Gradient Outer Product](emergence_in_non-neural_models_grokking_modular_arithmetic_via_average_gradient_.md)
+- [\[ICLR 2026\] Provable and Practical In-Context Policy Optimization for Self-Improvement](../../ICLR2026/optimization/provable_and_practical_in-context_policy_optimization_for_self-improvement.md)
+- [\[ICML 2026\] Distilling Linearized Behavior into Non-Linear Fine-Tuning for Effective Task Arithmetic](../../ICML2026/optimization/distilling_linearized_behavior_into_non-linear_fine-tuning_for_effective_task_ar.md)
 - [\[ICML 2025\] Training Dynamics of In-Context Learning in Linear Attention](training_dynamics_of_in-context_learning_in_linear_attention.md)
-- [\[ICML 2025\] Can Transformers Learn Full Bayesian Inference In Context?](can_transformers_learn_full_bayesian_inference_in_context.md)
+- [\[ICML 2025\] Emergence in Non-Neural Models: Grokking Modular Arithmetic via Average Gradient Outer Product](emergence_in_non-neural_models_grokking_modular_arithmetic_via_average_gradient_.md)
 
 </div>
 

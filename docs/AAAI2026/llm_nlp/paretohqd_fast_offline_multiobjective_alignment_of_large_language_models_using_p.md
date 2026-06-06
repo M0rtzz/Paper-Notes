@@ -130,8 +130,8 @@ ParetoHqD 分两阶段：Stage 1 从原始数据集的 Pareto 前沿选取匹配
 
 - [\[ACL 2025\] Gradient-Adaptive Policy Optimization: Towards Multi-Objective Alignment of Large Language Models](../../ACL2025/llm_nlp/gapo_multi_objective_alignment.md)
 - [\[ACL 2025\] Diversity-oriented Data Augmentation with Large Language Models](../../ACL2025/llm_nlp/diversity_data_augmentation.md)
-- [\[AAAI 2026\] ProFuser: Progressive Fusion of Large Language Models](profuser_progressive_fusion_of_large_language_models.md)
 - [\[ACL 2025\] DeAL: Decoding-time Alignment for Large Language Models](../../ACL2025/llm_nlp/deal_decoding_time_alignment.md)
+- [\[AAAI 2026\] ProFuser: Progressive Fusion of Large Language Models](profuser_progressive_fusion_of_large_language_models.md)
 - [\[ACL 2025\] From Neurons to Semantics: Evaluating Cross-Linguistic Alignment Capabilities of Large Language Models via Neurons Alignment](../../ACL2025/llm_nlp/from_neurons_to_semantics_evaluating_cross-linguistic_alignment_capabilities_of_.md)
 
 </div>

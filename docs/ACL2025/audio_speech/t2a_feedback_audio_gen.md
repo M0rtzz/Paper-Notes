@@ -128,11 +128,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICML 2026\] Reward Modeling from Natural Language Human Feedback](../../ICML2026/audio_speech/reward_modeling_from_natural_language_human_feedback.md)
+- [\[ACL 2026\] SegTune: Structured and Fine-Grained Control for Song Generation](../../ACL2026/audio_speech/segtune_structured_and_fine-grained_control_for_song_generation.md)
 - [\[ACL 2025\] SpeechWeave: Diverse Multilingual Synthetic Text & Audio Data Generation Pipeline for Training Text to Speech Models](speechweave_diverse_multilingual_synthetic_text_audio_data_generation_pipeline_f.md)
 - [\[ICML 2026\] MECAT: A Multi-Experts Constructed Benchmark for Fine-Grained Audio Understanding Tasks](../../ICML2026/audio_speech/mecat_a_multi-experts_constructed_benchmark_for_fine-grained_audio_understanding.md)
-- [\[ACL 2025\] In-the-wild Audio Spatialization with Flexible Text-guided Localization](tas_audio_spatialization.md)
 - [\[ACL 2025\] Double Entendre: Robust Audio-Based AI-Generated Lyrics Detection via Multi-View Fusion](double_entendre_robust_audio-based_ai-generated_lyrics_detection_via_multi-view_.md)
+- [\[ACL 2025\] In-the-wild Audio Spatialization with Flexible Text-guided Localization](tas_audio_spatialization.md)
 
 </div>
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 多模态 VLM方向50篇论文解读
+  ICML2025 多模态 VLM方向49篇论文解读
 description: >-
-  50篇ICML2025的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对齐/RLHF、机器人、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  49篇ICML2025的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对齐/RLHF、机器人、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2025"
   - "多模态 VLM"
@@ -19,9 +19,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**🧪 ICML2025** · **50** 篇论文解读
+**🧪 ICML2025** · **49** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (30)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (83)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (230)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (88)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (88)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (149)](../../NeurIPS2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (106)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (99)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (217)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (88)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (88)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (148)](../../NeurIPS2025/multimodal_vlm/index.md)
 
 🔥 **高频主题：** 多模态 ×32 · 推理 ×6 · LLM ×4 · 对齐/RLHF ×4 · 机器人 ×2
 
@@ -72,10 +72,6 @@ tags:
 **[Enhancing Target-unspecific Tasks through a Features Matrix](enhancing_target-unspecific_tasks_through_a_features_matrix.md)**
 
 :   提出 Features Matrix (FM) 方法，利用多个手工 prompt 模板从冻结 CLIP 中提取通用知识构成特征矩阵，通过对齐 unexpected features 与微调视觉特征来增强模型在目标无关任务（如 base-to-novel 泛化、跨数据集泛化、域泛化）上的表现。
-
-**[ExLM: Rethinking the Impact of [MASK] Tokens in Masked Language Models](exlm_rethinking_the_impact_of_mask_tokens_in_masked_language_models.md)**
-
-:   本文首次系统分析了 MLM 中 [MASK] 对性能的影响，发现**语义损坏（corrupted semantics）**比**非真实token（unreal tokens）**的负面作用更大，据此提出 ExLM：通过将每个 [MASK] 扩展为多个隐状态并用转移矩阵建模依赖关系，有效缓解语义多模态性问题，在文本和分子建模任务上均取得显著提升。
 
 **[From Black Boxes to Transparent Minds: Evaluating and Enhancing the Theory of Mind in Multimodal Large Language Models](from_black_boxes_to_transparent_minds_evaluating_and_enhancing_the_theory_of_min.md)**
 

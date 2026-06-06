@@ -122,12 +122,6 @@ tags:
 - 写作质量: ⭐⭐⭐⭐⭐ 概念命名清晰、limitations 写得极其诚实、表格组织好
 - 价值: ⭐⭐⭐⭐⭐ 部署侧审计框架可直接复用，公平性 + 校准发现对 trust & safety 团队有直接 actionable 意义
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">

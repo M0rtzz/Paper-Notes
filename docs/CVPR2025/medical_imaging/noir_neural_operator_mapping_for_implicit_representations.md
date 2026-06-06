@@ -123,11 +123,11 @@ NOIR 包含两个核心模块：
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Self-Supervised Learning via Flow-Guided Neural Operator on Time-Series Data](../../NeurIPS2025/medical_imaging/self-supervised_learning_via_flow-guided_neural_operator_on_time-series_data.md)
 - [\[CVPR 2025\] Reanimating Images using Neural Representations of Dynamic Stimuli](reanimating_images_using_neural_representations_of_dynamic_stimuli.md)
+- [\[NeurIPS 2025\] Self-Supervised Learning via Flow-Guided Neural Operator on Time-Series Data](../../NeurIPS2025/medical_imaging/self-supervised_learning_via_flow-guided_neural_operator_on_time-series_data.md)
+- [\[ICML 2026\] DGNO: Discontinuous Galerkin Neural Operator for Pathology Defocus Deblurring](../../ICML2026/medical_imaging/discontinuous_galerkin_neural_operator_for_pathology_defocus_deblurring.md)
 - [\[ECCV 2024\] I-MedSAM: Implicit Medical Image Segmentation with Segment Anything](../../ECCV2024/medical_imaging/i-medsam_implicit_medical_image_segmentation_with_segment_anything.md)
 - [\[NeurIPS 2025\] Convolutional Monge Mapping between EEG Datasets to Support Independent Component Labeling](../../NeurIPS2025/medical_imaging/convolutional_monge_mapping_between_eeg_datasets_to_support_independent_componen.md)
-- [\[CVPR 2025\] FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields](ffacenerf_few-shot_face_editing_in_neural_radiance_fields.md)
 
 </div>
 

@@ -166,8 +166,8 @@ CstNet 包含两个阶段：
 
 ## 相关论文
 
-- [\[CVPR 2025\] Parametric Point Cloud Completion for Polygonal Surface Reconstruction](../../CVPR2025/3d_vision/parametric_point_cloud_completion_for_polygonal_surface_reconstruction.md)
 - [\[ICCV 2025\] Curve-Aware Gaussian Splatting for 3D Parametric Curve Reconstruction](curve-aware_gaussian_splatting_for_3d_parametric_curve_reconstruction.md)
+- [\[CVPR 2025\] Parametric Point Cloud Completion for Polygonal Surface Reconstruction](../../CVPR2025/3d_vision/parametric_point_cloud_completion_for_polygonal_surface_reconstruction.md)
 - [\[ICCV 2025\] StruMamba3D: Exploring Structural Mamba for Self-supervised Point Cloud Representation Learning](strumamba3d_exploring_structural_mamba_for_self-supervised_point_cloud_represent.md)
 - [\[ICCV 2025\] DAP-MAE: Domain-Adaptive Point Cloud Masked Autoencoder for Effective Cross-Domain Learning](dap-mae_domain-adaptive_point_cloud_masked_autoencoder_for_effective_cross-domai.md)
 - [\[ICCV 2025\] Efficient Spiking Point Mamba for Point Cloud Analysis](efficient_spiking_point_mamba_for_point_cloud_analysis.md)

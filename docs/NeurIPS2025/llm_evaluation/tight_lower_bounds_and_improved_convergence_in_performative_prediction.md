@@ -148,7 +148,7 @@ ARM 的实际实现是在每步 $t$ 对最近 $\tau$ 个快照的数据做均匀
 - [\[NeurIPS 2025\] Conformal Prediction in The Loop: A Feedback-Based Uncertainty Model for Trajectory Optimization](conformal_prediction_in_the_loop_a_feedback-based_uncertainty_model_for_trajecto.md)
 - [\[ACL 2025\] Movie101v2: Improved Movie Narration Benchmark](../../ACL2025/llm_evaluation/movie101v2_improved_movie_narration_benchmark.md)
 - [\[ICML 2025\] Improved and Oracle-Efficient Online $\ell_1$-Multicalibration](../../ICML2025/llm_evaluation/improved_and_oracle-efficient_online_ell_1-multicalibration.md)
-- [\[ICCV 2025\] DisCoPatch: Taming Adversarially-driven Batch Statistics for Improved Out-of-Distribution Detection](../../ICCV2025/llm_evaluation/discopatch_taming_adversarially-driven_batch_statistics_for_improved_out-of-dist.md)
+- [\[ICML 2025\] On Temperature Scaling and Conformal Prediction of Deep Classifiers](../../ICML2025/llm_evaluation/on_temperature_scaling_and_conformal_prediction_of_deep_classifiers.md)
 
 </div>
 

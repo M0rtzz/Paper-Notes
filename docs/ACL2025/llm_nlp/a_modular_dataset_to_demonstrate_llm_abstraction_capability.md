@@ -121,8 +121,8 @@ tags:
 - [\[ACL 2025\] ScaleQuest: Unleashing LLM Reasoning Capability via Scalable Question Synthesis from Scratch](unleashing_llm_reasoning_capability_via_scalable.md)
 - [\[ACL 2025\] Re-TASK: Revisiting LLM Tasks from Capability, Skill, and Knowledge Perspectives](re-task_revisiting_llm_tasks_from_capability_skill_and_knowledge_perspectives.md)
 - [\[ACL 2025\] Circuit Compositions: Exploring Modular Structures in Transformer-Based Language Models](circuit_compositions_modular_structures.md)
-- [\[ACL 2026\] Detoxification for LLM from Dataset Itself](../../ACL2026/llm_nlp/detoxification_for_llm_from_dataset_itself.md)
 - [\[ACL 2025\] LazyReview: A Dataset for Uncovering Lazy Thinking in NLP Peer Reviews](lazyreview_peer_review.md)
+- [\[ACL 2025\] Palm: A Culturally Inclusive and Linguistically Diverse Dataset for Arabic LLMs](palm_a_culturally_inclusive_and_linguistically_diverse_dataset_for_arabic_llms.md)
 
 </div>
 

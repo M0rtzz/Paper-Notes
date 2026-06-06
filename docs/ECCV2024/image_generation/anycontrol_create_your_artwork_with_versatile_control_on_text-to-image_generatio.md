@@ -144,7 +144,7 @@ tags:
 - [\[ECCV 2024\] Collaborative Control for Geometry-Conditioned PBR Image Generation](collaborative_control_for_geometry-conditioned_pbr_image_generation.md)
 - [\[ECCV 2024\] Generating Human Interaction Motions in Scenes with Text Control](generating_human_interaction_motions_in_scenes_with_text_control.md)
 - [\[ECCV 2024\] MagicEraser: Erasing Any Objects via Semantics-Aware Control](magiceraser_erasing_any_objects_via_semantics-aware_control.md)
-- [\[ECCV 2024\] Latent Guard: A Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_texttoimage_generation.md)
+- [\[ECCV 2024\] M2D2M: Multi-Motion Generation from Text with Discrete Diffusion Models](m2d2m_multi-motion_generation_from_text_with_discrete_diffusion_models.md)
 
 </div>
 

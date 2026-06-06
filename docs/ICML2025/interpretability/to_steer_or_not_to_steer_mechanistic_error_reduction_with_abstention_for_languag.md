@@ -174,8 +174,8 @@ MERA 在各error percentile上均表现出正面或中性影响，尤其对高er
 
 - [\[ICML 2026\] Steer Like the LLM: Activation Steering that Mimics Prompting](../../ICML2026/interpretability/steer_like_the_llm_activation_steering_that_mimics_prompting.md)
 - [\[ACL 2025\] Mechanistic Interpretability of Emotion Inference in Large Language Models](../../ACL2025/interpretability/mechanistic_interpretability_of_emotion_inference_in_large_language_models.md)
-- [\[ACL 2025\] Reasoning Circuits in Language Models: A Mechanistic Interpretation of Syllogistic Inference](../../ACL2025/interpretability/reasoning_circuits_in_language_models_a_mechanistic_interpretation_of_syllogisti.md)
 - [\[ICML 2025\] Validating Mechanistic Interpretations: An Axiomatic Approach](validating_mechanistic_interpretations_an_axiomatic_approach.md)
+- [\[ACL 2025\] Reasoning Circuits in Language Models: A Mechanistic Interpretation of Syllogistic Inference](../../ACL2025/interpretability/reasoning_circuits_in_language_models_a_mechanistic_interpretation_of_syllogisti.md)
 - [\[ICML 2025\] MIB: A Mechanistic Interpretability Benchmark](mib_a_mechanistic_interpretability_benchmark.md)
 
 </div>

@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 代码智能方向21篇论文解读
+  NeurIPS2025 代码智能方向22篇论文解读
 description: >-
-  21篇NeurIPS2025的代码智能方向论文解读，涵盖代码智能、LLM、推理、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  22篇NeurIPS2025的代码智能方向论文解读，涵盖代码智能、LLM、推理、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "代码智能"
@@ -16,11 +16,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💻 代码智能
 
-**🧠 NeurIPS2025** · **21** 篇论文解读
+**🧠 NeurIPS2025** · **22** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/code_intelligence/index.md) · [💬 ACL2026 (48)](../../ACL2026/code_intelligence/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/code_intelligence/index.md) · [🔬 ICLR2026 (20)](../../ICLR2026/code_intelligence/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/code_intelligence/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/code_intelligence/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/code_intelligence/index.md) · [💬 ACL2026 (52)](../../ACL2026/code_intelligence/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/code_intelligence/index.md) · [🔬 ICLR2026 (20)](../../ICLR2026/code_intelligence/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/code_intelligence/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/code_intelligence/index.md)
 
-🔥 **高频主题：** 代码智能 ×5 · LLM ×3 · 推理 ×3 · 布局/合成 ×2
+🔥 **高频主题：** 代码智能 ×5 · LLM ×4 · 推理 ×4 · 布局/合成 ×2
 
 **[A Self-Improving Coding Agent](a_selfimproving_coding_agent.md)**
 
@@ -37,6 +37,10 @@ tags:
 **[Co-Evolving LLM Coder and Unit Tester via Reinforcement Learning](co-evolving_llm_coder_and_unit_tester_via_reinforcement_learning.md)**
 
 :   提出 CURE 框架，让同一个 LLM 同时扮演代码生成器和单元测试生成器两个角色，通过生成代码与生成测试的交叉执行构建成对奖励矩阵，用基于理论推导的奖励信号进行强化学习，在完全不需要 ground-truth 代码标注的情况下实现代码生成能力和单元测试生成能力的共同进化，在五个编程基准上大幅超过同规模的专用 Coder 模型。
+
+**[CodeCrash: Exposing LLM Fragility to Misleading Natural Language in Code Reasoning](codecrash_exposing_llm_fragility_to_misleading_natural_language_in_code_reasonin.md)**
+
+:   提出 CodeCrash 压力测试框架，通过功能等价的结构扰动和误导性自然语言注入（注释/print/暗示），系统评估 17 个 LLM 的代码推理鲁棒性，揭示模型平均性能下降 23.2%，CoT 仅能挽回至 13.8%，并首次发现大推理模型（LRM）中的 "Reasoning Collapse" 现象。
 
 **[CoRe: Benchmarking LLMs' Code Reasoning Capabilities through Static Analysis Tasks](core_benchmarking_llms_code_reasoning_capabilities_through_static_analysis_tasks.md)**
 

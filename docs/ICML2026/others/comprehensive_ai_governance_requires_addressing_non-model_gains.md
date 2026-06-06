@@ -1,0 +1,125 @@
+---
+title: >-
+  [论文解读] Comprehensive AI Governance Requires Addressing Non-Model Gains
+description: >-
+  [ICML2026][AI治理] 本文是一篇立场论文，论证当前以模型为中心的AI治理范式在"非模型增益"（推理增益、系统增益、资产增益）日益重要的背景下效力递减，需要系统治理、实体治理、代理治理和云治理等多层互补方案来填补监管空白。
+tags:
+  - "ICML2026"
+  - "AI治理"
+  - "非模型增益"
+  - "前沿AI安全"
+  - "推理扩展"
+  - "多层治理"
+---
+
+# Comprehensive AI Governance Requires Addressing Non-Model Gains
+
+**会议**: ICML2026  
+**arXiv**: [2606.00047](https://arxiv.org/abs/2606.00047)  
+**代码**: 无  
+**领域**: AI安全  
+**关键词**: AI治理, 非模型增益, 前沿AI安全, 推理扩展, 多层治理  
+
+## 一句话总结
+本文是一篇立场论文，论证当前以模型为中心的AI治理范式在"非模型增益"（推理增益、系统增益、资产增益）日益重要的背景下效力递减，需要系统治理、实体治理、代理治理和云治理等多层互补方案来填补监管空白。
+
+## 研究背景与动机
+
+**领域现状**：当前前沿AI治理主要依赖"模型级治理"（model-level governance），即通过评估和缓解模型的危险能力来管理风险。这种范式假设模型的能力主要由训练阶段的算力和数据决定，因此将前沿模型开发者作为安全工作的核心节点。各国监管（如欧盟AI法案）和企业自律框架（如Anthropic RSP、OpenAI Preparedness Framework）都集中在部署前评估与缓解。
+
+**现有痛点**：随着推理模型（如OpenAI o1系列）、复杂scaffolding系统（如Google DeepMind的Big Sleep零日漏洞发现）以及国家安全机构与AI公司合作的兴起，越来越多的能力提升并非来自预训练扩展，而是来自部署后的"非模型增益"。这些增益成本低、扩散快，且模型开发者难以在部署前完全预见。
+
+**核心矛盾**：模型级治理的有效性依赖于开发者在部署前**穷尽式引出**（elicitation）模型的下游能力。但非模型增益使得能力空间在部署后持续膨胀，导致三种治理失效：引出失败（无法预见所有增强方式）、缓解失败（难以控制已知危险能力）、滞后成本（未引出能力造成的预期危害增大）。
+
+**本文目标**：(1) 形式化"非模型增益"概念并建立分类体系；(2) 分析每类增益如何削弱模型级治理；(3) 提出超越模型级的互补治理方案。
+
+**切入角度**：作者从治理实践出发，观察到前沿模型预训练扩展贡献占比下降（推理扩展和后训练的重要性上升），且低资源行为者通过系统增益即可逼近前沿能力，这意味着治理的"杠杆点"正在从模型开发者向下游扩散。
+
+**核心 idea**：非模型增益正在系统性削弱模型级治理的前提假设，需要建立包含系统、实体、代理和云层面的多层治理组合来应对。
+
+## 方法详解
+
+### 整体框架
+本文构建了一个"非模型增益 → 治理失效机制 → 互补治理方案"的分析框架。输入是当前AI治理生态和能力发展趋势，输出是一套多层治理方案建议。核心分析分为三阶段：定义非模型增益分类体系、分析各类增益对模型级治理的影响、提出对应的治理补充方案。
+
+### 关键设计
+
+1. **非模型增益分类体系（Taxonomy of Non-Model Gains）**:
+
+    - 功能：将模型部署后的能力提升系统分为三类当前增益和三类前瞻性增益
+    - 核心思路：当前三类增益包括——**推理增益**（inference gain）：通过扩展推理算力提升能力，如reasoning模型的思维链扩展，使小模型可以模拟大模型表现（如Qwen3-4B通过递归自聚合达到o3-mini水平）；**系统增益**（systems gain）：通过后训练增强如scaffolding、工具调用、多智能体编排提升能力，且一旦"配方"被发现便可自由扩散；**资产增益**（asset gain）：通过接入受限资产（如政府机密数据、专用硬件）获得的能力提升，特定数据集可带来等效于$1000\times$预训练算力的性能提升。前瞻性增益包括具身化（embodiment）、持续学习（continual learning）和扩散效应（diffusion effects）
+    - 设计动机：分类体系使得原本模糊的"非模型能力提升"概念可操作化，便于逐一分析其对治理的影响并设计针对性对策
+
+2. **治理失效机制分析（Governance Failure Modes）**:
+
+    - 功能：揭示每类非模型增益如何具体削弱模型级治理的三个支柱
+    - 核心思路：推理增益通过缩小前沿与次前沿模型的性能差距，使恶意行为者可利用开放权重模型绕过监管；系统增益因成本低、门槛低、扩散快，使开发者无法预见所有下游修改；资产增益因受限资产的保密性，使评估者根本无法测试相关场景。三类增益共同导致部署前评估从"困难但可行"变为"结构性不充分"
+    - 设计动机：通过明确失效机制，论证单纯改进模型级治理是不够的，需要范式转换
+
+3. **多层治理方案框架（Multi-Layer Governance Portfolio）**:
+
+    - 功能：提出四层互补治理方案，覆盖模型级治理无法触及的风险节点
+    - 核心思路：**系统治理**（system governance）：要求显著提升基础模型能力的系统提供者承担风险管理责任；**实体治理**（entity governance）：关注组织结构、激励机制和决策流程，而非单个模型；**代理治理**（agent governance）：管理AI代理的委托参数和自主交互，包括访问边界、行为约束和唯一代理ID；**云治理**（cloud governance）：通过KYC、内容监控和计算模式监控实现推理层面的安全监察。社会韧性（societal resilience）作为所有治理层的兜底补充
+    - 设计动机：不同类型的非模型增益需要不同的治理节点来应对，单一层面无法覆盖所有风险向量
+
+## 实验关键数据
+
+### 非模型增益与治理方案映射
+
+| 非模型增益类型 | 治理失效机制 | 推荐治理层 |
+|---------------|-------------|-----------|
+| 推理增益 | 缩小前沿/次前沿差距，开放模型可绕过监管 | 模型级改进 + 实体治理 + 云治理 |
+| 系统增益 | 低成本、快速扩散，开发者无法预见所有scaffold | 模型级改进 + 实体/代理/系统治理 |
+| 资产增益 | 受限资产无法评估，少数高能力行为者 | 部署后监控 + 国安合作 |
+| 具身化增益 | 信息风险转化为物理安全风险 | 供应链对齐 + 系统治理 |
+| 持续学习 | 安全训练可能被遗忘，模型行为漂移 | 部署后监控 |
+| 扩散效应 | 单一文化风险、级联失效 | 实体/代理治理 + 社会韧性 |
+
+### 推理增益的经验证据
+
+| 案例 | 增益方式 | 效果 |
+|------|---------|------|
+| Qwen3-4B + 递归自聚合 | 推理时算力扩展 | 4B参数模型达到o3-mini (high)水平 |
+| DeepSeek-V3.2 vs Gemini 3 | 1.5-2.5倍token消耗 | 次前沿模型在多个benchmark超越前沿 |
+| 专用数据集微调 | 资产增益 | 等效$1000\times$预训练算力 |
+| Big Sleep (Google DeepMind) | 系统增益(scaffold+工具) | 首个发现零日漏洞的LLM代理 |
+
+### 关键发现
+- 推理增益是目前最具量化前景的非模型增益类型，已有新兴的推理扩展法则（inference scaling laws）支持预测
+- 系统增益最难防范——低资源行为者已证明可构建复杂的对抗性scaffold（如2025年中国国家支持组织构建的Claude Code scaffold）
+- 资产增益虽影响行为者最少，但潜在危害最大，且因保密性质几乎无法提前评估
+- 云治理面临重大商业、技术和法律障碍（隐私法规、跨提供商协调、机密计算技术成熟度）
+
+## 亮点与洞察
+- **非模型增益的形式化分类**：将此前模糊的"部署后能力提升"概念清晰拆解为推理/系统/资产三类，并各自建立了与治理失效的因果链条，为政策制定提供了可操作的分析框架
+- **"治理杠杆点转移"的核心洞见**：随着非模型增益重要性上升，安全责任不应只压在模型开发者身上，而应沿价值链向系统集成商、部署平台和最终使用者分散——这一观点对当前过度聚焦模型开发者的监管思路有重要修正意义
+- **推理增益作为"民主化利器"的双刃剑效应**：推理扩展使小模型逼近大模型性能，一方面降低了AI能力的获取门槛，另一方面也降低了恶意使用的门槛，这对开放权重模型的安全政策有直接启示
+
+## 局限与展望
+- 作为立场论文缺乏实证验证，所提治理方案的可行性和有效性未经系统评估
+- 对非模型增益之间的交互效应（如推理增益 × 系统增益的组合放大）分析不足，实际风险场景往往是多类增益叠加
+- 云治理部分承认面临隐私法律、技术和商业可行性的重大挑战，短期内落地困难
+- 未充分讨论治理方案之间的潜在冲突（如实体治理的准入门槛可能抑制竞争和创新）
+- 未来可深入量化各类非模型增益的能力提升幅度，建立预测模型指导治理资源分配
+
+## 相关工作与启发
+- 与Anthropic RSP、OpenAI Preparedness Framework等模型级安全框架互补，指出了这些框架的盲区
+- 与METR关于引出（elicitation）能力的研究直接相关，本文论证了引出工作的结构性局限
+- 与Epoch AI关于三种扩展范式（预训练/后训练/推理）相对重要性变化的经验研究相呼应
+- 启发：在评估AI系统安全性时，应将"系统级能力"与"模型级能力"分开考量，前者可能远超后者
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICML 2026\] Beyond Model Readiness: Institutional Readiness for AI Deployment in Public Systems](beyond_model_readiness_institutional_readiness_for_ai_deployment_in_public_syste.md)
+- [\[NeurIPS 2025\] Fostering the Ecosystem of AI for Social Impact Requires Expanding and Strengthening Evaluation Standards](../../NeurIPS2025/others/fostering_the_ecosystem_of_ai_for_social_impact_requires_expanding_and_strengthe.md)
+- [\[AAAI 2026\] Bridging the Skills Gap: A Course Model for Modern Generative AI Education](../../AAAI2026/others/bridging_the_skills_gap_a_course_model_for_modern_generative_ai_education.md)
+- [\[ICLR 2026\] The Hot Mess of AI: How Does Misalignment Scale With Model Intelligence and Task Complexity?](../../ICLR2026/others/the_hot_mess_of_ai_how_does_misalignment_scale_with_model_intelligence_and_task_.md)
+- [\[ICML 2026\] Position: Reliable AI Needs to Externalize Implicit Knowledge: A Human-AI Collaboration Perspective](reliable_ai_needs_to_externalize_implicit_knowledge_a_human-ai_collaboration_per.md)
+
+</div>
+
+<!-- RELATED:END -->

@@ -1,5 +1,5 @@
 # Auto-generated: ACL2025 paper notes ignore
-# 由 src/sync_notes.py 根据 TODO.md 自动生成
+# 已完成笔记由 src/gen_gitignore.py 根据 TODO.md 排除
 
 # 默认忽略所有笔记
 *.md
@@ -8,9 +8,8 @@
 # 保留元数据文件
 !TODO.md
 !INDEX.md
-!index.md
 
-# 排除已完成笔记所在的子目录
+# 排除已完成笔记所在的子目录（git 要求先 unignore 父目录）
 !3d_vision/
 !ai_safety/
 !aigc_detection/
@@ -18,6 +17,7 @@
 !autonomous_driving/
 !causal_inference/
 !code_intelligence/
+!computational_biology/
 !dialogue/
 !graph_learning/
 !human_understanding/
@@ -35,6 +35,7 @@
 !llm_reasoning/
 !llm_safety/
 !medical_imaging/
+!medical_nlp/
 !model_compression/
 !multilingual_mt/
 !multimodal_vlm/
@@ -159,6 +160,11 @@
 !code_intelligence/tree-of-code_a_tree-structured_exploring_framework_for_end-to-end_code_generatio.md
 !code_intelligence/tree_of_evolution_code_gen.md
 !code_intelligence/utboost_rigorous_evaluation_of_coding_agents_on_swe-bench.md
+!computational_biology/align-pro_align_protein_representations_through_multi-modal_learning.md
+!computational_biology/concept_bottleneck_language_models_for_protein_design.md
+!computational_biology/foundation_lm_single_cell_survey.md
+!computational_biology/kpo_protein_safety.md
+!computational_biology/retrieve_to_explain_drug_target_identification.md
 !dialogue/dialogue_systems_for_emotional_support_via_value_reinforcement.md
 !dialogue/enabling_chatbots_with_eyes_and_ears_an_immersive_multimodal_conversation_system.md
 !dialogue/enhancing_goal-oriented_proactive_dialogue_systems_via_consistency_reflection_an.md
@@ -304,7 +310,6 @@
 !interpretability/probing_subphonemes_in_morphology_models.md
 !interpretability/probing_the_geometry_of_truth_consistency_and_generalization_of_truth_directions.md
 !interpretability/reasoning_circuits_in_language_models_a_mechanistic_interpretation_of_syllogisti.md
-!interpretability/retrieve_to_explain_drug_target_identification.md
 !interpretability/safety_is_not_only_about_refusal_reasoning-enhanced_fine-tuning_for_interpretabl.md
 !interpretability/separating_tongue_from_thought_activation_patching_reveals_language-agnostic_con.md
 !interpretability/shortcut_neuron_eval.md
@@ -406,7 +411,6 @@
 !llm_alignment/jailbreaking_one_step_is_enough.md
 !llm_alignment/jailbreakradar_comprehensive_assessment_jailbreak_attacks.md
 !llm_alignment/jsontuning_towards_generalizable_robust_and_controllable_instruction_tuning.md
-!llm_alignment/kpo_protein_safety.md
 !llm_alignment/llms_caught_in_the_crossfire_malware_requests_and_jailbreak_challenges.md
 !llm_alignment/lpoi_listwise_preference_optimization_for_vision_language_models.md
 !llm_alignment/lssf_safety_subspace.md
@@ -558,7 +562,6 @@
 !llm_evaluation/tripcraft_a_benchmark_for_spatio-temporally_fine_grained_travel_planning.md
 !llm_evaluation/triptailor_a_real-world_benchmark_for_personalized_travel_planning.md
 !llm_evaluation/tumlu_a_unified_and_native_language_understanding_benchmark_for_turkic_languages.md
-!llm_evaluation/vital_pluralistic_alignment_healthcare.md
 !llm_evaluation/voxeval_benchmarking_the_knowledge_understanding_capabilities_of_end-to-end_spok.md
 !llm_evaluation/webwalker_benchmarking_llms_in_web_traversal.md
 !llm_evaluation/where_are_we_evaluating_llm_performance_on_african_languages.md
@@ -576,7 +579,6 @@
 !llm_nlp/a_training-free_llm-based_approach_to_general_chinese_character_error_correction.md
 !llm_nlp/aad-llm_neural_attention-driven_auditory_scene_understanding.md
 !llm_nlp/acquisition_and_application_of_novel_knowledge_in_large_language_models.md
-!llm_nlp/adaptive-vp_a_framework_for_llm-based_virtual_patients_that_adapts_to_trainees_d.md
 !llm_nlp/afrobench_how_good_are_large_language_models_on_african_languages.md
 !llm_nlp/agentdropout_dynamic_agent_elimination_for_token-efficient_and_high-performance_.md
 !llm_nlp/agentgym_evaluating_and_training_large_language_model-based_agents_across_divers.md
@@ -703,7 +705,6 @@
 !llm_nlp/escapebench_creative_agent.md
 !llm_nlp/evaluating_implicit_bias_in_large_language_models_by_attacking_from_a_psychometr.md
 !llm_nlp/evaluating_lms_synthetic_data_gen.md
-!llm_nlp/evopatient_standardized_patient.md
 !llm_nlp/expetrans_llms_are_experiential_transfer_learners.md
 !llm_nlp/explain-then-process_using_grammar_prompting_to_enhance_grammatical_acceptabilit.md
 !llm_nlp/explica_evaluating_explicit_causal_reasoning_in_large_language_models.md
@@ -712,7 +713,6 @@
 !llm_nlp/exploring_the_potential_of_llms_as.md
 !llm_nlp/factual_knowledge_in_language_models_robustness_and_anomalies_under_simple_tempo.md
 !llm_nlp/foodtaxo_generating_food_taxonomies_with_large_language_models.md
-!llm_nlp/foundation_lm_single_cell_survey.md
 !llm_nlp/from_data_to_knowledge_evaluating_how_efficiently_language_models_learn_facts.md
 !llm_nlp/from_neurons_to_semantics_evaluating_cross-linguistic_alignment_capabilities_of_.md
 !llm_nlp/from_selection_to_generation_a_survey.md
@@ -1020,7 +1020,6 @@
 !llm_safety/alleviating_hallucinations_from_knowledge_misalignment_in_large_language_models_.md
 !llm_safety/answer_when_needed_forget_when_not_language_models_pretend_to_forget_via_in-cont.md
 !llm_safety/are_the_hidden_states_hiding_something_testing_the_limits_of_factuality-encoding.md
-!llm_safety/arghitz_at_archehr-qa_2025_a_two-step_divide_and_conquer_approach_to_patient_que.md
 !llm_safety/automated_explanation_generation_and_hallucination_detection_for_heritage_image_.md
 !llm_safety/chinese_simpleqa_a_chinese_factuality_evaluation_for_large_language_models.md
 !llm_safety/cliperase_efficient_unlearning_of_visual-textual_associations_in_clip.md
@@ -1067,18 +1066,11 @@
 !llm_safety/zjuklab_at_semeval-2025_task_4_unlearning_via_model_merging.md
 !medical_imaging/a_modular_approach_for_clinical_slms_driven_by_synthetic_data_with_pre-instructi.md
 !medical_imaging/a_retrieval-based_approach_to_medical_procedure_matching_in_romanian.md
-!medical_imaging/afrimed_qa_pan_african.md
-!medical_imaging/align-pro_align_protein_representations_through_multi-modal_learning.md
 !medical_imaging/automated_structured_radiology_report_generation.md
 !medical_imaging/auxiliary_patient_data_xray.md
-!medical_imaging/biore_llm_judge_evaluation.md
 !medical_imaging/chexalign_preference_finetuning.md
 !medical_imaging/clinical_coding_eight_recommendations.md
-!medical_imaging/clinidial_a_naturally_occurring_multimodal_dialogue_dataset_for_team_reflection_.md
-!medical_imaging/concept_bottleneck_language_models_for_protein_design.md
 !medical_imaging/cstrl_context-driven_sequential_transfer_learning_for_abstractive_radiology_repo.md
-!medical_imaging/enhancing_medical_dialogue_generation_through_knowledge_refinement_and_dynamic_p.md
-!medical_imaging/evaluation_of_llms_in_medical_text_summarization_the_role_of_vocabulary_adaptati.md
 !medical_imaging/learning_from_negative_samples_in_biomedical_generative_entity_linking.md
 !medical_imaging/medbiorag_semantic_search_and_retrieval-augmented_generation_for_biomedical_lite.md
 !medical_imaging/medbiorag_semantic_search_and_retrieval-augmented_generation_with_large_language.md
@@ -1089,9 +1081,19 @@
 !medical_imaging/pattern_recognition_or_medical_knowledge_the_problem_with_multiple-choice_questi.md
 !medical_imaging/radar_radiology_report_gen.md
 !medical_imaging/redactor_an_llm-powered_framework_for_automatic_clinical_data_de-identification.md
-!medical_imaging/reflectool_clinical_agent.md
 !medical_imaging/secret_semi-supervised_clinical_trial_document_similarity_search.md
-!medical_imaging/urca_biomedical_evidence_extraction.md
+!medical_nlp/adaptive-vp_a_framework_for_llm-based_virtual_patients_that_adapts_to_trainees_d.md
+!medical_nlp/afrimed_qa_pan_african.md
+!medical_nlp/arghitz_at_archehr-qa_2025_a_two-step_divide_and_conquer_approach_to_patient_que.md
+!medical_nlp/biore_llm_judge_evaluation.md
+!medical_nlp/clinidial_a_naturally_occurring_multimodal_dialogue_dataset_for_team_reflection_.md
+!medical_nlp/enhancing_medical_dialogue_generation_through_knowledge_refinement_and_dynamic_p.md
+!medical_nlp/evaluation_of_llms_in_medical_text_summarization_the_role_of_vocabulary_adaptati.md
+!medical_nlp/evopatient_standardized_patient.md
+!medical_nlp/follow-up_question_generation_for_enhanced_patient-provider_conversations.md
+!medical_nlp/reflectool_clinical_agent.md
+!medical_nlp/urca_biomedical_evidence_extraction.md
+!medical_nlp/vital_pluralistic_alignment_healthcare.md
 !model_compression/500xcompressor_generalized_prompt_compression_for_large_language_models.md
 !model_compression/accurate_kv_cache_quantization_with_outlier_tokens_tracing.md
 !model_compression/aligndistil_token_level_alignment.md
@@ -1477,7 +1479,6 @@
 !others/fcmr_robust_evaluation_of_financial_cross-modal_multi-hop_reasoning.md
 !others/feat_a_preference_feedback_dataset_through_a_cost-effective_auto-generation_and_.md
 !others/federated_lora_heterogeneous.md
-!others/follow-up_question_generation_for_enhanced_patient-provider_conversations.md
 !others/foreplay_polish_erotic_detection.md
 !others/fractal_fine-grained_scoring_from_aggregate_text_labels.md
 !others/frictional_agent_alignment.md

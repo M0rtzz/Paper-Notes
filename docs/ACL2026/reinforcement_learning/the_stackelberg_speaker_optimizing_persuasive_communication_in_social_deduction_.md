@@ -2,11 +2,15 @@
 title: >-
   [论文解读] The Stackelberg Speaker: Optimizing Persuasive Communication in Social Deduction Games
 description: >-
-  [ACL 2026][强化学习][待补充] 待深读论文后补充
+  [ACL 2026][强化学习][说服性通信] 本文将社交推理游戏中的回合制对话建模为 Stackelberg 博弈，当前玩家作为 leader 通过度量下一玩家的响应分布来优化话语的说服力影响，使用 GRPO 训练 Refiner 模型在狼人杀、阿瓦隆等四个游戏基准上显著超越基线。
 tags:
   - "ACL 2026"
   - "强化学习"
-  - "待补充"
+  - "说服性通信"
+  - "社交推理游戏"
+  - "Stackelberg博弈"
+  - "GRPO"
+  - "LLM智能体"
 ---
 
 # The Stackelberg Speaker: Optimizing Persuasive Communication in Social Deduction Games
@@ -117,33 +121,19 @@ GRPO 目标函数：$\mathcal{J}(\theta) = \mathbb{E}_c[\frac{1}{n}\sum_i \mathc
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个 SDGs + Sotopia、多基线叠加、消融完整
 - 写作质量: ⭐⭐⭐⭐ 理论清晰但部分公式密集
 - 价值: ⭐⭐⭐⭐ 为 LLM 智能体说服性通信提供可行框架
-**代码**: 待确认  
-**领域**: reinforcement_learning  
-**关键词**: 待补充
 
-## 一句话总结
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 研究背景与动机
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 方法详解
-待深读论文后补充
+## 相关论文
 
-## 实验关键数据
-待深读论文后补充
+- [\[ICML 2026\] Learning in Structured Stackelberg Games](../../ICML2026/reinforcement_learning/learning_in_structured_stackelberg_games.md)
+- [\[ICLR 2026\] Learning to Play Multi-Follower Bayesian Stackelberg Games](../../ICLR2026/reinforcement_learning/learning_to_play_multi-follower_bayesian_stackelberg_games.md)
+- [\[ICLR 2026\] Nearly-Optimal Bandit Learning in Stackelberg Games with Side Information](../../ICLR2026/reinforcement_learning/nearly-optimal_bandit_learning_in_stackelberg_games_with_side_information.md)
+- [\[NeurIPS 2025\] Learning in Stackelberg Mean Field Games: A Non-Asymptotic Analysis](../../NeurIPS2025/reinforcement_learning/learning_in_stackelberg_mean_field_games_a_non-asymptotic_analysis.md)
+- [\[ACL 2026\] Savoir: Learning Social Savoir-Faire via Shapley-based Reward Attribution](savoir_learning_social_savoir-faire_via_shapley-based_reward_attribution.md)
 
-## 亮点与洞察
-待深读论文后补充
+</div>
 
-## 局限性 / 可改进方向
-待深读论文后补充
-
-## 相关工作与启发
-待深读论文后补充
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+<!-- RELATED:END -->

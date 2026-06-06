@@ -143,7 +143,7 @@ RULEBREAKERS 是一个包含 25,600 个实例的评估数据集，由 12,800 个
 - [\[ACL 2025\] Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning](../../ACL2025/llm_nlp/problem-solving_logic_guided_curriculum_in-context_learning_for_llms_complex_rea.md)
 - [\[ACL 2025\] Can We Further Elicit Reasoning in LLMs? Critic-Guided Planning with Retrieval-Augmentation for Solving Challenging Tasks](../../ACL2025/llm_nlp/can_we_further_elicit_reasoning_in_llms_critic-guided_planning_with_retrieval-au.md)
 - [\[ICML 2025\] Regress, Don't Guess — A Regression-like Loss on Number Tokens for Language Models](regress_dont_guess_--_a_regression-like_loss_on_number_tokens_for_language_model.md)
-- [\[ACL 2026\] Dual Alignment Between Language Model Layers and Human Sentence Processing](../../ACL2026/llm_nlp/dual_alignment_between_language_model_layers_and_human_sentence_processing.md)
+- [\[ACL 2025\] Can LLMs Reason About Program Semantics? A Comprehensive Evaluation of LLMs on Formal Specification Inference](../../ACL2025/llm_nlp/can_llms_reason_about_program_semantics_a_comprehensive_evaluation_of_llms_on_fo.md)
 
 </div>
 

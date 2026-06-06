@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Securing the Language of Life: Inheritable Watermarks from DNA Language Models to Proteins
 description: >-
-  [NeurIPS 2025][医学图像][DNA水印] 提出 DNAMark 和 CentralMark 两种水印方案，针对 DNA 语言模型生成的序列嵌入鲁棒水印：前者利用同义密码子替换实现功能不变水印，后者实现从 DNA 到蛋白质的可遗传水印。
+  [NeurIPS 2025][LLM安全][DNA水印] 提出 DNAMark 和 CentralMark 两种水印方案，针对 DNA 语言模型生成的序列嵌入鲁棒水印：前者利用同义密码子替换实现功能不变水印，后者实现从 DNA 到蛋白质的可遗传水印。
 tags:
   - "NeurIPS 2025"
-  - "医学图像"
+  - "LLM安全"
   - "DNA水印"
   - "生物安全"
   - "语言模型"
@@ -130,7 +130,7 @@ $$\mathcal{G}_a = \{a \mid \text{translate}(b_1, b_2, b_3) = a, b_2 \in \mathcal
 - [\[NeurIPS 2025\] DNA-DetectLLM: Unveiling AI-Generated Text via a DNA-Inspired Mutation-Repair Paradigm](dna-detectllm_unveiling_ai-generated_text_via_a_dna-inspired_mutation-repair_par.md)
 - [\[ACL 2026\] Topic-Based Watermarks for Large Language Models](../../ACL2026/llm_safety/topic-based_watermarks_for_large_language_models.md)
 - [\[NeurIPS 2025\] Approximate Domain Unlearning for Vision-Language Models](approximate_domain_unlearning_for_visionlanguage_models.md)
-- [\[NeurIPS 2025\] DRIFT: Dynamic Rule-Based Defense with Injection Isolation for Securing LLM Agents](drift_dynamic_rulebased_defense_with_injection_isolation_for.md)
+- [\[NeurIPS 2025\] SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders](saemark_steering_personalized_multilingual_llm_watermarks_with_sparse_autoencode.md)
 
 </div>
 

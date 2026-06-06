@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Hyperbolic Safety-Aware Vision-Language Models
 description: >-
-  [CVPR 2025][多模态VLM][双曲空间] HySAC 提出在双曲空间中构建安全感知的视觉语言模型，通过蕴含锥（entailment cone）将安全/不安全内容映射到双曲空间的不同区域（安全内容靠近原点、不安全内容远离原点），使模型具备安全内容分类和动态重定向能力…
+  [CVPR 2025][LLM安全][双曲空间] HySAC 提出在双曲空间中构建安全感知的视觉语言模型，通过蕴含锥（entailment cone）将安全/不安全内容映射到双曲空间的不同区域（安全内容靠近原点、不安全内容远离原点），使模型具备安全内容分类和动态重定向能力…
 tags:
   - "CVPR 2025"
-  - "多模态VLM"
+  - "LLM安全"
   - "双曲空间"
   - "内容安全"
   - "CLIP"

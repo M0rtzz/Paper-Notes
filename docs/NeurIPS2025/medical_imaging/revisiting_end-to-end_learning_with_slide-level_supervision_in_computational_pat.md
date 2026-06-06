@@ -155,11 +155,11 @@ $$\{\hat{\theta}, \hat{\phi}, \hat{\eta}\} \leftarrow \arg\min_{\theta, \phi, \e
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] UniSite: The First Cross-Structure Dataset and Learning Framework for End-to-End Ligand Binding Site Detection](unisite_the_first_cross-structure_dataset_and_learning_framework_for_end-to-end_.md)
-- [\[ICML 2025\] Protriever: End-to-End Differentiable Protein Homology Search for Fitness Prediction](../../ICML2025/medical_imaging/protriever_end-to-end_differentiable_protein_homology_search_for_fitness_predict.md)
-- [\[ACL 2026\] Decide less, communicate more: On the construct validity of end-to-end fact-checking in medicine](../../ACL2026/medical_imaging/decide_less_communicate_more_on_the_construct_validity_of_end-to-end_fact-checki.md)
-- [\[CVPR 2026\] Momentum Memory for Knowledge Distillation in Computational Pathology](../../CVPR2026/medical_imaging/momentum_memory_for_knowledge_distillation_in_computational_pathology.md)
 - [\[CVPR 2025\] Unsupervised Foundation Model-Agnostic Slide-Level Representation Learning](../../CVPR2025/medical_imaging/unsupervised_foundation_model-agnostic_slide-level_representation_learning.md)
+- [\[CVPR 2026\] Momentum Memory for Knowledge Distillation in Computational Pathology](../../CVPR2026/medical_imaging/momentum_memory_for_knowledge_distillation_in_computational_pathology.md)
+- [\[CVPR 2026\] A protocol for evaluating robustness to H&E staining variation in computational pathology models](../../CVPR2026/medical_imaging/a_protocol_for_evaluating_robustness_to_he_stainin.md)
+- [\[NeurIPS 2025\] ImageNet-trained CNNs are not biased towards texture: Revisiting feature reliance through controlled suppression](imagenet-trained_cnns_are_not_biased_towards_texture_revisiting_feature_reliance.md)
+- [\[ECCV 2024\] Pathology-knowledge Enhanced Multi-instance Prompt Learning for Few-shot Whole Slide Image Classification](../../ECCV2024/medical_imaging/pathology-knowledge_enhanced_multi-instance_prompt_learning_for_few-shot_whole_s.md)
 
 </div>
 

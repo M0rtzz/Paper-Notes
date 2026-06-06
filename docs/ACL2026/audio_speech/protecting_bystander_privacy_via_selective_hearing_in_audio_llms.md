@@ -122,11 +122,11 @@ BPFT 使用标准 SFT 损失，仅微调 LLM 骨干（LoRA rank 32），冻结�
 
 ## 相关论文
 
+- [\[ACL 2026\] Privacy-preserving Prosody Representation Learning](privacy-preserving_prosody_representation_learning.md)
 - [\[ACL 2026\] Omni-Embed-Audio: Leveraging Multimodal LLMs for Robust Audio-Text Retrieval](omni-embed-audio_leveraging_multimodal_llms_for_robust_audio-text_retrieval.md)
 - [\[ICML 2026\] Probing Cross-modal Information Hubs in Audio-Visual LLMs](../../ICML2026/audio_speech/probing_cross-modal_information_hubs_in_audio-visual_llms.md)
-- [\[CVPR 2025\] Hearing Anywhere in Any Environment](../../CVPR2025/audio_speech/hearing_anywhere_in_any_environment.md)
 - [\[ACL 2026\] Mind the Pause: Disfluency-Aware Objective Tuning for Multilingual Speech Correction with LLMs](mind_the_pause_disfluency-aware_objective_tuning_for_multilingual_speech_correct.md)
-- [\[ICLR 2026\] VowelPrompt: Hearing Speech Emotions from Text via Vowel-level Prosodic Augmentation](../../ICLR2026/audio_speech/vowelprompt_hearing_speech_emotions_from_text_via_vowel-level_prosodic_augmentat.md)
+- [\[CVPR 2025\] Hearing Anywhere in Any Environment](../../CVPR2025/audio_speech/hearing_anywhere_in_any_environment.md)
 
 </div>
 

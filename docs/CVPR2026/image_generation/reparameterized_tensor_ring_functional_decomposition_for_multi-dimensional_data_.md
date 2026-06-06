@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Reparameterized Tensor Ring Functional Decomposition for Multi-Dimensional Data Recovery
 description: >-
-  [CVPR2026][3D视觉][Tensor Ring分解] 提出 RepTRFD：通过将 Tensor Ring 因子重参数化为"可学习隐张量 × 固定基"的形式，解决 INR 参数化 TR 因子的频谱偏置问题，在图像修复/去噪/超分/点云恢复等任务上全面超越 SOTA。
+  [CVPR2026][图像生成][Tensor Ring分解] 提出 RepTRFD：通过将 Tensor Ring 因子重参数化为"可学习隐张量 × 固定基"的形式，解决 INR 参数化 TR 因子的频谱偏置问题，在图像修复/去噪/超分/点云恢复等任务上全面超越 SOTA。
 tags:
   - "CVPR2026"
-  - "3D视觉"
+  - "图像生成"
   - "Tensor Ring分解"
   - "隐式神经表示"
   - "重参数化"
@@ -133,11 +133,11 @@ RepTRFD 由三个核心组件构成：
 
 ## 相关论文
 
+- [\[ICML 2026\] Bayesian Tensor Decomposition with Diffusion Model Prior](../../ICML2026/image_generation/bayesian_tensor_decomposition_with_diffusion_model_prior.md)
 - [\[CVPR 2026\] From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition](from_inpainting_to_layer_decomposition_repurposing_generative_inpainting_models_.md)
 - [\[ICCV 2025\] Transformed Low-rank Adaptation via Tensor Decomposition and Its Applications to Text-to-image Models](../../ICCV2025/image_generation/transformed_low-rank_adaptation_via_tensor_decomposition_and_its_applications_to.md)
 - [\[AAAI 2026\] Conditional Diffusion Model for Multi-Agent Dynamic Task Decomposition](../../AAAI2026/image_generation/conditional_diffusion_model_for_multi-agent_dynamic_task_dec.md)
-- [\[ECCV 2024\] RingID: Rethinking Tree-Ring Watermarking for Enhanced Multi-Key Identification](../../ECCV2024/image_generation/ringid_rethinking_tree-ring_watermarking_for_enhanced_multi-key_identification.md)
-- [\[AAAI 2026\] VoiceCloak: A Multi-Dimensional Defense Framework against Unauthorized Diffusion-based Voice Cloning](../../AAAI2026/image_generation/voicecloak_a_multi-dimensional_defense_framework_against_unauthorized_diffusion-.md)
+- [\[ICML 2026\] Offline Multi-agent Reinforcement Learning via Sequential Score Decomposition](../../ICML2026/image_generation/offline_multi-agent_reinforcement_learning_via_sequential_score_decomposition.md)
 
 </div>
 

@@ -212,7 +212,7 @@ $$\min_{f \in \mathcal{M}} \mathcal{L}_\mathcal{D}(f)$$
 - [\[ICLR 2026\] MoMa: A Simple Modular Deep Learning Framework for Material Property Prediction](../../ICLR2026/llm_pretraining/moma_a_modular_deep_learning_framework_for_material_property_prediction.md)
 - [\[NeurIPS 2025\] Predict Training Data Quality via Its Geometry in Metric Space](../../NeurIPS2025/llm_pretraining/predict_training_data_quality_via_its_geometry_in_metric_space.md)
 - [\[NeurIPS 2025\] Deep Compositional Phase Diffusion for Long Motion Sequence Generation](../../NeurIPS2025/llm_pretraining/deep_compositional_phase_diffusion_for_long_motion_sequence_generation.md)
-- [\[ICML 2025\] On the Role of Label Noise in the Feature Learning Process](on_the_role_of_label_noise_in_the_feature_learning_process.md)
+- [\[ICLR 2026\] Intrinsic Training Dynamics of Deep Neural Networks](../../ICLR2026/llm_pretraining/intrinsic_training_dynamics_of_deep_neural_networks.md)
 
 </div>
 

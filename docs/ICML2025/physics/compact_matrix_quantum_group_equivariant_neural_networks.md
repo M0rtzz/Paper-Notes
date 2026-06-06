@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Compact Matrix Quantum Group Equivariant Neural Networks
 description: >-
-  [ICML 2025 (Poster)][物理学][紧致矩阵量子群] 本文将群等变神经网络扩展到**紧致矩阵量子群**的设定下，利用 Woronowicz 形式的 Tannaka-Krein 对偶理论刻画了该类网络的权重矩阵，为非交换几何上的数据学习提供了理论基础。
+  [ICML 2025 (Poster)][物理/科学计算][紧致矩阵量子群] 本文将群等变神经网络扩展到**紧致矩阵量子群**的设定下，利用 Woronowicz 形式的 Tannaka-Krein 对偶理论刻画了该类网络的权重矩阵，为非交换几何上的数据学习提供了理论基础。
 tags:
   - "ICML 2025 (Poster)"
-  - "物理学"
+  - "物理/科学计算"
   - "紧致矩阵量子群"
   - "等变神经网络"
   - "Tannaka-Krein 对偶"
@@ -157,10 +157,10 @@ $$W = \sum_{\pi \in D(k, l)} c_\pi \cdot T_\pi$$
 ## 相关论文
 
 - [\[CVPR 2025\] ATP: Adaptive Threshold Pruning for Efficient Data Encoding in Quantum Neural Networks](../../CVPR2025/physics/atp_adaptive_threshold_pruning_for_efficient_data_encoding_in_quantum_neural_net.md)
-- [\[NeurIPS 2025\] Exoplanet Formation Inference Using Conditional Invertible Neural Networks](../../NeurIPS2025/physics/exoplanet_formation_inference_using_conditional_invertible_neural_networks.md)
 - [\[ICCV 2025\] ResQ: A Novel Framework to Implement Residual Neural Networks on Analog Rydberg Atom Quantum Computers](../../ICCV2025/physics/resq_a_novel_framework_to_implement_residual_neural_networks_on_analog_rydberg_a.md)
-- [\[ICLR 2026\] Feedback-driven Recurrent Quantum Neural Network Universality](../../ICLR2026/physics/feedback-driven_recurrent_quantum_neural_network_universality.md)
-- [\[NeurIPS 2025\] Neural Deprojection of Galaxy Stellar Mass Profiles](../../NeurIPS2025/physics/neural_deprojection_of_galaxy_stellar_mass_profiles.md)
+- [\[ICML 2025\] Differentiable Stellar Atmospheres with Physics-Informed Neural Networks](differentiable_stellar_atmospheres_with_physics-informed_neural_networks.md)
+- [\[NeurIPS 2025\] Exoplanet Formation Inference Using Conditional Invertible Neural Networks](../../NeurIPS2025/physics/exoplanet_formation_inference_using_conditional_invertible_neural_networks.md)
+- [\[ICML 2026\] EqGINO: Equivariant Geometry-Informed Fourier Neural Operators for 3D PDEs](../../ICML2026/physics/eqgino_equivariant_geometry-informed_fourier_neural_operators_for_3d_pdes.md)
 
 </div>
 

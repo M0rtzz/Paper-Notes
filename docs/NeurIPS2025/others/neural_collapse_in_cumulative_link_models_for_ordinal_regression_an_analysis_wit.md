@@ -144,7 +144,7 @@ Neural Collapse (NC)是深度分类网络中发现的一个关键现象：经过
 - [\[NeurIPS 2025\] Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry](reliable_active_learning_from_unreliable_labels_via_neural_collapse_geometry.md)
 - [\[NeurIPS 2025\] An Empirical Investigation of Neural ODEs and Symbolic Regression for Dynamical Systems](an_empirical_investigation_of_neural_odes_and_symbolic_regression_for_dynamical_.md)
 - [\[NeurIPS 2025\] MaxSup: Overcoming Representation Collapse in Label Smoothing](maxsup_overcoming_representation_collapse_in_label_smoothing.md)
-- [\[CVPR 2025\] CADCrafter: Generating Computer-Aided Design Models from Unconstrained Images](../../CVPR2025/others/cadcrafter_generating_computer-aided_design_models_from_unconstrained_images.md)
+- [\[ACL 2025\] Length-Induced Embedding Collapse in PLM-based Models](../../ACL2025/others/length-induced_embedding_collapse_in_plm-based_models.md)
 
 </div>
 

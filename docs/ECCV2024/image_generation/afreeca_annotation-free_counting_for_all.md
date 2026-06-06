@@ -2,10 +2,10 @@
 title: >-
   [论文解读] AFreeCA: Annotation-Free Counting for All
 description: >-
-  [ECCV 2024][目标检测][Object Counting] 利用 Stable Diffusion 生成合成排序/计数数据，通过先学排序再学计数的两阶段策略 + 密度引导的图像分块，实现了首个适用于任意类别物体的无标注计数方法，在人群计数上超越已有无监督方法。
+  [ECCV 2024][图像生成][Object Counting] 利用 Stable Diffusion 生成合成排序/计数数据，通过先学排序再学计数的两阶段策略 + 密度引导的图像分块，实现了首个适用于任意类别物体的无标注计数方法，在人群计数上超越已有无监督方法。
 tags:
   - "ECCV 2024"
-  - "目标检测"
+  - "图像生成"
   - "Object Counting"
   - "Unsupervised"
   - "扩散模型"
@@ -143,8 +143,8 @@ tags:
 
 - [\[AAAI 2026\] CountSteer: Steering Attention for Object Counting in Diffusion Models](../../AAAI2026/image_generation/countsteer_steering_attention_for_object_counting_in_diffusion_models.md)
 - [\[CVPR 2025\] T2ICount: Enhancing Cross-modal Understanding for Zero-Shot Counting](../../CVPR2025/image_generation/t2icount_enhancing_cross-modal_understanding_for_zero-shot_counting.md)
-- [\[NeurIPS 2025\] Pairwise Optimal Transports for Training All-to-All Flow-Based Condition Transfer Model](../../NeurIPS2025/image_generation/pairwise_optimal_transports_for_training_all-to-all_flow-based_condition_transfe.md)
 - [\[ECCV 2024\] FouriScale: A Frequency Perspective on Training-Free High-Resolution Image Synthesis](fouriscale_a_frequency_perspective_on_training-free_high-resolution_image_synthe.md)
+- [\[NeurIPS 2025\] Pairwise Optimal Transports for Training All-to-All Flow-Based Condition Transfer Model](../../NeurIPS2025/image_generation/pairwise_optimal_transports_for_training_all-to-all_flow-based_condition_transfe.md)
 - [\[ECCV 2024\] PanoFree: Tuning-Free Holistic Multi-view Image Generation with Cross-view Self-Guidance](panofree_tuning-free_holistic_multi-view_image_generation_with_cross-view_self-g.md)
 
 </div>

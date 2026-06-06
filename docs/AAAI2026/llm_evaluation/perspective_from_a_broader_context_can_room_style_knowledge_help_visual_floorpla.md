@@ -171,9 +171,9 @@ tags:
 
 - [\[ICCV 2025\] Supercharging Floorplan Localization with Semantic Rays](../../ICCV2025/llm_evaluation/supercharging_floorplan_localization_with_semantic_rays.md)
 - [\[CVPR 2025\] Scene-Agnostic Pose Regression for Visual Localization](../../CVPR2025/llm_evaluation/scene-agnostic_pose_regression_for_visual_localization.md)
-- [\[ACL 2026\] Fine-tuning vs. In-context Learning in Large Language Models: A Formal Language Learning Perspective](../../ACL2026/llm_evaluation/fine-tuning_vs_in-context_learning_in_large_language_models_a_formal_language_le.md)
 - [\[ICLR 2026\] Can Vision–Language Models Assess Graphic Design Aesthetics? A Benchmark, Evaluation, and Dataset Perspective](../../ICLR2026/llm_evaluation/can_vision_language_models_assess_graphic_design_aesthetics_a_benchmark_evaluati.md)
 - [\[AAAI 2026\] Benchmarking LLMs for Political Science: A United Nations Perspective](benchmarking_llms_for_political_science_a_united_nations_perspective.md)
+- [\[ICLR 2026\] In-Context Learning for Pure Exploration](../../ICLR2026/llm_evaluation/in-context_learning_for_pure_exploration.md)
 
 </div>
 

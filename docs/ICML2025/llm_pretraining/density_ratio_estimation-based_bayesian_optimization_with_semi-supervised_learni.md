@@ -171,8 +171,8 @@ $$\mathbf{x}_{t+1} = \arg\max_{\mathbf{x} \in \mathcal{X}} \pi_{\hat{\mathbf{C}}
 - [\[CVPR 2025\] A Unified Framework for Heterogeneous Semi-supervised Learning](../../CVPR2025/llm_pretraining/a_unified_framework_for_heterogeneous_semi-supervised_learning.md)
 - [\[ICML 2025\] A Square Peg in a Square Hole: Meta-Expert for Long-Tailed Semi-Supervised Learning](a_square_peg_in_a_square_hole_meta-expert_for_long-tailed_semi-supervised_learni.md)
 - [\[NeurIPS 2025\] Mouse-Guided Gaze: Semi-Supervised Learning of Intention-Aware Representations for Reading Detection](../../NeurIPS2025/llm_pretraining/mouse-guided_gaze_semi-supervised_learning_of_intention-aware_representations_fo.md)
-- [\[NeurIPS 2025\] PRESCRIBE: Predicting Single-Cell Responses with Bayesian Estimation](../../NeurIPS2025/llm_pretraining/prescribe_predicting_single-cell_responses_with_bayesian_estimation.md)
 - [\[ICML 2025\] LLM Data Selection and Utilization via Dynamic Bi-level Optimization](llm_data_selection_and_utilization_via_dynamic_bi-level_optimization.md)
+- [\[ICML 2025\] Position: The Future of Bayesian Prediction Is Prior-Fitted](position_the_future_of_bayesian_prediction_is_prior-fitted.md)
 
 </div>
 

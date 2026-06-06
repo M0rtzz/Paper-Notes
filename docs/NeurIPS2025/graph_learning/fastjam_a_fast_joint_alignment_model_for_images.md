@@ -151,8 +151,8 @@ FastJAM 在对齐质量上持平或优于所有现有方法，同时比最快的
 
 - [\[NeurIPS 2025\] GFM-RAG: Graph Foundation Model for Retrieval Augmented Generation](gfm-rag_graph_foundation_model_for_retrieval_augmented_generation.md)
 - [\[ACL 2025\] Fast-and-Frugal Text-Graph Transformers are Effective Link Predictors](../../ACL2025/graph_learning/fast-and-frugal_text-graph_transformers_are_effective_link_predictors.md)
-- [\[NeurIPS 2025\] Heterogeneous Swarms: Jointly Optimizing Model Roles and Weights for Multi-LLM Systems](heterogeneous_swarms_jointly_optimizing_model_roles_and_weights_for_multi-llm_sy.md)
 - [\[CVPR 2025\] Hypergraph Vision Transformers: Images are More than Nodes, More than Edges](../../CVPR2025/graph_learning/hypergraph_vision_transformers_images_are_more_than_nodes_more_than_edges.md)
+- [\[NeurIPS 2025\] Heterogeneous Swarms: Jointly Optimizing Model Roles and Weights for Multi-LLM Systems](heterogeneous_swarms_jointly_optimizing_model_roles_and_weights_for_multi-llm_sy.md)
 - [\[ACL 2025\] Beyond Completion: A Foundation Model for General Knowledge Graph Reasoning](../../ACL2025/graph_learning/beyond_completion_a_foundation_model_for_general_knowledge_graph_reasoning.md)
 
 </div>

@@ -2,11 +2,15 @@
 title: >-
   [论文解读] Self-Consistency from Only Two Samples: CoT-PoT Ensembling for Efficient LLM Reasoning
 description: >-
-  [ACL 2026][LLM推理][待补充] 待深读论文后补充
+  [ACL 2026][LLM推理][自一致性] 提出 CoT-PoT 跨模态集成方法，利用链式推理（CoT）和程序化推理（PoT）两种根本不同推理模态的互补性，将自一致性所需的采样次数减少9.3倍，78.6%的问题仅需2个样本即可解决。
 tags:
   - "ACL 2026"
   - "LLM推理"
-  - "待补充"
+  - "自一致性"
+  - "思维链"
+  - "程序化思维"
+  - "跨模态集成"
+  - "贝叶斯早停"
 ---
 
 # Self-Consistency from Only Two Samples: CoT-PoT Ensembling for Efficient LLM Reasoning
@@ -118,33 +122,19 @@ tags:
 - 新颖性: ⭐⭐⭐⭐⭐ 跨模态一致性的洞察简洁深刻，贝叶斯早停框架优美
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个基准×5个LLM，全量+早停+多种变体，极为充分
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，理论推导严谨，实验组织优秀
-**代码**: 待确认  
-**领域**: llm_reasoning  
-**关键词**: 待补充
 
-## 一句话总结
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 研究背景与动机
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 方法详解
-待深读论文后补充
+## 相关论文
 
-## 实验关键数据
-待深读论文后补充
+- [\[ACL 2026\] Reliability-Aware Adaptive Self-Consistency for Efficient Sampling in LLM Reasoning](reliability-aware_adaptive_self-consistency_for_efficient_sampling_in_llm_reason.md)
+- [\[ACL 2026\] Does Self-Consistency Improve the Recall of Encyclopedic Knowledge?](does_self-consistency_improve_the_recall_of_encyclopedic_knowledge.md)
+- [\[ACL 2026\] Revisiting the Uniform Information Density Hypothesis in LLM Reasoning](revisiting_the_uniform_information_density_hypothesis_in_llm_reasoning.md)
+- [\[ICML 2026\] Self-Play Only Evolves When Self-Synthetic Pipeline Ensures Learnable Information Gain](../../ICML2026/llm_reasoning/self-play_only_evolves_when_self-synthetic_pipeline_ensures_learnable_informatio.md)
+- [\[ICML 2026\] Beyond Two-Stage Training: Cooperative SFT and RL for LLM Reasoning](../../ICML2026/llm_reasoning/beyond_two-stage_training_cooperative_sft_and_rl_for_llm_reasoning.md)
 
-## 亮点与洞察
-待深读论文后补充
+</div>
 
-## 局限性 / 可改进方向
-待深读论文后补充
-
-## 相关工作与启发
-待深读论文后补充
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+<!-- RELATED:END -->

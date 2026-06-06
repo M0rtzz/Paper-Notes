@@ -136,7 +136,7 @@ $$\bm{z}_t^{(k+1)} = \bm{B} \odot (\bm{z}_t^{(k)} - \alpha \cdot \frac{\partial 
 - [\[CVPR 2025\] FaithDiff: Unleashing Diffusion Priors for Faithful Image Super-Resolution](../../CVPR2025/image_generation/faithdiff_unleashing_diffusion_priors_for_faithful_image_super-resolution.md)
 - [\[ICCV 2025\] SuperEdit: Rectifying and Facilitating Supervision for Instruction-Based Image Editing](../../ICCV2025/image_generation/superedit_rectifying_and_facilitating_supervision_for_instruction-based_image_ed.md)
 - [\[ICML 2026\] CoCoEdit: Content-Consistent Image Editing via Region Regularized Reinforcement Learning](../../ICML2026/image_generation/cocoedit_content-consistent_image_editing_via_region_regularized_reinforcement_l.md)
-- [\[ECCV 2024\] RegionDrag: Fast Region-Based Image Editing with Diffusion Models](../../ECCV2024/image_generation/regiondrag_fast_region-based_image_editing_with_diffusion_models.md)
+- [\[ICCV 2025\] Inpaint4Drag: Repurposing Inpainting Models for Drag-Based Image Editing via Bidirectional Warping](../../ICCV2025/image_generation/inpaint4drag_repurposing_inpainting_models_for_drag-based_image_editing_via_bidi.md)
 
 </div>
 

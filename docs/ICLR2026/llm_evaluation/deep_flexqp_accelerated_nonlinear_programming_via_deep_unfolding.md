@@ -110,11 +110,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICML 2026\] Possibilistic Predictive Uncertainty for Deep Learning](../../ICML2026/llm_evaluation/possibilistic_predictive_uncertainty_for_deep_learning.md)
 - [\[ICLR 2026\] Disentangling Shared and Private Neural Dynamics with SPIRE: A Latent Modeling Framework for Deep Brain Stimulation](disentangling_shared_and_private_neural_dynamics_with_spire_a_latent_modeling_fr.md)
 - [\[CVPR 2025\] Potential Field Based Deep Metric Learning](../../CVPR2025/llm_evaluation/potential_field_based_deep_metric_learning.md)
 - [\[AAAI 2026\] Deep Incomplete Multi-View Clustering via Hierarchical Imputation and Alignment](../../AAAI2026/llm_evaluation/deep_incomplete_multi-view_clustering_via_hierarchical_imputation_and_alignment.md)
 - [\[ICML 2025\] On Temperature Scaling and Conformal Prediction of Deep Classifiers](../../ICML2025/llm_evaluation/on_temperature_scaling_and_conformal_prediction_of_deep_classifiers.md)
+- [\[CVPR 2025\] Improving Accuracy and Calibration via Differentiated Deep Mutual Learning](../../CVPR2025/llm_evaluation/improving_accuracy_and_calibration_via_differentiated_deep_mutual_learning.md)
 
 </div>
 

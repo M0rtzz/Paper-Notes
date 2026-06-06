@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SIR-DIFF: Sparse Image Sets Restoration with Multi-View Diffusion Model
 description: >-
-  [CVPR 2025][3D视觉][多视角图像修复] 提出 SIR-Diff，一种多视角扩散模型，通过联合去噪多张同场景退化图像来实现跨视角一致的图像修复，利用 Spatial-3D ResNet 和 3D 自注意力 Transformer 融合多视角互补信息，在去模糊和超分辨率任务上超越单视角和视频修复方法…
+  [CVPR 2025][图像生成][多视角图像修复] 提出 SIR-Diff，一种多视角扩散模型，通过联合去噪多张同场景退化图像来实现跨视角一致的图像修复，利用 Spatial-3D ResNet 和 3D 自注意力 Transformer 融合多视角互补信息，在去模糊和超分辨率任务上超越单视角和视频修复方法…
 tags:
   - "CVPR 2025"
-  - "3D视觉"
+  - "图像生成"
   - "多视角图像修复"
   - "扩散模型"
   - "3D一致性"
@@ -119,9 +119,9 @@ SIR-Diff 基于 SD 2.1 的潜在扩散模型架构。输入为一组退化图像
 
 - [\[CVPR 2025\] Pippo: High-Resolution Multi-View Humans from a Single Image](pippo_high-resolution_multi-view_humans_from_a_single_image.md)
 - [\[NeurIPS 2025\] A Data-Driven Prism: Multi-View Source Separation with Diffusion Model Priors](../../NeurIPS2025/image_generation/a_data-driven_prism_multi-view_source_separation_with_diffusion_model_priors.md)
-- [\[CVPR 2025\] MVPortrait: Text-Guided Motion and Emotion Control for Multi-View Vivid Portrait Animation](mvportrait_text-guided_motion_and_emotion_control_for_multi-view_vivid_portrait_.md)
 - [\[CVPR 2025\] OSDFace: One-Step Diffusion Model for Face Restoration](osdface_one-step_diffusion_model_for_face_restoration.md)
-- [\[CVPR 2025\] RoomPainter: View-Integrated Diffusion for Consistent Indoor Scene Texturing](roompainter_view-integrated_diffusion_for_consistent_indoor_scene_texturing.md)
+- [\[CVPR 2025\] MVPortrait: Text-Guided Motion and Emotion Control for Multi-View Vivid Portrait Animation](mvportrait_text-guided_motion_and_emotion_control_for_multi-view_vivid_portrait_.md)
+- [\[CVPR 2025\] GenDeg: Diffusion-based Degradation Synthesis for Generalizable All-In-One Image Restoration](gendeg_diffusion-based_degradation_synthesis_for_generalizable_all-in-one_image_.md)
 
 </div>
 

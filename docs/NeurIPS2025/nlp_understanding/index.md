@@ -16,7 +16,7 @@ tags:
 
 **🧠 NeurIPS2025** · **2** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (27)](../../ACL2026/nlp_understanding/index.md) · [🤖 AAAI2026 (2)](../../AAAI2026/nlp_understanding/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/nlp_understanding/index.md) · [🧪 ICML2025 (1)](../../ICML2025/nlp_understanding/index.md) · [💬 ACL2025 (30)](../../ACL2025/nlp_understanding/index.md) · [🎞️ ECCV2024 (1)](../../ECCV2024/nlp_understanding/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/nlp_understanding/index.md) · [💬 ACL2026 (33)](../../ACL2026/nlp_understanding/index.md) · [🤖 AAAI2026 (2)](../../AAAI2026/nlp_understanding/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/nlp_understanding/index.md) · [🧪 ICML2025 (1)](../../ICML2025/nlp_understanding/index.md) · [💬 ACL2025 (30)](../../ACL2025/nlp_understanding/index.md)
 
 **[Planning without Search: Refining Frontier LLMs with Offline Goal-Conditioned RL](planning_without_search_refining_frontier_llms_with_offline_goal-conditioned_rl.md)**
 

@@ -2,10 +2,9 @@
 title: >-
   [论文解读] Improving Point-based Crowd Counting and Localization Based on Auxiliary Point Guidance
 description: >-
-  [ECCV 2024][人体理解][人群计数] 提出辅助点引导 (APG) 策略和隐式特征插值 (IFI) 模块，通过在真值点附近显式生成辅助正负样本来稳定 point-based 人群计数方法中 proposal-target 匹配过程的不稳定性，在多个数据集上取得 SOTA。
+  [ECCV 2024][人群计数] 提出辅助点引导 (APG) 策略和隐式特征插值 (IFI) 模块，通过在真值点附近显式生成辅助正负样本来稳定 point-based 人群计数方法中 proposal-target 匹配过程的不稳定性，在多个数据集上取得 SOTA。
 tags:
   - "ECCV 2024"
-  - "人体理解"
   - "人群计数"
   - "人群定位"
   - "点监督"
@@ -151,7 +150,7 @@ $$\mathcal{L}_{overall} = \mathcal{L}_{point} + \lambda_5 \mathcal{L}_{APG}$$
 - [\[ECCV 2024\] Mahalanobis Distance-Based Multi-View Optimal Transport for Multi-View Crowd Localization](mahalanobis_distance-based_multi-view_optimal_transport_for_multi-view_crowd_loc.md)
 - [\[ECCV 2024\] Online Temporal Action Localization with Memory-Augmented Transformer](online_temporal_action_localization_with_memory-augmented_transformer.md)
 - [\[ECCV 2024\] CLR-GAN: Improving GANs Stability and Quality via Consistent Latent Representation and Reconstruction](clr-gan_improving_gans_stability_and_quality_via_consistent_latent_representatio.md)
-- [\[ECCV 2024\] Momentum Auxiliary Network for Supervised Local Learning](momentum_auxiliary_network_for_supervised_local_learning.md)
+- [\[ECCV 2024\] ABC Easy as 123: A Blind Counter for Exemplar-Free Multi-Class Class-Agnostic Counting](abc_easy_as_123_a_blind_counter_for_exemplar-free_multi-class_class-agnostic_cou.md)
 
 </div>
 

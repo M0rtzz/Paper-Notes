@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Cooperative Pseudo Labeling for Unsupervised Federated Classification
 description: >-
-  [ICCV 2025][优化/理论][无监督联邦学习] FedCoPL 首次将无监督联邦学习扩展到分类任务，通过协作伪标签策略（全局分配伪标签确保类别平衡）和部分 prompt 聚合协议（仅聚合视觉 prompt、保留文本 prompt 本地化）有效应对 CLIP 固有偏差和标签偏移挑战。
+  [ICCV 2025][LLM安全][无监督联邦学习] FedCoPL 首次将无监督联邦学习扩展到分类任务，通过协作伪标签策略（全局分配伪标签确保类别平衡）和部分 prompt 聚合协议（仅聚合视觉 prompt、保留文本 prompt 本地化）有效应对 CLIP 固有偏差和标签偏移挑战。
 tags:
   - "ICCV 2025"
-  - "优化/理论"
+  - "LLM安全"
   - "无监督联邦学习"
   - "伪标签"
   - "CLIP"
@@ -196,7 +196,7 @@ FedCoPL 平均精度 **72.49%**，比最佳基线高约 **10%**。特别是在 R
 - [\[ICCV 2025\] LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning](latte_collaborative_test-time_adaptation_of_vision-language_models_in_federated_.md)
 - [\[ACL 2025\] Unveiling and Addressing Pseudo Forgetting in Large Language Models](../../ACL2025/llm_safety/unveiling_and_addressing_pseudo_forgetting_in_large_language_models.md)
 - [\[ICCV 2025\] Geminio: Language-Guided Gradient Inversion Attacks in Federated Learning](geminio_language-guided_gradient_inversion_attacks_in_federated_learning.md)
-- [\[ICCV 2025\] FedMVP: Federated Multimodal Visual Prompt Tuning for Vision-Language Models](fedmvp_federated_multimodal_visual_prompt_tuning_for_vision-language_models.md)
+- [\[ICLR 2026\] SABRE-FL: Selective and Accurate Backdoor Rejection for Federated Prompt Learning](../../ICLR2026/llm_safety/sabre-fl_selective_and_accurate_backdoor_rejection_for_federated_prompt_learning.md)
 
 </div>
 

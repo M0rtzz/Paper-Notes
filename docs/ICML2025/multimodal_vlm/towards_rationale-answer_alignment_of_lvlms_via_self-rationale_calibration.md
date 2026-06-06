@@ -175,8 +175,8 @@ Self-play、Self-reward 利用模型自身能力迭代改进，SRC 的闭环与�
 - [\[NeurIPS 2025\] SSR: Enhancing Depth Perception in VLMs via Rationale-Guided Spatial Reasoning](../../NeurIPS2025/multimodal_vlm/ssr_enhancing_depth_perception_in_vision-language_models_via_rationale-guided_sp.md)
 - [\[ICML 2025\] CoMemo: LVLMs Need Image Context with Image Memory](comemo_lvlms_need_image_context_with_image_memory.md)
 - [\[ICML 2025\] Look Twice Before You Answer: Memory-Space Visual Retracing for Hallucination Mitigation in Multimodal Large Language Models](look_twice_before_you_answer_memory-space_visual_retracing_for_hallucination_mit.md)
+- [\[ICML 2026\] Self-Prophetic Decoding to Unlock Visual Search in LVLMs](../../ICML2026/multimodal_vlm/self-prophetic_decoding_to_unlock_visual_search_in_lvlms.md)
 - [\[ICML 2025\] Kernel-based Unsupervised Embedding Alignment for Enhanced Visual Representation in Vision-language Models](kernel-based_unsupervised_embedding_alignment_for_enhanced_visual_representation.md)
-- [\[ICML 2025\] Handling Imbalanced Pseudolabels for Vision-Language Models with Concept Alignment and Confusion-Aware Calibrated Margin](handling_imbalanced_pseudolabels_for_vision-language_models_with_concept_alignme.md)
 
 </div>
 

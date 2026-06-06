@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 目标检测方向26篇论文解读
+  ICCV2025 目标检测方向27篇论文解读
 description: >-
-  26篇ICCV2025的目标检测方向论文解读，涵盖目标检测、对抗鲁棒、扩散模型、多模态、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  27篇ICCV2025的目标检测方向论文解读，涵盖目标检测、对抗鲁棒、扩散模型、多模态、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "目标检测"
@@ -17,9 +17,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎯 目标检测
 
-**📹 ICCV2025** · **26** 篇论文解读
+**📹 ICCV2025** · **27** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/object_detection/index.md) · [📷 CVPR2026 (36)](../../CVPR2026/object_detection/index.md) · [🔬 ICLR2026 (9)](../../ICLR2026/object_detection/index.md) · [🤖 AAAI2026 (15)](../../AAAI2026/object_detection/index.md) · [🧠 NeurIPS2025 (17)](../../NeurIPS2025/object_detection/index.md) · [🧪 ICML2025 (8)](../../ICML2025/object_detection/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/object_detection/index.md) · [📷 CVPR2026 (55)](../../CVPR2026/object_detection/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/object_detection/index.md) · [🤖 AAAI2026 (15)](../../AAAI2026/object_detection/index.md) · [🧠 NeurIPS2025 (16)](../../NeurIPS2025/object_detection/index.md) · [🧪 ICML2025 (8)](../../ICML2025/object_detection/index.md)
 
 🔥 **高频主题：** 目标检测 ×10 · 对抗鲁棒 ×2 · 扩散模型 ×2 · 多模态 ×2 · 遥感 ×2
 
@@ -94,6 +94,10 @@ tags:
 **[The Devil is in the Spurious Correlations: Boosting Moment Retrieval with Dynamic Learning](the_devil_is_in_the_spurious_correlations_boosting_moment_retrieval_with_dynamic.md)**
 
 :   首次揭示文本查询与视频背景帧之间的虚假相关性是时刻检索性能瓶颈的根本原因，提出 TD-DETR 框架通过动态上下文视频合成和文本-动态交互增强两个策略来缓解该问题，在 QVHighlights 和 Charades-STA 上达到 SOTA。
+
+**[Toward Long-Tailed Online Anomaly Detection through Class-Agnostic Concepts](toward_long-tailed_online_anomaly_detection_through_class-agnostic_concepts.md)**
+
+:   本文提出长尾在线异常检测（LTOAD）新任务和benchmark，核心创新是用可学习的"类无关概念集"替代传统的类标签依赖，结合Concept VQ-VAE和综合prompt学习框架，在不需要类标签的情况下于offline和online场景下均达到SOTA。
 
 **[Uncertainty-Aware Gradient Stabilization for Small Object Detection](uncertainty-aware_gradient_stabilization_for_small_object_detection.md)**
 

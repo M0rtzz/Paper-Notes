@@ -175,8 +175,8 @@ $$
 - [\[ACL 2025\] Circuit Compositions: Exploring Modular Structures in Transformer-Based Language Models](../../ACL2025/llm_nlp/circuit_compositions_modular_structures.md)
 - [\[ACL 2025\] Automated CAD Modeling Sequence Generation from Text Descriptions via Transformer-Based Large Language Models](../../ACL2025/llm_nlp/cadllm_cad_modeling_from_text.md)
 - [\[ACL 2025\] A Modular Dataset to Demonstrate LLM Abstraction Capability](../../ACL2025/llm_nlp/a_modular_dataset_to_demonstrate_llm_abstraction_capability.md)
-- [\[ICLR 2026\] ELLMob: Event-Driven Human Mobility Generation with Self-Aligned LLM Framework](ellmob_event-driven_human_mobility_generation_with_self-aligned_language_models.md)
-- [\[AAAI 2026\] TransMamba: A Sequence-Level Hybrid Transformer-Mamba Language Model](../../AAAI2026/llm_nlp/transmamba_a_sequence-level_hybrid_transformer-mamba_language_model.md)
+- [\[ICML 2026\] Position: The Turing-Completeness of Autoregressive Transformers Relies Heavily on Context Management](../../ICML2026/llm_nlp/position_the_turing-completeness_of_autoregressive_transformers_relies_heavily_o.md)
+- [\[ICML 2026\] SphericalDreamer: Generating Navigable Immersive 3D Worlds with Panorama Fusion](../../ICML2026/llm_nlp/sphericaldreamer_generating_navigable_immersive_3d_worlds_with_panorama_fusion.md)
 
 </div>
 

@@ -18,7 +18,7 @@ tags:
 
 **🧪 ICML2025** · **26** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (10)](../../ICML2026/time_series/index.md) · [💬 ACL2026 (6)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/time_series/index.md) · [🤖 AAAI2026 (35)](../../AAAI2026/time_series/index.md) · [🧠 NeurIPS2025 (56)](../../NeurIPS2025/time_series/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (32)](../../ICML2026/time_series/index.md) · [💬 ACL2026 (7)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/time_series/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/time_series/index.md) · [🤖 AAAI2026 (36)](../../AAAI2026/time_series/index.md) · [🧠 NeurIPS2025 (56)](../../NeurIPS2025/time_series/index.md)
 
 🔥 **高频主题：** 时序预测 ×20 · 异常检测 ×2 · 自监督学习 ×2
 

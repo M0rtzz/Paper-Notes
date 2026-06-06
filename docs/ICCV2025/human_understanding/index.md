@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 人体理解方向38篇论文解读
+  ICCV2025 人体理解方向39篇论文解读
 description: >-
-  38篇ICCV2025的人体理解方向论文解读，涵盖人脸/视线、人体姿态、重识别、扩散模型、语音、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  39篇ICCV2025的人体理解方向论文解读，涵盖人脸/视线、人体姿态、重识别、扩散模型、语音、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "人体理解"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧑 人体理解
 
-**📹 ICCV2025** · **38** 篇论文解读
+**📹 ICCV2025** · **39** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (1)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (53)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (7)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (15)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (18)](../../NeurIPS2025/human_understanding/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (3)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (60)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (7)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (15)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (18)](../../NeurIPS2025/human_understanding/index.md)
 
-🔥 **高频主题：** 人脸/视线 ×7 · 人体姿态 ×7 · 重识别 ×4 · 扩散模型 ×3 · 语音 ×3
+🔥 **高频主题：** 人脸/视线 ×8 · 人体姿态 ×7 · 重识别 ×4 · 扩散模型 ×3 · 语音 ×3
 
 **[AR-VRM: Imitating Human Motions for Visual Robot Manipulation with Analogical Reasoning](ar-vrm_imitating_human_motions_for_visual_robot_manipulation_with_analogical_rea.md)**
 
@@ -128,6 +128,10 @@ tags:
 **[Monocular Facial Appearance Capture in the Wild](monocular_facial_appearance_capture_in_the_wild.md)**
 
 :   提出一种从单目头部旋转视频重建面部外观属性（漫反射反照率、高光强度、高光粗糙度）的方法，通过提出遮挡感知的 split-sum 近似着色模型，在不对光照环境做任何简化假设的情况下实现了逼近工作室级别的面部外观捕捉质量。
+
+**[Multi-view Gaze Target Estimation](multi-view_gaze_target_estimation.md)**
+
+:   本文首次将注视目标估计（GTE）从单视角扩展到多视角，通过头部信息聚合（HIA）、基于不确定性的注视选择（UGS）和基于极线的场景注意力（ESA）三个模块融合多相机信息，在自建 MVGT 数据集上显著超越单视角 SOTA，并实现了单视角方法无法处理的跨视角估计。
 
 **[NGD: Neural Gradient Based Deformation for Monocular Garment Reconstruction](ngd_neural_gradient_based_deformation_for_monocular_garment_reconstruction.md)**
 

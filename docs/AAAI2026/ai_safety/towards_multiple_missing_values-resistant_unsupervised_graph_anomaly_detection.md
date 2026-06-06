@@ -217,8 +217,8 @@ M2V-UGAD 在缺失率从 10% 到 50% 的范围内性能几乎不变（0.93→0.9
 - [\[AAAI 2026\] Generalizing Fair Clustering to Multiple Groups: Algorithms and Applications](generalizing_fair_clustering_to_multiple_groups_algorithms_and_applications.md)
 - [\[AAAI 2026\] Sim-to-Real: An Unsupervised Noise Layer for Screen-Camera Watermarking Robustness](sim-to-real_an_unsupervised_noise_layer_for_screen-camera_watermarking_robustnes.md)
 - [\[CVPR 2026\] One-to-More: High-Fidelity Training-Free Anomaly Generation with Attention Control](../../CVPR2026/ai_safety/one-to-more_high-fidelity_training-free_anomaly_generation_with_attention_control.md)
+- [\[ICML 2026\] From Out-of-Distribution Detection to Hallucination Detection: A Geometric View](../../ICML2026/ai_safety/from_out-of-distribution_detection_to_hallucination_detection_a_geometric_view.md)
 - [\[AAAI 2026\] Fine-Grained DINO Tuning with Dual Supervision for Face Forgery Detection](fine-grained_dino_tuning_with_dual_supervision_for_face_forgery_detection.md)
-- [\[AAAI 2026\] FairGSE: Fairness-Aware Graph Neural Network without High False Positive Rates](fairgse_fairness-aware_graph_neural_network_without_high_false_positive_rates.md)
 
 </div>
 

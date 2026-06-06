@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 图像生成方向109篇论文解读
+  ICML2025 图像生成方向103篇论文解读
 description: >-
-  109篇ICML2025的图像生成方向论文解读，涵盖扩散模型、语音、对齐/RLHF、时序预测、对抗鲁棒、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  103篇ICML2025的图像生成方向论文解读，涵盖扩散模型、语音、对齐/RLHF、时序预测、对抗鲁棒、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2025"
   - "图像生成"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🧪 ICML2025** · **109** 篇论文解读
+**🧪 ICML2025** · **103** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (2)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (209)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (149)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (244)](../../NeurIPS2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (124)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (219)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (144)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (77)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (235)](../../NeurIPS2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×45 · 语音 ×6 · 对齐/RLHF ×3 · 时序预测 ×3 · 对抗鲁棒 ×3
+🔥 **高频主题：** 扩散模型 ×43 · 语音 ×6 · 对齐/RLHF ×3 · 时序预测 ×3 · 对抗鲁棒 ×3
 
 **[Action-Minimization Meets Generative Modeling: Efficient Transition Path Sampling with the Onsager-Machlup Functional](action-minimization_meets_generative_modeling_efficient_transition_path_sampling.md)**
 
@@ -64,10 +64,6 @@ tags:
 **[Broadband Ground Motion Synthesis by Diffusion Model with Minimal Condition](broadband_ground_motion_synthesis_by_diffusion_model_with_minimal_condition.md)**
 
 :   提出 HEGGS（High-fidelity Earthquake Groundmotion Generation System），利用地震数据集中波形天然可配对的特性，结合条件隐扩散模型与 ACM 振幅校正模块，仅需最少条件信息（经纬度、震源深度、震级）即可端到端生成高保真三分量地震波形。
-
-**[Compositional Flows for 3D Molecule and Synthesis Pathway Co-design](compositional_flows_for_3d_molecule_and_synthesis_pathway_co-design.md)**
-
-:   提出 CGFlow（Compositional Generative Flows）——将 flow matching 扩展到组合对象的逐步生成，交织组合结构采样（合成路径）和连续状态传输（3D 构象），作为 3DSynthFlow 应用于可合成药物设计，在 LIT-PCBA 15个靶标上首次同时达到结合亲和力和可合成性的 SOTA。
 
 **[Compositional Scene Understanding through Inverse Generative Modeling](compositional_scene_understanding_through_inverse_generative_modeling.md)**
 
@@ -169,10 +165,6 @@ tags:
 
 :   GRAM 提出用生成式（而非判别式）方法训练奖励模型——先通过大规模无监督学习预训练生成式奖励模型，再用监督数据微调，并证明 label smoothing 实际上等价于正则化的 pairwise ranking 损失，实现了跨任务的奖励泛化。
 
-**[Graph Generative Pre-trained Transformer (G2PT)](graph_generative_pre-trained_transformer.md)**
-
-:   提出 G2PT——将图编码为节点+边的 token 序列，用 GPT 风格的自回归 Transformer 做 next-token prediction 来生成图，并通过拒绝采样微调(RFT)和 PPO 强化学习实现目标导向分子生成，在通用图和分子数据集上均达到 SOTA。
-
 **[Hessian Geometry of Latent Space in Generative Models](hessian_geometry_of_latent_space_in_generative_models.md)**
 
 :   提出通过重建 Fisher 信息度量来分析生成模型潜空间几何的方法，发现扩散模型潜空间中存在分形结构的相变边界，在相边界处 Lipschitz 常数发散。
@@ -197,10 +189,6 @@ tags:
 
 :   通过引入非线性映射的伴随算子（adjoint operator），将线性模型中经典的范数采样和杠杆分数采样系统性地推广到非线性模型，首次为神经网络等非线性模型的重要性采样提供了理论近似保证。
 
-**[Improving Flow Matching by Aligning Flow Divergence](improving_flow_matching_by_aligning_flow_divergence.md)**
-
-:   从 PDE 视角分析了 Flow Matching 中学习概率路径与真实概率路径之间的误差，证明该误差受到向量场散度(divergence)差距的控制，并提出联合匹配流和散度的 FDM 训练目标，在密度估计、DNA 序列生成和视频预测等任务上显著提升了 FM 的表现。
-
 **[Improving the Diffusability of Autoencoders](improving_the_diffusability_of_autoencoders.md)**
 
 :   通过DCT频谱分析发现自编码器潜在空间存在与RGB不匹配的过强高频成分，提出尺度等变正则化（Scale Equivariance）对齐两者频率分布，仅需10-20K步微调即可将ImageNet FID降19%、Kinetics FVD降44%+。
@@ -216,10 +204,6 @@ tags:
 **[IntLoRA: Integral Low-rank Adaptation of Quantized Diffusion Models](intlora_integral_low-rank_adaptation_of_quantized_diffusion_models.md)**
 
 :   提出 IntLoRA，通过整数型低秩参数实现量化扩散模型的微调，合并权重后无需额外 PTQ 即可直接获得量化推理权重，兼顾训练与推理效率。
-
-**[Kinetic Langevin Diffusion for Crystalline Materials Generation](kinetic_langevin_diffusion_for_crystalline_materials_generation.md)**
-
-:   KLDM 提出用 Kinetic Langevin Diffusion 处理晶体材料生成中原子分数坐标位于超环面的问题，通过引入辅助速度变量将扩散偏移到平坦欧几里得空间，同时保持周期平移对称性，在晶体结构预测和从头生成任务上达到竞争力性能。
 
 **[Label-Efficient Hyperspectral Image Classification via Spectral FiLM Modulation of Low-Level Pretrained Diffusion Features](label-efficient_hyperspectral_image_classification_via_spectral_film_modulation_.md)**
 
@@ -297,17 +281,9 @@ tags:
 
 :   提出 PAK-UCB 上下文老虎机算法，通过为每个生成模型学习独立的核函数，在线预测给定 prompt 下的最优模型，实现 prompt 级别的生成模型/LLM 选择，并用随机傅里叶特征（RFF）降低计算开销。
 
-**[PepTune: De Novo Generation of Therapeutic Peptides with Multi-Objective-Guided Discrete Diffusion](peptune_de_novo_generation_of_therapeutic_peptides_with_multi-objective-guided_d.md)**
-
-:   PepTune 结合 Masked Discrete Language Model (MDLM) 和蒙特卡罗树搜索 (MCTS) 多目标引导策略，在离散肽 SMILES 空间中同时优化多种治疗属性（结合亲和力、溶解性、膜通透性等），生成含非天然氨基酸和环化修饰的从头设计肽药物。
-
 **[Performance Plateaus in Inference-Time Scaling for Text-to-Image Diffusion Without External Models](performance_plateaus_in_inference-time_scaling_for_text-to-image_diffusion_witho.md)**
 
 :   系统性研究了在不依赖外部模型（VLM/CLIP）的前提下，对文本到图像扩散模型的初始噪声优化算法施加 Best-of-N 推理时缩放的效果，发现性能会迅速达到平台期（plateau），少量优化步数即可逼近该设置下的最大性能，且不同底层扩散模型上的最优算法不同。
-
-**[Piloting Structure-Based Drug Design via Modality-Specific Optimal Schedule](piloting_structure-based_drug_design_via_modality-specific_optimal_schedule.md)**
-
-:   提出 VLB-Optimal Scheduling (VOS) 策略，通过理论分析多模态（连续3D位置+离散2D拓扑）联合噪声调度的路径依赖VLB特性，用动态规划搜索最优噪声调度路径，在 CrossDock 上以 95.9% PoseBusters 通过率达到 SBDD SOTA。
 
 **[Position: All Current Generative Fidelity and Diversity Metrics are Flawed](position_all_current_generative_fidelity_and_diversity_metrics_are_flawed.md)**
 

@@ -128,8 +128,8 @@ $$\|\mathcal{G}(x_{1:t})|_{\mathcal{A}} - \overline{x_{1:t}}|_{\mathcal{A}}\|_{\
 - [\[ICML 2025\] Long-Form Speech Generation with Spoken Language Models](long-form_speech_generation_with_spoken_language_models.md)
 - [\[CVPR 2025\] Language-Guided Image Tokenization for Generation](../../CVPR2025/image_generation/language-guided_image_tokenization_for_generation.md)
 - [\[CVPR 2025\] Yo'Chameleon: Personalized Vision and Language Generation](../../CVPR2025/image_generation/yochameleon_personalized_vision_and_language_generation.md)
-- [\[ICML 2025\] NTPP: Generative Speech Language Modeling for Dual-Channel Spoken Dialogue via Next-Token-Pair Prediction](ntpp_generative_speech_language_modeling_for_dual-channel_spoken_dialogue_via_ne.md)
-- [\[NeurIPS 2025\] Continuous Diffusion Model for Language Modeling](../../NeurIPS2025/image_generation/continuous_diffusion_model_for_language_modeling.md)
+- [\[ICML 2026\] CoFrGeNet: Continued Fraction Architectures for Language Generation](../../ICML2026/image_generation/cofrgenet_continued_fraction_architectures_for_language_generation.md)
+- [\[CVPR 2026\] VecGlypher: Unified Vector Glyph Generation with Language Models](../../CVPR2026/image_generation/vecglypher_unified_vector_glyph_generation_with_language_models.md)
 
 </div>
 

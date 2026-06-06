@@ -126,7 +126,7 @@ tags:
 - [\[NeurIPS 2025\] GASP: Efficient Black-Box Generation of Adversarial Suffixes for Jailbreaking LLMs](gasp_efficient_black-box_generation_of_adversarial_suffixes_for_jailbreaking_llm.md)
 - [\[NeurIPS 2025\] ResponseRank: Data-Efficient Reward Modeling through Preference Strength Learning](responserank_data-efficient_reward_modeling_through_preference_strength_learning.md)
 - [\[ICML 2026\] $f$-Divergence Regularized RLHF: Two Tales of Sampling and Unified Analyses](../../ICML2026/llm_alignment/f-divergence_regularized_rlhf_two_tales_of_sampling_and_unified_analyses.md)
-- [\[ICML 2025\] Can RLHF be More Efficient with Imperfect Reward Models? A Policy Coverage Perspective](../../ICML2025/llm_alignment/can_rlhf_be_more_efficient_with_imperfect_reward_models_a_policy_coverage_perspe.md)
+- [\[ICML 2026\] Efficient Preference Poisoning Attack on Offline RLHF](../../ICML2026/llm_alignment/efficient_preference_poisoning_attack_on_offline_rlhf.md)
 
 </div>
 

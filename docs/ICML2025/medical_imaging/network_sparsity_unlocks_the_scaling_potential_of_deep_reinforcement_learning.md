@@ -127,9 +127,9 @@ tags:
 
 - [\[NeurIPS 2025\] Scaling Laws and Pathologies of Single-Layer PINNs: Network Width and PDE Nonlinearity](../../NeurIPS2025/medical_imaging/scaling_laws_and_pathologies_of_single-layer_pinns_network_width_and_pde_nonline.md)
 - [\[ICML 2025\] The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning](the_brains_bitter_lesson_scaling_speech_decoding_with_self-supervised_learning.md)
-- [\[ICML 2025\] Improved Off-policy Reinforcement Learning in Biological Sequence Design](improved_off-policy_reinforcement_learning_in_biological_sequence_design.md)
-- [\[ICML 2026\] Angel or Demon: Investigating the Plasticity Interventions' Impact on Backdoor Threats in Deep Reinforcement Learning](../../ICML2026/medical_imaging/angel_or_demon_investigating_the_plasticity_interventions_impact_on_backdoor_thr.md)
+- [\[ICML 2025\] Efficient Noise Calculation in Deep Learning-based MRI Reconstructions](efficient_noise_calculation_in_deep_learning-based_mri_reconstructions.md)
 - [\[ICML 2025\] The Disparate Benefits of Deep Ensembles](the_disparate_benefits_of_deep_ensembles.md)
+- [\[NeurIPS 2025\] FairGRPO: Fair Reinforcement Learning for Equitable Clinical Reasoning](../../NeurIPS2025/medical_imaging/fairgrpo_fair_reinforcement_learning_for_equitable_clinical_reasoning.md)
 
 </div>
 

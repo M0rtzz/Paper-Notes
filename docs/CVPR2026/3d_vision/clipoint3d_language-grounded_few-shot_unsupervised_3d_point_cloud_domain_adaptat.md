@@ -152,7 +152,7 @@ $$\mathbf{L}_{total} = \mathbf{L}_{ce} + \alpha(\mathbf{L}_{ortho} + \mathbf{L}_
 - [\[ECCV 2024\] Progressive Classifier and Feature Extractor Adaptation for Unsupervised Domain Adaptation on Point Clouds](../../ECCV2024/3d_vision/progressive_classifier_and_feature_extractor_adaptation_for_unsupervised_domain_.md)
 - [\[CVPR 2026\] QD-PCQA: Quality-Aware Domain Adaptation for Point Cloud Quality Assessment](qd-pcqa_quality-aware_domain_adaptation_for_point_cloud_quality_assessment.md)
 - [\[AAAI 2026\] EPSegFZ: Efficient Point Cloud Semantic Segmentation for Few- and Zero-Shot Scenarios](../../AAAI2026/3d_vision/epsegfz_efficient_point_cloud_semantic_segmentation_for_few-_and_zero-shot_scena.md)
-- [\[CVPR 2026\] Back to Point: Exploring Point-Language Models for Zero-Shot 3D Anomaly Detection](back_to_point_exploring_point-language_models_for_zero-shot_3d_anomaly_detection.md)
+- [\[CVPR 2026\] SCOPE: Scene-Contextualized Incremental Few-Shot 3D Segmentation](scope_scene-contextualized_incremental_few-shot_3d_segmentation.md)
 
 </div>
 

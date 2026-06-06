@@ -135,8 +135,8 @@ SAE 训练使用重构目标加稀疏正则：$\mathcal{L}(\mathbf{v}) = \mathca
 
 - [\[NeurIPS 2025\] In-Context Compositional Learning via Sparse Coding Transformer](in-context_compositional_learning_via_sparse_coding_transformer.md)
 - [\[ICCV 2025\] Enhancing Few-Shot Vision-Language Classification with Large Multimodal Model Features](../../ICCV2025/multimodal_vlm/enhancing_few-shot_vision-language_classification_with_large_multimodal_model_fe.md)
-- [\[ICML 2025\] Enhancing Target-unspecific Tasks through a Features Matrix](../../ICML2025/multimodal_vlm/enhancing_target-unspecific_tasks_through_a_features_matrix.md)
 - [\[ICCV 2025\] Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+- [\[ICML 2025\] Enhancing Target-unspecific Tasks through a Features Matrix](../../ICML2025/multimodal_vlm/enhancing_target-unspecific_tasks_through_a_features_matrix.md)
 - [\[NeurIPS 2025\] DOTA: DistributiOnal Test-time Adaptation of Vision-Language Models](dota_distributional_testtime_adaptation_of_visionlanguage_mo.md)
 
 </div>

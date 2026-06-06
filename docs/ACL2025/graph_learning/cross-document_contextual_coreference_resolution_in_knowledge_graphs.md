@@ -168,7 +168,7 @@ $$\mathbf{h}_i^{(t+1)} = \sum_{v_j \in \mathcal{N}(v_i)} \mathbf{W} \cdot \mathb
 - [\[ACL 2025\] Extending Complex Logical Queries on Uncertain Knowledge Graphs](extending_complex_logical_queries_uncertain_knowledge_graphs.md)
 - [\[ACL 2025\] SimGRAG: Leveraging Similar Subgraphs for Knowledge Graphs Driven Retrieval-Augmented Generation](simgrag_leveraging_similar_subgraphs_for_knowledge_graphs_driven_retrieval-augme.md)
 - [\[ACL 2025\] Can Knowledge Graphs Make Large Language Models More Trustworthy? An Empirical Study Over Open-ended Question Answering](kg_llm_trustworthy_qa.md)
-- [\[CVPR 2026\] Graph2Eval: Automatic Multimodal Task Generation for Agents via Knowledge Graphs](../../CVPR2026/graph_learning/graph2eval_automatic_multimodal_task_generation_for_agents_via_knowledge_graphs.md)
+- [\[ICML 2025\] Graph Attention is Not Always Beneficial: A Theoretical Analysis of Graph Attention Mechanisms via Contextual Stochastic Block Models](../../ICML2025/graph_learning/graph_attention_is_not_always_beneficial_a_theoretical_analysis_of_graph_attenti.md)
 
 </div>
 

@@ -147,12 +147,6 @@ LaaB 有三个模块和一个两阶段训练策略：
 - 写作质量: ⭐⭐⭐⭐ 逻辑链条 (intrinsic 弱点 + self-judgment 弱点 → 互补 → 怎么互补) 讲得非常清楚；Figure 1 (三种范式对比) 和 Figure 2 (架构图) 应该很直观；公式齐全，notation 表清晰。
 - 价值: ⭐⭐⭐⭐ "推理零开销 + 跨 LLM 通用 + 套壳已有检测器" 工程上极有吸引力，可直接落地到任何已部署 detector；"self-judgment 也要被 detect" 的视角对 LLM-as-judge 整个研究方向都有启示意义。
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">

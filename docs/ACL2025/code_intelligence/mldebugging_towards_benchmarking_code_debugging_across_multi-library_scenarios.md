@@ -156,8 +156,8 @@ tags:
 
 - [\[ACL 2025\] Revisit Self-Debugging with Self-Generated Tests for Code Generation](revisit_self-debugging_with_self-generated_tests_for_code_generation.md)
 - [\[ACL 2025\] LongCodeU: Benchmarking Long-Context Language Models on Long Code Understanding](benchmarking_long-context_language_models_on_long_code_understanding.md)
-- [\[ACL 2026\] Precise Debugging Benchmark: Is Your Model Debugging or Regenerating?](../../ACL2026/code_intelligence/precise_debugging_benchmark_is_your_model_debugging_or_regenerating.md)
 - [\[ACL 2025\] TeXpert: A Multi-Level Benchmark for Evaluating LaTeX Code Generation by LLMs](texpert_a_multi-level_benchmark_for_evaluating_latex_code_generation_by_llms.md)
+- [\[ACL 2026\] Precise Debugging Benchmark: Is Your Model Debugging or Regenerating?](../../ACL2026/code_intelligence/precise_debugging_benchmark_is_your_model_debugging_or_regenerating.md)
 - [\[ACL 2025\] CodeIF: Benchmarking the Instruction-Following Capabilities of Large Language Models for Code Generation](codeif_benchmarking_the_instruction-following_capabilities_of_large_language_mod.md)
 
 </div>

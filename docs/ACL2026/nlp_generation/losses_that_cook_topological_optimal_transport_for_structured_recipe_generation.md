@@ -115,28 +115,19 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 包含多模型对比、消融、人类评估，但数据规模和领域覆盖有限
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，方法阐述到位
 - 价值: ⭐⭐⭐ 技术思路有启发性，但应用场景偏窄，需验证更广泛的可迁移性
-待深读论文后补充
 
-## 研究背景与动机
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 方法详解
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 实验关键数据
-待深读论文后补充
+## 相关论文
 
-## 亮点与洞察
-待深读论文后补充
+- [\[ACL 2025\] Document-Level Text Generation with Minimum Bayes Risk Decoding using Optimal Transport](../../ACL2025/nlp_generation/doc_level_mbr_optimal_transport.md)
+- [\[ACL 2026\] FACTS: Table Summarization via Offline Template Generation with Agentic Workflows](facts_table_summarization_via_offline_template_generation_with_agentic_workflows.md)
+- [\[ACL 2026\] Planning Beyond Text: Graph-based Reasoning for Complex Narrative Generation](planning_beyond_text_graph-based_reasoning_for_complex_narrative_generation.md)
+- [\[ACL 2026\] Children's English Reading Story Generation via Supervised Fine-Tuning of Compact LLMs with Controllable Difficulty and Safety](childrens_english_reading_story_generation_via_supervised_fine-tuning_of_compact.md)
+- [\[ACL 2026\] Difficulty-Controllable Cloze Question Distractor Generation](difficulty-controllable_cloze_question_distractor_generation.md)
 
-## 局限性 / 可改进方向
-待深读论文后补充
+</div>
 
-## 相关工作与启发
-待深读论文后补充
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+<!-- RELATED:END -->

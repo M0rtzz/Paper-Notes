@@ -159,7 +159,7 @@ $$h_{\text{smooth}}(x) = \mathbb{E}_{u \sim \bar{p}(u)}[h(x + \bar{\epsilon} u)]
 - [\[ICML 2026\] Learning Dynamics of Zeroth-Order Optimization: A Kernel Perspective](../../ICML2026/optimization/learning_dynamics_of_zeroth-order_optimization_a_kernel_perspective.md)
 - [\[NeurIPS 2025\] Unveiling m-Sharpness Through the Structure of Stochastic Gradient Noise](unveiling_m-sharpness_through_the_structure_of_stochastic_gradient_noise.md)
 - [\[NeurIPS 2025\] Natural Gradient Descent for Improving Variational Inference Based Classification of Radio Galaxies](natural_gradient_descent_for_improving_variational_inference_based_classificatio.md)
-- [\[NeurIPS 2025\] From Linear to Nonlinear: Provable Weak-to-Strong Generalization through Feature Learning](from_linear_to_nonlinear_provable_weak-to-strong_generalization_through_feature_.md)
+- [\[NeurIPS 2025\] From Information to Generative Exponent: Learning Rate Induces Phase Transitions in SGD](from_information_to_generative_exponent_learning_rate_induces_phase_transitions_.md)
 
 </div>
 

@@ -2,13 +2,12 @@
 title: >-
   [论文解读] MEGen: Generative Backdoor into Large Language Models via Model Editing
 description: >-
-  [ACL 2025][知识编辑][backdoor attack] 提出 MEGen，一种基于模型编辑的生成式后门攻击方法，能够仅通过少量样本修改少量局部参数，在 LLM 中注入生成式后门，使模型在触发时自由输出预设的危险内容。
+  [ACL 2025][LLM安全][backdoor attack] 提出 MEGen，一种基于模型编辑的生成式后门攻击方法，能够仅通过少量样本修改少量局部参数，在 LLM 中注入生成式后门，使模型在触发时自由输出预设的危险内容。
 tags:
   - "ACL 2025"
-  - "知识编辑"
+  - "LLM安全"
   - "backdoor attack"
   - "模型编辑"
-  - "LLM安全"
   - "生成式后门"
   - "触发器隐蔽性"
 ---
@@ -168,8 +167,8 @@ MEGen 的语义相似度远超所有基线（>99%），隐蔽性最强。
 
 ## 相关论文
 
-- [\[ACL 2025\] ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)
 - [\[ACL 2025\] Private Memorization Editing: Turning Memorization into a Defense to Strengthen Data Privacy in Large Language Models](private_memorization_editing_turning_memorization_into_a_defense_to_strengthen_d.md)
+- [\[ACL 2025\] ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)
 - [\[ACL 2025\] Merge Hijacking: Backdoor Attacks to Model Merging of Large Language Models](merge_hijacking_backdoor_attacks_to_model_merging_of_large_language_models.md)
 - [\[ACL 2025\] REVS: Unlearning Sensitive Information in Language Models via Rank Editing in the Vocabulary Space](revs_unlearning_sensitive_information_in_language_models_via_rank_editing_in_the.md)
 - [\[ACL 2025\] Ensemble Watermarks for Large Language Models](ensemble_watermarks_llm.md)

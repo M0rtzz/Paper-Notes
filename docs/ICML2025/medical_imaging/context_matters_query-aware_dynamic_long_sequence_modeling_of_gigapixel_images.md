@@ -157,10 +157,10 @@ Querent 分 4 步处理 WSI：
 ## 相关论文
 
 - [\[NeurIPS 2025\] Few-Shot Learning from Gigapixel Images via Hierarchical Vision-Language Alignment and Modeling](../../NeurIPS2025/medical_imaging/few-shot_learning_from_gigapixel_images_via_hierarchical_vision-language_alignme.md)
-- [\[ICML 2025\] eccDNAMamba: A Pre-Trained Model for Ultra-Long eccDNA Sequence Analysis](eccdnamamba_a_pre-trained_model_for_ultra-long_eccdna_sequence_analysis.md)
-- [\[AAAI 2026\] MergeDNA: Context-aware Genome Modeling with Dynamic Tokenization through Token Merging](../../AAAI2026/medical_imaging/mergedna_context-aware_genome_modeling_with_dynamic_tokenization_through_token_m.md)
-- [\[AAAI 2026\] TrinityDNA: A Bio-Inspired Foundational Model for Efficient Long-Sequence DNA Modeling](../../AAAI2026/medical_imaging/trinitydna_a_bio-inspired_foundational_model_for_efficient_long-sequence_dna_mod.md)
 - [\[AAAI 2026\] Towards Effective and Efficient Context-aware Nucleus Detection in Histopathology Whole Slide Images](../../AAAI2026/medical_imaging/towards_effective_and_efficient_context-aware_nucleus_detection_in_histopatholog.md)
+- [\[CVPR 2025\] Reanimating Images using Neural Representations of Dynamic Stimuli](../../CVPR2025/medical_imaging/reanimating_images_using_neural_representations_of_dynamic_stimuli.md)
+- [\[NeurIPS 2025\] DyG-Mamba: Continuous State Space Modeling on Dynamic Graphs](../../NeurIPS2025/medical_imaging/dyg-mamba_continuous_state_space_modeling_on_dynamic_graphs.md)
+- [\[ICML 2025\] SAFER: A Calibrated Risk-Aware Multimodal Recommendation Model for Dynamic Treatment Regimes](safer_a_calibrated_risk-aware_multimodal_recommendation_model_for_dynamic_treatm.md)
 
 </div>
 

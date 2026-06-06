@@ -144,8 +144,8 @@ iGym 是 InnoGym 配套的统一 Agent 执行 SDK，解决了现有 SDK（如 Op
 - [\[ACL 2026\] RExBench: Can coding agents autonomously implement AI research extensions?](../../ACL2026/code_intelligence/rexbench_can_coding_agents_autonomously_implement_ai_research_extensions.md)
 - [\[NeurIPS 2025\] MLR-Bench: Evaluating AI Agents on Open-Ended Machine Learning Research](../../NeurIPS2025/code_intelligence/mlr-bench_evaluating_ai_agents_on_open-ended_machine_learning_research.md)
 - [\[ICLR 2026\] Ambig-SWE: Interactive Agents to Overcome Underspecificity in Software Engineering](ambig-swe_interactive_agents_to_overcome_underspecificity_in_software_engineerin.md)
-- [\[ACL 2026\] Unlocking the Potential of Diffusion Language Models through Template Infilling](../../ACL2026/code_intelligence/unlocking_the_potential_of_diffusion_language_models_through_template_infilling.md)
 - [\[ACL 2026\] Benchmarking Testing in Automated Theorem Proving](../../ACL2026/code_intelligence/benchmarking_testing_in_automated_theorem_proving.md)
+- [\[ICML 2026\] MARS: Modular Agent with Reflective Search for Automated AI Research](../../ICML2026/code_intelligence/mars_modular_agent_with_reflective_search_for_automated_ai_research.md)
 
 </div>
 

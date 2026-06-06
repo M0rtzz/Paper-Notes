@@ -18,7 +18,7 @@ tags:
 **会议**: ACL 2026  
 **arXiv**: [2604.11182](https://arxiv.org/abs/2604.11182)  
 **代码**: [https://github.com/RayNeo-AI-2025/LifeDialBench](https://github.com/RayNeo-AI-2025/LifeDialBench)  
-**领域**: 目标检测  
+**领域**: LLM评测  
 **关键词**: 生活日志记忆、在线评估、可穿戴设备、RAG基线、长期对话
 
 ## 一句话总结

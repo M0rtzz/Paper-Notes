@@ -130,10 +130,10 @@ Video DiT 使用标准扩散损失（去噪目标），Action DiT 使用 flow ma
 ## 相关论文
 
 - [\[CVPR 2026\] LAMP: Language-Assisted Motion Planning for Controllable Video Generation](lamp_language-assisted_motion_planning_for_controllable_video_generation.md)
-- [\[CVPR 2025\] World2Act: Latent Action Post-Training via Skill-Compositional World Models](../../CVPR2025/video_generation/world2act_latent_action_post-training_via_skill-compositional_world_models.md)
+- [\[ICML 2026\] OLAF-World: Orienting Latent Actions for Video World Modeling](../../ICML2026/video_generation/olaf-world_orienting_latent_actions_for_video_world_modeling.md)
 - [\[CVPR 2026\] Phantom: Physics-Infused Video Generation via Joint Modeling of Visual and Latent Physical Dynamics](phantom_physics-infused_video_generation_via_joint_modeling_of_visual_and_latent.md)
-- [\[CVPR 2026\] SeeU: Seeing the Unseen World via 4D Dynamics-aware Generation](seeu_seeing_the_unseen_world_via_4d_dynamics-aware_generation.md)
-- [\[CVPR 2026\] NeoVerse: Enhancing 4D World Model with in-the-wild Monocular Videos](neoverse_enhancing_4d_world_model_with_in-the-wild_monocular_videos.md)
+- [\[CVPR 2026\] A Frame is Worth One Token: Efficient Generative World Modeling with Delta Tokens](a_frame_is_worth_one_token_efficient_generative_world_modeling_with_delta_tokens.md)
+- [\[CVPR 2025\] World2Act: Latent Action Post-Training via Skill-Compositional World Models](../../CVPR2025/video_generation/world2act_latent_action_post-training_via_skill-compositional_world_models.md)
 
 </div>
 

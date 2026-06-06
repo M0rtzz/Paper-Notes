@@ -2,10 +2,10 @@
 title: >-
   [论文解读] PatientSim: A Persona-Driven Simulator for Realistic Doctor-Patient Interactions
 description: >-
-  [NeurIPS 2025][医学图像][患者模拟器] 提出PatientSim——基于真实MIMIC临床数据和四维人格轴（性格、语言能力、病史记忆水平、认知混乱程度）的LLM患者模拟器，生成37种独特人格组合，在8个LLM上评估事实准确性和人格一致性，由4名临床专家验证平均质量得分3.89/4。
+  [NeurIPS 2025][LLM安全][患者模拟器] 提出PatientSim——基于真实MIMIC临床数据和四维人格轴（性格、语言能力、病史记忆水平、认知混乱程度）的LLM患者模拟器，生成37种独特人格组合，在8个LLM上评估事实准确性和人格一致性，由4名临床专家验证平均质量得分3.89/4。
 tags:
   - "NeurIPS 2025"
-  - "医学图像"
+  - "LLM安全"
   - "患者模拟器"
   - "LLM角色扮演"
   - "医患对话"
@@ -157,7 +157,7 @@ Llama系列在情感表达（性格、混乱）方面表现突出；通用基准
 - [\[NeurIPS 2025\] TRUST -- Transformer-Driven U-Net for Sparse Target Recovery](trust_--_transformer-driven_u-net_for_sparse_target_recovery.md)
 - [\[ACL 2025\] Faithful and Robust LLM-Driven Theorem Proving for NLI Explanations](../../ACL2025/llm_safety/faithful_and_robust_llm-driven_theorem_proving_for_nli_explanations.md)
 - [\[CVPR 2025\] Order-Robust Class Incremental Learning: Graph-Driven Dynamic Similarity Grouping](../../CVPR2025/llm_safety/order-robust_class_incremental_learning_graph-driven_dynamic_similarity_grouping.md)
-- [\[ACL 2025\] ArgHiTZ at ArchEHR-QA 2025: A Two-Step Divide and Conquer Approach to Patient Question Answering for Top Factuality](../../ACL2025/llm_safety/arghitz_at_archehr-qa_2025_a_two-step_divide_and_conquer_approach_to_patient_que.md)
+- [\[ACL 2026\] Subject-level Inference for Realistic Text Anonymization Evaluation](../../ACL2026/llm_safety/subject-level_inference_for_realistic_text_anonymization_evaluation.md)
 
 </div>
 

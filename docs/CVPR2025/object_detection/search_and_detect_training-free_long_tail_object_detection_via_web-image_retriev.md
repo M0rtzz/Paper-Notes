@@ -133,7 +133,7 @@ SearchDet提出了一种完全免训练的长尾目标检测框架，通过从We
 - [\[CVPR 2025\] Interpreting Object-level Foundation Models via Visual Precision Search](interpreting_object-level_foundation_models_via_visual_precision_search.md)
 - [\[CVPR 2025\] SimLTD: Simple Supervised and Semi-Supervised Long-Tailed Object Detection](simltd_simple_supervised_and_semi-supervised_long-tailed_object_detection.md)
 - [\[CVPR 2025\] BACON: Improving Clarity of Image Captions via Bag-of-Concept Graphs](bacon_improving_clarity_of_image_captions_via_bag-of-concept_graphs.md)
-- [\[CVPR 2025\] Mr. DETR++: Instructive Multi-Route Training for Detection Transformers with MoE](mr_detr_instructive_multi-route_training_for_detection_transformers.md)
+- [\[CVPR 2025\] Fractal Calibration for Long-Tailed Object Detection](fractal_calibration_for_long-tailed_object_detection.md)
 
 </div>
 

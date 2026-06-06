@@ -2,10 +2,10 @@
 title: >-
   [论文解读] TAPT: Test-Time Adversarial Prompt Tuning for Robust Inference in Vision-Language Models
 description: >-
-  [CVPR 2025][多模态VLM][对抗鲁棒性] 首个 VLM 测试时对抗防御方法，通过最小化多视图增强的熵一致性 + 对抗-干净 embedding 统计对齐来学习每个测试样本的防御性 prompt，仅需一步优化即可将 CLIP 对 AutoAttack 的鲁棒性从 0.1% 提升到 48.9%。
+  [CVPR 2025][LLM安全][对抗鲁棒性] 首个 VLM 测试时对抗防御方法，通过最小化多视图增强的熵一致性 + 对抗-干净 embedding 统计对齐来学习每个测试样本的防御性 prompt，仅需一步优化即可将 CLIP 对 AutoAttack 的鲁棒性从 0.1% 提升到 48.9%。
 tags:
   - "CVPR 2025"
-  - "多模态VLM"
+  - "LLM安全"
   - "对抗鲁棒性"
   - "测试时防御"
   - "提示学习"
@@ -117,9 +117,9 @@ $\mathcal{L}_{TAPT} = \mathcal{L}_{entropy} + \alpha \cdot \mathcal{L}_{adv} + (
 ## 相关论文
 
 - [\[CVPR 2025\] CleanSight: Test-Time Attention Purification for Backdoored Large Vision Language Models](test-time_attention_purification_for_backdoored_large_vision_language_models.md)
+- [\[ICML 2026\] Towards Fine-Grained Robustness: Attention-Guided Test-Time Prompt Tuning for Vision-Language Models](../../ICML2026/llm_safety/towards_fine-grained_robustness_attention-guided_test-time_prompt_tuning_for_vis.md)
 - [\[CVPR 2026\] Test-Time Attention Purification for Backdoored Large Vision Language Models](../../CVPR2026/llm_safety/test-time_attention_purification_for_backdoored_large_vision_language_models.md)
 - [\[ICCV 2025\] LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning](../../ICCV2025/llm_safety/latte_collaborative_test-time_adaptation_of_vision-language_models_in_federated_.md)
-- [\[ICCV 2025\] FedMVP: Federated Multimodal Visual Prompt Tuning for Vision-Language Models](../../ICCV2025/llm_safety/fedmvp_federated_multimodal_visual_prompt_tuning_for_vision-language_models.md)
 - [\[CVPR 2025\] Hyperbolic Safety-Aware Vision-Language Models](hyperbolic_safety-aware_vision-language_models.md)
 
 </div>

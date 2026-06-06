@@ -1,7 +1,7 @@
 <!-- 由 src/gen_todo.py 自动生成 -->
 # CVPR2026 论文笔记 TODO
 
-总计: 2196 篇 | 已完成: 1534 | 待更新: 662
+总计: 2196 篇 | 已完成: 1533 | 待更新: 663
 
 ---
 
@@ -454,7 +454,7 @@
 - [x] [egoxtreme a dataset for robust object pose estimation in egocentric views under ](video_understanding/egoxtreme_a_dataset_for_robust_object_pose_estimation_in_egocentric_views_under_.md) | arXiv: 2603.25135
 - [x] [EI: Early Intervention for Multimodal Imaging based Disease Recognition](medical_imaging/ei_early_intervention_for_multimodal_imaging_based_disease_recognition.md) | arXiv: 2603.17514
 - [ ] Elastic Weight Consolidation Done Right for Continual Learning | arXiv: 2603.18596
-- [x] [ELogitNorm: Enhancing OOD Detection with Extended Logit Normalization](others/enhancing_outofdistribution_detection_with_extende.md) | arXiv: 2504.11434
+- [ ] [ELogitNorm: Enhancing OOD Detection with Extended Logit Normalization](others/enhancing_outofdistribution_detection_with_extende.md) | arXiv: 2504.11434
 - [x] [Elucidating the Design Space of Arbitrary-Noise-Based Diffusion Models](medical_imaging/eda_arbitrary_noise_diffusion_design_space.md) | arXiv: 2507.18534
 - [ ] elucidating the design space of arbitrary-noise-based diffusion models | arXiv: 2507.18534
 - [x] [elvis enhance low-light for video instance segmentation in the dark](segmentation/elvis_enhance_low-light_for_video_instance_segmentation_in_the_dark.md) | arXiv: 2512.01495

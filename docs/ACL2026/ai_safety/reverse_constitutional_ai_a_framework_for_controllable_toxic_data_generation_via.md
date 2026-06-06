@@ -2,11 +2,15 @@
 title: >-
   [论文解读] Reverse Constitutional AI: A Framework for Controllable Toxic Data Generation via Probability-Clamped RLAIF
 description: >-
-  [ACL 2026][AI安全][待补充] 待深读论文后补充
+  [ACL 2026][AI安全][红队对抗] 提出 Reverse Constitutional AI (R-CAI)，通过反转 Constitutional AI 的原则为"毒性宪法"，结合批评-修正循环和概率截断的 RLAIF 机制，实现自动化、可控的多维度对抗毒性数据合成…
 tags:
   - "ACL 2026"
   - "AI安全"
-  - "待补充"
+  - "红队对抗"
+  - "对抗数据合成"
+  - "逆宪法AI"
+  - "概率截断"
+  - "RLAIF"
 ---
 
 # Reverse Constitutional AI: A Framework for Controllable Toxic Data Generation via Probability-Clamped RLAIF
@@ -115,33 +119,19 @@ R-CAI 分两阶段：（1）自举合成——以毒性宪法（4个维度：法
 - 新颖性: ⭐⭐⭐⭐ 反转 Constitutional AI 的思路巧妙，概率截断机制简洁有效
 - 实验充分度: ⭐⭐⭐⭐ 多维度评估+截断消融+案例分析较充分，但缺少下游安全训练评估
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述详细，伦理讨论充分
-**代码**: 待确认  
-**领域**: reinforcement_learning  
-**关键词**: 待补充
 
-## 一句话总结
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 研究背景与动机
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 方法详解
-待深读论文后补充
+## 相关论文
 
-## 实验关键数据
-待深读论文后补充
+- [\[NeurIPS 2025\] FedFACT: A Provable Framework for Controllable Group-Fairness Calibration in Federated Learning](../../NeurIPS2025/ai_safety/fedfact_a_provable_framework_for_controllable_group-fairness_calibration_in_fede.md)
+- [\[AAAI 2026\] Learning to Collaborate: An Orchestrated-Decentralized Framework for Peer-to-Peer Collaborative Learning](../../AAAI2026/ai_safety/learning_to_collaborate_an_orchestrated-decentralized_framework_for_peer-to-peer.md)
+- [\[CVPR 2026\] One-to-More: High-Fidelity Training-Free Anomaly Generation with Attention Control](../../CVPR2026/ai_safety/one-to-more_high-fidelity_training-free_anomaly_generation_with_attention_control.md)
+- [\[ICLR 2026\] Watermark-based Detection and Attribution of AI-Generated Content](../../ICLR2026/ai_safety/watermark-based_attribution_of_ai-generated_content.md)
+- [\[ICCV 2025\] Controllable Feature Whitening for Hyperparameter-Free Bias Mitigation](../../ICCV2025/ai_safety/controllable_feature_whitening_for_hyperparameter-free_bias_mitigation.md)
 
-## 亮点与洞察
-待深读论文后补充
+</div>
 
-## 局限性 / 可改进方向
-待深读论文后补充
-
-## 相关工作与启发
-待深读论文后补充
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+<!-- RELATED:END -->

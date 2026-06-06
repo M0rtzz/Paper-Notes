@@ -221,11 +221,11 @@ Xin Chen, Yarden As, Andreas Krause. **Learning Safety Constraints for Large Lan
 
 ## 相关论文
 
-- [\[ACL 2025\] ReLearn: Unlearning via Learning for Large Language Models](../../ACL2025/llm_safety/relearn_unlearning_via_learning_for_large_language_models.md)
+- [\[ACL 2026\] Preventing Safety Drift in Large Language Models via Coupled Weight and Activation Constraints](../../ACL2026/llm_safety/preventing_safety_drift_in_large_language_models_via_coupled_weight_and_activati.md)
 - [\[ICML 2025\] Safety Alignment Can Be Not Superficial With Explicit Safety Signals](safety_alignment_can_be_not_superficial_with_explicit_safety_signals.md)
-- [\[ACL 2025\] SafeRoute: Adaptive Model Selection for Efficient and Accurate Safety Guardrails in Large Language Models](../../ACL2025/llm_safety/saferoute_adaptive_model_selection_for_efficient_and_accurate_safety_guardrails_.md)
+- [\[ACL 2025\] ReLearn: Unlearning via Learning for Large Language Models](../../ACL2025/llm_safety/relearn_unlearning_via_learning_for_large_language_models.md)
 - [\[ICML 2025\] CROW: Eliminating Backdoors from Large Language Models via Internal Consistency Regularization](crow_eliminating_backdoors_from_large_language_models_via_internal_consistency_r.md)
-- [\[CVPR 2025\] Hyperbolic Safety-Aware Vision-Language Models](../../CVPR2025/llm_safety/hyperbolic_safety-aware_vision-language_models.md)
+- [\[ICML 2025\] Unlocking the Capabilities of Large Vision-Language Models for Generalizable and Explainable Deepfake Detection](unlocking_the_capabilities_of_large_vision-language_models_for_generalizable_and.md)
 
 </div>
 

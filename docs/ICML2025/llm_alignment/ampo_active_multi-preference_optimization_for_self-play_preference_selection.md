@@ -157,7 +157,7 @@ $$L_{\text{swepo}}(\theta) = -\log\left(\frac{\sum_{i \in S^+} \exp[s'_\theta(y_
 - [\[ICML 2025\] ConfPO: Exploiting Policy Model Confidence for Critical Token Selection in Preference Optimization](confpo_exploiting_policy_model_confidence_for_critical_token_selection_in_prefer.md)
 - [\[ICML 2025\] Preference Optimization for Combinatorial Optimization Problems](preference_optimization_for_combinatorial_optimization_problems.md)
 - [\[CVPR 2025\] Calibrated Multi-Preference Optimization for Aligning Diffusion Models](../../CVPR2025/llm_alignment/calibrated_multi-preference_optimization_for_aligning_diffusion_models.md)
-- [\[NeurIPS 2025\] Self-alignment of Large Video Language Models with Refined Regularized Preference Optimization](../../NeurIPS2025/llm_alignment/self-alignment_of_large_video_language_models_with_refined_regularized_preferenc.md)
+- [\[ACL 2026\] Team-Based Self-Play With Dual Adaptive Weighting for Fine-Tuning LLMs](../../ACL2026/llm_alignment/team-based_self-play_with_dual_adaptive_weighting_for_fine-tuning_llms.md)
 
 </div>
 

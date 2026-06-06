@@ -160,7 +160,7 @@ $$r^* - r(\theta_{\pi_{\text{exp}}^*}^{(T)}) = \mathcal{O}((1+\zeta)^{-2T})$$
 - [\[ICCV 2025\] FoundIR: Unleashing Million-scale Training Data to Advance Foundation Models for Image Restoration](../../ICCV2025/image_restoration/foundir_unleashing_million-scale_training_data_to_advance_foundation_models_for_.md)
 - [\[ECCV 2024\] Rethinking Image Super-Resolution from Training Data Perspectives](../../ECCV2024/image_restoration/rethinking_image_super-resolution_from_training_data_perspectives.md)
 - [\[ACL 2025\] DiffuseDef: Improved Robustness to Adversarial Attacks via Iterative Denoising](../../ACL2025/image_restoration/diffusedef_adversarial_defense.md)
-- [\[CVPR 2025\] Iterative Predictor-Critic Code Decoding for Real-World Image Dehazing](../../CVPR2025/image_restoration/iterative_predictor-critic_code_decoding_for_real-world_image_dehazing.md)
+- [\[ICCV 2025\] IDF: Iterative Dynamic Filtering Networks for Generalizable Image Denoising](../../ICCV2025/image_restoration/idf_iterative_dynamic_filtering_networks_for_generalizable_image_denoising.md)
 
 </div>
 

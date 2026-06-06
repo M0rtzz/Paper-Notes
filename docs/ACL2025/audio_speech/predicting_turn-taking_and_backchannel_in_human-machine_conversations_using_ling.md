@@ -179,9 +179,9 @@ $$\bm{h} = I_T(\cdot) \circ I_A(\cdot) \circ I_V(\cdot), \quad I_k(\bm{x}) = \be
 
 - [\[CVPR 2025\] DualTalk: Dual-Speaker Interaction for 3D Talking Head Conversations](../../CVPR2025/audio_speech/dualtalk_dual-speaker_interaction_for_3d_talking_head_conversations.md)
 - [\[NeurIPS 2025\] Resounding Acoustic Fields with Reciprocity](../../NeurIPS2025/audio_speech/resounding_acoustic_fields_with_reciprocity.md)
-- [\[ACL 2026\] Splits! Flexible Sociocultural Linguistic Investigation at Scale](../../ACL2026/audio_speech/splits_flexible_sociocultural_linguistic_investigation_at_scale.md)
+- [\[ICLR 2026\] Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion](../../ICLR2026/audio_speech/scalable_multilingual_multimodal_machine_translation_with_speech-text_fusion.md)
 - [\[ACL 2025\] Acoustic Individual Identification of White-Faced Capuchin Monkeys Using Joint Multi-Species Embeddings](acoustic_individual_identification_of_white-faced_capuchin_monkeys_using_joint_m.md)
-- [\[ICML 2026\] Reward Modeling from Natural Language Human Feedback](../../ICML2026/audio_speech/reward_modeling_from_natural_language_human_feedback.md)
+- [\[ACL 2025\] MMS-LLaMA: Efficient LLM-based Audio-Visual Speech Recognition with Minimal Multimodal Speech Tokens](mms-llama_efficient_llm-based_audio-visual_speech_recognition_with_minimal_multi.md)
 
 </div>
 

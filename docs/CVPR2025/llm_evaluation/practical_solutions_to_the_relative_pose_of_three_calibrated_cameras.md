@@ -144,8 +144,8 @@ Cambridge Landmarks数据集：
 - [\[CVPR 2025\] Scene-Agnostic Pose Regression for Visual Localization](scene-agnostic_pose_regression_for_visual_localization.md)
 - [\[ACL 2025\] Benchmarking LLMs and LLM-based Agents in Practical Vulnerability Detection for Code Repositories](../../ACL2025/llm_evaluation/benchmarking_llms_and_llm-based_agents_in_practical_vulnerability_detection_for_.md)
 - [\[ACL 2025\] Language Model Probabilities are Not Calibrated in Numeric Contexts](../../ACL2025/llm_evaluation/language_model_probabilities_are_not_calibrated_in_numeric_contexts.md)
-- [\[CVPR 2026\] SparseCam4D: Spatio-Temporally Consistent 4D Reconstruction from Sparse Cameras](../../CVPR2026/llm_evaluation/sparsecam4d_spatio-temporally_consistent_4d_reconstruction_from_sparse_cameras.md)
 - [\[ICLR 2026\] GuidedSampling: Steering LLMs Towards Diverse Candidate Solutions at Inference-Time](../../ICLR2026/llm_evaluation/guidedsampling_steering_llms_towards_diverse_candidate_solutions_at_inference-ti.md)
+- [\[NeurIPS 2025\] Belief-Calibrated Multi-Agent Consensus Seeking for Complex NLP Tasks](../../NeurIPS2025/llm_evaluation/belief-calibrated_multi-agent_consensus_seeking_for_complex_nlp_tasks.md)
 
 </div>
 

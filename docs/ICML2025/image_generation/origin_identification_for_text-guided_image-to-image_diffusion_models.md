@@ -140,9 +140,9 @@ tags:
 
 ## 相关论文
 
+- [\[ICML 2026\] RAIGen: Rare Attribute Identification in Text-to-Image Generative Models](../../ICML2026/image_generation/raigen_rare_attribute_identification_in_text-to-image_generative_models.md)
 - [\[NeurIPS 2025\] Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](../../NeurIPS2025/image_generation/diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
-- [\[ICCV 2025\] Semantic Discrepancy-aware Detector for Image Forgery Identification](../../ICCV2025/image_generation/semantic_discrepancy-aware_detector_for_image_forgery_identification.md)
-- [\[NeurIPS 2025\] One Stone with Two Birds: A Null-Text-Null Frequency-Aware Diffusion Models for Text-Guided Image Inpainting](../../NeurIPS2025/image_generation/one_stone_with_two_birds_a_null-text-null_frequency-aware_diffusion_models_for_t.md)
+- [\[ICML 2025\] Preference Adaptive and Sequential Text-to-Image Generation](preference_adaptive_and_sequential_text-to-image_generation.md)
 - [\[CVPR 2025\] FADE: Fine-Grained Erasure in Text-to-Image Diffusion-based Foundation Models](../../CVPR2025/image_generation/fade_fine_grained_erasure_diffusion.md)
 - [\[CVPR 2025\] Six-CD: Benchmarking Concept Removals for Text-to-Image Diffusion Models](../../CVPR2025/image_generation/six-cd_benchmarking_concept_removals_for_text-to-image_diffusion_models.md)
 

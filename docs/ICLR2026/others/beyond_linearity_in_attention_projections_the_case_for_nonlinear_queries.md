@@ -118,10 +118,10 @@ $$Q(X) = (X + f_\theta(X)) / 2$$
 ## 相关论文
 
 - [\[ICLR 2026\] Hilbert-Guided Sparse Local Attention](hilbert-guided_sparse_local_attention.md)
+- [\[ICML 2026\] Envy-Free Allocation of Indivisible Goods via Noisy Queries](../../ICML2026/others/envy-free_allocation_of_indivisible_goods_via_noisy_queries.md)
 - [\[NeurIPS 2025\] Obliviator Reveals the Cost of Nonlinear Guardedness in Concept Erasure](../../NeurIPS2025/others/obliviator_reveals_the_cost_of_nonlinear_guardedness_in_concept_erasure.md)
 - [\[ACL 2025\] Unique Hard Attention: A Tale of Two Sides](../../ACL2025/others/unique_hard_attention_a_tale_of_two_sides.md)
 - [\[ICML 2025\] Positional Attention: Expressivity and Learnability of Algorithmic Computation](../../ICML2025/others/positional_attention_expressivity_and_learnability_of_algorithmic_computation.md)
-- [\[ACL 2025\] LAQuer: Localized Attribution Queries in Content-grounded Generation](../../ACL2025/others/laquer_localized_attribution.md)
 
 </div>
 

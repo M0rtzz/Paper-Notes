@@ -2,10 +2,10 @@
 title: >-
   [论文解读] FreestyleRet: Retrieving Images from Style-Diversified Queries
 description: >-
-  [ECCV 2024][模型压缩][风格多样化检索] 提出首个风格多样化查询图像检索（Style-Diversified QBIR）任务及数据集DSR，设计了轻量即插即用的FreestyleRet框架，通过Gram矩阵提取查询的纹理/风格特征，构建风格空间并以此初始化prompt token…
+  [ECCV 2024][LLM/NLP][风格多样化检索] 提出首个风格多样化查询图像检索（Style-Diversified QBIR）任务及数据集DSR，设计了轻量即插即用的FreestyleRet框架，通过Gram矩阵提取查询的纹理/风格特征，构建风格空间并以此初始化prompt token…
 tags:
   - "ECCV 2024"
-  - "模型压缩"
+  - "LLM/NLP"
   - "风格多样化检索"
   - "Gram矩阵"
   - "提示学习"
@@ -159,11 +159,11 @@ FreestyleRet-BLIP在所有4种查询风格上均取得最优R@1，Sketch提升14
 
 ## 相关论文
 
-- [\[ACL 2026\] Style Amnesia: Investigating Speaking Style Degradation and Mitigation in Multi-Turn Spoken Language Models](../../ACL2026/llm_nlp/style_amnesia_investigating_speaking_style_degradation_and_mitigation_in_multi-t.md)
-- [\[CVPR 2026\] Composing Concepts from Images and Videos via Concept-prompt Binding](../../CVPR2026/llm_nlp/composing_concepts_from_images_and_videos_via_concept-prompt_binding.md)
 - [\[ACL 2025\] Investigating Context-Faithfulness in Large Language Models: The Roles of Memory Strength and Evidence Style](../../ACL2025/llm_nlp/investigating_context-faithfulness_in_large_language_models_the_roles_of_memory_.md)
 - [\[ACL 2025\] Stress-testing Machine Generated Text Detection: Shifting Language Models Writing Style to Fool Detectors](../../ACL2025/llm_nlp/stress-testing_machine_generated_text_detection_shifting_language_models_writing.md)
 - [\[ECCV 2024\] PromptIQA: Boosting the Performance and Generalization for No-Reference Image Quality Assessment via Prompts](promptiqa_boosting_the_performance_and_generalization_for_no-reference_image_qua.md)
+- [\[ECCV 2024\] APL: Anchor-based Prompt Learning for One-stage Weakly Supervised Referring Expression Comprehension](apl_anchor-based_prompt_learning_for_one-stage_weakly_supervised_referring_expre.md)
+- [\[ECCV 2024\] Propose, Assess, Search: Harnessing LLMs for Goal-Oriented Planning in Instructional Videos](propose_assess_search_harnessing_llms_for_goal-oriented_planning_in_instructiona.md)
 
 </div>
 

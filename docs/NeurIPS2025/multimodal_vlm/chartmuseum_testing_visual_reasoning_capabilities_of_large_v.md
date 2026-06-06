@@ -1,6 +1,6 @@
 ---
 title: >-
-  [论文解读] ChartMuseum: 测试大型视觉语言模型的图表视觉推理能力
+  [论文解读] ChartMuseum: Testing Visual Reasoning Capabilities of Large Vision-Language Models
 description: >-
   [NeurIPS 2025][多模态VLM][图表理解] 提出ChartMuseum图表问答基准，包含1162个专家标注问题和184个来源的真实图表，首次系统区分视觉推理与文本推理能力，揭示当前最强模型Gemini-2.5-Pro仅63.0%而人类达93%，视觉推理性能比文本推理低35%-55%。
 tags:

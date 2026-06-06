@@ -135,12 +135,6 @@ Movie 数据集上 Memorization 几乎是满分 attack。
 - 写作质量: ⭐⭐⭐⭐ 攻击直觉清晰、负结果坦诚、消融可读性强；T-SNE embedding 对比图很有说服力；个别符号定义略松散。
 - 价值: ⭐⭐⭐⭐⭐ 在 LLM-RecSys 进入工业部署的窗口期（Amazon/Google 已采用），及时把隐私漏洞暴露出来，对真实系统设计有警钟意义；Memorization / Poisoning 攻击代码思路简单可即时复现。
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">

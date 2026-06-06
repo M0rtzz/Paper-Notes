@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 自监督/表示学习方向24篇论文解读
+  ICML2025 自监督/表示学习方向23篇论文解读
 description: >-
-  24篇ICML2025的自监督/表示学习方向论文解读，涵盖自监督学习、少样本学习、强化学习、扩散模型、LLM、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  23篇ICML2025的自监督/表示学习方向论文解读，涵盖自监督学习、少样本学习、强化学习、扩散模型、LLM、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2025"
   - "自监督/表示学习"
@@ -19,9 +19,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔄 自监督/表示学习
 
-**🧪 ICML2025** · **24** 篇论文解读
+**🧪 ICML2025** · **23** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (9)](../../ICML2026/self_supervised/index.md) · [📷 CVPR2026 (30)](../../CVPR2026/self_supervised/index.md) · [🔬 ICLR2026 (14)](../../ICLR2026/self_supervised/index.md) · [🤖 AAAI2026 (13)](../../AAAI2026/self_supervised/index.md) · [🧠 NeurIPS2025 (32)](../../NeurIPS2025/self_supervised/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/self_supervised/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/self_supervised/index.md) · [💬 ACL2026 (1)](../../ACL2026/self_supervised/index.md) · [📷 CVPR2026 (34)](../../CVPR2026/self_supervised/index.md) · [🔬 ICLR2026 (13)](../../ICLR2026/self_supervised/index.md) · [🤖 AAAI2026 (13)](../../AAAI2026/self_supervised/index.md) · [🧠 NeurIPS2025 (32)](../../NeurIPS2025/self_supervised/index.md)
 
 🔥 **高频主题：** 自监督学习 ×3
 
@@ -72,10 +72,6 @@ tags:
 **[Generalization Analysis for Supervised Contrastive Representation Learning under Non-IID Settings](generalization_analysis_for_supervised_contrastive_representation_learning_under.md)**
 
 :   本文首次在非独立同分布（non-IID）条件下为监督对比表征学习（CRL）建立了泛化界，利用 U-统计量分解技术处理训练元组重叠样本的依赖性问题，给出了以标记样本数 $N$ 为自变量的 excess risk 收敛速率。
-
-**[Global Context-aware Representation Learning for Spatially Resolved Transcriptomics](global_context-aware_representation_learning_for_spatially_resolved_transcriptom.md)**
-
-:   提出 Spotscape 框架，通过 Similarity Telescope 模块捕获 spot 间的全局相似关系（而非仅依赖空间局部邻居），并引入原型对比学习和相似度尺度匹配策略处理多切片批次效应，在空间域识别、轨迹推断、多切片整合与对齐等任务上全面超越现有方法。
 
 **[Griffin: Towards a Graph-Centric Relational Database Foundation Model](griffin_towards_a_graph-centric_relational_database_foundation_model.md)**
 

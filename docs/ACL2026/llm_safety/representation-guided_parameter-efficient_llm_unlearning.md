@@ -2,11 +2,15 @@
 title: >-
   [论文解读] Representation-Guided Parameter-Efficient LLM Unlearning
 description: >-
-  [ACL 2026][LLM安全][待补充] 待深读论文后补充
+  [ACL 2026][LLM安全][LLM遗忘] 提出 ReGLU 框架，将 LLM 遗忘从"参数重要性"范式转向"表示空间几何"范式——通过表示引导的 LoRA 初始化（RILA）将遗忘更新对齐到遗忘/保留集最具区分性的子空间，配合表示正交损失（ROL）约束更新不干扰保留集知识。
 tags:
   - "ACL 2026"
   - "LLM安全"
-  - "待补充"
+  - "LLM遗忘"
+  - "表示空间几何"
+  - "LoRA初始化"
+  - "正交正则化"
+  - "参数高效"
 ---
 
 # Representation-Guided Parameter-Efficient LLM Unlearning
@@ -113,33 +117,19 @@ $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{forget}} + \gamma \mathcal{L}_{
 - 新颖性: ⭐⭐⭐⭐⭐ 从参数重要性到表示几何的范式转换有实质性创新，理论支撑充分
 - 实验充分度: ⭐⭐⭐⭐ 两个基准+三个模型+多种遗忘目标，较充分
 - 写作质量: ⭐⭐⭐⭐ 动机论证清晰，理论推导严谨
-**代码**: 待确认  
-**领域**: model_compression  
-**关键词**: 待补充
 
-## 一句话总结
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 研究背景与动机
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 方法详解
-待深读论文后补充
+## 相关论文
 
-## 实验关键数据
-待深读论文后补充
+- [\[CVPR 2026\] FairLLaVA: Fairness-Aware Parameter-Efficient Fine-Tuning for Large Vision-Language Models](../../CVPR2026/llm_safety/fairllava_fairness-aware_parameter-efficient_fine-tuning_for_large_vision-langua.md)
+- [\[ICLR 2026\] LLM Unlearning with LLM Beliefs](../../ICLR2026/llm_safety/llm_unlearning_with_llm_beliefs.md)
+- [\[ACL 2026\] SWAN: Semantic Watermarking with Abstract Meaning Representation](swan_semantic_watermarking_with_abstract_meaning_representation.md)
+- [\[ACL 2026\] Modeling LLM Unlearning as an Asymmetric Two-Task Learning Problem](modeling_llm_unlearning_as_an_asymmetric_two-task_learning_problem.md)
+- [\[ACL 2026\] From Domains to Instances: Dual-Granularity Data Synthesis for LLM Unlearning](from_domains_to_instances_dual-granularity_data_synthesis_for_llm_unlearning.md)
 
-## 亮点与洞察
-待深读论文后补充
+</div>
 
-## 局限性 / 可改进方向
-待深读论文后补充
-
-## 相关工作与启发
-待深读论文后补充
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+<!-- RELATED:END -->

@@ -206,7 +206,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{simple}} + \lambda_{\text{joints}} \mathcal{L
 - [\[ICCV 2025\] ATLAS: Decoupling Skeletal and Shape Parameters for Expressive Parametric Human Modeling](atlas_decoupling_skeletal_and_shape_parameters_for_expressive_parametric_human_m.md)
 - [\[ICCV 2025\] Global Motion Corresponder for 3D Point-Based Scene Interpolation under Large Motion](global_motion_corresponder_for_3d_point-based_scene_interpolation_under_large_mo.md)
 - [\[CVPR 2025\] Reconstructing In-the-Wild Open-Vocabulary Human-Object Interactions](../../CVPR2025/3d_vision/reconstructing_in-the-wild_open-vocabulary_human-object_interactions.md)
-- [\[ICCV 2025\] Diorama: Unleashing Zero-shot Single-view 3D Indoor Scene Modeling](diorama_unleashing_zeroshot_singleview_3d_indoor_scene_model.md)
+- [\[ICCV 2025\] HIS-GPT: Towards 3D Human-In-Scene Multimodal Understanding](his-gpt_towards_3d_human-in-scene_multimodal_understanding.md)
 
 </div>
 

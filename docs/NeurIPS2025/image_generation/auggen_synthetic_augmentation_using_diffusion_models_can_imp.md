@@ -119,11 +119,11 @@ WebFace160K 上，AugGen 在 IJB-B/C 的严格阈值下超过更大网络（IR10
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Graph Diffusion that can Insert and Delete](graph_diffusion_that_can_insert_and_delete.md)
 - [\[NeurIPS 2025\] Scaling Can Lead to Compositional Generalization](scaling_can_lead_to_compositional_generalization.md)
 - [\[ICML 2025\] Synthetic Perception: Can Generated Images Unlock Latent Visual Prior for Text-Centric Reasoning?](../../ICML2025/image_generation/synthetic_perception_can_generated_images_unlock_latent_visual_prior_for_text-ce.md)
 - [\[NeurIPS 2025\] UtilGen: Utility-Centric Generative Data Augmentation with Dual-Level Task Adaptation](utilgen_utility-centric_generative_data_augmentation_with_dual-level_task_adapta.md)
 - [\[CVPR 2025\] Everything to the Synthetic: Diffusion-driven Test-time Adaptation via Synthetic-Domain Alignment](../../CVPR2025/image_generation/everything_to_the_synthetic_diffusion-driven_test-time_adaptation_via_synthetic-.md)
+- [\[NeurIPS 2025\] Increasing the Utility of Synthetic Images through Chamfer Guidance](increasing_the_utility_of_synthetic_images_through_chamfer_guidance.md)
 
 </div>
 

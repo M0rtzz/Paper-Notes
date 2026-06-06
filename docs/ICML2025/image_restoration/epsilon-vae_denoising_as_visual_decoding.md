@@ -189,7 +189,7 @@ $$\hat{\mathbf{x}} = \text{DiffusionDecode}(\mathbf{x}_T, z) \quad \text{where }
 - [\[CVPR 2025\] Iterative Predictor-Critic Code Decoding for Real-World Image Dehazing](../../CVPR2025/image_restoration/iterative_predictor-critic_code_decoding_for_real-world_image_dehazing.md)
 - [\[CVPR 2025\] Efficient Visual State Space Model for Image Deblurring](../../CVPR2025/image_restoration/efficient_visual_state_space_model_for_image_deblurring.md)
 - [\[CVPR 2025\] Visual-Instructed Degradation Diffusion for All-in-One Image Restoration](../../CVPR2025/image_restoration/visual-instructed_degradation_diffusion_for_all-in-one_image_restoration.md)
-- [\[ACL 2026\] Diffusion-CAM: Faithful Visual Explanations for dMLLMs](../../ACL2026/image_restoration/diffusion-cam_faithful_visual_explanations_for_dmllms.md)
+- [\[ICML 2026\] DAPD: Dependency-Aware Parallel Decoding via Attention for Diffusion LLMs](../../ICML2026/image_restoration/dapd_dependency-aware_parallel_decoding_via_attention_for_diffusion_llms.md)
 
 </div>
 

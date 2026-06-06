@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 LLM 效率方向20篇论文解读
+  ACL2026 LLM 效率方向22篇论文解读
 description: >-
-  20篇ACL2026的 LLM 效率方向论文解读，涵盖 LLM、推理、扩散模型、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  22篇ACL2026的 LLM 效率方向论文解读，涵盖 LLM、推理、扩散模型、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "LLM 效率"
@@ -17,9 +17,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚡ LLM 效率
 
-**💬 ACL2026** · **20** 篇论文解读
+**💬 ACL2026** · **22** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (11)](../../ICML2026/llm_efficiency/index.md) · [📷 CVPR2026 (4)](../../CVPR2026/llm_efficiency/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/llm_efficiency/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/llm_efficiency/index.md) · [🧠 NeurIPS2025 (35)](../../NeurIPS2025/llm_efficiency/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/llm_efficiency/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (30)](../../ICML2026/llm_efficiency/index.md) · [🔬 ICLR2026 (19)](../../ICLR2026/llm_efficiency/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/llm_efficiency/index.md) · [🧠 NeurIPS2025 (35)](../../NeurIPS2025/llm_efficiency/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/llm_efficiency/index.md) · [🧪 ICML2025 (11)](../../ICML2025/llm_efficiency/index.md)
 
 🔥 **高频主题：** LLM ×7 · 推理 ×2 · 扩散模型 ×2 · 对齐/RLHF ×2
 
@@ -94,6 +94,14 @@ tags:
 **[Task-Aware LLM Routing with Multi-Level Task-Profile-Guided Data Synthesis for Cold-Start Scenarios](task-aware_llm_routing_with_multi-level_task-profile-guided_data_synthesis_for_c.md)**
 
 :   提出多层级任务画像引导的数据合成框架解决 LLM 路由的冷启动问题，并设计 TRouter——一种将任务类型作为隐变量的路由方法，通过变分推断建模查询-成本-性能关系，在冷启动和域内设置下均实现有效路由。
+
+**[专业化的幻觉：揭示混合专家模型中的"常设委员会"](the_illusion_of_specialization_unveiling_the_domain-invariant_34standing_committ.md)**
+
+:   通过引入 CommitteeAudit 框架，作者发现 MoE 模型中存在一个"常设委员会"——一个紧凑的、持久的专家组合，在不同领域始终被激活并占据大部分路由权重，这与广泛假设的领域特定专业化形成鲜明对比，揭示了稀疏计算内在的集中化结构。
+
+**[阈值差分注意力：无 Sink、超稀疏且非分散的长上下文注意力](threshold_differential_attention_for_sink-free_ultra-sparse_and_non-dispersive_l.md)**
+
+:   TDA 通过结合长度自适应阈值和差分抑制视图，实现无注意力 Sink、99% 精确稀疏、且性能竞争力的长上下文 Transformer 注意力。
 
 **[TokenTiming: A Dynamic Alignment Method for Universal Speculative Decoding Model Pairs](tokentiming_a_dynamic_alignment_method_for_universal_speculative_decoding_model_.md)**
 

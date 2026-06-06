@@ -134,8 +134,8 @@ DAT 保持 Transformer 结构（注意力 + MLP 交替堆叠），将多头注�
 - [\[ICML 2025\] Cooperation of Experts: Fusing Heterogeneous Information with Large Margin](cooperation_of_experts_fusing_heterogeneous_information_with_large_margin.md)
 - [\[NeurIPS 2025\] RDB2G-Bench: A Comprehensive Benchmark for Automatic Graph Modeling of Relational Databases](../../NeurIPS2025/llm_evaluation/rdb2g-bench_a_comprehensive_benchmark_for_automatic_graph_modeling_of_relational.md)
 - [\[NeurIPS 2025\] HybridNorm: Towards Stable and Efficient Transformer Training via Hybrid Normalization](../../NeurIPS2025/llm_evaluation/hybridnorm_towards_stable_and_efficient_transformer_training_via_hybrid_normaliz.md)
-- [\[CVPR 2026\] CryoHype: Reconstructing a Thousand Cryo-EM Structures with Transformer-Based Hypernetworks](../../CVPR2026/llm_evaluation/cryohype_reconstructing_a_thousand_cryo-em_structures_with_transformer-based_hyp.md)
 - [\[NeurIPS 2025\] Towards Implicit Aggregation: Robust Image Representation for Place Recognition in the Transformer Era](../../NeurIPS2025/llm_evaluation/towards_implicit_aggregation_robust_image_representation_for_place_recognition_i.md)
+- [\[AAAI 2026\] SpikCommander: A High-Performance Spiking Transformer with Multi-View Learning for Efficient Speech Command Recognition](../../AAAI2026/llm_evaluation/spikcommander_a_high-performance_spiking_transformer_with_multi-view_learning_fo.md)
 
 </div>
 

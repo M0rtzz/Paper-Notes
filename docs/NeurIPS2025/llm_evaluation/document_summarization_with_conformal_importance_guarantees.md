@@ -128,9 +128,9 @@ $$1 - \alpha \leq \mathbb{P}[B(F_{\hat{q}}(x_{n+1}); y^*_{n+1}) \geq \beta] < 1 
 ## 相关论文
 
 - [\[NeurIPS 2025\] Conformal Prediction in The Loop: A Feedback-Based Uncertainty Model for Trajectory Optimization](conformal_prediction_in_the_loop_a_feedback-based_uncertainty_model_for_trajecto.md)
+- [\[ACL 2026\] Stress Testing Factual Consistency Metrics for Long-Document Summarization](../../ACL2026/llm_evaluation/stress_testing_factual_consistency_metrics_for_long-document_summarization.md)
 - [\[NeurIPS 2025\] Conformal Online Learning of Deep Koopman Linear Embeddings](conformal_online_learning_of_deep_koopman_linear_embeddings.md)
 - [\[ICML 2025\] On Temperature Scaling and Conformal Prediction of Deep Classifiers](../../ICML2025/llm_evaluation/on_temperature_scaling_and_conformal_prediction_of_deep_classifiers.md)
-- [\[AAAI 2026\] Improved Runtime Guarantees for the SPEA2 Multi-Objective Optimizer](../../AAAI2026/llm_evaluation/improved_runtime_guarantees_for_the_spea2_multi-objective_optimizer.md)
 - [\[ICLR 2026\] Conformal Prediction Adaptive to Unknown Subpopulation Shifts](../../ICLR2026/llm_evaluation/conformal_prediction_adaptive_to_unknown_subpopulation_shifts.md)
 
 </div>

@@ -144,10 +144,10 @@ HR 显著性（WSJ $P_2$ 部分，APS valid period 当 $U_t$）：$A_1 = 0.2022$
 
 ## 相关论文
 
+- [\[ACL 2026\] Repeated Sequences Reveal Gaps between Large Language Models and Natural Language](repeated_sequences_reveal_gaps_between_large_language_models_and_natural_languag.md)
 - [\[AAAI 2026\] Identifying and Analyzing Performance-Critical Tokens in Large Language Models](../../AAAI2026/llm_nlp/identifying_and_analyzing_performance-critical_tokens_in_large_language_models.md)
 - [\[ACL 2025\] What Makes a Good Natural Language Prompt?](../../ACL2025/llm_nlp/good_natural_language_prompt.md)
 - [\[ACL 2025\] Internal and External Impacts of Natural Language Processing Papers](../../ACL2025/llm_nlp/internal_and_external_impacts_of_natural_language_processing_papers.md)
-- [\[ACL 2025\] Natural Language Processing in Support of Evidence-based Medicine: A Scoping Review](../../ACL2025/llm_nlp/natural_language_processing_in_support_of_evidence-based_medicine_a_scoping_revi.md)
 - [\[ACL 2025\] Information Locality as an Inductive Bias for Neural Language Models](../../ACL2025/llm_nlp/information_locality_as_an_inductive_bias_for_neural_language_models.md)
 
 </div>

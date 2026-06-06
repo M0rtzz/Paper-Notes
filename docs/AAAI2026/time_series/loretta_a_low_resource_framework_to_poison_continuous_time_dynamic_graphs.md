@@ -149,11 +149,11 @@ LoReTTA 分两步走：**Step 1 稀疏化**（移除高影响力边）→ **Step
 
 ## 相关论文
 
+- [\[ICML 2026\] Learning Long Range Spatio-Temporal Representations over Continuous Time Dynamic Graphs with State Space Models](../../ICML2026/time_series/learning_long_range_spatio-temporal_representations_over_continuous_time_dynamic.md)
+- [\[ICML 2026\] Dynamic-TMoE: A Drift-Aware Dynamic Mixture of Experts Framework for Non-Stationary Time Series](../../ICML2026/time_series/dynamic_tmoe_a_drift-aware_dynamic_mixture_of_experts_framework_for_non-stationa.md)
 - [\[AAAI 2026\] Task-Aware Retrieval Augmentation for Dynamic Recommendation](task-aware_retrieval_augmentation_for_dynamic_recommendation.md)
-- [\[ICML 2025\] Are LLMs Prescient? A Continuous Evaluation using Daily News as the Oracle](../../ICML2025/time_series/are_llms_prescient_a_continuous_evaluation_using_daily_news_as_the_oracle.md)
 - [\[AAAI 2026\] GAICo: A Deployed and Extensible Framework for Evaluating Diverse and Multimodal Generative AI Outputs](gaico_a_deployed_and_extensible_framework_for_evaluating_diverse_and_multimodal_.md)
-- [\[ACL 2026\] TokenTiming: A Dynamic Alignment Method for Universal Speculative Decoding Model Pairs](../../ACL2026/time_series/tokentiming_a_dynamic_alignment_method_for_universal_speculative_decoding_model_.md)
-- [\[ICML 2026\] CombinationTS: A Modular Framework for Understanding Time-Series Forecasting Models](../../ICML2026/time_series/combinationts_a_modular_framework_for_understanding_time-series_forecasting_mode.md)
+- [\[AAAI 2026\] Finding Time Series Anomalies using Granular-ball Vector Data Description](finding_time_series_anomalies_using_granular-ball_vector_data_description.md)
 
 </div>
 

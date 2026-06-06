@@ -2,11 +2,15 @@
 title: >-
   [论文解读] Learning to Edit Knowledge via Instruction-based Chain-of-Thought Prompting
 description: >-
-  [ACL 2026][LLM推理][待补充] 待深读论文后补充
+  [ACL 2026][LLM推理][知识编辑] CoT2Edit 提出通过 CoT 推理教 LLM 进行知识编辑的新范式——构建结构化和非结构化编辑的 CoT 指令数据，经 SFT 冷启动 + GRPO 优化训练，推理时结合 RAG 检索编辑事实，单次训练即在 6 个编辑基准上达到 SOTA 且具有强泛化能力…
 tags:
   - "ACL 2026"
   - "LLM推理"
-  - "待补充"
+  - "知识编辑"
+  - "思维链"
+  - "GRPO"
+  - "RAG"
+  - "多跳推理"
 ---
 
 # Learning to Edit Knowledge via Instruction-based Chain-of-Thought Prompting
@@ -116,33 +120,19 @@ SFT: 标准自回归交叉熵。GRPO: 准确性奖励 + 格式奖励（包含 th
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 个基准、3 个模型、多种编辑场景，分析全面
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，方法描述完整
 - 价值: ⭐⭐⭐⭐ 单次训练泛化到多场景的实用价值高
-**代码**: 待确认  
-**领域**: llm_reasoning  
-**关键词**: 待补充
 
-## 一句话总结
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 研究背景与动机
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 方法详解
-待深读论文后补充
+## 相关论文
 
-## 实验关键数据
-待深读论文后补充
+- [\[ECCV 2024\] Controllable Navigation Instruction Generation with Chain of Thought Prompting](../../ECCV2024/llm_reasoning/controllable_navigation_instruction_generation_with_chain_of_thought_prompting.md)
+- [\[ACL 2026\] ETR: Entropy Trend Reward for Efficient Chain-of-Thought Reasoning](etr_entropy_trend_reward_for_efficient_chain-of-thought_reasoning.md)
+- [\[ACL 2026\] Revisiting Entropy in Reinforcement Learning for Large Reasoning Models](revisiting_entropy_in_reinforcement_learning_for_large_reasoning_models.md)
+- [\[ACL 2026\] TemplateRL: Structured Template-Guided Reinforcement Learning for LLM Reasoning](templaterl_structured_template-guided_reinforcement_learning_for_llm_reasoning.md)
+- [\[ACL 2026\] Does Self-Consistency Improve the Recall of Encyclopedic Knowledge?](does_self-consistency_improve_the_recall_of_encyclopedic_knowledge.md)
 
-## 亮点与洞察
-待深读论文后补充
+</div>
 
-## 局限性 / 可改进方向
-待深读论文后补充
-
-## 相关工作与启发
-待深读论文后补充
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+<!-- RELATED:END -->

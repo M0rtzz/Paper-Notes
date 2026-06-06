@@ -132,9 +132,9 @@ tags:
 ## 相关论文
 
 - [\[NeurIPS 2025\] Gemstones: A Model Suite for Multi-Faceted Scaling Laws](../../NeurIPS2025/llm_pretraining/gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)
-- [\[ICML 2026\] Model Merging Scaling Laws in Large Language Models](../../ICML2026/llm_pretraining/model_merging_scaling_laws_in_large_language_models.md)
 - [\[NeurIPS 2025\] Power Lines: Scaling Laws for Weight Decay and Batch Size in LLM Pre-training](../../NeurIPS2025/llm_pretraining/power_lines_scaling_laws_for_weight_decay_and_batch_size_in_llm_pre-training.md)
 - [\[ACL 2025\] Diversity Explains Inference Scaling Laws: Through a Case Study of Minimum Bayes Risk Decoding](diversity_explains_inference_scaling_laws_through_a_case_study_of_minimum_bayes_.md)
+- [\[ICML 2026\] Scaling Depth Capacity via Zero/One-Layer Model Expansion](../../ICML2026/llm_pretraining/scaling_depth_capacity_via_zeroone-layer_model_expansion.md)
 - [\[ICML 2025\] Scaling Inference-Efficient Language Models](../../ICML2025/llm_pretraining/scaling_inference-efficient_language_models.md)
 
 </div>

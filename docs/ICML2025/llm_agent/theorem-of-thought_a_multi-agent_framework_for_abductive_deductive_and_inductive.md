@@ -155,8 +155,8 @@ ToTh 在 6 个设置中的 5 个取得最佳成绩。在最具挑战性的 5 句
 
 ## 相关论文
 
-- [\[ICML 2025\] From Passive to Active Reasoning: Can Large Language Models Ask the Right Questions under Incomplete Information?](from_passive_to_active_reasoning_can_large_language_models_ask_the_right_questio.md)
 - [\[ICML 2025\] AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML](automl-agent_a_multi-agent_llm_framework_for_full-pipeline_automl.md)
+- [\[ICML 2025\] From Passive to Active Reasoning: Can Large Language Models Ask the Right Questions under Incomplete Information?](from_passive_to_active_reasoning_can_large_language_models_ask_the_right_questio.md)
 - [\[ICML 2025\] From Debate to Equilibrium: Belief-Driven Multi-Agent LLM Reasoning via Bayesian Nash Equilibrium](from_debate_to_equilibrium_belief-driven_multi-agent_llm_reasoning_via_bayesian_.md)
 - [\[ICML 2025\] Improving LLM Agent Planning with In-Context Learning via Atomic Fact Augmentation and Lookahead Search](improving_llm_agent_planning_with_in-context_learning_via_atomic_fact_augmentati.md)
 - [\[ICML 2025\] Towards LLM Agents for Earth Observation](towards_llm_agents_for_earth_observation.md)

@@ -135,11 +135,11 @@ $\mathcal{L}_{\text{task}}$ 为自回归语言模型损失，$\mathcal{L}_{\text
 
 ## 相关论文
 
+- [\[ACL 2026\] Frame of Reference: Addressing the Challenges of Common Ground Representation in Dialogue](../../ACL2026/dialogue/frame_of_reference_addressing_the_challenges_of_common_ground_representation_in_.md)
+- [\[ACL 2026\] Dual Hierarchical Dialogue Policy Learning for Legal Inquisitive Conversational Agents](../../ACL2026/dialogue/dual_hierarchical_dialogue_policy_learning_for_legal_inquisitive_conversational_.md)
 - [\[ACL 2026\] Reasoning Gets Harder for LLMs Inside A Dialogue](../../ACL2026/dialogue/reasoning_gets_harder_for_llms_inside_a_dialogue.md)
-- [\[AAAI 2026\] TalkSketch: Multimodal Generative AI for Real-time Sketch Ideation with Speech](../../AAAI2026/dialogue/talksketch_multimodal_generative_ai_for_real-time_sketch_ideation_with_speech.md)
 - [\[ICLR 2026\] ReIn: Conversational Error Recovery with Reasoning Inception](../../ICLR2026/dialogue/rein_conversational_error_recovery_with_reasoning_inception.md)
-- [\[ACL 2025\] Enabling Chatbots with Eyes and Ears: An Immersive Multimodal Conversation System](../../ACL2025/dialogue/enabling_chatbots_with_eyes_and_ears_an_immersive_multimodal_conversation_system.md)
-- [\[ACL 2026\] Agentic Conversational Search with Contextualized Reasoning via Reinforcement Learning](../../ACL2026/dialogue/agentic_conversational_search_with_contextualized_reasoning_via_reinforcement_le.md)
+- [\[AAAI 2026\] TalkSketch: Multimodal Generative AI for Real-time Sketch Ideation with Speech](../../AAAI2026/dialogue/talksketch_multimodal_generative_ai_for_real-time_sketch_ideation_with_speech.md)
 
 </div>
 

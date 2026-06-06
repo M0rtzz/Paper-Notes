@@ -131,8 +131,8 @@ VideoGuide 的流程紧密嵌入标准 DDIM 采样过程。在采样模型（Stu
 
 - [\[CVPR 2025\] Mimir: Improving Video Diffusion Models for Precise Text Understanding](mimir_improving_video_diffusion_models_for_precise_text_understanding.md)
 - [\[NeurIPS 2025\] Video Diffusion Models Excel at Tracking Similar-Looking Objects Without Supervision](../../NeurIPS2025/video_generation/video_diffusion_models_excel_at_tracking_similar-looking_objects_without_supervi.md)
-- [\[CVPR 2025\] Articulated Kinematics Distillation from Video Diffusion Models](articulated_kinematics_distillation_from_video_diffusion_models.md)
 - [\[CVPR 2025\] Taming Teacher Forcing for Masked Autoregressive Video Generation](taming_teacher_forcing_for_masked_autoregressive_video_generation.md)
+- [\[CVPR 2025\] Articulated Kinematics Distillation from Video Diffusion Models](articulated_kinematics_distillation_from_video_diffusion_models.md)
 - [\[CVPR 2025\] InterDyn: Controllable Interactive Dynamics with Video Diffusion Models](interdyn_controllable_interactive_dynamics_with_video_diffusion_models.md)
 
 </div>

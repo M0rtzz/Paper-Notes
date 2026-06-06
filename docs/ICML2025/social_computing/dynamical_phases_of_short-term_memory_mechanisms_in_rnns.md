@@ -138,11 +138,11 @@ tags:
 
 ## 相关论文
 
+- [\[ACL 2026\] Probing Multimodal Large Language Models on Cognitive Biases in Chinese Short-Video Misinformation](../../ACL2026/social_computing/probing_multimodal_large_language_models_on_cognitive_biases_in_chinese_short-vi.md)
 - [\[ICML 2025\] Raising the Bar: Investigating the Values of Large Language Models via Generative Evolving Testing](raising_the_bar_investigating_the_values_of_large_language_models_via_generative.md)
 - [\[ICML 2025\] OR-Bench: An Over-Refusal Benchmark for Large Language Models](or-bench_an_over-refusal_benchmark_for_large_language_models.md)
 - [\[ICML 2025\] When Bad Data Leads to Good Models](when_bad_data_leads_to_good_models.md)
 - [\[ICML 2025\] DEFAME: Dynamic Evidence-based FAct-checking with Multimodal Experts](defame_dynamic_evidence-based_fact-checking_with_multimodal_experts.md)
-- [\[ICML 2025\] Learning Survival Distributions with the Asymmetric Laplace Distribution](learning_survival_distributions_with_the_asymmetric_laplace_distribution.md)
 
 </div>
 

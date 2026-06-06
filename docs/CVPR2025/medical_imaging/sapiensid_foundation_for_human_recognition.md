@@ -127,11 +127,11 @@ SapiensID 以 ViT-Base 为骨干网络，输入任意人体图像（人脸特写
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] DesignX: Human-Competitive Algorithm Designer for Black-Box Optimization](../../NeurIPS2025/medical_imaging/designx_human-competitive_algorithm_designer_for_black-box_optimization.md)
+- [\[NeurIPS 2025\] The Human Brain as a Combinatorial Complex](../../NeurIPS2025/medical_imaging/the_human_brain_as_a_combinatorial_complex.md)
+- [\[ACL 2025\] MultiMed: Multilingual Medical Speech Recognition via Attention Encoder Decoder](../../ACL2025/medical_imaging/multimed_multilingual_medical_speech_recognition_via_attention_encoder_decoder.md)
 - [\[CVPR 2025\] vesselFM: A Foundation Model for Universal 3D Blood Vessel Segmentation](vesselfm_a_foundation_model_for_universal_3d_blood_vessel_segmentation.md)
 - [\[CVPR 2025\] VISTA3D: A Unified Segmentation Foundation Model For 3D Medical Imaging](vista3d_a_unified_segmentation_foundation_model_for_3d_medical_imaging.md)
 - [\[CVPR 2025\] Unsupervised Foundation Model-Agnostic Slide-Level Representation Learning](unsupervised_foundation_model-agnostic_slide-level_representation_learning.md)
-- [\[CVPR 2025\] Multimodal Protein Language Models for Enzyme Kinetic Parameters: From Substrate Recognition to Conformational Adaptation](multimodal_protein_language_models_for_enzyme_kinetic_parameters_from_substrate_.md)
 
 </div>
 

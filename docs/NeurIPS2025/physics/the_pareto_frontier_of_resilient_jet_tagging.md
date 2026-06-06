@@ -2,10 +2,10 @@
 title: >-
   [论文解读] The Pareto Frontier of Resilient Jet Tagging
 description: >-
-  [NeurIPS 2025][物理学][jet tagging] 系统评估LHC射流标记任务中多种架构（DNN/PFN/EFN/ParT）的AUC-鲁棒性权衡，揭示更复杂模型虽AUC更高但对蒙特卡洛模型依赖性更强，构建Pareto前沿并通过案例研究证明低鲁棒性分类器即使校准后仍在下游参数估计中产生偏差。
+  [NeurIPS 2025][物理/科学计算][jet tagging] 系统评估LHC射流标记任务中多种架构（DNN/PFN/EFN/ParT）的AUC-鲁棒性权衡，揭示更复杂模型虽AUC更高但对蒙特卡洛模型依赖性更强，构建Pareto前沿并通过案例研究证明低鲁棒性分类器即使校准后仍在下游参数估计中产生偏差…
 tags:
   - "NeurIPS 2025"
-  - "物理学"
+  - "物理/科学计算"
   - "jet tagging"
   - "Pareto frontier"
   - "resilience"

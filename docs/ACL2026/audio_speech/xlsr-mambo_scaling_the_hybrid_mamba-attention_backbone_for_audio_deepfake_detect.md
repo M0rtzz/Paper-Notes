@@ -116,17 +116,18 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 背景知识详实，实验组织清晰
 - 价值: ⭐⭐⭐⭐ 为 ADD 领域的架构选择提供了系统化参考
 
-## 亮点与洞察
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 局限性 / 可改进方向
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 相关工作与启发
-待深读论文后补充
+## 相关论文
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+- [\[ACL 2026\] HCFD: A Benchmark for Audio Deepfake Detection in Healthcare](hcfd_a_benchmark_for_audio_deepfake_detection_in_healthcare.md)
+- [\[ACL 2026\] An Exploration of Mamba for Speech Self-Supervised Models](an_exploration_of_mamba_for_speech_self-supervised_models.md)
+- [\[ACL 2026\] Analyzing Reasoning Shifts in Audio Deepfake Detection under Adversarial Attacks: The Reasoning Tax versus Shield Bifurcation](analyzing_reasoning_shifts_in_audio_deepfake_detection_under_adversarial_attacks.md)
+- [\[ACL 2026\] RTCFake: Speech Deepfake Detection in Real-Time Communication](rtcfake_speech_deepfake_detection_in_real-time_communication.md)
+- [\[ACL 2026\] HalluAudio: A Comprehensive Benchmark for Hallucination Detection in Large Audio-Language Models](halluaudio_a_comprehensive_benchmark_for_hallucination_detection_in_large_audio-.md)
+
+</div>
+
+<!-- RELATED:END -->

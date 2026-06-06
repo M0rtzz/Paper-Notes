@@ -149,8 +149,8 @@ $$\mathcal{D}_S = \{\mathcal{D}_U^j \mid j \in \text{TopK}_{i}(-\Omega_i)\}$$
 - [\[NeurIPS 2025\] Benford's Curse: Tracing Digit Bias to Numerical Hallucination in LLMs](../../NeurIPS2025/model_compression/benfords_curse_tracing_digit_bias_to_numerical_hallucination_in_llms.md)
 - [\[NeurIPS 2025\] AI-Generated Video Detection via Perceptual Straightening](../../NeurIPS2025/model_compression/ai-generated_video_detection_via_perceptual_straightening.md)
 - [\[ICCV 2025\] Gradient Short-Circuit: Efficient Out-of-Distribution Detection via Feature Intervention](../../ICCV2025/model_compression/gradient_short-circuit_efficient_out-of-distribution_detection_via_feature_inter.md)
+- [\[ICML 2026\] Hallucination is a Consequence of Space-Optimality: A Rate-Distortion Theorem for Membership Testing](../../ICML2026/model_compression/hallucination_is_a_consequence_of_space-optimality_a_rate-distortion_theorem_for.md)
 - [\[ICML 2025\] Sketch to Adapt: Fine-Tunable Sketches for Efficient LLM Adaptation](sketch_to_adapt_fine-tunable_sketches_for_efficient_llm_adaptation.md)
-- [\[NeurIPS 2025\] S2M-Former: Spiking Symmetric Mixing Branchformer for Brain Auditory Attention Detection](../../NeurIPS2025/model_compression/s2m-former_spiking_symmetric_mixing_branchformer_for_brain_auditory_attention_de.md)
 
 </div>
 

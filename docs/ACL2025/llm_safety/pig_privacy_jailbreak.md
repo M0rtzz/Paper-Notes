@@ -2,10 +2,10 @@
 title: >-
   [论文解读] PIG: Privacy Jailbreak Attack on LLMs via Gradient-based Iterative Prompts
 description: >-
-  [ACL 2025][LLM对齐][privacy jailbreak] 提出 PIG 框架，通过识别隐私查询中的 PII 实体类型、构建隐私上下文示例、并利用三种基于梯度的迭代优化策略更新上下文，实现对 LLM 的高效隐私越狱攻击，在白盒和黑盒模型上均达到 SOTA。
+  [ACL 2025][LLM安全][privacy jailbreak] 提出 PIG 框架，通过识别隐私查询中的 PII 实体类型、构建隐私上下文示例、并利用三种基于梯度的迭代优化策略更新上下文，实现对 LLM 的高效隐私越狱攻击，在白盒和黑盒模型上均达到 SOTA。
 tags:
   - "ACL 2025"
-  - "LLM对齐"
+  - "LLM安全"
   - "privacy jailbreak"
   - "PII extraction"
   - "in-context learning"
@@ -141,8 +141,8 @@ PIG 框架包含三个核心步骤：
 - [\[ACL 2025\] CAVGAN: Unifying Jailbreak and Defense of LLMs via Generative Adversarial Attacks](cavgan_unifying_jailbreak_and_defense_of_llms_via_generative_adversarial_attacks.md)
 - [\[ACL 2025\] Defense Against Prompt Injection Attack by Leveraging Attack Techniques](defense_prompt_injection.md)
 - [\[CVPR 2025\] Neural Gate: Mitigating Privacy Risks in LVLMs via Neuron-Level Gradient Gating](../../CVPR2025/llm_safety/neural_gate_mitigating_privacy_risks_in_lvlms_via_neuron-level_gradient_gating.md)
+- [\[ICML 2026\] Gradient Transformer: Learning to Generate Updates for LLMs](../../ICML2026/llm_safety/gradient_transformer_learning_to_generate_updates_for_llms.md)
 - [\[ICML 2025\] An Attack to Break Permutation-Based Private Third-Party Inference Schemes for LLMs](../../ICML2025/llm_safety/an_attack_to_break_permutation-based_private_third-party_inference_schemes_for_l.md)
-- [\[CVPR 2025\] IterIS: Iterative Inference-Solving Alignment for LoRA Merging](../../CVPR2025/llm_safety/iteris_iterative_inference-solving_alignment_for_lora_merging.md)
 
 </div>
 

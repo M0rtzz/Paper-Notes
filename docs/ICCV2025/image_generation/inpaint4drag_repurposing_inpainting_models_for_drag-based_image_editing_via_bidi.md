@@ -163,8 +163,8 @@ $$I_{\text{edit}} = \text{Inpaint}(I_{\text{warped}}, M_{\text{inpaint}})$$
 
 - [\[CVPR 2026\] From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition](../../CVPR2026/image_generation/from_inpainting_to_layer_decomposition_repurposing_generative_inpainting_models_.md)
 - [\[ICCV 2025\] BVINet: Unlocking Blind Video Inpainting with Zero Annotations](bvinet_unlocking_blind_video_inpainting_with_zero_annotations.md)
-- [\[ICCV 2025\] OmniPaint: Mastering Object-Oriented Editing via Disentangled Insertion-Removal Inpainting](omnipaint_mastering_object-oriented_editing_via_disentangled_insertion-removal_i.md)
 - [\[ICCV 2025\] Dense Policy: Bidirectional Autoregressive Learning of Actions](dense_policy_bidirectional_autoregressive_learning_of_actions.md)
+- [\[ICCV 2025\] OmniPaint: Mastering Object-Oriented Editing via Disentangled Insertion-Removal Inpainting](omnipaint_mastering_object-oriented_editing_via_disentangled_insertion-removal_i.md)
 - [\[CVPR 2025\] RAD: Region-Aware Diffusion Models for Image Inpainting](../../CVPR2025/image_generation/rad_region-aware_diffusion_models_for_image_inpainting.md)
 
 </div>

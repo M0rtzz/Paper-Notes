@@ -1,29 +1,29 @@
 ---
 title: >-
-  ACL2026 LLM / NLP方向50篇论文解读
+  ACL2026 LLM / NLP方向58篇论文解读
 description: >-
-  50篇ACL2026的 LLM / NLP 方向论文解读，涵盖 LLM、Agent、扩散模型、推理、少样本学习、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  58篇ACL2026的 LLM / NLP 方向论文解读，涵盖 LLM、扩散模型、推理、少样本学习、Agent、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2026"
   - "LLM / NLP"
   - "论文解读"
   - "论文笔记"
   - "LLM"
-  - "Agent"
   - "扩散模型"
   - "推理"
   - "少样本学习"
-  - "对齐/RLHF"
+  - "Agent"
+  - "个性化生成"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 LLM / NLP
 
-**💬 ACL2026** · **50** 篇论文解读
+**💬 ACL2026** · **58** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/llm_nlp/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (35)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (32)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (49)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/llm_nlp/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (35)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (32)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
 
-🔥 **高频主题：** LLM ×16 · Agent ×3 · 扩散模型 ×3 · 推理 ×3 · 少样本学习 ×2
+🔥 **高频主题：** LLM ×19 · 扩散模型 ×3 · 推理 ×3 · 少样本学习 ×2 · Agent ×2
 
 **[A Study of LLMs' Preferences for Libraries and Programming Languages](a_study_of_llms39_preferences_for_libraries_and_programming_languages.md)**
 
@@ -65,6 +65,14 @@ tags:
 
 :   作者用线性时序逻辑（LTL）作为统一刻画工具，严格证明 global-only Transformer ↔ $\mathrm{LTL}[\mathrm{P}]$、$k$-local-only ↔ $\mathrm{LTL}[\mathrm{Y}^{\leq k}]$、global+local 混合 ↔ $\mathrm{LTL}[\mathrm{P}, \mathrm{Y}^{\leq k}]$，并由此证明 **local 与 global 表达力互不包含**、混合严格更强、**1-local 是 local 家族里表达力最强**，最后在合成正则语言和 WikiText-2 上经验验证理论预测。
 
+**[Clozing the Gap: Exploring Why Language Model Surprisal Outperforms Cloze Surprisal](clozing_the_gap_exploring_why_language_model_surprisal_outperforms_cloze_surpris.md)**
+
+:   论文系统比较 cloze 反应和 GPT2 surprisal 对人类逐词阅读时间的解释力，并通过三类概率干预证明 LM surprisal 的优势主要来自更高概率分辨率、能区分语义相近词和能给低频词分配细粒度概率。
+
+**[Clustered Self-Assessment: A Simple yet Effective Method for Uncertainty Quantification in Large Language Models](clustered_self-assessment_a_simple_yet_effective_method_for_uncertainty_quantifi.md)**
+
+:   这篇论文提出 Clustered Self-Assessment：先把 LLM 的多个采样答案按语义聚成互斥选项，再让同一个 LLM 通过多选题概率给原答案打置信分，从而在 TQA、NQ 和 XSum 上获得比语义熵、P(True) 等基线更好的 AUROC 与 Brier 校准表现。
+
 **[CoSToM: Causal-oriented Steering for Intrinsic Theory-of-Mind Alignment in Large Language Models](costomcausal-oriented_steering_for_intrinsic_theory-of-mind_alignment_in_large_l.md)**
 
 :   提出 CoSToM 框架，先用因果追踪定位 LLM 中编码心智理论（ToM）特征的关键层（发现主要在早期层），再通过激活转向在这些层上进行轻量级对齐，使 LLM 在谈判和说服对话中显著提升社会推理质量——从"知道但不会用"变为"知道且会用"。
@@ -73,17 +81,13 @@ tags:
 
 :   提出 DeCoVec（Decoding Space based Task Vector），一个无训练、非侵入式的框架，通过对比 few-shot 和 zero-shot prompt 的输出 logit 分布差异构建解码空间中的任务向量，注入解码过程引导生成，在 TruthfulQA、Math-500 和 AQUA-RAT 上比标准 few-shot 基线平均提升高达 5.50 准确率。
 
-**[Dual Alignment Between Language Model Layers and Human Sentence Processing](dual_alignment_between_language_model_layers_and_human_sentence_processing.md)**
+**[Evaluating Customized vs. Generalist Transformer-based Models for Legal Contract Classification](evaluating_customized_vs_generalist_transformer-based_models_for_legal_contract_.md)**
 
-:   作者用 logit-lens 把 GPT-2/Pythia/OPT 共 19 个 LM 的每一层都解出"内部 surprisal"，发现一个反直觉的"双重对齐"：在自然阅读语料上**浅层**的 surprisal 最像人；但在 garden-path / NPS / NPZ / RC / Attachment 等**句法挑战句**上反而**深层**才像人，对应人类"shallow 默认 + 困难时切换到 deep 重分析"的双机制阅读模型——并由此提出用浅深层 surprisal 差（KL/JS）作为"层间预测更新量"来当 reading-time 的补充特征。
+:   本文系统比较 13 个法律领域定制 Transformer 模型与 9 个通用模型在 3 个英文合同分类任务上的表现，发现小规模但合同相关预训练的 Legal-BERT、Contracts-BERT 等模型在长尾法律标签上通常优于更大的通用模型。
 
 **[EVE: A Domain-Specific LLM Framework for Earth Intelligence](eve_a_domain-specific_llm_framework_for_earth_intelligence.md)**
 
 :   本文提出 EVE——欧空局 (ESA) Φ-lab 主导的首个面向 Earth Observation / Earth Sciences 的开源端到端 LLM 框架，包含 24B 领域适配的 EVE-Instruct（基于 Mistral Small 3.2 + 10.7B 合成 token 的 IFT/CPT 交替微调 + 10 个 checkpoint 融合）、首批 5693 条人工 EO 评测 benchmark、RAG + 幻觉检测 pipeline，已在 6 个月 pilot 中服务 350 位用户。
-
-**[EvoSpark: Endogenous Interactive Agent Societies for Unified Long-Horizon Narrative Evolution](evospark_endogenous_interactive_agent_societies_for_unified_long-horizon_narrati.md)**
-
-:   EvoSpark 提出一个支持长程叙事演化的多智能体框架，通过分层递归记忆（RSB 做社会认知代谢）、生成式场面调度（GMS 做角色-地点-情节对齐）和涌现角色锚定协议（ECGP 将 LLM 幻觉转化为持久角色）三重设计解决社会记忆堆叠和叙事-空间失谐问题。
 
 **[Expect the Unexpected? Testing the Surprisal of Salient Entities](expect_the_unexpected_testing_the_surprisal_of_salient_entities.md)**
 
@@ -141,6 +145,10 @@ tags:
 
 :   本文用统计物理中的 Glauber 动力学构造离散文本扩散：把预训练 UL2 模型当成"能量函数 / 噪声分布"，每一步把 mask infilling 当 Markov 转移核，训出的 Glauber-UL2 在生成 perplexity 上**首次匹配 GPT-2-M/L 同尺寸 AR 模型**，并在 Sudoku/Zebra 等搜索规划任务上击败 MDLM，同 compute 下 best-of-N 也优于 AR。
 
+**[LoCar: Localization-Aware Evaluation of In-Vehicle Assistants through Fine-Grained Sociolinguistic Control](locar_localization-aware_evaluation_of_in-vehicle_assistants_through_fine-graine.md)**
+
+:   LoCar 面向韩语车载助手提出 13 个部署级 KPI，并用人工校准的 LLM-as-a-Judge 与敬语形态验证来评测 11 个模型，发现通用理解能力接近饱和，但细粒度敬语控制和多轮策略性引导仍明显不稳定。
+
 **[Masked by Consensus: Disentangling Privileged Knowledge in LLM Correctness](masked_by_consensus_disentangling_privileged_knowledge_in_llm_correctness.md)**
 
 :   本文通过对比自探针（使用模型自身隐藏状态）和外部探针（使用其他模型隐藏状态）预测正确性的能力，发现"模型间一致性"是掩盖特权知识的关键混淆因子，在消除一致性后揭示了领域特异性的特权知识：事实性任务中存在但数学推理中不存在。
@@ -181,13 +189,21 @@ tags:
 
 :   本文提出 novelshare：把受版权保护文本的 token 变成截断后的非可逆哈希，并只公开哈希序列与研究者自有标注，使拥有合法原文的用户可以在轻微版本差异下重新对齐标注，在近版本小说上达到 98.7% 到 99.79% 的 token 正确对齐率。
 
+**[PersonaArena: Dynamic Simulation for Evaluating and Enhancing Persona-Level Role-Playing in Large Language Models](personaarena_dynamic_simulation_for_evaluating_and_enhancing_persona-level_role-.md)**
+
+:   PersonaArena 用真实用户生成内容构造 1,000 个细粒度 persona，并通过动态社交仿真与多评委辩论来评估和增强 LLM 的 persona-level 角色扮演能力。
+
+**[Prefix Parsing is Just Parsing](prefix_parsing_is_just_parsing.md)**
+
+:   本文提出**前缀文法变换**（prefix grammar transformation），一种将前缀解析归约为普通解析的高效方法——给定一个文法，构造另一个恰好生成其所有前缀字符串的新文法，从而可以直接复用任何现有的普通解析算法，无需设计专用的前缀解析算法。
+
+**[Repeated Sequences Reveal Gaps between Large Language Models and Natural Language](repeated_sequences_reveal_gaps_between_large_language_models_and_natural_languag.md)**
+
+:   本文提出基于重复子序列分布的评估框架，通过高阶 Rényi 熵刻画文本的熵增长行为，发现自然语言呈现稳定的次线性熵增长模式，而 GPT 生成文本的熵指数随模型规模单调增大，揭示了 LLM 在长程统计组织上与自然语言的系统性差异。
+
 **[Solver-Independent Automated Problem Formulation via LLMs for High-Cost Simulation-Driven Design](solver-independent_automated_problem_formulation_via_llms_for_high-cost_simulati.md)**
 
 :   本文提出 APF（Automated Problem Formulation），一种与求解器无关的框架，利用 LLM 将工程师的自然语言设计需求转化为可执行的数学优化模型，通过创新的数据生成和测试实例标注管线克服高成本仿真场景下无法使用求解器反馈筛选数据的困难，在天线设计任务上显著优于现有方法。
-
-**[Style Amnesia: Investigating Speaking Style Degradation and Mitigation in Multi-Turn Spoken Language Models](style_amnesia_investigating_speaking_style_degradation_and_mitigation_in_multi-t.md)**
-
-:   发现口语语言模型（SLMs）在多轮对话中无法维持初始指定的说话风格（情感、口音、音量、语速），称之为"风格遗忘"现象，并通过注意力分析揭示其成因（注意力衰减），提出显式回忆过程作为缓解手段。
 
 **[Synthetic Eggs in Many Baskets: The Impact of Synthetic Data Diversity on LLM Fine-Tuning](synthetic_eggs_in_many_baskets_the_impact_of_synthetic_data_diversity_on_llm_fin.md)**
 
@@ -197,13 +213,17 @@ tags:
 
 :   本文提出Quantile Token Regression方法，通过在输入序列中插入专用分位数token并结合检索到的邻居实例及其经验分布，使LLM能够预测完整的条件分布而非单一点估计，在Airbnb和StackSample数据集上相比基线降低约4个MAPE点并将预测区间收窄2倍以上。
 
-**[The Model Agreed, But Didn't Learn: Diagnosing Surface Compliance in Large Language Models](the_model_agreed_but_didn39t_learn_diagnosing_surface_compliance_in_large_langua.md)**
-
-:   提出 SA-MCQ 诊断框架揭示知识编辑中的"表面合规"现象——编辑器在标准基准上达到高分但并未真正覆写内部信念，模型在判别式自评中会回退到原始参数记忆，递归编辑还会累积表征残留导致认知不稳定。
-
 **[Think in Sentences: Explicit Sentence Boundaries Enhance Language Model's Capabilities](think_in_sentences_explicit_sentence_boundaries_enhance_language_model39s_capabi.md)**
 
 :   本文提出在 LLM 输入中的句子边界处插入分隔符标记，通过 ICL 和 SFT 两种方式实现"逐句思考"的推理范式，在 7B 到 600B 模型上取得一致提升（GSM8k +7.7%，DROP +12.5%），且几乎不增加额外计算开销。
+
+**[TingIS: Real-time Risk Event Discovery from Noisy Customer Incidents at Enterprise Scale](tingis_real-time_risk_event_discovery_from_noisy_customer_incidents_at_enterpris.md)**
+
+:   TingIS是一个部署在金融科技平台的端到端风险事件发现系统，通过五模块架构（语义蒸馏、级联路由、事件链接引擎、状态管理、多维降噪）从海量嘈杂客户投诉中实时提取可操作的风险事件，实现了P90告警延迟3.5分钟和95%的高优先级事件发现率。
+
+**[面向稳健上下文学习的 OOD 代理演示检索方案](toward_robust_in-context_learning_leveraging_out-of-distribution_proxies_for_tar.md)**
+
+:   通过构造源域和目标域的双代理并计算其困惑度差值作为 OOD 得分，结合马哈拉诺比斯距离约束演示多样性，在无法获取目标域样本的条件下，从源域中精准筛选与目标域分布对齐的演示样本，增强 LLM 的上下文学习鲁棒性。
 
 **[UCS: Estimating Unseen Coverage for Improved In-Context Learning](ucs_estimating_unseen_coverage_for_improved_in-context_learning.md)**
 
@@ -220,6 +240,18 @@ tags:
 **[VOYAGER: A Training Free Approach for Generating Diverse Datasets using LLMs](voyager_a_training_free_approach_for_generating_diverse_datasets_using_llms.md)**
 
 :   Voyager 是一个无需训练的 LLM 数据生成算法，用 DPP 维护多样 anchor 和 explorer，并用 textual gradients 迭代改写提示词，从而在创意写作和推理数据生成中显著提高 Vendi 多样性且基本不牺牲质量。
+
+**[等等，还有出路：一个对话脱轨预测的决策机制](wait_theres_a_way_out_a_decision_mechanism_for_forecasting_conversational_derail.md)**
+
+:   论文将对话脱轨预测中的"信度估计"与"触发决策"解耦，通过前向模拟识别可恢复的紧张时刻，实现显著降低虚警率（从 36.2% 降至 26.7%）而不牺牲准确性。
+
+**[当梯度相撞：多目标提示优化对 LLM 评判员的失效模式](when_gradients_collide_failure_modes_of_multi-objective_prompt_optimization_for_.md)**
+
+:   本文系统研究了用文本梯度方法同时优化多个评估准则的提示时的失效模式，发现梯度稀释和指令干扰两个关键瓶颈导致多目标优化几乎无法改进初始提示。
+
+**[当 TableQA 遇到噪声：复杂问题与大表的双重去噪框架](when_tableqa_meets_noise_a_dual_denoising_framework_for_complex_questions_and_la.md)**
+
+:   通过分解问题中的语义单元并构建证据树进行透明化表格修剪，EnoTab 框架在处理复杂问题和超大表格时实现显著性能提升，通过双重去噪机制有效缓解噪声数据对推理的负面影响。
 
 **[Why Did Apple Fall: Evaluating Curiosity in Large Language Models](why_did_apple_fall_evaluating_curiosity_in_large_language_models.md)**
 

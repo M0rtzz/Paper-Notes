@@ -129,12 +129,6 @@ SNMF 最小化 Frobenius 重建误差 $\|A - ZY\|_F^2$ + 非负约束（仅对 $
 - 写作质量: ⭐⭐⭐⭐⭐ 公式清晰、附录详尽（初始化、稀疏度、层级数据集）、提供完整工作日案例研究
 - 价值: ⭐⭐⭐⭐⭐ 给 MI 社区提供了一条"MLP 内嵌特征"路线，且开源代码，对未来研究有直接 actionable 价值
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">
@@ -143,9 +137,9 @@ SNMF 最小化 Frobenius 重建误差 $\|A - ZY\|_F^2$ + 非负约束（仅对 $
 
 - [\[ACL 2026\] Compositional Steering of Large Language Models with Steering Tokens](compositional_steering_of_large_language_models_with_steering_tokens.md)
 - [\[CVPR 2026\] CI-ICE: Intrinsic Concept Extraction Based on Compositional Interpretability](../../CVPR2026/interpretability/ciice_intrinsic_concept_extraction_compositional.md)
+- [\[ACL 2026\] DPN-LE: Dual Personality Neuron Localization and Editing for Large Language Models](dpn-le_dual_personality_neuron_localization_and_editing_for_large_language_model.md)
 - [\[CVPR 2026\] Language Models Can Explain Visual Features via Steering](../../CVPR2026/interpretability/language_models_can_explain_visual_features_via_steering.md)
-- [\[ACL 2026\] Model Internal Sleuthing: Finding Lexical Identity and Inflectional Features in Modern Language Models](model_internal_sleuthing_finding_lexical_identity_and_inflectional_features_in_m.md)
-- [\[AAAI 2026\] CrossCheck-Bench: Diagnosing Compositional Failures in Multimodal Conflict Resolution](../../AAAI2026/interpretability/crosscheck-bench_diagnosing_compositional_failures_in_multim.md)
+- [\[ACL 2026\] AdaptiveK: Complexity-Driven Sparse Autoencoders for Interpretable Language Model Representations](adaptivek_complexity-driven_sparse_autoencoders_for_interpretable_language_model.md)
 
 </div>
 

@@ -1,11 +1,11 @@
 ---
 title: >-
-  [论文解读] SolverLLM: 通过LLM引导的搜索利用测试时缩放求解优化问题
+  [论文解读] SolverLLM: Leveraging Test-Time Scaling for Optimization Problem via LLM-Guided Search
 description: >-
-  [NeurIPS 2025][LLM/NLP][测试时缩放] 提出SolverLLM，一个无需训练的框架，将优化问题的数学建模视为搜索问题，通过改进的MCTS在六元素表述空间中探索最优formulation，引入动态扩展、提示反向传播和不确定性反向传播，在6个基准上以无训练方式超越prompt方法和微调方法。
+  [NeurIPS 2025][LLM推理][测试时缩放] 提出SolverLLM，一个无需训练的框架，将优化问题的数学建模视为搜索问题，通过改进的MCTS在六元素表述空间中探索最优formulation，引入动态扩展、提示反向传播和不确定性反向传播，在6个基准上以无训练方式超越prompt方法和微调方法。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM推理"
   - "测试时缩放"
   - "蒙特卡洛树搜索"
   - "优化问题"

@@ -153,8 +153,8 @@ Reference Clustering 本身是 5-近似，因此总近似比为 $4 \times 5 \tim
 - [\[NeurIPS 2025\] Improved Approximation Algorithms for Chromatic and Pseudometric-Weighted Correlation Clustering](../../NeurIPS2025/others/improved_approximation_algorithms_for_chromatic_and_pseudometric-weighted_correl.md)
 - [\[ICML 2026\] Estimating Correlation Clustering Cost in Node-Arrival Stream](../../ICML2026/others/estimating_correlation_clustering_cost_in_node-arrival_stream.md)
 - [\[NeurIPS 2025\] Learning-Augmented Streaming Algorithms for Correlation Clustering](../../NeurIPS2025/others/learning-augmented_streaming_algorithms_for_correlation_clustering.md)
+- [\[ICML 2026\] Simple Algorithms for Bad Triangle Transversals with Applications to Correlation Clustering](../../ICML2026/others/simple_algorithms_for_bad_triangle_transversals_with_applications_to_correlation.md)
 - [\[ICML 2025\] DSP: Dynamic Sequence Parallelism for Multi-Dimensional Transformers](dsp_dynamic_sequence_parallelism_for_multi-dimensional_transformers.md)
-- [\[ICML 2025\] TANGO: Clustering with Typicality-Aware Nonlocal Mode-Seeking and Graph-Cut Optimization](tango_clustering_with_typicality-aware_nonlocal_mode-seeking_and_graph-cut_optim.md)
 
 </div>
 

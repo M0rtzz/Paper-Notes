@@ -144,8 +144,8 @@ tags:
 
 ## 相关论文
 
-- [\[ACL 2025\] GRACE: A Granular Benchmark for Evaluating Model Calibration Against Human Calibration](../../ACL2025/llm_evaluation/grace_a_granular_benchmark_for_evaluating_model_calibration_against_human_calibr.md)
 - [\[ICLR 2026\] Measuring Uncertainty Calibration](../../ICLR2026/llm_evaluation/measuring_uncertainty_calibration.md)
+- [\[ACL 2025\] GRACE: A Granular Benchmark for Evaluating Model Calibration Against Human Calibration](../../ACL2025/llm_evaluation/grace_a_granular_benchmark_for_evaluating_model_calibration_against_human_calibr.md)
 - [\[ICML 2025\] Cross-regularization: Adaptive Model Complexity through Validation Gradients](../../ICML2025/llm_evaluation/cross-regularization_adaptive_model_complexity_through_validation_gradients.md)
 - [\[ACL 2025\] A Conformal Risk Control Framework for Granular Word Assessment and Uncertainty Calibration of CLIPScore Quality Estimates](../../ACL2025/llm_evaluation/a_conformal_risk_control_framework_for_granular_word_assessment_and_uncertainty_.md)
 - [\[CVPR 2025\] LoTUS: Large-Scale Machine Unlearning with a Taste of Uncertainty](lotus_large-scale_machine_unlearning_with_a_taste_of_uncertainty.md)

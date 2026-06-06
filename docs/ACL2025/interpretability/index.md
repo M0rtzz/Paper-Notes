@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 可解释性方向22篇论文解读
+  ACL2025 可解释性方向21篇论文解读
 description: >-
-  22篇ACL2025的可解释性方向论文解读，涵盖 LLM、推理、情感分析、生物分子等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  21篇ACL2025的可解释性方向论文解读，涵盖 LLM、推理、情感分析等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "可解释性"
@@ -11,15 +11,14 @@ tags:
   - "LLM"
   - "推理"
   - "情感分析"
-  - "生物分子"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**💬 ACL2025** · **22** 篇论文解读
+**💬 ACL2025** · **21** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (21)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (51)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (84)](../../NeurIPS2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (72)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (63)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (54)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/interpretability/index.md)
 
 🔥 **高频主题：** LLM ×7 · 推理 ×3
 
@@ -86,10 +85,6 @@ tags:
 **[Reasoning Circuits in Language Models: A Mechanistic Interpretation of Syllogistic Inference](reasoning_circuits_in_language_models_a_mechanistic_interpretation_of_syllogisti.md)**
 
 :   用机械可解释性技术（激活补丁 + Logit Lens + 电路消融）发现语言模型中实现三段论推理的完整电路：三阶段机制——长归纳偏差→中间项抑制（h11.10）→传递项移动，该电路在符号输入上既充分又必要，可迁移到自然语言输入，且跨 GPT-2/Pythia/LLaMA/Qwen 四种架构存在兼容模式。
-
-**[Retrieve to Explain: Evidence-driven Predictions for Explainable Drug Target Identification](retrieve_to_explain_drug_target_identification.md)**
-
-:   提出 R2E (Retrieve to Explain)，一种基于检索的架构，通过从文献语料库中检索证据来评分和排序所有候选答案，并利用 Shapley 值将预测忠实地归因到支撑证据，在药物靶点识别任务上超越了遗传学基线和 GPT-4 基线。
 
 **[Safety is Not Only About Refusal: Reasoning-Enhanced Fine-tuning for Interpretable LLM Safety](safety_is_not_only_about_refusal_reasoning-enhanced_fine-tuning_for_interpretabl.md)**
 

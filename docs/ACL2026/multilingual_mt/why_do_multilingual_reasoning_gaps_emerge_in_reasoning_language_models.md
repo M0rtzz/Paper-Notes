@@ -105,7 +105,7 @@ tags:
 
 ## 局限与展望
 - 实验主要集中在数学和 STEM 推理任务，尚未验证在常识推理等其他领域的适用性
-- 语言覆盖范围为10种，未覆盖所有语言家族，更多极低资源语言的验证有待补充
+- 语言覆盖范围为10种，未覆盖所有语言家族，更多极低资源语言仍需进一步验证
 - 分析聚焦于英语主导推理的场景，对于以其他语言（如俄语）进行推理的模型尚未探索
 - 选择性翻译依赖外部翻译系统(GPT-4.1)，引入了额外的延迟和成本
 - 未来方向：将理解失败检测与缓解机制直接集成到模型训练中
@@ -121,3 +121,19 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型、多语言、多难度级别的全面实验，含泛化性验证和早期检测分析
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，从分析到检测到缓解的递进逻辑流畅，图表信息丰富
 - 价值: ⭐⭐⭐⭐ 为多语言推理研究提供了明确的方向指引，选择性翻译具有实用价值
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[AAAI 2026\] Mitigating Content Effects on Reasoning in Language Models through Fine-Grained Activation Steering](../../AAAI2026/multilingual_mt/mitigating_content_effects_on_reasoning_in_language_models_through_fine-grained_.md)
+- [\[ACL 2026\] EMCEE: Improving Multilingual Capability of LLMs via Bridging Knowledge and Reasoning with Extracted Synthetic Multilingual Context](emcee_improving_multilingual_capability_of_llms_via_bridging_knowledge_and_reaso.md)
+- [\[NeurIPS 2025\] PolyMath: Evaluating Mathematical Reasoning in Multilingual Contexts](../../NeurIPS2025/multilingual_mt/polymath_evaluating_mathematical_reasoning_in_multilingual_contexts.md)
+- [\[ACL 2025\] CruxEval-X: A Benchmark for Multilingual Code Reasoning, Understanding and Execution](../../ACL2025/multilingual_mt/cruxeval-x_a_benchmark_for_multilingual_code_reasoning_understanding_and_executi.md)
+- [\[ACL 2026\] Language Models Entangle Language and Culture](language_models_entangle_language_and_culture.md)
+
+</div>
+
+<!-- RELATED:END -->

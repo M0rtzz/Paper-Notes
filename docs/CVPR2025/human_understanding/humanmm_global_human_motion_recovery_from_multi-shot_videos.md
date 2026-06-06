@@ -124,8 +124,8 @@ ms-HMR、轨迹预测器和脚部滑动优化器在AMASS、3DPW、Human3.6M和BE
 
 - [\[CVPR 2025\] RePerformer: Immersive Human-centric Volumetric Videos from Playback to Photoreal Reperformance](reperformer_immersive_human-centric_volumetric_videos_from_playback_to_photoreal.md)
 - [\[CVPR 2025\] Human Motion Instruction Tuning](human_motion_instruction_tuning.md)
-- [\[ICCV 2025\] GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation](../../ICCV2025/human_understanding/genm3_generative_pretrained_multi-path_motion_model_for_text_conditional_human_m.md)
 - [\[CVPR 2025\] SimMotionEdit: Text-Based Human Motion Editing with Motion Similarity Prediction](simmotionedit_text-based_human_motion_editing_with_motion_similarity_prediction.md)
+- [\[ICCV 2025\] GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation](../../ICCV2025/human_understanding/genm3_generative_pretrained_multi-path_motion_model_for_text_conditional_human_m.md)
 - [\[CVPR 2025\] PoseBH: Prototypical Multi-Dataset Training Beyond Human Pose Estimation](posebh_prototypical_multi-dataset_training_beyond_human_pose_estimation.md)
 
 </div>

@@ -139,10 +139,10 @@ CD 较 InstantMesh 降低 15.4%。
 ## 相关论文
 
 - [\[CVPR 2025\] Event Fields: Capturing Light Fields at High Speed, Resolution, and Dynamic Range](event_fields_capturing_light_fields_at_high_speed_resolution_and_dynamic_range.md)
+- [\[ECCV 2024\] SemanticHuman-HD: High-Resolution Semantic Disentangled 3D Human Generation](../../ECCV2024/3d_vision/semantichuman-hd_high-resolution_semantic_disentangled_3d_human_generation.md)
 - [\[ECCV 2024\] Repaint123: Fast and High-Quality One Image to 3D Generation with Progressive Controllable Repainting](../../ECCV2024/3d_vision/repaint123_fast_and_high-quality_one_image_to_3d_generation_with_progressive_con.md)
 - [\[CVPR 2025\] Masked Point-Entity Contrast for Open-Vocabulary 3D Scene Understanding](masked_point-entity_contrast_for_open-vocabulary_3d_scene_understanding.md)
 - [\[CVPR 2025\] S2Gaussian: Sparse-View Super-Resolution 3D Gaussian Splatting](s2gaussian_sparse-view_super-resolution_3d_gaussian_splatting.md)
-- [\[CVPR 2025\] High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)
 
 </div>
 

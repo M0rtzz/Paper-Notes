@@ -1,10 +1,11 @@
 ---
 title: >-
-  [论文解读] GLGENN: 基于Clifford几何代数的轻参数等变神经网络架构
+  [论文解读] GLGENN: A Novel Parameter-Light Equivariant Neural Networks Architecture Based on Clifford Geometric Algebras
 description: >-
-  [ICML2025][等变神经网络] 提出广义Lipschitz群等变神经网络(GLGENN)，利用几何代数中grade involution和reversion定义的四个基本子空间实现权重共享，在保持伪正交群等变性的同时大幅减少可训练参数（约为CGENN的1/2至1/3）…
+  [ICML2025][LLM评测][等变神经网络] 提出广义Lipschitz群等变神经网络(GLGENN)，利用几何代数中grade involution和reversion定义的四个基本子空间实现权重共享，在保持伪正交群等变性的同时大幅减少可训练参数（约为CGENN的1/2至1/3）…
 tags:
   - "ICML2025"
+  - "LLM评测"
   - "等变神经网络"
   - "Clifford代数"
   - "几何代数"
@@ -162,9 +163,9 @@ $$\langle x \rangle_{\bar{k}} \mapsto \frac{\langle x \rangle_{\bar{k}}}{\sigma(
 
 - [\[ICML 2025\] Improving the Effective Receptive Field of Message-Passing Neural Networks](improving_the_effective_receptive_field_of_message-passing_neural_networks.md)
 - [\[CVPR 2025\] NADER: Neural Architecture Design via Multi-Agent Collaboration](../../CVPR2025/llm_evaluation/nader_neural_architecture_design_via_multi-agent_collaboration.md)
-- [\[ICML 2026\] Singular Bayesian Neural Networks](../../ICML2026/llm_evaluation/singular_bayesian_neural_networks.md)
 - [\[ICLR 2026\] Improving Set Function Approximation with Quasi-Arithmetic Neural Networks](../../ICLR2026/llm_evaluation/improving_set_function_approximation_with_quasi-arithmetic_neural_networks.md)
 - [\[ICCV 2025\] Combinative Matching for Geometric Shape Assembly](../../ICCV2025/llm_evaluation/combinative_matching_for_geometric_shape_assembly.md)
+- [\[ICML 2025\] Fully Heteroscedastic Count Regression with Deep Double Poisson Networks](fully_heteroscedastic_count_regression_with_deep_double_poisson_networks.md)
 
 </div>
 

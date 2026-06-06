@@ -155,10 +155,10 @@ InteractDPO使Qwen2.5-7B的性能达到GPT-4o水平。
 ## 相关论文
 
 - [\[ACL 2025\] When to Speak, When to Abstain: Contrastive Decoding with Abstention](when_to_speak_when_to_abstain.md)
+- [\[ICML 2026\] Position: Age Estimation Models Do Not Process Biometric Data](../../ICML2026/others/position_age_estimation_models_do_not_process_biometric_data.md)
 - [\[ACL 2025\] LoGU: Long-form Generation with Uncertainty Expressions](logu_longform_gen_uncertainty.md)
 - [\[ACL 2025\] All That Glitters is Not Novel: Plagiarism in AI Generated Research](plagiarism_ai_generated_research.md)
 - [\[ACL 2025\] It's Not a Walk in the Park! Challenges of Idiom Translation in Speech-to-text Systems](its_not_a_walk_in_the_park_challenges_of_idiom_translation_in_speech-to-text_sys.md)
-- [\[ACL 2025\] Adaptive Retrieval without Self-Knowledge? Bringing Uncertainty Back Home](adaptive_retrieval_without_self-knowledge_bringing_uncertainty_back_home.md)
 
 </div>
 

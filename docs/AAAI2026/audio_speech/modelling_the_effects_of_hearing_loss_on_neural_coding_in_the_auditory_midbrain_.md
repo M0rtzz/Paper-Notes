@@ -162,9 +162,9 @@ $$\mathcal{L} = \mathcal{L}_{CE}(R, p(\hat{R})) + \alpha_{KL} D_{KL} + \alpha_{A
 
 - [\[AAAI 2026\] REINA: Regularized Entropy Information-Based Loss for Efficient Simultaneous Speech Translation](reina_regularized_entropy_information-based_loss_for_efficient_simultaneous_spee.md)
 - [\[AAAI 2026\] Say More with Less: Variable-Frame-Rate Speech Tokenization via Adaptive Clustering and Implicit Duration Coding](say_more_with_less_variable-frame-rate_speech_tokenization_via_adaptive_clusteri.md)
+- [\[ICML 2026\] Two-Dimensional Quantization for Geometry-Aware Audio Coding](../../ICML2026/audio_speech/two-dimensional_quantization_for_geometry-aware_audio_coding.md)
 - [\[AAAI 2026\] Hearing More with Less: Multi-Modal Retrieval-and-Selection Augmented Conversational LLM-Based ASR](hearing_more_with_less_multi-modal_retrieval-and-selection_augmented_conversatio.md)
 - [\[CVPR 2025\] Hearing Anywhere in Any Environment](../../CVPR2025/audio_speech/hearing_anywhere_in_any_environment.md)
-- [\[CVPR 2025\] VinTAGe: Joint Video and Text Conditioning for Holistic Audio Generation](../../CVPR2025/audio_speech/vintage_joint_video_and_text_conditioning_for_holistic_audio_generation.md)
 
 </div>
 

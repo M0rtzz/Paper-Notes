@@ -139,8 +139,8 @@ GWAD 框架持续监控发送到被保护模型的查询序列。对于每三个
 - [\[ACL 2025\] Multi-task Adversarial Attacks against Black-box Model with Few-shot Queries](../../ACL2025/ai_safety/multi-task_adversarial_attacks_against_black-box_model_with_few-shot_queries.md)
 - [\[CVPR 2025\] Detecting Backdoor Attacks in Federated Learning via Direction Alignment Inspection](detecting_backdoor_attacks_in_federated_learning_via_direction_alignment_inspect.md)
 - [\[ICLR 2026\] Traceable Black-box Watermarks for Federated Learning](../../ICLR2026/ai_safety/traceable_black-box_watermarks_for_federated_learning.md)
+- [\[ICML 2026\] Mind the Gap: Mixtures of Gaussians in Approximate Differential Privacy](../../ICML2026/ai_safety/mind_the_gap_mixtures_of_gaussians_in_approximate_differential_privacy.md)
 - [\[CVPR 2025\] Gradient Inversion Attacks on Parameter-Efficient Fine-Tuning](gradient_inversion_attacks_on_parameter-efficient_fine-tuning.md)
-- [\[CVPR 2025\] Data-free Universal Adversarial Perturbation with Pseudo-Semantic Prior](data-free_universal_adversarial_perturbation_with_pseudo-semantic_prior.md)
 
 </div>
 

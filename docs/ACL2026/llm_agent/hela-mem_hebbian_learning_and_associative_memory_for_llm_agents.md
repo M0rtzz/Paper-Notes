@@ -2,11 +2,15 @@
 title: >-
   [论文解读] HeLa-Mem: Hebbian Learning and Associative Memory for LLM Agents
 description: >-
-  [ACL 2026][LLM Agent][待补充] 待深读论文后补充
+  [ACL 2026][LLM Agent][Hebbian学习] HeLa-Mem 提出了一种受神经科学启发的 LLM 代理记忆架构，将对话历史建模为带 Hebbian 学习动力学的动态图——通过共激活强化记忆间连接、反思性蒸馏将枢纽记忆凝练为语义知识、双路径检索结合语义相似度和 Hebbian 扩散激活…
 tags:
   - "ACL 2026"
   - "LLM Agent"
-  - "待补充"
+  - "Hebbian学习"
+  - "联想记忆"
+  - "长期对话"
+  - "情景-语义双路径"
+  - "扩散激活"
 ---
 
 # HeLa-Mem: Hebbian Learning and Associative Memory for LLM Agents
@@ -105,33 +109,19 @@ HeLa-Mem 提出了一种受神经科学启发的 LLM 代理记忆架构，将对
 - 实验充分度: ⭐⭐⭐⭐ 四骨干+四类别+消融，但仅单一基准
 - 写作质量: ⭐⭐⭐⭐⭐ 认知科学动机清晰，架构描述系统
 - 价值: ⭐⭐⭐⭐⭐ 为 LLM 长期记忆提供了生物启发的新范式
-**代码**: 待确认  
-**领域**: llm_agent  
-**关键词**: 待补充
 
-## 一句话总结
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 研究背景与动机
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 方法详解
-待深读论文后补充
+## 相关论文
 
-## 实验关键数据
-待深读论文后补充
+- [\[ACL 2026\] AnchorMem: Anchored Facts with Associative Contexts for Building Memory in Large Language Models](anchormem_anchored_facts_with_associative_contexts_for_building_memory_in_large_.md)
+- [\[ACL 2026\] Mem^p: Exploring Agent Procedural Memory](memp_exploring_agent_procedural_memory.md)
+- [\[NeurIPS 2025\] A-MEM: Agentic Memory for LLM Agents](../../NeurIPS2025/llm_agent/a-mem_agentic_memory_for_llm_agents.md)
+- [\[ACL 2026\] Lightweight LLM Agent Memory with Small Language Models](lightweight_llm_agent_memory_with_small_language_models.md)
+- [\[ACL 2026\] Hierarchical Reinforcement Learning with Augmented Step-Level Transitions for LLM Agents](hierarchical_reinforcement_learning_with_augmented_step-level_transitions_for_ll.md)
 
-## 亮点与洞察
-待深读论文后补充
+</div>
 
-## 局限性 / 可改进方向
-待深读论文后补充
-
-## 相关工作与启发
-待深读论文后补充
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+<!-- RELATED:END -->

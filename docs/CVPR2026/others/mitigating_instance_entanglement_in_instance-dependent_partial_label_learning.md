@@ -148,7 +148,7 @@ CAD 在全部 5 个基准上达到最优，CIFAR-10 上超 DIRK 2.70%，CIFAR-10
 - [\[CVPR 2025\] Instance-wise Supervision-level Optimization in Active Learning](../../CVPR2025/others/instance-wise_supervision-level_optimization_in_active_learning.md)
 - [\[ICML 2025\] Revisiting Instance-Optimal Cluster Recovery in the Labeled Stochastic Block Model](../../ICML2025/others/revisiting_instance-optimal_cluster_recovery_in_the_labeled_stochastic_block_mod.md)
 - [\[ACL 2025\] Mitigating Shortcut Learning with InterpoLated Learning](../../ACL2025/others/mitigating_shortcut_learning_with_interpolated_learning.md)
-- [\[CVPR 2026\] U-F²-CBM: CLIP-Free, Label Free, Unsupervised Concept Bottleneck Models](clipfree_label_free_unsupervised_concept_bottlenec.md)
+- [\[ICML 2026\] DISCO: Mitigating Bias in Deep Learning with Conditional Distance Correlation](../../ICML2026/others/disco_mitigating_bias_in_deep_learning_with_conditional_distance_correlation.md)
 - [\[ICLR 2026\] CaDrift: A Time-dependent Causal Generator of Drifting Data Streams](../../ICLR2026/others/cadrift_a_time-dependent_causal_generator_of_drifting_data_streams.md)
 
 </div>

@@ -192,11 +192,11 @@ LLR-BC 的 AP 比所有基线低一个数量级（CVRP: 4.2 vs 23.5+；TSP: 3.4 
 
 ## 相关论文
 
-- [\[CVPR 2026\] Elastic Weight Consolidation Done Right for Continual Learning](../../CVPR2026/llm_safety/elastic_weight_consolidation_done_right_for_continual_learning.md)
-- [\[CVPR 2026\] Association and Consolidation: Evolutionary Memory-Enhanced Incremental Multi-View Clustering](../../CVPR2026/llm_safety/association_and_consolidation_evolutionary_memory-enhanced_incremental_multi-vie.md)
 - [\[ACL 2025\] AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection](../../ACL2025/llm_safety/agrail_a_lifelong_agent_guardrail_with_effective_and_adaptive_safety_detection.md)
 - [\[AAAI 2026\] PRISM: Privacy-Aware Routing for Adaptive Cloud-Edge LLM Inference via Semantic Sketch Collaboration](../../AAAI2026/llm_safety/prism_privacy-aware_routing_for_adaptive_cloud-edge_llm_inference_via_semantic_s.md)
-- [\[AAAI 2026\] Attention Retention for Continual Learning with Vision Transformers](../../AAAI2026/llm_safety/attention_retention_for_continual_learning_with_vision_transformers.md)
+- [\[ICLR 2026\] Watermark Robustness and Radioactivity May Be at Odds in Federated Learning](watermark_robustness_and_radioactivity_may_be_at_odds_in_federated_learning.md)
+- [\[ICLR 2026\] Supervised Reinforcement Learning: From Expert Trajectories to Step-wise Reasoning](supervised_reinforcement_learning_from_expert_trajectories_to_step-wise_reasonin.md)
+- [\[NeurIPS 2025\] CryptoMoE: Privacy-Preserving and Scalable Mixture of Experts Inference via Balanced Expert Routing](../../NeurIPS2025/llm_safety/cryptomoe_privacy-preserving_and_scalable_mixture_of_experts_inference_via_balan.md)
 
 </div>
 

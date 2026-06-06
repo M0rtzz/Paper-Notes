@@ -131,9 +131,9 @@ tags:
 
 - [\[ACL 2025\] UnSeenTimeQA: Time-Sensitive Question-Answering Beyond LLMs' Memorization](../../ACL2025/llm_nlp/unseentimeqa_time-sensitive_question-answering_beyond_llms_memorization.md)
 - [\[ACL 2026\] VOYAGER: A Training Free Approach for Generating Diverse Datasets using LLMs](../../ACL2026/llm_nlp/voyager_a_training_free_approach_for_generating_diverse_datasets_using_llms.md)
-- [\[ACL 2026\] Revisiting Non-Verbatim Memorization in Large Language Models: The Role of Entity Surface Forms](../../ACL2026/llm_nlp/revisiting_non-verbatim_memorization_in_large_language_models_the_role_of_entity.md)
-- [\[ACL 2026\] MemSearcher: Training LLMs to Reason, Search and Manage Memory via End-to-End RL](../../ACL2026/llm_nlp/memsearcher_training_llms_to_reason_search_and_manage_memory_via_end-to-end_rein.md)
 - [\[ACL 2025\] Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs](../../ACL2025/llm_nlp/token_prepending_training_free.md)
+- [\[ICML 2025\] Regress, Don't Guess — A Regression-like Loss on Number Tokens for Language Models](../../ICML2025/llm_nlp/regress_dont_guess_--_a_regression-like_loss_on_number_tokens_for_language_model.md)
+- [\[ACL 2025\] Lost in Literalism: How Supervised Training Shapes Translationese in LLMs](../../ACL2025/llm_nlp/lost_in_literalism_how_supervised_training_shapes_translationese_in_llms.md)
 
 </div>
 

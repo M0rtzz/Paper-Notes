@@ -153,8 +153,8 @@ $$\mathcal{L}_a = -\log \frac{\exp(s(i, v_a^+)/\tau)}{\exp(s(i, v_a^+)/\tau) + \
 
 ## 相关论文
 
-- [\[ACL 2025\] Value Residual Learning](value_residual_learning.md)
 - [\[ACL 2025\] Divide-Then-Aggregate: An Efficient Tool Learning Method via Parallel Tool Invocation](dta_llama_parallel_tool_invocation.md)
+- [\[ACL 2025\] Value Residual Learning](value_residual_learning.md)
 - [\[ACL 2025\] GeAR: Generation Augmented Retrieval](gear_generation_augmented_retrieval.md)
 - [\[ACL 2025\] HATA: Trainable and Hardware-Efficient Hash-Aware Top-k Attention for Scalable Large Model Inference](hata_trainable_and_hardware-efficient_hash-aware_top-k_attention_for_scalable_la.md)
 - [\[ACL 2025\] Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education](uni-retrieval_a_multi-style_retrieval_framework_for_stems_education.md)

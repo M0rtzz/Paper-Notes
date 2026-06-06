@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 图学习方向31篇论文解读
+  ICML2025 图学习方向30篇论文解读
 description: >-
-  31篇ICML2025的图学习方向论文解读，涵盖图神经网络、LLM、RAG等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  30篇ICML2025的图学习方向论文解读，涵盖图神经网络、LLM、布局/合成、RAG、持续学习、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "图学习"
@@ -10,17 +10,20 @@ tags:
   - "论文笔记"
   - "图神经网络"
   - "LLM"
+  - "布局/合成"
   - "RAG"
+  - "持续学习"
+  - "推理"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🕸️ 图学习
 
-**🧪 ICML2025** · **31** 篇论文解读
+**🧪 ICML2025** · **30** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (9)](../../ICML2026/graph_learning/index.md) · [💬 ACL2026 (21)](../../ACL2026/graph_learning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/graph_learning/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/graph_learning/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/graph_learning/index.md) · [🧠 NeurIPS2025 (52)](../../NeurIPS2025/graph_learning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (31)](../../ICML2026/graph_learning/index.md) · [💬 ACL2026 (23)](../../ACL2026/graph_learning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/graph_learning/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/graph_learning/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/graph_learning/index.md) · [🧠 NeurIPS2025 (52)](../../NeurIPS2025/graph_learning/index.md)
 
-🔥 **高频主题：** 图神经网络 ×6 · LLM ×3 · RAG ×2
+🔥 **高频主题：** 图神经网络 ×6 · LLM ×3
 
 **[A Cognac Shot To Forget Bad Memories: Corrective Unlearning for Graph Neural Networks](a_cognac_shot_to_forget_bad_memories_corrective_unlearning_for_graph_neural_netw.md)**
 
@@ -109,10 +112,6 @@ tags:
 **[GlycanAA: Modeling All-Atom Glycan Structures via Hierarchical Message Passing and Multi-Scale Pre-training](modeling_all-atom_glycan_structures_via_hierarchical_message_passing_and_multi-s.md)**
 
 :   提出 GlycanAA，首个全原子级糖链建模方法：将糖链表示为包含原子节点和单糖节点的异构图，通过层次消息传递捕获从局部原子交互到全局单糖交互的多尺度信息，并通过多尺度掩码预测预训练（PreGlycanAA）进一步增强，在 GlycanML 基准 11 个任务上获得第一。
-
-**[Neural Graph Matching Improves Retrieval Augmented Generation in Molecular Machine Learning](neural_graph_matching_improves_retrieval_augmented_generation_in_molecular_machi.md)**
-
-:   提出 MARASON，将**神经图匹配（Neural Graph Matching）**引入分子机器学习的检索增强生成（RAG）框架，通过可微分的碎片级对齐机制，把检索到的参考分子谱图信息有效融入目标分子的质谱预测中，在 NIST 数据集上将 top-1 检索准确率从 19% 提升到 28%。
 
 **[On Measuring Long-Range Interactions in Graph Neural Networks](on_measuring_long-range_interactions_in_graph_neural_networks.md)**
 

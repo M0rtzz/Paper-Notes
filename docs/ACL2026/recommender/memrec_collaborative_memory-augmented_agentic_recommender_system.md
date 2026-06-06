@@ -133,23 +133,17 @@ MemRec 维护一张 unified memory graph $G = (\mathcal{V}, E)$，节点 $\mathc
 - 写作质量: ⭐⭐⭐⭐⭐ Figure 1 的"孤岛 vs 协同"对比一图胜千言；方法 section 公式 / 思路 / 直觉三位一体；附录 prompt 完整、case study 详细；结构非常工整。
 - 价值: ⭐⭐⭐⭐⭐ 在 LLM-based RecSys 的关键瓶颈（稀疏用户、冷启动、解释质量）上提供了直接可工业部署的方案，公开代码 + 公开主页，复现门槛极低；对推荐系统社区是个里程碑式工作。
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">
 
 ## 相关论文
 
+- [\[ACL 2026\] ClusterRAG: Cluster-Based Collaborative Filtering for Personalized Retrieval-Augmented Generation](clusterrag_cluster-based_collaborative_filtering_for_personalized_retrieval-augm.md)
 - [\[NeurIPS 2025\] Radial Neighborhood Smoothing Recommender System](../../NeurIPS2025/recommender/radial_neighborhood_smoothing_recommender_system.md)
+- [\[ICML 2026\] Learning Design Skills as Memory Policies for Agentic Photonic Inverse Design](../../ICML2026/recommender/learning_design_skills_as_memory_policies_for_agentic_photonic_inverse_design.md)
+- [\[ICML 2026\] Incentivized Exploration with Stochastic Covariates: A Two-Stage Mechanism Design for Recommender System](../../ICML2026/recommender/incentivized_exploration_with_stochastic_covariates_a_two-stage_mechanism_design.md)
 - [\[ACL 2026\] HARPO: Hierarchical Agentic Reasoning for User-Aligned Conversational Recommendation](harpo_hierarchical_agentic_reasoning_for_user-aligned_conversational_recommendat.md)
-- [\[ACL 2026\] From Recall to Forgetting: Benchmarking Long-Term Memory for Personalized Agents](from_recall_to_forgetting_benchmarking_long-term_memory_for_personalized_agents.md)
-- [\[ACL 2026\] ReRec: Reasoning-Augmented LLM-based Recommendation Assistant via Reinforcement Fine-tuning](rerec_reasoning-augmented_llm-based_recommendation_assistant_via_reinforcement_f.md)
-- [\[ICLR 2026\] CollectiveKV: Decoupling and Sharing Collaborative Information in Sequential Recommendation](../../ICLR2026/recommender/collectivekv_decoupling_and_sharing_collaborative_information_in_sequential_reco.md)
 
 </div>
 

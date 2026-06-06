@@ -125,11 +125,11 @@ tags:
 
 ## 相关论文
 
-- [\[CVPR 2025\] MAP: Unleashing Hybrid Mamba-Transformer Vision Backbone's Potential with Masked Autoregressive Pretraining](map_unleashing_hybrid_mamba-transformer_vision_backbones_potential_with_masked_a.md)
-- [\[CVPR 2025\] Transformers without Normalization](transformers_without_normalization.md)
-- [\[CVPR 2025\] UniSTD: Towards Unified Spatio-Temporal Learning Across Diverse Disciplines](unistd_towards_unified_spatio-temporal_learning_across_diverse_disciplines.md)
+- [\[CVPR 2026\] MINE-JEPA: In-Domain Self-Supervised Learning for Mineral Exploration](../../CVPR2026/self_supervised/mine-jepa_in-domain_self-supervised_learning_for_mine-like_object_classification.md)
+- [\[ECCV 2024\] Rethinking Unsupervised Outlier Detection via Multiple Thresholding](../../ECCV2024/self_supervised/rethinking_unsupervised_outlier_detection_via_multiple_thresholding.md)
 - [\[CVPR 2025\] ScaleLSD: Scalable Deep Line Segment Detection Streamlined](scalelsd_scalable_deep_line_segment_detection_streamlined.md)
-- [\[CVPR 2025\] Learning to Normalize on the SPD Manifold under Bures-Wasserstein Geometry](learning_to_normalize_on_the_spd_manifold_under_bures-wasserstein_geometry.md)
+- [\[ICML 2025\] Towards Benchmarking Foundation Models for Tabular Data With Text](../../ICML2025/self_supervised/towards_benchmarking_foundation_models_for_tabular_data_with_text.md)
+- [\[CVPR 2025\] Text-Phase Synergy Network with Dual Priors for Unsupervised Cross-Domain Image Retrieval](text-phase_synergy_network_with_dual_priors_for_unsupervised_cross-domain_image_.md)
 
 </div>
 

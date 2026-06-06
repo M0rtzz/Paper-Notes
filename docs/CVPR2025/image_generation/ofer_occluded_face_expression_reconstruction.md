@@ -144,8 +144,8 @@ OFER 使用两个条件扩散模型分别生成 FLAME 参数模型的形状和�
 - [\[AAAI 2026\] Realistic Face Reconstruction from Facial Embeddings via Diffusion Models](../../AAAI2026/image_generation/realistic_face_reconstruction_from_facial_embeddings_via_diffusion_models.md)
 - [\[CVPR 2025\] SVFR: A Unified Framework for Generalized Video Face Restoration](svfr_a_unified_framework_for_generalized_video_face_restoration.md)
 - [\[CVPR 2025\] DeClotH: Decomposable 3D Cloth and Human Body Reconstruction from a Single Image](decloth_decomposable_3d_cloth_and_human_body_reconstruction_from_a_single_image.md)
-- [\[CVPR 2025\] Efficient Long Video Tokenization via Coordinate-based Patch Reconstruction](efficient_long_video_tokenization_via_coordinate-based_patch_reconstruction.md)
 - [\[CVPR 2025\] FDeID-Toolbox: Face De-Identification Toolbox](fdeid-toolbox_face_de-identification_toolbox.md)
+- [\[CVPR 2025\] GIF: Generative Inspiration for Face Recognition at Scale](gif_generative_inspiration_for_face_recognition_at_scale.md)
 
 </div>
 

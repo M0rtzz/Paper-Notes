@@ -177,7 +177,7 @@ $$\hat{\mathbf{x}}_j^{(t+1)} = \lambda\big(\hat{\mathbf{x}}_j^{(t)} - \frac{\alp
 - [\[NeurIPS 2025\] Double Descent Meets Out-of-Distribution Detection: Theoretical Insights and Empirical Analysis](double_descent_meets_out-of-distribution_detection_theoretical_insights_and_empi.md)
 - [\[NeurIPS 2025\] Out-of-distribution Generalisation is Hard: Evidence from ARC-like Tasks](out-of-distribution_generalisation_is_hard_evidence_from_arc-like_tasks.md)
 - [\[CVPR 2025\] H2ST: Hierarchical Two-Sample Tests for Continual Out-of-Distribution Detection](../../CVPR2025/others/h2st_hierarchical_two-sample_tests_for_continual_out-of-distribution_detection.md)
-- [\[CVPR 2025\] Joint Out-of-Distribution Filtering and Data Discovery Active Learning](../../CVPR2025/others/joint_out-of-distribution_filtering_and_data_discovery_active_learning.md)
+- [\[ICML 2026\] Target-Agnostic Calibration under Distribution Shift with Frequency-Aware Gradient Rectification](../../ICML2026/others/target-agnostic_calibration_under_distribution_shift_with_frequency-aware_gradie.md)
 
 </div>
 

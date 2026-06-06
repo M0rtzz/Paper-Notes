@@ -142,8 +142,8 @@ tags:
 
 - [\[ICML 2025\] Mixed-Curvature Decision Trees and Random Forests](mixed-curvature_decision_trees_and_random_forests.md)
 - [\[ICML 2025\] WILTing Trees: Interpreting the Distance Between MPNN Embeddings](wilting_trees_interpreting_the_distance_between_mpnn_embeddings.md)
+- [\[ICML 2026\] When Do Graph Foundation Models Transfer? A Data-Centric Theory](../../ICML2026/graph_learning/when_do_graph_foundation_models_transfer_a_data-centric_theory.md)
 - [\[ICML 2025\] From RAG to Memory: Non-Parametric Continual Learning for Large Language Models](from_rag_to_memory_non-parametric_continual_learning_for_large_language_models.md)
-- [\[NeurIPS 2025\] Reasoning Meets Representation: Envisioning Neuro-Symbolic Wireless Foundation Models](../../NeurIPS2025/graph_learning/reasoning_meets_representation_envisioning_neuro-symbolic_wireless_foundation_mo.md)
 - [\[ICML 2025\] TopInG: Topologically Interpretable Graph Learning via Persistent Rationale Filtration](toping_topologically_interpretable_graph_learning_via_persistent_rationale_filtr.md)
 
 </div>

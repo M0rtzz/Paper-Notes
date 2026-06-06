@@ -124,8 +124,8 @@ tags:
 - [\[ICML 2025\] Near-Optimal Consistency-Robustness Trade-Offs for Learning-Augmented Online Knapsack Problems](../../ICML2025/others/near-optimal_consistency-robustness_trade-offs_for_learning-augmented_online_kna.md)
 - [\[ACL 2025\] Entailed Between the Lines: Incorporating Implication into NLI](entailed_between_the_lines_incorporating_implication_into_nli.md)
 - [\[ACL 2025\] The Time Scale of Redundancy between Prosody and Linguistic Context](the_time_scale_of_redundancy_between_prosody_and_linguistic_context.md)
-- [\[ACL 2025\] Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
 - [\[ACL 2025\] Well Begun is Half Done: Low-resource Preference Alignment by Weak-to-Strong Decoding](well_begun_is_half_done_low-resource_preference_alignment_by_weak-to-strong_deco.md)
+- [\[ACL 2025\] Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
 
 </div>
 

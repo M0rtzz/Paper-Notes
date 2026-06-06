@@ -242,8 +242,8 @@ $$A_{enhanced}^{(h)} = A_{std}^{(h)} + \alpha^{(h)} \cdot A_{stripe}^{(h)}$$
 
 - [\[CVPR 2025\] Rethinking Spiking Self-Attention Mechanism: Implementing a-XNOR Similarity Calculation in Spiking Transformers](../../CVPR2025/llm_nlp/rethinking_spiking_self-attention_mechanism_implementing_a-xnor_similarity_calcu.md)
 - [\[ACL 2025\] Nudging: Inference-time Alignment of LLMs via Guided Decoding](../../ACL2025/llm_nlp/nudging_inference_time_alignment.md)
-- [\[ICML 2025\] Star Attention: Efficient LLM Inference over Long Sequences](../../ICML2025/llm_nlp/star_attention_efficient_llm_inference_over_long_sequences.md)
 - [\[ICML 2026\] Compute as Teacher: Turning Inference Compute Into Reference-Free Supervision](../../ICML2026/llm_nlp/compute_as_teacher_turning_inference_compute_into_reference-free_supervision.md)
+- [\[ICML 2025\] Star Attention: Efficient LLM Inference over Long Sequences](../../ICML2025/llm_nlp/star_attention_efficient_llm_inference_over_long_sequences.md)
 - [\[ACL 2025\] MHA2MLA: Towards Economical Inference by Enabling DeepSeek's Multi-Head Latent Attention in Any Transformer-based LLMs](../../ACL2025/llm_nlp/mha2mla_deepseek_latent_attention.md)
 
 </div>

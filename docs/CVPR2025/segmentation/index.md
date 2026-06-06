@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 语义分割方向96篇论文解读
+  CVPR2025 语义分割方向95篇论文解读
 description: >-
-  96篇CVPR2025的语义分割方向论文解读，涵盖语义分割、多模态、语音、目标检测、对齐/RLHF、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  95篇CVPR2025的语义分割方向论文解读，涵盖语义分割、多模态、语音、对齐/RLHF、目标检测、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2025"
   - "语义分割"
@@ -10,19 +10,19 @@ tags:
   - "论文笔记"
   - "多模态"
   - "语音"
-  - "目标检测"
   - "对齐/RLHF"
+  - "目标检测"
   - "遥感"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**📷 CVPR2025** · **96** 篇论文解读
+**📷 CVPR2025** · **95** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/segmentation/index.md) · [💬 ACL2026 (1)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/segmentation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (13)](../../ICML2026/segmentation/index.md) · [💬 ACL2026 (1)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/segmentation/index.md)
 
-🔥 **高频主题：** 语义分割 ×39 · 多模态 ×6 · 语音 ×5 · 目标检测 ×5 · 对齐/RLHF ×4
+🔥 **高频主题：** 语义分割 ×39 · 多模态 ×6 · 语音 ×5 · 对齐/RLHF ×4 · 目标检测 ×4
 
 **[2DMamba: Efficient State Space Model for Image Representation with Applications on Giga-Pixel Whole Slide Image Classification](2dmamba_efficient_state_space_model_for_image_representation_with_applications_o.md)**
 
@@ -137,10 +137,6 @@ tags:
 **[Foveated Instance Segmentation](foveated_instance_segmentation.md)**
 
 :   FSNet 提出一种模拟人眼中央凹视觉机制的实例分割框架，通过可学习的显著性图引导非均匀下采样，在注视目标区域保持高分辨率细节、在外围降低分辨率，实现了在不同预训练分割网络上的即插即用式效率提升。
-
-**[Fractal Calibration for Long-Tailed Object Detection](fractal_calibration_for_long-tailed_object_detection.md)**
-
-:   提出 FRACAL（FRActal CALibration），一种无需训练的后处理方法，首次将分形维数引入长尾目标检测的后校准中，通过对称校准频率轴（类别频率）和空间轴（类别位置均匀度），在 LVIS 数据集上将稀有类 mask AP 提升高达 8.6%，并在 COCO、V3Det、OpenImages 上展示泛化性。
 
 **[Frequency Dynamic Convolution for Dense Image Prediction](frequency_dynamic_convolution_for_dense_image_prediction.md)**
 

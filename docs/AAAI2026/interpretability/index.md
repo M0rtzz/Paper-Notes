@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 可解释性方向37篇论文解读
+  AAAI2026 可解释性方向38篇论文解读
 description: >-
-  37篇AAAI2026的可解释性方向论文解读，涵盖 LLM、布局/合成、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  38篇AAAI2026的可解释性方向论文解读，涵盖 LLM、布局/合成、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "可解释性"
@@ -16,9 +16,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**🤖 AAAI2026** · **37** 篇论文解读
+**🤖 AAAI2026** · **38** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (21)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (51)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/interpretability/index.md) · [🧠 NeurIPS2025 (84)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (72)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (63)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (54)](../../ICLR2026/interpretability/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
 
 🔥 **高频主题：** LLM ×6 · 布局/合成 ×3 · Agent ×2
 
@@ -133,6 +133,10 @@ tags:
 **[Probing Preference Representations: A Multi-Dimensional Evaluation and Analysis Method for Reward Models](probing_preference_representations_a_multi-dimensional_evaluation_and_analysis_m.md)**
 
 :   提出 MRMBench 基准，通过 6 个维度（无害性、有帮助性、正确性、连贯性、复杂性、冗长性）的探针任务评估奖励模型是否有效捕获多维偏好，发现探针性能与 PPO 对齐质量强相关（Pearson $r > 0.8$），并提出推理时探针方法将 AlpacaEval win rate 从 57.3% 提升至 62.5%。
+
+**[QGShap: Quantum Acceleration for Faithful GNN Explanations](qgshap_quantum_acceleration_for_faithful_gnn_explanations.md)**
+
+:   提出 QGShap，一种利用量子振幅放大技术加速精确 Shapley 值计算的图神经网络可解释性框架，在保持精确计算（非近似）的同时实现了相对经典 Monte Carlo 方法的二次加速。
 
 **[Quiet Feature Learning in Algorithmic Tasks](quiet_feature_learning_in_algorithmic_tasks.md)**
 

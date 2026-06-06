@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 图像恢复方向29篇论文解读
+  ICCV2025 图像恢复方向30篇论文解读
 description: >-
-  29篇ICCV2025的图像恢复方向论文解读，涵盖图像恢复、超分辨率、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  30篇ICCV2025的图像恢复方向论文解读，涵盖图像恢复、超分辨率、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "图像恢复"
@@ -15,11 +15,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🖼️ 图像恢复
 
-**📹 ICCV2025** · **29** 篇论文解读
+**📹 ICCV2025** · **30** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/image_restoration/index.md) · [📷 CVPR2026 (39)](../../CVPR2026/image_restoration/index.md) · [🔬 ICLR2026 (14)](../../ICLR2026/image_restoration/index.md) · [🤖 AAAI2026 (13)](../../AAAI2026/image_restoration/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/image_restoration/index.md) · [🧪 ICML2025 (5)](../../ICML2025/image_restoration/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/image_restoration/index.md) · [📷 CVPR2026 (41)](../../CVPR2026/image_restoration/index.md) · [🔬 ICLR2026 (14)](../../ICLR2026/image_restoration/index.md) · [🤖 AAAI2026 (13)](../../AAAI2026/image_restoration/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/image_restoration/index.md) · [🧪 ICML2025 (5)](../../ICML2025/image_restoration/index.md)
 
-🔥 **高频主题：** 图像恢复 ×14 · 超分辨率 ×4 · 扩散模型 ×3
+🔥 **高频主题：** 图像恢复 ×15 · 超分辨率 ×4 · 扩散模型 ×3
 
 **[Benchmarking Burst Super-Resolution for Polarization Images: Noise Dataset and Analysis](benchmarking_burst_super-resolution_for_polarization_images_noise_dataset_and_an.md)**
 
@@ -80,6 +80,10 @@ tags:
 **[Generic Event Boundary Detection via Denoising Diffusion (DiffGEBD)](generic_event_boundary_detection_via_denoising_diffusion.md)**
 
 :   DiffGEBD 首次将扩散模型引入通用事件边界检测（GEBD），通过将边界预测建模为从随机噪声到合理边界分布的去噪过程，利用 Classifier-Free Guidance 控制预测多样性，并提出了对称 F1 和 Diversity Score 两项新评估指标来衡量多预测场景下的质量与多样性。
+
+**[IDF: Iterative Dynamic Filtering Networks for Generalizable Image Denoising](idf_iterative_dynamic_filtering_networks_for_generalizable_image_denoising.md)**
+
+:   提出迭代动态滤波网络 (IDF)，仅用约 0.04M 参数，通过逐像素动态核预测 + 自适应迭代精炼策略，仅在单一级别高斯噪声上训练即可泛化到各种未见噪声类型（高斯/泊松/椒盐/蒙特卡洛渲染/真实噪声），实现出色的 OOD 去噪性能。
 
 **[IM-LUT: Interpolation Mixing Look-Up Tables for Image Super-Resolution](im-lut_interpolation_mixing_look-up_tables_for_image_super-resolution.md)**
 

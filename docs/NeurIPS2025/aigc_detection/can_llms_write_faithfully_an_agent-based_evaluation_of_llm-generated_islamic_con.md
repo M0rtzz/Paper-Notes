@@ -136,11 +136,11 @@ tags:
 
 ## 相关论文
 
-- [\[ACL 2026\] FlexGuard: Continuous Risk Scoring for Strictness-Adaptive LLM Content Moderation](../../ACL2026/aigc_detection/flexguard_continuous_risk_scoring_for_strictness-adaptive_llm_content_moderation.md)
+- [\[ACL 2026\] GigaCheck: Detecting LLM-generated Content via Object-Centric Span Localization](../../ACL2026/aigc_detection/gigacheck_detecting_llm-generated_content_via_object-centric_span_localization.md)
+- [\[ICML 2026\] Distributional Open-Ended Evaluation of LLM Cultural Value Alignment Based on Value Codebook](../../ICML2026/aigc_detection/distributional_open-ended_evaluation_of_llm_cultural_value_alignment_based_on_va.md)
+- [\[ACL 2026\] Can AI-Generated Persuasion Be Detected? Persuaficial Benchmark and AI vs. Human Linguistic Differences](../../ACL2026/aigc_detection/can_ai-generated_persuasion_be_detected_persuaficial_benchmark_and_ai_vs_human_l.md)
+- [\[ICLR 2026\] PoliCon: Evaluating LLMs on Achieving Diverse Political Consensus Objectives](../../ICLR2026/aigc_detection/policon_evaluating_llms_on_achieving_diverse_political_consensus_objectives.md)
 - [\[NeurIPS 2025\] CLAWS: Creativity Detection for LLM-Generated Solutions Using Attention Window of Sections](clawscreativity_detection_for_llm-generated_solutions_using_attention_window_of_.md)
-- [\[ACL 2026\] Comprehensiveness Metrics for Automatic Evaluation of Factual Recall in Text Generation](../../ACL2026/aigc_detection/comprehensiveness_metrics_for_automatic_evaluation_of_factual_recall_in_text_gen.md)
-- [\[NeurIPS 2025\] Classical Planning with LLM-Generated Heuristics: Challenging the State of the Art with Python Code](classical_planning_with_llm-generated_heuristics_challenging_the_state_of_the_ar.md)
-- [\[ACL 2026\] Reasoning-Based Refinement of Unsupervised Text Clusters with LLMs](../../ACL2026/aigc_detection/reasoning-based_refinement_of_unsupervised_text_clusters_with_llms.md)
 
 </div>
 

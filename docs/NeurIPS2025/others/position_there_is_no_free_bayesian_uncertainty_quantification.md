@@ -167,7 +167,7 @@ $$\mathbb{P}((X^v, Y^v) \text{ s.t. } R((X,Y), \hat{q}) \leq \alpha + C(\epsilon
 - [\[NeurIPS 2025\] Adjusted Count Quantification Learning on Graphs](adjusted_count_quantification_learning_on_graphs.md)
 - [\[NeurIPS 2025\] Uncertainty Estimation by Flexible Evidential Deep Learning](uncertainty_estimation_by_flexible_evidential_deep_learning.md)
 - [\[ICLR 2026\] Bayesian Influence Functions for Hessian-Free Data Attribution](../../ICLR2026/others/bayesian_influence_functions_for_hessian-free_data_attribution.md)
-- [\[ICML 2025\] Latent Variable Estimation in Bayesian Black-Litterman Models](../../ICML2025/others/latent_variable_estimation_in_bayesian_black-litterman_models.md)
+- [\[NeurIPS 2025\] Depth-Supervised Fusion Network for Seamless-Free Image Stitching](depth-supervised_fusion_network_for_seamless-free_image_stitching.md)
 
 </div>
 

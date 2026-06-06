@@ -114,10 +114,10 @@ EDM在Matterport3D上超越最强透视方法DKM 26.72 AUC@5°点，在Stanford2
 ## 相关论文
 
 - [\[CVPR 2025\] Feature Selection for Latent Factor Models](feature_selection_for_latent_factor_models.md)
-- [\[ICML 2025\] Score Matching with Missing Data](../../ICML2025/others/score_matching_with_missing_data.md)
 - [\[CVPR 2025\] Improving Transferable Targeted Attacks with Feature Tuning Mixup](improving_transferable_targeted_attacks_with_feature_tuning_mixup.md)
+- [\[ICML 2025\] Score Matching with Missing Data](../../ICML2025/others/score_matching_with_missing_data.md)
 - [\[NeurIPS 2025\] Dense Associative Memory with Epanechnikov Energy](../../NeurIPS2025/others/dense_associative_memory_with_epanechnikov_energy.md)
-- [\[CVPR 2025\] Task-Agnostic Guided Feature Expansion for Class-Incremental Learning](task-agnostic_guided_feature_expansion_for_class-incremental_learning.md)
+- [\[CVPR 2026\] HypeVPR: Exploring Hyperbolic Space for Perspective to Equirectangular Visual Place Recognition](../../CVPR2026/others/hypevpr_exploring_hyperbolic_space_for_perspective_to_equirectangular_visual_pla.md)
 
 </div>
 

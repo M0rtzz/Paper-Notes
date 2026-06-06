@@ -120,17 +120,18 @@ tags:
 - **写作质量**: ⭐⭐⭐⭐ — 论文结构清晰，可视化效果好，偏差分析深入直观
 - **价值**: ⭐⭐⭐⭐ — 对LLM-as-a-Judge社区有重要警示意义，方法实用且与现有推理加速技术兼容
 
-## 亮点与洞察
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 局限性 / 可改进方向
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 相关工作与启发
-待深读论文后补充
+## 相关论文
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+- [\[ICLR 2026\] BiasScope: Towards Automated Detection of Bias in LLM-as-a-Judge Evaluation](../../ICLR2026/llm_evaluation/biasscope_towards_automated_detection_of_bias_in_llm-as-a-judge_evaluation.md)
+- [\[ACL 2026\] Fin-Bias: Comprehensive Evaluation for LLM Decision-Making under human bias in Finance Domain](fin-bias_comprehensive_evaluation_for_llm_decision-making_under_human_bias_in_fi.md)
+- [\[ACL 2026\] When Vision-Language Models Judge Without Seeing: Exposing Informativeness Bias](when_vision-language_models_judge_without_seeing_exposing_informativeness_bias.md)
+- [\[ACL 2026\] Common to Whom? Regional Cultural Commonsense and LLM Bias in India](common_to_whom_regional_cultural_commonsense_and_llm_bias_in_india.md)
+- [\[ACL 2026\] Reasoning Model Is Superior LLM-Judge, Yet Suffers from Biases](reasoning_model_is_superior_llm-judge_yet_suffers_from_biases.md)
+
+</div>
+
+<!-- RELATED:END -->

@@ -1,0 +1,136 @@
+---
+title: >-
+  [论文解读] Cross-Slice Knowledge Transfer via Masked Multi-Modal Heterogeneous Graph Contrastive Learning for Spatial Gene Expression Inference
+description: >-
+  [CVPR 2026][计算生物][空间转录组学] 提出 SpaHGC，一种基于多模态异构图的框架，通过构建目标切片内、跨切片和参考切片内三种子图，结合 masked graph 对比学习和跨节点双注意力机制，实现从 H&E 病理图像预测空间基因表达，在七个数据集上 PCC 指标提升 7.3%-27.1%。
+tags:
+  - "CVPR 2026"
+  - "计算生物"
+  - "空间转录组学"
+  - "异构图学习"
+  - "跨切片知识迁移"
+  - "对比学习"
+  - "基因表达预测"
+---
+
+# Cross-Slice Knowledge Transfer via Masked Multi-Modal Heterogeneous Graph Contrastive Learning for Spatial Gene Expression Inference
+
+**会议**: CVPR 2026  
+**arXiv**: [2603.22821](https://arxiv.org/abs/2603.22821)  
+**代码**: [https://github.com/wenwenmin/SpaHGC](https://github.com/wenwenmin/SpaHGC)  
+**领域**: 医学图像分析 / 空间转录组学  
+**关键词**: 空间转录组学, 异构图学习, 跨切片知识迁移, 对比学习, 基因表达预测
+
+## 一句话总结
+提出 SpaHGC，一种基于多模态异构图的框架，通过构建目标切片内、跨切片和参考切片内三种子图，结合 masked graph 对比学习和跨节点双注意力机制，实现从 H&E 病理图像预测空间基因表达，在七个数据集上 PCC 指标提升 7.3%-27.1%。
+
+## 研究背景与动机
+
+**领域现状**：空间转录组学（ST）技术能精确量化组织中基因表达的空间分布，但实验成本高昂限制了大规模应用。从 H&E 病理图像预测 ST 基因表达是一种有前景的替代方案。
+
+**现有痛点**：(1) ST 数据稀疏有噪声——某些位置基因表达缺失或极低；(2) 现有方法仅建模单切片内空间结构，忽视了不同切片之间共享的表达模式；(3) 个体差异和疾病进展引入跨样本异质性，单切片模型难以学到泛化表征。
+
+**核心矛盾**：同类组织/疾病通常共享共性表达模式，但个体差异导致跨切片直接对齐困难——如何有效整合共享信息同时处理个体差异？
+
+**本文要解决**：如何建模跨切片空间关系，将多个参考切片的先验知识迁移到目标切片的基因表达预测中？
+
+**切入角度**：构建多模态异构图，用病理学基础模型（UNI）的图像嵌入连接跨切片 spot，通过对比学习增强特征表征的鲁棒性。
+
+**核心 idea**：异构图 + 跨切片知识迁移 + Masked 对比学习 = 更准确的基因表达预测。
+
+## 方法详解
+
+### 整体框架
+SpaHGC 分四步：(1) 用 UNI 病理基础模型提取 patch 嵌入；(2) 构建三种子图：目标切片内（TS）、跨切片（CS）、参考切片内（RS）；(3) 互补 masking 生成两个增强视图，通过异构图编码器+对比学习训练；(4) 输出基因表达预测。
+
+### 关键设计
+
+1. **多模态异构图构建**：
+
+    - **Target-slice (TS) 图**：基于欧式距离连接目标切片内 $Q$ 个最近邻 spot，捕获局部空间连续性。
+    - **Cross-slice (CS) 图**：对每个目标 patch 嵌入 $\mathbf{z}_t^{(i)}$，检索参考切片中余弦相似度 Top-K 的 patch，形成跨切片连接。参考节点包含联合特征 $\mathbf{h}_r = [\mathbf{z}_r \| \mathbf{y}_r]$（视觉+基因表达）。
+    - **Reference-slice (RS) 图**：参考节点之间基于联合特征余弦相似度的 Top-K 连接，形成全局语义支架。
+    - **设计动机**：三种边分别捕获局部空间语义、跨切片形态相似性、参考切片内全局表达关系——多层次信息融合。
+
+2. **Cross Node Dual Attention (CNDA)**：
+
+    - **功能**：双向注意力机制——目标节点 attend 参考节点以获取视觉+基因知识，参考节点 attend 目标节点以更新自身表征。
+    - **核心公式**：$\mathbf{A}_{t \leftarrow r} = \text{softmax}(\frac{\mathbf{Q}_t \mathbf{K}_r^\top}{\sqrt{d'}})$，$\bar{\mathbf{L}}_t = \mathbf{A}_{t \leftarrow r} \mathbf{V}_r$
+    - **设计动机**：选择性迁移——通过动态注意力权重，模型自动从参考切片中选择最相关的形态和表达信息迁移到目标切片，同时抑制不相关的跨切片噪声。
+
+3. **Cross Node Attention Pooling (CNAP)**：
+
+    - **功能**：多头单向 cross-node attention，将目标节点表征与参考节点表征做 cross-attention 聚合。
+    - **设计动机**：相比简单的 exemplar retrieval，CNAP 能根据目标节点的上下文语义动态聚合辅助信息，更灵活地适应不同组织区域的需求。
+
+4. **互补 Masking 对比学习**：
+
+    - **功能**：对目标节点和参考节点分别做节点类型特异的特征 masking，生成两个互补视图（$\mathbf{M}_t^{(1)} + \mathbf{M}_t^{(2)} = \mathbf{1}$），通过余弦距离对比损失训练。
+    - **设计动机**：模拟 ST 数据中真实存在的特征缺失和测序噪声，迫使模型学到对噪声鲁棒的一致表征。
+
+### 损失函数 / 训练策略
+- 对比损失：$\mathcal{L}_{\text{con}} = \frac{1}{N} \sum_j (2 - 2 \cdot \text{Cos}(\hat{L}_j^1, \hat{L}_j^2))$
+- 回归损失用于基因表达预测
+- 采用非对称对比设计：一个视图 stop-gradient 作为稳定目标
+
+## 实验关键数据
+
+### 主实验（7 个公开 ST 数据集）
+
+| 方法 | HER+ PCC% | cSCC PCC% | Lymph Node PCC% | Pancreas2 PCC% |
+|------|----------|----------|----------------|---------------|
+| STNet | 5.61 | 9.2 | 3.4 | 31.56 |
+| HisToGene | 7.89 | 17.56 | 19.24 | 26.13 |
+| mclSTExp | 23.15 | 31.88 | 21.64 | 31.61 |
+| M2OST | 18.24 | 24.88 | 30.97 | 38.35 |
+| **SpaHGC** | **27.86** | **38.79** | **35.02** | **41.36** |
+
+### 消融实验
+
+通过逐步移除组件验证有效性（从完整 SpaHGC 出发）：
+- 移除 CNDA → PCC 下降明显，验证跨切片注意力的关键作用
+- 移除 CS 图 → PCC 显著下降，验证跨切片连接的必要性
+- 移除 Masking → 鲁棒性下降，验证对比学习的贡献
+- 用 ResNet 替代 UNI → PCC 明显降低，验证强病理基础模型的重要性
+
+### 关键发现
+- 跨所有 7 个数据集，SpaHGC 的 PCC 提升幅度为 7.3%-27.1%，提升非常显著
+- 预测结果在多个癌症相关通路中显著富集，验证了生物学相关性
+- 跨切片知识迁移在不同平台（10x Visium、ST 1000 等）、组织类型和癌症亚型上均有效
+
+## 亮点与洞察
+- **跨切片知识迁移**：不同于只看单切片的现有方法，利用多个参考切片的先验知识是一个重要的范式转变
+- **病理基础模型（UNI）的深度集成**：用预训练的强嵌入建立跨切片连接，充分利用大规模预训练的知识
+- **生物学下游验证**：不仅关注数值指标，还做了通路富集分析等生物学验证
+
+## 局限与展望
+- 需要多个参考切片作为训练数据，对于极稀缺的组织类型可能受限
+- 图构建中的 Top-K 连接依赖于 UNI 嵌入质量
+- 未探索在构建异构图时纳入空间位置信息的细粒度方式
+
+## 相关工作与启发
+- BLEEP 和 mclSTExp 的对比学习对齐思路有启发，但 SpaHGC 的异构图框架更灵活
+- EGGN 的 exemplar retrieval 思路与 SpaHGC 的 CS 图有相似性，但 SpaHGC 的图结构化方式更系统
+- 互补 masking 策略可推广到其他多模态图学习任务
+
+## 评分
+- 新颖性: ⭐⭐⭐⭐ 异构图建模跨切片关系的思路有价值，但基础组件（GraphSAGE、注意力、对比学习）都是成熟技术的组合
+- 实验充分度: ⭐⭐⭐⭐⭐ 7 个数据集+9 个基线+生物学下游分析，非常充分
+- 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富
+- 价值: ⭐⭐⭐⭐ 对空间转录组学领域有显著推动，跨切片知识迁移是正确的方向
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[AAAI 2026\] Dual-Path Knowledge-Augmented Contrastive Alignment Network for Spatially Resolved Transcriptomics](../../AAAI2026/computational_biology/dual-path_knowledge-augmented_contrastive_alignment_network_for_spatially_resolv.md)
+- [\[AAAI 2026\] HiFusion: Hierarchical Intra-Spot Alignment and Regional Context Fusion for Spatial Gene Expression Prediction from Histopathology](../../AAAI2026/computational_biology/hifusion_hierarchical_intra-spot_alignment_and_regional_context_fusion_for_spati.md)
+- [\[CVPR 2026\] HINGE: Adapting a Pre-trained Single-Cell Foundation Model to Spatial Gene Expression Generation from Histology Images](adapting_a_pre-trained_single-cell_foundation_model_to_spatial_gene_expression_g.md)
+- [\[NeurIPS 2025\] Learning Relative Gene Expression Trends from Pathology Images in Spatial Transcriptomics](../../NeurIPS2025/computational_biology/learning_relative_gene_expression_trends_from_pathology_images_in_spatial_transc.md)
+- [\[ICLR 2026\] HistoPrism: Unlocking Functional Pathway Analysis from Pan-Cancer Histology via Gene Expression Prediction](../../ICLR2026/computational_biology/histoprism_unlocking_functional_pathway_analysis_from_pan-cancer_histology_via_g.md)
+
+</div>
+
+<!-- RELATED:END -->

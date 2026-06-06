@@ -2,10 +2,10 @@
 title: >-
   [论文解读] NI-Tex: Non-isometric Image-based Garment Texture Generation
 description: >-
-  [CVPR 2026][3D视觉][服装纹理生成] 提出NI-Tex框架，通过构建3D Garment Videos数据集、基于图像编辑的跨拓扑增强以及不确定性引导的迭代烘焙算法，首次以前馈架构实现了非等距条件下从单图到3D服装PBR纹理的高质量生成。
+  [CVPR 2026][图像生成][服装纹理生成] 提出NI-Tex框架，通过构建3D Garment Videos数据集、基于图像编辑的跨拓扑增强以及不确定性引导的迭代烘焙算法，首次以前馈架构实现了非等距条件下从单图到3D服装PBR纹理的高质量生成。
 tags:
   - "CVPR 2026"
-  - "3D视觉"
+  - "图像生成"
   - "服装纹理生成"
   - "PBR材质"
   - "非等距变形"
@@ -186,10 +186,10 @@ $$\mathcal{L}_2 = \mathbb{E}_{\epsilon \sim \mathcal{N}(0,1), t} \left[ \alpha \
 ## 相关论文
 
 - [\[ECCV 2024\] GarmentAligner: Text-to-Garment Generation via Retrieval-augmented Multi-level Corrections](../../ECCV2024/image_generation/garmentaligner_text-to-garment_generation_via_retrieval-augmented_multi-level_co.md)
-- [\[ACL 2026\] ZipVoice-Dialog: Non-Autoregressive Spoken Dialogue Generation with Flow Matching](../../ACL2026/image_generation/zipvoice-dialog_non-autoregressive_spoken_dialogue_generation_with_flow_matching.md)
-- [\[NeurIPS 2025\] Track, Inpaint, Resplat: Subject-driven 3D and 4D Generation with Progressive Texture Infilling](../../NeurIPS2025/image_generation/track_inpaint_resplat_subject-driven_3d_and_4d_generation_with_progressive_textu.md)
 - [\[CVPR 2026\] Agentic Retoucher for Text-To-Image Generation](agentic_retoucher_for_texttoimage_generation.md)
+- [\[NeurIPS 2025\] Track, Inpaint, Resplat: Subject-driven 3D and 4D Generation with Progressive Texture Infilling](../../NeurIPS2025/image_generation/track_inpaint_resplat_subject-driven_3d_and_4d_generation_with_progressive_textu.md)
 - [\[CVPR 2026\] Resolving the Identity Crisis in Text-to-Image Generation](resolving_the_identity_crisis_in_text-to-image_generation.md)
+- [\[CVPR 2026\] Image Generation as a Visual Planner for Robotic Manipulation](image_generation_as_a_visual_planner_for_robotic_manipulation.md)
 
 </div>
 

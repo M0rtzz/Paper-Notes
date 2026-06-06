@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 医学图像方向84篇论文解读
+  CVPR2025 医学图像方向83篇论文解读
 description: >-
-  84篇CVPR2025的医学图像方向论文解读，涵盖医学影像、语义分割、扩散模型、多模态、推理、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  83篇CVPR2025的医学图像方向论文解读，涵盖医学影像、语义分割、扩散模型、多模态、推理、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2025"
   - "医学图像"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**📷 CVPR2025** · **84** 篇论文解读
+**📷 CVPR2025** · **83** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/medical_imaging/index.md) · [💬 ACL2026 (51)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (119)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (79)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (106)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (34)](../../ICML2026/medical_imaging/index.md) · [💬 ACL2026 (35)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (103)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (48)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (88)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (92)](../../NeurIPS2025/medical_imaging/index.md)
 
-🔥 **高频主题：** 医学影像 ×29 · 语义分割 ×19 · 扩散模型 ×10 · 多模态 ×6 · 推理 ×4
+🔥 **高频主题：** 医学影像 ×29 · 语义分割 ×19 · 扩散模型 ×10 · 多模态 ×5 · 推理 ×4
 
 **[A Semi-Supervised Framework for Breast Ultrasound Segmentation with Training-Free Pseudo-Label Generation and Label Refinement](a_semi-supervised_framework_for_breast_ultrasound_segmentation_with_training-fre.md)**
 
@@ -204,10 +204,6 @@ tags:
 **[Multimodal Classification of Radiation-Induced Contrast Enhancements and Tumor Recurrence Using Deep Learning](multimodal_classification_of_radiation-induced_contrast_enhancements_and_tumor_r.md)**
 
 :   提出 RICE-NET，一个多模态 3D 深度学习模型，融合纵向 MRI 数据与放疗剂量分布图，用于区分胶质母细胞瘤术后放射性对比增强（RICE）与肿瘤复发，在独立测试集上达到 F1=0.92。
-
-**[Multimodal Protein Language Models for Enzyme Kinetic Parameters: From Substrate Recognition to Conformational Adaptation](multimodal_protein_language_models_for_enzyme_kinetic_parameters_from_substrate_.md)**
-
-:   提出 ERBA 适配器，将酶动力学预测建模为"底物识别→构象适应"的分阶段条件化过程，通过 MRCA 注入底物语义、G-MoE 融合活性位点3D几何、ESDA 保持 PLM 先验，在 kcat/Km/Ki 三个动力学端点上一致超越现有方法。
 
 **[MultiMorph: On-demand Atlas Construction](multimorph_on-demand_atlas_construction.md)**
 

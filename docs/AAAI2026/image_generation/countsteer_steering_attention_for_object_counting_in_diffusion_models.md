@@ -140,9 +140,9 @@ $$h_{t,b}' = h_{t,b} + \alpha_{t,b} \cdot s_{t,b}$$
 
 - [\[AAAI 2026\] Melodia: Training-Free Music Editing Guided by Attention Probing in Diffusion Models](melodia_training-free_music_editing_guided_by_attention_probing_in_diffusion_mod.md)
 - [\[CVPR 2026\] Precise Object and Effect Removal with Adaptive Target-Aware Attention](../../CVPR2026/image_generation/precise_object_and_effect_removal_with_adaptive_target-aware_attention.md)
+- [\[ICML 2026\] AdaEraser: Training-Free Object Removal via Adaptive Attention Suppression](../../ICML2026/image_generation/adaeraser_training-free_object_removal_via_adaptive_attention_suppression.md)
 - [\[ICML 2025\] ToMA: Token Merge with Attention for Diffusion Models](../../ICML2025/image_generation/toma_token_merge_with_attention_for_diffusion_models.md)
-- [\[CVPR 2026\] Attention, May I Have Your Decision? Localizing Generative Choices in Diffusion Models](../../CVPR2026/image_generation/attention_may_i_have_your_decision_localizing_generative_choices_in_diffusion_mo.md)
-- [\[AAAI 2026\] Steering One-Step Diffusion Model with Fidelity-Rich Decoder for Fast Image Compression](steering_one-step_diffusion_model_with_fidelity-rich_decoder_for_fast_image_comp.md)
+- [\[ECCV 2024\] AFreeCA: Annotation-Free Counting for All](../../ECCV2024/image_generation/afreeca_annotation-free_counting_for_all.md)
 
 </div>
 

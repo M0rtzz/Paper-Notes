@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 可解释性方向84篇论文解读
+  NeurIPS2025 可解释性方向83篇论文解读
 description: >-
-  84篇NeurIPS2025的可解释性方向论文解读，涵盖推理、LLM、多模态、模型压缩、布局/合成、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  83篇NeurIPS2025的可解释性方向论文解读，涵盖推理、LLM、多模态、模型压缩、布局/合成、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "可解释性"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**🧠 NeurIPS2025** · **84** 篇论文解读
+**🧠 NeurIPS2025** · **83** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (21)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (51)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (72)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (63)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (54)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
 
-🔥 **高频主题：** 推理 ×10 · LLM ×10 · 多模态 ×4 · 模型压缩 ×3 · 布局/合成 ×3
+🔥 **高频主题：** 推理 ×9 · LLM ×9 · 多模态 ×4 · 模型压缩 ×3 · 布局/合成 ×3
 
 **[A is for Absorption: Studying Feature Splitting and Absorption in Sparse Autoencoders](a_is_for_absorption_studying_feature_splitting_and_absorption_in_sparse_autoenco.md)**
 
@@ -260,10 +260,6 @@ tags:
 **[Saying the Unsaid: Revealing the Hidden Language of Multimodal Systems Through Telephone Games](saying_the_unsaid_revealing_the_hidden_language_of_multimodal_systems_through_te.md)**
 
 :   通过多轮"电话游戏"（图像→文本→图像循环）利用多模态系统的偏好偏差，量化系统隐含空间中概念间的连接强度（即"隐含语言"），贡献Telescope数据集（10,000+概念对），建立可在测试时扩展的多模态系统"世界地图"。
-
-**[scPilot: Large Language Model Reasoning Toward Automated Single-Cell Analysis and Discovery](scpilot_large_language_model_reasoning_toward_automated_single-cell_analysis_and.md)**
-
-:   提出 scPilot 框架和 scBench 基准，让LLM直接在单细胞RNA-seq数据上进行"组学原生推理"（读取标记基因→提出假设→调用工具验证→迭代修正），实现细胞类型标注准确率提升11%、轨迹推断graph-edit distance降低30%。
 
 **[Self-Supervised Contrastive Learning is Approximately Supervised Contrastive Learning](self-supervised_contrastive_learning_is_approximately_supervised_contrastive_lea.md)**
 

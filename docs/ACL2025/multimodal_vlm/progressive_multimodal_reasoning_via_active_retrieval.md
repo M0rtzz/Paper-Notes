@@ -142,11 +142,11 @@ AR-MCTS由两大核心组件构成：
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] PhysVLM-AVR: Active Visual Reasoning for Multimodal Large Language Models in Physical Environments](../../NeurIPS2025/multimodal_vlm/physvlm-avr_active_visual_reasoning_for_multimodal_large_language_models_in_phys.md)
 - [\[ACL 2025\] MegaPairs: Massive Data Synthesis For Universal Multimodal Retrieval](megapairs_massive_data_synthesis_for_universal_multimodal_retrieval.md)
+- [\[ICML 2026\] Spectral-Progressive Thought Flow for Lightweight Multimodal Reasoning](../../ICML2026/multimodal_vlm/spectral-progressive_thought_flow_for_lightweight_multimodal_reasoning.md)
 - [\[ICCV 2025\] Training-Free Personalization via Retrieval and Reasoning on Fingerprints](../../ICCV2025/multimodal_vlm/training-free_personalization_via_retrieval_and_reasoning_on_fingerprints.md)
+- [\[ACL 2025\] VisuoThink: Empowering LVLM Reasoning with Multimodal Tree Search](visuothink_empowering_lvlm_reasoning_with_multimodal_tree_search.md)
 - [\[ACL 2025\] OMGM: Orchestrate Multiple Granularities and Modalities for Efficient Multimodal Retrieval](omgm_orchestrate_multiple_granularities_and_modalities_for_efficient_multimodal_.md)
-- [\[ICCV 2025\] From Easy to Hard: The MIR Benchmark for Progressive Interleaved Multi-Image Reasoning](../../ICCV2025/multimodal_vlm/from_easy_to_hard_the_mir_benchmark_for_progressive_interleaved_multi-image_reas.md)
 
 </div>
 

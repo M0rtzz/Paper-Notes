@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ImageSentinel: Protecting Visual Datasets from Unauthorized Retrieval-Augmented Image Generation
 description: >-
-  [NeurIPS 2025][图像生成][检索增强图像生成] 提出 ImageSentinel 框架，通过合成与私有数据集视觉一致的哨兵图像（sentinel images）并绑定随机字符检索键…
+  [NeurIPS 2025][LLM安全][检索增强图像生成] 提出 ImageSentinel 框架，通过合成与私有数据集视觉一致的哨兵图像（sentinel images）并绑定随机字符检索键…
 tags:
   - "NeurIPS 2025"
-  - "图像生成"
+  - "LLM安全"
   - "检索增强图像生成"
   - "数据集保护"
   - "哨兵图像"
@@ -200,7 +200,7 @@ ImageSentinel 包含三个核心组件：**密钥生成**、**哨兵图像合成
 - [\[ACL 2025\] Automated Explanation Generation and Hallucination Detection for Heritage Image Retrieval](../../ACL2025/llm_safety/automated_explanation_generation_and_hallucination_detection_for_heritage_image_.md)
 - [\[ACL 2026\] Differentially Private Synthetic Text Generation for Retrieval-Augmented Generation (RAG)](../../ACL2026/llm_safety/differentially_private_synthetic_text_generation_for_retrieval-augmented_generat.md)
 - [\[AAAI 2026\] Privacy-protected Retrieval-Augmented Generation for Knowledge Graph Question Answering](../../AAAI2026/llm_safety/privacy-protected_retrieval-augmented_generation_for_knowledge_graph_question_an.md)
-- [\[NeurIPS 2025\] CPRet: A Dataset, Benchmark, and Model for Retrieval in Competitive Programming](cpret_a_dataset_benchmark_and_model_for_retrieval_in_competitive_programming.md)
+- [\[ACL 2026\] Beyond Explicit Refusals: Soft-Failure Attacks on Retrieval-Augmented Generation](../../ACL2026/llm_safety/beyond_explicit_refusals_soft-failure_attacks_on_retrieval-augmented_generation.md)
 
 </div>
 

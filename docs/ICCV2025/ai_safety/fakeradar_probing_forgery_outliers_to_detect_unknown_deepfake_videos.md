@@ -139,7 +139,7 @@ FakeRadar基于CLIP ViT-B/16冻结骨干网络，插入ST-Adapter进行参数高
 - [\[ICCV 2025\] Vulnerability-Aware Spatio-Temporal Learning for Generalizable Deepfake Video Detection](vulnerability-aware_spatio-temporal_learning_for_generalizable_deepfake_video_de.md)
 - [\[CVPR 2025\] Forensics Adapter: Adapting CLIP for Generalizable Face Forgery Detection](../../CVPR2025/ai_safety/forensics_adapter_adapting_clip_for_generalizable_face_forgery_detection.md)
 - [\[CVPR 2025\] Where the Devil Hides: Deepfake Detectors Can No Longer Be Trusted](../../CVPR2025/ai_safety/where_the_devil_hides_deepfake_detectors_can_no_longer_be_trusted.md)
-- [\[CVPR 2025\] Towards General Visual-Linguistic Face Forgery Detection](../../CVPR2025/ai_safety/towards_general_visual-linguistic_face_forgery_detection.md)
+- [\[ICML 2026\] Regret-Based Federated Causal Discovery with Unknown Interventions](../../ICML2026/ai_safety/regret-based_federated_causal_discovery_with_unknown_interventions.md)
 
 </div>
 

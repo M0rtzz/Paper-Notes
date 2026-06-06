@@ -149,7 +149,7 @@ $$\text{RFR}^{(l)}=\frac{\sum_{i}\sum_{r}e^{(l)}_{i,r}}{\sum_{i}|\mathcal{R}_{i}
 - [\[ACL 2025\] Disentangling Language and Culture for Evaluating Multilingual Large Language Models](../../ACL2025/multilingual_mt/disentangle_language_culture.md)
 - [\[NeurIPS 2025\] Exploring the Translation Mechanism of Large Language Models](exploring_the_translation_mechanism_of_large_language_models.md)
 - [\[ACL 2025\] MaXIFE: Multilingual and Cross-lingual Instruction Following Evaluation](../../ACL2025/multilingual_mt/maxife_multilingual_and_cross-lingual_instruction_following_evaluation.md)
-- [\[ACL 2025\] Do Large Language Models Have an English Accent? Evaluating and Improving the Naturalness of Multilingual LLMs](../../ACL2025/multilingual_mt/multilingual_llm_english_accent.md)
+- [\[NeurIPS 2025\] PolyMath: Evaluating Mathematical Reasoning in Multilingual Contexts](polymath_evaluating_mathematical_reasoning_in_multilingual_contexts.md)
 
 </div>
 

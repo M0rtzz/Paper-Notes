@@ -129,11 +129,11 @@ tags:
 
 ## 相关论文
 
+- [\[ACL 2026\] DraDDP: A Multimodal Multi-Party Dialogue Discourse Parsing Dataset](../../ACL2026/multimodal_vlm/draddp_a_multimodal_multi-party_dialogue_discourse_parsing_dataset.md)
 - [\[ACL 2025\] Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach](multimodal_coreference_resolution_for_chinese_social_media_dialogues_dataset_and.md)
 - [\[ACL 2025\] Speaking Beyond Language: A Large-Scale Multimodal Dataset for Learning Nonverbal Cues from Video-Grounded Dialogues](speaking_beyond_language.md)
 - [\[ACL 2025\] iNews: A Multimodal Dataset for Modeling Personalized Affective Responses to News](inews_a_multimodal_dataset_for_modeling_personalized_affective_responses_to_news.md)
 - [\[ACL 2025\] FinMME: Benchmark Dataset for Financial Multi-Modal Reasoning Evaluation](finmme_benchmark_dataset_for_financial_multi-modal_reasoning_evaluation.md)
-- [\[CVPR 2026\] EmoVerse: A MLLMs-Driven Emotion Representation Dataset for Interpretable Visual Emotion Analysis](../../CVPR2026/multimodal_vlm/emoverse_a_mllms-driven_emotion_representation_dataset_for_interpretable_visual_.md)
 
 </div>
 

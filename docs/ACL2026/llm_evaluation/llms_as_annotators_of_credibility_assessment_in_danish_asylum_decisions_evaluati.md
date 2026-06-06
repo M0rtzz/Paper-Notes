@@ -137,12 +137,6 @@ tags:
 - 写作质量: ⭐⭐⭐⭐⭐ 法律背景介绍清晰、Table 1 的真实丹麦案例翻译 + 标注示例非常直观、"哪些 case 难、为什么难"讲得透；Appendix 把 prompt 全文、regex、约束解码代码都附上，可复现度极高。
 - 价值: ⭐⭐⭐⭐ 为社科/法律领域用 LLM 做标注提供了可借鉴的方法论框架；RAB-Cred 数据集对 Danish NLP 社区是稀缺资源；缺点是结论 (prompt > model, ensemble 涨点) 在通用 LLM-as-annotator 语境里部分已知，迁移性可能不如方法论本身。
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">

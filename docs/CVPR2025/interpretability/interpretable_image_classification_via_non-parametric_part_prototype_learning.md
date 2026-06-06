@@ -126,7 +126,7 @@ Prototypical Part Networks（ProtoPNet）通过学习代表物体部件的原型
 - [\[NeurIPS 2025\] CHiQPM: Calibrated Hierarchical Interpretable Image Classification](../../NeurIPS2025/interpretability/chiqpm_calibrated_hierarchical_interpretable_image_classification.md)
 - [\[CVPR 2026\] DINO-QPM: Adapting Visual Foundation Models for Globally Interpretable Image Classification](../../CVPR2026/interpretability/dino-qpm_adapting_visual_foundation_models_for_globally_interpretable_image_clas.md)
 - [\[CVPR 2025\] On the Possible Detectability of Image-in-Image Steganography](on_the_possible_detectability_of_image-in-image_steganography.md)
-- [\[CVPR 2025\] Sample- and Parameter-Efficient Auto-Regressive Image Models](sample-_and_parameter-efficient_auto-regressive_image_models.md)
+- [\[ICML 2026\] Accurate Evaluation of Quickest Changepoint Detectors via Non-parametric Survival Analysis](../../ICML2026/interpretability/accurate_evaluation_of_quickest_changepoint_detectors_via_non-parametric_surviva.md)
 
 </div>
 

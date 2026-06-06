@@ -187,10 +187,10 @@ PopAlign的Reward Margins（70.2）远超Label-DPO（21.4），说明chosen和re
 ## 相关论文
 
 - [\[ACL 2025\] Towards Comprehensive Argument Analysis in Education: Dataset, Tasks, and Method](towards_comprehensive_argument_analysis_in_education_dataset_tasks_and_method.md)
+- [\[ICML 2026\] Return-to-Go is More Than a Number: Q-Guided Alignment for Return-Conditioned Supervised Learning](../../ICML2026/others/return-to-go_is_more_than_a_number_q-guided_alignment_for_return-conditioned_sup.md)
 - [\[ACL 2025\] GA-S3: Comprehensive Social Network Simulation with Group Agents](ga-s3_comprehensive_social_network_simulation_with_group_agents.md)
 - [\[ACL 2025\] ChildMandarin: A Comprehensive Mandarin Speech Dataset for Young Children Aged 3-5](childmandarin_a_comprehensive_mandarin_speech_dataset_for_young_children_aged_3-.md)
 - [\[ACL 2025\] RoToR: Towards More Reliable Responses for Order-Invariant Inputs](rotor_towards_more_reliable_responses_for_order-invariant_inputs.md)
-- [\[ACL 2025\] Model Extrapolation Expedites Alignment](expo_model_extrapolation.md)
 
 </div>
 

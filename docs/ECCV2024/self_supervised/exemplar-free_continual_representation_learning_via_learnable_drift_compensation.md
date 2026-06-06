@@ -144,7 +144,7 @@ $$y^* = \arg\min_{y=1,...,Y^t} \|f_\theta^t(x) - P_t^y\|$$
 - [\[ICCV 2025\] Scaling Language-Free Visual Representation Learning](../../ICCV2025/self_supervised/scaling_languagefree_visual_representation_learning.md)
 - [\[ECCV 2024\] PromptCCD: Learning Gaussian Mixture Prompt Pool for Continual Category Discovery](promptccd_learning_gaussian_mixture_prompt_pool_for_continual_category_discovery.md)
 - [\[ECCV 2024\] ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders](vic-mae_self-supervised_representation_learning_from_images_and_video_with_contr.md)
-- [\[ECCV 2024\] Self-supervised Video Copy Localization with Regional Token Representation](self-supervised_video_copy_localization_with_regional_token_representation.md)
+- [\[CVPR 2026\] Free-Grained Hierarchical Visual Recognition](../../CVPR2026/self_supervised/free-grained_hierarchical_visual_recognition.md)
 
 </div>
 

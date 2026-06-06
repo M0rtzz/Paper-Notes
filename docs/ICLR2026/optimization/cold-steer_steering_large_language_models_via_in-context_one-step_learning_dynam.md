@@ -135,8 +135,8 @@ tags:
 - [\[NeurIPS 2025\] Doubly Robust Alignment for Large Language Models](../../NeurIPS2025/optimization/doubly_robust_alignment_for_large_language_models.md)
 - [\[NeurIPS 2025\] Constrained Network Slice Assignment via Large Language Models](../../NeurIPS2025/optimization/constrained_network_slice_assignment_via_llms.md)
 - [\[ICML 2025\] Subspace Optimization for Large Language Models with Convergence Guarantees](../../ICML2025/optimization/subspace_optimization_for_large_language_models_with_convergence_guarantees.md)
-- [\[ICML 2025\] Training Dynamics of In-Context Learning in Linear Attention](../../ICML2025/optimization/training_dynamics_of_in-context_learning_in_linear_attention.md)
 - [\[NeurIPS 2025\] VERA: Variational Inference Framework for Jailbreaking Large Language Models](../../NeurIPS2025/optimization/vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
+- [\[ICLR 2026\] Exploring Diverse Generation Paths via Inference-time Stiefel Activation Steering](exploring_diverse_generation_paths_via_inference-time_stiefel_activation_steerin.md)
 
 </div>
 

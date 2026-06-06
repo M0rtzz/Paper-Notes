@@ -130,10 +130,10 @@ tags:
 
 ## 相关论文
 
-- [\[CVPR 2025\] LiVOS: Light Video Object Segmentation with Gated Linear Matching](livos_light_video_object_segmentation_with_gated_linear_matching.md)
-- [\[CVPR 2025\] Your ViT is Secretly an Image Segmentation Model](your_vit_is_secretly_an_image_segmentation_model.md)
-- [\[CVPR 2025\] Golden Cudgel Network for Real-Time Semantic Segmentation](golden_cudgel_network_for_real-time_semantic_segmentation.md)
+- [\[AAAI 2026\] Multigranular Evaluation for Brain Visual Decoding](../../AAAI2026/segmentation/multigranular_evaluation_for_brain_visual_decoding.md)
+- [\[NeurIPS 2025\] Torch-Uncertainty: A Deep Learning Framework for Uncertainty Quantification](../../NeurIPS2025/segmentation/torch-uncertainty_a_deep_learning_framework_for_uncertainty_quantification.md)
 - [\[CVPR 2025\] Show and Tell: Visually Explainable Deep Neural Nets via Spatially-Aware Concept Bottleneck Models](show_and_tell_visually_explainable_deep_neural_nets_via_spatially-aware_concept_.md)
+- [\[ICCV 2025\] Learn2Synth: Learning Optimal Data Synthesis Using Hypergradients for Brain Image Segmentation](../../ICCV2025/segmentation/learn2synth_learning_optimal_data_synthesis_using_hypergradients_for_brain_image.md)
 - [\[CVPR 2025\] DeCLIP: Decoupled Learning for Open-Vocabulary Dense Perception](declip_decoupled_learning_for_open-vocabulary_dense_perception.md)
 
 </div>

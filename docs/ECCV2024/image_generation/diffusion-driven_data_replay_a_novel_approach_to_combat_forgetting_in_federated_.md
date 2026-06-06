@@ -166,8 +166,8 @@ $$\mathcal{F}^* = \arg\min_\mathcal{F} \underbrace{\mathcal{L}_{CE}}_{\text{å½“å
 - [\[ECCV 2024\] Mutual Learning for Acoustic Matching and Dereverberation via Visual Scene-driven Diffusion](mutual_learning_for_acoustic_matching_and_dereverberation_via_visual_scene-drive.md)
 - [\[ICML 2025\] Autoencoder-Based Hybrid Replay for Class-Incremental Learning](../../ICML2025/image_generation/autoencoder-based_hybrid_replay_for_class-incremental_learning.md)
 - [\[ECCV 2024\] Idempotent Unsupervised Representation Learning for Skeleton-Based Action Recognition](idempotent_unsupervised_representation_learning_for_skeleton-based_action_recogn.md)
+- [\[ECCV 2024\] Toward Tiny and High-quality Facial Makeup with Data Amplify Learning](toward_tiny_and_high-quality_facial_makeup_with_data_amplify_learning.md)
 - [\[ECCV 2024\] Prompting Future Driven Diffusion Model for Hand Motion Prediction](prompting_future_driven_diffusion_model_for_hand_motion_prediction.md)
-- [\[ECCV 2024\] RodinHD: High-Fidelity 3D Avatar Generation with Diffusion Models](rodinhd_high-fidelity_3d_avatar_generation_with_diffusion_models.md)
 
 </div>
 

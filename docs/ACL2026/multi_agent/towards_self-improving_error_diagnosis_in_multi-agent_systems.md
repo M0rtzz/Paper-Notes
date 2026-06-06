@@ -2,11 +2,15 @@
 title: >-
   [论文解读] Towards Self-Improving Error Diagnosis in Multi-Agent Systems
 description: >-
-  [ACL 2026][llm_evaluation][待补充] 待深读论文后补充
+  [ACL 2026][多智能体][多智能体故障归因] 提出 ErrorProbe 框架，通过 MAST 分类驱动的结构化分解、症状驱动的后向追踪和验证式记忆机制，在多智能体系统中实现自改进的语义故障归因，尤其在步骤级错误定位上大幅超越基线。
 tags:
   - "ACL 2026"
-  - "llm_evaluation"
-  - "待补充"
+  - "多智能体"
+  - "多智能体故障归因"
+  - "错误定位"
+  - "自改进诊断"
+  - "验证记忆"
+  - "后向追踪"
 ---
 
 # Towards Self-Improving Error Diagnosis in Multi-Agent Systems
@@ -117,33 +121,19 @@ ErrorProbe 是一个无需训练的推理时框架。通过流式处理失败任
 - 新颖性: ⭐⭐⭐⭐ 验证式记忆和后向追踪的组合很有新意，但核心思路（多 Agent 协作诊断）不算全新
 - 实验充分度: ⭐⭐⭐⭐ 三个基准+三个模型+丰富消融+记忆缩放分析，较为充分
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述详细，但部分内容略显冗长
-**代码**: 待确认  
-**领域**: llm_evaluation  
-**关键词**: 待补充
 
-## 一句话总结
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 研究背景与动机
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 方法详解
-待深读论文后补充
+## 相关论文
 
-## 实验关键数据
-待深读论文后补充
+- [\[ACL 2026\] AgenticEval: Toward Agentic and Self-Evolving Safety Evaluation of Large Language Models](agenticeval_toward_agentic_and_self-evolving_safety_evaluation_of_large_language.md)
+- [\[ICML 2026\] MAS-Orchestra: Understanding and Improving Multi-Agent Reasoning Through Holistic Orchestration and Controlled Benchmarks](../../ICML2026/multi_agent/mas-orchestra_understanding_and_improving_multi-agent_reasoning_through_holistic.md)
+- [\[ACL 2026\] Conjunctive Prompt Attacks in Multi-Agent LLM Systems](conjunctive_prompt_attacks_in_multi-agent_llm_systems.md)
+- [\[ACL 2026\] CIA: Inferring the Communication Topology from LLM-based Multi-Agent Systems](cia_inferring_the_communication_topology_from_llm-based_multi-agent_systems.md)
+- [\[ACL 2026\] LLM-Based Human-Agent Collaboration and Interaction Systems: A Survey](llm-based_human-agent_collaboration_and_interaction_systems_a_survey.md)
 
-## 亮点与洞察
-待深读论文后补充
+</div>
 
-## 局限性 / 可改进方向
-待深读论文后补充
-
-## 相关工作与启发
-待深读论文后补充
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+<!-- RELATED:END -->

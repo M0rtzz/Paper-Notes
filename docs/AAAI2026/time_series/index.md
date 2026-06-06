@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 时间序列方向35篇论文解读
+  AAAI2026 时间序列方向36篇论文解读
 description: >-
-  35篇AAAI2026的时间序列方向论文解读，涵盖时序预测、LLM、Agent、多模态、扩散模型、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  36篇AAAI2026的时间序列方向论文解读，涵盖时序预测、LLM、Agent、多模态、扩散模型、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "时间序列"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📈 时间序列
 
-**🤖 AAAI2026** · **35** 篇论文解读
+**🤖 AAAI2026** · **36** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (10)](../../ICML2026/time_series/index.md) · [💬 ACL2026 (6)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/time_series/index.md) · [🧠 NeurIPS2025 (56)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (32)](../../ICML2026/time_series/index.md) · [💬 ACL2026 (7)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/time_series/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/time_series/index.md) · [🧠 NeurIPS2025 (56)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md)
 
-🔥 **高频主题：** 时序预测 ×25 · LLM ×2
+🔥 **高频主题：** 时序预测 ×26 · LLM ×2
 
 **[A Theoretical Analysis of Detecting Large Model-Generated Time Series](a_theoretical_analysis_of_detecting_large_model-generated_time_series.md)**
 
@@ -156,6 +156,10 @@ tags:
 **[Transparent Networks for Multivariate Time Series](transparent_networks_for_multivariate_time_series.md)**
 
 :   提出 GATSM（Generalized Additive Time Series Model），一种透明的时间序列神经网络模型，通过共享权重的特征网络学习特征表示并用带掩码的多头注意力捕捉时序模式，在保持完全可解释性的同时达到与 Transformer 等黑箱模型可比的性能。
+
+**[TSGDiff: Rethinking Synthetic Time Series Generation from a Pure Graph Perspective](tsgdiff_rethinking_synthetic_time_series_generation_from_a_pure_graph_perspectiv.md)**
+
+:   提出 TSGDiff，首次从纯图的视角重新审视时间序列生成任务，将时间序列表示为基于傅里叶频谱特征构建的动态图，在图的潜在空间中进行扩散建模，并提出 Topo-FID 指标评估生成时间序列的结构忠实度。
 
 **[Urban Incident Prediction with Graph Neural Networks: Integrating Government Ratings and Crowdsourced Reports](urban_incident_prediction_with_graph_neural_networks_integrating_government_rati.md)**
 

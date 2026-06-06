@@ -1,0 +1,133 @@
+---
+title: >-
+  [论文解读] Learning Molecular Chirality via Chiral Determinant Kernels
+description: >-
+  [ICLR2026][计算生物][分子手性] 提出手性行列式核(ChiDeK)来编码 SE(3) 不变的手性矩阵，首次在 GNN 框架中统一处理中心手性和轴向手性，结合交叉注意力传播立体化学信息，在新构建的轴向手性基准上准确率提升 >7%。
+tags:
+  - "ICLR2026"
+  - "计算生物"
+  - "分子手性"
+  - "手性行列式核"
+  - "等变图神经网络"
+  - "轴向手性"
+  - "SE(3)不变性"
+---
+
+# Learning Molecular Chirality via Chiral Determinant Kernels
+
+**会议**: ICLR2026  
+**arXiv**: [2602.07415](https://arxiv.org/abs/2602.07415)  
+**代码**: 待确认  
+**领域**: 计算生物
+**关键词**: 分子手性, 手性行列式核, 等变图神经网络, 轴向手性, SE(3)不变性  
+
+## 一句话总结
+提出手性行列式核(ChiDeK)来编码 SE(3) 不变的手性矩阵，首次在 GNN 框架中统一处理中心手性和轴向手性，结合交叉注意力传播立体化学信息，在新构建的轴向手性基准上准确率提升 >7%。
+
+## 研究背景与动机
+- 手性(chirality)是药物化学的核心概念：对映异构体化学式相同但3D结构互为镜像，生物活性可能截然不同（经典案例：沙利度胺的R构型为镇静剂、S构型致畸）
+- 现有GNN分子表征方法主要关注**中心手性**（四面体碳），但**轴向手性**（因联苯键等受限旋转产生）在药物化学中同样重要且更难建模
+- 传统方法用CIP规则（R/S标记）或手性体积来编码手性，存在两个问题：
+  1. 仅处理中心手性，忽略轴向手性
+  2. 手性体积(chiral volume)是SE(3)不变的标量，信息量有限
+- 需要一个统一框架同时捕获两种手性并保持SE(3)不变性
+
+## 方法详解
+
+### 整体框架
+给定分子 $\bm{z} = (\bm{X}, \bm{H})$（3D 坐标 + 原子特征），构建分子图 $\mathcal{G}$，将原子分为手性原子 $\mathcal{I}_c$、手性相关原子 $\mathcal{I}_r$ 和非手性原子 $\mathcal{I}_n$ 三类。流程：(1) Chiral Encoder 用行列式核计算手性原子的立体化学嵌入 + 三类原子各自的特征投影；(2) Chiral Transformer 用手性原子作 query、其他原子作 key/value 的交叉注意力传播手性信息；(3) Predictor 头做下游预测。
+
+### 关键设计
+1. **手性行列式核(Chiral Determinant Kernel)**：
+
+    - 构建手性矩阵 $\bm{M}_C(i)$：由手性原子 $i$ 的 4 个取代基的 3D 坐标构成 $3 \times 3$ 矩阵
+    - 经可学习投影 $\bm{W} \in \mathbb{R}^{k \times d_p \times 3}$ 变换后做 QR 分解，取 $\det(\bm{R})$ 作为行列式特征
+    - 关键性质：$\det(\bm{R}) = \alpha(\bm{W}) \cdot P_C(i)$，与原始手性积成正比，保持 SE(3) 不变性且对反射变号
+    - 输出 $k$ 维嵌入（$k$ 个行列式核），比标量手性体积信息量大 $k$ 倍
+
+2. **统一中心手性与轴向手性**：
+
+    - 中心手性：以四面体中心原子为核心，4 个邻居构建 $\bm{M}_C$
+    - 轴向手性：以旋转受限键为轴，两侧各取最近取代基原子构建 $\bm{M}_C$
+    - 两种手性用**完全相同的数学框架**统一处理
+
+3. **手性交叉注意力**：
+
+    - 手性原子嵌入作 query，手性相关原子和非手性原子分别投影为 key/value
+    - 加入 GKPT（Gaussian Kernel with Pair Type）距离偏置——区分手性-手性相关和手性-非手性两种原子对
+    - 堆叠 $L$ 层，逐层更新 pairwise bias
+
+### 损失函数 / 训练策略
+- 标准分类/回归损失 + 权重正则化 $\mathcal{L}_{reg} = \|W^\top W - I_3\|^2$ 确保投影矩阵满秩
+- 辅助 QR 分解：在投影前直接对权重矩阵做 QR 分解，保证列独立性
+- 多任务评估：R/S 分类（准确率）、对映体排序（准确率）、ECD 谱预测（RMSE）、旋光角预测（RMSE）
+
+## 实验关键数据
+
+### 主实验
+
+| 任务 | 指标 | ChiDeK | ChiGNN | SphereNet | 提升 |
+|------|------|--------|--------|-----------|------|
+| 中心手性 R/S 分类 | Acc↑ | 98.2% | 97.8% | 94.5% | +0.4% |
+| 对映体排序 | Acc↑ | 77.8% | 75.6% | 65.7% | +2.2% |
+| 中心手性 ECD (Position) | RMSE↓ | 2.75 | 3.21 | 3.85 | -14.3% |
+| **轴向手性 ECD** | RMSE↓ | **较强基线** | **N/A** | 较弱 | **>7%↑** |
+| **轴向手性 OR** | RMSE↓ | **较强基线** | **N/A** | 较弱 | **>7%↑** |
+
+### 消融实验
+
+| 配置 | R/S Acc | ECD RMSE | 说明 |
+|------|---------|----------|------|
+| ChiDeK 完整 | 98.2% | 2.75 | 行列式核 + 交叉注意力 |
+| w/o 行列式核（用手性体积标量） | 95.1% | 3.45 | 标量信息量不足 |
+| w/o 交叉注意力 | 96.0% | 3.12 | 手性信息无法传播到全分子 |
+| w/o GKPT 距离偏置 | 97.3% | 2.95 | 距离信息辅助作用明显 |
+
+### 关键发现
+- ChiDeK 在轴向手性任务上准确率比最强基线高 >7%——首次系统性评估轴向手性
+- 行列式核比标量手性体积提供更丰富的立体化学信息（消融验证）
+- 交叉注意力使手性信息不局限于手性中心，而是扩散影响整个分子表征
+- 权重正则化对训练稳定性至关重要——rank-deficient 的投影矩阵会导致手性信息完全丢失
+
+## 亮点与洞察
+- 首次在 GNN 框架中统一处理中心手性和轴向手性，概念突破明确——此前所有方法仅处理中心手性
+- 手性行列式核的数学设计优雅：SE(3) 不变性有严格证明（Proposition 3.1 + Lemma 3.1 + Lemma 4.1），不依赖经验近似
+- 构建 ACMP（Axial Chiral Molecular Properties）基准填补了轴向手性评测的空白，对社区有持续贡献价值
+- 交叉注意力机制使手性信息不局限于手性中心，而是通过 GKPT 距离偏置扩散影响全分子图
+- QR 分解保证了梯度可微性同时保持行列式的手性判别性——处理了 rank deficiency 的边界情况
+
+## 局限与展望
+- 轴向手性的识别需要先知道哪些键是旋转受限的，目前依赖化学知识/启发式规则——自动检测是重要方向
+- 仅在小分子上验证，蛋白质/多肽等大分子的手性建模未涉及——计算开销随手性中心数量增加
+- 与 3D 坐标预测任务（如构象生成）的结合未探索——ChiDeK 可否作为分子生成中的手性约束？
+- 更复杂的手性形式（如平面手性、螺旋手性）未覆盖，虽然理论框架可扩展
+
+## 相关工作与启发
+- **vs ChIRo**：ChIRo 学习对键旋转不变但对立体异构体敏感的 3D 表征，但仅处理中心手性；ChiDeK 统一处理中心和轴向两种手性
+- **vs ChiGNN**：ChiGNN 通过原子排列解析策略编码手性，但缺乏显式的定位手性描述符；ChiDeK 的行列式核提供了更丰富的特征
+- **vs SphereNet/DimeNet**：E(3)-不变模型无法区分对映体（距离和角度在镜像下不变）；ChiDeK 的行列式在反射下变号，天然区分对映体
+- **vs Tetra-DMPNN**：2D 图上的手性编码仅能用 R/S 标签等符号信息，缺少 3D 几何上下文
+- **ACMP 基准**：首个轴向手性分子性质预测基准，包含 ECD 和 OR 预测任务，填补了社区空白，预期将成为后续手性建模研究的标准评测
+- **启发**：行列式作为手性的数学表征，可能也适用于其他需区分镜像对称的几何深度学习任务（如晶体结构分类、手性纳米材料设计）
+
+## 评分
+- 新颖性: ⭐⭐⭐⭐⭐ (手性行列式核是全新概念，统一两种手性)
+- 实验充分度: ⭐⭐⭐⭐ (新基准+多任务验证，但缺大分子实验)
+- 写作质量: ⭐⭐⭐⭐ (数学推导严谨，化学动机清晰)
+- 价值: ⭐⭐⭐⭐ (对药物设计有实际意义，基准贡献持久)
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICML 2026\] Cross-Chirality Generalization by Axial Vectors for Hetero-Chiral Protein-Peptide Interaction Design](../../ICML2026/computational_biology/cross-chirality_generalization_by_axial_vectors_for_hetero-chiral_protein-peptid.md)
+- [\[ICLR 2026\] Enhancing Molecular Property Predictions by Learning from Bond Modelling and Interactions](enhancing_molecular_property_predictions_by_learning_from_bond_modelling_and_int.md)
+- [\[ICML 2026\] Learning the Neighborhood: Contrast-Free Multimodal Self-Supervised Molecular Graph Pretraining](../../ICML2026/computational_biology/learning_the_neighborhood_contrast-free_multimodal_self-supervised_molecular_gra.md)
+- [\[AAAI 2026\] Learning Cell-Aware Hierarchical Multi-Modal Representations for Robust Molecular Modeling](../../AAAI2026/computational_biology/learning_cell-aware_hierarchical_multi-modal_representations.md)
+- [\[ICLR 2026\] A Genetic Algorithm for Navigating Synthesizable Molecular Spaces](a_genetic_algorithm_for_navigating_synthesizable_molecular_spaces.md)
+
+</div>
+
+<!-- RELATED:END -->

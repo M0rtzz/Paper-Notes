@@ -164,8 +164,8 @@ $$\text{argmax}_a Q_{IE}^\pi = \text{argmax}_a Q_E^\pi \quad \forall \pi$$
 - [\[ICML 2025\] Automatic Reward Shaping from Confounded Offline Data](automatic_reward_shaping_from_confounded_offline_data.md)
 - [\[ICLR 2026\] MVR: Multi-view Video Reward Shaping for Reinforcement Learning](../../ICLR2026/reinforcement_learning/mvr_multi-view_video_reward_shaping_for_reinforcement_learning.md)
 - [\[ICML 2025\] Action-Constrained Imitation Learning](action-constrained_imitation_learning.md)
+- [\[ICML 2026\] One Bias After Another: Mechanistic Reward Shaping and Persistent Biases in Language Reward Models](../../ICML2026/reinforcement_learning/one_bias_after_another_mechanistic_reward_shaping_and_persistent_biases_in_langu.md)
 - [\[ICML 2025\] Gradual Transition from Bellman Optimality Operator to Bellman Operator in Online Reinforcement Learning](gradual_transition_from_bellman_optimality_operator_to_bellman_operator_in_onlin.md)
-- [\[ICML 2025\] Demystifying the Paradox of Importance Sampling with an Estimated History-Dependent Behavior Policy in Off-Policy Evaluation](demystifying_the_paradox_of_importance_sampling_with_an_estimated_history-depend.md)
 
 </div>
 

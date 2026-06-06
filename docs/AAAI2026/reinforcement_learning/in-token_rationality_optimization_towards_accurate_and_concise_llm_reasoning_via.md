@@ -177,10 +177,10 @@ $$w_{t,i} = \frac{\pi_\theta(z_t^i|x\oplus y, z_{<t})}{\pi_\theta(z_t^i|x, z_{<t
 ## 相关论文
 
 - [\[AAAI 2026\] Well Begun, Half Done: Reinforcement Learning with Prefix Optimization for LLM Reasoning](well_begun_half_done_reinforcement_learning_with_prefix_optimization_for_llm_rea.md)
+- [\[ICML 2026\] ORLoopBench: Solver-in-the-Loop Benchmarks for Self-Correction and Behavioral Rationality in Operations Research](../../ICML2026/reinforcement_learning/orloopbench_solver-in-the-loop_benchmarks_for_self-correction_and_behavioral_rat.md)
 - [\[AAAI 2026\] STELAR-Vision: Self-Topology-Aware Efficient Learning for Aligned Reasoning in Vision](stelar-vision_self-topology-aware_efficient_learning_for_aligned_reasoning_in_vi.md)
+- [\[ICML 2026\] Making Expert Reasoning Learnable with Self-Distillation](../../ICML2026/reinforcement_learning/making_expert_reasoning_learnable_with_self-distillation.md)
 - [\[AAAI 2026\] MARS: Multi-Agent Adaptive Reasoning with Socratic Guidance for Automated Prompt Optimization](mars_multi-agent_adaptive_reasoning_with_socratic_guidance_f.md)
-- [\[ICLR 2026\] Spotlight on Token Perception for Multimodal Reinforcement Learning](../../ICLR2026/reinforcement_learning/spotlight_on_token_perception_for_multimodal_reinforcement_learning.md)
-- [\[AAAI 2026\] G-UBS: Towards Robust Understanding of Implicit Feedback via Group-Aware User Behavior Simulation](g-ubs_towards_robust_understanding_of_implicit_feedback_via_group-aware_user_beh.md)
 
 </div>
 

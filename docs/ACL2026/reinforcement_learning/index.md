@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 强化学习方向34篇论文解读
+  ACL2026 强化学习方向44篇论文解读
 description: >-
-  34篇ACL2026的强化学习方向论文解读，涵盖强化学习、LLM、推理、对抗鲁棒、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  44篇ACL2026的强化学习方向论文解读，涵盖强化学习、LLM、推理、对抗鲁棒、多模态、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "强化学习"
@@ -12,16 +12,17 @@ tags:
   - "推理"
   - "对抗鲁棒"
   - "多模态"
+  - "对齐/RLHF"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎮 强化学习
 
-**💬 ACL2026** · **34** 篇论文解读
+**💬 ACL2026** · **44** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (20)](../../ICML2026/reinforcement_learning/index.md) · [📷 CVPR2026 (19)](../../CVPR2026/reinforcement_learning/index.md) · [🔬 ICLR2026 (138)](../../ICLR2026/reinforcement_learning/index.md) · [🤖 AAAI2026 (70)](../../AAAI2026/reinforcement_learning/index.md) · [🧠 NeurIPS2025 (172)](../../NeurIPS2025/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (94)](../../ICML2026/reinforcement_learning/index.md) · [📷 CVPR2026 (11)](../../CVPR2026/reinforcement_learning/index.md) · [🔬 ICLR2026 (138)](../../ICLR2026/reinforcement_learning/index.md) · [🤖 AAAI2026 (70)](../../AAAI2026/reinforcement_learning/index.md) · [🧠 NeurIPS2025 (171)](../../NeurIPS2025/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md)
 
-🔥 **高频主题：** 强化学习 ×16 · LLM ×8 · 推理 ×8 · 对抗鲁棒 ×2 · 多模态 ×2
+🔥 **高频主题：** 强化学习 ×21 · LLM ×10 · 推理 ×10 · 对抗鲁棒 ×2 · 多模态 ×2
 
 **[A Goal Without a Plan Is Just a Wish: Efficient and Effective Global Planner Training for Long-Horizon Agent Tasks (EAGLET)](a_goal_without_a_plan_is_just_a_wish_efficient_and_effective_global_planner_trai.md)**
 
@@ -59,6 +60,10 @@ tags:
 
 :   提出 CE-GPPO 算法，通过 stop-gradient 操作重新引入 PPO 裁剪区间外低概率 token 的梯度信号，实现对策略熵的精细化协调控制，在探索-利用之间取得更好平衡。
 
+**[Community-Aware Assessment of Social Textual Engagement and Resonance: A Human-Centric Perspective on User-Generated Content Evaluation](community-aware_assessment_of_social_textual_engagement_and_resonance_a_human-ce.md)**
+
+:   这篇论文提出 CASTER 任务与 CASTER-Bench，并用 MEDEA 通过 Social-CoT、SFT 和带 Social Alignment Reward 的过程监督强化学习来模拟社区反应，在 CASTER-Bench 上把 High-Quality F1 提升到 0.650、Macro-F1 提升到 0.749，显著优于传统 VQA 和通用 LMM 基线。
+
 **[Controlling Multimodal Conversational Agents with Coverage-Enhanced Latent Actions](controlling_multimodal_conversational_agents_with_coverage-enhanced_latent_actio.md)**
 
 :   提出为多模态对话智能体（MCA）构建紧凑的潜在动作空间来替代巨大的 token 动作空间进行 RL 微调，通过跨模态投影器和循环一致性损失利用配对图文数据和纯文本数据共同构建码本，将动作空间从 152K（词表大小）压缩到 128（码本大小），在两个对话任务上全面超越 token 级 RL 基线。
@@ -75,6 +80,14 @@ tags:
 
 :   作者提出"并行探索"新范式——agent 同步与 $K$ 个 environment 交互、跨轨迹共享经验，并给出对应的 RL 算法 **DPEPO**：先 SFT 冷启动学会并行 reasoning，再用"轨迹级成功 + 步级 Diverse Action / Diverse State Transition"分层奖励的 GRPO 训练，在 ALFWorld 与 ScienceWorld 全部 split 上拿下 SOTA（Qwen2.5-7B 上分别 98.2% / 61.4%），且在更大 $K$ 时 token 增长远低于"多采样"基线。
 
+**[Easy Samples Are All You Need: Self-Evolving LLMs via Data-Efficient Reinforcement Learning](easy_samples_are_all_you_need_self-evolving_llms_via_data-efficient_reinforcemen.md)**
+
+:   提出 EasyRL 框架，受认知发展理论启发，仅用10%的简单标注数据通过知识迁移初始化模型，再通过分治伪标注和由难度递进的自训练逐步掌握困难未标注数据，一致性超越全量数据监督的 GRPO。
+
+**[Efficient Hyperparameter Optimization for LLM Reinforcement Learning](efficient_hyperparameter_optimization_for_llm_reinforcement_learning.md)**
+
+:   本文提出 JF-HPO，把小型同族代理模型、训练步数保真度、训练动态早停和 checkpoint 复用合到一个 Bayesian HPO 框架中，用更低成本为 LLM 强化学习找到更稳的超参数，并在多个推理任务上优于 VeRL Recipe、Random Search 和 BOHB。
+
 **[EvoCoT: Overcoming the Exploration Bottleneck in Reinforcement Learning for LLMs](evocot_overcoming_the_exploration_bottleneck_in_reinforcement_learning.md)**
 
 :   本文提出 EvoCoT，一个两阶段自我进化的课程学习框架：先用最终答案约束 LLM 自生成可验证的 CoT 轨迹，再渐进地从尾部删除推理步骤，逐步扩大探索空间，从而在 sparse reward 的硬题上稳定训练 RLVR，不依赖任何教师模型或人写 CoT，就让 R1-Qwen-1.5B 在 MATH 训练集上的硬题正确率从 55.7 飙升到 87.8。
@@ -83,17 +96,41 @@ tags:
 
 :   FREIA 把自由能原理 (FEP) 引入无标签 RL 微调，用「共识 + 探索」自适应奖励 (FER) 和基于奖励分布偏度的自适应优势整形 (AAS) 同时解决传统多数投票 / 自信度 reward 的过早收敛和 advantage 估计在训练阶段错配两个问题，在 3 个推理任务、9 个数据集上达到与 supervised GRPO 持平甚至更好的水平。
 
+**[From Isolated Scoring to Collaborative Ranking: A Comparison-Native Framework for LLM-Based Paper Evaluation](from_isolated_scoring_to_collaborative_ranking_a_comparison-native_framework_for.md)**
+
+:   这篇论文把 LLM 论文评审从“单篇打绝对分”改成“成对比较再全局排序”，用语义图采样、比较式 SFT 与可验证奖励强化训练 7B 模型，在 ICLR-2025 论文排序和录用预测上显著超过 DeepReview-14B，并能迁移到多个未见会议。
+
 **[GeoRA: Geometry-Aware Low-Rank Adaptation for RLVR](geora_geometry-aware_low-rank_adaptation_for_rlvr.md)**
 
 :   本文提出 GeoRA，一种专为强化学习可验证奖励（RLVR）设计的低秩适配方法，通过构建几何约束矩阵（融合谱先验和欧几里得先验）提取 RL 更新子空间的主方向进行 SVD 初始化，同时冻结残差矩阵作为结构锚，在 1.5B-32B 参数的 Qwen/Llama 模型上，数学、医学和代码 RLVR 任务中一致超越 LoRA、PiSSA、MiLoRA 等基线，且具备更强的域外泛化和更少的能力遗忘。
+
+**[Glance-or-Gaze: Incentivizing LMMs to Adaptively Focus Search via Reinforcement Learning](glance-or-gaze_incentivizing_lmms_to_adaptively_focus_search_via_reinforcement_l.md)**
+
+:   这篇论文提出 Glance-or-Gaze (GoG)，让多模态大模型在回答知识密集型视觉问题时学会先看全图、再选择高价值区域精查，并通过 SFT + 复杂度自适应 GRPO 在 6 个视觉问答/搜索基准上显著优于直接回答、全量搜索和 MMSearch-R1 等基线。
+
+**[Good Reasoning Makes Good Demonstrations: Implicit Reasoning Quality Supervision via In-Context Reinforcement Learning](good_reasoning_makes_good_demonstrations_implicit_reasoning_quality_supervision_.md)**
+
+:   这篇论文指出 RLVR 不能区分“推理质量高的正确答案”和“碰巧答对的低质量推理”，并提出用示范的 in-context 教学效用 Evidence Gain 作为隐式质量信号，通过 In-Context RLVR 在不训练 PRM 的情况下提升数学推理准确率和推理质量。
+
+**[HEALing Entropy Collapse: Enhancing Exploration in Few-Shot RLVR via Hybrid-Domain Entropy Dynamics Alignment](healing_entropy_collapse_enhancing_exploration_in_few-shot_rlvr_via_hybrid-domai.md)**
+
+:   提出 HEAL 框架，通过混合通用领域数据和熵动态对齐（EDA）奖励机制解决少样本 RLVR 中的严重熵崩溃问题，仅用32个目标域样本即可匹配甚至超越使用1K样本的全量 RLVR 性能。
 
 **[ImpRIF: Stronger Implicit Reasoning Leads to Better Complex Instruction Following](imprif_stronger_implicit_reasoning_leads_to_better_complex_instruction_following.md)**
 
 :   ImpRIF 将复杂指令中的隐式推理结构形式化为可验证的显式推理图（ERG），基于此构建大规模单轮/多轮数据并通过 SFT+过程验证 RL 训练，使 4B-32B 模型在五个指令遵循基准上显著超越基座模型，32B 模型甚至超越部分大型商用模型。
 
+**[KASER: Knowledge-Aligned Student Error Simulator for Open-Ended Coding Tasks](kaser_knowledge-aligned_student_error_simulator_for_open-ended_coding_tasks.md)**
+
+:   KASER先估计学生对知识点的掌握度，再用GRPO和“代码相似度 + 错误匹配 + 多样性”混合奖励训练代码生成器，使其能模拟与学生知识状态一致的编程错误。
+
 **[KnowRL: Exploring Knowledgeable Reinforcement Learning for Factuality](knowrl_exploring_knowledgeable_reinforcement_learning_for_factuality.md)**
 
 :   KnowRL 把"原子事实校验"作为过程级奖励直接塞进 GRPO 训练循环，对慢思考模型的 CoT 每一步进行事实判定，同时用"拒答给正奖励"教模型识别自己的知识边界，在 SimpleQA Incorrect Rate 上直降 20.3% 的同时不损失（甚至略升）GPQA / AIME 等推理能力，并展现出英文知识 → 中文 QA 的跨语言迁移。
+
+**[LANG: Reinforcement Learning for Multilingual Reasoning with Language-Adaptive Hint Guidance](lang_reinforcement_learning_for_multilingual_reasoning_with_language-adaptive_hi.md)**
+
+:   LANG 用同语种推理 hint 启动多语言数学推理 RL，再通过余弦衰减和按语言难度自适应关停 hint，让模型在保持语言一致性的同时提升非英语推理准确率。
 
 **[LearnAlign: Data Selection for LLM Reinforcement Learning with Improved Gradient Alignment](learnalign_data_selection_for_llm_reinforcement_learning_with_improved_gradient_.md)**
 
@@ -134,6 +171,10 @@ tags:
 **[Targeted Exploration via Unified Entropy Control for Reinforcement Learning](targeted_exploration_via_unified_entropy_control_for_reinforcement_learning.md)**
 
 :   本文提出 UEC-RL，一个统一的双向熵控制框架，通过对困难 prompt 进行高温定向探索（增大熵）和通过经验回放稳定器巩固高质量轨迹（减小熵），解决 GRPO 中普遍存在的熵坍塌和训练不稳定问题，在 Geometry3K 上实现 37.9% 的相对提升。
+
+**[The Stackelberg Speaker: Optimizing Persuasive Communication in Social Deduction Games](the_stackelberg_speaker_optimizing_persuasive_communication_in_social_deduction_.md)**
+
+:   本文将社交推理游戏中的回合制对话建模为 Stackelberg 博弈，当前玩家作为 leader 通过度量下一玩家的响应分布来优化话语的说服力影响，使用 GRPO 训练 Refiner 模型在狼人杀、阿瓦隆等四个游戏基准上显著超越基线。
 
 **[Understanding Generalization in Role-Playing Models via Information Theory](understanding_generalization_in_role-playing_models_via_information_theory.md)**
 

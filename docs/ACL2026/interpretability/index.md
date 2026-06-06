@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 可解释性方向51篇论文解读
+  ACL2026 可解释性方向63篇论文解读
 description: >-
-  51篇ACL2026的可解释性方向论文解读，涵盖 LLM、推理、布局/合成、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  63篇ACL2026的可解释性方向论文解读，涵盖 LLM、推理、布局/合成、对齐/RLHF、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "可解释性"
@@ -11,21 +11,30 @@ tags:
   - "LLM"
   - "推理"
   - "布局/合成"
+  - "对齐/RLHF"
   - "多模态"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**💬 ACL2026** · **51** 篇论文解读
+**💬 ACL2026** · **63** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (21)](../../ICML2026/interpretability/index.md) · [📷 CVPR2026 (28)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (84)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (72)](../../ICML2026/interpretability/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (54)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
 
-🔥 **高频主题：** LLM ×13 · 推理 ×4 · 布局/合成 ×3 · 多模态 ×3
+🔥 **高频主题：** LLM ×16 · 推理 ×5 · 布局/合成 ×3 · 对齐/RLHF ×3 · 多模态 ×3
 
 **[A Structured Clustering Approach for Inducing Media Narratives](a_structured_clustering_approach_for_inducing_media_narratives.md)**
 
 :   提出一个从大规模新闻语料中自动归纳媒体叙事模式的框架，通过联合建模事件因果链和角色（英雄/威胁/受害者）信息，使用角色约束的聚类算法将叙事链组织成语义连贯的叙事模式，在移民和枪支控制两个领域生成了可解释且与框架理论一致的叙事模式。
+
+**[A Systematic Comparison between Extractive Self-Explanations and Human Rationales in Text Classification](a_systematic_comparison_between_extractive_self-explanations_and_human_rationale.md)**
+
+:   这篇论文系统比较了 4 个开源指令调优 LLM 在 3 类文本分类任务上生成的抽取式自解释与人类 rationale、后验归因方法之间的差异，发现自解释与人类标注的一致性强烈受文本长度和任务复杂度影响，但在扰动式 faithfulness 评测中，自解释往往能选出对模型预测更关键的 token 子集。
+
+**[AdaptiveK: Complexity-Driven Sparse Autoencoders for Interpretable Language Model Representations](adaptivek_complexity-driven_sparse_autoencoders_for_interpretable_language_model.md)**
+
+:   AdaptiveK 提出一种由输入语义复杂度驱动的 Sparse Autoencoder，让简单文本激活更少特征、复杂文本激活更多特征，在 8 个自回归 LLM 和附加架构实验上改善重构质量、概念解耦与训练效率，并减少固定 TopK 需要反复调参的问题。
 
 **[Aligning What LLMs Do and Say: Towards Self-Consistent Explanations](aligning_what_llms_do_and_say_towards_self-consistent_explanations.md)**
 
@@ -59,6 +68,18 @@ tags:
 
 :   发现并形式化了 LLM 工具调用中的"结构对齐偏差"——当查询属性可以有效映射到工具参数时（即使工具功能与用户目标无关），LLM 仍倾向调用该工具。构建 SABEval 数据集解耦结构对齐和语义相关性，用对比注意力归因揭示内部存在语义检查和结构匹配两条竞争路径，提出再平衡策略实现 80% 的相对错误减少。
 
+**[DPN-LE: Dual Personality Neuron Localization and Editing for Large Language Models](dpn-le_dual_personality_neuron_localization_and_editing_for_large_language_model.md)**
+
+:   这篇论文提出 DPN-LE，通过对比高/低人格特质样本的 MLP 激活来定位互斥的人格相关神经元，只干预约 0.5% 神经元即可实现人格控制，并比既有大规模神经元编辑更好地保留通用能力。
+
+**[Dual Alignment Between Language Model Layers and Human Sentence Processing](dual_alignment_between_language_model_layers_and_human_sentence_processing.md)**
+
+:   作者用 logit-lens 把 GPT-2/Pythia/OPT 共 19 个 LM 的每一层都解出"内部 surprisal"，发现一个反直觉的"双重对齐"：在自然阅读语料上**浅层**的 surprisal 最像人；但在 garden-path / NPS / NPZ / RC / Attachment 等**句法挑战句**上反而**深层**才像人，对应人类"shallow 默认 + 困难时切换到 deep 重分析"的双机制阅读模型——并由此提出用浅深层 surprisal 差（KL/JS）作为"层间预测更新量"来当 reading-time 的补充特征。
+
+**[Embracing Anisotropy: Turning Massive Activations into Interpretable Control Knobs for Large Language Models](embracing_anisotropy_turning_massive_activations_into_interpretable_control_knob.md)**
+
+:   本文把 LLM 中常被视为异常值的 massive activations 重新解释为可解释的领域关键维度，用无需训练的激活幅值准则识别这些维度，并只在这些维度上做 activation steering，从而在领域适配和 jailbreak 场景中比全维度 steering 更有效。
+
 **[Evian: Towards Explainable Visual Instruction-tuning Data Auditing](evian_towards_explainable_visual_instruction-tuning_data_auditing.md)**
 
 :   提出"分解-再评估"（Decomposition-then-Evaluation）范式和 EVIAN 框架，将视觉指令微调数据的回答分解为视觉描述、主观推理和事实声明三个组件，沿图文一致性、逻辑连贯性和事实准确性三个正交维度评估，发现用其筛选的少量高质量数据训练的模型优于大规模数据集训练的模型。
@@ -82,6 +103,10 @@ tags:
 **[Follow the Flow: On Information Flow Across Textual Tokens in Text-to-Image Models](follow_the_flow_on_information_flow_across_textual_tokens_in_text-to-image_model.md)**
 
 :   本文通过因果干预框架系统研究了文本到图像模型中文本编码器输出的 token 级信息分布，发现词汇项的语义通常集中在 1-2 个代表性 token 上，且跨项信息流在 11% 的情况下会导致语义泄漏和图像错误解读，并提出了简单有效的 token 级干预方法来改善对齐。
+
+**[From Documents to Segments: A Contextual Reformulation for Topic Assignment](from_documents_to_segments_a_contextual_reformulation_for_topic_assignment.md)**
+
+:   本文把主题分配的基本单位从 document 改成 segment，提出 SBTA 和 SemEval-STM 数据集，证明在多主题短文本中按语义片段分配主题能显著提升主题纯度、可解释性和下游检索可用性。
 
 **[From Interpretability to Performance: Optimizing Retrieval Heads for Long-Context Language Models](from_interpretability_to_performance_optimizing_retrieval_heads_for_long-context.md)**
 
@@ -119,6 +144,14 @@ tags:
 
 :   通过规则化问题分解方法构建可验证的中间推理链数据集，揭示 CoT 推理链的语义正确性与最终答案准确率不可靠地相关（正确链仅 28% 导致正确答案），且最可解释的推理链并非最提升性能的——冗长的 R1 链性能最优但用户评为最不可解释。
 
+**[Interpreting Style Representations via Style-Eliciting Prompts](interpreting_style_representations_via_style-eliciting_prompts.md)**
+
+:   这篇论文把难解释的文本风格向量解码成可直接驱动 LLM 写作的 style-eliciting prompts，用“可控制性”作为解释标准，在风格恢复、合成文本风格控制和人类文本风格模仿上都优于直接让 LLM 描述目标文本风格的基线。
+
+**[Interpreto: An Explainability Library for Transformers](interpreto_an_explainability_library_for_transformers.md)**
+
+:   Interpreto 是一个面向 HuggingFace 语言模型的开源 Python 可解释性库，把 token/word/sentence attribution 与 activation-level concept explanations 统一到一个 API 中，并提供 demo、教程、指标和端到端概念解释流水线。
+
 **[Investigating More Explainable and Partition-Free Compositionality Estimation for LLMs: A Rule-Generation Perspective](investigating_more_explainable_and_partition-free_compositionality_estimation_fo.md)**
 
 :   论文跳出"造测试集做组合泛化测试"的传统范式，让 LLM 直接为整个数据集生成一段 Python 程序作为映射规则，再用基于 Kolmogorov 复杂度上界的 $\mathcal{C}(\text{P})$ 把"程序的压缩度 + 正确率"折成 0–100 的组合性分数；从而把"看输出对不对"换成"看规则压得多紧"，既绕开了大模型预训练时已经"见过组合"的污染，又给出了可解释的内省式评估。
@@ -135,9 +168,21 @@ tags:
 
 :   VL-MDR 把"单标量黑盒"的判别式视觉语言奖励模型升级成"动态选维度 + 各维度打分 + 自适应加权"的三头架构，配合 321k 条带 21 维细粒度偏好标注的数据集，在 VL-RewardBench 上击败现有开源 RM，并能产出更高质量的 DPO 偏好对来缓解 VLM 幻觉。
 
+**[Letting Tutor Personas Speak Up for LLMs: Learning Steering Vectors from Dialogue via Preference Optimization](letting_tutor_personas_speak_up_for_llms_learning_steering_vectors_from_dialogue.md)**
+
+:   本文从真实师生对话中学习共享 steering direction 和导师专属缩放系数，让 LLM 在不显式写 persona prompt 的情况下生成更接近特定真人导师风格的辅导话语。
+
+**[Linear Probes Detect Task Format, Not Reasoning Mode in Language Model Hidden States](linear_probes_detect_task_format_not_reasoning_mode_in_language_model_hidden_sta.md)**
+
+:   这篇论文用 Qwen3-14B 上的探针、残差去混淆、trace-anchor 和 causal steering 实验证明：线性探针看似能 100% 区分演绎、归纳、溯因推理，但实际检测到的是数据源和题目格式，而不是隐藏状态中的推理模式。
+
 **[Lost in Translation? Exploring the Shift in Grammatical Gender from Latin to Occitan](lost_in_translation_exploring_the_shift_in_grammatical_gender_from_latin_to_occi.md)**
 
 :   针对中世纪奥克语这种低资源历史语言，作者搭了一套 mBERT + 混合分词 + 域适应 MLM 的可解释框架，把"原拉丁中性名词在奥克语里到底是男性还是女性"这个问题拆成词形线索 vs. 句法上下文两路证据来量化，发现后缀形态贡献最大单一信号、上下文（尤其冠词与形容词）能把宏 F1 从 0.665 推到 0.929。
+
+**[Make Mechanistic Interpretability Auditable: A Call to Develop Guidelines via Continuous Collaborative Reviewing](make_mechanistic_interpretability_auditable_a_call_to_develop_guidelines_via_con.md)**
+
+:   这是一篇 position paper，主张机制可解释性研究需要补上“可审计性”这一层，通过连续协作评审平台、社区精炼指南和源证据追踪系统，把零散复现、负结果和方法学批评沉淀成可用于安全关键场景的审计协议。
 
 **[Mechanisms of Prompt-Induced Hallucination in Vision–Language Models](mechanisms_of_prompt-induced_hallucination_in_vision-language_models.md)**
 
@@ -226,3 +271,7 @@ tags:
 **[Understanding or Memorizing? A Case Study of German Definite Articles in Language Models](understanding_or_memorizing_a_case_study_of_german_definite_articles_in_language.md)**
 
 :   本文利用 Gradiend 梯度可解释性方法研究语言模型预测德语定冠词（der/die/das/den/dem/des）时是基于抽象语法规则还是表层记忆，发现模型至少部分依赖记忆化关联而非严格的规则编码。
+
+**[为什么 LLM 在结构化知识上产生幻觉：推理过程的机制分析](why_llms_hallucinate_on_structured_knowledge_a_mechanistic_analysis_of_reasoning.md)**
+
+:   论文通过两个机制指标（结构捷径依赖 SSR 和语义对齐分数 SAS）揭示 LLM 在处理线性化结构化知识时产生幻觉的内部失败机制，并基于这些信号构建了一个轻量级的幻觉检测器。

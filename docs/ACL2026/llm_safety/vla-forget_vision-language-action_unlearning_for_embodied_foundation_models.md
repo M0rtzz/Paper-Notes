@@ -102,7 +102,7 @@ LoRA adapter 分阶段更新（先视觉→投影器→推理/动作），每阶
 - 作为近似遗忘方法，不提供认证擦除保证
 - 仅在 OpenVLA-7B 和 pi0fast-base 上验证，更大规模 VLA 模型待测试
 - 遗忘-保留的超参数（$\lambda_f, \lambda_m, \lambda_{feat}$）需要针对不同场景调优
-- 评估主要在模拟环境中进行，真实机器人部署验证待补充
+- 评估主要在模拟环境中进行，真实机器人部署验证仍需进一步开展
 - 未来可探索多轮交互遗忘和持续学习与遗忘的结合
 
 ## 相关工作与启发
@@ -116,3 +116,18 @@ LoRA adapter 分阶段更新（先视觉→投影器→推理/动作），每阶
 - 写作质量: ⭐⭐⭐⭐ 方法阐述清晰，三阶段流程逻辑性强
 - 价值: ⭐⭐⭐⭐ 随着 VLA 模型部署增多，安全遗忘将成为刚需
 
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2026\] ATAAT: Adaptive Threat-Aware Adversarial Tuning Framework against Backdoor Attacks on Vision-Language-Action Models](ataat_adaptive_threat-aware_adversarial_tuning_framework_against_backdoor_attack.md)
+- [\[ACL 2026\] Forget What Matters, Keep the Rest: Selective Unlearning of Informative Tokens](forget_what_matters_keep_the_rest_selective_unlearning_of_informative_tokens.md)
+- [\[CVPR 2026\] Designing to Forget: Deep Semi-parametric Models for Unlearning](../../CVPR2026/llm_safety/designing_to_forget_deep_semi-parametric_models_for_unlearning.md)
+- [\[CVPR 2026\] Which Concepts to Forget and How to Refuse? Decomposing Concepts for Continual Unlearning in Large Vision-Language Models](../../CVPR2026/llm_safety/which_concepts_to_forget_and_how_to_refuse_decomposing_concepts_for_continual_un.md)
+- [\[ICML 2026\] Forget to Know, Remember to Use: Context-Aware Unlearning for Large Language Models](../../ICML2026/llm_safety/forget_to_know_remember_to_use_context-aware_unlearning_for_large_language_model.md)
+
+</div>
+
+<!-- RELATED:END -->

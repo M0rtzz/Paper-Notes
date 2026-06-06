@@ -1,16 +1,16 @@
 ---
 title: >-
-  ACL2026 NLP 理解方向27篇论文解读
+  ACL2026 NLP 理解方向33篇论文解读
 description: >-
-  27篇ACL2026的 NLP 理解方向论文解读，涵盖 LLM、信息抽取、问答、推理、情感分析、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  33篇ACL2026的 NLP 理解方向论文解读，涵盖 LLM、问答、信息抽取、推理、情感分析、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "NLP 理解"
   - "论文解读"
   - "论文笔记"
   - "LLM"
-  - "信息抽取"
   - "问答"
+  - "信息抽取"
   - "推理"
   - "情感分析"
   - "少样本学习"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📖 NLP 理解
 
-**💬 ACL2026** · **27** 篇论文解读
+**💬 ACL2026** · **33** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🤖 AAAI2026 (2)](../../AAAI2026/nlp_understanding/index.md) · [🧠 NeurIPS2025 (2)](../../NeurIPS2025/nlp_understanding/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/nlp_understanding/index.md) · [🧪 ICML2025 (1)](../../ICML2025/nlp_understanding/index.md) · [💬 ACL2025 (30)](../../ACL2025/nlp_understanding/index.md) · [🎞️ ECCV2024 (1)](../../ECCV2024/nlp_understanding/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/nlp_understanding/index.md) · [🤖 AAAI2026 (2)](../../AAAI2026/nlp_understanding/index.md) · [🧠 NeurIPS2025 (2)](../../NeurIPS2025/nlp_understanding/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/nlp_understanding/index.md) · [🧪 ICML2025 (1)](../../ICML2025/nlp_understanding/index.md) · [💬 ACL2025 (30)](../../ACL2025/nlp_understanding/index.md)
 
-🔥 **高频主题：** LLM ×5 · 信息抽取 ×4 · 问答 ×3 · 推理 ×2 · 情感分析 ×2
+🔥 **高频主题：** LLM ×6 · 问答 ×5 · 信息抽取 ×4 · 推理 ×3 · 情感分析 ×2
 
 **[A Computational Method for Measuring "Open Codes" in Qualitative Analysis](a_computational_method_for_measuring_34open_codes34_in_qualitative_analysis.md)**
 
@@ -41,6 +41,10 @@ tags:
 
 :   将LiTEx推理分类法从"标签一致下的解释变异"扩展到"标签不一致"场景，发现标注者可能标签不同但推理类似，推理类别的一致性比标签一致性更好地反映解释的语义相似度。
 
+**[ASTRA: Adaptive Semantic Tree Reasoning Architecture for Complex Table Question Answering](astra_adaptive_semantic_tree_reasoning_architecture_for_complex_table_question_a.md)**
+
+:   ASTRA 把复杂表格自适应重构为语义树，再用文本树导航和符号代码执行双模式推理回答问题，在 AIT-QA、SSTQA 和 HiTab 上分别达到 91.6%、81.9% 和 90.1% 准确率，超过强 LLM 和已有表格结构化方法。
+
 **[Beyond Chunking: Discourse-Aware Hierarchical Retrieval for Long Document Question Answering](beyond_chunking_discourse-aware_hierarchical_retrieval_for_long_document_questio.md)**
 
 :   用修辞结构理论（RST）解析长文档的篇章结构，构建一棵句子级层级树并对中间节点做 LLM 摘要增强，最后在树上做结构感知的多粒度检索，使长文档 QA 在 QASPER / QuALITY / NarrativeQA / MultiFieldQA-zh 四个 benchmark 一致超越固定切块和 RAPTOR 语义聚类。
@@ -48,6 +52,10 @@ tags:
 **[BoundRL: Efficient Structured Text Segmentation through Reinforced Boundary Generation](boundrl_efficient_structured_text_segmentation_through_reinforced_boundary_gener.md)**
 
 :   BoundRL 将结构化文本分割重新定义为边界生成任务——仅生成每个片段的起始 token 而非完整文本，减少 90% 的输出 token 并消除幻觉风险，结合双目标奖励函数和选择性扰动策略的 RLVR 训练，使 1.7B 小模型超越了 Claude-4 Sonnet 的 few-shot 表现。
+
+**[Can LLMs Estimate Cognitive Complexity of Reading Comprehension Items?](can_llms_estimate_cognitive_complexity_of_reading_comprehension_items.md)**
+
+:   这篇论文构建 ReCo 阅读理解认知复杂度数据集，并系统评估 8 个 LLM 是否能自动判断题目所需的证据范围和表述转换层级，结果显示强模型能接近但仍明显低于专家，尤其不擅长识别完整证据集合和细粒度词序转换。
 
 **[Commonsense Knowledge with Negation: A Resource to Enhance Negation Understanding](commonsense_knowledge_with_negation_a_resource_to_enhance_negation_understanding.md)**
 
@@ -85,6 +93,10 @@ tags:
 
 :   本文提供了时序问答（TQA）的全面综述，提出了基于语料时间性、问题时间性和模型时间能力三个维度的统一分析框架，系统梳理了从规则管道到 Transformer/LLM 时代的 TQA 方法演进、基准数据集和评估策略，并识别了未来挑战。
 
+**[Knowledge-driven Augmentation and Retrieval for Integrative Temporal Adaptation](knowledge-driven_augmentation_and_retrieval_for_integrative_temporal_adaptation.md)**
+
+:   KARITA 把"时序漂移"拆成不确定性、特征距离和本体术语稀有度三种互补信号，对每个被命中的目标样本回溯检索语义相近的源样本，再用 LLM + 领域本体（MeSH / EuroVoc / CSO）生成同义词改写做数据增强，从而以纯数据驱动的方式把源时段模型迁移到未来时段，在临床、法律、科学三类长跨度多标签分类数据上稳定优于强基线。
+
 **[LexRel: Benchmarking Legal Relation Extraction for Chinese Civil Cases](lexrel_benchmarking_legal_relation_extraction_for_chinese_civil_cases.md)**
 
 :   构建了首个中国民事法律关系的结构化分类体系（9 大领域、265 种关系类型），并基于此提出 LexRel 基准（1,140 个专家标注样本），评估了主流 LLM 在法律关系抽取任务上的能力，发现当前模型在该任务上存在显著局限，同时证明了法律关系信息对下游法律 AI 任务的增益效果。
@@ -117,9 +129,17 @@ tags:
 
 :   提出基于推理的聚类精炼框架，将 LLM 作为语义判官（而非嵌入生成器）验证和重构无监督聚类的输出，通过一致性验证、冗余裁决和标签接地三个推理阶段，在社交媒体语料上显著提升聚类一致性和人类对齐的标注质量。
 
+**[Refining and Reusing Annotation Guidelines for LLM Annotation](refining_and_reusing_annotation_guidelines_for_llm_annotation.md)**
+
+:   这篇论文把传统人工标注项目中的 guideline reuse 和 moderation 流程迁移到 LLM 标注中，证明显式标注规范、推理型模型和少量 gold discrepancy 驱动的迭代规范细化，都能提升生物医学 NER 的严格 span+type F1。
+
 **[SAM-NER: Semantic Archetype Mediation for Zero-Shot Named Entity Recognition](sam-ner_semantic_archetype_mediation_for_zero-shot_named_entity_recognition.md)**
 
 :   SAM-NER 用“实体发现 → 14 类通用语义原型 → 目标类型定义校准”的三阶段中介框架缓解零样本 NER 的 schema drift，在 CrossNER 上取得 66.3 平均 micro-F1，超过一系列强基线。
+
+**[Semantic Reranking at Inference Time for Hard Examples in Rhetorical Role Labeling](semantic_reranking_at_inference_time_for_hard_examples_in_rhetorical_role_labeli.md)**
+
+:   提出 RiSE，一种推理时语义重排序框架，通过自动识别低置信度困难样本并利用对比学习的标签语义表示重排序模型输出，在 8 个修辞角色标注数据集上困难样本平均提升 +9.15 macro-F1。
 
 **[Table Question Answering in the Era of Large Language Models: A Comprehensive Survey](table_question_answering_in_the_era_of_large_language_models_a_comprehensive_sur.md)**
 
@@ -132,3 +152,7 @@ tags:
 **[The Imperfective Paradox in Large Language Models](the_imperfective_paradox_in_large_language_models.md)**
 
 :   这篇论文用新构造的 ImperfectiveNLI 诊断集检验 LLM 是否理解“正在做某事”不一定意味着“已经完成某事”，发现开源 LLM 普遍会把有目标事件误判为已完成，提示工程只能在减少完成幻觉和保留合法蕴含之间摇摆，真正问题在于推理阶段被目的论先验主导。
+
+**[新闻文本中的时间框架揭示](uncovering_temporal_framing_in_the_news.md)**
+
+:   本文提出了新闻文本中"时间框架"的概念——从社会科学理论出发，建立包含 8 类时间框架的分类体系，标注了英德双语新闻语料库，并用有监督和零样本两种方式训练模型进行时间框架检测。

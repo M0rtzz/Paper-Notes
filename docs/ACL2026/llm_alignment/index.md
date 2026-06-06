@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 对齐 / RLHF方向26篇论文解读
+  ACL2026 对齐 / RLHF方向30篇论文解读
 description: >-
-  26篇ACL2026的对齐 / RLHF 方向论文解读，涵盖 LLM、对齐/RLHF、个性化生成、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  30篇ACL2026的对齐 / RLHF 方向论文解读，涵盖 LLM、对齐/RLHF、个性化生成、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "对齐 / RLHF"
@@ -17,11 +17,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐 / RLHF
 
-**💬 ACL2026** · **26** 篇论文解读
+**💬 ACL2026** · **30** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (7)](../../ICML2026/llm_alignment/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (41)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (19)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/llm_alignment/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (40)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (18)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md)
 
-🔥 **高频主题：** LLM ×7 · 对齐/RLHF ×5 · 个性化生成 ×2 · 强化学习 ×2
+🔥 **高频主题：** LLM ×9 · 对齐/RLHF ×7 · 个性化生成 ×2 · 强化学习 ×2
 
 **[AgentV-RL: Scaling Reward Modeling with Agentic Verifier](agentv-rl_scaling_reward_modeling_with_agentic_verifier.md)**
 
@@ -31,6 +31,10 @@ tags:
 
 :   提出 Plan-RewardBench，一个面向复杂工具增强场景的轨迹级偏好基准，用于评估奖励模型在多步规划、工具使用和错误恢复等场景下区分优劣智能体轨迹的能力。
 
+**[Alignment Data Map for Efficient Preference Data Selection and Diagnosis](alignment_data_map_for_efficient_preference_data_selection_and_diagnosis.md)**
+
+:   提出 Alignment Data Map，一个通过联合考量回复质量(quality)和回复变异性(variability)来可视化、选择和诊断偏好数据的分析工具，仅用 33% 数据即可达到全量训练的对齐效果。
+
 **[ARES: Adaptive Red-Teaming and End-to-End Repair of Policy-Reward System](ares_adaptive_red-teaming_and_end-to-end_repair_of_policy-reward_system.md)**
 
 :   ARES 通过一个能动态组合「话题 / 人设 / 目标 / 战术」四元结构的 Safety Mentor 同时探测 Core LLM 和 Reward Model 的「系统性弱点」（两者同时失守），然后用先修 RM 再修策略的两阶段闭环把 RedTeam 安全率从 0.28 提到 0.96，几乎不损失通用能力。
@@ -38,6 +42,10 @@ tags:
 **[BACH-V: Bridging Abstract and Concrete Human-Values in Large Language Models](bach-v_bridging_abstract_and_concrete_human-values_in_large_language_models.md)**
 
 :   本文提出 abstraction-grounding 框架，把 LLM 的概念理解拆成"抽象-抽象 / 抽象-具体 / 具体-具体"三层，并用概念探针 + 激活引导在 6 个开源 LLM、10 个价值维度上证明：LLM 内部确实存在结构化的价值表示，能跨抽象层迁移、并因果地驱动具体决策。
+
+**[Better Literary Translation: A Multi-Aspect Data Generation and LLM Training Approach](better_literary_translation_a_multi-aspect_data_generation_and_llm_training_appr.md)**
+
+:   这篇论文把文学翻译质量拆成“表达流畅”和“文学效果”两个维度，用专门 LLM 反复生成高质量参考译文和偏好对，再用 SFT + 显式奖励模型 + GRPO 训练 LitMT，使 8B/14B 小模型在英译中文学翻译上接近甚至超过部分大模型。
 
 **[ConsistRM: Improving Generative Reward Models via Consistency-Aware Self-Training](consistrm_improving_generative_reward_models_via_consistency-aware_self-training.md)**
 
@@ -50,6 +58,10 @@ tags:
 **[How Value Induction Reshapes LLM Behaviour](how_value_induction_reshapes_llm_behaviour.md)**
 
 :   本文用价值标注后的偏好数据子集对 8 个开源 LLM (3 系) × 15 个价值做 DPO 微调，发现价值之间存在系统性串扰 —— 诱导一个值会同时强化或抑制其他相关 / 对立值，正面价值能提升安全性但所有价值都会让模型更"拟人化"，使输出更易被感知为阿谀。
+
+**[Large Language Models Are Overconfident in Their Own Responses](large_language_models_are_overconfident_in_their_own_responses.md)**
+
+:   这篇论文发现 instruction-tuned LLM 在评估“自己给出的答案”时存在显著 ownership bias，并提出把答案改写成用户输入再询问置信度的简单推理时策略，可在无需重训的情况下降低过度自信。
 
 **[MAESTRO: Meta-learning Adaptive Estimation of Scalarization Trade-offs for Reward Optimization](maestro_meta-learning_adaptive_estimation_of_scalarization_trade-offs_for_reward.md)**
 
@@ -83,13 +95,17 @@ tags:
 
 :   RbtAct 把作者 rebuttal 视为“哪些评审意见真的促成修改”的隐式监督，构建 7.5 万条 review-rebuttal 段级映射，并用 SFT+DPO 训练 8B 模型生成更具体、更可执行的论文评审反馈。
 
+**[S2H-DPO: Hardness-Aware Preference Optimization for Vision-Language Models](s2h-dpo_hardness-aware_preference_optimization_for_vision-language_models.md)**
+
+:   提出 Simple-to-Hard（S2H）DPO 框架，通过构建三个递进难度级别的多图偏好数据（定点推理→跨图比较→全局视觉搜索），系统性地提升 VLM 的多图推理能力，同时保持单图性能。
+
 **[SFTMix: Elevating Language Model Instruction Tuning with Mixup Recipe](sftmix_elevating_language_model_instruction_tuning_with_mixup_recipe.md)**
 
 :   本文提出 SFTMix，一种基于 Mixup 的指令微调方法，通过训练动态将 SFT 数据集分为高置信度和低置信度子集，在隐表示空间对两者进行线性插值并施加 Mixup 正则化，在不依赖高质量数据集的情况下，跨 LLM 家族和数据集规模一致性地提升指令遵循能力。
 
 **[Student Guides Teacher: Weak-to-Strong Inference via Spectral Orthogonal Exploration](student_guides_teacher_weak-to-strong_inference_via_spectral_orthogonal_explorat.md)**
 
-:   这篇论文把 LLM 推理失败解释为隐藏状态落入低秩 bias manifold，并提出 SOE：用弱学生模型生成与教师主导子空间正交的短 probe，再拼接回教师上下文，从而比普通 self-consistency 更有效地探索正确推理路径。
+:   本文把 LLM 在难题上反复沿同一错误逻辑采样的现象解释为隐藏状态低秩塌缩，并提出 Spectral Orthogonal Exploration (SOE)：用弱学生模型提供与教师当前 dominant subspace 正交的短 probe，迫使教师跳出原有 bias manifold，在 AIME/MATH/Olympiad 等难题子集上把 Pass@16 平均从 26.7% 提升到 45.9%。
 
 **[Taming Extreme Tokens: Covariance-Aware GRPO with Gaussian-Kernel Advantage Reweighting](taming_extreme_tokens_covariance-aware_grpo_with_gaussian-kernel_advantage_rewei.md)**
 

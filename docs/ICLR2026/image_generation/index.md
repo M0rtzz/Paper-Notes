@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 图像生成方向149篇论文解读
+  ICLR2026 图像生成方向144篇论文解读
 description: >-
-  149篇ICLR2026的图像生成方向论文解读，涵盖扩散模型、文生图、对齐/RLHF、布局/合成、对抗鲁棒、图像编辑等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  144篇ICLR2026的图像生成方向论文解读，涵盖扩散模型、文生图、布局/合成、对齐/RLHF、图像编辑、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICLR2026"
   - "图像生成"
@@ -10,20 +10,20 @@ tags:
   - "论文笔记"
   - "扩散模型"
   - "文生图"
-  - "对齐/RLHF"
   - "布局/合成"
-  - "对抗鲁棒"
+  - "对齐/RLHF"
   - "图像编辑"
+  - "对抗鲁棒"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🔬 ICLR2026** · **149** 篇论文解读
+**🔬 ICLR2026** · **144** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (2)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (209)](../../CVPR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (244)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (124)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (219)](../../CVPR2026/image_generation/index.md) · [🤖 AAAI2026 (77)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (235)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×48 · 文生图 ×10 · 对齐/RLHF ×7 · 布局/合成 ×6 · 对抗鲁棒 ×6
+🔥 **高频主题：** 扩散模型 ×46 · 文生图 ×10 · 布局/合成 ×6 · 对齐/RLHF ×6 · 图像编辑 ×6
 
 **[A Hidden Semantic Bottleneck in Conditional Embeddings of Diffusion Transformers](a_hidden_semantic_bottleneck_in_conditional_embeddings_of_diffusion_transformers.md)**
 
@@ -97,10 +97,6 @@ tags:
 
 :   揭示 T2I 模型中 ID 偏移的根本原因是"场景上下文化"（scene contextualization，场景 token 对 ID token 注入上下文信息），并提出 training-free 的 Scene De-Contextualization (SDeC) 方法，通过 SVD 特征值的方向稳定性分析识别并抑制 prompt embedding 中潜在的场景-ID 关联，实现逐场景的身份一致性生成。
 
-**[Contact-Guided 3D Genome Structure Generation of E. coli via Diffusion Transformers](contact-guided_3d_genome_structure_generation_of_e_coli_via_diffusion_transforme.md)**
-
-:   提出 DiffBacChrom——基于条件扩散 Transformer (CrossDiT) 从 Hi-C 接触图谱生成大肠杆菌三维基因组构象集合，通过 ResNet VAE 保持逐 bin 对齐的潜空间编码、Transformer 编码器 + 交叉注意力注入 Hi-C 条件、flow-matching 训练，生成的集合在距离衰减 P(s) 和 SCC 指标上与输入 Hi-C 高度一致，同时保持构象多样性。
-
 **[Contact Wasserstein Geodesics for Non-Conservative Schrödinger Bridges](contact_wasserstein_geodesics_for_non-conservative_schrödinger_bridges.md)**
 
 :   提出非守恒广义 Schrödinger 桥 (NCGSB)——基于接触哈密顿力学允许能量随时间变化，通过 Contact Wasserstein Geodesic (CWG) 将桥问题转化为有限维 Jacobi 度量上的测地线计算，用 ResNet 参数化实现近线性复杂度且支持引导生成，在流形导航、分子动力学、图像生成等任务上大幅超越迭代式 SB 求解器。
@@ -136,10 +132,6 @@ tags:
 **[DiffInk: Glyph- and Style-Aware Latent Diffusion Transformer for Text to Online Handwriting Generation](diffink_glyph-_and_style-aware_latent_diffusion_transformer_for_text_to_online_h.md)**
 
 :   提出 DiffInk，首个面向全行手写生成的潜在扩散 Transformer 框架，包含 InkVAE（通过 OCR + 风格分类双正则化学习结构化潜空间）和 InkDiT（在潜空间中做条件去噪生成），在中文手写生成上大幅超越 SOTA（AR 94.38% vs 91.48%），速度提升 800×。
-
-**[Diffusion Alignment as Variational Expectation-Maximization](diffusion_alignment_as_variational_expectation-maximization.md)**
-
-:   将扩散模型对齐形式化为变分 EM 算法：E-step 用 test-time search（soft Q 引导 + 重要性采样）探索高奖励多模态轨迹，M-step 通过 forward-KL 蒸馏将搜索结果写入模型参数，在图像生成和 DNA 序列设计上同时实现高奖励和高多样性。
 
 **[Diffusion Blend: Inference-Time Multi-Preference Alignment for Diffusion Models](diffusion_blend_inference-time_multi-preference_alignment_for_diffusion_models.md)**
 
@@ -489,10 +481,6 @@ tags:
 
 :   提出 DiME，一种沿扩散后验时间边缘积分的模型证据估计器，无需先验评分或密度评估，仅用少量后验样本（如 20 个）即可准确估计扩散模型先验下的模型证据，用于先验选择和模型验证。
 
-**[scDFM: Distributional Flow Matching for Robust Single-Cell Perturbation Prediction](scdfm_distributional_flow_matching_model_for_robust_single-cell_perturbation_pre.md)**
-
-:   提出 scDFM，基于条件流匹配（CFM）的生成式框架，通过 MMD 正则化保证分布级保真度，并设计 PAD-Transformer 骨干处理噪声稀疏的单细胞数据，在组合扰动预测上比最强基线 CellFlow 的 MSE 降低 19.6%。
-
 **[Seek-CAD: A Self-Refined Generative Modeling for 3D Parametric CAD Using Local Inference via DeepSeek](seek-cad_a_self-refined_generative_modeling_for_3d_parametric_cad_using_local_in.md)**
 
 :   提出 Seek-CAD，首个基于本地部署的推理 LLM（DeepSeek-R1）的无训练 CAD 参数化模型生成框架，通过分步视觉反馈与思维链 (CoT) 协同实现自我精炼，并设计新的 SSR 三元组设计范式支持复杂 CAD 模型生成。
@@ -597,10 +585,6 @@ tags:
 
 :   提出对抗序列生成方法验证生成式序列模型的隐式世界模型健全性，在国际象棋领域通过多种对抗策略（IMO/BSO/AD）系统评估，发现所有模型均不健全，但训练方法和数据集选择对健全性有显著影响，且线性棋盘状态探针在大多数模型中无因果作用。
 
-**[Verifier-Constrained Flow Expansion for Discovery Beyond the Data](verifier-constrained_flow_expansion_for_discovery_beyond_the_data.md)**
-
-:   提出Flow Expander (FE)，通过验证器约束的熵最大化在概率空间中扩展预训练流模型的覆盖范围，使其生成超越训练数据分布但保持有效性的设计样本，在分子构象设计中增加多样性同时保持化学有效性。
-
 **[VFScale: Intrinsic Reasoning through Verifier-Free Test-time Scalable Diffusion Model](vfscale_intrinsic_reasoning_through_verifier-free_test-time_scalable_diffusion_m.md)**
 
 :   VFScale提出无需外部验证器的测试时可缩放扩散模型，通过MRNCL损失和KL正则化改善能量景观使其内在能量函数可作为验证器，结合混合MCTS去噪实现高效搜索，在6×6训练的迷宫模型能解决88%的15×15迷宫，而标准扩散模型完全失败。
@@ -616,7 +600,3 @@ tags:
 **[When Scores Learn Geometry: Rate Separations under the Manifold Hypothesis](when_scores_learn_geometry_rate_separations_under_the_manifold_hypothesis.md)**
 
 :   在流形假设下揭示score学习中几何信息与分布信息的尺度分离现象——流形几何信息强度为 $\Theta(\sigma^{-2})$，比分布信息强 $O(\sigma^{-2})$ 倍，由此证明扩散模型的成功主要来自学习数据流形而非完整分布，并提出一行代码修改即可生成流形上的均匀分布。
-
-**[Zatom-1: A Multimodal Flow Foundation Model for 3D Molecules and Materials](zatom-1_a_multimodal_flow_foundation_model_for_3d_molecules_and_materials.md)**
-
-:   Zatom-1是首个端到端全开源的基础模型，通过多模态流匹配(multimodal flow matching)统一了3D分子和材料的生成建模与属性预测，使用标准Transformer架构在欧几里得空间直接建模离散原子类型和连续3D几何，实现了跨化学域的正迁移学习。

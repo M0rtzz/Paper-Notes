@@ -2,10 +2,10 @@
 title: >-
   [论文解读] MASFactory: A Graph-centric Framework for Orchestrating LLM-Based Multi-Agent Systems with Vibe Graphing
 description: >-
-  [ACL 2026][LLM 多智能体系统 / 图编排 / 工程框架][多智能体编排] MASFactory 把 LLM 多智能体系统建模成 Node / Edge 计算图，提出 "Vibe Graphing" 三阶段流水线（Role Assignment → Structure Design → Seman…
+  [ACL 2026][多智能体][多智能体编排] MASFactory 把 LLM 多智能体系统建模成 Node / Edge 计算图，提出 "Vibe Graphing" 三阶段流水线（Role Assignment → Structure Design → Semantic Completion）把自然语…
 tags:
   - "ACL 2026"
-  - "LLM 多智能体系统 / 图编排 / 工程框架"
+  - "多智能体"
   - "多智能体编排"
   - "Vibe Graphing"
   - "计算图"
@@ -142,11 +142,11 @@ Vibe Graphing 比 Vibe Coding 便宜约 10 倍，且 Vibe Coding 产物经常出
 
 ## 相关论文
 
-- [\[ACL 2026\] CIA: Inferring the Communication Topology from LLM-based Multi-Agent Systems](cia_inferring_the_communication_topology_from_llm-based_multi-agent_systems.md)
-- [\[ACL 2026\] To Trust or Not to Trust: Attention-Based Trust Management for LLM Multi-Agent Systems](to_trust_or_not_to_trust_attention-based_trust_management_for_llm_multi-agent_sy.md)
 - [\[ACL 2026\] BookAgent: Orchestrating Safety-Aware Visual Narratives via Multi-Agent Cognitive Calibration](bookagent_orchestrating_safety-aware_visual_narratives_via_multi-agent_cognitive.md)
-- [\[ACL 2026\] SILO-BENCH: A Scalable Environment for Evaluating Distributed Coordination in Multi-Agent LLM Systems](silo-bench_a_scalable_environment_for_evaluating_distributed_coordination_in_mul.md)
-- [\[ACL 2026\] MATA: Multi-Agent Framework for Reliable and Flexible Table Question Answering](mata_multi-agent_framework_for_reliable_and_flexible_table_question_answering.md)
+- [\[ACL 2026\] Conjunctive Prompt Attacks in Multi-Agent LLM Systems](conjunctive_prompt_attacks_in_multi-agent_llm_systems.md)
+- [\[ACL 2026\] CIA: Inferring the Communication Topology from LLM-based Multi-Agent Systems](cia_inferring_the_communication_topology_from_llm-based_multi-agent_systems.md)
+- [\[ACL 2026\] LLM-Based Human-Agent Collaboration and Interaction Systems: A Survey](llm-based_human-agent_collaboration_and_interaction_systems_a_survey.md)
+- [\[ACL 2026\] To Trust or Not to Trust: Attention-Based Trust Management for LLM Multi-Agent Systems](to_trust_or_not_to_trust_attention-based_trust_management_for_llm_multi-agent_sy.md)
 
 </div>
 

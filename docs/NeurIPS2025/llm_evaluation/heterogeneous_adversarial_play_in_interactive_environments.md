@@ -154,11 +154,11 @@ HAP 在 CRAFT Hard 任务上比 DreamerV3 高 15%。
 
 ## 相关论文
 
+- [\[ICML 2026\] Multi$^2$: Hierarchical Multi-Agent Decision-Making with LLM-Based Agents in Interactive Environments](../../ICML2026/llm_evaluation/multi2_hierarchical_multi-agent_decision-making_with_llm-based_agents_in_interac.md)
 - [\[NeurIPS 2025\] Small Language Models as Compiler Experts: Auto-Parallelization for Heterogeneous Systems](small_language_models_as_compiler_experts_auto-parallelization_for_heterogeneous.md)
 - [\[ICML 2025\] Cooperation of Experts: Fusing Heterogeneous Information with Large Margin](../../ICML2025/llm_evaluation/cooperation_of_experts_fusing_heterogeneous_information_with_large_margin.md)
 - [\[ICML 2025\] Provably Cost-Sensitive Adversarial Defense via Randomized Smoothing](../../ICML2025/llm_evaluation/provably_cost-sensitive_adversarial_defense_via_randomized_smoothing.md)
 - [\[ICML 2025\] IBDR: Promoting Ensemble Diversity with Interactive Bayesian Distributional Robustness](../../ICML2025/llm_evaluation/promoting_ensemble_diversity_with_interactive_bayesian_distributional_robustness.md)
-- [\[ICML 2025\] EnIGMA: Interactive Tools Substantially Assist LM Agents in Finding Security Vulnerabilities](../../ICML2025/llm_evaluation/enigma_interactive_tools_substantially_assist_lm_agents_in_finding_security_vuln.md)
 
 </div>
 

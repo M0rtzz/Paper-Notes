@@ -2,10 +2,10 @@
 title: >-
   [论文解读] A Statistical and Multi-Perspective Revisiting of the Membership Inference Attack in Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][成员推断攻击] 本文通过数千次实验从统计视角全面重新审视 LLM 中的成员推断攻击（MIA），从数据分割方式、模型规模、领域特性、文本特征、嵌入可分性和解码动态六个维度分析 MIA 性能的不一致性，揭示了阈值泛化、文本长度/相似性影响、嵌入层涌现变化等此前被忽视的发现。
+  [ACL 2025][LLM安全][成员推断攻击] 本文通过数千次实验从统计视角全面重新审视 LLM 中的成员推断攻击（MIA），从数据分割方式、模型规模、领域特性、文本特征、嵌入可分性和解码动态六个维度分析 MIA 性能的不一致性，揭示了阈值泛化、文本长度/相似性影响、嵌入层涌现变化等此前被忽视的发现。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM安全"
   - "成员推断攻击"
   - "大语言模型"
   - "数据隐私"

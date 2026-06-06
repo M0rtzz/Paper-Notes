@@ -128,7 +128,7 @@ tags:
 - [\[ICCV 2025\] Soft Separation and Distillation: Toward Global Uniformity in Federated Unsupervised Learning](soft_separation_and_distillation_toward_global_uniformity_in_federated_unsupervi.md)
 - [\[ECCV 2024\] Improving Knowledge Distillation via Regularizing Feature Direction and Norm](../../ECCV2024/model_compression/improving_knowledge_distillation_via_regularizing_feature_direction_and_norm.md)
 - [\[ECCV 2024\] Anytime Continual Learning for Open Vocabulary Classification](../../ECCV2024/model_compression/anytime_continual_learning_for_open_vocabulary_classification.md)
-- [\[ICCV 2025\] Knowledge Distillation with Refined Logits](knowledge_distillation_with_refined_logits.md)
+- [\[CVPR 2025\] DELT: A Simple Diversity-driven EarlyLate Training for Dataset Distillation](../../CVPR2025/model_compression/delt_a_simple_diversity-driven_earlylate_training_for_dataset_distillation.md)
 
 </div>
 

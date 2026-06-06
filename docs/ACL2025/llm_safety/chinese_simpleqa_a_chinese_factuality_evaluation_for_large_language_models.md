@@ -233,8 +233,8 @@ Claude-3.5-Sonnet 拒绝率最高（27.4%），但也因此避免了大量错误
 - [\[ACL 2025\] UAlign: Leveraging Uncertainty Estimations for Factuality Alignment on Large Language Models](ualign_leveraging_uncertainty_estimations_for_factuality_alignment_on_large_lang.md)
 - [\[ACL 2025\] Ensemble Watermarks for Large Language Models](ensemble_watermarks_llm.md)
 - [\[ACL 2025\] Real-time Factuality Assessment from Adversarial Feedback](real-time_factuality_assessment_from_adversarial_feedback.md)
-- [\[ACL 2025\] ReLearn: Unlearning via Learning for Large Language Models](relearn_unlearning_via_learning_for_large_language_models.md)
-- [\[ACL 2025\] Improved Unbiased Watermark for Large Language Models](improved_unbiased_watermark_for_large_language.md)
+- [\[ACL 2025\] Ewe: Improving Factuality with Explicit Working Memory](improving_factuality_with_explicit_working_memory.md)
+- [\[ACL 2026\] Permutation-Consensus Listwise Judging for Robust Factuality Evaluation](../../ACL2026/llm_safety/permutation-consensus_listwise_judging_for_robust_factuality_evaluation.md)
 
 </div>
 

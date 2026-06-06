@@ -145,8 +145,8 @@ DocOwl2的编码流程：高分辨率图片 → Shape-adaptive Cropping切为$R 
 
 - [\[CVPR 2025\] Understanding Multi-layered Transmission Matrices](../../CVPR2025/model_compression/understanding_multi-layered_transmission_matrices.md)
 - [\[ICML 2026\] Hierarchical Image Tokenization for Multi-Scale Image Super Resolution](../../ICML2026/model_compression/hierarchical_image_tokenization_for_multi-scale_image_super_resolution.md)
-- [\[ACL 2025\] TaDA: Training-free recipe for Decoding with Adaptive KV Cache Compression and Mean-centering](tada_training-free_recipe_for_decoding_with_adaptive_kv_cache_compression_and_me.md)
 - [\[ICCV 2025\] Variance-Based Pruning for Accelerating and Compressing Trained Networks](../../ICCV2025/model_compression/variance-based_pruning_for_accelerating_and_compressing_trained_networks.md)
+- [\[ACL 2025\] TaDA: Training-free recipe for Decoding with Adaptive KV Cache Compression and Mean-centering](tada_training-free_recipe_for_decoding_with_adaptive_kv_cache_compression_and_me.md)
 - [\[NeurIPS 2025\] AdmTree: Compressing Lengthy Context with Adaptive Semantic Trees](../../NeurIPS2025/model_compression/admtree_compressing_lengthy_context_with_adaptive_semantic_trees.md)
 
 </div>

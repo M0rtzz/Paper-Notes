@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 优化/理论方向56篇论文解读
+  ICML2025 优化/理论方向57篇论文解读
 description: >-
-  56篇ICML2025的优化/理论方向论文解读，涵盖联邦学习、布局/合成、对抗鲁棒、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  57篇ICML2025的优化/理论方向论文解读，涵盖联邦学习、布局/合成、对抗鲁棒、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "优化/理论"
@@ -17,9 +17,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**🧪 ICML2025** · **56** 篇论文解读
+**🧪 ICML2025** · **57** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/optimization/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (44)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (22)](../../AAAI2026/optimization/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (60)](../../ICML2026/optimization/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (44)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (21)](../../AAAI2026/optimization/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md)
 
 🔥 **高频主题：** 联邦学习 ×4 · 布局/合成 ×2 · 对抗鲁棒 ×2 · LLM ×2
 
@@ -154,6 +154,10 @@ tags:
 **[MetaAgent: Automatically Constructing Multi-Agent Systems Based on Finite State Machines](metaagent_automatically_constructing_multi-agent_systems_based_on_finite_state_m.md)**
 
 :   提出 MetaAgent，一个基于有限状态机（FSM）的框架，给定任务描述即可自动设计多智能体系统，无需外部训练数据，支持工具调用和状态回溯，在文本任务、ML 任务和软件开发任务上超越现有自动设计方法并逼近人工设计系统性能。
+
+**[Multivariate Conformal Selection](multivariate_conformal_selection.md)**
+
+:   将 Conformal Selection 从单变量响应推广到多变量设定，提出区域单调性 (Regional Monotonicity) 概念，设计距离型 (mCS-dist) 和学习型 (mCS-learn) 两种非一致性分数，在有限样本下保证 FDR 控制并提升选择功效。
 
 **[Nearly Optimal Sample Complexity for Learning with Label Proportions](nearly_optimal_sample_complexity_for_learning_with_label_proportions.md)**
 

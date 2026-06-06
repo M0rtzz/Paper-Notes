@@ -124,8 +124,8 @@ GeoDe 包含三个步骤：(1) 在源数据 D0 上测试基座模型，按回答
 - [\[ACL 2026\] Into the Gray Zone: Domain Contexts Can Blur LLM Safety Boundaries](into_the_gray_zone_domain_contexts_can_blur_llm_safety_boundaries.md)
 - [\[ACL 2026\] CURaTE: Continual Unlearning in Real Time with Ensured Preservation of LLM Knowledge](curate_continual_unlearning_in_real_time_with_ensured_preservation_of_llm_knowle.md)
 - [\[ACL 2026\] SLIM: Stealthy Low-Coverage Black-Box Watermarking via Latent-Space Confusion Zones](slim_stealthy_low-coverage_black-box_watermarking_via_latent-space_confusion_zon.md)
-- [\[ACL 2025\] Alleviating Hallucinations from Knowledge Misalignment in Large Language Models via Selective Abstention Learning](../../ACL2025/llm_safety/alleviating_hallucinations_from_knowledge_misalignment_in_large_language_models_.md)
 - [\[ICML 2026\] REALISTA: Realistic Latent Adversarial Attacks that Elicit LLM Hallucinations](../../ICML2026/llm_safety/realista_realistic_latent_adversarial_attacks_that_elicit_llm_hallucinations.md)
+- [\[ACL 2025\] Alleviating Hallucinations from Knowledge Misalignment in Large Language Models via Selective Abstention Learning](../../ACL2025/llm_safety/alleviating_hallucinations_from_knowledge_misalignment_in_large_language_models_.md)
 
 </div>
 

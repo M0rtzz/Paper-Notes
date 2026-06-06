@@ -119,9 +119,9 @@ tags:
 ## 相关论文
 
 - [\[AAAI 2026\] Do LLMs Really Struggle at NL-FOL Translation? Revealing Their Strengths via a Novel Benchmarking Strategy](../../AAAI2026/robotics/do_llms_really_struggle_at_nl-fol_translation_revealing_their_strengths_via_a_no.md)
-- [\[ACL 2026\] Why Are We Moral? An LLM-based Agent Simulation Approach to Study Moral Evolution](../../ACL2026/robotics/why_are_we_moral_an_llm-based_agent_simulation_approach_to_study_moral_evolution.md)
 - [\[ACL 2025\] DRAE: Dynamic Retrieval-Augmented Expert Networks for Lifelong Learning and Task Adaptation in Robotics](drae_dynamic_retrieval-augmented_expert_networks_for_lifelong_learning_and_task_.md)
 - [\[AAAI 2026\] Dexterous Manipulation Transfer via Progressive Kinematic-Dynamic Alignment](../../AAAI2026/robotics/dexterous_manipulation_transfer_via_progressive_kinematic-dynamic_alignment.md)
+- [\[NeurIPS 2025\] LLM World Models Are Mental: Output Layer Evidence of Brittle World Model Use in LLM Mechanical Reasoning](../../NeurIPS2025/robotics/llm_world_models_are_mental_output_layer_evidence_of_brittle_world_model_use_in_.md)
 - [\[ACL 2025\] SELF-PERCEPT: Introspection Improves LLMs' Detection of Multi-Person Mental Manipulation in Conversations](self_percept_manipulation_detection.md)
 
 </div>

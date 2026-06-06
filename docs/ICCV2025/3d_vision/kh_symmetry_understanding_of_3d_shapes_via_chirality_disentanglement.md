@@ -138,7 +138,7 @@ $$\mathcal{L}_{fif} = \frac{1}{|V|}(\frac{|\chi^\top\mathbf{1}_{|V|}|}{\|\chi\|_
 - [\[ICCV 2025\] Representing 3D Shapes with 64 Latent Vectors for 3D Diffusion Models](representing_3d_shapes_with_64_latent_vectors_for_3d_diffusion_models.md)
 - [\[ICCV 2025\] DMesh++: An Efficient Differentiable Mesh for Complex Shapes](dmesh_an_efficient_differentiable_mesh_for_complex_shapes.md)
 - [\[ICCV 2025\] NeuraLeaf: Neural Parametric Leaf Models with Shape and Deformation Disentanglement](neuraleaf_neural_parametric_leaf_models_with_shape_and_deformation_disentangleme.md)
-- [\[ICCV 2025\] Open-Vocabulary Octree-Graph for 3D Scene Understanding](open-vocabulary_octree-graph_for_3d_scene_understanding.md)
+- [\[ICCV 2025\] HIS-GPT: Towards 3D Human-In-Scene Multimodal Understanding](his-gpt_towards_3d_human-in-scene_multimodal_understanding.md)
 
 </div>
 

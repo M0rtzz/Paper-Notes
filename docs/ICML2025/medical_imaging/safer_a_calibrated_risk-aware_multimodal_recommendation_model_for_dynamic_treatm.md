@@ -125,7 +125,7 @@ $$\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}(1 - \hat{\kappa}_i)\sum_{l=1}^{L} y_i
 - [\[ICML 2025\] Context Matters: Query-aware Dynamic Long Sequence Modeling of Gigapixel Images](context_matters_query-aware_dynamic_long_sequence_modeling_of_gigapixel_images.md)
 - [\[ICML 2025\] I2MoE: Interpretable Multimodal Interaction-aware Mixture-of-Experts](i2moe_interpretable_multimodal_interaction-aware_mixture-of-experts.md)
 - [\[NeurIPS 2025\] Brain Harmony: A Multimodal Foundation Model Unifying Morphology and Function into 1D Tokens](../../NeurIPS2025/medical_imaging/brain_harmony_a_multimodal_foundation_model_unifying_morphology_and_function_int.md)
-- [\[ICLR 2026\] Inference-Time Dynamic Modality Selection for Incomplete Multimodal Classification](../../ICLR2026/medical_imaging/inference-time_dynamic_modality_selection_for_incomplete_multimodal_classificati.md)
+- [\[ACL 2026\] Reliable Automated Triage in Spanish Clinical Notes: A Hybrid Framework for Risk-Aware HIV Suspicion Identification](../../ACL2026/medical_imaging/reliable_automated_triage_in_spanish_clinical_notes_a_hybrid_framework_for_risk-.md)
 
 </div>
 

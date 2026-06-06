@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 推荐系统方向19篇论文解读
+  ACL2026 推荐系统方向21篇论文解读
 description: >-
-  19篇ACL2026的推荐系统方向论文解读，涵盖推荐系统、个性化生成、对话系统、推理、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  21篇ACL2026的推荐系统方向论文解读，涵盖推荐系统、个性化生成、对话系统、推理、RAG、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "推荐系统"
@@ -11,21 +11,26 @@ tags:
   - "个性化生成"
   - "对话系统"
   - "推理"
+  - "RAG"
   - "LLM"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎁 推荐系统
 
-**💬 ACL2026** · **19** 篇论文解读
+**💬 ACL2026** · **21** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/recommender/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/recommender/index.md) · [🤖 AAAI2026 (26)](../../AAAI2026/recommender/index.md) · [🧠 NeurIPS2025 (24)](../../NeurIPS2025/recommender/index.md) · [🧪 ICML2025 (17)](../../ICML2025/recommender/index.md) · [💬 ACL2025 (7)](../../ACL2025/recommender/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (11)](../../ICML2026/recommender/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/recommender/index.md) · [🤖 AAAI2026 (26)](../../AAAI2026/recommender/index.md) · [🧠 NeurIPS2025 (24)](../../NeurIPS2025/recommender/index.md) · [🧪 ICML2025 (17)](../../ICML2025/recommender/index.md) · [💬 ACL2025 (7)](../../ACL2025/recommender/index.md)
 
-🔥 **高频主题：** 推荐系统 ×11 · 个性化生成 ×4 · 对话系统 ×4 · 推理 ×3 · LLM ×2
+🔥 **高频主题：** 推荐系统 ×11 · 个性化生成 ×5 · 对话系统 ×4 · 推理 ×3 · RAG ×2
 
 **[Bridging Language and Items for Retrieval and Recommendation: Benchmarking LLMs as Semantic Encoders](bridging_language_and_items_for_retrieval_and_recommendation_benchmarking_llms_a.md)**
 
 :   本文发布 Amazon Reviews 2023 大规模数据集（570M reviews / 48M items）并基于它构建 BLaIR 基准，覆盖序列推荐 / 协同过滤 / 商品搜索 (短 query + 复杂 query) 三大场景，benchmark 了 11 个顶尖 LLM 作为语义编码器，发现它们在 BLaIR 上的排名与 MTEB 几乎不相关（Spearman -0.476），并指出推荐场景对语义编码器有独特要求。
+
+**[ClusterRAG: Cluster-Based Collaborative Filtering for Personalized Retrieval-Augmented Generation](clusterrag_cluster-based_collaborative_filtering_for_personalized_retrieval-augm.md)**
+
+:   ClusterRAG 把协同过滤引入个性化 RAG：先用用户历史文档构建用户表示并用 HDBSCAN 聚类，再从目标用户和相似用户中分层检索 profile 文档组成 prompt，在 LaMP 多任务基准上使 hybrid 模式全面优于 vanillaRAG、LaMP-IPA、ROPG 和 CFRAG。
 
 **[Culinary Crossroads: A RAG Framework for Enhancing Diversity in Cross-Cultural Recipe Adaptation](culinary_crossroads_a_rag_framework_for_enhancing_diversity_in_cross-cultural_re.md)**
 
@@ -86,6 +91,10 @@ tags:
 **[ReRec: Reasoning-Augmented LLM-based Recommendation Assistant via Reinforcement Fine-tuning](rerec_reasoning-augmented_llm-based_recommendation_assistant_via_reinforcement_f.md)**
 
 :   本文提出 ReRec，一个基于强化微调（RFT）的推荐助手框架，通过双图增强的奖励塑形提供细粒度奖励信号、推理感知的优势估计对推理步骤进行差异化监督、以及在线课程调度器动态调整训练难度，使 LLM 能处理复杂的多步推理推荐查询，在 RecBench+ 基准上显著超越现有方法。
+
+**[SenseJudge: Human-Centric Preference-Driven Judgment Framework](sensejudge_human-centric_preference-driven_judgment_framework.md)**
+
+:   提出 SenseJudge，一种基于显式人类偏好的可定制化 LLM 判断框架，配合真实多轮对话基准 SenseBench，在个性化评判任务中平均准确率比基线高 16.08%，模型排名与真实人类排名一致。
 
 **[What Makes an Ideal Quote? Recommending "Unexpected yet Rational" Quotations via Novelty](what_makes_an_ideal_quote_recommending_34unexpected_yet_rational34_quotations_vi.md)**
 

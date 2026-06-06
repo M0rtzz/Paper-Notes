@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 对齐 / RLHF方向76篇论文解读
+  ACL2025 对齐 / RLHF方向75篇论文解读
 description: >-
-  76篇ACL2025的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、LLM、对抗鲁棒、Agent、多模态、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  75篇ACL2025的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、LLM、对抗鲁棒、Agent、多模态、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2025"
   - "对齐 / RLHF"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐 / RLHF
 
-**💬 ACL2025** · **76** 篇论文解读
+**💬 ACL2025** · **75** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (7)](../../ICML2026/llm_alignment/index.md) · [💬 ACL2026 (26)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (41)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (19)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_alignment/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/llm_alignment/index.md) · [💬 ACL2026 (30)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (40)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (18)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (50)](../../NeurIPS2025/llm_alignment/index.md)
 
-🔥 **高频主题：** 对齐/RLHF ×38 · LLM ×11 · 对抗鲁棒 ×11 · Agent ×4 · 多模态 ×4
+🔥 **高频主题：** 对齐/RLHF ×37 · LLM ×11 · 对抗鲁棒 ×11 · Agent ×4 · 多模态 ×4
 
 **[AGD: Adversarial Game Defense Against Jailbreak Attacks in Large Language Models](agd_adversarial_game_defense_against_jailbreak_attacks_in_large_language_models.md)**
 
@@ -172,10 +172,6 @@ tags:
 **[JsonTuning: Towards Generalizable, Robust, and Controllable Instruction Tuning](jsontuning_towards_generalizable_robust_and_controllable_instruction_tuning.md)**
 
 :   提出 JsonTuning——将指令微调的输入输出从自然语言文本替换为 JSON 结构化格式，通过显式表示任务元素、关系和输出约束（JSON Schema），在 7 个预训练模型和 6 类任务上一致超越传统 TextTuning，平均性能从 26.78 提升到 30.88，同时显著增强鲁棒性和可控性。
-
-**[Enhancing Safe and Controllable Protein Generation via Knowledge Preference Optimization](kpo_protein_safety.md)**
-
-:   提出KPO框架，通过构建蛋白质安全知识图谱(PSKG)并结合加权图剪枝策略识别"相似但安全"的蛋白质对，用DPO微调蛋白质语言模型使其远离有害序列空间，同时保持功能性。
 
 **[LLMs Caught in the Crossfire: Malware Requests and Jailbreak Challenges](llms_caught_in_the_crossfire_malware_requests_and_jailbreak_challenges.md)**
 

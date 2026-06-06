@@ -1,6 +1,6 @@
 ---
 title: >-
-  [论文解读] 笔记1: CoT是幻觉吗？数据分布角度
+  [论文解读] Is Chain-of-Thought Reasoning of LLMs a Mirage? A Data Distribution Lens
 description: >-
   [NeurIPS 2025][LLM推理][Chain-of-Thought] 通过构建完全可控的抽象环境DataAlchemy，本文揭示CoT推理是一种幻觉——其有效性完全由训练数据分布主导，在分布外场景表现极其脆弱。
 tags:

@@ -133,8 +133,8 @@ Pipeline：
 
 - [\[NeurIPS 2025\] Deep Continuous-Time State-Space Models for Marked Event Sequences](../../NeurIPS2025/others/deep_continuous-time_state-space_models_for_marked_event_sequences.md)
 - [\[ICML 2025\] Rethinking Aleatoric and Epistemic Uncertainty](rethinking_aleatoric_and_epistemic_uncertainty.md)
-- [\[AAAI 2026\] Agent-SAMA: State-Aware Mobile Assistant](../../AAAI2026/others/agent-sama_state-aware_mobile_assistant.md)
 - [\[ICML 2025\] Symmetry-Aware GFlowNets](symmetry-aware_gflownets.md)
+- [\[AAAI 2026\] Agent-SAMA: State-Aware Mobile Assistant](../../AAAI2026/others/agent-sama_state-aware_mobile_assistant.md)
 - [\[ICML 2025\] Nonparametric Modern Hopfield Models](nonparametric_modern_hopfield_models.md)
 
 </div>

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 其他方向66篇论文解读
+  ECCV2024 其他方向65篇论文解读
 description: >-
-  66篇ECCV2024的其他方向论文解读，涵盖对抗鲁棒、人脸/视线、异常检测、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  65篇ECCV2024的其他方向论文解读，涵盖对抗鲁棒、人脸/视线、异常检测、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
   - "其他"
@@ -17,11 +17,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🎞️ ECCV2024** · **66** 篇论文解读
+**🎞️ ECCV2024** · **65** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (27)](../../ICML2026/others/index.md) · [📷 CVPR2026 (44)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (145)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (91)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (122)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (142)](../../NeurIPS2025/others/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×4 · 人脸/视线 ×4 · 异常检测 ×3 · 自监督学习 ×2
+🔥 **高频主题：** 对抗鲁棒 ×4 · 人脸/视线 ×3 · 异常检测 ×3 · 自监督学习 ×2
 
 **[3DFG-PIFu: 3D Feature Grids for Human Digitization from Sparse Views](3dfg-pifu_3d_feature_grids_for_human_digitization_from_sparse_views.md)**
 
@@ -86,10 +86,6 @@ tags:
 **[DC-Solver: Improving Predictor-Corrector Diffusion Sampler via Dynamic Compensation](dc-solver_improving_predictor-corrector_diffusion_sampler_via_dynamic_compensati.md)**
 
 :   提出 DC-Solver，通过动态补偿（Dynamic Compensation）缓解 predictor-corrector 扩散采样器中的 misalignment 问题，仅需 10 个数据点即可优化补偿比率，并通过级联多项式回归（CPR）实现对未见 NFE/CFG 配置的即时泛化。
-
-**[De-confounded Gaze Estimation](de-confounded_gaze_estimation.md)**
-
-:   本文提出基于因果干预的视线估计框架 FSCI，通过特征分离将视线相关特征与身份/光照等无关特征解耦，并利用动态混杂因子库对无关特征进行因果干预，在跨域设置下较基线提升36.2%、较SOTA提升11.5%。
 
 **[Decoupling Common and Unique Representations for Multimodal Self-supervised Learning](decoupling_common_and_unique_representations_for_multimodal_self-supervised_lear.md)**
 

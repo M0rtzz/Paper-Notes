@@ -1,0 +1,167 @@
+---
+title: >-
+  [论文解读] Interpreting GFlowNets for Drug Discovery: Extracting Actionable Insights for Medicinal Chemistry
+description: >-
+  [NeurIPS 2025][计算生物][GFlowNet] 为 SynFlowNet（基于合成反应模板的 GFlowNet）构建了一套多层次可解释性工具包，整合梯度显著性、反事实扰动、稀疏自编码器（SAE）和基序探针，揭示模型内部表征如何编码药物化学相关的理化性质和官能团信息。
+tags:
+  - "NeurIPS 2025"
+  - "计算生物"
+  - "GFlowNet"
+  - "可解释性"
+  - "药物发现"
+  - "稀疏自编码器"
+  - "反事实分析"
+---
+
+# Interpreting GFlowNets for Drug Discovery: Extracting Actionable Insights for Medicinal Chemistry
+
+**会议**: NeurIPS 2025  
+**arXiv**: [2511.19264](https://arxiv.org/abs/2511.19264)  
+**代码**: [GitHub](https://github.com/amirtha-montai/synflownet_public/tree/main/src/interpretability)  
+**领域**: 药物发现 / 可解释AI  
+**关键词**: GFlowNet, 可解释性, 药物发现, 稀疏自编码器, 反事实分析
+
+## 一句话总结
+
+为 SynFlowNet（基于合成反应模板的 GFlowNet）构建了一套多层次可解释性工具包，整合梯度显著性、反事实扰动、稀疏自编码器（SAE）和基序探针，揭示模型内部表征如何编码药物化学相关的理化性质和官能团信息。
+
+## 研究背景与动机
+
+**领域现状**：GFlowNet 是一类强大的生成模型，能学习随机策略依序构建分子，将概率质量分配到多个高奖励结构上，SynFlowNet 进一步引入合成反应约束，确保生成分子的合成可行性。
+
+**现有痛点**：尽管 GFlowNet 性能优秀，但其内部决策策略不透明——药物化学家需要理解模型为什么偏好某个骨架或合成路线，否则难以信任和集成到 DMTA 循环中。
+
+**核心矛盾**：现有归因方法主要针对监督学习或扩散模型设计，不适用于离散的、基于图的生成策略；GFlowNet 需要在异构动作类型之间选择，中间图状态包含丰富的结构信息但从未被系统分析。
+
+**本文目标**：为 GFlowNet 开发首个系统性的可解释性框架，跨越原子级、潜空间级和基序级的多尺度解释。
+
+**切入角度**：将监督学习和网络剖析中成熟的方法（集成梯度、SAE、探针分类器）适配到结构化的序列图生成策略。
+
+**核心 idea**：SynFlowNet 的内部表征沿极性、亲脂性、分子大小等可解释轴组织药物类药性（QED），且官能团信息以线性可解码的方式编码在嵌入中。
+
+## 方法详解
+
+### 整体框架
+
+提出三层互补的可解释性方法：① 梯度显著性 + 反事实QED分析提供原子/基序级归因；② 稀疏自编码器（SAE）发现潜在因子并关联理化性质；③ 基序探针检测嵌入是否编码了离散官能团。
+
+### 关键设计
+
+1. **梯度显著性与反事实分析**：
+
+    - 功能：估计原子级显著性并通过结构编辑评估对 QED 的因果影响
+    - 为什么：纯梯度归因只提供相关性，反事实编辑提供干预性的因果归因
+    - 怎么做：对 Stop 动作的 log 概率应用集成梯度（IG），$M=64$ 步插值：
+    $\mathrm{IG}_i(\text{Stop}, s_t) \approx (x_i - \tilde{x}_i) \frac{1}{M} \sum_{m=1}^{M} \nabla_{x_i} \log \pi_\theta(\text{Stop} \mid s_t^{(m)})$
+    - 提取高显著性连通分量和环系统作为候选基序，对每个基序应用化学驱动的 RDKit 变换规则（如醚→硫醚、甲基→氟、氯→溴），计算 $\Delta\text{QED} = \text{QED}(m') - \text{QED}(m)$
+    - 区别：关注 Stop 动作可归因于完整分子图，但目前仅限于最终决策步
+
+2. **稀疏自编码器（SAE）**：
+
+    - 功能：发现 SynFlowNet 嵌入中的解耦理化因子
+    - 为什么：判断模型是否以可解释的方式组织药物相关性质
+    - 怎么做：在冻结的 SynFlowNet 最终图 Transformer 层池化嵌入上训练 SAE，结构为 $256 \to 128 \to 256$，目标函数为：
+    $\mathcal{L} = \|h - \hat{h}\|_2^2 + \lambda \|z\|_1$
+      其中 $\lambda = 0.01$，目标稀疏度 0.05，Adam 优化器 lr=$10^{-3}$，训练 200 epoch
+    - 区别：针对生成模型嵌入应用 SAE 分析，而非传统 LLM 场景
+
+3. **基序探针**：
+
+    - 功能：测试嵌入中是否线性编码了离散化学基序
+    - 为什么：将抽象表征与可识别的药化概念连接
+    - 怎么做：冻结 GFlowNet，对每个 SMARTS 定义的基序训练 3 层 MLP 分类器（$256 \to 256 \to 128 \to 64 \to 1$），使用 BCEWithLogitsLoss，类别平衡采样，50 epoch
+    - 区别：探针方法常用于 NLP，这里首次系统应用于分子生成模型
+
+### 训练策略
+
+- SAE 在 32,054 个分子嵌入上训练，train/test = 28,848/3,206
+- 奖励预测器额外训练 100 epoch，dropout=0.2
+- 所有分析基于 QED 作为奖励函数训练的 SynFlowNet
+
+## 实验关键数据
+
+### 主实验：SAE 奖励预测
+
+| 奖励信号 | Train $R^2$ | Test $R^2$ |
+|---------|------------|-----------|
+| Drug-likeness (QED) | 0.289 | 0.251 |
+| Complexity | 0.756 | 0.750 |
+| Lipophilicity | 0.670 | 0.664 |
+| Size | 0.735 | 0.711 |
+| **Polarity** | **0.920** | **0.918** |
+| Flexibility | 0.488 | 0.502 |
+
+极性和分子大小单独预测 $R^2 > 0.7$，但复合 QED 只有 0.25，说明 QED 是非线性组合但底层理化性质被线性编码。
+
+### 关键因子关联
+
+| 因子 | 奖励信号 | 相关系数 $r$ |
+|------|---------|------------|
+| Factor_11 | Size | 0.757 |
+| Factor_75 | Size | -0.574 |
+| Factor_86 | Polarity | -0.570 |
+| Factor_118 | Polarity | 0.540 |
+
+### 基序探针结果
+
+| 基序 | 流行率 | AUROC | AP |
+|------|-------|-------|-----|
+| halogen_F | 0.322 | 1.000 | 1.000 |
+| halogen_Cl | 0.147 | 1.000 | 1.000 |
+| aromatic_ring | 0.906 | 1.000 | 1.000 |
+| nitrile | 0.225 | 0.997 | 0.989 |
+| methyl | 0.733 | 0.996 | 0.998 |
+| amide | 0.528 | 0.923 | 0.927 |
+
+平均 AUROC ≈ 0.95，卤素、芳环和可电离基团 AUROC > 0.99。
+
+### 消融/关键发现
+
+- 反事实显著性：高显著性基序的修改产生最大的 QED 变化，验证了归因的可靠性
+- SAE 稀疏度：均值激活稀疏度 0.105，多数因子仅在 <10% 分子中激活
+- 地面真值验证：SynFlowNet 提取的基序相关矩阵与 RDKit 计算的理化相关矩阵一致
+
+## 亮点与洞察
+
+- **首个 GFlowNet 可解释性框架**：填补了生成策略透明性的重要空白
+- **多尺度设计**：从原子级（IG）到概念级（SAE）到官能团级（探针）的层次化解释
+- **干预性归因**：反事实编辑提供了可操作的药化建议，不仅是事后解释
+- **理化轴解耦**：QED 虽难以直接预测，但其组成性质（极性 $R^2$=0.92、大小 $R^2$=0.71）被清晰编码
+- 框架通用性强，可迁移到其他 GFlowNet 变体
+
+## 局限与展望
+
+- 仅分析了 QED 单一奖励函数，未扩展到多目标设置（合成可行性、结合亲和力等）
+- 梯度显著性仅分析 Stop 动作（最终步），未覆盖中间决策步的归因
+- SA E 和探针方法施加了相对简单的结构假设，更复杂的奖励景观可能需要非线性解耦
+- 未来方向：直接在理化性质上条件化 GFlowNet，使潜在表征天然对齐药化轴
+
+## 相关工作与启发
+
+- SynFlowNet：基于合成反应模板的 GFlowNet，保证生成分子可合成
+- SAE 在 LLM 可解释性中流行（Anthropic 的单语义性工作），本文首次迁移到分子生成
+- 反事实解释在图神经网络中有探索（CF-GNNExplainer），本文扩展到生成策略
+- 启发：可解释性工具不应是事后装饰，而应融入模型设计（条件化生成）
+
+## 评分
+
+- 新颖性: ⭐⭐⭐⭐ 首次为GFlowNet构建系统性可解释性框架，但每个子方法本身不全新
+- 实验充分度: ⭐⭐⭐⭐ 三种方法互相印证，有定量分析，但仅单一奖励函数
+- 写作质量: ⭐⭐⭐⭐ 结构清晰，药化-ML桥接好，但篇幅较短缺少部分细节
+- 价值: ⭐⭐⭐⭐ 对药物AI的实际部署有显著推动，填补重要空白
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[NeurIPS 2025\] Compressing Biology: Evaluating the Stable Diffusion VAE for Phenotypic Drug Discovery](compressing_biology_evaluating_the_stable_diffusion_vae_for_phenotypic_drug_disc.md)
+- [\[ICML 2025\] GenMol: A Drug Discovery Generalist with Discrete Diffusion](../../ICML2025/computational_biology/genmol_a_drug_discovery_generalist_with_discrete_diffusion.md)
+- [\[NeurIPS 2025\] scPilot: Large Language Model Reasoning Toward Automated Single-Cell Analysis and Discovery](scpilot_large_language_model_reasoning_toward_automated_single-cell_analysis_and.md)
+- [\[NeurIPS 2025\] Pharmacophore-Guided Generative Design of Novel Drug-Like Molecules](pharmacophore-guided_generative_design_of_novel_drug-like_molecules.md)
+- [\[AAAI 2026\] ProtSAE: Disentangling and Interpreting Protein Language Models via Semantically-Guided Sparse Autoencoders](../../AAAI2026/computational_biology/protsae_disentangling_and_interpreting_protein_language_models_via_semantically-.md)
+
+</div>
+
+<!-- RELATED:END -->

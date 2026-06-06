@@ -1,6 +1,6 @@
 ---
 title: >-
-  [论文解读] FlexAttention: 面向高效高分辨率视觉语言模型的灵活注意力机制
+  [论文解读] FlexAttention for Efficient High-Resolution Vision-Language Models
 description: >-
   [ECCV 2024][多模态VLM][高分辨率VLM] 提出 FlexAttention，通过基于注意力图的高分辨率token动态选择和层次化自注意力融合机制，在保持甚至超越现有高分辨率VLM性能的同时，将计算成本降低近40%。
 tags:

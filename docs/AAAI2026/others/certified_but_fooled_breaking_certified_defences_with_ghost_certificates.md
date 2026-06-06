@@ -169,9 +169,9 @@ $$\max_\delta \sum_{i=1}^N L(f_\theta(x + \Delta_i + \delta \odot m), y) \quad \
 
 - [\[AAAI 2026\] Faster Certified Symmetry Breaking Using Orders With Auxiliary Variables](faster_certified_symmetry_breaking_using_orders_with_auxiliary_variables.md)
 - [\[AAAI 2026\] Certified Branch-and-Bound MaxSAT Solving (Extended Version)](certified_branch-and-bound_maxsat_solving_extended_version.md)
+- [\[ICML 2026\] Rethinking Evaluation Paradigms in IBP-based Certified Training](../../ICML2026/others/rethinking_evaluation_paradigms_in_ibp-based_certified_training.md)
 - [\[ICLR 2026\] LipNeXt: Scaling up Lipschitz-based Certified Robustness to Billion-parameter Models](../../ICLR2026/others/lipnext_scaling_up_lipschitz-based_certified_robustness_to_billion-parameter_mod.md)
 - [\[ICML 2025\] Enhancing Certified Robustness via Block Reflector Orthogonal Layers and Logit Annealing Loss](../../ICML2025/others/enhancing_certified_robustness_via_block_reflector_orthogonal_layers_and_logit_a.md)
-- [\[AAAI 2026\] Rethinking Flow and Diffusion Bridge Models for Speech Enhancement](rethinking_flow_and_diffusion_bridge_models_for_speech_enhancement.md)
 
 </div>
 

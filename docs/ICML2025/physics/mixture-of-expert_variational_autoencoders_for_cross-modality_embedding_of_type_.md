@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Mixture-of-Expert Variational Autoencoders for Cross-Modality Embedding of Type Ia Supernova Data
 description: >-
-  [ICML2025 (ML4Astro Workshop)][物理学][多模态VAE] 提出基于 Perceiver-IO 架构的多模态混合专家 VAE（MMVAE），对 Ia 型超新星的光变曲线和光谱进行联合嵌入，实现从光变曲线到光谱的跨模态概率生成，重建精度优于对比学习基线。
+  [ICML2025 (ML4Astro Workshop)][物理/科学计算][多模态VAE] 提出基于 Perceiver-IO 架构的多模态混合专家 VAE（MMVAE），对 Ia 型超新星的光变曲线和光谱进行联合嵌入，实现从光变曲线到光谱的跨模态概率生成，重建精度优于对比学习基线。
 tags:
   - "ICML2025 (ML4Astro Workshop)"
-  - "物理学"
+  - "物理/科学计算"
   - "多模态VAE"
   - "超新星"
   - "跨模态生成"
@@ -149,9 +149,9 @@ $$\mathcal{L}(x_{1,\dots,M}) = \mathbb{E}_{z^{1:K} \sim q_\phi} \left[ \log \sum
 
 - [\[NeurIPS 2025\] Unsupervised Discovery of High-Redshift Galaxy Populations with Variational Autoencoders](../../NeurIPS2025/physics/unsupervised_discovery_of_high-redshift_galaxy_populations_with_variational_auto.md)
 - [\[CVPR 2025\] ATP: Adaptive Threshold Pruning for Efficient Data Encoding in Quantum Neural Networks](../../CVPR2025/physics/atp_adaptive_threshold_pruning_for_efficient_data_encoding_in_quantum_neural_net.md)
-- [\[NeurIPS 2025\] Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology](../../NeurIPS2025/physics/multi-modal_masked_autoencoders_for_learning_image-spectrum_associations_for_gal.md)
 - [\[AAAI 2026\] Data Verification is the Future of Quantum Computing Copilots](../../AAAI2026/physics/data_verification_is_the_future_of_quantum_computing_copilots.md)
-- [\[ICML 2025\] Finetuning Stellar Spectra Foundation Models with LoRA](finetuning_stellar_spectra_foundation_models_with_lora.md)
+- [\[ICML 2026\] $\mathbb{R}^{2k}$ is Theoretically Large Enough for Embedding-based Top-$k$ Retrieval](../../ICML2026/physics/mathbbr2k_is_theoretically_large_enough_for_embedding-based_top-k_retrieval.md)
+- [\[NeurIPS 2025\] Neural Emulator Superiority: When Machine Learning for PDEs Surpasses its Training Data](../../NeurIPS2025/physics/neural_emulator_superiority_when_machine_learning_for_pdes_surpasses_its_trainin.md)
 
 </div>
 

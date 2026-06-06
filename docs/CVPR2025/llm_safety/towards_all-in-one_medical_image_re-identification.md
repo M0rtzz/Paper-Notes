@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Towards All-in-One Medical Image Re-Identification
 description: >-
-  [CVPR 2025][医学图像][医学图像重识别] 提出 MaMI，首个全模态统一的医学图像重识别模型，通过连续模态参数适配器 (ComPA) 动态生成模态特定参数，并利用医学基础模型的差异特征对齐传递医学先验，在 11 个数据集上超越 25 个基础模型和 8 个大语言模型。
+  [CVPR 2025][LLM安全][医学图像重识别] 提出 MaMI，首个全模态统一的医学图像重识别模型，通过连续模态参数适配器 (ComPA) 动态生成模态特定参数，并利用医学基础模型的差异特征对齐传递医学先验，在 11 个数据集上超越 25 个基础模型和 8 个大语言模型。
 tags:
   - "CVPR 2025"
-  - "医学图像"
+  - "LLM安全"
   - "医学图像重识别"
   - "模态自适应"
   - "参数适配器"
@@ -126,10 +126,10 @@ $\mathcal{L}_{id\text{-}classify}$ 为身份分类交叉熵损失，$\mathcal{L}
 
 ## 相关论文
 
-- [\[ICCV 2025\] Oasis: One Image is All You Need for Multimodal Instruction Data Synthesis](../../ICCV2025/llm_safety/oasis_one_image_is_all_you_need_for_multimodal_instruction_data_synthesis.md)
-- [\[AAAI 2026\] Federated CLIP for Resource-Efficient Heterogeneous Medical Image Classification](../../AAAI2026/llm_safety/federated_clip_for_resource-efficient_heterogeneous_medical_image_classification.md)
 - [\[ICLR 2026\] Train Once, Answer All: Many Pretraining Experiments for the Cost of One](../../ICLR2026/llm_safety/train_once_answer_all_many_pretraining_experiments_for_the_cost_of_one.md)
+- [\[AAAI 2026\] Federated CLIP for Resource-Efficient Heterogeneous Medical Image Classification](../../AAAI2026/llm_safety/federated_clip_for_resource-efficient_heterogeneous_medical_image_classification.md)
 - [\[ICLR 2026\] Attention Smoothing Is All You Need For Unlearning](../../ICLR2026/llm_safety/attention_smoothing_is_all_you_need_for_unlearning.md)
+- [\[NeurIPS 2025\] Watermarking Autoregressive Image Generation](../../NeurIPS2025/llm_safety/watermarking_autoregressive_image_generation.md)
 - [\[ACL 2025\] Core: Robust Factual Precision with Informative Sub-Claim Identification](../../ACL2025/llm_safety/core_robust_factual_precision_with_informative_sub-claim_identification.md)
 
 </div>

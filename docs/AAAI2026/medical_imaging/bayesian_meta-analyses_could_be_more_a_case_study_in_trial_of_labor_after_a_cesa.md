@@ -128,11 +128,11 @@ tags:
 
 ## 相关论文
 
+- [\[ICLR 2026\] SEED: Towards More Accurate Semantic Evaluation for Visual Brain Decoding](../../ICLR2026/medical_imaging/seed_towards_more_accurate_semantic_evaluation_for_visual_brain_decoding.md)
 - [\[ICLR 2026\] An Orthogonal Learner for Individualized Outcomes in Markov Decision Processes](../../ICLR2026/medical_imaging/an_orthogonal_learner_for_individualized_outcomes_in_markov_decision_processes.md)
-- [\[ACL 2026\] Model-Agnostic Meta Learning for Class Imbalance Adaptation](../../ACL2026/medical_imaging/model-agnostic_meta_learning_for_class_imbalance_adaptation.md)
 - [\[ACL 2025\] SECRET: Semi-supervised Clinical Trial Document Similarity Search](../../ACL2025/medical_imaging/secret_semi-supervised_clinical_trial_document_similarity_search.md)
 - [\[ICML 2025\] Bayesian Inference for Correlated Human Experts and Classifiers](../../ICML2025/medical_imaging/bayesian_inference_for_correlated_human_experts_and_classifiers.md)
-- [\[ICLR 2026\] SEED: Towards More Accurate Semantic Evaluation for Visual Brain Decoding](../../ICLR2026/medical_imaging/seed_towards_more_accurate_semantic_evaluation_for_visual_brain_decoding.md)
+- [\[CVPR 2026\] Meta-learning In-Context Enables Training-Free Cross Subject Brain Decoding](../../CVPR2026/medical_imaging/meta-learning_in-context_enables_training-free_cross_subject_brain_decoding.md)
 
 </div>
 

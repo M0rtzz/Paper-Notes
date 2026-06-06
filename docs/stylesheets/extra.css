@@ -141,7 +141,7 @@
 [data-md-color-scheme="slate"] .conf-card .area-tag {
   background: rgba(167, 139, 250, 0.12);
   border-color: rgba(167, 139, 250, 0.28);
-  color: rgba(255, 255, 255, 0.86) !important;
+  color: rgba(255, 255, 255, 0.62) !important;
 }
 
 .conf-card .area-tag:hover {

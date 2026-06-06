@@ -132,9 +132,9 @@ tags:
 
 - [\[CVPR 2025\] Reanimating Images using Neural Representations of Dynamic Stimuli](reanimating_images_using_neural_representations_of_dynamic_stimuli.md)
 - [\[CVPR 2025\] Unmasking Biases and Reliability Concerns in Convolutional Neural Networks Analysis of Cancer Pathology Images](unmasking_biases_and_reliability_concerns_in_convolutional_neural_networks_analy.md)
+- [\[ICML 2026\] On Revisiting Entropy for Identifying Mislabeled Images](../../ICML2026/medical_imaging/on_revisiting_entropy_for_identifying_mislabeled_images.md)
 - [\[ECCV 2024\] Topology-Preserving Downsampling of Binary Images](../../ECCV2024/medical_imaging/topology-preserving_downsampling_of_binary_images.md)
 - [\[ICCV 2025\] SegAnyPET: Universal Promptable Segmentation from Positron Emission Tomography Images](../../ICCV2025/medical_imaging/seganypet_universal_promptable_segmentation_from_positron_emission_tomography_im.md)
-- [\[ICCV 2025\] AcZeroTS: Active Learning for Zero-shot Tissue Segmentation in Pathology Images](../../ICCV2025/medical_imaging/aczerots_active_learning_for_zeroshot_tissue_segmentation_in.md)
 
 </div>
 

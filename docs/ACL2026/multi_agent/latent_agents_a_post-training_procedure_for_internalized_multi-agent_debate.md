@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Latent Agents: A Post-Training Procedure for Internalized Multi-Agent Debate
 description: >-
-  [ACL 2026][LLM Agent / 多智能体 / 可解释性][多智能体辩论] 提出 IMAD（Internalized Multi-Agent Debate）框架，用 SFT + GRPO 两阶段后训练把多智能体辩论"内化"进单个 LLM，token 消耗最多减少 93%…
+  [ACL 2026][多智能体][多智能体辩论] 提出 IMAD（Internalized Multi-Agent Debate）框架，用 SFT + GRPO 两阶段后训练把多智能体辩论"内化"进单个 LLM，token 消耗最多减少 93%…
 tags:
   - "ACL 2026"
-  - "LLM Agent / 多智能体 / 可解释性"
+  - "多智能体"
   - "多智能体辩论"
   - "知识蒸馏"
   - "激活引导"
@@ -142,10 +142,10 @@ SFT 用标准 next-token CE，训练 3–6 epoch。RL 用 GRPO 训练 2 epoch：
 ## 相关论文
 
 - [\[ACL 2026\] Efficient Multi-Agent System Training with Data Influence-Oriented Tree Search](efficient_multi-agent_system_training_with_data_influence-oriented_tree_search.md)
-- [\[ACL 2026\] HACHIMI: Scalable and Controllable Student Persona Generation via Orchestrated Agents](hachimi_scalable_and_controllable_student_persona_generation_via_orchestrated_ag.md)
+- [\[ACL 2026\] Dialectic-Med: Mitigating Diagnostic Hallucinations via Counterfactual Adversarial Multi-Agent Debate](dialectic-med_mitigating_diagnostic_hallucinations_via_counterfactual_adversaria.md)
 - [\[ACL 2026\] When Identity Skews Debate: Anonymization for Bias-Reduced Multi-Agent Reasoning](when_identity_skews_debate_anonymization_for_bias-reduced_multi-agent_reasoning.md)
-- [\[ACL 2025\] CortexDebate: Debating Sparsely and Equally for Multi-Agent Debate](../../ACL2025/multi_agent/cortexdebate_debating_sparsely_and_equally_for_multi-agent_debate.md)
-- [\[ACL 2025\] Preventing Rogue Agents Improves Multi-Agent Collaboration](../../ACL2025/multi_agent/preventing_rogue_agents_improves_multi-agent_collaboration.md)
+- [\[ICML 2026\] When Cloud Agents Meet Device Agents: Lessons from Hybrid Multi-Agent Systems](../../ICML2026/multi_agent/when_cloud_agents_meet_device_agents_lessons_from_hybrid_multi-agent_systems.md)
+- [\[ACL 2026\] HACHIMI: Scalable and Controllable Student Persona Generation via Orchestrated Agents](hachimi_scalable_and_controllable_student_persona_generation_via_orchestrated_ag.md)
 
 </div>
 

@@ -152,7 +152,7 @@ GLM 后验推断（真实数据集，与 MCMC/VI 对比）：
 - [\[NeurIPS 2025\] Multi-head Transformers Provably Learn Symbolic Multi-step Reasoning via Gradient Descent](../../NeurIPS2025/optimization/multi-head_transformers_provably_learn_symbolic_multi-step_reasoning_via_gradien.md)
 - [\[ICML 2025\] In-Context Linear Regression Demystified: Training Dynamics and Mechanistic Interpretability of Multi-Head Softmax Attention](in-context_linear_regression_demystified_training_dynamics_and_mechanistic_inter.md)
 - [\[NeurIPS 2025\] Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers](../../NeurIPS2025/optimization/generalization_or_hallucination_understanding_out-of-context_reasoning_in_transf.md)
-- [\[ICML 2025\] Training Dynamics of In-Context Learning in Linear Attention](training_dynamics_of_in-context_learning_in_linear_attention.md)
+- [\[ICML 2025\] Transformative or Conservative? Conservation Laws for ResNets and Transformers](transformative_or_conservative_conservation_laws_for_resnets_and_transformers.md)
 
 </div>
 

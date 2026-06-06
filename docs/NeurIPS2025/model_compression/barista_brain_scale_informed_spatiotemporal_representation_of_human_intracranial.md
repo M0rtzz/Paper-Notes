@@ -123,7 +123,7 @@ iEEG 数据（2048Hz）→ **时间分词**（Dilated CNN 提取 250ms patch）�
 - [\[NeurIPS 2025\] S2M-Former: Spiking Symmetric Mixing Branchformer for Brain Auditory Attention Detection](s2m-former_spiking_symmetric_mixing_branchformer_for_brain_auditory_attention_de.md)
 - [\[NeurIPS 2025\] Representation Consistency for Accurate and Coherent LLM Answer Aggregation](representation_consistency_for_accurate_and_coherent_llm_answer_aggregation.md)
 - [\[NeurIPS 2025\] Spiking Brain Compression: Post-Training Second-Order Compression for Spiking Neural Networks](spiking_brain_compression_post-training_second-order_compression_for_spiking_neu.md)
-- [\[ICML 2025\] A Mathematical Framework for AI-Human Integration in Work](../../ICML2025/model_compression/a_mathematical_framework_for_ai-human_integration_in_work.md)
+- [\[ICCV 2025\] Representation Shift: Unifying Token Compression with FlashAttention](../../ICCV2025/model_compression/representation_shift_unifying_token_compression_with_flashattention.md)
 
 </div>
 

@@ -1,0 +1,132 @@
+---
+title: >-
+  [论文解读] One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers
+description: >-
+  [ICLR 2026][物理/科学计算][神经算子] 论证神经 PDE 求解器在边界条件变化时学到的不是单一的解算子，而是由边界条件索引的算子族，并从学习理论角度形式化了 ERM 下边界分布偏移导致的不可辨识性问题。
+tags:
+  - "ICLR 2026"
+  - "物理/科学计算"
+  - "神经算子"
+  - "边界条件"
+  - "分布偏移"
+  - "不可辨识性"
+---
+
+# One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers
+
+**会议**: ICLR 2026  
+**arXiv**: [2603.01406](https://arxiv.org/abs/2603.01406)  
+**代码**: [有](https://github.com/lennonshikhman/boundary-indexed-neural-pde)  
+**领域**: Scientific Computing / Neural PDE Solvers  
+**关键词**: Neural Operator, 边界条件, 分布偏移, 不可辨识性, Fourier Neural Operator
+
+## 一句话总结
+
+论证神经 PDE 求解器在边界条件变化时学到的不是单一的解算子，而是由边界条件索引的算子族，并从学习理论角度形式化了 ERM 下边界分布偏移导致的不可辨识性问题。
+
+## 研究背景与动机
+
+神经 PDE 求解器（如 FNO）通常被描述为"学习解算子"——从问题输入映射到 PDE 解。然而，从经典 PDE 理论看，解算子不仅由微分方程本身定义，**边界条件**是良定性和唯一性的核心要素。
+
+现有方法通常将边界条件隐式编码（如边界填充、辅助通道），这引出一个根本性问题：当边界条件不固定时，神经求解器到底在近似什么？作者指出，它们学到的映射内在地绑定于训练时见过的边界条件分布，这导致在边界分布偏移时会出现不可预期的失败——而这种失败不是架构不足或优化问题。
+
+## 方法详解
+
+### 整体框架
+
+本文不提出新架构，而是提供一个**学习理论框架**来重新解释神经 PDE 求解器的学习行为：
+
+- 将算子学习形式化为**条件风险最小化**：$\min_\theta \mathbb{E}_{(f,\mathcal{B})\sim\mu}[\ell(\hat{\mathcal{S}}_\theta(f,\mathcal{B}), \mathcal{S}(f,\mathcal{B}))]$
+- 当边界条件 $\mathcal{B}$ 固定时，学到的是单一算子 $\mathcal{S}_\mathcal{B}: f \mapsto u$
+- 当 $\mathcal{B}$ 变化时，学到的是联合映射 $\mathcal{S}: (f, \mathcal{B}) \mapsto u$，但其行为仅在训练分布 $\mu_\mathcal{B}$ 的支撑集上有约束
+
+### 关键设计
+
+1. **边界索引算子族的形式化**
+
+    功能：证明神经 PDE 求解器学到的不是边界无关的单一算子，而是一族由边界条件参数化的算子。
+
+    核心思路：ERM 只在训练分布 $\mu_\mathcal{B}$ 上施加约束，对于分布外的边界条件，多个不同的映射可以达到相同的训练损失。形式化为：在 $\mu_\mathcal{B}$ 支撑集外，学到的映射不唯一（不可辨识性）。
+
+    设计动机：这解释了为什么在外推力（forcing function）上的鲁棒性**不等同于**在边界条件上的鲁棒性——前者在输入中密集采样，后者可能只占低维稀疏子空间。
+
+2. **条件期望退化行为**
+
+    功能：分析当边界信息被删除或弱表示时，ERM 训练的模型会退化为边界条件的条件期望。
+
+    核心思路：当模型无法获取边界信息时，其最优预测变为 $\hat{u}(f) \approx \mathbb{E}_{\mathcal{B}\sim\mu_\mathcal{B}}[\mathcal{S}(f,\mathcal{B}) \mid f]$，这是在未观测边界变量上的平均，不对应任何固定边界条件下的有效解算子。
+
+    设计动机：这从理论上解释了为什么边界消融模型在所有分布上都失败——它学到的是"平均解"而非特定解。
+
+### 损失函数 / 训练策略
+
+实验采用 FNO 架构，Adam 优化器（学习率 $8 \times 10^{-4}$），MSE 损失，2500 步梯度更新，batch size 12，在 $64 \times 64$ 网格上训练。边界函数通过截断 Fourier 展开参数化（带宽 $K=6$）。
+
+## 实验关键数据
+
+### 主实验（表格）
+
+**跨分布泛化（Poisson 方程）**：
+
+| 模型 | 测试 $\mu_{B_0}$ | 测试 $\mu_{B_1}$ |
+|------|-------------------|-------------------|
+| FNO (训练 $\mu_{B_0}$) | 0.078 ± 0.005 | **0.489 ± 0.022** |
+| FNO (训练 $\mu_{B_1}$) | **0.601 ± 0.036** | 0.102 ± 0.003 |
+| FNO (无边界通道) | 0.999 ± 0.001 | 1.001 ± 0.001 |
+
+每个模型仅在训练边界分布上表现良好，在另一分布上误差飙升 5-6 倍。无边界通道的模型在所有分布上完全失败（误差 ≈ 1.0）。
+
+### 消融实验（表格）
+
+**边界外推（Dirichlet 均值偏移）**：
+
+| 偏移量 $\delta$ | -1.0 | -0.5 | 0 | 0.5 | 1.0 |
+|----------------|------|------|---|-----|-----|
+| 误差趋势 | 高 | 中 | 低（域内） | 中 | 高 |
+
+误差随偏移量对称增长，连续退化而非突变。频率外推（将 Dirichlet 带宽从 $K=6$ 增至 12）同样导致单调性能下降。
+
+### 关键发现
+
+- **跨分布失败是结构性的**：不是模型容量不足或优化不稳定，而是 ERM 目标的内在限制——在相同 FNO 架构下，域内性能良好证明了这一点
+- **条件期望行为验证**：固定一个 forcing function $f^*$，无边界版模型的输出几乎完全匹配 $\mathbb{E}[u \mid f^*]$ 的蒙特卡洛估计
+- **分辨率鲁棒性 ≠ 边界鲁棒性**：能跨网格分辨率泛化的模型在边界偏移下仍会严重失败
+
+## 亮点与洞察
+
+- 不是提出新方法、而是提供新理解的典范性工作——用条件风险最小化和不可辨识性精确刻画了一个被忽视的基本问题
+- 对"基础模型 for PDE"的热潮提出了冷静的结构性警示：仅靠扩大数据规模和模型容量无法解决边界泛化问题
+- 实验设计简洁精巧：通过控制变量（同一方程、同一 forcing、同一分辨率）精确隔离边界条件的影响
+
+## 局限与展望
+
+- 仅在二维 Poisson 方程上实验，未扩展到抛物线、双曲或非线性 PDE
+- 未考虑时间依赖系统中边界条件与初始条件的交互
+- 提供了诊断框架但未提出解决方案（如边界感知架构或不变表示）
+- 未探索跨随机初始化种子的变异性
+
+## 相关工作与启发
+
+- 与之前观察到边界敏感性并提出边界感知架构的工作互补（本文提供理论解释）
+- 启发方向：将边界条件作为"一等公民"纳入算子学习的设计——如条件算子分解、结构化边界编码、不变表示学习
+- 对 PDE 基础模型（如 Subramanian et al., 2023）的评估协议提出重要启示：需要显式测试边界分布偏移
+
+## 评分
+
+⭐⭐⭐⭐ 理论洞察深刻，用简洁实验精确验证了核心论点，对神经 PDE 求解器社区具有重要的警示意义，但缺少建设性解决方案。
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[CVPR 2026\] NESTOR: A Nested MOE-based Neural Operator for Large-Scale PDE Pre-Training](../../CVPR2026/physics/nestor_a_nested_moe-based_neural_operator_for_large-scale_pde_pre-training.md)
+- [\[ICLR 2026\] DRIFT-Net: A Spectral--Coupled Neural Operator for PDEs Learning](drift-net_a_spectral--coupled_neural_operator_for_pdes_learning.md)
+- [\[ICML 2026\] Topology-Preserving Neural Operator Learning via Hodge Decomposition](../../ICML2026/physics/topology-preserving_neural_operator_learning_via_hodge_decomposition.md)
+- [\[ICCV 2025\] JPEG Processing Neural Operator for Backward-Compatible Coding](../../ICCV2025/physics/jpeg_processing_neural_operator_for_backward-compatible_coding.md)
+- [\[NeurIPS 2025\] From Black Hole to Galaxy: Neural Operator Framework for Accretion and Feedback Dynamics](../../NeurIPS2025/physics/from_black_hole_to_galaxy_neural_operator_framework_for_accretion_and_feedback_d.md)
+
+</div>
+
+<!-- RELATED:END -->

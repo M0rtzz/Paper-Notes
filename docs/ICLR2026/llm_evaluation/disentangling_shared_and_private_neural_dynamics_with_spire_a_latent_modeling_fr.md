@@ -143,10 +143,10 @@ DLAG 在真实颅内数据上高斯过程优化数值不稳定无法收敛。SPI
 ## 相关论文
 
 - [\[ICLR 2026\] Deep FlexQP: Accelerated Nonlinear Programming via Deep Unfolding](deep_flexqp_accelerated_nonlinear_programming_via_deep_unfolding.md)
-- [\[CVPR 2026\] AdaBet: Gradient-free Layer Selection for Efficient Training of Deep Neural Networks](../../CVPR2026/llm_evaluation/adabet_gradient-free_layer_selection_for_efficient_training_of_deep_neural_netwo.md)
 - [\[AAAI 2026\] Towards a Rigorous Understanding of the Population Dynamics of the NSGA-III: Tight Runtime Bounds](../../AAAI2026/llm_evaluation/towards_a_rigorous_understanding_of_the_population_dynamics_of_the_nsga-iii_tigh.md)
-- [\[ICLR 2026\] DARE-bench: Evaluating Modeling and Instruction Fidelity of LLMs in Data Science](dare-bench_evaluating_modeling_and_instruction_fidelity_of_llms_in_data_science.md)
-- [\[ICML 2026\] Singular Bayesian Neural Networks](../../ICML2026/llm_evaluation/singular_bayesian_neural_networks.md)
+- [\[ICLR 2026\] Improving Set Function Approximation with Quasi-Arithmetic Neural Networks](improving_set_function_approximation_with_quasi-arithmetic_neural_networks.md)
+- [\[ACL 2026\] Reward Modeling for Scientific Writing Evaluation](../../ACL2026/llm_evaluation/reward_modeling_for_scientific_writing_evaluation.md)
+- [\[ICML 2025\] Disentangling and Integrating Relational and Sensory Information in Transformer Architectures](../../ICML2025/llm_evaluation/disentangling_and_integrating_relational_and_sensory_information_in_transformer_.md)
 
 </div>
 

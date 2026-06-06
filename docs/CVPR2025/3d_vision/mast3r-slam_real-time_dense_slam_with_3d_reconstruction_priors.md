@@ -146,8 +146,8 @@ tags:
 - [\[CVPR 2025\] SLAM3R: Real-Time Dense Scene Reconstruction from Monocular RGB Videos](slam3r_real-time_dense_scene_reconstruction_from_monocular_rgb_videos.md)
 - [\[CVPR 2025\] WildGS-SLAM: Monocular Gaussian Splatting SLAM in Dynamic Environments](wildgs-slam_monocular_gaussian_splatting_slam_in_dynamic_environments.md)
 - [\[CVPR 2025\] MAGiC-SLAM: Multi-Agent Gaussian Globally Consistent SLAM](magic-slam_multi-agent_gaussian_globally_consistent_slam.md)
-- [\[CVPR 2025\] MNE-SLAM: Multi-Agent Neural SLAM for Mobile Robots](mne-slam_multi-agent_neural_slam_for_mobile_robots.md)
 - [\[ECCV 2024\] SGS-SLAM: Semantic Gaussian Splatting for Neural Dense SLAM](../../ECCV2024/3d_vision/sgs-slam_semantic_gaussian_splatting_for_neural_dense_slam.md)
+- [\[CVPR 2025\] MNE-SLAM: Multi-Agent Neural SLAM for Mobile Robots](mne-slam_multi-agent_neural_slam_for_mobile_robots.md)
 
 </div>
 

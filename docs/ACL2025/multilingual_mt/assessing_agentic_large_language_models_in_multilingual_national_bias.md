@@ -2,12 +2,13 @@
 title: >-
   [论文解读] 7 Points to Tsinghua but 10 Points to 清华? Assessing Agentic Large Language Models in Multilingual National Bias
 description: >-
-  [ACL 2025 Findings][LLM Agent][多语言偏见] 首次系统研究LLM作为多语言智能建议agent在推理型决策任务中的国籍偏见，通过大学申请/旅行/搬迁三类场景+Thurstone比较法量化GPT-3.5/GPT-4/Claude Sonnet在6种语言下的评分偏差…
+  [ACL 2025 Findings][多语言/翻译][多语言偏见] 首次系统研究LLM作为多语言智能建议agent在推理型决策任务中的国籍偏见，通过大学申请/旅行/搬迁三类场景+Thurstone比较法量化GPT-3.5/GPT-4/Claude Sonnet在6种语言下的评分偏差…
 tags:
   - "ACL 2025 Findings"
-  - "LLM Agent"
+  - "多语言/翻译"
   - "多语言偏见"
   - "国籍偏见"
+  - "LLM Agent"
   - "决策推理"
   - "Chain-of-Thought"
   - "公平性"
@@ -138,8 +139,8 @@ tags:
 - [\[ACL 2025\] Delving into Multilingual Ethical Bias: The MSQAD with Statistical Hypothesis Tests for Large Language Models](msqad_multilingual_ethical_bias.md)
 - [\[ACL 2025\] Disentangling Language and Culture for Evaluating Multilingual Large Language Models](disentangle_language_culture.md)
 - [\[ACL 2025\] X-WebAgentBench: A Multilingual Interactive Web Benchmark for Evaluating Global Agentic System](x-webagentbench_a_multilingual_interactive_web_benchmark_for_evaluating_global_a.md)
-- [\[ACL 2025\] Cross-Lingual Optimization for Language Transfer in Large Language Models](cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
 - [\[ACL 2025\] Just Go Parallel: Improving the Multilingual Capabilities of Large Language Models](just_go_parallel_improving_the_multilingual_capabilities_of_large_language_model.md)
+- [\[ACL 2025\] Cross-Lingual Auto Evaluation for Assessing Multilingual LLMs](cross-lingual_auto_evaluation_for_assessing_multilingual_llms.md)
 
 </div>
 

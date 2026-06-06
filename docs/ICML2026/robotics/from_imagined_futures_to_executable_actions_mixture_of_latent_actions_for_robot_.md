@@ -18,7 +18,7 @@ tags:
 **会议**: ICML 2026  
 **arXiv**: [2605.12167](https://arxiv.org/abs/2605.12167)  
 **代码**: https://logosroboticsgroup.github.io/MoLA (有)  
-**领域**: 机器人 / 具身智能 / 视频生成 / VLA  
+**领域**: 机器人
 **关键词**: 潜动作、逆动力学、视频生成、机器人操控、模态感知
 
 ## 一句话总结
@@ -128,9 +128,9 @@ CALVIN 上 MoLA 把"连续完成 5 个子任务"的成功率从前 SOTA 的 76.9
 
 - [\[ICLR 2026\] From Spatial to Actions: Grounding Vision-Language-Action Model in Spatial Foundation Priors](../../ICLR2026/robotics/from_spatial_to_actions_grounding_vision-language-action_model_in_spatial_founda.md)
 - [\[CVPR 2025\] UniAct: Universal Actions for Enhanced Embodied Foundation Models](../../CVPR2025/robotics/universal_actions_for_enhanced_embodied_foundation_models.md)
+- [\[ICML 2026\] Mixture of Horizons in Action Chunking](mixture_of_horizons_in_action_chunking.md)
 - [\[ICML 2026\] Latent Reasoning VLA: Latent Thinking and Prediction for Vision-Language-Action Models](latent_reasoning_vla_latent_thinking_and_prediction_for_vision-language-action_m.md)
 - [\[ICCV 2025\] Moto: Latent Motion Token as the Bridging Language for Learning Robot Manipulation from Videos](../../ICCV2025/robotics/moto_latent_motion_token_as_the_bridging_language_for_learning_robot_manipulatio.md)
-- [\[CVPR 2026\] CoMo: Learning Continuous Latent Motion from Internet Videos for Scalable Robot Learning](../../CVPR2026/robotics/como_learning_continuous_latent_motion_from_internet_videos_for_scalable_robot_l.md)
 
 </div>
 

@@ -128,8 +128,8 @@ tags:
 - [\[ACL 2026\] Toward Culturally Grounded Natural Language Processing](../../ACL2026/multilingual_mt/toward_culturally_grounded_natural_language_processing.md)
 - [\[ACL 2025\] LexGen: Domain-aware Multilingual Lexicon Generation](../../ACL2025/multilingual_mt/lexgen_domain-aware_multilingual_lexicon_generation.md)
 - [\[ACL 2025\] Exploring In-context Example Generation for Machine Translation](../../ACL2025/multilingual_mt/exploring_in-context_example_generation_for_machine_translation.md)
+- [\[NeurIPS 2025\] PolyMath: Evaluating Mathematical Reasoning in Multilingual Contexts](polymath_evaluating_mathematical_reasoning_in_multilingual_contexts.md)
 - [\[NeurIPS 2025\] Enhancing Multilingual LLM Pretraining with Model-Based Data Selection](enhancing_multilingual_llm_pretraining_with_model-based_data_selection.md)
-- [\[NeurIPS 2025\] XIFBench: Evaluating Large Language Models on Multilingual Instruction Following](xifbench_evaluating_large_language_models_on_multilingual_instruction_following.md)
 
 </div>
 

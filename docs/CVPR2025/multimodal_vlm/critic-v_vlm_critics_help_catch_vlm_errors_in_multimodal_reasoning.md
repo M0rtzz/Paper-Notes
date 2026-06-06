@@ -155,8 +155,8 @@ Critic-V包含三个核心阶段：
 
 - [\[CVPR 2025\] LLaVA-Critic: Learning to Evaluate Multimodal Models](llava-critic_learning_to_evaluate_multimodal_models.md)
 - [\[CVPR 2025\] DocVLM: Make Your VLM an Efficient Reader](docvlm_make_your_vlm_an_efficient_reader.md)
-- [\[CVPR 2025\] FLAIR: VLM with Fine-grained Language-informed Image Representations](flair_vlm_with_fine-grained_language-informed_image_representations.md)
 - [\[CVPR 2025\] Self-Evolving Visual Concept Library using Vision-Language Critics](self-evolving_visual_concept_library_using_vision-language_critics.md)
+- [\[CVPR 2025\] FLAIR: VLM with Fine-grained Language-informed Image Representations](flair_vlm_with_fine-grained_language-informed_image_representations.md)
 - [\[CVPR 2025\] VisionArena: 230K Real World User-VLM Conversations with Preference Labels](visionarena_230k_real_world_user-vlm_conversations_with_preference_labels.md)
 
 </div>

@@ -131,8 +131,8 @@ PhD 基于 TDIUC 数据集的标注进行改造，通过四个核心模块构建
 - [\[NeurIPS 2025\] Hallucination as an Upper Bound: A New Perspective on Text-to-Image Evaluation](../../NeurIPS2025/image_generation/hallucination_as_an_upper_bound_a_new_perspective_on_text-to-image_evaluation.md)
 - [\[ICCV 2025\] ADIEE: Automatic Dataset Creation and Scorer for Instruction-Guided Image Editing Evaluation](../../ICCV2025/image_generation/adiee_automatic_dataset_creation_and_scorer_for_instruction-guided_image_editing.md)
 - [\[CVPR 2025\] ORIDa: Object-Centric Real-World Image Composition Dataset](orida_object-centric_real-world_image_composition_dataset.md)
-- [\[CVPR 2025\] ViUniT: Visual Unit Tests for More Robust Visual Programming](viunit_visual_unit_tests_for_more_robust_visual_programming.md)
 - [\[CVPR 2025\] lbGen: Low-Biased General Annotated Dataset Generation](low-biased_general_annotated_dataset_generation.md)
+- [\[CVPR 2025\] ViUniT: Visual Unit Tests for More Robust Visual Programming](viunit_visual_unit_tests_for_more_robust_visual_programming.md)
 
 </div>
 

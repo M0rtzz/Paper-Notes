@@ -126,11 +126,11 @@ Tensor Product Attention (TPA) 将传统注意力中的 Q/K/V 矩阵分解为两
 
 ## 相关论文
 
+- [\[ICML 2026\] Do Transformers Need Three Projections？三选一/二的 QKV 共享系统研究](../../ICML2026/llm_efficiency/do_transformers_need_three_projections_systematic_study_of_qkv_variants.md)
 - [\[NeurIPS 2025\] Scale-invariant Attention](scale-invariant_attention.md)
 - [\[NeurIPS 2025\] The Emergence of Sparse Attention: Impact of Data Distribution and Benefits of Repetition](the_emergence_of_sparse_attention_impact_of_data_distribution_and_benefits_of_re.md)
 - [\[NeurIPS 2025\] Dynamics of Spontaneous Topic Changes in Next Token Prediction with Self-Attention](dynamics_of_spontaneous_topic_changes_in_next_token_prediction_with_self-attenti.md)
 - [\[NeurIPS 2025\] Tiled Flash Linear Attention: More Efficient Linear RNN and xLSTM Kernels](tiled_flash_linear_attention_more_efficient_linear_rnn_and_xlstm_kernels.md)
-- [\[ICLR 2026\] Universe Routing: Why Self-Evolving Agents Need Epistemic Control](../../ICLR2026/llm_efficiency/universe_routing_why_self-evolving_agents_need_epistemic_control.md)
 
 </div>
 

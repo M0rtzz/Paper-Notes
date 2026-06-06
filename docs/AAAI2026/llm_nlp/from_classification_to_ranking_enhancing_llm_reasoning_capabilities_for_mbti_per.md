@@ -132,10 +132,10 @@ tags:
 ## 相关论文
 
 - [\[AAAI 2026\] PERSIST: Persistent Instability in LLM's Personality Measurements](persistent_instability_in_llms_personality_measurements_effects_of_scale_reasoni.md)
+- [\[ICML 2026\] Margin-Adaptive Confidence Ranking for Reliable LLM Judgement](../../ICML2026/llm_nlp/margin-adaptive_confidence_ranking_for_reliable_llm_judgement.md)
 - [\[AAAI 2026\] Collaborative LLM Numerical Reasoning with Local Data Protection](collaborative_llm_numerical_reasoning_with_local_data_protection.md)
 - [\[AAAI 2026\] Scalable and Accurate Graph Reasoning with LLM-Based Multi-Agents](scalable_and_accurate_graph_reasoning_with_llm-based_multi-agents.md)
 - [\[ACL 2025\] Just a Scratch: Enhancing LLM Capabilities for Self-Harm Detection through Intent Refinement](../../ACL2025/llm_nlp/just_a_scratch_enhancing_llm_capabilities_for_self-harm_detection_through_intent.md)
-- [\[AAAI 2026\] PromptMoE: Generalizable Zero-Shot Anomaly Detection via Visually-Guided Prompt Mixing of Experts](promptmoe_generalizable_zero-shot_anomaly_detection_via_visually-guided_prompt_m.md)
 
 </div>
 

@@ -1,27 +1,28 @@
 ---
 title: >-
-  ACL2026 对话系统方向23篇论文解读
+  ACL2026 对话系统方向26篇论文解读
 description: >-
-  23篇ACL2026的对话系统方向论文解读，涵盖对话系统、推理、对齐/RLHF、Agent、情感分析等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  26篇ACL2026的对话系统方向论文解读，涵盖对话系统、推理、情感分析、Agent、LLM、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "对话系统"
   - "论文解读"
   - "论文笔记"
   - "推理"
-  - "对齐/RLHF"
-  - "Agent"
   - "情感分析"
+  - "Agent"
+  - "LLM"
+  - "对齐/RLHF"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🗣️ 对话系统
 
-**💬 ACL2026** · **23** 篇论文解读
+**💬 ACL2026** · **26** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (1)](../../CVPR2026/dialogue/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/dialogue/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/dialogue/index.md) · [🧠 NeurIPS2025 (5)](../../NeurIPS2025/dialogue/index.md) · [🧪 ICML2025 (3)](../../ICML2025/dialogue/index.md) · [💬 ACL2025 (17)](../../ACL2025/dialogue/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/dialogue/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/dialogue/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/dialogue/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/dialogue/index.md) · [🧠 NeurIPS2025 (5)](../../NeurIPS2025/dialogue/index.md) · [🧪 ICML2025 (3)](../../ICML2025/dialogue/index.md)
 
-🔥 **高频主题：** 对话系统 ×17 · 推理 ×3 · 对齐/RLHF ×2 · Agent ×2 · 情感分析 ×2
+🔥 **高频主题：** 对话系统 ×18 · 推理 ×3 · 情感分析 ×3 · Agent ×3 · LLM ×2
 
 **[APEX-MEM: Agentic Semi-Structured Memory with Temporal Reasoning for Long-Term Conversational AI](apex-mem_agentic_semi-structured_memory_with_temporal_reasoning_for_long-term_co.md)**
 
@@ -38,6 +39,10 @@ tags:
 **[CoDial: Interpretable Task-Oriented Dialogue Systems Through Dialogue Flow Alignment](codial_interpretable_task-oriented_dialogue_systems_through_dialogue_flow_alignm.md)**
 
 :   本文提出 CoDial，一个将预定义的对话流（task schema）转换为结构化异构图再自动生成 LLM 护栏代码（如 Colang）的框架，在推理阶段实现可解释且可控的任务型对话策略，在 STAR 基准上达到 SOTA，且无需训练数据。
+
+**[Cognitive Policy-Driven LLM for Diagnosis and Intervention of Cognitive Distortions in Emotional Support Conversation](cognitive_policy-driven_llm_for_diagnosis_and_intervention_of_cognitive_distorti.md)**
+
+:   提出CoPoLLM框架，通过构建首个带认知扭曲标注的情感支持对话数据集CogBiasESC，结合认知策略强化学习（CPRL）引擎和双流条件优化（DSCO），使LLM能诊断8类认知扭曲并生成策略感知的干预回复，在15个SOTA基线上全面领先。
 
 **[Context-Agent: Dynamic Discourse Trees for Non-Linear Dialogue](context-agent_dynamic_discourse_trees_for_non-linear_dialogue.md)**
 
@@ -63,21 +68,29 @@ tags:
 
 :   本文提出 IndiRef 基准测试，用于评估对话系统通过"关系指代"（如"昨天我们去的那个公园旁边的咖啡馆"）建立和利用持久共识（common ground）的能力，发现现有 LLM 在全上下文条件下准确率不超过 50%，并通过合成数据 + GRPO 强化学习训练将性能提升 15-20%。
 
+**[GenesisFunc: Multi-Agent Data Generation for Accurate and Generalizable Function-Calling](genesisfunc_multi-agent_data_generation_for_accurate_and_generalizable_function-.md)**
+
+:   GenesisFunc 用可靠工具池、多代理对话生成和多阶段质检自动构造高质量函数调用训练数据，微调 Qwen3-8B 后在 BFCL、API-Bank 和 ACEBench 上超过同规模开源函数调用模型，并展示出向更多工具和多轮 RL 训练扩展的潜力。
+
 **[LOCKET: Robust Feature-Locking Technique for Language Models](locket_robust_feature-locking_technique_for_language_models.md)**
 
 :   为 LLM "按特征付费解锁" 商业模式设计了一个不用密码、可扩展、抗越狱的 feature-locking 方案 LOCKET：每个待锁特征训一个 LoRA adapter（用 LAT 做对抗强化拒答），合并多个 adapter 时按层做频谱范数裁剪 (spectral norm clipping) 防止"过度拒答"塌缩，最终在 3 个模型 × 4 特征 (Math/SQL/Summarize/MMLU) 上拿到 100% 拒答率、≤7% 效用损失、≤5% 越狱攻击成功率，全面碾压 password-locking 基线。
+
+**[MA$^2$P: A Meta-Cognitive Autonomous Intelligent Agents Framework for Complex Persuasion](ma2p_a_meta-cognitive_autonomous_intelligent_agents_framework_for_complex_persua.md)**
+
+:   MA$^2$P 将复杂说服对话拆成“元策略选择-任务级多智能体说服-事后知识更新”的闭环，在不训练底座 LLM 的情况下，把被说服者的信念、欲望和顾虑转成更具体的策略动作，并在 CToMPersu 上显著提升多种 LLM 的说服成功率。
 
 **[Metro: Towards Strategy Induction from Expert Dialogue Transcripts for Non-collaborative Dialogues](metro_towards_strategy_induction_from_expert_dialogue_transcripts_for_non-collab.md)**
 
 :   Metro 把专家对话 transcript 自动归纳成一片 "Strategy Forest"——以 K-Means 聚类的对话状态为根节点的树，节点是 LLM 扩展的 micro-principle 动作、分支是按 Wilson 置信下界 + MCTS 风格价值回传打分剪枝后的完整动作轨迹，推理时直接 retrieve 一棵树、并行抽取 short-term（breadth）和 long-term（depth）建议，无需任何训练就在 P4G / CB 两个非合作对话任务上比 PRINCIPLES、PPDPP、GDP-Zero 等基线平均涨点约 10%。
 
-**[ODUTQA-MDC: A Task for Open-Domain Underspecified Tabular QA with Multi-turn Dialogue-based Clarification](odutqa-mdc_a_task_for_open-domain_underspecified_tabular_qa_with_multi-turn_dial.md)**
-
-:   本文提出 ODUTQA-MDC 任务和基准，首次系统研究开放域场景下用户查询模糊性的检测与多轮对话澄清问题，构建了包含 25,105 个 QA 对的大规模数据集，并设计了 MAIC-TQA 多智能体框架来完成"检测-澄清-推理"的端到端表格问答。
-
 **[Preference Learning Unlocks LLMs' Psycho-Counseling Skills](preference_learning_unlocks_llms_psycho-counseling_skills.md)**
 
 :   本文构建了面向心理咨询回复质量的 PsyCoPref 偏好数据集，并用奖励模型、DPO 与迭代式偏好学习训练 LLM，使 8B 模型在心理咨询回复上相对 GPT-4o 达到 87.0% 的胜率。
+
+**[ReacTOD: Bounded Neuro-Symbolic Agentic NLU for Zero-Shot Dialogue State Tracking](reactod_bounded_neuro-symbolic_agentic_nlu_for_zero-shot_dialogue_state_tracking.md)**
+
+:   ReacTOD 将任务型对话状态跟踪拆成受限工具调用，并用确定性符号校验器拦截和反馈 LLM 错误，使 8B 到 32B 级模型也能在零样本 MultiWOZ 和 SGD 上获得强于先前大模型提示方法的 JGA。
 
 **[Reasoning Gets Harder for LLMs Inside A Dialogue](reasoning_gets_harder_for_llms_inside_a_dialogue.md)**
 

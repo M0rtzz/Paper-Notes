@@ -146,7 +146,7 @@ BOTS 本身是任务选择框架，与具体 RL 算法解耦。实验中使用 G
 - [\[ICLR 2026\] ELLMob: Event-Driven Human Mobility Generation with Self-Aligned LLM Framework](ellmob_event-driven_human_mobility_generation_with_self-aligned_language_models.md)
 - [\[CVPR 2025\] MG-MotionLLM: A Unified Framework for Motion Comprehension and Generation across Multiple Granularities](../../CVPR2025/llm_nlp/mg-motionllm_a_unified_framework_for_motion_comprehension_and_generation_across_.md)
 - [\[ACL 2025\] From Selection to Generation: A Survey of LLM-based Active Learning](../../ACL2025/llm_nlp/from_selection_to_generation_a_survey.md)
-- [\[ICLR 2026\] Function Induction and Task Generalization: An Interpretability Study with Off-by-One Addition](function_induction_and_task_generalization_an_interpretability_study_with_off-by.md)
+- [\[ACL 2026\] EVE: A Domain-Specific LLM Framework for Earth Intelligence](../../ACL2026/llm_nlp/eve_a_domain-specific_llm_framework_for_earth_intelligence.md)
 
 </div>
 

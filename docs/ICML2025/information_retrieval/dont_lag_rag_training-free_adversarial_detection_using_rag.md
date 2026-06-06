@@ -153,7 +153,7 @@ VRAG 检测 pipeline（如 Figure 2 所示）分四步：
 - [\[NeurIPS 2025\] SeCon-RAG: A Two-Stage Semantic Filtering and Conflict-Free Framework for Trustworthy RAG](../../NeurIPS2025/information_retrieval/secon-rag_a_two-stage_semantic_filtering_and_conflict-free_framework_for_trustwo.md)
 - [\[ACL 2026\] CRAFT: Training-Free Cascaded Retrieval for Tabular QA](../../ACL2026/information_retrieval/craft_training-free_cascaded_retrieval_for_tabular_qa.md)
 - [\[ACL 2025\] VoxRAG: A Step Toward Transcription-Free RAG Systems in Spoken Question Answering](../../ACL2025/information_retrieval/voxrag_a_step_toward_transcription-free_rag_systems_in_spoken_question_answering.md)
-- [\[ICLR 2026\] Q-RAG: Long Context Multi-Step Retrieval via Value-Based Embedder Training](../../ICLR2026/information_retrieval/q_rag_long_context_multi_step_retrieval.md)
+- [\[ICML 2026\] Ranking-Free RAG: Replacing Re-Ranking with Selection in RAG for Sensitive Domains](../../ICML2026/information_retrieval/ranking_free_rag_replacing_re-ranking_with_selection_in_rag_for_sensitive_domain.md)
 
 </div>
 

@@ -167,9 +167,9 @@ ShapeNet测试集（完全未见物体）：
 
 - [\[ECCV 2024\] Learning Cross-Hand Policies of High-DOF Reaching and Grasping](learning_cross-hand_policies_of_high-dof_reaching_and_grasping.md)
 - [\[ECCV 2024\] Hierarchically Structured Neural Bones for Reconstructing Animatable Objects from Casual Videos](hierarchically_structured_neural_bones_for_reconstructing_animatable_objects_fro.md)
+- [\[CVPR 2026\] GraspLDP: Towards Generalizable Grasping Policy via Latent Diffusion](../../CVPR2026/robotics/graspldp_towards_generalizable_grasping_policy_via_latent_diffusion.md)
 - [\[CVPR 2025\] Coordinated Manipulation of Hybrid Deformable-Rigid Objects in Constrained Environments](../../CVPR2025/robotics/coordinated_manipulation_hybrid_deformable_rigid_objects.md)
 - [\[AAAI 2026\] GRIM: Task-Oriented Grasping with Conditioning on Generative Examples](../../AAAI2026/robotics/grim_task-oriented_grasping_with_conditioning_on_generative_examples.md)
-- [\[AAAI 2026\] Realistic Synthetic Household Data Generation at Scale](../../AAAI2026/robotics/realistic_synthetic_household_data_generation_at_scale.md)
 
 </div>
 

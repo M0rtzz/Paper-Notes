@@ -171,11 +171,11 @@ IC 的进一步分解（iDigits VIL）：
 
 ## 相关论文
 
-- [\[CVPR 2026\] Temporal Imbalance of Positive and Negative Supervision in Class-Incremental Learning](../../CVPR2026/llm_evaluation/temporal_imbalance_of_positive_and_negative_supervision_in_class-incremental_lea.md)
 - [\[CVPR 2025\] Dual Consolidation for Pre-Trained Model-Based Domain-Incremental Learning](../../CVPR2025/llm_evaluation/dual_consolidation_for_pre-trained_model-based_domain-incremental_learning.md)
-- [\[ICML 2026\] HEDP: A Hybrid Energy-Distance Prompt-based Framework for Domain Incremental Learning](../../ICML2026/llm_evaluation/hedp_a_hybrid_energy-distance_prompt-based_framework_for_domain_incremental_lear.md)
 - [\[ICML 2025\] Addressing Imbalanced Domain-Incremental Learning through Dual-Balance Collaborative Experts (DCE)](../../ICML2025/llm_evaluation/addressing_imbalanced_domain-incremental_learning_through_dual-balance_collabora.md)
-- [\[CVPR 2026\] HyCal: A Training-Free Prototype Calibration Method for Cross-Discipline Few-Shot Class-Incremental Learning](../../CVPR2026/llm_evaluation/hycal_training_free_prototype_calibration_for_cross_discipline_fscil.md)
+- [\[ECCV 2024\] Image-Feature Weak-to-Strong Consistency: An Enhanced Paradigm for Semi-Supervised Learning](image-feature_weak-to-strong_consistency_an_enhanced_paradigm_for_semi-supervise.md)
+- [\[ECCV 2024\] Instance-dependent Noisy-label Learning with Graphical Model Based Noise-rate Estimation](instance-dependent_noisy-label_learning_with_graphical_model_based_noise-rate_es.md)
+- [\[ECCV 2024\] Learn from the Learnt: Source-Free Active Domain Adaptation via Contrastive Sampling and Visual Persistence](learn_from_the_learnt_source-free_active_domain_adaptation_via_contrastive_sampl.md)
 
 </div>
 

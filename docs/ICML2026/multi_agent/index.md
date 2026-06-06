@@ -1,27 +1,34 @@
 ---
 title: >-
-  ICML2026 multi_agent方向6篇论文解读
+  ICML2026 多智能体方向14篇论文解读
 description: >-
-  6篇ICML2026的 multi_agent 方向论文解读，涵盖 Agent、LLM、扩散模型、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  14篇ICML2026的多智能体方向论文解读，涵盖 Agent、LLM、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
-  - "multi_agent"
+  - "多智能体"
   - "论文解读"
   - "论文笔记"
   - "Agent"
   - "LLM"
-  - "扩散模型"
   - "推理"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
-# 📄 multi_agent
+# 👥 多智能体
 
-**🧪 ICML2026** · **6** 篇论文解读
+**🧪 ICML2026** · **14** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (21)](../../ACL2026/multi_agent/index.md) · [💬 ACL2025 (8)](../../ACL2025/multi_agent/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (39)](../../ACL2026/multi_agent/index.md) · [💬 ACL2025 (8)](../../ACL2025/multi_agent/index.md)
 
-🔥 **高频主题：** Agent ×5 · LLM ×4
+🔥 **高频主题：** Agent ×9 · LLM ×6 · 推理 ×2
+
+**[Beyond Majority Voting: LLM Aggregation by Leveraging Higher-Order Information](beyond_majority_voting_llm_aggregation_by_leveraging_higher-order_information.md)**
+
+:   本文提出两种利用高阶信息的 LLM 回答聚合算法——基于一阶准确率信息的 Optimal Weight (OW) 和基于二阶相关性信息的 Inverse Surprising Popularity (ISP)，在不需要标签的条件下证明性优于多数投票，并在 UltraFeedback、MMLU 和医疗健康数据集上验证了一致的提升。
+
+**[CoOT: Learning to Coordinate In-Context with Coordination Transformers](coot_learning_to_coordinate_in-context_with_coordination_transformers.md)**
+
+:   把"如何与陌生伙伴协作"从 task-generalization 改写成 partner-generalization 的 in-context 学习问题：训练一个 Decision Transformer 在跨 episode 的交互轨迹上预测最佳响应动作，让模型不更新参数就能在几局之内适应任何未见过的伙伴。
 
 **[E-mem: Multi-Agent Based Episodic Context Reconstruction for LLM Agent Memory](e-mem_multi-agent_based_episodic_context_reconstruction_for_llm_agent_memory.md)**
 
@@ -31,18 +38,42 @@ tags:
 
 :   EngiAgent 把工程问题求解拆成 Analyzer/Modeler/Verifier/Solver/Evaluator 五个专家 Agent，再用一个**全连接协调器**动态路由反馈（而不是走固定流水线），让 GPT-4o 上工程任务的可行解率从 5.66%（zero-shot）/7.55%（MM-Agent）一跃到 64.15%，平均比此前 SOTA 提升约 7 倍。
 
+**[Sheaf-ADMM: Learning Multi-Agent Coordination via Sheaf-ADMM](learning_multi-agent_coordination_via_sheaf-admm.md)**
+
+:   Sheaf-ADMM 把多智能体协调问题做成端到端可微的 ADMM 展开——每个 agent 只看局部 patch，独立解 ADMM 子问题（$\bm x$-update）、通过 cellular sheaf 定义的"边空间投影"协商一致（$\bm z$-update）、用对偶变量 $\bm u$ 累积分歧；在 maze pathfinding / MNIST / Sudoku 上 agents 协同得出正确全局解，且推理路径有可分析的 primal/consensus/dual 三态——比 MPNN 更可干预。
+
+**[MAS-Orchestra: Understanding and Improving Multi-Agent Reasoning Through Holistic Orchestration and Controlled Benchmarks](mas-orchestra_understanding_and_improving_multi-agent_reasoning_through_holistic.md)**
+
+:   把"自动多智能体系统设计"重新表述为一次性输出整张 MAS 的函数调用 RL 问题，并配套 MASBench 从 Depth/Horizon/Breadth/Parallel/Robustness 五个轴说清楚"什么时候多智能体真的比单智能体强"。
+
 **[MASPO: Joint Prompt Optimization for LLM-based Multi-Agent Systems](maspo_joint_prompt_optimization_for_llm-based_multi-agent_systems.md)**
 
 :   MASPO 通过多粒度联合评价（局部有效性 + 前瞻潜力 + 全局对齐）+ 错位案例驱动的进化束搜索，在不依赖标注的前提下端到端地为整条多智能体链路联合优化角色提示词，6 个任务上平均提升约 2.9 分。
+
+**[MASPOB: 用 GNN 代理 + LinUCB + 坐标上升做多智能体提示优化](maspob_bandit-based_prompt_optimization_for_multi-agent_systems_with_graph_neura.md)**
+
+:   MASPOB 把多智能体系统的 prompt 优化看作预算紧缩的黑盒优化，用 GAT 代理模型捕获 workflow topology 下的 prompt 耦合、用 LinUCB 在嵌入空间算 epistemic uncertainty、用坐标上升把联合搜索拆成序贯单体问题，复杂度从 $\mathcal{O}(\prod |\mathcal{P}_i|)$ 降到 $\mathcal{O}(\sum |\mathcal{P}_i|)$；在 6 个基准（QA/Code/Math）上平均 80.58 超越 MIPRO 78.87、AFlow 78.52、IO 68.56。
 
 **[OMAC: A Holistic Optimization Framework for LLM-Based Multi-Agent Collaboration](omac_a_holistic_optimization_framework_for_llm-based_multi-agent_collaboration.md)**
 
 :   本文把多智能体系统的优化空间形式化为五个维度（两个功能维度 + 三个结构维度），用"Semantic Initializer 生成 + Contrastive Comparator 对比改进"的双 actor 算法在每个维度上做监督式优化，再迭代联合优化多个维度，在 HumanEval / MMLU / MATH 上稳定打败 DyLAN、ADAS、AFlow 等基线。
 
+**[ProtocolBench: Which LLM MultiAgent Protocol to Choose?](protocolbench_which_llm_multiagent_protocol_to_choose.md)**
+
+:   ProtocolBench 首次系统对比四大 LLM 多智能体通信协议（A2A、ACP、ANP、Agora）在任务成功、端到端延迟、消息字节开销、失败鲁棒性四轴上的表现——发现协议选择对系统行为有 36.5% 完成时间差、3.48s 延迟差；进一步提出 ProtocolRouter 按场景/模块动态选协议，将 Fail-Storm 恢复时间降 18.1%。
+
 **[RADAR: Redundancy-Aware Diffusion for Multi-Agent Communication Structure Generation](radar_redundancy-aware_diffusion_for_multi-agent_communication_structure_generat.md)**
 
 :   RADAR 把多 LLM-Agent 系统的通信拓扑设计建模为一个"冗余感知"的离散图扩散过程，用 effective size 作为指导信号一步步增量生成 query-自适应的协作图，在 6 个基准上同时拿到更高准确率、更低 token 消耗和更强鲁棒性。
 
+**[Securing Multi-Agent Systems Against Corruptions via Node Contribution Backpropagation](securing_multi-agent_systems_against_corruptions_via_node_contribution_backpropa.md)**
+
+:   BPD 把 LLM 多智能体系统的多轮交互重构成 "带符号有向无环图"，把每条消息打成 $\{-1, 0, 1\}$ 的同意 / 漠视 / 反对分数，再用 PageRank 式的一次反向拓扑传播算出每个 agent 对最终答案的贡献分，分数离群者直接判定为恶意 agent 并切掉其出边——免训练、单次查询即用、对动态拓扑天然鲁棒。
+
 **[Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs](systematic_failures_in_collective_reasoning_under_distributed_information_in_mul.md)**
 
 :   本文将社会心理学的 Hidden Profile 范式搬到多智能体 LLM 评测里，构建 65 任务的 HiddenBench，在 15 个前沿 LLM 上系统揭示：单 agent 在 Full Profile 下能 80.7% 答对的同类任务，多 agent 在分布式信息下仅 30.1%，根本失败模式是**不会主动 elicit 别人没说出来的信息**，而轻量结构化沟通协议能跨家族大幅缓解。
+
+**[When Cloud Agents Meet Device Agents: Lessons from Hybrid Multi-Agent Systems](when_cloud_agents_meet_device_agents_lessons_from_hybrid_multi-agent_systems.md)**
+
+:   这篇论文系统研究云端 GPT-4o 监督者与端侧 Qwen3 执行者组成的混合多智能体系统，发现 PEVR 和 EVA 在 UI assistance 与 deep search 上各有优势，更多云端介入不一定更好，而上下文重置与摘要能显著改善端侧长任务的成本和 KV-cache 压力。

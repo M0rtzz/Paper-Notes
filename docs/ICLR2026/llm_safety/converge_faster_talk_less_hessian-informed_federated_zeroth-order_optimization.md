@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Converge Faster, Talk Less: Hessian-Informed Federated Zeroth-Order Optimization
 description: >-
-  [ICLR 2026][优化/理论][联邦学习] 提出 HiSo（Hessian-informed Scalar-only communication），在联邦零阶优化中利用全局对角 Hessian 近似加速收敛，同时严格保持标量通信不传输任何二阶信息…
+  [ICLR 2026][LLM安全][联邦学习] 提出 HiSo（Hessian-informed Scalar-only communication），在联邦零阶优化中利用全局对角 Hessian 近似加速收敛，同时严格保持标量通信不传输任何二阶信息…
 tags:
   - "ICLR 2026"
-  - "优化/理论"
+  - "LLM安全"
   - "联邦学习"
   - "zeroth-order optimization"
   - "Hessian preconditioning"

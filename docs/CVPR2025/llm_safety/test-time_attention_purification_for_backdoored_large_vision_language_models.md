@@ -2,10 +2,10 @@
 title: >-
   [论文解读] CleanSight: Test-Time Attention Purification for Backdoored Large Vision Language Models
 description: >-
-  [CVPR 2025][多模态VLM][backdoor attack] CleanSight 发现 LVLM 后门攻击的机制不在像素层面而在注意力层面——触发器通过"注意力窃取"（trigger token 抢夺 text token 的注意力）来激活后门…
+  [CVPR 2025][LLM安全][backdoor attack] CleanSight 发现 LVLM 后门攻击的机制不在像素层面而在注意力层面——触发器通过"注意力窃取"（trigger token 抢夺 text token 的注意力）来激活后门…
 tags:
   - "CVPR 2025"
-  - "多模态VLM"
+  - "LLM安全"
   - "backdoor attack"
   - "LVLM防御"
   - "注意力机制"

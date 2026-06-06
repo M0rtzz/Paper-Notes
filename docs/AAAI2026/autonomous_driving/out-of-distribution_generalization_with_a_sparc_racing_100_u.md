@@ -1,6 +1,6 @@
 ---
 title: >-
-  [论文解读] SPARC: 用单一策略驾驶100辆未见车辆的OOD泛化
+  [论文解读] Out-of-Distribution Generalization with a SPARC: Racing 100 Unseen Vehicles with a Single Policy
 description: >-
   [AAAI 2026][自动驾驶][OOD泛化] 提出 SPARC（Single-Phase Adaptation for Robust Control），将 RMA 的两阶段上下文编码与历史适应统一为单阶段训练…
 tags:

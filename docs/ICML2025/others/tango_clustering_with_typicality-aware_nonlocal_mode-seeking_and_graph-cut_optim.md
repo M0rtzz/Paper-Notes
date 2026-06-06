@@ -255,7 +255,7 @@ $O(nk^2d)$，由相似度矩阵计算主导（可并行化），其中 $k, q \ll
 - [\[ICML 2025\] Understanding Mode Connectivity via Parameter Space Symmetry](understanding_mode_connectivity_via_parameter_space_symmetry.md)
 - [\[NeurIPS 2025\] Redundancy-Aware Test-Time Graph Out-of-Distribution Detection](../../NeurIPS2025/others/redundancy-aware_test-time_graph_out-of-distribution_detection.md)
 - [\[ICML 2025\] Sparse-Pivot: Dynamic Correlation Clustering for Node Insertions](sparse-pivot_dynamic_correlation_clustering_for_node_insertions.md)
-- [\[ICML 2025\] Exploiting Similarity for Computation and Communication-Efficient Decentralized Optimization](exploiting_similarity_for_computation_and_communication-efficient_decentralized_.md)
+- [\[ICML 2026\] Cost-Aware Stopping for Bayesian Optimization](../../ICML2026/others/cost-aware_stopping_for_bayesian_optimization.md)
 
 </div>
 

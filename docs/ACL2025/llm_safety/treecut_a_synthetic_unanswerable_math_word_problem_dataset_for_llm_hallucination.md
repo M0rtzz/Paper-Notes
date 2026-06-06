@@ -135,11 +135,11 @@ Sun et al. 依赖人工标注将现有题目改为不可回答，仅产出 2600 
 
 ## 相关论文
 
+- [\[ACL 2026\] Detoxification for LLM from Dataset Itself](../../ACL2026/llm_safety/detoxification_for_llm_from_dataset_itself.md)
 - [\[ICML 2025\] The Canary's Echo: Auditing Privacy Risks of LLM-Generated Synthetic Text](../../ICML2025/llm_safety/the_canarys_echo_auditing_privacy_risks_of_llm-generated_synthetic_text.md)
+- [\[ACL 2026\] Rethinking Evaluation for LLM Hallucination Detection: A Desiderata, A New RAG-based Benchmark, New Insights](../../ACL2026/llm_safety/rethinking_evaluation_for_llm_hallucination_detection_a_desiderata_a_new_rag-bas.md)
 - [\[ACL 2026\] Modeling LLM Unlearning as an Asymmetric Two-Task Learning Problem](../../ACL2026/llm_safety/modeling_llm_unlearning_as_an_asymmetric_two-task_learning_problem.md)
 - [\[ACL 2025\] Towards Effective Extraction and Evaluation of Factual Claims](towards_effective_extraction_and_evaluation_of_factual_claims.md)
-- [\[NeurIPS 2025\] CPRet: A Dataset, Benchmark, and Model for Retrieval in Competitive Programming](../../NeurIPS2025/llm_safety/cpret_a_dataset_benchmark_and_model_for_retrieval_in_competitive_programming.md)
-- [\[NeurIPS 2025\] DeepPersona: A Generative Engine for Scaling Deep Synthetic Personas](../../NeurIPS2025/llm_safety/deeppersona_a_generative_engine_for_scaling_deep_synthetic_personas.md)
 
 </div>
 

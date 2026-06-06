@@ -125,11 +125,11 @@ tags:
 
 ## 相关论文
 
-- [\[ACL 2025\] Towards Reward Fairness in RLHF: From a Resource Allocation Perspective](reward_fairness_rlhf.md)
 - [\[NeurIPS 2025\] What Makes a Reward Model a Good Teacher? An Optimization Perspective](../../NeurIPS2025/llm_alignment/what_makes_a_reward_model_a_good_teacher_an_optimization_perspective.md)
+- [\[ACL 2025\] Towards Reward Fairness in RLHF: From a Resource Allocation Perspective](reward_fairness_rlhf.md)
 - [\[ACL 2025\] Reward Generalization in RLHF: A Topological Perspective](reward_generalization_in_rlhf_a_topological_perspective.md)
 - [\[ICML 2025\] DPO Meets PPO: Reinforced Token Optimization for RLHF](../../ICML2025/llm_alignment/dpo_meets_ppo_reinforced_token_optimization_for_rlhf.md)
-- [\[ICLR 2026\] Beyond RLHF and NLHF: Population-Proportional Alignment under an Axiomatic Framework](../../ICLR2026/llm_alignment/beyond_rlhf_and_nlhf_population-proportional_alignment_under_an_axiomatic_framew.md)
+- [\[ACL 2025\] HAF-RM: A Hybrid Alignment Framework for Reward Model Training](haf-rm_a_hybrid_alignment_framework_for_reward_model_training.md)
 
 </div>
 

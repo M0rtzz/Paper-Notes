@@ -39,7 +39,9 @@ tags:
 
 **核心 idea**：将"引用"、"归因"和"引述"统一为"证据基础文本生成"范式，通过三维分类学和七维评估框架为碎片化领域提供系统化视角。
 
-## 综述框架/分类体系
+## 方法详解
+
+### 综述框架/分类体系
 
 ### 整体分类学
 
@@ -74,7 +76,9 @@ tags:
 **训练**（45% 论文使用）：以监督微调为主，主要用于改善归因行为。预训练较少使用。
 **提示**（78% 论文使用）：以零/少样本提示为主。专门针对引用行为的策略包括 chain-of-citation、chain-of-quote 和 conflict-aware 提示。
 
-## 文献分析/覆盖范围
+## 实验关键数据
+
+### 文献分析/覆盖范围
 
 ### 评估指标体系
 
@@ -133,3 +137,19 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 134 篇论文、300 个指标、19 框架、231 数据集、11 基准的覆盖范围极全面
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，多维度分析平衡，每节附有精炼的 "Takeaways" 总结
 - 价值: ⭐⭐⭐⭐⭐ 对快速增长但碎片化领域的全景梳理，对研究者和实践者都有重要参考价值
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2026\] Dynamic Infilling Anchors for Format-Constrained Generation in Diffusion Large Language Models](dynamic_infilling_anchors_for_format-constrained_generation_in_diffusion_large_l.md)
+- [\[ACL 2026\] Comprehensiveness Metrics for Automatic Evaluation of Factual Recall in Text Generation](comprehensiveness_metrics_for_automatic_evaluation_of_factual_recall_in_text_gen.md)
+- [\[ACL 2026\] Capabilities and Evaluation Biases of Large Language Models in Classical Chinese Poetry Generation: A Case Study on Tang Poetry](capabilities_and_evaluation_biases_of_large_language_models_in_classical_chinese.md)
+- [\[ACL 2026\] Minos: A Multimodal Evaluation Model for Bidirectional Generation Between Image and Text](minos_a_multimodal_evaluation_model_for_bidirectional_generation_between_image_a.md)
+- [\[AAAI 2026\] Structured Language Generation Model: Loss Calibration and Formatted Decoding for Efficient Text](../../AAAI2026/llm_evaluation/structured_language_generation_model_loss_calibration_and_formatted_decoding_for.md)
+
+</div>
+
+<!-- RELATED:END -->

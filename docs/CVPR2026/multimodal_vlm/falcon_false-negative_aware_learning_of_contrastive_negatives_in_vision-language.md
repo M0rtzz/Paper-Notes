@@ -151,9 +151,9 @@ $$\phi_{k+1} = \phi_k + \gamma \cdot \mathbb{E}_{\pi_{\phi_k}}\left[\Delta_k^{V,
 
 - [\[CVPR 2026\] The More, the Merrier: Contrastive Fusion for Higher-Order Multimodal Alignment](the_more_the_merrier_contrastive_fusion_for_higher-order_multimodal_alignment.md)
 - [\[CVPR 2026\] No Hard Negatives Required: Concept Centric Learning Leads to Compositionality without Degrading Zero-shot Capabilities of Contrastive Models](no_hard_negatives_required_concept_centric_learning_leads_to_compositionality_wi.md)
+- [\[NeurIPS 2025\] Multimodal Negative Learning](../../NeurIPS2025/multimodal_vlm/multimodal_negative_learning.md)
 - [\[CVPR 2026\] Noise-Aware Few-Shot Learning through Bi-directional Multi-View Prompt Alignment](noise-aware_few-shot_learning_through_bi-directional_multi-view_prompt_alignment.md)
 - [\[NeurIPS 2025\] Aligning by Misaligning: Boundary-aware Curriculum Learning for Multimodal Alignment](../../NeurIPS2025/multimodal_vlm/aligning_by_misaligning_boundaryaware_curriculum_learning_fo.md)
-- [\[NeurIPS 2025\] Multimodal Negative Learning](../../NeurIPS2025/multimodal_vlm/multimodal_negative_learning.md)
 
 </div>
 

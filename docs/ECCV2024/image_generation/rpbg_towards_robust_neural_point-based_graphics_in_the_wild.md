@@ -2,10 +2,10 @@
 title: >-
   [论文解读] RPBG: Towards Robust Neural Point-based Graphics in the Wild
 description: >-
-  [ECCV 2024][3D视觉][点云渲染] 本文针对Neural Point-based Graphics (NPBG)在真实场景中的鲁棒性不足问题，提出RPBG，通过退化感知卷积模块、注意力驱动的点可见性校正、轻量级背景建模和点云增强…
+  [ECCV 2024][图像生成][点云渲染] 本文针对Neural Point-based Graphics (NPBG)在真实场景中的鲁棒性不足问题，提出RPBG，通过退化感知卷积模块、注意力驱动的点可见性校正、轻量级背景建模和点云增强…
 tags:
   - "ECCV 2024"
-  - "3D视觉"
+  - "图像生成"
   - "点云渲染"
   - "神经重渲染"
   - "鲁棒性"
@@ -125,8 +125,8 @@ tags:
 - [\[ECCV 2024\] WildVidFit: Video Virtual Try-On in the Wild via Image-Based Controlled Diffusion Models](wildvidfit_video_virtual_try-on_in_the_wild_via_image-based_controlled_diffusion.md)
 - [\[ECCV 2024\] Robust-Wide: Robust Watermarking against Instruction-driven Image Editing](robust-wide_robust_watermarking_against_instruction-driven_image_editing.md)
 - [\[ECCV 2024\] Shedding More Light on Robust Classifiers under the lens of Energy-based Models](shedding_more_light_on_robust_classifiers_under_the_lens_of_energy-based_models.md)
-- [\[NeurIPS 2025\] Neural Entropy](../../NeurIPS2025/image_generation/neural_entropy.md)
 - [\[ECCV 2024\] A High-Quality Robust Diffusion Framework for Corrupted Dataset](a_highquality_robust_diffusion_framework_for_corrupted_datas.md)
+- [\[NeurIPS 2025\] Neural Entropy](../../NeurIPS2025/image_generation/neural_entropy.md)
 
 </div>
 

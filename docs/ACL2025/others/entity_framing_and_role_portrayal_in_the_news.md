@@ -152,8 +152,8 @@ tags:
 - [\[ACL 2025\] Narrative Media Framing in Political Discourse](narrative_media_framing_in_political_discourse.md)
 - [\[ACL 2025\] Evaluating Design Decisions for Dual Encoder-based Entity Disambiguation](evaluating_design_decisions_for_dual_encoder-based_entity_disambiguation.md)
 - [\[ACL 2025\] Digital Gatekeepers: Google's Role in Curating Hashtags and Subreddits](digital_gatekeepers_googles_role_in_curating_hashtags_and_subreddits.md)
+- [\[ICML 2026\] Over-Alignment vs Over-Fitting: The Role of Feature Learning Strength in Generalization](../../ICML2026/others/over-alignment_vs_over-fitting_the_role_of_feature_learning_strength_in_generali.md)
 - [\[ACL 2025\] Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
-- [\[ACL 2025\] Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
 
 </div>
 

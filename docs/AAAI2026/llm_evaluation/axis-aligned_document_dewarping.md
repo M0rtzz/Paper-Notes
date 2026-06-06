@@ -164,9 +164,9 @@ $$\mathcal{L}_{all} = \alpha \mathcal{L}_{2D} + \beta \mathcal{L}_{3D} + \gamma 
 
 - [\[AAAI 2026\] HybriDLA: Hybrid Generation for Document Layout Analysis](hybridla_hybrid_generation_for_document_layout_analysis.md)
 - [\[ICML 2025\] Gradient Aligned Regression via Pairwise Losses](../../ICML2025/llm_evaluation/gradient_aligned_regression_via_pairwise_losses.md)
+- [\[ACL 2026\] Beyond Marginal Distributions: A Framework to Evaluate the Representativeness of Demographic-Aligned LLMs](../../ACL2026/llm_evaluation/beyond_marginal_distributions_a_framework_to_evaluate_the_representativeness_of_.md)
+- [\[ACL 2026\] Stress Testing Factual Consistency Metrics for Long-Document Summarization](../../ACL2026/llm_evaluation/stress_testing_factual_consistency_metrics_for_long-document_summarization.md)
 - [\[NeurIPS 2025\] Document Summarization with Conformal Importance Guarantees](../../NeurIPS2025/llm_evaluation/document_summarization_with_conformal_importance_guarantees.md)
-- [\[ICCV 2025\] ForCenNet: Foreground-Centric Network for Document Image Rectification](../../ICCV2025/llm_evaluation/forcennet_foreground-centric_network_for_document_image_rectification.md)
-- [\[ACL 2025\] READoc: A Unified Benchmark for Realistic Document Structured Extraction](../../ACL2025/llm_evaluation/readoc_a_unified_benchmark_for_realistic_document_structured_extraction.md)
 
 </div>
 

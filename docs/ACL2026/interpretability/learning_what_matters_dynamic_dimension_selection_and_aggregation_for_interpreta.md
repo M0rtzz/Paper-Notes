@@ -131,12 +131,6 @@ VL-MDR 在一个共享的预训练 VLM backbone 上挂三个轻量 head，遵循
 - 写作质量: ⭐⭐⭐⭐ 问题设定清晰，三阶段方法图直观；数学符号略多
 - 价值: ⭐⭐⭐⭐ 可解释 RM 是 VLM 对齐的刚需，开源 321k 数据集和 21 维 taxonomy 有长期复用价值
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">
@@ -144,10 +138,10 @@ VL-MDR 在一个共享的预训练 VLM backbone 上挂三个轻量 head，遵循
 ## 相关论文
 
 - [\[ACL 2026\] Mechanisms of Prompt-Induced Hallucination in Vision–Language Models](mechanisms_of_prompt-induced_hallucination_in_vision-language_models.md)
+- [\[ICML 2026\] IdEst: Assessing Self-Supervised Learning Representations via Intrinsic Dimension](../../ICML2026/interpretability/idest_assessing_self-supervised_learning_representations_via_intrinsic_dimension.md)
 - [\[ICML 2025\] What Makes an Ensemble (Un)interpretable?](../../ICML2025/interpretability/what_makes_an_ensemble_un_interpretable.md)
-- [\[ACL 2026\] Aligning What LLMs Do and Say: Towards Self-Consistent Explanations](aligning_what_llms_do_and_say_towards_self-consistent_explanations.md)
 - [\[ACL 2026\] Retrieval Heads are Dynamic](retrieval_heads_are_dynamic.md)
-- [\[NeurIPS 2025\] Rectifying Shortcut Behaviors in Preference-based Reward Learning](../../NeurIPS2025/interpretability/rectifying_shortcut_behaviors_in_preference-based_reward_learning.md)
+- [\[ACL 2026\] Aligning What LLMs Do and Say: Towards Self-Consistent Explanations](aligning_what_llms_do_and_say_towards_self-consistent_explanations.md)
 
 </div>
 

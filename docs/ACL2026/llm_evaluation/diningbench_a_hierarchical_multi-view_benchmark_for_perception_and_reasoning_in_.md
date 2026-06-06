@@ -139,13 +139,6 @@ DiningBench 是一个 benchmark 数据集，「方法」就是数据构造 pipel
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，pipeline 图和表格信息量大；prompt 设计在附录全公开值得称赞
 - 价值: ⭐⭐⭐⭐⭐ HuggingFace 公开数据集，对食品域 VLM 研究有直接推动作用；揭示的 5 大失败模式对通用 VLM 设计也有启发
 
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">

@@ -167,7 +167,7 @@ Llama3.1-8B-Instruct 结果：
 - [\[ACL 2025\] Micro-Act: Mitigate Knowledge Conflict in QA via Actionable Self-Reasoning](micro_act_knowledge_conflict_reasoning.md)
 - [\[ACL 2025\] Theoretical Guarantees for Minimum Bayes Risk Decoding](theoretical_guarantees_for_minimum_bayes_risk_decoding.md)
 - [\[ACL 2025\] GeAR: Generation Augmented Retrieval](gear_generation_augmented_retrieval.md)
-- [\[ACL 2025\] Commonsense Reasoning in Arab Culture](commonsense_arab_culture.md)
+- [\[ACL 2025\] Implicit Reasoning in Transformers is Reasoning through Shortcuts](implicit_reasoning_in_transformers_is_reasoning_through_shortcuts.md)
 
 </div>
 

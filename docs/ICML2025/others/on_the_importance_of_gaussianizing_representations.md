@@ -155,10 +155,10 @@ $$y_i = x_i + z_i \cdot \xi \cdot s, \quad z_i \sim \mathcal{N}(0,1)$$
 ## 相关论文
 
 - [\[ACL 2025\] MEXMA: Token-level Objectives Improve Sentence Representations](../../ACL2025/others/mexma_token-level_objectives_improve_sentence_representations.md)
-- [\[ICML 2025\] SUICA: Learning Super-high Dimensional Sparse Implicit Neural Representations for Spatial Transcriptomics](suica_learning_super-high_dimensional_sparse_implicit_neural_representations_for.md)
+- [\[ICML 2026\] Continual Learning of Domain-Invariant Representations](../../ICML2026/others/continual_learning_of_domain-invariant_representations.md)
 - [\[NeurIPS 2025\] RNNs Perform Task Computations by Dynamically Warping Neural Representations](../../NeurIPS2025/others/rnns_perform_task_computations_by_dynamically_warping_neural_representations.md)
+- [\[AAAI 2026\] Guided Perturbation Sensitivity (GPS): Detecting Adversarial Text via Embedding Stability and Word Importance](../../AAAI2026/others/guided_perturbation_sensitivity_gps_detecting_adversarial_text_via_embedding_sta.md)
 - [\[ICLR 2026\] Exchangeability of GNN Representations with Applications to Graph Retrieval](../../ICLR2026/others/exchangeability_gnn_representations.md)
-- [\[AAAI 2026\] Learning Fair Representations with Kolmogorov-Arnold Networks](../../AAAI2026/others/learning_fair_representations_with_kolmogorov-arnold_networks.md)
 
 </div>
 

@@ -127,7 +127,7 @@ $$\mathcal{L} = \mathcal{L}_{image} + \mathcal{L}_{geom} + \mathcal{L}_{op}$$
 - [\[CVPR 2025\] GASP: Gaussian Avatars with Synthetic Priors](gasp_gaussian_avatars_with_synthetic_priors.md)
 - [\[CVPR 2026\] PhysHead: Simulation-Ready Gaussian Head Avatars](../../CVPR2026/3d_vision/physhead_simulation-ready_gaussian_head_avatars.md)
 - [\[ICCV 2025\] StrandHead: Text to Hair-Disentangled 3D Head Avatars Using Human-Centric Priors](../../ICCV2025/3d_vision/strandhead_text_to_hair-disentangled_3d_head_avatars_using_human-centric_priors.md)
-- [\[NeurIPS 2025\] HyPlaneHead: Rethinking Tri-plane-like Representations in Full-Head Image Synthesis](../../NeurIPS2025/3d_vision/hyplanehead_rethinking_tri-plane-like_representations_in_full-head_image_synthes.md)
+- [\[CVPR 2025\] HRAvatar: High-Quality and Relightable Gaussian Head Avatar](hravatar_high-quality_and_relightable_gaussian_head_avatar.md)
 
 </div>
 

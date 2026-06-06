@@ -142,8 +142,8 @@ TAWM 基于 TD-MPC2 架构进行修改。编码器 $h$ 将观测 $o_t$ 映射到
 - [\[ICML 2025\] Prediction-Powered Adaptive Shrinkage Estimation](prediction-powered_adaptive_shrinkage_estimation.md)
 - [\[NeurIPS 2025\] Deep Learning for Continuous-Time Stochastic Control with Jumps](../../NeurIPS2025/others/deep_learning_for_continuous-time_stochastic_control_with_jumps.md)
 - [\[ICML 2025\] General Agents Contain World Models](general_agents_contain_world_models.md)
-- [\[AAAI 2026\] UniShape: A Unified Shape-Aware Foundation Model for Time Series Classification](../../AAAI2026/others/a_unified_shape-aware_foundation_model_for_time_series_class.md)
 - [\[CVPR 2025\] Test-Time Augmentation Improves Efficiency in Conformal Prediction](../../CVPR2025/others/test-time_augmentation_improves_efficiency_in_conformal_prediction.md)
+- [\[ICML 2025\] Symmetry-Aware GFlowNets](symmetry-aware_gflownets.md)
 
 </div>
 

@@ -143,10 +143,10 @@ tags:
 ## 相关论文
 
 - [\[CVPR 2025\] Towards Source-Free Machine Unlearning](towards_source-free_machine_unlearning.md)
+- [\[ICML 2026\] Optimal Transport under Group Fairness Constraints](../../ICML2026/ai_safety/optimal_transport_under_group_fairness_constraints.md)
 - [\[CVPR 2026\] SubFLOT: Submodel Extraction for Efficient and Personalized Federated Learning via Optimal Transport](../../CVPR2026/ai_safety/subflot_submodel_extraction_for_efficient_and_personalized_federated_learning_vi.md)
 - [\[CVPR 2025\] Split Adaptation for Pre-trained Vision Transformers](split_adaptation_for_pre-trained_vision_transformers.md)
 - [\[CVPR 2025\] Towards General Visual-Linguistic Face Forgery Detection](towards_general_visual-linguistic_face_forgery_detection.md)
-- [\[CVPR 2025\] Forensics Adapter: Adapting CLIP for Generalizable Face Forgery Detection](forensics_adapter_adapting_clip_for_generalizable_face_forgery_detection.md)
 
 </div>
 

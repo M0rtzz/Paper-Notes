@@ -134,10 +134,10 @@ LLM 上 Krause-Llama3-8B（Krause attention 作为 LoRA shortcut）vs 基线：
 ## 相关论文
 
 - [\[NeurIPS 2025\] OmniSync: Towards Universal Lip Synchronization via Diffusion Transformers](../../NeurIPS2025/image_generation/omnisync_towards_universal_lip_synchronization_via_diffusion.md)
+- [\[ICML 2026\] DiScoFormer: Plug-In Density and Score Estimation with Transformers](discoformer_plug-in_density_and_score_estimation_with_transformers.md)
 - [\[ICML 2026\] Diagnosing and Correcting Concept Omission in Multimodal Diffusion Transformers](diagnosing_and_correcting_concept_omission_in_multimodal_diffusion_transformers.md)
+- [\[ICML 2026\] Scalable GANs with Transformers](scalable_gans_with_transformers.md)
 - [\[CVPR 2025\] SyncSDE: A Probabilistic Framework for Diffusion Synchronization](../../CVPR2025/image_generation/syncsde_a_probabilistic_framework_for_diffusion_synchronization.md)
-- [\[CVPR 2026\] DiFlowDubber: Discrete Flow Matching for Automated Video Dubbing via Cross-Modal Alignment and Synchronization](../../CVPR2026/image_generation/diflowdubber_discrete_flow_matching_for_automated_video_dubbing_via_cross-modal_.md)
-- [\[CVPR 2026\] PixelDiT: Pixel Diffusion Transformers for Image Generation](../../CVPR2026/image_generation/pixeldit_pixel_diffusion_transformers_for_image_generation.md)
 
 </div>
 

@@ -1,0 +1,131 @@
+---
+title: >-
+  [论文解读] Verified SHAP: 神经网络精确 Shapley 值的可证明界
+description: >-
+  [ICML 2026][可解释性][SHAP] VERISHAP 通过组合分支定界与神经网络验证技术，首次为神经网络 SHAP 值计算提供可证明的界限——并能扩展到比现有精确方法大几个数量级的特征搜索空间。
+tags:
+  - "ICML 2026"
+  - "可解释性"
+  - "SHAP"
+  - "神经网络验证"
+  - "分支定界"
+  - "可证明界"
+---
+
+# Verified SHAP: 神经网络精确 Shapley 值的可证明界
+
+**会议**: ICML 2026  
+**arXiv**: [2605.24084](https://arxiv.org/abs/2605.24084)  
+**代码**: https://github.com/sen-uni-kn/verishap  
+**领域**: 可解释性 / 神经网络验证  
+**关键词**: SHAP, 可解释性, 神经网络验证, 分支定界, 可证明界
+
+## 一句话总结
+VERISHAP 通过组合分支定界与神经网络验证技术，首次为神经网络 SHAP 值计算提供可证明的界限——并能扩展到比现有精确方法大几个数量级的特征搜索空间。
+
+## 研究背景与动机
+
+**领域现状**：SHAP 是最广泛使用的特征归因方法，对树模型和线性模型可高效计算精确值，而神经网络上的精确计算面临指数复杂性。
+
+**现有痛点**：神经网络上 SHAP 值计算导致特征子集上指数级搜索空间（$2^n$ 种联合），现有方法只能提供统计近似（KernelSHAP、DeepSHAP）。这些方法两个根本局限——（1）在高度非线性模型下精度不足；（2）缺乏原则性评估框架（无法获得"真值"验证）。
+
+**核心矛盾**：精确 SHAP 计算的 #P-hard 性质与实际可解释性需求之间矛盾——研究者无法用精确值验证近似方法的质量。
+
+**本文目标**：（1）扩展精确 SHAP 计算的可行规模；（2）在任意精度下提供可证明界限；（3）建立评估 SHAP 近似方法的"真值"基准。
+
+**切入角度**：神经网络验证领域（分支定界、界传播如 CROWN）能用于计算复杂函数性质，但此前未应用于 SHAP。SHAP 值边际贡献 $\Delta_i(S)$ 在特征空间分区内可近似为线性，与分段线性 ReLU 网络结构恰好吻合。
+
+**核心 idea**：用分支定界将 SHAP 计算转化为区间优化问题——递归分区特征集，在每分区内用神经网络验证的界传播技术为边际贡献计算上下界，最终恢复精确值。
+
+## 方法详解
+
+### 整体框架
+（1）初始化平凡分区；（2）对分支进行**递归分区**——选择未固定特征 $j$ 作为分割轴；（3）对每分支用**界传播**计算边际贡献的上下界；（4）按 Shapley 权重聚合得 SHAP 值的上下界；（5）当上下界相等时收敛到精确值。
+
+### 关键设计
+
+1. **SHAP 界的理论基础（Theorem 3.1）**:
+
+    - 功能：从分区级别的边际贡献界推导出 SHAP 值的全局界。
+    - 核心思路：将 SHAP 定义 $\varphi_i = \sum_{S \in S_i} \lambda(|S|) \Delta_i(S)$ 中的特征子集分组为分支 $B_k$。对每分支计算 $\Delta_{i,B}^{lower} \leq \Delta_i(S) \leq \Delta_{i,B}^{upper}$，则 $\sum_{B} \Lambda_B \Delta_{i,B}^{lower} \leq \varphi_i \leq \sum_{B} \Lambda_B \Delta_{i,B}^{upper}$。
+    - 设计动机：将指数级求和分解为分支级求和，使得只需在每分支内计算一对界。
+
+2. **递归分区与闭形式权重计算**:
+
+    - 功能：高效划分特征空间并计算每分支的 Shapley 权重。
+    - 核心思路：分支用 $(I, E)$ 定义。令 $r = |I|, s = |I| + |E|$，则 $\Lambda_B = \binom{s}{r}^{-1} (s+1)^{-1}$（闭形式公式）。递归细化用 $\Lambda_{B'} = \frac{r+1}{s+2} \Lambda_B$（包含特征），$\Lambda_{B''} = \frac{s+1-r}{s+2} \Lambda_B$（排除特征）。
+    - 设计动机：避免对每分支重复计算组合数，使用组合恒等式实现常数时间更新。
+
+3. **掩码与界传播的适配**:
+
+    - 功能：将离散特征子集映射到连续域使现有神经网络验证工具可应用。
+    - 核心思路：用二进制掩码 $m \in \{0,1\}^n$ 表示特征子集 $S$，定义 $\Delta_i(m) = v(m^{+i}) - v(m)$。分支 $(I,E)$ 对应掩码区间 $[m, \bar{m}] \subseteq [0,1]^n$。用 LBP（如 CROWN）计算 $[\Delta_{i,B}, \Delta_{i,B}]$。
+    - 设计动机：桥接离散组合优化（SHAP）与连续凸优化（神经网络验证）。
+
+## 实验关键数据
+
+### 主实验
+
+| 数据集 | 特征数 $n$ | 联合数 | EXACTSHAP (s) | VERISHAP 精确 (s) | 提升 |
+|--------|-----------|--------|---------------|--------------------|---------|
+| Obesity | 17 | $2^{17} > 10^4$ | 4 | 18 | ✓ 可行 |
+| German | 20 | $2^{20} > 10^6$ | 9 | 16 | ✓ 可行 |
+| Mushroom | 22 | $2^{22} > 10^6$ | – (OOM) | 17 | **无可比** |
+| Default | 23 | $2^{23} > 10^6$ | – (OOM) | 127 | **无可比** |
+| Auto | 25 | $2^{25} \approx 3 \times 10^7$ | – (OOM) | 81 | **无可比** |
+| Sonar | 60 | $2^{60} > 10^{18}$ | – | 13 (10% HR) | **大幅扩展** |
+
+### MNIST CNN 收敛
+
+| 迭代数 | 运行时 (s) | 关键指标 |
+|------|-----------|---------|
+| t=1 | 1s | 界宽度 > 200% 网络输出 |
+| t=121 (25% HR) | 25s | 界宽度收缩至 25% |
+| t=278 (10% HR) | 29s | 清晰显示图像区域重要性 |
+| t=512 精确 | 34s | 上下界相等，恢复精确值 |
+
+### 关键发现
+- VERISHAP 对 $n \geq 22$ 表格数据扩展精确计算 1-2 个数量级。
+- 在 $n=60$ 特征 Sonar 数据上从 OOM 降至 13s 的界计算。
+- CROWN-IBP 检测到值函数跨多联合时的常数性（Theorem 3.5 应用）避免穷举 $2^{64}$ 个联合。
+- 界在前几十轮迭代后已具可用性——10% 相对误差下浮现归因模式。
+- 分割策略消融：SMEARS > SmartBranching > StrongBranching > InOrder。
+
+## 亮点与洞察
+- **验证到解释的范式转移**：首次将神经网络验证工具系统引入 SHAP 计算，展现 adversarial robustness 与可解释性两个领域的深层联系。
+- **理论-实践的裂隙**：Theorem 3.5 证明分段线性网络在充分分区后可退化为常数函数查询，规避组合爆炸。
+- **可证明界作为中间产品**：生成的界序列在精确值前数十轮迭代即具实用性，为时间-精度权衡提供原则性方案。
+- **评估框架的反转**：首次能在 20-25 特征真实表格数据获得精确值，反过来评估 KernelSHAP 和 TreeMSR。
+
+## 局限与展望
+- 高维瓶颈——$n > 25$ 时精确计算仍需 > 100s；图像 RGB 像素仍不实用。
+- 值函数 tractability 依赖——若界过松，递归会探索指数多分支。
+- 背景分布的隐含假设——不同背景选择会影响验证器的界紧性。
+- 改进：集成更强神经网络验证算法；研究特征聚合理论；适配其他归因方法（IG、DeepLIFT）。
+
+## 相关工作与启发
+- **vs ExactSHAP**：枚举所有 $2^{n-1}$ 联合，神经网络易 OOM；VERISHAP 通过分支定界+界传播规避穷举。
+- **vs KernelSHAP/DeepSHAP**：MC 采样近似无精度保证；VERISHAP 提供"真值基准"和上界。
+- **启发链**：神经网络验证从对抗健壮性演进到通用界传播，本文反向流动到解释领域。
+
+## 评分
+- 新颖性: ⭐⭐⭐⭐⭐  首次用验证技术系统求解 SHAP，范式创新与技术创新兼有。
+- 实验充分度: ⭐⭐⭐⭐  表格全面 + 消融完整 + MNIST 可视化；高维图像实验缺失。
+- 写作质量: ⭐⭐⭐⭐  数学严谨，算法伪代码清晰；分割策略小节过短。
+- 价值: ⭐⭐⭐⭐⭐  既有理论突破又有实践价值，对可解释 AI 与形式化验证融合意义深远。
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICML 2026\] ShaplEIG: Bayesian Experimental Design for Shapley Value Estimation](shapleig_bayesian_experimental_design_for_shapley_value_estimation.md)
+- [\[NeurIPS 2025\] SHAP Values via Sparse Fourier Representation](../../NeurIPS2025/interpretability/shap_values_via_sparse_fourier_representation.md)
+- [\[ICML 2026\] From Rashomon Theory to PRAXIS: Efficient Decision Tree Rashomon Sets](from_rashomon_theory_to_praxis_efficient_decision_tree_rashomon_sets.md)
+- [\[ICML 2026\] Interpretable Self-Supervised Learning via Representer Landmarks and Nyström Approximation](interpretable_self-supervised_learning_via_representer_landmarks_and_nyström_app.md)
+- [\[ICML 2026\] Courtroom Analogy: New Perspective on Uncertainty-Aware Classification](courtroom_analogy_new_perspective_on_uncertainty-aware_classification.md)
+
+</div>
+
+<!-- RELATED:END -->

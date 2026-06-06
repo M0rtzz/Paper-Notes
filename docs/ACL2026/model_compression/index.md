@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 模型压缩方向49篇论文解读
+  ACL2026 模型压缩方向59篇论文解读
 description: >-
-  49篇ACL2026的模型压缩方向论文解读，涵盖 LLM、模型压缩、压缩/编码、推理、个性化生成、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  59篇ACL2026的模型压缩方向论文解读，涵盖 LLM、模型压缩、压缩/编码、推理、对齐/RLHF、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2026"
   - "模型压缩"
@@ -11,18 +11,18 @@ tags:
   - "LLM"
   - "压缩/编码"
   - "推理"
-  - "个性化生成"
   - "对齐/RLHF"
+  - "个性化生成"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**💬 ACL2026** · **49** 篇论文解读
+**💬 ACL2026** · **59** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (21)](../../ICML2026/model_compression/index.md) · [📷 CVPR2026 (50)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (90)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (53)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (134)](../../NeurIPS2025/model_compression/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/model_compression/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (101)](../../ICML2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (90)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (53)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (134)](../../NeurIPS2025/model_compression/index.md) · [📹 ICCV2025 (49)](../../ICCV2025/model_compression/index.md)
 
-🔥 **高频主题：** LLM ×14 · 模型压缩 ×6 · 压缩/编码 ×4 · 推理 ×3 · 个性化生成 ×2
+🔥 **高频主题：** LLM ×19 · 模型压缩 ×9 · 压缩/编码 ×4 · 推理 ×4 · 对齐/RLHF ×3
 
 **[A BERTology View of LLM Orchestrations: Token- and Layer-Selective Probes for Efficient Single-Pass Classification](a_bertology_view_of_llm_orchestrations_token-_and_layer-selective_probes_for_eff.md)**
 
@@ -35,6 +35,10 @@ tags:
 **[Adaptive Layer Selection for Layer-Wise Token Pruning in LLM Inference](adaptive_layer_selection_for_layer-wise_token_pruning_in_llm_inference.md)**
 
 :   提出ASL（Adaptive Selection Layer），通过监控token注意力分数排名的方差来自适应确定KV缓存剪枝的层位置，在困难任务上显著优于固定层选择方法，同时保持无需训练。
+
+**[Alignment Tuning for Large Language Models: A Data-Centric Lens on Alignment Data Pipelines](alignment_tuning_for_large_language_models_a_data-centric_lens_on_alignment_data.md)**
+
+:   这篇论文把 LLM alignment tuning 重新解释为一个动态的数据管线设计问题：模型最终学到什么，不只取决于 PPO、DPO、GRPO 这类优化算法，更取决于候选回答如何生成、偏好如何评估、偏好信号又如何实例化为训练目标。
 
 **[Analytical FFN-to-MoE Restructuring via Activation Pattern Analysis](analytical_ffn-to-moe_restructuring_via_activation_pattern_analysis.md)**
 
@@ -59,6 +63,10 @@ tags:
 **[Cognitive-Uncertainty Guided Knowledge Distillation for Accurate Classification of Student Misconceptions](cognitive-uncertainty_guided_knowledge_distillation_for_accurate_classification_.md)**
 
 :   论文用两阶段知识蒸馏 + 基于教师认知不确定性的"双层边际样本选择" + 难度自适应损失，在仅用 10.30% 真实样本增量训练的情况下，把 4B 学生模型在 MAP-Charting 上做到 MAP@3 = 0.9585（+17.8%），并在 220 题中学代数误解 benchmark 上以 84.38% 准确率超过 GPT-5（67.73%）与直接微调的 72B 教师（81.25%），同时推理速度比教师快 23×。
+
+**[DASH-KV: Accelerating Long-Context LLM Inference via Asymmetric KV Cache Hashing](dash-kv_accelerating_long-context_llm_inference_via_asymmetric_kv_cache_hashing.md)**
+
+:   提出 DASH-KV 框架，将注意力机制重构为近似最近邻搜索问题，通过非对称深度哈希将高维浮点相似度计算替换为高效的汉明距离比特操作，配合动态混合精度机制，将长上下文推理复杂度从 $O(N^2)$ 降至 $O(N)$ 且性能匹配全注意力。
 
 **[DeepPrune: Parallel Scaling without Inter-Trace Redundancy](deepprune_parallel_scaling_without_inter-trace_redundancy.md)**
 
@@ -96,6 +104,10 @@ tags:
 
 :   本文提出 **GlimpRouter**：在 step 级 LRM 协同推理中，先让小模型只解码每个推理步的"第一个 token"，用它的熵 $\mathbf{H}_{\text{init}}$ 估计该步难度，低则小模型续写、高则切换到大模型；training-free，无需大模型 verifier，在 AIME25 上比独立大模型准确率 +10.7% 同时延迟 −25.9%，且与 token-level Speculative Decoding 正交叠加。
 
+**[GRASPrune: Global Gating for Budgeted Structured Pruning of Large Language Models](grasprune_global_gating_for_budgeted_structured_pruning_of_large_language_models.md)**
+
+:   GRASPrune 提出了一种全局预算约束的结构化剪枝框架，通过投影直通估计器（Projected STE）在每步训练中强制满足硬掩码预算约束，联合剪枝 FFN 通道和 KV 头组，在 LLaMA-2-7B 上以 50% 参数保留达到 12.18 PPL，仅需单卡 A100 训练 6 分钟。
+
 **[HeteroCache: A Dynamic Retrieval Approach to Heterogeneous KV Cache Compression for Long-Context LLM Inference](heterocache_a_dynamic_retrieval_approach_to_heterogeneous_kv_cache_compression_f.md)**
 
 :   本文提出 HeteroCache，一种免训练的动态 KV 缓存压缩框架，基于注意力头的时间异质性（稳定头 vs 漂移头）和层内冗余性（相似头聚类），实施细粒度的角色分配策略——为漂移头分配更大缓存预算，用代表头稀疏监控注意力漂移触发异步按需检索，在 224K 上下文下实现 3 倍解码加速。
@@ -116,9 +128,17 @@ tags:
 
 :   提出了一个 synthetic-organic 监督管线，将法官的原始判决文书转化为推理指令微调数据，通过 CLM→指令微调的 Chain-of-LoRA 策略实现对个体法官推理风格的高保真模拟，在希伯来语低资源场景下生成内容与真实法官不可区分。
 
+**[Latent-Condensed Transformer for Efficient Long Context Modeling](latent-condensed_transformer_for_efficient_long_context_modeling.md)**
+
+:   LCA 提出在 MLA 的潜空间中直接进行上下文压缩——对语义潜向量用查询感知加权池化聚合、对位置键用锚点选择保持位置精度——在 128K 上下文中实现 2.5 倍预填充加速和 90% KV 缓存压缩，同时保持竞争性性能。
+
 **[LEAP: Layer-wise Exit-Aware Pretraining for Efficient Transformer Inference](leap_layer-wise_exit-aware_pretraining_for_efficient_transformer_inference.md)**
 
 :   首先在理论 + 实证上指出"逐层对齐蒸馏"与"基于收敛的早退"在标准部署下**系统性不兼容**——蒸馏模型每一层都在干活、没有冗余可早退，然后提出 LEAP 这种零额外参数的辅助训练目标，让中间层提前逼近最终层表示，在 MiniLM-L12 上拿到 1.61× 实测墙钟加速（batch=1，91.9% 样本在 L7 退出）。
+
+**[LightReasoner: Can Small Language Models Teach Large Language Models Reasoning?](lightreasoner_can_small_language_models_teach_large_language_models_reasoning.md)**
+
+:   LightReasoner 用较弱的 Amateur 模型和较强的 Expert 模型之间的 token 分布差异来自动找出高价值推理步骤，再只对这些步骤做对比式自蒸馏，使数学推理模型在接近或超过 SFT 的同时显著减少采样、训练时间和调参 token。
 
 **[LLM Prompt Duel Optimizer: Efficient Label-Free Prompt Optimization](llm_prompt_duel_optimizer_efficient_label-free_prompt_optimization.md)**
 
@@ -148,6 +168,14 @@ tags:
 
 :   本文提出 PERA（Polynomial Expansion Rank Adaptation），通过在低秩因子的参数空间中引入结构化多项式展开（平方项和交叉项），将 LoRA 的线性适配空间扩展为多项式流形，在不增加秩或推理开销的前提下显著提升权重更新的表达能力，在常识推理和 NLU 任务上一致优于 LoRA/DoRA/HiRA 等方法。
 
+**[ProActor: Timing-Aware Reinforcement Learning for Proactive Task Scheduling Agents](proactor_timing-aware_reinforcement_learning_for_proactive_task_scheduling_agent.md)**
+
+:   ProActor 把对话式任务调度从“等用户明确指令后反应”推进到“在合适时机主动触发动作”，通过自动 reference action 标注、proactiveness metrics、turn-level GRPO 和 ART-F 高效训练框架，让 4-bit Qwen2.5-14B-ProActor-Q4 在 ABCD+ 上取得最高 PRI 0.7293，并在保持动作一致性的同时显著提升 proactive timing。
+
+**[Quantize What Counts: More for Keys, Less for Values](quantize_what_counts_more_for_keys_less_for_values.md)**
+
+:   本文从线性代数角度证明 Transformer 中 Key 权重的谱范数和 Frobenius 范数系统性大于 Value 权重，据此提出 Key 优先的混合精度 KV 缓存量化策略（如 K4V2），在减少 25% 内存的同时保持 98.3% 的全精度准确率。
+
 **[Reason Only When Needed: Efficient Generative Reward Modeling via Model-Internal Uncertainty](reason_only_when_needed_efficient_generative_reward_modeling_via_model-internal_.md)**
 
 :   提出 E-GRM 框架，利用模型并行解码的收敛行为估计不确定性，仅在必要时触发 CoT 推理，并通过混合损失训练的判别式评分器精细评估推理路径质量，在多个奖励模型基准上实现 SOTA 同时降低 62% 推理延迟。
@@ -155,6 +183,10 @@ tags:
 **[Rethinking Parameter Sharing for LLM Fine-Tuning with Multiple LoRAs](rethinking_parameter_sharing_for_llm_fine-tuning_with_multiple_loras.md)**
 
 :   本文推翻了“多 LoRA 应共享 A 矩阵”的常见假设，证明 A 的相似性主要来自相同初始化而非共享知识，并提出共享 B 矩阵的 ALoRA / Fed-ALoRA，在多任务和联邦微调中兼顾性能、均衡性与通信效率。
+
+**[Rethinking Table Pruning in TableQA: From Sequential Revisions to Gold Trajectory-Supervised Parallel Search](rethinking_table_pruning_in_tableqa_from_sequential_revisions_to_gold_trajectory.md)**
+
+:   这篇论文提出 TabTrim，把表格剪枝从容易累积错误的单路径顺序修订改成“SQL 轨迹监督的剪枝器 + loss-aware verifier + 并行轨迹搜索”，在 WikiTQ、TabFact 和 TableBench 上把平均准确率提升到 73.5%，比最强基线高 3.2 个点。
 
 **[RouteNLP: Closed-Loop LLM Routing with Conformal Cascading and Distillation Co-Optimization](routenlp_closed-loop_llm_routing_with_conformal_cascading_and_distillation_co-op.md)**
 
@@ -172,9 +204,17 @@ tags:
 
 :   SRA 把跨分词器 LLM 蒸馏的基本对齐单元从易碎的 token 换成 tokenizer-agnostic 的文本 span，通过 LCS 字符偏移匹配、注意力加权 center-of-mass 表示、几何结构正则和共享词表 span logit 蒸馏，在多组 teacher-student 压缩实验中稳定超过 ULD、MinED、DSKD 和 MultiLevelOT。
 
+**[SSSD: Simply-Scalable Speculative Decoding](sssd_simply-scalable_speculative_decoding.md)**
+
+:   提出 SSSD，一种无需训练的推测解码方法，结合轻量级 n-gram 匹配与硬件感知投机长度调整，在无需任何草稿模型训练或部署的前提下，实现最高 2.9× 的推理加速，并在语言/领域迁移和长上下文场景中展现出优于训练式方法的鲁棒性。
+
 **[Stable On-Policy Distillation through Adaptive Target Reformulation](stable_on-policy_distillation_through_adaptive_target_reformulation.md)**
 
 :   本文提出 Veto，一种目标层面的重构方法，通过在 logit 空间构建教师-学生的几何桥接分布来稳定 on-policy 知识蒸馏，单一参数 $\beta$ 同时在 forward KL 中充当自适应梯度否决器（抑制低置信度 token 的有害梯度）和在 reverse KL 中充当果断性旋钮（平衡奖励驱动和输出多样性），在 GSM8K 上比 SFT 提升 9.2%。
+
+**[TalkLoRA: Communication-Aware Mixture of Low-Rank Adaptation for Large Language Models](talklora_communication-aware_mixture_of_low-rank_adaptation_for_large_language_m.md)**
+
+:   TalkLoRA 在 MoE-LoRA 架构中引入轻量级 Talking Module，允许低秩专家在路由前进行信息交换，解决传统 MoELoRA 中专家独立运行导致的路由不稳定和专家主导问题，在常识推理和 NLU 任务上以更少参数（0.2%）持续超越 LoRA 和 MoELoRA 变体。
 
 **[Task-Stratified Knowledge Scaling Laws for Post-Training Quantized LLMs](task-stratified_knowledge_scaling_laws_for_post-training_quantized_large_languag.md)**
 

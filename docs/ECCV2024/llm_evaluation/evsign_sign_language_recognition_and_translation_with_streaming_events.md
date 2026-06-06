@@ -187,11 +187,11 @@ tags:
 
 ## 相关论文
 
-- [\[ACL 2026\] Think in Latent Thoughts: A New Paradigm for Gloss-Free Sign Language Translation](../../ACL2026/llm_evaluation/think_in_latent_thoughts_a_new_paradigm_for_gloss-free_sign_language_translation.md)
 - [\[ACL 2025\] SwiLTra-Bench: The Swiss Legal Translation Benchmark](../../ACL2025/llm_evaluation/swiltra-bench_the_swiss_legal_translation_benchmark.md)
 - [\[CVPR 2025\] On the Generalization of Handwritten Text Recognition Models](../../CVPR2025/llm_evaluation/on_the_generalization_of_handwritten_text_recognition_models.md)
-- [\[CVPR 2026\] Free-Grained Hierarchical Visual Recognition](../../CVPR2026/llm_evaluation/free-grained_hierarchical_visual_recognition.md)
+- [\[NeurIPS 2025\] PARROT: A Benchmark for Evaluating LLMs in Cross-System SQL Translation](../../NeurIPS2025/llm_evaluation/parrot_a_benchmark_for_evaluating_llms_in_cross-system_sql_translation.md)
 - [\[AAAI 2026\] TRACE: A Generalizable Drift Detector for Streaming Data-Driven Optimization](../../AAAI2026/llm_evaluation/trace_a_generalizable_drift_detector_for_streaming_data-driven_optimization.md)
+- [\[AAAI 2026\] Streaming Generated Gaussian Process Experts for Online Learning and Control: Extended Version](../../AAAI2026/llm_evaluation/streaming_generated_gaussian_process_experts_for_online_learning_and_control_ext.md)
 
 </div>
 

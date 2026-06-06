@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Social Dynamics as Critical Vulnerabilities that Undermine Objective Decision-Making in LLM Collectives
 description: >-
-  [ACL2026][LLM Agent / 多智能体决策 / AI安全评测][多智能体系统] 这篇论文证明，LLM 多智能体系统中的代表智能体不仅会受自身推理能力限制，还会被同伴数量、同伴能力、论证长度和修辞风格等“社会动力学”显著影响，从而在有客观答案的任务上做出错误决策。
+  [ACL2026][多智能体][多智能体系统] 这篇论文证明，LLM 多智能体系统中的代表智能体不仅会受自身推理能力限制，还会被同伴数量、同伴能力、论证长度和修辞风格等“社会动力学”显著影响，从而在有客观答案的任务上做出错误决策。
 tags:
   - "ACL2026"
-  - "LLM Agent / 多智能体决策 / AI安全评测"
+  - "多智能体"
   - "多智能体系统"
   - "社会从众"
   - "对抗性同伴"
@@ -140,8 +140,8 @@ RQ4 中，修辞策略的效果取决于代表模型能力和任务上下文。Q
 - [\[ACL 2025\] Voting or Consensus? Decision-Making in Multi-Agent Debate](../../ACL2025/multi_agent/voting_or_consensus_decision-making_in_multi-agent_debate.md)
 - [\[ACL 2026\] OxyGent: Making Multi-Agent Systems Modular, Observable, and Evolvable via Oxy Abstraction](oxygent_making_multi-agent_systems_modular_observable_and_evolvable_via_oxy_abst.md)
 - [\[ACL 2026\] Seeing the Whole Elephant: A Benchmark for Failure Attribution in LLM-based Multi-Agent Systems](seeing_the_whole_elephant_a_benchmark_for_failure_attribution_in_llm-based_multi.md)
+- [\[ACL 2026\] PROTEA: Offline Evaluation and Iterative Refinement for Multi-Agent LLM Workflows](protea_offline_evaluation_and_iterative_refinement_for_multi-agent_llm_workflows.md)
 - [\[ACL 2026\] Memory-Augmented LLM-based Multi-Agent System for Automated Feature Generation on Tabular Data](memory-augmented_llm-based_multi-agent_system_for_automated_feature_generation_o.md)
-- [\[ACL 2026\] Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation](diversity_collapse_in_multi-agent_llm_systems_structural_coupling_and_collective.md)
 
 </div>
 

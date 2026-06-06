@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Data Verification is the Future of Quantum Computing Copilots
 description: >-
-  [AAAI 2026][物理学][量子电路优化] 这是一篇 position paper，提出量子计算 AI 助手（Copilot）必须将数据验证从事后过滤提升为架构级基础——通过三个立场论证：(1) 验证数据是最低要求，(2) 先验约束优于后验过滤，(3) 受物理定律约束的科学领域需要验证感知架构…
+  [AAAI 2026][物理/科学计算][量子电路优化] 这是一篇 position paper，提出量子计算 AI 助手（Copilot）必须将数据验证从事后过滤提升为架构级基础——通过三个立场论证：(1) 验证数据是最低要求，(2) 先验约束优于后验过滤，(3) 受物理定律约束的科学领域需要验证感知架构…
 tags:
   - "AAAI 2026"
-  - "物理学"
+  - "物理/科学计算"
   - "量子电路优化"
   - "LLM幻觉"
   - "形式验证"
@@ -126,7 +126,7 @@ tags:
 
 - [\[CVPR 2025\] ATP: Adaptive Threshold Pruning for Efficient Data Encoding in Quantum Neural Networks](../../CVPR2025/physics/atp_adaptive_threshold_pruning_for_efficient_data_encoding_in_quantum_neural_net.md)
 - [\[AAAI 2026\] Adaptive Fidelity Estimation for Quantum Programs with Graph-Guided Noise Awareness](adaptive_fidelity_estimation_for_quantum_programs_with_graph.md)
-- [\[ICML 2025\] Mixture-of-Expert Variational Autoencoders for Cross-Modality Embedding of Type Ia Supernova Data](../../ICML2025/physics/mixture-of-expert_variational_autoencoders_for_cross-modality_embedding_of_type_.md)
+- [\[ICML 2025\] OmniArch: Building Foundation Model For Scientific Computing](../../ICML2025/physics/omniarch_building_foundation_model_for_scientific_computing.md)
 - [\[ICLR 2026\] Sublinear Time Quantum Algorithm for Attention Approximation](../../ICLR2026/physics/sublinear_time_quantum_algorithm_for_attention_approximation.md)
 - [\[ICLR 2026\] Feedback-driven Recurrent Quantum Neural Network Universality](../../ICLR2026/physics/feedback-driven_recurrent_quantum_neural_network_universality.md)
 

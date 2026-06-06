@@ -1,0 +1,136 @@
+---
+title: >-
+  [论文解读] Reference Games as a Testbed for the Alignment of Model Uncertainty and Clarification Requests
+description: >-
+  [ACL2026][音频/语音][reference game] 这篇论文用颜色网格 reference games 检验 VLM 能否把内部不确定性转化为恰当澄清请求，发现即便任务很受控，Qwen2.5-VL 和 GPT-5-mini 也仍存在过度自信、澄清行为不稳定和澄清问题低质量等交互能力缺口。
+tags:
+  - "ACL2026"
+  - "音频/语音"
+  - "reference game"
+  - "clarification request"
+  - "VLM校准"
+  - "pragmatic competence"
+  - "uncertainty alignment"
+---
+
+# Reference Games as a Testbed for the Alignment of Model Uncertainty and Clarification Requests
+
+**会议**: ACL2026  
+**arXiv**: [2601.07820](https://arxiv.org/abs/2601.07820)  
+**代码**: https://github.com/Manarali-bit/reference-games-clarification  
+**领域**: 多模态交互 / VLM 不确定性 / 澄清请求  
+**关键词**: reference game, clarification request, VLM校准, pragmatic competence, uncertainty alignment  
+
+## 一句话总结
+这篇论文用颜色网格 reference games 检验 VLM 能否把内部不确定性转化为恰当澄清请求，发现即便任务很受控，Qwen2.5-VL 和 GPT-5-mini 也仍存在过度自信、澄清行为不稳定和澄清问题低质量等交互能力缺口。
+
+## 研究背景与动机
+**领域现状**：人类对话中，听者并不是被动接收者。当指称不清、信息不足或存在多个候选对象时，听者会发起修复，例如提出澄清问题，以维持共同理解。
+
+**现有痛点**：语言模型和视觉语言模型能流畅回答，却未必知道自己何时不确定。流畅输出会掩盖理解失败，让用户误以为模型很有把握；同时，模型语言表达出的 confidence 往往和实际准确率不匹配。
+
+**核心矛盾**：开放对话里很难定义“什么时候必须澄清”，因为用户意图和可能解释空间都不封闭。若没有明确 ground truth，就难以判断模型是否应该问问题。
+
+**本文目标**：找到一个可控、闭合、可量化的测试场景，评估 VLM 作为 listener 时是否能识别内部不确定性，并用合适的 clarification request 表达出来。
+
+**切入角度**：作者选择 reference games。该任务有固定候选 referents、明确目标和难度条件，因此可以直接判断模型是否选对对象、是否在困难样本上更应该提问。
+
+**核心 idea**：把 reference game 从“指称解析能力测试”扩展成“模型不确定性与澄清行为对齐测试”，用 baseline confidence、CR-rate、relaxed accuracy 和人机交互实验共同评估。
+
+## 方法详解
+论文使用颜色网格 reference game：每轮有三个 $3\times3$ 色块网格，一个是目标，两个是干扰项；人类 speaker 给出目标描述，模型作为 listener 需要识别目标。作者设计三个实验：baseline 只要求模型选目标；clarification experiment 明确允许模型不确定时提问；interaction experiment 让人类回答模型的问题，检验这些澄清是否真的有帮助。
+
+### 整体框架
+数据来自 McDowell and Goodman (2019) 的 color-grid reference game，共 197 个 games，每个 60 rounds。样本按目标和干扰项颜色相似度分为 far、split、close 三种难度。作者测试 Qwen2.5-VL-7B、Qwen2.5-VL-72B 和 GPT-5-mini。Qwen 模型跑完整数据集并报告 500 子集结果；GPT-5-mini 因 API 成本只评估 500 轮子集，其中 19 个 null answers 被排除。
+
+### 关键设计
+1. **Baseline 多采样估计不确定性**:
+
+	- 功能：在没有澄清机会时测模型指称解析准确率和内部一致性。
+	- 核心思路：每个 round 采样 5 次，用多数投票作为预测答案；baseline confidence 定义为多数答案占 5 次采样的比例，因此可能取 $0.4,0.6,0.8,1.0$。
+	- 设计动机：单次输出无法反映模型不确定性，多样采样可以给出一个简单但可解释的一致性信号。
+
+2. **Clarification experiment**:
+
+	- 功能：检查模型是否会在不确定时主动提出澄清请求。
+	- 核心思路：修改 prompt，明确指示模型在不确定时可以提问。评估三个指标：CR-Rate 表示产生澄清问题的比例；Accuracy 只看非澄清回答是否正确；Relaxed accuracy 把正确回答和澄清请求都视作可接受行为。
+	- 设计动机：如果模型能合理使用澄清，那么它应该在困难、低 confidence 样本上更频繁提问，并在高 confidence 样本上直接回答。
+
+3. **Human-in-the-loop interaction**:
+
+	- 功能：判断模型问出来的问题是否真的能帮助解析指称。
+	- 核心思路：作者人工检查 Qwen2.5-VL-72B 生成的 116 个 clarification requests，标注是否 task-relevant。对相关问题，人类直接回答；对不相关问题，人类改写原始描述。然后重新让模型基于澄清后的对话作答，并比较前后 accuracy 与 confidence。
+	- 设计动机：CR-rate 高不等于交互能力强，模型可能只是在泛泛地说“请澄清”，但没有指出具体歧义。
+
+### 损失函数 / 训练策略
+本文不训练模型，属于评估研究。关键“策略”是实验协议：baseline 用 5 次采样多数投票估计 confidence；clarification 只采样 1 次并解析是否提问；interaction 阶段由专家人类给出澄清响应，再重新评估 Qwen2.5-VL-72B。
+
+## 实验关键数据
+
+### 主实验
+| 模型 | Baseline Accuracy | Baseline Confidence | CR-Rate | Clarification Accuracy | Relaxed Accuracy |
+|------|-------------------|---------------------|---------|-------------------------|------------------|
+| Qwen2.5-VL-7B | 0.53 (0.52 full) | 0.88 (0.87 full) | 0.0 (0.002 full) | 0.46 (0.42 full) | 0.46 (0.42 full) |
+| Qwen2.5-VL-72B | 0.77 (0.71 full) | 0.91 (0.92 full) | 0.24 (0.24 full) | 0.73 (0.71 full) | 0.80 (0.78 full) |
+| GPT-5-mini | 0.91 | 0.99 | 0.13 | 0.94 | 0.94 |
+| Human | 0.92 full | 未报告 | 不适用 | 不适用 | 不适用 |
+
+### 难度条件结果摘录
+| 模型 / 条件 | Baseline Accuracy | CR-Rate | Relaxed Accuracy | 现象 |
+|-------------|-------------------|---------|------------------|------|
+| GPT-5-mini close | 0.87 | 0.17 | 0.92 | 困难条件下更常提问 |
+| GPT-5-mini far | 0.98 | 0.06 | 0.99 | 简单条件下较少提问 |
+| Qwen2.5-VL-72B close | 0.68 (0.65 full) | 0.24 (0.23 full) | 0.71 (0.73 full) | CR-rate 没有明显随难度变化 |
+| Qwen2.5-VL-7B ALL | 0.53 (0.52 full) | 0.0 (0.002 full) | 0.46 (0.42 full) | 几乎不会提问 |
+
+### 交互实验
+| 设置 | Before Accuracy | After Accuracy | Before Confidence | After Confidence | 结论 |
+|------|-----------------|----------------|-------------------|------------------|------|
+| Qwen-72B CR-only ALL | 0.776 | 0.741 | 0.871 | 0.902 | 人类回答澄清后准确率反而下降 0.035 |
+| Qwen-72B full ALL | 0.767 | 0.759 | 0.914 | 0.921 | 全集准确率小幅下降 0.008，confidence 小幅上升 |
+| Qwen-72B CR quality | 42% task-relevant | 58% not task-relevant | - | - | 多数澄清问题没有抓住任务相关歧义 |
+
+### 关键发现
+- GPT-5-mini 的澄清行为最接近合理模式：困难条件 CR-rate 更高，非澄清回答 accuracy 从 0.91 到 0.94。
+- Qwen2.5-VL-72B 会提问，但提问频率和任务难度、不确定性对齐不稳定。
+- Qwen2.5-VL-7B 基本不会提问，说明“允许提问”本身不足以诱导小模型形成澄清行为。
+- 交互实验说明，澄清请求必须具体、任务相关才有价值；泛化模板式提问可能提高 confidence，却不能提高 accuracy。
+
+## 亮点与洞察
+- 论文的贡献不在新模型，而在评估场景设计。reference games 把“该不该澄清”从模糊开放对话变成可测量问题，非常适合评估 pragmatic competence。
+- Relaxed accuracy 是一个有用指标：它承认“不确定时提问”也是成功交互行为，而不是只奖励直接回答。
+- 42% task-relevant 的人工分析很关键，说明仅统计 CR-rate 会高估模型能力。真正困难的是问出能缩小候选空间的问题。
+
+## 局限与展望
+- 人类数据来自 60 轮互动 dyads，人类参与者会逐步建立 common ground；VLM 只看到初始描述，比较上可能吃亏。
+- baseline confidence 基于 diversity sampling，不一定等同模型内部概率不确定性。作者也指出 Qwen-72B 的信息论不确定性估计更细，但仍无法让澄清行为更好对齐。
+- 数据中部分人类 speaker 描述可能有瑕疵，baseline 错误不一定全是 listener 模型问题。
+- 后续可以扩展到多轮 reference games，让模型通过自身澄清逐步建立共同理解，而不是只评估第一轮。
+
+## 相关工作与启发
+- **vs 开放式澄清研究**: 开放对话很难判断何时需要澄清；reference game 的候选集封闭，能更干净地定义 clarification need。
+- **vs 不确定性量化**: 熵或采样一致性可以测不确定性，但本文进一步问模型能否把不确定性转化成交互行为。
+- **vs 指称解析 benchmark**: 传统 reference game 多看选对目标；本文把它拓展为“选择或提问”的交互质量评估。
+- **启发**: 评估对话模型时，应把“会不会适时拒答、反问、澄清”纳入任务成功，而不只看一次性答案准确率。
+
+## 评分
+- 新颖性: ⭐⭐⭐⭐☆ 把 reference games 用作不确定性-澄清对齐测试很有启发，方法简单但问题定义好。
+- 实验充分度: ⭐⭐⭐⭐☆ 覆盖三个模型、三种难度和人机交互实验；模型规模和任务类型还可扩展。
+- 写作质量: ⭐⭐⭐⭐☆ 论文论证清楚，实验指标设计易懂，讨论也比较克制。
+- 价值: ⭐⭐⭐⭐☆ 对构建更可靠的交互式 VLM 很有价值，尤其提醒我们“会提问”不等于“会问有用的问题”。
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[AAAI 2026\] A Text-Routed Sparse Mixture-of-Experts Model with Explanation and Temporal Alignment for Multi-Modal Sentiment Analysis](../../AAAI2026/audio_speech/text-routed_sparse_mixture-of-experts_model_with_explanation_and_temporal_alignm.md)
+- [\[ICLR 2026\] AC-Foley: Reference-Audio-Guided Video-to-Audio Synthesis with Acoustic Transfer](../../ICLR2026/audio_speech/ac-foley_reference-audio-guided_video-to-audio_synthesis_with_acoustic_transfer.md)
+- [\[ACL 2026\] ImmersiveTTS: Environment-Aware Text-to-Speech with Multimodal Diffusion Transformer and Domain-Specific Representation Alignment](immersivetts_environment-aware_text-to-speech_with_multimodal_diffusion_transfor.md)
+- [\[ACL 2026\] UniSonate: A Unified Model for Speech, Music, and Sound Effect Generation with Text Instructions](unisonate_a_unified_model_for_speech_music_and_sound_effect_generation_with_text.md)
+- [\[CVPR 2025\] UWAV: Uncertainty-Weighted Weakly-Supervised Audio-Visual Video Parsing](../../CVPR2025/audio_speech/uwav_uncertainty-weighted_weakly-supervised_audio-visual_video_parsing.md)
+
+</div>
+
+<!-- RELATED:END -->

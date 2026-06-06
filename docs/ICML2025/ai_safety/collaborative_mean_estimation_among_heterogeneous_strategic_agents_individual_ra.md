@@ -136,10 +136,10 @@ tags:
 ## 相关论文
 
 - [\[ICLR 2026\] Co-LoRA: Collaborative Model Personalization on Heterogeneous Multi-Modal Clients](../../ICLR2026/ai_safety/co-lora_collaborative_model_personalization_on_heterogeneous_multi-modal_clients.md)
-- [\[AAAI 2026\] CoRe-Fed: Bridging Collaborative and Representation Fairness via Federated Embedding Distillation](../../AAAI2026/ai_safety/core-fed_bridging_collaborative_and_representation_fairness_via_federated_embedd.md)
+- [\[ICML 2026\] One Model to Translate Them All: Universal Any-to-Any Translation for Heterogeneous Collaborative Perception](../../ICML2026/ai_safety/one_model_to_translate_them_all_universal_any-to-any_translation_for_heterogeneo.md)
 - [\[NeurIPS 2025\] Optimal Adjustment Sets for Nonparametric Estimation of Weighted Controlled Direct Effect](../../NeurIPS2025/ai_safety/optimal_adjustment_sets_for_nonparametric_estimation_of_weighted_controlled_dire.md)
+- [\[AAAI 2026\] CoRe-Fed: Bridging Collaborative and Representation Fairness via Federated Embedding Distillation](../../AAAI2026/ai_safety/core-fed_bridging_collaborative_and_representation_fairness_via_federated_embedd.md)
 - [\[ICML 2025\] Accelerating Spectral Clustering under Fairness Constraints](accelerating_spectral_clustering_under_fairness_constraints.md)
-- [\[NeurIPS 2025\] Efficient Fairness-Performance Pareto Front Computation](../../NeurIPS2025/ai_safety/efficient_fairness-performance_pareto_front_computation.md)
 
 </div>
 

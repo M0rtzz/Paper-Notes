@@ -137,10 +137,10 @@ Pipeline 分四步：(1) 自动搜索收集领域图像（如食物/房间）；
 ## 相关论文
 
 - [\[CVPR 2025\] FineVQ: Fine-Grained User Generated Content Video Quality Assessment](../../CVPR2025/recommender/finevq_fine-grained_user_generated_content_video_quality_assessment.md)
-- [\[ACL 2026\] Content Fuzzing for Escaping Information Cocoons on Social Media](../../ACL2026/recommender/content_fuzzing_for_escaping_information_cocoons_on_digital_social_media.md)
 - [\[AAAI 2026\] TraveLLaMA: A Multimodal Travel Assistant with Large-Scale Dataset and Structured Reasoning](../../AAAI2026/recommender/travellama_a_multimodal_travel_assistant_with_large-scale_dataset_and_structured.md)
 - [\[ICML 2025\] How to Set AdamW's Weight Decay as You Scale Model and Dataset Size](../../ICML2025/recommender/how_to_set_adamws_weight_decay_as_you_scale_model_and_dataset_size.md)
 - [\[ACL 2025\] LOTUS: A Leaderboard for Detailed Image Captioning from Quality to Societal Bias and User Preferences](../../ACL2025/recommender/lotus_a_leaderboard_for_detailed_image_captioning_from_quality_to_societal_bias_.md)
+- [\[ICML 2025\] QuRe: Query-Relevant Retrieval through Hard Negative Sampling in Composed Image Retrieval](../../ICML2025/recommender/qure_query-relevant_retrieval_through_hard_negative_sampling_in_composed_image_r.md)
 
 </div>
 

@@ -145,10 +145,10 @@ tags:
 ## 相关论文
 
 - [\[ACL 2025\] On Synthetic Data Strategies for Domain-Specific Generative Retrieval](../../ACL2025/information_retrieval/on_synthetic_data_strategies_for_domain-specific_generative_retrieval.md)
-- [\[ACL 2026\] From Interpretability to Performance: Optimizing Retrieval Heads for Long-Context Language Models](../../ACL2026/information_retrieval/from_interpretability_to_performance_optimizing_retrieval_heads_for_long-context.md)
-- [\[ACL 2026\] Retrieval Heads are Dynamic](../../ACL2026/information_retrieval/retrieval_heads_are_dynamic.md)
 - [\[ICML 2025\] RAPID: Long-Context Inference with Retrieval-Augmented Speculative Decoding](rapid_long-context_inference_with_retrieval-augmented_speculative_decoding.md)
-- [\[ICML 2025\] FedRAG: A Framework for Fine-Tuning Retrieval-Augmented Generation Systems](fedrag_a_framework_for_fine-tuning_retrieval-augmented_generation_systems.md)
+- [\[ACL 2025\] The Distracting Effect: Understanding Irrelevant Passages in RAG](../../ACL2025/information_retrieval/the_distracting_effect_understanding_irrelevant_passages_in_rag.md)
+- [\[CVPR 2025\] DocoPilot: Improving Multimodal Models for Document-Level Understanding](../../CVPR2025/information_retrieval/docopilot_improving_multimodal_models_for_document-level_understanding.md)
+- [\[ACL 2025\] A Reality Check on Context Utilisation for Retrieval-Augmented Generation](../../ACL2025/information_retrieval/a_reality_check_on_context_utilisation_for_retrieval-augmented_generation.md)
 
 </div>
 

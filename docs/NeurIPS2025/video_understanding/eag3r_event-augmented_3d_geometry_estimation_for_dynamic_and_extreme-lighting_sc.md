@@ -2,10 +2,10 @@
 title: >-
   [论文解读] EAG3R: Event-Augmented 3D Geometry Estimation for Dynamic and Extreme-Lighting Scenes
 description: >-
-  [NeurIPS 2025][3D视觉][事件相机] EAG3R 将事件相机的异步事件流融入 MonST3R 点图重建框架，通过 Retinex 增强模块 + SNR 感知融合机制 + 事件光度一致性损失，在极端低光动态场景下实现鲁棒的深度估计、位姿跟踪和 4D 重建…
+  [NeurIPS 2025][视频理解][事件相机] EAG3R 将事件相机的异步事件流融入 MonST3R 点图重建框架，通过 Retinex 增强模块 + SNR 感知融合机制 + 事件光度一致性损失，在极端低光动态场景下实现鲁棒的深度估计、位姿跟踪和 4D 重建…
 tags:
   - "NeurIPS 2025"
-  - "3D视觉"
+  - "视频理解"
   - "事件相机"
   - "3D几何估计"
   - "低光照"
@@ -166,8 +166,8 @@ $$X_{\text{global}}^* = \arg\min \left(\mathcal{L}_{\text{align}} + w_{\text{smo
 
 - [\[ICCV 2025\] EMoTive: Event-Guided Trajectory Modeling for 3D Motion Estimation](../../ICCV2025/video_understanding/emotive_event-guided_trajectory_modeling_for_3d_motion_estimation.md)
 - [\[ICCV 2025\] Simultaneous Motion And Noise Estimation with Event Cameras](../../ICCV2025/video_understanding/simultaneous_motion_and_noise_estimation_with_event_cameras.md)
-- [\[CVPR 2026\] SHOW3D: Capturing Scenes of 3D Hands and Objects in the Wild](../../CVPR2026/video_understanding/show3d_capturing_scenes_of_3d_hands_and_objects_in_the_wild.md)
 - [\[NeurIPS 2025\] PASS: Path-Selective State Space Model for Event-Based Recognition](pass_path-selective_state_space_model_for_event-based_recognition.md)
+- [\[CVPR 2026\] SHOW3D: Capturing Scenes of 3D Hands and Objects in the Wild](../../CVPR2026/video_understanding/show3d_capturing_scenes_of_3d_hands_and_objects_in_the_wild.md)
 - [\[CVPR 2025\] EDCFlow: Exploring Temporally Dense Difference Maps for Event-based Optical Flow Estimation](../../CVPR2025/video_understanding/edcflow_exploring_temporally_dense_difference_maps_for_event-based_optical_flow_.md)
 
 </div>

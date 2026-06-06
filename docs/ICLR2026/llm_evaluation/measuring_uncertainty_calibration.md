@@ -137,8 +137,8 @@ NW 方法在所有四种合成函数上均给出最紧的上界。ECE 在前三�
 - [\[ICLR 2026\] TabStruct: Measuring Structural Fidelity of Tabular Data](tabstruct_measuring_structural_fidelity_of_tabular_data.md)
 - [\[CVPR 2025\] Uncertainty Weighted Gradients for Model Calibration](../../CVPR2025/llm_evaluation/uncertainty_weighted_gradients_for_model_calibration.md)
 - [\[ACL 2025\] A Conformal Risk Control Framework for Granular Word Assessment and Uncertainty Calibration of CLIPScore Quality Estimates](../../ACL2025/llm_evaluation/a_conformal_risk_control_framework_for_granular_word_assessment_and_uncertainty_.md)
-- [\[ICML 2026\] Possibilistic Predictive Uncertainty for Deep Learning](../../ICML2026/llm_evaluation/possibilistic_predictive_uncertainty_for_deep_learning.md)
 - [\[AAAI 2026\] Structured Language Generation Model: Loss Calibration and Formatted Decoding for Efficient Text](../../AAAI2026/llm_evaluation/structured_language_generation_model_loss_calibration_and_formatted_decoding_for.md)
+- [\[AAAI 2026\] Sampling Control for Imbalanced Calibration in Semi-Supervised Learning](../../AAAI2026/llm_evaluation/sampling_control_for_imbalanced_calibration_in_semi-supervised_learning.md)
 
 </div>
 

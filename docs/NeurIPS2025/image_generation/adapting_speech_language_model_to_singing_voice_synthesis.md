@@ -127,9 +127,9 @@ SingMOS (感知质量) 与最佳专用系统 TokSing 持平
 ## 相关论文
 
 - [\[ICML 2025\] Long-Form Speech Generation with Spoken Language Models](../../ICML2025/image_generation/long-form_speech_generation_with_spoken_language_models.md)
+- [\[NeurIPS 2025\] Continuous Diffusion Model for Language Modeling](continuous_diffusion_model_for_language_modeling.md)
 - [\[ACL 2025\] OZSpeech: One-step Zero-shot Speech Synthesis with Learned-Prior-Conditioned Flow Matching](../../ACL2025/image_generation/ozspeech_one-step_zero-shot_speech_synthesis_with_learned-prior-conditioned_flow.md)
 - [\[ICML 2025\] BinauralFlow: A Causal and Streamable Approach for High-Quality Binaural Speech Synthesis with Flow Matching Models](../../ICML2025/image_generation/binauralflow_a_causal_and_streamable_approach_for_high-quality_binaural_speech_s.md)
-- [\[NeurIPS 2025\] Continuous Diffusion Model for Language Modeling](continuous_diffusion_model_for_language_modeling.md)
 - [\[CVPR 2025\] TurboFill: Adapting Few-Step Text-to-Image Model for Fast Image Inpainting](../../CVPR2025/image_generation/turbofill_adapting_few-step_text-to-image_model_for_fast_image_inpainting.md)
 
 </div>

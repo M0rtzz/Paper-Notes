@@ -1,0 +1,144 @@
+---
+title: >-
+  [论文解读] CG-MLLM: Captioning and Generating 3D Content via Multi-modal Large Language Models
+description: >-
+  [ICML 2026][多模态VLM][3D生成] CG-MLLM 提出了一种基于 Mixture-of-Transformer 的多模态大语言模型，通过 TokenAR（逐token自回归）和 BlockAR（块级并行）双 Transformer 架构，结合预训练 VLM 骨干与 3D VAE 潜空间…
+tags:
+  - "ICML 2026"
+  - "多模态VLM"
+  - "3D生成"
+  - "多模态大语言模型"
+  - "Transformer"
+  - "空间智能"
+  - "3D理解"
+---
+
+# CG-MLLM: Captioning and Generating 3D Content via Multi-modal Large Language Models
+
+**会议**: ICML 2026  
+**arXiv**: [2601.21798](https://arxiv.org/abs/2601.21798)  
+**代码**: 待确认  
+**领域**: 多模态VLM / 3D视觉  
+**关键词**: 3D生成, 多模态大语言模型, Mixture-of-Transformer, 空间智能, 3D理解  
+
+## 一句话总结
+CG-MLLM 提出了一种基于 Mixture-of-Transformer 的多模态大语言模型，通过 TokenAR（逐token自回归）和 BlockAR（块级并行）双 Transformer 架构，结合预训练 VLM 骨干与 3D VAE 潜空间，首次实现在单一 MLLM 框架内端到端进行高分辨率 3D 内容生成与 3D 字幕理解，在 MLLM 类 3D 生成方法中达到 SOTA。
+
+## 研究背景与动机
+
+**领域现状**：大语言模型已在文本、图像、视频等模态取得突破性进展，众多 MLLM 在 2D 视觉-语言理解与生成任务上表现优异。然而，3D 内容生成领域进展缓慢，与 2D 多模态生成之间存在明显差距。
+
+**现有痛点**：当前 MLLM 用于 3D 生成主要有两条路线：(1) 以文本/离散 token 形式生成网格，但 token 预算限制了网格的复杂度和分辨率；(2) 使用低分辨率体素 VAE 或乐高结构生成粗糙 3D 代理形状，仍需额外 3D 扩散模型才能获得精细几何。两者均无法在 LLM 阶段端到端生成高分辨率 3D 对象。
+
+**核心矛盾**：3D 几何本质上形成长程、高度相互依赖的序列，纯 token 级自回归建模会导致严重的效率问题；而现有 MoT 方法将 Transformer 按任务（理解 vs 生成）绑定，不够灵活。
+
+**本文目标**：构建一个统一的语言-图像-3D 多模态大语言模型，在单一模型内同时实现精确的空间理解和高保真空间内容生成。
+
+**切入角度**：作者观察到 token 级串行建模与 block 级并行建模可以解耦到不同的 Transformer 分支，按生成模式（serial vs parallel）而非按任务绑定，从而灵活接入不同预训练编码器。
+
+**核心 idea**：用双 Transformer 的 MoT 架构（TokenAR + BlockAR）整合预训练 Qwen3-VL 骨干与 Hunyuan3D-2.1 VAE 潜空间，在 MLLM 内原生实现高分辨率 3D 生成。
+
+## 方法详解
+
+### 整体框架
+CG-MLLM 采用 decoder-only 架构，由三个阶段组成：(1) **多模态编码**——文本使用 BBPE 分词器、图像通过 SigLIP-2 编码器 + 2层 MLP 压缩、3D 资产通过冻结的 Hunyuan3D-2.1 Spatial-VAE 编码为潜在表示；(2) **MoT 建模**——TokenAR Transformer 处理 token 级序列建模，BlockAR Transformer 处理 block 级并行建模，二者共享注意力机制；(3) **多模态解码**——文本 token 通过分词器解码，3D token 通过 VAE 解码器还原为网格，再经材质生成器增强视觉质量。
+
+### 关键设计
+
+1. **双 Transformer MoT 架构（TokenAR + BlockAR）**:
+
+    - 功能：解耦串行建模与并行建模，使模型同时具备 token 级语言/视觉理解和 block 级 3D 空间生成能力
+    - 核心思路：TokenAR 和 BlockAR 均从预训练 Qwen3-VL 权重初始化。TokenAR 保持原始 token 级自回归能力；BlockAR 对 3D 潜在 token 进行 block 级并行预测，各 block 内共享位置索引以保持点特征的排列不变性。采用混合掩码机制——因果掩码用于顺序 token，并行掩码用于同一 block 内的 token，二者在注意力层中自适应组合
+    - 设计动机：与按任务绑定（理解 vs 生成）不同，按生成模式绑定可灵活接入任意编码器，且 block 级并行在 4096 token 分辨率下实现约 3 倍加速
+
+2. **3D Spatial-VAE 集成与位置编码策略**:
+
+    - 功能：将 3D 对象编码为高维潜在空间，并与 VLM 语义空间对齐
+    - 核心思路：采用 Hunyuan3D-2.1 的 Spatial-VAE（下采样因子 20，潜在维度 64），从 3D 物体表面提取点云并编码为潜在表示，通过 Connector 层与 LLM 隐藏维度对齐。对 3D token 故意省略 block 内位置嵌入，仅赋予 block 级位置索引，保持点特征排列不变性的同时维护全局空间结构。VAE 在训练中全程冻结
+    - 设计动机：复用成熟的 3D VAE 几何先验，避免从零训练 3D 编码器的高成本；位置编码策略确保点云特征的无序性不被位置信息破坏
+
+3. **渐进分辨率训练策略**:
+
+    - 功能：分两阶段逐步提升 3D 生成分辨率，稳定训练过程
+    - 核心思路：第一阶段（对齐阶段）丢弃 90% 条件输入，以 512 token 分辨率训练无条件生成与初始理解能力；第二阶段（渐进分辨率阶段）将分辨率从 512 逐步提升至 4096 token，同时将丢弃概率从 90% 降低至 10%。使用 AdamW 优化器，学习率从 $1 \times 10^{-4}$ 调整到 $5 \times 10^{-5}$
+    - 设计动机：直接训练高分辨率 3D token（4096）对 LLM 序列长度和显存压力过大，渐进策略使模型先掌握粗粒度结构再细化几何细节
+
+### 训练策略
+采用 Classifier-Free Guidance (CFG)，推理时 CFG scale 设为 7.5，采样 50 步。时间步采用 logit-normal 采样器。训练在 16 块 NVIDIA H20 GPU 上进行，最大序列长度从 36,864 增至 51,200。
+
+## 实验关键数据
+
+### 主实验：3D 生成质量对比
+
+| 方法 | 类型 | p-FID↓ | p-KID↓ | CLIP-IQA+↑ | MUSIQ↑ | CLIP↑ | User Study↑ |
+|------|------|--------|--------|------------|--------|-------|------------|
+| Michelangelo | Non-MLLM | 17.96 | 0.56 | 0.45 | 71.42 | 84.08 | 2.60 |
+| CraftsMan | Non-MLLM | 14.09 | 0.40 | 0.45 | 71.09 | 84.86 | 3.15 |
+| TRELLIS | Non-MLLM | 7.36 | 0.12 | 0.44 | 66.97 | 84.13 | 3.28 |
+| SAR3D | MLLM | 30.07 | 1.00 | 0.42 | 66.01 | 82.86 | 2.93 |
+| ShapeLLM-Omni | MLLM | 13.11 | 0.29 | 0.37 | 55.71 | 84.18 | 2.30 |
+| **CG-MLLM（本文）** | MLLM | **12.55** | **0.27** | **0.45** | **71.65** | **84.47** | **3.32** |
+
+CG-MLLM 在 MLLM 类方法中全面领先，p-FID 比 SAR3D 降低 58%，p-KID 降低 73%。
+
+### 消融实验
+
+| HY2.1-VAE | MoT | LLM 骨干 | #Tokens | p-FID↓ | p-KID↓ |
+|-----------|-----|----------|---------|--------|--------|
+| ✗ | ✗ | Qwen2.5-0.5B | 512 | 53.66 | 1.76 |
+| ✓ | ✗ | Qwen2.5-0.5B | 512 | 44.91 | 1.42 |
+| ✓ | ✓ | Qwen2.5-0.5B | 512 | 30.60 | 0.77 |
+| ✓ | ✓ | Qwen3VL-2B | 512 | 15.61 | 0.43 |
+| ✓ | ✓ | Qwen2.5-0.5B | 4096 | 16.57 | 0.53 |
+| ✓ | ✓ | Qwen3VL-2B | 4096 | **12.55** | **0.27** |
+
+HY2.1-VAE、MoT 架构、更大 token 预算、更强 VLM 骨干均带来一致的增益，符合 scaling law 趋势。
+
+### 3D 字幕理解对比
+
+| 模型 | 输入 | BLEU-1↑ | ROUGE-L↑ | METEOR↑ |
+|------|------|---------|----------|---------|
+| 3D-LLM | 3D 潜在 | 16.91 | 19.48 | 19.73 |
+| ShapeLLM-Omni-7B | 3D 潜在 | 18.51 | 21.37 | 19.89 |
+| Qwen3-VL-2B | 图像 | 3.13 | 7.21 | 11.92 |
+| **CG-MLLM-2B（本文）** | **图像** | **13.51** | **19.13** | **14.28** |
+
+在仅使用图像输入的条件下，CG-MLLM 的字幕能力大幅超越同规模 Qwen3-VL（BLEU-1 提升 4.3 倍），证明 3D 生成训练可以反哺感知能力。
+
+## 亮点与洞察
+- **生成反哺理解**：联合 3D 生成训练不仅赋予模型生成能力，还显著提升了基于 2D 图像的 3D 结构推理能力，验证了"学会生成有助于理解"的假说
+- **按模式绑定 vs 按任务绑定**：将 Transformer 按生成模式（串行/并行）而非任务（理解/生成）绑定是一个简洁但关键的设计选择，保持了架构的可扩展性
+- **AdaLN 在 MLLM 中的失效**：作者发现 AdaLN 在共享因果-并行注意力机制中引入额外缩放因子会破坏训练稳定性，这对后续 MLLM+扩散的工作有参考价值
+
+## 局限性 / 可改进方向
+- 整体质量仍未超越顶尖非 MLLM 方法（如 TRELLIS），缩小该差距是开放性问题
+- 3D 字幕数据集质量有限（通常 < 20 词），限制了 3D 理解能力
+- Hunyuan3D-2.1 VAE 的水密化预处理会损失数据精度，token 数仅 4K（高质量方法可达 40K+）
+- 输入歧义或语义混淆时可能产生幻觉（如输入羊生成兔子）
+
+## 相关工作与启发
+- **SAR3D / ShapeLLM-Omni**：先前 MLLM 3D 生成方法，分别用 token 和体素 VAE，CG-MLLM 在所有指标上超越
+- **TRELLIS**：非 MLLM 的 3D 生成 SOTA，p-FID 7.36 仍低于 CG-MLLM，说明纯 LLM 范式在 3D 精度上仍有差距
+- **Mixture-of-Transformers**：MoT 思想被重新诠释为模式绑定而非任务绑定
+
+## 评分
+- 新颖性: ★★★★☆ — 双 Transformer 按生成模式绑定的设计新颖，3D MLLM 探索有价值
+- 实验充分度: ★★★★☆ — 消融全面（5 组），但与非 MLLM SOTA 仍有差距
+- 写作质量: ★★★☆☆ — 方法描述清晰但部分段落冗长
+- 价值: ★★★★☆ — 首个端到端高分辨率 3D 生成 MLLM，开辟了新方向
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICML 2026\] Vision-aligned Latent Reasoning for Multi-modal Large Language Model](vision-aligned_latent_reasoning_for_multi-modal_large_language_model.md)
+- [\[ICCV 2025\] Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+- [\[ACL 2026\] Leave My Images Alone: Preventing Multi-Modal Large Language Models from Analyzing Unauthorized Images](../../ACL2026/multimodal_vlm/leave_my_images_alone_preventing_multi-modal_large_language_models_from_analyzin.md)
+- [\[ICML 2026\] Self-Captioning Multimodal Interaction Tuning: Amplifying Exploitable Redundancies for Robust Vision Language Models](self-captioning_multimodal_interaction_tuning_amplifying_exploitable_redundancie.md)
+- [\[CVPR 2026\] HAMMER: Harnessing MLLM via Cross-Modal Integration for Intention-Driven 3D Affordance Grounding](../../CVPR2026/multimodal_vlm/hammer_harnessing_mllm_via_cross-modal_integration_for_intention-driven_3d_affor.md)
+
+</div>
+
+<!-- RELATED:END -->

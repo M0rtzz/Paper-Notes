@@ -119,12 +119,6 @@ Llama-3.1-8B-it 完整模型 vs 去掉单个组件（相对 Δ）：
 - 写作质量: ⭐⭐⭐⭐ 动机、几何观察、方法和分析串联清晰，图 2 一目了然；个别符号说明可更紧凑。
 - 价值: ⭐⭐⭐⭐ 给"推理类型的可控表征"提供了一个范式，对 mechanistic interpretability 与 multi-property steering 都有借鉴意义。
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">

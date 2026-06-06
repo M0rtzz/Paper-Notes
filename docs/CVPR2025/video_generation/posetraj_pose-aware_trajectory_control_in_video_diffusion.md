@@ -123,7 +123,7 @@ PoseTraj 基于 Stable Video Diffusion（SVD）构建，包含三个训练阶段
 - [\[CVPR 2025\] FADE: Frequency-Aware Diffusion Model Factorization for Video Editing](fade_frequency-aware_diffusion_model_factorization_for_video_editing.md)
 - [\[CVPR 2025\] LeviTor: 3D Trajectory Oriented Image-to-Video Synthesis](levitor_3d_trajectory_oriented_image-to-video_synthesis.md)
 - [\[ICML 2025\] MimicMotion: High-Quality Human Motion Video Generation with Confidence-aware Pose Guidance](../../ICML2025/video_generation/mimicmotion_high-quality_human_motion_video_generation_with_confidence-aware_pos.md)
-- [\[ICLR 2026\] Learning Video Generation for Robotic Manipulation with Collaborative Trajectory Control](../../ICLR2026/video_generation/learning_video_generation_for_robotic_manipulation_with_collaborative_trajectory.md)
+- [\[CVPR 2025\] FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](flashmotion_few-step_controllable_video_generation_with_trajectory_guidance.md)
 
 </div>
 

@@ -160,8 +160,8 @@ $$\text{Pass Rate} = 1 - \frac{1}{N} \sum_{i=1}^{N} \left(\frac{C_i}{K}\right)$$
 - [\[ACL 2025\] In Prospect and Retrospect: Reflective Memory Management for Long-term Personalized Dialogue Agents](in_prospect_and_retrospect_reflective_memory_management_for_long-term_personaliz.md)
 - [\[CVPR 2025\] Effortless Active Labeling for Long-Term Test-Time Adaptation](../../CVPR2025/others/effortless_active_labeling_for_long-term_test-time_adaptation.md)
 - [\[ACL 2025\] Substance over Style: Evaluating Proactive Conversational Coaching Agents](proactive_conversational_coaching.md)
-- [\[ACL 2025\] Follow-up Question Generation for Enhanced Patient-Provider Conversations](follow-up_question_generation_for_enhanced_patient-provider_conversations.md)
-- [\[ACL 2025\] Learning to Reason from Feedback at Test-Time](learning_to_reason_from_feedback_at_test-time.md)
+- [\[ACL 2025\] A Little Human Data Goes A Long Way](a_little_human_data_goes_a_long_way.md)
+- [\[ACL 2025\] LoGU: Long-form Generation with Uncertainty Expressions](logu_longform_gen_uncertainty.md)
 
 </div>
 

@@ -143,10 +143,10 @@ VPTQ利用Hessian信息优化后训练量化码本。PocketLLM在所有压缩比
 ## 相关论文
 
 - [\[AAAI 2026\] SkipCat: Rank-Maximized Low-Rank Compression of Large Language Models via Shared Projection and Block Skipping](skipcat_rank-maximized_low-rank_compression_of_large_language_models_via_shared_.md)
-- [\[ACL 2026\] Meta-Tool: Efficient Few-Shot Tool Adaptation for Small Language Models](../../ACL2026/model_compression/meta-tool_efficient_few-shot_tool_adaptation_for_small_language_models.md)
 - [\[ICLR 2026\] Distillation of Large Language Models via Concrete Score Matching](../../ICLR2026/model_compression/distillation_of_large_language_models_via_concrete_score_matching.md)
 - [\[ACL 2025\] 500xCompressor: Generalized Prompt Compression for Large Language Models](../../ACL2025/model_compression/500xcompressor_generalized_prompt_compression_for_large_language_models.md)
 - [\[AAAI 2026\] Failures to Surface Harmful Contents in Video Large Language Models](failures_to_surface_harmful_contents_in_video_large_language_models.md)
+- [\[ACL 2026\] LightReasoner: Can Small Language Models Teach Large Language Models Reasoning?](../../ACL2026/model_compression/lightreasoner_can_small_language_models_teach_large_language_models_reasoning.md)
 
 </div>
 

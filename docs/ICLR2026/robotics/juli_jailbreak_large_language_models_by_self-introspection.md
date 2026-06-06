@@ -126,10 +126,10 @@ BiasNet $F_\theta$ 接收目标 LLM 的 log probability 输出 $\log p_\alpha(x_
 ## 相关论文
 
 - [\[ICLR 2026\] Sysformer: Safeguarding Frozen Large Language Models with Adaptive System Prompts](sysformer_safeguarding_frozen_large_language_models_with_adaptive_system_prompts.md)
-- [\[ACL 2026\] The Imperfective Paradox in Large Language Models](../../ACL2026/robotics/the_imperfective_paradox_in_large_language_models.md)
-- [\[ACL 2026\] Reasoning Hijacking: The Fragility of Reasoning Alignment in Large Language Models](../../ACL2026/robotics/reasoning_hijacking_the_fragility_of_reasoning_alignment_in_large_language_model.md)
-- [\[ACL 2026\] BACH-V: Bridging Abstract and Concrete Human-Values in Large Language Models](../../ACL2026/robotics/bach-v_bridging_abstract_and_concrete_human-values_in_large_language_models.md)
-- [\[ACL 2026\] Sparse Feature Coactivation Reveals Causal Semantic Modules in Large Language Models](../../ACL2026/robotics/sparse_feature_coactivation_reveals_causal_semantic_modules_in_large_language_mo.md)
+- [\[NeurIPS 2025\] Uncovering Strategic Egoism Behaviors in Large Language Models](../../NeurIPS2025/robotics/uncovering_strategic_egoism_behaviors_in_large_language_models.md)
+- [\[ICML 2026\] Embodied Task Planning via Graph-Informed Action Generation with Large Language Models](../../ICML2026/robotics/embodied_task_planning_via_graph-informed_action_generation_with_large_language_.md)
+- [\[ACL 2025\] SELF-PERCEPT: Introspection Improves LLMs' Detection of Multi-Person Mental Manipulation in Conversations](../../ACL2025/robotics/self_percept_manipulation_detection.md)
+- [\[ICML 2026\] SpecPrune-VLA: Accelerating Vision-Language-Action Models via Action-Aware Self-Speculative Pruning](../../ICML2026/robotics/specprune-vla_accelerating_vision-language-action_models_via_action-aware_self-s.md)
 
 </div>
 

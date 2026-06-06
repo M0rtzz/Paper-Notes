@@ -115,11 +115,11 @@ Token 用量仅为 TAMA 的 **1/27**，SigLLM-PG 的 **1/51**。
 
 ## 相关论文
 
-- [\[ACL 2025\] LogicQA: Logical Anomaly Detection with Vision Language Model Generated Questions](../../ACL2025/multimodal_vlm/logicqa_logical_anomaly_detection_with_vision_language_model_generated_questions.md)
 - [\[AAAI 2026\] HeadHunt-VAD: Hunting Robust Anomaly-Sensitive Heads in MLLM for Tuning-Free Video Anomaly Detection](headhunt-vad_hunting_robust_anomaly-sensitive_heads_in_mllm_.md)
-- [\[CVPR 2026\] No Need For Real Anomaly: MLLM Empowered Zero-Shot Video Anomaly Detection](../../CVPR2026/multimodal_vlm/no_need_for_real_anomaly_mllm_empowered_zero-shot_video_anomaly_detection.md)
+- [\[ACL 2025\] LogicQA: Logical Anomaly Detection with Vision Language Model Generated Questions](../../ACL2025/multimodal_vlm/logicqa_logical_anomaly_detection_with_vision_language_model_generated_questions.md)
+- [\[AAAI 2026\] Learning to Tell Apart: Weakly Supervised Video Anomaly Detection via Disentangled Semantic Alignment](learning_to_tell_apart_weakly_supervised_video_anomaly_detection_via_disentangle.md)
 - [\[AAAI 2026\] Cross-modal Proxy Evolving for OOD Detection with Vision-Language Models](cross-modal_proxy_evolving_for_ood_detection_with_vision-lan.md)
-- [\[CVPR 2026\] Activation Matters: Test-time Activated Negative Labels for OOD Detection with Vision-Language Models](../../CVPR2026/multimodal_vlm/activation_matters_test-time_activated_negative_labels_for_ood_detection_with_vi.md)
+- [\[CVPR 2025\] Towards Zero-Shot Anomaly Detection and Reasoning with Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/towards_zero-shot_anomaly_detection_and_reasoning_with_multimodal_large_language.md)
 
 </div>
 

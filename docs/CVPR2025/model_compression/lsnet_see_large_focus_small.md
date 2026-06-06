@@ -144,11 +144,11 @@ LSNet-T 在 0.3G FLOPs 即达 74.9%，超越同 FLOPs 所有模型；LSNet-B 80.
 
 ## 相关论文
 
+- [\[ACL 2026\] LightReasoner: Can Small Language Models Teach Large Language Models Reasoning?](../../ACL2026/model_compression/lightreasoner_can_small_language_models_teach_large_language_models_reasoning.md)
 - [\[ICCV 2025\] Colors See Colors Ignore: Clothes Changing ReID with Color Disentanglement](../../ICCV2025/model_compression/colors_see_colors_ignore_clothes_changing_reid_with_color_disentanglement.md)
 - [\[ACL 2025\] Flipping Knowledge Distillation: Leveraging Small Models' Expertise to Enhance LLMs in Text Matching](../../ACL2025/model_compression/flipping_kd_small_to_large.md)
 - [\[NeurIPS 2025\] Find your Needle: Small Object Image Retrieval via Multi-Object Attention Optimization](../../NeurIPS2025/model_compression/find_your_needle_small_object_image_retrieval_via_multi-object_attention_optimiz.md)
 - [\[CVPR 2025\] Gaze-LLE: Gaze Target Estimation via Large-Scale Learned Encoders](gaze-lle_gaze_target_estimation_via_large-scale_learned_encoders.md)
-- [\[CVPR 2025\] DyCoke: Dynamic Compression of Tokens for Fast Video Large Language Models](dycoke_dynamic_compression_of_tokens_for_fast_video_large_language_models.md)
 
 </div>
 

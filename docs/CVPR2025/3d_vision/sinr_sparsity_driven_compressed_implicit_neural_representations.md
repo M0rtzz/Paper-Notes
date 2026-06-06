@@ -136,7 +136,7 @@ COIN++集成：达到~24.2dB PSNR，COIN++需>1.5 bpp，加SINR后<1.0 bpp。
 - [\[ECCV 2024\] Lagrangian Hashing for Compressed Neural Field Representations](../../ECCV2024/3d_vision/lagrangian_hashing_for_compressed_neural_field_representations.md)
 - [\[ICCV 2025\] LINR-PCGC: Lossless Implicit Neural Representations for Point Cloud Geometry Compression](../../ICCV2025/3d_vision/linr-pcgc_lossless_implicit_neural_representations_for_point_cloud_geometry_comp.md)
 - [\[CVPR 2025\] Flow-NeRF: Joint Learning of Geometry, Poses, and Dense Flow within Unified Neural Representations](flow-nerf_joint_learning_of_geometry_poses_and_dense_flow_within_unified_neural_.md)
-- [\[CVPR 2025\] Sonata: Self-Supervised Learning of Reliable Point Representations](sonata_self-supervised_learning_of_reliable_point_representations.md)
+- [\[CVPR 2026\] NTK-Guided Implicit Neural Teaching](../../CVPR2026/3d_vision/ntk-guided_implicit_neural_teaching.md)
 
 </div>
 

@@ -136,7 +136,7 @@ $$\tilde{T}_n(h) \coloneqq \inf_{f_1,f_2 \in \mathcal{F}: \ell_{f_1} - \ell_{f_2
 - [\[ICML 2025\] Improved Learning via k-DTW: A Novel Dissimilarity Measure for Curves](improved_learning_via_k-dtw_a_novel_dissimilarity_measure_for_curves.md)
 - [\[NeurIPS 2025\] Military AI Needs Technically-Informed Regulation to Safeguard AI Research and its Applications](../../NeurIPS2025/others/military_ai_needs_technically-informed_regulation_to_safeguard_ai_research_and_i.md)
 - [\[NeurIPS 2025\] The Cost of Robustness: Tighter Bounds on Parameter Complexity for Robust Memorization in ReLU Nets](../../NeurIPS2025/others/the_cost_of_robustness_tighter_bounds_on_parameter_complexity_for_robust_memoriz.md)
-- [\[ICML 2025\] Maximum Coverage in Turnstile Streams with Applications to Fingerprinting Measures](maximum_coverage_in_turnstile_streams_with_applications_to_fingerprinting_measur.md)
+- [\[ICML 2025\] Modified K-means Algorithm with Local Optimality Guarantees](modified_k-means_algorithm_with_local_optimality_guarantees.md)
 - [\[NeurIPS 2025\] Kernel Conditional Tests from Learning-Theoretic Bounds](../../NeurIPS2025/others/kernel_conditional_tests_from_learning-theoretic_bounds.md)
 
 </div>

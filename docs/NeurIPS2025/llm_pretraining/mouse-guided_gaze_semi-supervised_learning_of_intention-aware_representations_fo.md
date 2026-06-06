@@ -156,7 +156,7 @@ tags:
 - [\[CVPR 2025\] A Unified Framework for Heterogeneous Semi-supervised Learning](../../CVPR2025/llm_pretraining/a_unified_framework_for_heterogeneous_semi-supervised_learning.md)
 - [\[ICML 2025\] A Square Peg in a Square Hole: Meta-Expert for Long-Tailed Semi-Supervised Learning](../../ICML2025/llm_pretraining/a_square_peg_in_a_square_hole_meta-expert_for_long-tailed_semi-supervised_learni.md)
 - [\[AAAI 2026\] Learning Procedural-aware Video Representations through State-Grounded Hierarchy Unfolding](../../AAAI2026/llm_pretraining/learning_procedural-aware_video_representations_through_state-grounded_hierarchy.md)
-- [\[NeurIPS 2025\] Understanding and Enhancing Mask-Based Pretraining towards Universal Representations](understanding_and_enhancing_mask-based_pretraining_towards_universal_representat.md)
+- [\[NeurIPS 2025\] Optimal Online Change Detection via Random Fourier Features](optimal_online_change_detection_via_random_fourier_features.md)
 
 </div>
 

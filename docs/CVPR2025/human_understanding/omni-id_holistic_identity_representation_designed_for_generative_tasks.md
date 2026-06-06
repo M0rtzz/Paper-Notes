@@ -133,7 +133,7 @@ MTD 阶段训练 200K 步，95% mask ratio，L1 重建损失。Flow Matching 阶
 - [\[CVPR 2025\] FSFM: A Generalizable Face Security Foundation Model via Self-Supervised Facial Representation Learning](fsfm_a_generalizable_face_security_foundation_model_via_self-supervised_facial_r.md)
 - [\[CVPR 2025\] GaussianIP: Identity-Preserving Realistic 3D Human Generation via Human-Centric Diffusion Prior](gaussianip_identity-preserving_realistic_3d_human_generation_via_human-centric_d.md)
 - [\[ICCV 2025\] DreamActor-M1: Holistic, Expressive and Robust Human Image Animation with Hybrid Guidance](../../ICCV2025/human_understanding/dreamactor-m1_holistic_expressive_and_robust_human_image_animation_with_hybrid_g.md)
-- [\[ECCV 2024\] Combining Generative and Geometry Priors for Wide-Angle Portrait Correction](../../ECCV2024/human_understanding/combining_generative_and_geometry_priors_for_wide-angle_portrait_correction.md)
+- [\[ICML 2026\] WaveVerse: Scalable RF Simulation in Generative 4D Worlds](../../ICML2026/human_understanding/scalable_rf_simulation_in_generative_4d_worlds.md)
 - [\[ICCV 2025\] Dynamic Reconstruction of Hand-Object Interaction with Distributed Force-aware Contact Representation](../../ICCV2025/human_understanding/dynamic_reconstruction_of_hand-object_interaction_with_distributed_force-aware_c.md)
 
 </div>

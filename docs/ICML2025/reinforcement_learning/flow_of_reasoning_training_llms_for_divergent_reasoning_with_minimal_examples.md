@@ -156,8 +156,8 @@ FoR 在**推理步骤级别**建模（每步对应一个推理操作），而非
 
 - [\[ICML 2025\] Diving into Self-Evolving Training for Multimodal Reasoning](diving_into_self-evolving_training_for_multimodal_reasoning.md)
 - [\[ICML 2025\] The Challenge of Teaching Reasoning to LLMs Without RL or Distillation](the_challenge_of_teaching_reasoning_to_llms_without_rl_or_distillation.md)
-- [\[ICML 2026\] Perceptual Flow Network for Visually Grounded Reasoning](../../ICML2026/reinforcement_learning/perceptual_flow_network_for_visually_grounded_reasoning.md)
 - [\[ICML 2025\] VinePPO: Refining Credit Assignment in RL Training of LLMs](vineppo_refining_credit_assignment_in_rl_training_of_llms.md)
+- [\[ICML 2026\] Perceptual Flow Network for Visually Grounded Reasoning](../../ICML2026/reinforcement_learning/perceptual_flow_network_for_visually_grounded_reasoning.md)
 - [\[ICLR 2026\] Reasoning Boosts Opinion Alignment in LLMs](../../ICLR2026/reinforcement_learning/reasoning_boosts_opinion_alignment_in_llms.md)
 
 </div>

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] HACHIMI: Scalable and Controllable Student Persona Generation via Orchestrated Agents
 description: >-
-  [ACL 2026][LLM 评测 / 教育 / Agent][学生画像] HACHIMI 把"学生画像生成"形式化为 TAD-PG（理论对齐 + 分布可控）任务，用"提议–验证–修订"多智能体框架配合神经符号验证器和分层采样，产出 100 万条 1–12 年级合成学生画像…
+  [ACL 2026][多智能体][学生画像] HACHIMI 把"学生画像生成"形式化为 TAD-PG（理论对齐 + 分布可控）任务，用"提议–验证–修订"多智能体框架配合神经符号验证器和分层采样，产出 100 万条 1–12 年级合成学生画像…
 tags:
   - "ACL 2026"
-  - "LLM 评测 / 教育 / Agent"
+  - "多智能体"
   - "学生画像"
   - "Multi-Agent"
   - "神经符号验证"
@@ -133,9 +133,9 @@ PISA 2022 跨 5 个区域（东亚、西欧、南欧、拉美、中东）×16 co
 
 - [\[ACL 2026\] SILO-BENCH: A Scalable Environment for Evaluating Distributed Coordination in Multi-Agent LLM Systems](silo-bench_a_scalable_environment_for_evaluating_distributed_coordination_in_mul.md)
 - [\[ACL 2026\] Latent Agents: A Post-Training Procedure for Internalized Multi-Agent Debate](latent_agents_a_post-training_procedure_for_internalized_multi-agent_debate.md)
-- [\[ACL 2025\] Preventing Rogue Agents Improves Multi-Agent Collaboration](../../ACL2025/multi_agent/preventing_rogue_agents_improves_multi-agent_collaboration.md)
+- [\[ICML 2026\] When Cloud Agents Meet Device Agents: Lessons from Hybrid Multi-Agent Systems](../../ICML2026/multi_agent/when_cloud_agents_meet_device_agents_lessons_from_hybrid_multi-agent_systems.md)
+- [\[ACL 2026\] ATLAS: Adaptive Trading with LLM AgentS Through Dynamic Prompt Optimization and Multi-Agent Coordination](atlas_adaptive_trading_with_llm_agents_through_dynamic_prompt_optimization_and_m.md)
 - [\[ACL 2026\] Memory-Augmented LLM-based Multi-Agent System for Automated Feature Generation on Tabular Data](memory-augmented_llm-based_multi-agent_system_for_automated_feature_generation_o.md)
-- [\[ACL 2026\] Collaborative Multi-Agent Scripts Generation for Enhancing Imperfect-Information Reasoning in Murder Mystery Games](collaborative_multi-agent_scripts_generation_for_enhancing_imperfect-information.md)
 
 </div>
 

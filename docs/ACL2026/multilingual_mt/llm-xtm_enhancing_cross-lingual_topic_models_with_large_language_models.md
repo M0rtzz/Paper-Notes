@@ -131,12 +131,6 @@ Phase 2 总目标 $\mathcal{J} = \mathcal{L}_{\text{Phase 1}} + \lambda_{\text{m
 - 写作质量: ⭐⭐⭐⭐ Method 写得清楚，公式齐全，Table 1 / Table 4 的对比例子很有说服力；Phase 1 / Phase 2 的拆分让方法易于复用。
 - 价值: ⭐⭐⭐⭐ 给跨语言主题模型社区提供了一个"无脑加 +10–50% CNPMI"的插件，工程上立即可用；范式 (黑盒 LLM + 自一致 + MMD + QA 对齐) 可迁移到其他对齐任务。
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">
@@ -146,8 +140,8 @@ Phase 2 总目标 $\mathcal{J} = \mathcal{L}_{\text{Phase 1}} + \lambda_{\text{m
 - [\[ACL 2026\] Efficient Training for Cross-lingual Speech Language Models](efficient_training_for_cross-lingual_speech_language_models.md)
 - [\[ACL 2026\] LaoBench: A Large-Scale Multidimensional Lao Benchmark for Large Language Models](laobench_a_large-scale_multidimensional_lao_benchmark_for_large_language_models.md)
 - [\[ACL 2026\] Evaluating Robustness of Large Language Models Against Multilingual Typographical Errors](evaluating_robustness_of_large_language_models_against_multilingual_typographica.md)
-- [\[ACL 2026\] Language Models Entangle Language and Culture](language_models_entangle_language_and_culture.md)
 - [\[ACL 2025\] Cross-Lingual Optimization for Language Transfer in Large Language Models](../../ACL2025/multilingual_mt/cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
+- [\[ACL 2026\] Language Models Entangle Language and Culture](language_models_entangle_language_and_culture.md)
 
 </div>
 

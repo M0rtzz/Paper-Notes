@@ -2,10 +2,10 @@
 title: >-
   [论文解读] iSeal: Encrypted Fingerprinting for Reliable LLM Ownership Verification
 description: >-
-  [AAAI 2026][机器人][LLM指纹] 提出 iSeal——首个在模型窃取者完全控制推理过程的黑盒场景下仍能可靠验证 LLM 所有权的主动指纹方法，通过外部加密编码器 + RSC 纠错 + 相似度匹配三重机制，在 12 个 LLM、10+ 种攻击下均保持 100% 指纹成功率（FSR）…
+  [AAAI 2026][LLM安全][LLM指纹] 提出 iSeal——首个在模型窃取者完全控制推理过程的黑盒场景下仍能可靠验证 LLM 所有权的主动指纹方法，通过外部加密编码器 + RSC 纠错 + 相似度匹配三重机制，在 12 个 LLM、10+ 种攻击下均保持 100% 指纹成功率（FSR）…
 tags:
   - "AAAI 2026"
-  - "机器人"
+  - "LLM安全"
   - "LLM指纹"
   - "所有权验证"
   - "加密编码器"
@@ -151,10 +151,10 @@ iSeal 在所有模型上微调后均保持 100% FSR，与 IF 持平，远超 WLM
 
 ## 相关论文
 
+- [\[ICML 2026\] Antidistillation Fingerprinting](../../ICML2026/llm_safety/antidistillation_fingerprinting.md)
 - [\[ACL 2026\] XMark: Reliable Multi-Bit Watermarking for LLM-Generated Texts](../../ACL2026/llm_safety/xmark_reliable_multi-bit_watermarking_for_llm-generated_texts.md)
+- [\[ACL 2026\] FinGround: Detecting and Grounding Financial Hallucinations via Atomic Claim Verification](../../ACL2026/llm_safety/finground_detecting_and_grounding_financial_hallucinations_via_atomic_claim_veri.md)
 - [\[CVPR 2026\] Demographic Fairness in Multimodal LLMs: A Benchmark of Gender and Ethnicity Bias in Face Verification](../../CVPR2026/llm_safety/demographic_fairness_in_multimodal_llms_a_benchmark_of_gender_and_ethnicity_bias.md)
-- [\[ACL 2026\] MATA: Multi-Agent Framework for Reliable and Flexible Table Question Answering](../../ACL2026/llm_safety/mata_multi-agent_framework_for_reliable_and_flexible_table_question_answering.md)
-- [\[NeurIPS 2025\] A Reliable Cryptographic Framework for Empirical Machine Unlearning Evaluation](../../NeurIPS2025/llm_safety/a_reliable_cryptographic_framework_for_empirical_machine_unl.md)
 - [\[AAAI 2026\] Democratizing LLM Efficiency: From Hyperscale Optimizations to Universal Deployability](democratizing_llm_efficiency_from_hyperscale_optimizations_to_universal_deployab.md)
 
 </div>

@@ -127,9 +127,9 @@ tags:
 
 ## 相关论文
 
+- [\[ACL 2025\] Optimizing Decomposition for Optimal Claim Verification](../../ACL2025/others/optimizing_decomposition_for_optimal_claim_verification.md)
 - [\[AAAI 2026\] Formal Abductive Latent Explanations for Prototype-Based Networks](formal_abductive_latent_explanations_for_prototype-based_networks.md)
 - [\[AAAI 2026\] Learning Fair Representations with Kolmogorov-Arnold Networks](learning_fair_representations_with_kolmogorov-arnold_networks.md)
-- [\[ACL 2025\] Optimizing Decomposition for Optimal Claim Verification](../../ACL2025/others/optimizing_decomposition_for_optimal_claim_verification.md)
 - [\[AAAI 2026\] PIPHEN: Physical Interaction Prediction with Hamiltonian Energy Networks](piphen_physical_interaction_prediction_with_hamiltonian_energy_networks.md)
 - [\[AAAI 2026\] TDSNNs: Competitive Topographic Deep Spiking Neural Networks for Visual Cortex Modeling](tdsnns_competitive_topographic_deep_spiking_neural_networks_for_visual_cortex_mo.md)
 

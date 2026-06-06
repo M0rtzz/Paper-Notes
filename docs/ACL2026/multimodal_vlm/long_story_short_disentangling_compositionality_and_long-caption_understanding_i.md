@@ -148,12 +148,6 @@ tags:
 - 写作质量: ⭐⭐⭐⭐⭐ 问题问得清晰 (Q1/Q2 直白)、结论问句式呈现、Figure 1 用相关性散点图把 bidirectional 关系直接可视化；Limitations 写得非常诚实 (proxy 评估 / 没做因果分析等)；Appendix B 把 baseline 模型差异说得清清楚楚。
 - 价值: ⭐⭐⭐⭐ 对 VLM 社区有 calibration 意义 (retire ARO / 强调数据质量 / 警惕位置 embedding 冻结)；对工程师有直接 actionable guideline (训长 caption VLM 怎么选数据怎么训)；唯一遗憾是没给生成型 VLM (LLaVA 系) 的对应分析。
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">

@@ -177,7 +177,7 @@ $$\mathcal{L}_{switch} = N \cdot \sum_{i=1}^N f_i \cdot \mathcal{P}_i$$
 - [\[ICCV 2025\] GM-MoE: Low-Light Enhancement with Gated-Mechanism Mixture-of-Experts](../../ICCV2025/autonomous_driving/gm-moe_low-light_enhancement_with_gated-mechanism_mixture-of-experts.md)
 - [\[AAAI 2026\] AdaptiveAD: Decoupling Scene Perception and Ego Status for End-to-End Autonomous Driving](decoupling_scene_perception_and_ego_status_a_multi-context_fusion_approach_for_e.md)
 - [\[AAAI 2026\] PriorDrive: Enhancing Online HD Mapping with Unified Vector Priors](priordrive_enhancing_online_hd_mapping_with_unified_vector_p.md)
-- [\[AAAI 2026\] LUCID: Learning-Enabled Uncertainty-Aware Certification of Stochastic Dynamical Systems](lucid_learning-enabled_uncertainty-aware_certification_of_stochastic_dynamical_s.md)
+- [\[AAAI 2026\] Smart: A Surrogate Model for Predicting Application Runtime in Dragonfly Systems](smart_a_surrogate_model_for_predicting_application_runtime_in_dragonfly_systems.md)
 
 </div>
 

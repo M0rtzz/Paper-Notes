@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 其他方向145篇论文解读
+  NeurIPS2025 其他方向142篇论文解读
 description: >-
-  145篇NeurIPS2025的其他方向论文解读，涵盖对抗鲁棒、异常检测、对齐/RLHF、人脸/视线、布局/合成、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  142篇NeurIPS2025的其他方向论文解读，涵盖对抗鲁棒、异常检测、对齐/RLHF、人脸/视线、布局/合成、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "其他"
@@ -19,9 +19,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🧠 NeurIPS2025** · **145** 篇论文解读
+**🧠 NeurIPS2025** · **142** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (27)](../../ICML2026/others/index.md) · [📷 CVPR2026 (44)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/others/index.md) · [🧪 ICML2025 (92)](../../ICML2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (91)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (122)](../../AAAI2026/others/index.md) · [📹 ICCV2025 (47)](../../ICCV2025/others/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×7 · 异常检测 ×3 · 对齐/RLHF ×3 · 人脸/视线 ×2 · 布局/合成 ×2
 
@@ -48,10 +48,6 @@ tags:
 **[A Theoretical Framework for Grokking: Interpolation followed by Riemannian Norm Minimisation](a_theoretical_framework_for_grokking_interpolation_followed_by_riemannian_norm_m.md)**
 
 :   本文从纯优化角度严格证明了 grokking 现象的成因：带小 weight decay 的梯度流在 $\lambda\to 0$ 极限下呈现两阶段动力学——先快速收敛到训练损失的临界流形 $\mathcal{M}$，再在 $t\approx 1/\lambda$ 时沿流形做黎曼梯度流以最小化 $\ell_2$ 范数，从而延迟实现泛化。
-
-**[A Unified Framework for Variable Selection in Model-Based Clustering with Missing Not at Random](a_unified_framework_for_variable_selection_in_modelbased_clu.md)**
-
-:   在高斯混合模型的聚类框架中，统一解决变量选择（区分信号变量、冗余变量和噪声变量）与MNAR缺失数据建模，通过两阶段策略（LASSO惩罚排序加BIC角色分配）和谱距离自适应惩罚权重实现高维场景下的高效推理，并证明了可辨识性和渐近选择一致性。
 
 **[Active Measurement: Efficient Estimation at Scale](active_measurement_efficient_estimation_at_scale.md)**
 
@@ -268,10 +264,6 @@ tags:
 **[Improving Forecasts of Suicide Attempts for Patients with Little Data](improving_forecasts_of_suicide_attempts_for_patients_with_little_data.md)**
 
 :   提出 Latent Similarity Gaussian Process (LSGP)，将患者嵌入连续隐空间以捕获异质性，使数据稀少的患者能从相似患者"借用"预测趋势，从而改进基于 EMA 数据的自杀未遂预测。
-
-**[Inferring Stochastic Dynamics with Growth from Cross-Sectional Data](inferring_stochastic_dynamics_with_growth_from_cross-sectional_data.md)**
-
-:   提出非平衡概率流推断（UPFI），通过Fokker-Planck方程的Lagrangian形式化，从横截面数据中联合推断随机动力学系统的漂移项、扩散项和增长率，首次准确处理含细胞增殖/死亡的场景。
 
 **[Information-Computation Tradeoffs for Noiseless Linear Regression with Oblivious Contamination](information-computation_tradeoffs_for_noiseless_linear_regression_with_oblivious.md)**
 
@@ -596,10 +588,6 @@ tags:
 **[UniFormer: Unified and Efficient Transformer for Reasoning Across General and Custom Computing](uniformer_unified_and_efficient_transformer_for_reasoning_across_general_and_cus.md)**
 
 :   提出 UniFormer，一种面向 GPU 和 FPGA 跨平台部署的统一高效 Transformer 架构，通过双分支注意力机制（全局线性注意力 + 局部块注意力）实现了高并行性和计算存储融合。
-
-**[Variational Regularized Unbalanced Optimal Transport: Single Network, Least Action](variational_regularized_unbalanced_optimal_transport_single_network_least_action.md)**
-
-:   提出 Var-RUOT，通过将正则化非平衡最优传输（RUOT）问题的最优性必要条件融入参数化和损失设计，仅需学习单个标量场即可求解 RUOT，获得更低作用量的解并提升训练稳定性；同时分析了增长惩罚函数对生物先验的影响。
 
 **[Weight Weaving: Parameter Pooling for Data-Free Model Merging](weight_weaving_parameter_pooling_for_data-free_model_merging.md)**
 

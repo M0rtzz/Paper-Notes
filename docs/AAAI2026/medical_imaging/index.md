@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 医学图像方向106篇论文解读
+  AAAI2026 医学图像方向88篇论文解读
 description: >-
-  106篇AAAI2026的医学图像方向论文解读，涵盖医学影像、语义分割、对齐/RLHF、多模态、对抗鲁棒、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  88篇AAAI2026的医学图像方向论文解读，涵盖医学影像、语义分割、对齐/RLHF、LLM、对抗鲁棒、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "医学图像"
@@ -11,19 +11,19 @@ tags:
   - "医学影像"
   - "语义分割"
   - "对齐/RLHF"
-  - "多模态"
-  - "对抗鲁棒"
   - "LLM"
+  - "对抗鲁棒"
+  - "多模态"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**🤖 AAAI2026** · **106** 篇论文解读
+**🤖 AAAI2026** · **88** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/medical_imaging/index.md) · [💬 ACL2026 (51)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (119)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (79)](../../ICLR2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (38)](../../ICCV2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (34)](../../ICML2026/medical_imaging/index.md) · [💬 ACL2026 (35)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (103)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (48)](../../ICLR2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (92)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/medical_imaging/index.md)
 
-🔥 **高频主题：** 医学影像 ×42 · 语义分割 ×11 · 对齐/RLHF ×10 · 多模态 ×8 · 对抗鲁棒 ×7
+🔥 **高频主题：** 医学影像 ×39 · 语义分割 ×11 · 对齐/RLHF ×8 · LLM ×7 · 对抗鲁棒 ×6
 
 **[A Disease-Aware Dual-Stage Framework for Chest X-ray Report Generation](a_disease-aware_dual-stage_framework_for_chest_x-ray_report_.md)**
 
@@ -41,17 +41,9 @@ tags:
 
 :   提出 ATFM 框架，通过数据层级推理范式将预测精度和多样性解耦到分布级和样本级分别优化，结合高斯截断表示（GTR）和分割流匹配（SFM）两个模块，在模糊医学图像分割任务中同时提升预测的精度、保真度和多样性。
 
-**[Apo2Mol: 3D Molecule Generation via Dynamic Pocket-Aware Diffusion Models](apo2mol_3d_molecule_generation_via_dynamic_pocket-aware_diff.md)**
-
-:   提出Apo2Mol，一个基于扩散的全原子框架，从蛋白质apo（未结合）构象出发，同时生成3D配体分子和对应的holo（结合态）口袋构象，使用24K实验解析的apo-holo结构对训练，在结合亲和力（Vina min -7.86）和药物类似性上达到SOTA。
-
 **[Bayesian Meta-Analyses Could Be More: A Case Study in Trial of Labor After a Cesarean-section Outcomes and Complications](bayesian_meta-analyses_could_be_more_a_case_study_in_trial_of_labor_after_a_cesa.md)**
 
 :   提出一种层次贝叶斯 meta-analysis 方法，通过对未记录的决策变量（Bishop 分数）建模为截断隐变量，纠正传统固定效应 meta-analysis 中因忽略混杂因子而导致的偏差结论，在 TOLAC（剖宫产后试产）场景中证明机械扩张与 Pitocin 无显著差异。
-
-**[BiCA: Effective Biomedical Dense Retrieval with Citation-Aware Hard Negatives](bica_effective_biomedical_dense_retrieval_with_citation-aware_hard_negatives.md)**
-
-:   提出利用 PubMed 引文链构建多跳语义图并进行随机游走的 hard negative 挖掘方法，仅用 20k 训练样本和极少微调步数，即让 33M/110M 小模型在 BEIR 和 LoTTE 上超越数十亿参数的检索基线。
 
 **[Bidirectional Channel-selective Semantic Interaction for Semi-Supervised Medical Segmentation](bidirectional_channel-selective_semantic_interaction_for_semi-supervised_medical.md)**
 
@@ -77,14 +69,6 @@ tags:
 
 :   提出 CoCoLIT 框架，基于 ControlNet 条件化的潜在扩散模型，从结构 MRI 合成淀粉样蛋白 PET 图像，通过加权图像空间损失（WISL）和潜在平均稳定化（LAS）显著超越现有方法。
 
-**[Constrained Best Arm Identification with Tests for Feasibility](constrained_best_arm_identification_with_tests_for_feasibility.md)**
-
-:   提出带可行性约束的最优臂识别新框架，允许决策者分别测试臂的性能或可行性约束，设计了渐近最优算法，可自适应地选择通过性能或可行性中更容易的方式淘汰次优臂。
-
-**[ConSurv: Multimodal Continual Learning for Survival Analysis](consurv_multimodal_continual_learning_for_survival_analysis.md)**
-
-:   本文提出 ConSurv，首个面向生存分析的多模态持续学习方法，通过多阶段混合专家（MS-MoE）和特征约束回放（FCR）两个核心组件，在整合全切片病理图像和基因组数据的场景下有效缓解灾难性遗忘，并在新构建的 MSAIL 基准上全面超越现有方法。
-
 **[Cross-Sample Augmented Test-Time Adaptation for Personalized Intraoperative Hypotension Prediction](cross-sample_augmented_test-time_adaptation_for_personalized_intraoperative_hypo.md)**
 
 :   提出 CSA-TTA 框架，通过跨样本库构建、粗到细检索和多任务优化，在测试时从其他患者数据中检索低血压事件信号来增强个性化术中低血压预测。
@@ -105,10 +89,6 @@ tags:
 
 :   提出 DiA-gnostic VLVAE，通过视觉-语言混合专家VAE学习三因子潜空间（视觉特有/语言特有/共享），配合正交性+对比对齐的双约束实现解纠缠，使模型在临床上下文缺失时仍能生成可靠的放射学报告，在 IU X-Ray 和 MIMIC-CXR 上达到竞争性 BLEU@4。
 
-**[Distributional Priors Guided Diffusion for Generating 3D Molecules in Low Data Regimes](distributional_priors_guided_diffusion_for_generating_3d_molecules_in_low_data_r.md)**
-
-:   本文提出 GODD（Geometric OOD Diffusion Model），通过等变非对称自编码器捕捉分布结构先验来引导扩散模型的生成过程，使得在数据丰富的分子分布上训练的模型能够泛化到数据稀缺的分布，在 OOD 结构偏移基准上成功率提升 12.6%。
-
 **[Divide, Conquer and Unite: Hierarchical Style-Recalibrated Prototype Alignment for Federated Medical Segmentation](divide_conquer_and_unite_hierarchical_style-recalibrated_prototype_alignment_for.md)**
 
 :   针对联邦医学图像分割中的"层间风格偏差累积"和"上下文表征不完整"两大挑战，提出FedBCS框架：通过频域自适应风格重校准（FSR）构建领域不变原型，并设计上下文感知的双层原型对齐（CDPA）融合编解码器多层级语义，在组织核分割和前列腺MRI分割任务上达到SOTA。
@@ -117,10 +97,6 @@ tags:
 
 :   本文通过对比14个公开LLM的逐层表示与人类被试听自然叙事时的fMRI数据，在句子级别系统地研究了LLM与人脑语言处理的对齐程度，发现中间层最对齐、指令微调显著增强对齐、且存在与经典神经语言学理论一致的半球偏侧化模式。
 
-**[Dual-Path Knowledge-Augmented Contrastive Alignment Network for Spatially Resolved Transcriptomics](dual-path_knowledge-augmented_contrastive_alignment_network_for_spatially_resolv.md)**
-
-:   提出 DKAN，一个双路径知识增强对比对齐网络，通过整合外部基因数据库的语义信息作为跨模态协调器，结合统一的一阶段对比学习范式和自适应加权机制，从病理组织切片图像（H&E WSI）预测空间分辨率的基因表达，在三个公开ST数据集上全面超越SOTA。
-
 **[DualFete: Revisiting Teacher-Student Interactions from a Feedback Perspective for Semi-supervised Medical Image Segmentation](dualfete_revisiting_teacher-student_interactions_from_a_feedback_perspective_for.md)**
 
 :   在教师-学生半监督学习框架中引入反馈机制，让学生能将伪标签引导的更新是否与有标签数据方向一致的信息反馈给教师，并在双教师架构中进一步增强反馈动态性，有效遏制了医学图像分割中的错误累积和确认偏差。
@@ -128,10 +104,6 @@ tags:
 **[DW-DGAT: Dynamically Weighted Dual Graph Attention Network for Neurodegenerative Disease Diagnosis](dw-dgat_dynamically_weighted_dual_graph_attention_network_for_neurodegenerative_.md)**
 
 :   针对神经退行性疾病（PD/AD）早期诊断中的多指标数据融合、异质信息提取和类别不平衡三大挑战，提出动态加权双图注意力网络DW-DGAT，通过通用数据融合策略、微观-宏观双层图特征学习和动态类别权重生成机制，在PPMI和ADNI3数据集上大幅超越14种基线方法。
-
-**[Efficient Chromosome Parallelization for Precision Medicine Genomic Workflows](efficient_chromosome_parallelization_for_precision_medicine_genomic_workflows.md)**
-
-:   提出三种互补的染色体级基因组并行化调度方案——静态调度（优化处理顺序）、动态调度（背包问题式批处理+在线RAM预测）和符号回归RAM预测器，在模拟和真实精准医学流水线中显著降低了内存溢出和执行时间。
 
 **[EgoEMS: A High-Fidelity Multimodal Egocentric Dataset for Cognitive Assistance in Emergency Medical Services](egoems_a_high-fidelity_multimodal_egocentric_dataset_for_cognitive_assistance_in.md)**
 
@@ -185,10 +157,6 @@ tags:
 
 :   提出基于多异构图（MHG）的GIIM框架，通过图结构同时建模病灶间的视图内依赖和视图间动态变化，并引入四种缺失视图表示策略，在肝脏CT、乳腺X线和乳腺MRI三种模态上显著超越现有多视图方法。
 
-**[GP-MoLFormer-Sim: Test Time Molecular Optimization through Contextual Similarity Guidance](gp-molformer-sim_test_time_molecular_optimization_through_contextual_similarity_.md)**
-
-:   提出 GP-MoLFormer-Sim，一种无需训练的测试时分子生成引导方法：利用化学语言模型（GP-MoLFormer）自身的上下文嵌入计算与目标分子的相似度，在自回归解码时动态调整logits来引导生成，结合遗传算法（GP-MoLFormer-Sim+GA）后在PMO基准的23个任务上平均排名第2，且在黑盒oracle设定下优于依赖GPT-4的MOLLEO。
-
 **[Graph-Theoretic Consistency for Robust and Topology-Aware Semi-Supervised Histopathology Segmentation](graph-theoretic_consistency_for_robust_and_topology-aware_semi-supervised_histop.md)**
 
 :   本文提出 TGC（Topology Graph Consistency）框架，通过对齐预测图与参考图之间的拉普拉斯谱、连通分量数和邻接统计量来引入图论拓扑约束，在仅 5-10% 标注下实现接近全监督的组织病理学分割性能。
@@ -205,10 +173,6 @@ tags:
 
 :   HSO 提出了一种层次化调度优化器，通过双层优化框架（上层全局搜索最优初始化策略 + 下层局部优化调度精炼），在仅 8 秒一次性优化代价下实现扩散模型极低 NFE 下的 SOTA 免训练采样质量。
 
-**[HiFusion: Hierarchical Intra-Spot Alignment and Regional Context Fusion for Spatial Gene Expression Prediction from Histopathology](hifusion_hierarchical_intra-spot_alignment_and_regional_context_fusion_for_spati.md)**
-
-:   提出 HiFusion 框架，通过层次化 spot 内建模（HISM）和上下文感知跨尺度融合（CCF）两个互补模块，从 H&E 染色全切片图像中准确预测空间基因表达，在两个基准数据集的 2D 切片交叉验证和 3D 样本特异性评估中均达到 SOTA。
-
 **[Human-in-the-Loop Interactive Report Generation for Chronic Disease Adherence](human-in-the-loop_interactive_report_generation_for_chronic_disease_adherence.md)**
 
 :   本文设计了一个"医生在回路"的交互界面，将 AI 限定于数据组织和草稿生成角色，通过单页面编辑器、图表-文本配对和自动紧急度分级，实现了高效且可问责的慢性病依从性报告生成。试点研究揭示了一个"问责悖论"：即便 AI 生成质量达到了医生手动撰写基线水平，审阅时间仍无法显著减少，因为临床责任要求完整核验。
@@ -216,14 +180,6 @@ tags:
 **[Intervention Efficiency and Perturbation Validation Framework: Capacity-Aware and Robust Clinical Model Selection under the Rashomon Effect](intervention_efficiency_and_perturbation_validation_framework_capacity-aware_and.md)**
 
 :   针对临床小样本、类别不平衡场景下多个模型性能相近（Rashomon Effect）导致的模型选择困难，提出 **Intervention Efficiency (IE)** 容量感知评估指标和 **Perturbation Validation Framework (PVF)** 鲁棒性验证框架，联合实现资源约束下的可靠模型选择。
-
-**[Investigating Data Pruning for Pretraining Biological Foundation Models at Scale](investigating_data_pruning_for_pretraining_biological_foundation_models_at_scale.md)**
-
-:   提出一个基于影响函数的后验数据剪枝框架，通过子集自影响估计（Subset-Based Self-Influence）和两种选择策略（Top-k Influence 和 Coverage-Centric Influence），在超过 99% 的极端剪枝率下，用仅 0.2M 序列预训练的 RNA-FM 在多项下游任务上媲美甚至超越用 23M 序列训练的完整模型，揭示了生物序列数据集的巨大冗余性。
-
-**[Learning Cell-Aware Hierarchical Multi-Modal Representations for Robust Molecular Modeling](learning_cell-aware_hierarchical_multi-modal_representations.md)**
-
-:   本文提出 CHMR 框架，通过结构感知传播解决生物模态缺失问题，引入树状向量量化(Tree-VQ)建模分子-细胞-基因间的层次依赖关系，在9个基准728个任务上分类提升3.6%、回归提升17.2%，实现鲁棒的细胞感知分子表征学习。
 
 **[Learning with Preserving for Continual Multitask Learning](learning_with_preserving_for_continual_multitask_learning.md)**
 
@@ -256,10 +212,6 @@ tags:
 **[MedEyes: Learning Dynamic Visual Focus for Medical Progressive Diagnosis](medeyes_learning_dynamic_visual_focus_for_medical_progressive_diagnosis.md)**
 
 :   提出 MedEyes，一个混合策略强化学习框架，通过注视引导推理导航器（GRN）模拟临床医生"扫描-钻探"的诊断视觉搜索模式，结合置信度值采样器（CVS）和双流 GRPO 优化，实现动态视觉聚焦的医学渐进式诊断推理，在五个医学 VQA 基准上平均提升 8.5pp。
-
-**[MergeDNA: Context-aware Genome Modeling with Dynamic Tokenization through Token Merging](mergedna_context-aware_genome_modeling_with_dynamic_tokenization_through_token_m.md)**
-
-:   提出 MergeDNA，通过可微分 Token Merging 实现上下文感知的动态 DNA tokenization，结合层次化 autoencoder 和自适应 masked token modeling 预训练，380M 参数超越 1.3B GENERator。
 
 **[MindCross: Fast New Subject Adaptation with Limited Data for Cross-subject Video Reconstruction from Brain Signals](mindcross_fast_new_subject_adaptation_with_limited_data_for_cross-subject_video_.md)**
 
@@ -329,17 +281,9 @@ tags:
 
 :   提出 ProPL 框架，通过共享视觉编码器 + 提示引导双解码器 + 不确定性驱动伪标签校准，首次实现通用半监督超声图像分割，在 5 个器官 8 个任务上以极少标注数据（1/16）超越全监督方法 5.18% mDice。
 
-**[ProtSAE: Disentangling and Interpreting Protein Language Models via Semantically-Guided Sparse Autoencoders](protsae_disentangling_and_interpreting_protein_language_models_via_semantically-.md)**
-
-:   提出 ProtSAE，在稀疏自编码器训练中引入语义标注和领域本体知识作为引导信号，解决传统 SAE 的语义纠缠问题，使蛋白质语言模型的隐层特征与生物学概念（分子功能、生物过程、离子结合位点等）精准对齐，同时保持高重建保真度并支持概念级别的生成控制。
-
 **[Provably Minimum-Length Conformal Prediction Sets for Ordinal Classification](provably_minimum-length_conformal_prediction_sets_for_ordinal_classification.md)**
 
 :   提出 min-CPS 及其正则化变体 min-RCPS，一种模型无关的序数保形预测方法，通过线性时间滑动窗口算法求解每个样本的最小长度预测区间，在保证覆盖率的同时平均减少 15% 的预测集大小，且提供了实例级最优性的理论保证。
-
-**[PulseMind: A Multi-Modal Medical Model for Real-World Clinical Diagnosis](pulsemind_a_multi-modal_medical_model_for_real-world_clinical_diagnosis.md)**
-
-:   提出 PulseMind 医学多模态诊断模型，包含大规模多轮诊断对话数据集 MediScope、临床对话评估基准 PulseMind Benchmark，以及基于比较的强化策略优化方法 CRPO，在真实临床诊断对话场景中取得优异表现。
 
 **[Q-FSRU: Quantum-Augmented Frequency-Spectral Fusion for Medical Visual Question Answering](q-fsru_quantum-augmented_frequency-spectral_fusion_for_medical_visual_question_a.md)**
 
@@ -348,10 +292,6 @@ tags:
 **[qa-FLoRA: Data-free Query-Adaptive Fusion of LoRAs for LLMs](qa-flora_data-free_query-adaptive_fusion_of_loras_for_llms.md)**
 
 :   提出 qa-FLoRA，一种无需训练数据和训练过程的查询自适应 LoRA 融合方法，通过逐层计算各适配器与基座模型间的 KL 散度来动态确定融合权重，在九个多语言复合任务上显著优于静态融合和无训练基线。
-
-**[QGShap: Quantum Acceleration for Faithful GNN Explanations](qgshap_quantum_acceleration_for_faithful_gnn_explanations.md)**
-
-:   提出 QGShap，一种利用量子振幅放大技术加速精确 Shapley 值计算的图神经网络可解释性框架，在保持精确计算（非近似）的同时实现了相对经典 Monte Carlo 方法的二次加速。
 
 **[Radiation-Preserving Selective Imaging for Pediatric Hip Dysplasia: A Cross-Modal Approach](radiation-preserving_selective_imaging_for_pediatric_hip_dysplasia_a_cross-modal.md)**
 
@@ -373,10 +313,6 @@ tags:
 
 :   本文首次将手术烟雾分为扩散烟（Diffusion Smoke）和环境烟（Ambient Smoke）两种类型，提出了第一个烟雾类型感知的腹腔镜视频去烟网络 STANet，包含语义软分割、粗到精解耦和双分支重建三个子网络，并构建了首个包含烟雾类型标注的大规模合成视频去烟数据集 STSVD。
 
-**[S2Drug: Bridging Protein Sequence and 3D Structure in Contrastive Representation Learning for Virtual Screening](s2drug_bridging_protein_sequence_and_3d_structure_in_contrastive_representation_.md)**
-
-:   提出 S2Drug，一个两阶段对比学习框架，第一阶段在 ChemBL 大规模数据上用蛋白质序列-配体对比预训练（含双边数据采样策略降噪去冗），第二阶段在 PDBBind 上通过残基级门控模块融合序列与 3D 结构信息并引入结合位点预测辅助任务，在 DUD-E 和 LIT-PCBA 虚拟筛选基准上大幅超越现有方法。
-
 **[Self-supervised Multiplex Consensus Mamba for General Image Fusion](self-supervised_multiplex_consensus_mamba_for_general_image_fusion.md)**
 
 :   提出 SMC-Mamba 框架，通过**模态无关特征增强（MAFE）**、**多路共识跨模态 Mamba（MCCM）**和**双层自监督对比学习损失（BSCL）**，实现覆盖红外-可见光、医学、多聚焦、多曝光的通用图像融合，全面超越 SOTA。
@@ -397,10 +333,6 @@ tags:
 
 :   提出 Self-Priority Alignment（SPA），一种全无监督框架，通过字典序优化实现"可信赖优先于有用性"的严格优先级对齐——模型自生成多样响应、自评估、自改进，经双准则去噪构建偏好对，用不确定性加权 SimPO 损失微调，在多个安全基准上同时提升安全性和有用性。
 
-**[SpaCRD: Multimodal Deep Fusion of Histology and Spatial Transcriptomics for Cancer Region Detection](spacrd_multimodal_deep_fusion_of_histology_and_spatial_transcriptomics_for_cance.md)**
-
-:   提出 SpaCRD，一个基于迁移学习的多模态深度融合框架，通过类别正则化变分重建引导的双向交叉注意力融合网络（VRBCA），将组织学图像与空间转录组学数据深度整合，在 23 个配对数据集上跨样本、跨平台/批次实现了癌症组织区域（CTR）检测的 SOTA 性能。
-
 **[TAlignDiff: Automatic Tooth Alignment assisted by Diffusion-based Transformation Learning](taligndiff_automatic_tooth_alignment_assisted_by_diffusion-based_transformation_.md)**
 
 :   提出TAlignDiff框架，将基于点云的几何约束回归网络（PRN）与扩散模型辅助的变换矩阵去噪模块（DTMD）统一为一个联合训练框架，通过双向反馈机制在小样本临床数据上实现了优于现有方法的自动牙齿排列效果。
@@ -412,10 +344,6 @@ tags:
 **[Training-Free Policy Violation Detection via Activation-Space Whitening in LLMs](training-free_policy_violation_detection_via_activation-space_whitening_in_llms.md)**
 
 :   将 LLM 的策略违规检测重构为激活空间中的分布外（OOD）检测问题，提出无需训练的白化方法：对合规激活拟合白化变换，用欧几里得范数作为合规分数，仅需策略文本和少量示例即可部署，在 DynaBench 上达到 86.0% F1，超越微调基线 9.1 个点、LLM-as-Judge 16 个点。
-
-**[TrinityDNA: A Bio-Inspired Foundational Model for Efficient Long-Sequence DNA Modeling](trinitydna_a_bio-inspired_foundational_model_for_efficient_long-sequence_dna_mod.md)**
-
-:   提出 TrinityDNA，一个生物启发的DNA基础模型，整合三大创新：Groove Fusion模块捕获DNA大小沟槽结构特征、Gated Reverse Complement机制处理双链互补对称性、Sliding Multi-Window Attention实现多尺度长程依赖建模，配合从原核到真核的进化训练策略（ETS），在GUE基准15个任务上平均MCC达0.708（超越2.5B参数的NT），在19个零样本任务上的原核/真核表现均领先，并提出新的CDS标注基准供长序列推理评估。
 
 **[Unleashing the Potential of Large Language Models for Text-to-Image Generation through Autoregressive Representation Alignment](unleashing_the_potential_of_large_language_models_for_text-to-image_generation_t.md)**
 

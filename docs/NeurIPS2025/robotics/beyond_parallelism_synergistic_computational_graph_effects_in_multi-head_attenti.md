@@ -148,8 +148,8 @@ tags:
 - [\[ICCV 2025\] Beyond Losses Reweighting: Empowering Multi-Task Learning via the Generalization Perspective](../../ICCV2025/robotics/beyond_losses_reweighting_empowering_multi-task_learning_via_the_generalization_.md)
 - [\[NeurIPS 2025\] mmWalk: Towards Multi-modal Multi-view Walking Assistance](mmwalk_towards_multi-modal_multi-view_walking_assistance.md)
 - [\[ICML 2025\] Unable to Forget: Proactive Interference Reveals Working Memory Limits in LLMs Beyond Context Length](../../ICML2025/robotics/unable_to_forget_proactive_interference_reveals_working_memory_limits_in_llms_be.md)
-- [\[CVPR 2025\] Influence Malleability in Linearized Attention: Dual Implications of Non-Convergent NTK Dynamics](../../CVPR2025/robotics/influence_malleability_in_linearized_attention_dual_implications_of_non-converge.md)
 - [\[NeurIPS 2025\] MMTU: A Massive Multi-Task Table Understanding and Reasoning Benchmark](mmtu_a_massive_multi-task_table_understanding_and_reasoning_benchmark.md)
+- [\[CVPR 2025\] Influence Malleability in Linearized Attention: Dual Implications of Non-Convergent NTK Dynamics](../../CVPR2025/robotics/influence_malleability_in_linearized_attention_dual_implications_of_non-converge.md)
 
 </div>
 

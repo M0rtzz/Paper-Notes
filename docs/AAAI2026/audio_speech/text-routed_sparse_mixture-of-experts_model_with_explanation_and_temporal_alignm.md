@@ -1,6 +1,6 @@
 ---
 title: >-
-  [论文解读] TEXT: 文本路由稀疏专家混合模型——融合解释增强与时序对齐的多模态情感分析
+  [论文解读] A Text-Routed Sparse Mixture-of-Experts Model with Explanation and Temporal Alignment for Multi-Modal Sentiment Analysis
 description: >-
   [AAAI 2026][音频/语音][多模态情感分析] 提出 TEXT 模型，利用 MLLM 为音视频生成自然语言解释来增强模态表示，设计融合 Mamba 与时序交叉注意力优点的轻量时序对齐模块，并以文本路由的稀疏专家混合进行跨模态融合，在四个 MSA 数据集上全面超越 SOTA 及 GPT-4o 等大模型。
 tags:

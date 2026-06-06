@@ -137,8 +137,8 @@ DomainNet 共享标签空间（ResNet-50, 1x 大小）:
 
 - [\[CVPR 2025\] Less is More: Efficient Model Merging with Binary Task Switch](less_is_more_efficient_model_merging_with_binary_task_switch.md)
 - [\[ICLR 2026\] A Representer Theorem for Hawkes Processes via Penalized Least Squares Minimization](../../ICLR2026/others/a_representer_theorem_for_hawkes_processes_via_penalized_least_squares_minimizat.md)
-- [\[NeurIPS 2025\] Weight Weaving: Parameter Pooling for Data-Free Model Merging](../../NeurIPS2025/others/weight_weaving_parameter_pooling_for_data-free_model_merging.md)
 - [\[CVPR 2025\] Feature Selection for Latent Factor Models](feature_selection_for_latent_factor_models.md)
+- [\[NeurIPS 2025\] Weight Weaving: Parameter Pooling for Data-Free Model Merging](../../NeurIPS2025/others/weight_weaving_parameter_pooling_for_data-free_model_merging.md)
 - [\[ACL 2025\] Bone Soups: A Seek-and-Soup Model Merging Approach for Controllable Multi-Objective Generation](../../ACL2025/others/bone_soups_multi_objective_gen.md)
 
 </div>

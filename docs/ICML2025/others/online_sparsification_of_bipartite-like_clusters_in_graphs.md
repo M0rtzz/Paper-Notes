@@ -228,7 +228,7 @@ $$1 - \frac{1}{1-c} \cdot \rho_{H^*}(k) \le \bar{\rho}_{\overrightarrow{G^*}}(k)
 - [\[NeurIPS 2025\] Structure-Aware Spectral Sparsification via Uniform Edge Sampling](../../NeurIPS2025/others/structure-aware_spectral_sparsification_via_uniform_edge_sampling.md)
 - [\[ICML 2025\] Bipartite Ranking From Multiple Labels: On Loss Versus Label Aggregation](bipartite_ranking_from_multiple_labels_on_loss_versus_label_aggregation.md)
 - [\[NeurIPS 2025\] Adjusted Count Quantification Learning on Graphs](../../NeurIPS2025/others/adjusted_count_quantification_learning_on_graphs.md)
-- [\[ICML 2025\] Provably Efficient Algorithm for Best Scoring Rule Identification in Online Principal-Agent Information Acquisition](provably_efficient_algorithm_for_best_scoring_rule_identification_in_online_prin.md)
+- [\[ICLR 2026\] t-SNE Exaggerates Clusters, Provably](../../ICLR2026/others/t-sne_exaggerates_clusters_provably.md)
 
 </div>
 

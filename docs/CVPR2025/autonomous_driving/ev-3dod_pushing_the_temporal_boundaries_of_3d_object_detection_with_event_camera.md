@@ -113,7 +113,7 @@ $\mathcal{L} = \mathcal{L}_{RPN} + \lambda_1 \mathcal{L}_{reg} + \lambda_2 \math
 - [\[CVPR 2025\] PAP: A Prediction-as-Perception Framework for 3D Object Detection](a_prediction-as-perception_framework_for_3d_object_detection.md)
 - [\[CVPR 2025\] RaCFormer: Towards High-Quality 3D Object Detection via Query-based Radar-Camera Fusion](racformer_towards_high-quality_3d_object_detection_via_query-based_radar-camera_.md)
 - [\[CVPR 2025\] Cubify Anything: Scaling Indoor 3D Object Detection](cubify_anything_scaling_indoor_3d_object_detection.md)
-- [\[CVPR 2025\] V2X-R: Cooperative LiDAR-4D Radar Fusion with Denoising Diffusion for 3D Object Detection](v2x-r_cooperative_lidar-4d_radar_fusion_with_denoising_diffusion_for_3d_object_d.md)
+- [\[CVPR 2025\] Temporal Action Detection Model Compression by Progressive Block Drop](temporal_action_detection_model_compression_by_progressive_block_drop.md)
 
 </div>
 

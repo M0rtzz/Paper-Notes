@@ -144,9 +144,9 @@ ICQ 包含三大贡献：
 
 - [\[ICCV 2025\] BlinkTrack: Feature Tracking over 80 FPS via Events and Images](../../ICCV2025/video_understanding/blinktrack_feature_tracking_over_80_fps_via_events_and_images.md)
 - [\[ACL 2026\] ArrowGEV: Grounding Events in Video via Learning the Arrow of Time](../../ACL2026/video_understanding/arrowgev_grounding_events_in_video_via_learning_the_arrow_of_time.md)
-- [\[CVPR 2025\] VideoGEM: Training-Free Action Grounding in Videos](videogem_training-free_action_grounding_in_videos.md)
 - [\[ICCV 2025\] OVG-HQ: Online Video Grounding with Hybrid-modal Queries](../../ICCV2025/video_understanding/ovg-hq_online_video_grounding_with_hybrid-modal_queries.md)
-- [\[CVPR 2026\] Mamba-VMR: Multimodal Query Augmentation via Generated Videos for Precise Temporal Grounding](../../CVPR2026/video_understanding/mamba-vmr_multimodal_query_augmentation_via_generated_videos_for_precise_tempora.md)
+- [\[CVPR 2025\] VideoGEM: Training-Free Action Grounding in Videos](videogem_training-free_action_grounding_in_videos.md)
+- [\[CVPR 2025\] DPU: Dynamic Prototype Updating for Multimodal Out-of-Distribution Detection](dpu_dynamic_prototype_updating_for_multimodal_out-of-distribution_detection.md)
 
 </div>
 

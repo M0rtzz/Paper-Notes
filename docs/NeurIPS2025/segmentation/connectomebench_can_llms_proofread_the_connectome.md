@@ -164,10 +164,10 @@ ConnectomeBench 基于两个大规模开源连接组数据集构建：
 ## 相关论文
 
 - [\[ICCV 2025\] ReferEverything: Towards Segmenting Everything We Can Speak of in Videos](../../ICCV2025/segmentation/refereverything_towards_segmenting_everything_we_can_speak_of_in_videos.md)
-- [\[ACL 2026\] TemporalVLM: Video LLMs for Temporal Reasoning in Long Videos](../../ACL2026/segmentation/temporalvlm_video_llms_for_temporal_reasoning_in_long_videos.md)
 - [\[ICCV 2025\] Can Generative Geospatial Diffusion Models Excel as Discriminative Geospatial Foundation Models?](../../ICCV2025/segmentation/can_generative_geospatial_diffusion_models_excel_as_discriminative_geospatial_fo.md)
 - [\[ICML 2025\] Using Multiple Input Modalities Can Improve Data-Efficiency and O.O.D. Generalization for ML with Satellite Imagery](../../ICML2025/segmentation/using_multiple_input_modalities_can_improve_data-efficiency_and_ood_generalizati.md)
 - [\[NeurIPS 2025\] SANSA: Unleashing the Hidden Semantics in SAM2 for Few-Shot Segmentation](sansa_unleashing_the_hidden_semantics_in_sam2_for_few-shot_segmentation.md)
+- [\[NeurIPS 2025\] MultiHuman-Testbench: Benchmarking Image Generation for Multiple Humans](multihuman-testbench_benchmarking_image_generation_for_multiple_humans.md)
 
 </div>
 

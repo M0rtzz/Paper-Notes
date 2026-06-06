@@ -1,0 +1,127 @@
+---
+title: >-
+  [论文解读] Beyond Structural Symmetries: Linear Mode Connectivity via Neuron Identifiability
+description: >-
+  [ICML 2026][预训练][参数对称性] 本文提出"有效函数类"和"神经元可辨识性"的理论框架，揭示打破结构对称性并不等于打破有效对称性——即使参数空间的置换对称已被消除，数据依赖的近似对称仍可能使神经元互换代价极低，并据此给出无需对齐即可实现线性模式连通性（LMC）的充分条件。
+tags:
+  - "ICML 2026"
+  - "预训练"
+  - "参数对称性"
+  - "神经元可辨识性"
+  - "线性模式连通性"
+  - "模型合并"
+  - "损失景观"
+---
+
+# Beyond Structural Symmetries: Linear Mode Connectivity via Neuron Identifiability
+
+**会议**: ICML 2026  
+**arXiv**: [2606.04754](https://arxiv.org/abs/2606.04754)  
+**代码**: https://github.com/vuenc/neuron-identifiability  
+**领域**: 优化与理论  
+**关键词**: 参数对称性, 神经元可辨识性, 线性模式连通性, 模型合并, 损失景观  
+
+## 一句话总结
+
+本文提出"有效函数类"和"神经元可辨识性"的理论框架，揭示打破结构对称性并不等于打破有效对称性——即使参数空间的置换对称已被消除，数据依赖的近似对称仍可能使神经元互换代价极低，并据此给出无需对齐即可实现线性模式连通性（LMC）的充分条件。
+
+## 研究背景与动机
+
+**领域现状**：现代深度网络通常过参数化，存在大量参数对称性（尤其是隐藏单元的置换对称），使得权重空间中功能相同的模型对应大量等价类。线性模式连通性（LMC）描述了两个独立训练模型在权重空间线性插值时损失保持较低的现象。已有工作表明，在对齐置换后，LMC 在许多场景下成立。
+
+**现有痛点**：近期有多种对称性打破方法（如 $\mathbf{W}$-asymmetric 网络、SYRE 等），通过在权重矩阵中引入固定偏置或对角缩放来消除结构上的置换对称性。然而，打破结构对称性后并非总能获得无对齐的 LMC——有些干预有效，有些无效，背后的机制不清楚。
+
+**核心矛盾**：结构对称性被打破不等于有效对称性被打破。当数据或表示位于低维子空间时，即使不同神经元的参数不再可互换，它们在输入支撑上可实现的函数仍可能相同，且互换代价可能很低。问题在于：对称性打破的有效性取决于架构扰动在输入支撑上的可观测程度，而非仅取决于参数空间的结构。
+
+**本文目标**：(1) 形式化神经元在输入支撑上的有效函数类及其实现代价；(2) 给出神经元可辨识性（跨训练种子一致分配特征给神经元）的条件；(3) 刻画无对齐 LMC 成立的充分条件。
+
+**切入角度**：将每个神经元视为在输入支撑上实现特定函数的算子，用 Mahalanobis 半范数刻画实现代价，通过置换灵敏度衡量对称性打破的有效程度。在子空间支撑模型下，所有分析可转化为显式的线性代数形式。
+
+**核心 idea**：用"有效函数类 + 实现代价"取代"参数空间对称群"来分析对称性打破，揭示数据几何（内在维度、子空间相干性）对 LMC 和模型合并的决定性影响。
+
+## 方法详解
+
+### 整体框架
+
+考虑一个带非对称干预的单层网络 $\bm{H}(\bm{W};\bm{x}) = \eta((\mathbf{F} + \mathbf{D} \odot \bm{W})\bm{x})$，其中 $\mathbf{F}$ 为固定偏置矩阵、$\mathbf{D}$ 为固定对角缩放矩阵、$\bm{W}$ 为可训练权重。该统一公式涵盖 $\mathbf{W}$-asymmetric 网络、SYRE、线性残差连接和稀疏网络等多种对称性打破方案。在低维子空间支撑假设下（输入实际位于 $k$ 维子空间 $\mathcal{U}$），分析每个神经元在输入支撑上可实现的函数集及其实现代价，最终推导出 LMC 的弦偏差上界。
+
+### 关键设计
+
+1. **有效函数类与实现代价（Realization Cost）**:
+
+    - 功能：量化每个神经元实现目标函数所需的最小权重范数
+    - 核心思路：在子空间支撑模型下，第 $i$ 个神经元可实现的函数类 $\mathcal{H}_i(\mathcal{X})$ 可表示为仿射子空间 $\mathbf{v}_i + \mathrm{im}(\mathbf{M}_i) \subseteq \mathbb{R}^k$，其中 $\mathbf{v}_i = \bm{U}^\top \mathbf{f}_i$ 为投影中心，$\mathbf{M}_i = \bm{U}^\top \mathrm{Diag}(\mathbf{d}_i)$ 为投影算子。实现代价化为 Mahalanobis 半范数：$\|\bm{h}\|_{\mathcal{H}_i} = \|\bm{a} - \mathbf{v}_i\|_{\mathbf{S}_i^\dagger}$，其中 Gram 矩阵 $\mathbf{S}_i = \mathbf{M}_i \mathbf{M}_i^\top$ 的各向异性决定了不同方向的代价差异
+    - 设计动机：即使所有神经元的函数类相同（$\mathbf{M}_i$ 满秩时），不同神经元实现同一函数的代价可能大不相同——优化器偏好小范数解，从而在跨训练种子时一致地将特征分配给"便宜"的神经元
+
+2. **置换灵敏度（Permutation Sensitivity）**:
+
+    - 功能：衡量重新分配特征给不同神经元所引起的实现代价变化
+    - 核心思路：对置换 $\pi$ 定义代价灵敏度 $\Delta_\pi^{\mathrm{out}}$，在中心主导（center-dominated）regime 下约为 $\mu_\mathbf{D}^{-1} \|\bm{\delta}_\pi^{\mathrm{out}}\|_F^2$，主要由投影中心间距 $\gamma_{\mathrm{out}} = \sqrt{2} \min_{i \neq j} \|\mathbf{v}_j - \mathbf{v}_i\|_2$ 决定。高维空间中 $\gamma_{\mathrm{out}} = \Theta(\sigma_\mathbf{F} \sqrt{k} m^{-2/k})$，在内在维度 $k$ 足够大时衰减极慢，保证有效对称性打破
+    - 设计动机：如果所有非恒等置换的灵敏度都大，则存在唯一的最小复杂度特征-神经元分配方案，即神经元可辨识。对输入置换 $\tau$ 的灵敏度则由 $\gamma_{\mathrm{in}} = \Theta(\sigma_\mathbf{F} \sqrt{m}) \cdot \min_{a \neq b} \|\bm{U}_{b,:} - \bm{U}_{a,:}\|_2$ 控制，关键依赖子空间相干性 $\nu(\mathcal{U})$
+
+3. **LMC 弦偏差上界**:
+
+    - 功能：建立从神经元可辨识性到无对齐 LMC 的桥梁
+    - 核心思路：对 ReLU 网络，线性插值路径上的弦偏差满足 $\sup_\lambda \|\xi_{\bm{H}}(\lambda;\cdot)\|_{L^2} = \mathcal{O}(\beta^{3/2}) \|\mathbf{F} \bm{\Sigma}^{1/2}\|_F$，其中 $\beta$ 衡量可训练部分相对于固定部分的比值。结合损失的 Lipschitz 性，弦偏差直接上界损失障碍，保证 LMC
+    - 设计动机：将 LMC 问题从全局损失景观分析降维为逐层弦偏差分析，利用中心主导条件在凸性下传递到整个插值段
+
+## 实验关键数据
+
+### 主实验：对齐/无对齐 LMC
+
+| 架构 | 数据集 | $\sigma_\mathbf{F}$ | 无对齐 LMC 障碍 | 对齐 LMC 障碍 |
+|------|--------|---------------------|-----------------|---------------|
+| MLP | MNIST | 0 | 高（~80%精度下降） | 低 |
+| $\mathbf{W}$-MLP | MNIST | 0 | 高 | 低 |
+| $\mathbf{W}$-MLP | MNIST | 1 | **低（接近零）** | 低 |
+| SYRE-MLP | MNIST | - | 低 | 低 |
+| ResNet | CIFAR-10 | 0 | 高 | 低 |
+| $\mathbf{W}$-ResNet | CIFAR-10 | 2 | **中等偏低** | 低 |
+| SYRE-ResNet | CIFAR-10 | - | 中 | 低（对齐仍有帮助） |
+
+### 消融：内在维度 $k$ 对神经元互换代价的影响
+
+| 内在维度 $k$ | $\sigma_\mathbf{F}$ | 无对齐 LMC 精度下降 | 互换代价分布 |
+|-------------|---------------------|---------------------|-------------|
+| $k=2$ | 1 | 46.4 pp | 大量低代价互换 |
+| $k=8$ | 1 | 15.7 pp | 中等 |
+| $k=32$ | 1 | **6.1 pp** | 仅对角线低代价 |
+| $k=2$ | 0 | 高 | 近零甚至负代价 |
+
+### 关键发现
+- **结构 ≠ 有效**：$\mathbf{W}$-asymmetric 网络在 $\sigma_\mathbf{F}=0$ 时虽已打破结构对称性，但无对齐 LMC 障碍仍高，经对齐后与标准网络表现相当
+- **内在维度是关键调控变量**：$k$ 越大，投影中心间距 $\gamma_{\mathrm{out}}$ 越大，神经元互换代价越高，无对齐 LMC 越好
+- **子空间相干性影响对角缩放的有效性**：高相干性（$\nu \approx 1$）时，即使 $\mathbf{F}=0$，仅靠 $\mathbf{D}$ 的对角掩码也可实现 LMC；低相干性时失效
+- **激活匹配实验验证**：当 $\sigma_\mathbf{F}$ 足够大时，恒等置换的激活匹配目标值趋近最优置换，证实神经元可辨识性
+
+## 亮点与洞察
+- **理论洞察的精巧性**：将对称性打破从"参数空间的代数性质"转移到"输入支撑上的函数几何"，Mahalanobis 半范数框架使得分析既直观又可计算，完美解释了"为什么 bias 打破对称无效"（偏置只在一维方向引入差异）等经验现象
+- **数据几何的核心角色**：揭示数据内在维度和子空间相干性对 LMC 的决定性影响——这是一个可迁移到模型合并、联邦学习、权重空间学习等场景的重要洞察
+- **统一多种方案**：$W_{\mathrm{eff}} = \mathbf{F} + \mathbf{D} \odot \bm{W}$ 一个公式涵盖了 W-asymmetric、SYRE、稀疏网络、线性残差等看似不同的对称性打破方案
+
+## 局限与展望
+- 理论分析局限于**线性子空间支撑模型**，真实数据的低维流形可能更复杂（非线性、弯曲）
+- 当前框架主要针对**逐层分析**，尚未完全刻画深层网络中跨层对称性的交互效应
+- **可辨识性 vs 特征学习的 tradeoff**：强对称性打破限制了可学习特征的范围，在中心主导 regime 下网络退化为随机特征模型——如何在保持可辨识性的同时最大化特征学习能力是开放问题
+- 未来方向：将框架扩展到更丰富的对称群（如注意力头的对称性）、结合精确训练动力学分析、以及开发可预测 LMC 成立与否的定量诊断工具
+
+## 相关工作与启发
+- **LMC 与模型合并**：Entezari et al. (2022) 的 LMC 猜想、Ainsworth et al. (2023) 的 Git Re-Basin 方法、Singh & Jaggi (2020) 的激活匹配
+- **对称性打破**：Lim et al. (2024b) 的 W-asymmetric 网络、Ziyin et al. (2025) 的 SYRE
+- **权重空间学习**：模型权重作为数据对象的处理方式正成为新兴方向，本文的可辨识性分析直接服务于该领域的"数据对称性"理解
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICML 2026\] Annotations Mitigate Post-Training Mode Collapse](annotations_mitigate_post-training_mode_collapse.md)
+- [\[ICCV 2025\] FlowMo: Flow to the Mode — Mode-Seeking Diffusion Autoencoders for State-of-the-Art Image Tokenization](../../ICCV2025/llm_pretraining/flow_to_the_mode_mode-seeking_diffusion_autoencoders_for_state-of-the-art_image_.md)
+- [\[ICLR 2026\] A Law of Data Reconstruction for Random Features (and Beyond)](../../ICLR2026/llm_pretraining/a_law_of_data_reconstruction_for_random_features_and_beyond.md)
+- [\[NeurIPS 2025\] Beyond Benign Overfitting in Nadaraya-Watson Interpolators](../../NeurIPS2025/llm_pretraining/beyond_benign_overfitting_in_nadaraya-watson_interpolators.md)
+- [\[ICML 2026\] On Training Large Language Models for Long-Horizon Tasks: An Empirical Study of Horizon Length](on_training_large_language_models_for_long-horizon_tasks_an_empirical_study_of_h.md)
+
+</div>
+
+<!-- RELATED:END -->

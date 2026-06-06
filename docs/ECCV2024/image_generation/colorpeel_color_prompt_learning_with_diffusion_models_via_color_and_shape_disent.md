@@ -147,7 +147,7 @@ ColorPeel在所有指标上均远超现有方法，$\Delta E$ 误差降低约55%
 - [\[CVPR 2025\] GCC: Generative Color Constancy via Diffusing a Color Checker](../../CVPR2025/image_generation/gcc_generative_color_constancy_via_diffusing_a_color_checker.md)
 - [\[ECCV 2024\] Source Prompt Disentangled Inversion for Boosting Image Editability with Diffusion Models](source_prompt_disentangled_inversion_for_boosting_image_editability_with_diffusi.md)
 - [\[CVPR 2025\] The Art of Deception: Color Visual Illusions and Diffusion Models](../../CVPR2025/image_generation/the_art_of_deception_color_visual_illusions_and_diffusion_models.md)
-- [\[ECCV 2024\] Learning Differentially Private Diffusion Models via Stochastic Adversarial Distillation](learning_differentially_private_diffusion_models_via_stochastic_adversarial_dist.md)
+- [\[ECCV 2024\] Unveiling Advanced Frequency Disentanglement Paradigm for Low-Light Image Enhancement](unveiling_advanced_frequency_disentanglement_paradigm_for_low-light_image_enhanc.md)
 
 </div>
 

@@ -199,11 +199,11 @@ $$\tilde{f_v} = f_v + \text{Attn}_{t \to v}(f_t, f_v) + \text{Attn}_{t \to v}(p_
 
 ## 相关论文
 
-- [\[ACL 2026\] Multi-View Attention Multiple-Instance Learning Enhanced by LLM Reasoning for Cognitive Distortion Detection](../../ACL2026/medical_imaging/multi-view_attention_multiple-instance_learning_enhanced_by_llm_reasoning_for_co.md)
-- [\[CVPR 2026\] Mitigating Object Hallucination in LVLMs via Attention Imbalance Rectification](../../CVPR2026/medical_imaging/mitigating_object_hallucinations_in_lvlms_via_attention_imbalance_rectification.md)
 - [\[ECCV 2024\] Unleashing the Power of Prompt-driven Nucleus Instance Segmentation](../../ECCV2024/medical_imaging/unleashing_the_power_of_prompt-driven_nucleus_instance_segmentation.md)
+- [\[ACL 2026\] Multi-View Attention Multiple-Instance Learning Enhanced by LLM Reasoning for Cognitive Distortion Detection](../../ACL2026/medical_imaging/multi-view_attention_multiple-instance_learning_enhanced_by_llm_reasoning_for_co.md)
 - [\[ICML 2025\] The Four Color Theorem for Cell Instance Segmentation](the_four_color_theorem_for_cell_instance_segmentation.md)
-- [\[ACL 2025\] Enhancing Medical Dialogue Generation through Knowledge Refinement and Dynamic Prompt Adjustment](../../ACL2025/medical_imaging/enhancing_medical_dialogue_generation_through_knowledge_refinement_and_dynamic_p.md)
+- [\[ECCV 2024\] Pathology-knowledge Enhanced Multi-instance Prompt Learning for Few-shot Whole Slide Image Classification](../../ECCV2024/medical_imaging/pathology-knowledge_enhanced_multi-instance_prompt_learning_for_few-shot_whole_s.md)
+- [\[ICML 2025\] Do Multiple Instance Learning Models Transfer?](do_multiple_instance_learning_models_transfer.md)
 
 </div>
 

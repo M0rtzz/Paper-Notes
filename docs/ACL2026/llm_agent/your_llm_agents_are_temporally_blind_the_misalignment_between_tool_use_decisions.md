@@ -100,7 +100,7 @@ tags:
 
 ## 局限与展望
 - 主要评估英语场景，跨语言的时间感知差异未知
-- 后训练对齐的详细方法和大规模验证有待补充
+- 后训练对齐的详细方法和大规模验证仍需进一步公开和扩展
 - 时间戳以固定格式(ISO 8601)提供，不同时间表示方式的影响未探索
 - 场景设计虽然多样但仍有限（76个），更多领域的覆盖有待扩展
 - 未来应研究如何在预训练或对齐阶段系统性地注入时间感知能力
@@ -115,3 +115,19 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 18个模型、76个场景、5592个标注样本、多维度分析
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，数据集构建方法详尽，分析深入
 - 价值: ⭐⭐⭐⭐⭐ 揭示了 LLM Agent 的基本能力缺陷，对 Agent 系统设计有直接指导意义
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2026\] When Agents Look the Same: Quantifying Distillation-Induced Similarity in Tool-Use Behaviors](when_agents_look_the_same_quantifying_distillation-induced_similarity_in_tool-us.md)
+- [\[ACL 2026\] Robust Tool Use via Fission-GRPO: Learning to Recover from Execution Errors](robust_tool_use_via_fission-grpo_learning_to_recover_from_execution_errors.md)
+- [\[ICML 2026\] Reward Hacking Benchmark: Measuring Exploits in LLM Agents with Tool Use](../../ICML2026/llm_agent/reward_hacking_benchmark_measuring_exploits_in_llm_agents_with_tool_use.md)
+- [\[ACL 2026\] ZARA: Training-Free Motion Time-Series Reasoning via Evidence-Grounded LLM Agents](zara_training-free_motion_time-series_reasoning_via_evidence-grounded_llm_agents.md)
+- [\[ACL 2026\] Feedback-Driven Tool-Use Improvements in Large Language Models via Automated Build Environments](feedback-driven_tool-use_improvements_in_large_language_models_via_automated_bui.md)
+
+</div>
+
+<!-- RELATED:END -->

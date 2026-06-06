@@ -127,11 +127,11 @@ CARE-S0/S1/S2块配置⟨2,4,8,4⟩/⟨3,6,10,6⟩/⟨3,6,10,6⟩。非对称比
 
 ## 相关论文
 
+- [\[ICML 2026\] Vision Transformer 微调中的非光滑分量优势](../../ICML2026/others/vision_transformer_finetuning_benefits_from_non-smooth_components.md)
 - [\[NeurIPS 2025\] Frequency-Aware Token Reduction for Efficient Vision Transformer](../../NeurIPS2025/others/frequency-aware_token_reduction_for_efficient_vision_transformer.md)
 - [\[ICCV 2025\] LayerTracer: Cognitive-Aligned Layered SVG Synthesis via Diffusion Transformer](../../ICCV2025/others/layertracer_cognitive-aligned_layered_svg_synthesis_via_diffusion_transformer.md)
 - [\[NeurIPS 2025\] 4DGT: Learning a 4D Gaussian Transformer Using Real-World Monocular Videos](../../NeurIPS2025/others/4dgt_learning_a_4d_gaussian_transformer_using_realworld_mono.md)
 - [\[ACL 2025\] Capacity Matters: A Proof-of-Concept for Transformer Memorization on Real-World Data](../../ACL2025/others/capacity_matters_a_proof-of-concept_for_transformer_memorization_on_real-world_d.md)
-- [\[ACL 2025\] Principled Understanding of Generalization for Generative Transformer Models in Arithmetic Reasoning Tasks](../../ACL2025/others/principled_generalization_arithmetic.md)
 
 </div>
 

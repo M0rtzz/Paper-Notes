@@ -163,8 +163,8 @@ Test-time优化贡献最大，diffusion-time优化效果有限（其调整可能
 ## 相关论文
 
 - [\[CVPR 2026\] LaMoGen: Language to Motion Generation Through LLM-Guided Symbolic Inference](../../CVPR2026/human_understanding/lamogen_language_to_motion_generation_through_llm-guided_symbolic_inference.md)
-- [\[CVPR 2025\] Exploring Timeline Control for Facial Motion Generation](../../CVPR2025/human_understanding/exploring_timeline_control_for_facial_motion_generation.md)
 - [\[ICCV 2025\] KinMo: Kinematic-Aware Human Motion Understanding and Generation](../../ICCV2025/human_understanding/kinmo_kinematic-aware_human_motion_understanding_and_generation.md)
+- [\[CVPR 2025\] Exploring Timeline Control for Facial Motion Generation](../../CVPR2025/human_understanding/exploring_timeline_control_for_facial_motion_generation.md)
 - [\[AAAI 2026\] mmPred: Radar-based Human Motion Prediction in the Dark](mmpred_radar-based_human_motion_prediction_in_the_dark.md)
 - [\[CVPR 2026\] IDperturb: Enhancing Variation in Synthetic Face Generation via Angular Perturbations](../../CVPR2026/human_understanding/idperturb_enhancing_variation_in_synthetic_face_generation_via_angular_perturbat.md)
 

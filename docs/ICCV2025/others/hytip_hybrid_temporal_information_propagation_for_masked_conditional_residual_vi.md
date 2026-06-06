@@ -138,7 +138,7 @@ HyTIP 以 PSNR-RGB 衡量平均节省 26.5% BD-rate，超过 VTM 17.0，与 DCVC
 - [\[ACL 2025\] Value Residual Learning](../../ACL2025/others/value_residual_learning.md)
 - [\[ECCV 2024\] STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning](../../ECCV2024/others/stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning.md)
 - [\[NeurIPS 2025\] Sheaf Cohomology of Linear Predictive Coding Networks](../../NeurIPS2025/others/sheaf_cohomology_of_linear_predictive_coding_networks.md)
-- [\[NeurIPS 2025\] Kernel Conditional Tests from Learning-Theoretic Bounds](../../NeurIPS2025/others/kernel_conditional_tests_from_learning-theoretic_bounds.md)
+- [\[NeurIPS 2025\] Hybrid-Balance GFlowNet for Solving Vehicle Routing Problems](../../NeurIPS2025/others/hybrid-balance_gflownet_for_solving_vehicle_routing_problems.md)
 
 </div>
 

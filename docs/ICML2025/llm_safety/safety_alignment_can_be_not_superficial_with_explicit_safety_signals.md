@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Safety Alignment Can Be Not Superficial With Explicit Safety Signals
 description: >-
-  [ICML 2025][LLM对齐][Safety Alignment] 通过在LLM中引入显式的安全二分类任务（[CLS] token），并设计策略性注意力机制和解码策略，在推理过程中动态评估安全性，以不到0.2x的额外开销将对抗攻击成功率从90%+降至接近0%。
+  [ICML 2025][LLM安全][Safety Alignment] 通过在LLM中引入显式的安全二分类任务（[CLS] token），并设计策略性注意力机制和解码策略，在推理过程中动态评估安全性，以不到0.2x的额外开销将对抗攻击成功率从90%+降至接近0%。
 tags:
   - "ICML 2025"
-  - "LLM对齐"
+  - "LLM安全"
   - "Safety Alignment"
   - "Jailbreak Defense"
   - "Binary Classification"
@@ -173,9 +173,9 @@ tags:
 
 - [\[ICML 2025\] Improving LLM Safety Alignment with Dual-Objective Optimization](improving_llm_safety_alignment_with_dual-objective_optimization.md)
 - [\[ICML 2025\] Learning Safety Constraints for Large Language Models](learning_safety_constraints_for_large_language_models.md)
-- [\[AAAI 2026\] SafeNlidb: A Privacy-Preserving Safety Alignment Framework for LLM-based Natural Language Database Interfaces](../../AAAI2026/llm_safety/safenlidb_a_privacy-preserving_safety_alignment_framework_for_llm-based_natural_.md)
+- [\[ACL 2026\] Reasoning Structure Matters for Safety Alignment of Reasoning Models](../../ACL2026/llm_safety/reasoning_structure_matters_for_safety_alignment_of_reasoning_models.md)
+- [\[ACL 2026\] Into the Gray Zone: Domain Contexts Can Blur LLM Safety Boundaries](../../ACL2026/llm_safety/into_the_gray_zone_domain_contexts_can_blur_llm_safety_boundaries.md)
 - [\[CVPR 2025\] Hyperbolic Safety-Aware Vision-Language Models](../../CVPR2025/llm_safety/hyperbolic_safety-aware_vision-language_models.md)
-- [\[ACL 2026\] Confident, Calibrated, or Complicit: Safety Alignment and Ideological Bias in LLM Hate Speech Detection](../../ACL2026/llm_safety/confident_calibrated_or_complicit_safety_alignment_and_ideological_bias_in_llm_h.md)
 
 </div>
 

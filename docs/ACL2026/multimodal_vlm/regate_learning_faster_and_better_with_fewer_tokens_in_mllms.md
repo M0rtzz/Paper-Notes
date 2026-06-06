@@ -159,8 +159,8 @@ ReGATE 保持原始 MLLM 微调目标不变，改变的是哪些 token 参与主
 - [\[NeurIPS 2025\] Better Tokens for Better 3D: Advancing Vision-Language Modeling in 3D Medical Imaging](../../NeurIPS2025/multimodal_vlm/better_tokens_for_better_3d_advancing_vision-language_modeling_in_3d_medical_ima.md)
 - [\[ACL 2026\] MathFlow: Enhancing the Perceptual Flow of MLLMs for Visual Mathematical Problems](mathflow_enhancing_the_perceptual_flow_of_mllms_for_visual_mathematical_problems.md)
 - [\[ACL 2025\] Sharper and Faster mean Better: Towards More Efficient Vision-Language Model for Hour-scale Long Video Understanding](../../ACL2025/multimodal_vlm/sophia_efficient_long_video.md)
+- [\[ICML 2026\] 通用骨架理解：可微渲染与 MLLMs](../../ICML2026/multimodal_vlm/universal_skeleton_understanding_via_differentiable_rendering_and_mllms.md)
 - [\[ACL 2026\] MSEarth: A Multimodal Benchmark for Earth Science Phenomenon Discovery with MLLMs](msearth_a_multimodal_benchmark_for_earth_science_phenomenon_discovery_with_mllms.md)
-- [\[CVPR 2026\] LFPC: Learning to Focus and Precise Cropping for MLLMs](../../CVPR2026/multimodal_vlm/lfpc_learning_to_focus_and_precise_cropping_for_mllms.md)
 
 </div>
 

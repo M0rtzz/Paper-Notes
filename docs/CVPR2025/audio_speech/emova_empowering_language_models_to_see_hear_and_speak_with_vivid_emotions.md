@@ -143,9 +143,9 @@ Stage 1: 视觉投影器对齐（LCS-558K）。Stage 2: 自回归语言模型损
 
 - [\[ICCV 2025\] Learning to See Inside Opaque Liquid Containers using Speckle Vibrometry](../../ICCV2025/audio_speech/learning_to_see_inside_opaque_liquid_containers_using_speckle_vibrometry.md)
 - [\[NeurIPS 2025\] A Controllable Examination for Long-Context Language Models](../../NeurIPS2025/audio_speech/a_controllable_examination_for_longcontext_language_models.md)
+- [\[ICLR 2026\] VowelPrompt: Hearing Speech Emotions from Text via Vowel-level Prosodic Augmentation](../../ICLR2026/audio_speech/vowelprompt_hearing_speech_emotions_from_text_via_vowel-level_prosodic_augmentat.md)
 - [\[NeurIPS 2025\] Physics of Language Models: Part 4.1, Architecture Design and the Magic of Canon Layers](../../NeurIPS2025/audio_speech/physics_of_language_models_part_41_architecture_design_and_the_magic_of_canon_la.md)
 - [\[NeurIPS 2025\] AudSemThinker: Enhancing Audio-Language Models through Reasoning over Semantics of Sound](../../NeurIPS2025/audio_speech/audsemthinker_enhancing_audio-language_models_through_reasoning_over_semantics_o.md)
-- [\[ACL 2025\] Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models](../../ACL2025/audio_speech/investigating_and_enhancing_vision-audio_capability_in_omnimodal_large_language_.md)
 
 </div>
 

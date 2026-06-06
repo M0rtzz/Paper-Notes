@@ -146,10 +146,10 @@ $$\mathbb{E}_{\mathcal{D}(f)} (p-y)^2 \geq \max_{h \in \mathcal{H}} \mathbb{E}_{
 ## 相关论文
 
 - [\[NeurIPS 2025\] Revisiting Agnostic Boosting](../../NeurIPS2025/others/revisiting_agnostic_boosting.md)
+- [\[ICML 2026\] Optimal Regularization for Performative Learning](../../ICML2026/others/optimal_regularization_for_performative_learning.md)
 - [\[ACL 2025\] SOTOPIA-Ω: Dynamic Strategy Injection Learning and Social Instruction Following Evaluation for Social Agents](../../ACL2025/others/sotopia-ensuremathomega_dynamic_strategy_injection_learning_and_social_instructi.md)
 - [\[ICML 2025\] Revisiting Instance-Optimal Cluster Recovery in the Labeled Stochastic Block Model](revisiting_instance-optimal_cluster_recovery_in_the_labeled_stochastic_block_mod.md)
 - [\[ACL 2025\] Temporal Reasoning for Timeline Summarisation in Social Media](../../ACL2025/others/temporal_reasoning_for_timeline_summarisation_in_social_media.md)
-- [\[ACL 2025\] Explicit and Implicit Data Augmentation for Social Event Detection](../../ACL2025/others/explicit_and_implicit_data_augmentation_for_social_event_detection.md)
 
 </div>
 

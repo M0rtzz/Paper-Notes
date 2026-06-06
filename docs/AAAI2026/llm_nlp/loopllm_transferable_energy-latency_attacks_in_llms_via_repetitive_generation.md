@@ -143,11 +143,11 @@ LoopLLM由两个核心组件构成：(1) 重复诱导提示优化——构造包
 
 ## 相关论文
 
-- [\[ACL 2026\] ProxyPrompt: Securing System Prompts against Prompt Extraction Attacks](../../ACL2026/llm_nlp/proxyprompt_securing_system_prompts_against_prompt_extraction_attacks.md)
+- [\[ACL 2026\] Leveraging Pretrained Language Models as Energy Functions for Glauber Dynamics Text Diffusion](../../ACL2026/llm_nlp/leveraging_pretrained_language_models_as_energy_functions_for_glauber_dynamics_t.md)
 - [\[NeurIPS 2025\] Nemotron-Flash: Towards Latency-Optimal Hybrid Small Language Models](../../NeurIPS2025/llm_nlp/nemotron-flash_towards_latency-optimal_hybrid_small_language_models.md)
 - [\[AAAI 2026\] VSPO: Validating Semantic Pitfalls in Ontology via LLM-Based CQ Generation](vspo_validating_semantic_pitfalls_in_ontology_via_llm-based_cq_generation.md)
-- [\[ACL 2025\] Length Controlled Generation for Black-box LLMs](../../ACL2025/llm_nlp/length_controlled_generation_for_black-box_llms.md)
 - [\[ACL 2025\] Red-Teaming LLM Multi-Agent Systems via Communication Attacks](../../ACL2025/llm_nlp/red-teaming_llm_multi-agent_systems_via_communication_attacks.md)
+- [\[ACL 2025\] Length Controlled Generation for Black-box LLMs](../../ACL2025/llm_nlp/length_controlled_generation_for_black-box_llms.md)
 
 </div>
 

@@ -1,10 +1,11 @@
 ---
 title: >-
-  [论文解读] 笔记7：价值引导搜索 - 高效链式思考推理
+  [论文解读] PolyMath: Evaluating Mathematical Reasoning in Multilingual Contexts
 description: >-
-  [NeurIPS 2025][价值模型] 提出Value-Guided Search(VGS)——通过token级价值模型指导块级束搜索，无需预定义"步骤"，相对多数投票在竞赛数学上准确度提升+14.5%，同时推理计算效率提升30%，超越现有PRM方案。
+  [NeurIPS 2025][多语言/翻译][价值模型] 提出Value-Guided Search(VGS)——通过token级价值模型指导块级束搜索，无需预定义"步骤"，相对多数投票在竞赛数学上准确度提升+14.5%，同时推理计算效率提升30%，超越现有PRM方案。
 tags:
   - "NeurIPS 2025"
+  - "多语言/翻译"
   - "价值模型"
   - "块级搜索"
   - "束搜索"
@@ -136,9 +137,9 @@ $$\text{WMV}: \arg\max_{p_k}\sum_{y_i∈p_k}w_i, \quad w_i = V(x,y_i)$$
 
 - [\[NeurIPS 2025\] XIFBench: Evaluating Large Language Models on Multilingual Instruction Following](xifbench_evaluating_large_language_models_on_multilingual_instruction_following.md)
 - [\[ACL 2025\] The Hidden Space of Safety: Understanding Preference-Tuned LLMs in Multilingual Contexts](../../ACL2025/multilingual_mt/the_hidden_space_of_safety_understanding_preference-tuned_llms_in_multilingual_c.md)
+- [\[ACL 2026\] Why Do Multilingual Reasoning Gaps Emerge in Reasoning Language Models?](../../ACL2026/multilingual_mt/why_do_multilingual_reasoning_gaps_emerge_in_reasoning_language_models.md)
 - [\[ACL 2025\] CruxEval-X: A Benchmark for Multilingual Code Reasoning, Understanding and Execution](../../ACL2025/multilingual_mt/cruxeval-x_a_benchmark_for_multilingual_code_reasoning_understanding_and_executi.md)
 - [\[ACL 2025\] M-RewardBench: Evaluating Reward Models in Multilingual Settings](../../ACL2025/multilingual_mt/m_rewardbench.md)
-- [\[ACL 2025\] Are Rules Meant to be Broken? Understanding Multilingual Moral Reasoning as a Computational Pipeline with UniMoral](../../ACL2025/multilingual_mt/are_rules_meant_to_be_broken_understanding_multilingual_moral_reasoning_as_a_com.md)
 
 </div>
 

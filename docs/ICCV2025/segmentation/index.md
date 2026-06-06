@@ -1,28 +1,28 @@
 ---
 title: >-
-  ICCV2025 语义分割方向73篇论文解读
+  ICCV2025 语义分割方向74篇论文解读
 description: >-
-  73篇ICCV2025的语义分割方向论文解读，涵盖语义分割、扩散模型、语音、推理、遥感、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  74篇ICCV2025的语义分割方向论文解读，涵盖语义分割、扩散模型、少样本学习、语音、推理、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "语义分割"
   - "论文解读"
   - "论文笔记"
   - "扩散模型"
+  - "少样本学习"
   - "语音"
   - "推理"
   - "遥感"
-  - "少样本学习"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**📹 ICCV2025** · **73** 篇论文解读
+**📹 ICCV2025** · **74** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/segmentation/index.md) · [💬 ACL2026 (1)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (48)](../../NeurIPS2025/segmentation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (13)](../../ICML2026/segmentation/index.md) · [💬 ACL2026 (1)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/segmentation/index.md)
 
-🔥 **高频主题：** 语义分割 ×40 · 扩散模型 ×4 · 语音 ×4 · 推理 ×4 · 遥感 ×3
+🔥 **高频主题：** 语义分割 ×41 · 扩散模型 ×4 · 少样本学习 ×4 · 语音 ×4 · 推理 ×4
 
 **[2HandedAfforder: Learning Precise Actionable Bimanual Affordances from Human Videos](2handedafforder_learning_precise_actionable_bimanual_affordances_from_human_vide.md)**
 
@@ -79,6 +79,10 @@ tags:
 **[DeRIS: Decoupling Perception and Cognition for Enhanced Referring Image Segmentation through Loopback Synergy](deris_decoupling_perception_and_cognition_for_enhanced_referring_image_segmentat.md)**
 
 :   提出DeRIS框架，将指代图像分割任务解耦为感知（perception）和认知（cognition）两个分支，通过回环协同（Loopback Synergy）机制迭代增强两分支的交互，并引入非指代样本转换增强策略，在RefCOCO/+/g和gRefCOCO数据集上取得SOTA。
+
+**[DictAS: A Framework for Class-Generalizable Few-Shot Anomaly Segmentation via Dictionary Lookup](dictas_a_framework_for_class-generalizable_few-shot_anomaly_segmentation_via_dic.md)**
+
+:   受人类检查员"查字典"直觉启发，提出 DictAS 框架，将少样本异常分割重新定义为字典查询任务——若查询特征无法从正常样本字典中检索到则判定为异常——通过自监督训练获得类别无关的字典查询能力，在 7 个工业和医学数据集上的 FSAS 性能和推理速度均达到 SOTA。
 
 **[Dynamic Dictionary Learning for Remote Sensing Image Segmentation](dynamic_dictionary_learning_for_remote_sensing_image_segmentation.md)**
 

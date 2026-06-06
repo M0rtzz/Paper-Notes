@@ -145,13 +145,6 @@ ImpForge 作为攻击方的有效性（Table 2）：把 BeaverTails 原始恶意
 - 写作质量: ⭐⭐⭐⭐ 图 1 (a-d) 对四种威胁的可视化非常清晰，section 结构按 RQ 组织易读；少量公式 OCR 抽取后变形（如 $R_\psi$ 表达式略乱），需要查附录。
 - 价值: ⭐⭐⭐⭐⭐ 直接 release 代码，工业部署门槛低；guardrail + 数据生成器双 artifact 让整个社区都能直接用，对 MLLM 安全社区是一个标杆级工作。
 
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">
@@ -161,8 +154,8 @@ ImpForge 作为攻击方的有效性（Table 2）：把 BeaverTails 原始恶意
 - [\[ACL 2026\] Making MLLMs Blind: Adversarial Smuggling Attacks in MLLM Content Moderation](making_mllms_blind_adversarial_smuggling_attacks_in_mllm_content_moderation.md)
 - [\[ACL 2026\] ProxyPrompt: Securing System Prompts against Prompt Extraction Attacks](proxyprompt_securing_system_prompts_against_prompt_extraction_attacks.md)
 - [\[ACL 2026\] Robustness via Referencing: Defending against Prompt Injection Attacks by Referencing the Executed Instruction](robustness_via_referencing_defending_against_prompt_injection_attacks_by_referen.md)
+- [\[ACL 2026\] Knowledge Poisoning Attacks on Medical Multi-Modal Retrieval-Augmented Generation](knowledge_poisoning_attacks_on_medical_multi-modal_retrieval-augmented_generatio.md)
 - [\[ACL 2026\] Evaluating Answer Leakage Robustness of LLM Tutors against Adversarial Student Attacks](evaluating_answer_leakage_robustness_of_llm_tutors_against_adversarial_student_a.md)
-- [\[ACL 2026\] XOXO: Stealthy Cross-Origin Context Poisoning Attacks against AI Coding Assistants](xoxo_stealthy_cross-origin_context_poisoning_attacks_against_ai_coding_assistant.md)
 
 </div>
 

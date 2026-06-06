@@ -124,9 +124,9 @@ tags:
 
 - [\[AAAI 2026\] Provably Data-Driven Projection Method for Quadratic Programming](../../AAAI2026/others/provably_data-driven_projection_method_for_quadratic_programming.md)
 - [\[ICLR 2026\] An Efficient, Provably Optimal Algorithm for the 0-1 Loss Linear Classification Problem](../../ICLR2026/others/an_efficient_provably_optimal_algorithm_for_the_0-1_loss_linear_classification_p.md)
+- [\[ICML 2026\] Adaptive Preconditioners Trigger Loss Spikes in Adam](adaptive_preconditioners_trigger_loss_spikes_in_adam.md)
 - [\[ICML 2025\] Bipartite Ranking From Multiple Labels: On Loss Versus Label Aggregation](../../ICML2025/others/bipartite_ranking_from_multiple_labels_on_loss_versus_label_aggregation.md)
 - [\[ACL 2025\] TARGA: Targeted Synthetic Data Generation for Practical Reasoning over Structured Data](../../ACL2025/others/targa_targeted_synthetic_data_generation_for_practical_reasoning_over_structured.md)
-- [\[ICLR 2026\] t-SNE Exaggerates Clusters, Provably](../../ICLR2026/others/t-sne_exaggerates_clusters_provably.md)
 
 </div>
 

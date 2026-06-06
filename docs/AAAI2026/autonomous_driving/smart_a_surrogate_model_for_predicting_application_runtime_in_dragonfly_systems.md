@@ -1,11 +1,11 @@
 ---
 title: >-
-  [论文解读] Smart: 基于 GNN 与 LLM 融合的 Dragonfly 系统应用运行时代理模型
+  [论文解读] Smart: A Surrogate Model for Predicting Application Runtime in Dragonfly Systems
 description: >-
-  [AAAI 2026][LLM/NLP][Dragonfly 网络] 提出 Smart（Surrogate Model for Predicting Application RunTime），首次将 GNN 和 LLM（Time-LLM）融合用于 Dragonfly 互连网络中的应用迭代运行时预测，在 1…
+  [AAAI 2026][自动驾驶][Dragonfly 网络] 提出 Smart（Surrogate Model for Predicting Application RunTime），首次将 GNN 和 LLM（Time-LLM）融合用于 Dragonfly 互连网络中的应用迭代运行时预测，在 1…
 tags:
   - "AAAI 2026"
-  - "LLM/NLP"
+  - "自动驾驶"
   - "Dragonfly 网络"
   - "图神经网络"
   - "大语言模型"

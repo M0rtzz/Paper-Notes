@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 社会计算方向41篇论文解读
+  ACL2026 社会计算方向43篇论文解读
 description: >-
-  41篇ACL2026的社会计算方向论文解读，涵盖 LLM、语音、Agent、推理、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  43篇ACL2026的社会计算方向论文解读，涵盖 LLM、语音、Agent、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "社会计算"
@@ -11,18 +11,17 @@ tags:
   - "LLM"
   - "语音"
   - "Agent"
-  - "推理"
   - "多模态"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 👥 社会计算
 
-**💬 ACL2026** · **41** 篇论文解读
+**💬 ACL2026** · **43** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (4)](../../CVPR2026/social_computing/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/social_computing/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/social_computing/index.md) · [🧠 NeurIPS2025 (18)](../../NeurIPS2025/social_computing/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/social_computing/index.md) · [🧪 ICML2025 (7)](../../ICML2025/social_computing/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (8)](../../ICML2026/social_computing/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/social_computing/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/social_computing/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/social_computing/index.md) · [🧠 NeurIPS2025 (17)](../../NeurIPS2025/social_computing/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/social_computing/index.md)
 
-🔥 **高频主题：** LLM ×14 · 语音 ×3 · Agent ×3 · 推理 ×2 · 多模态 ×2
+🔥 **高频主题：** LLM ×14 · 语音 ×3 · Agent ×2 · 多模态 ×2
 
 **[Among Us: Language of Conspiracy Theorists on Mainstream Reddit](among_us_language_of_conspiracy_theorists_on_mainstream_reddit.md)**
 
@@ -40,6 +39,10 @@ tags:
 
 :   本文为 SemEval-2026 POLAR 极化检测任务（英文子集）提出「结构化 slot-filling SFT + DPO 偏好优化」两阶段流水线，赛中提交 Qwen2.5-7B 系统取得 0.7664 Macro-F1，赛后换 Mistral-Nemo-12B + LLM-judge 过滤的偏好对，Macro-F1 提升至 0.8162，超过 organiser baseline (0.7802)。
 
+**[Building Arabic NLP from the Ground Up: Twenty Years of Lessons, Failures, and Open Problems](building_arabic_nlp_from_the_ground_up_twenty_years_of_lessons_failures_and_open.md)**
+
+:   这是一篇完整缓存的反思型论文而非实验论文，作者回顾二十年阿拉伯语 NLP 建设，指出低资源语言最难的问题往往不是语言学或模型技术，而是社区、制度、部署治理和知识生产方式。
+
 **[ClaimDB: A Fact Verification Benchmark over Large Structured Data](claimdb_a_fact_verification_benchmark_over_large_structured_data.md)**
 
 :   ClaimDB 是首个把事实核查 evidence 放大到 80 个真实数据库、平均每 claim 含 11 张表 / 460 万行 / 1.1 亿 token 的基准，强制方法必须用可执行程序（SQL）做组合推理；对 30 个 SOTA LLM 的工具调用 agent 评测显示，过半模型 accuracy 不到 55%，且封闭模型几乎不会"弃权"、开源模型又过度弃权——NEI 处理是最大短板。
@@ -52,9 +55,9 @@ tags:
 
 :   提出 ContentFuzz，一个从内容创作者视角出发的置信度引导模糊测试框架，通过 LLM 改写帖子使其在保持人类解读含义不变的前提下改变机器推断的立场标签，从而突破社交媒体信息茧房。
 
-**[Debating the Unspoken: Role-Anchored Multi-Agent Reasoning for Half-Truth Detection](debating_the_unspoken_role-anchored_multi-agent_reasoning_for_half-truth_detecti.md)**
+**[Decide less, communicate more: On the construct validity of end-to-end fact-checking in medicine](decide_less_communicate_more_on_the_construct_validity_of_end-to-end_fact-checki.md)**
 
-:   提出RADAR框架，通过角色锚定（政客 vs 科学家）的多智能体辩论来检测基于遗漏上下文的半真半假信息，配合双阈值自适应早停机制，在噪声检索条件下一致超越单智能体和传统多智能体基线。
+:   作者用 5 位临床专家在 RedHOT（Reddit 健康讨论）社交媒体真实声明上做了一项 1,000 实例的标注研究，发现端到端医学事实核查（end-to-end fact-checking）在 construct validity 层面就站不住脚 —— 证据连接难、声明欠规约、严重程度判定主观，三大障碍即便专家也无法消除，因此提出应把医学 fact-checking 重构为「交互式医患沟通模型」而非「分类→裁决」管线。
 
 **[DIA-HARM: Dialectal Disparities in Harmful Content Detection Across 50 English Dialects](dia-harm_dialectal_disparities_in_harmful_content_detection_across_50_english_di.md)**
 
@@ -71,6 +74,10 @@ tags:
 **[Explain the Flag: Contextualizing Hate Speech Beyond Censorship](explain_the_flag_contextualizing_hate_speech_beyond_censorship.md)**
 
 :   本文提出一种混合方法，结合 LLM 和三种语言（英/法/希腊语）的人工策展词汇表来检测和解释仇恨言论——术语管道通过词汇匹配+LLM 语义消歧检测固有贬损用语，无术语管道用 LLM 检测群体针对性内容，两者融合生成有据可查的解释。
+
+**[FigSIM: A Dataset for Fine-grained Suicide Severity and Figurative Language in Suicide Memes](figsim_a_dataset_for_fine-grained_suicide_severity_and_figurative_language_in_su.md)**
+
+:   FigSIM 构建了首个面向自杀相关 meme 的细粒度多模态数据集，标注 figurative phenomenon、自杀严重度和自杀相关内容，并用 16 类模型验证了当前模型在隐喻、讽刺和高严重度风险识别上仍会系统性低估。
 
 **[GKnow: Measuring the Entanglement of Gender Bias and Factual Gender](gknow_measuring_the_entanglement_of_gender_bias_and_factual_gender.md)**
 
@@ -124,6 +131,10 @@ tags:
 
 :   这篇论文构建了一个 200 条中文健康短视频的高质量谣言评测集，用证据链、错误类型和社交线索系统评估 8 个前沿 MLLM，发现 Gemini-2.5-Pro 最稳，但多数模型在多模态谣言判断中仍受标签偏置、权威账号和流量指标影响。
 
+**[Prompt-Level Distillation: A Non-Parametric Alternative to Model Fine-Tuning for Efficient Reasoning](prompt-level_distillation_a_non-parametric_alternative_to_model_fine-tuning_for_.md)**
+
+:   本文提出 Prompt-Level Distillation，把教师模型在训练样本上的推理规律抽取、聚类并消解冲突后写入学生模型的 system prompt，在不更新参数的情况下显著提升小模型的推理分类能力。
+
 **[PSK@EEUCA 2026: Fine-Tuning Large Language Models with Synthetic Data Augmentation for Multi-Class Toxicity Detection in Gaming Chat](pskeeuca_2026_fine-tuning_large_language_models_with_synthetic_data_augmentation.md)**
 
 :   这篇系统论文面向 EEUCA 2026 游戏聊天毒性识别任务，用 Llama 3.1 8B + LoRA + 经过严格过滤的 5% 少数类合成改写数据，在六分类 macro-F1 上达到 0.6234，并揭示了验证集高分但测试集迁移差的“验证陷阱”。
@@ -163,10 +174,6 @@ tags:
 **[ToxiTrace: Gradient-Aligned Training for Explainable Chinese Toxicity Detection](toxitrace_gradient-aligned_training_for_explainable_chinese_toxicity_detection.md)**
 
 :   ToxiTrace 提出了一种面向 BERT 类编码器的可解释中文毒性检测方法，通过 CuSA（LLM 引导的弱标注）、GCLoss（梯度约束损失）和 ARCL（对抗推理对比学习）三个组件，在保持高效编码器推理的同时实现了句级分类准确率和连续有毒片段提取的双重提升。
-
-**[ToxReason: A Benchmark for Mechanistic Chemical Toxicity Reasoning via Adverse Outcome Pathway](toxreason_a_benchmark_for_mechanistic_chemical_toxicity_reasoning_via_adverse_ou.md)**
-
-:   本文提出 ToxReason，一个基于不良结局路径 (AOP) 框架的化学毒性机理推理基准，整合药物-靶点实验数据与毒性标签，要求模型从分子起始事件推理到器官级不良结局；通过 GRPO 强化学习训练的 4B 模型在毒性预测（F1 71.4%）和推理质量上均超越 GPT-5 等大模型。
 
 **[VeriTaS: The First Dynamic Benchmark for Multimodal Automated Fact-Checking](veritas_the_first_dynamic_benchmark_for_multimodal_automated_fact-checking.md)**
 

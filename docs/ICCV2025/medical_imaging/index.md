@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 医学图像方向38篇论文解读
+  ICCV2025 医学图像方向31篇论文解读
 description: >-
-  38篇ICCV2025的医学图像方向论文解读，涵盖医学影像、语义分割、少样本学习、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  31篇ICCV2025的医学图像方向论文解读，涵盖医学影像、语义分割、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "医学图像"
@@ -10,18 +10,17 @@ tags:
   - "论文笔记"
   - "医学影像"
   - "语义分割"
-  - "少样本学习"
   - "自监督学习"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**📹 ICCV2025** · **38** 篇论文解读
+**📹 ICCV2025** · **31** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/medical_imaging/index.md) · [💬 ACL2026 (51)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (119)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (79)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (106)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (34)](../../ICML2026/medical_imaging/index.md) · [💬 ACL2026 (35)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (103)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (48)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (88)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (92)](../../NeurIPS2025/medical_imaging/index.md)
 
-🔥 **高频主题：** 医学影像 ×14 · 语义分割 ×12 · 少样本学习 ×2 · 自监督学习 ×2
+🔥 **高频主题：** 医学影像 ×14 · 语义分割 ×11 · 自监督学习 ×2
 
 **[AcZeroTS: Active Learning for Zero-shot Tissue Segmentation in Pathology Images](aczerots_active_learning_for_zeroshot_tissue_segmentation_in.md)**
 
@@ -55,21 +54,9 @@ tags:
 
 :   本文提出一种高效的自监督联合重建方法，通过将声速（SOS）参数化为像素网格或神经场，并通过可微成像前向模型反向传播梯度来恢复SOS和高质量光声图像，在精度上超越现有SOTA的同时实现35倍加速（40秒 vs 23分钟）。
 
-**[CryoFastAR: Fast Cryo-EM Ab initio Reconstruction Made Easy](cryofastar_fast_cryoem_ab_initio_reconstruction_made_easy.md)**
-
-:   首个将DUSt3R式的几何基础模型范式引入冷冻电镜(cryo-EM)领域的工作，通过ViT编码器+跨视图注意力解码器直接从大量含噪粒子图像前馈预测姿态（无需迭代优化），实现了比传统方法快10-33倍的ab initio蛋白质三维重建。
-
 **[CuMPerLay: Learning Cubical Multiparameter Persistence Vectorizations](cumperlay_learning_cubical_multiparameter_persistence_vectorizations.md)**
 
 :   提出 CuMPerLay，一个可微的立方多参数持久同调 (Cubical Multiparameter Persistence, CMP) 向量化层，将 CMP 分解为多条可学习的单参数持久同调线，通过联合学习双滤过 (bifiltration) 函数实现端到端训练，嵌入 Swin Transformer 后在医学图像分类和语义分割任务上（尤其小数据场景）取得显著提升。
-
-**[DictAS: A Framework for Class-Generalizable Few-Shot Anomaly Segmentation via Dictionary Lookup](dictas_a_framework_for_class-generalizable_few-shot_anomaly_segmentation_via_dic.md)**
-
-:   受人类检查员"查字典"直觉启发，提出 DictAS 框架，将少样本异常分割重新定义为字典查询任务——若查询特征无法从正常样本字典中检索到则判定为异常——通过自监督训练获得类别无关的字典查询能力，在 7 个工业和医学数据集上的 FSAS 性能和推理速度均达到 SOTA。
-
-**[G2PDiffusion: Cross-Species Genotype-to-Phenotype Prediction via Evolutionary Diffusion](g2pdiffusion_cross-species_genotype-to-phenotype_prediction_via_evolutionary_dif.md)**
-
-:   提出G2PDiffusion，首个基于扩散模型的跨物种基因型到表型预测框架，通过进化信号（多序列比对MSA和环境上下文）条件化生成形态学图像，实现从DNA序列预测物种外观。
 
 **[GDKVM: Echocardiography Video Segmentation via Spatiotemporal Key-Value Memory with Gated Delta Rule](gdkvm_echocardiography_video_segmentation_via_spatiotemporal_key-value_memory_wi.md)**
 
@@ -82,18 +69,6 @@ tags:
 **[GEMeX: A Large-Scale, Groundable, and Explainable Medical VQA Benchmark for Chest X-ray Diagnosis](gemex_a_large-scale_groundable_and_explainable_medical_vqa_benchmark_for_chest_x.md)**
 
 :   构建了当前最大的胸部X光 VQA 数据集 GEMeX（151K 图像、1.6M 问题），首次同时提供文本推理解释和视觉区域定位，涵盖四种问题类型，并系统评估了 12 个代表性大视觉语言模型。
-
-**[IDF: Iterative Dynamic Filtering Networks for Generalizable Image Denoising](idf_iterative_dynamic_filtering_networks_for_generalizable_image_denoising.md)**
-
-:   提出迭代动态滤波网络 (IDF)，仅用约 0.04M 参数，通过逐像素动态核预测 + 自适应迭代精炼策略，仅在单一级别高斯噪声上训练即可泛化到各种未见噪声类型（高斯/泊松/椒盐/蒙特卡洛渲染/真实噪声），实现出色的 OOD 去噪性能。
-
-**[InsideOut: Integrated RGB-Radiative Gaussian Splatting for Comprehensive 3D Object Representation](insideout_integrated_rgb-radiative_gaussian_splatting_for_comprehensive_3d_objec.md)**
-
-:   InsideOut 将 3D Gaussian Splatting 从仅建模 RGB 表面扩展到同时建模 X 射线内部结构，通过层次化拟合和 X 射线参考损失实现了 RGB 外观与内部辐射结构的联合表示。
-
-**[Integrating Biological Knowledge for Robust Microscopy Image Profiling on De Novo Cell Lines](integrating_biological_knowledge_for_robust_microscopy_image_profiling_on_de_nov.md)**
-
-:   提出将外部生物知识（蛋白质互作图谱+单细胞基础模型的转录组特征）整合到显微图像预训练中，显式解耦扰动特异性和细胞系特异性表征，提升模型在未见细胞系上的扰动筛查泛化能力。
 
 **[M-Net: MRI Brain Tumor Sequential Segmentation Network via Mesh-Cast](m-net_mri_brain_tumor_sequential_segmentation_network_via_mesh-cast.md)**
 
@@ -154,10 +129,6 @@ tags:
 **[TeethGenerator: A Two-Stage Framework for Paired Pre- and Post-Orthodontic 3D Dental Data Generation](teethgenerator_a_two-stage_framework_for_paired_pre-_and_post-orthodontic_3d_den.md)**
 
 :   提出 TeethGenerator，一个两阶段框架用于生成配对的正畸前后 3D 牙齿点云模型，Stage I 用 VQ-VAE+扩散模型生成矫正后牙齿形态，Stage II 用 Transformer 根据风格模型生成对应的矫正前牙齿排列。
-
-**[Toward Long-Tailed Online Anomaly Detection through Class-Agnostic Concepts](toward_long-tailed_online_anomaly_detection_through_class-agnostic_concepts.md)**
-
-:   本文提出长尾在线异常检测（LTOAD）新任务和benchmark，核心创新是用可学习的"类无关概念集"替代传统的类标签依赖，结合Concept VQ-VAE和综合prompt学习框架，在不需要类标签的情况下于offline和online场景下均达到SOTA。
 
 **[UKBOB: One Billion MRI Labeled Masks for Generalizable 3D Medical Image Segmentation](ukbob_one_billion_mri_labeled_masks_for_generalizable_3d_medical_image_segmentat.md)**
 

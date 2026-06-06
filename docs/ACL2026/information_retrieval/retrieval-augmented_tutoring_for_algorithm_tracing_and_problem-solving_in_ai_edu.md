@@ -142,7 +142,7 @@ KITE 本身不是训练新模型，而是系统集成。检索侧使用 text-emb
 - [\[NeurIPS 2025\] MITRA: An AI Assistant for Knowledge Retrieval in Physics Collaborations](../../NeurIPS2025/information_retrieval/mitra_an_ai_assistant_for_knowledge_retrieval_in_physics_collaborations.md)
 - [\[ACL 2026\] Utility-Oriented Visual Evidence Selection for Multimodal Retrieval-Augmented Generation](utility-oriented_visual_evidence_selection_for_multimodal_retrieval-augmented_ge.md)
 - [\[ACL 2026\] S2G-RAG: Structured Sufficiency and Gap Judging for Iterative Retrieval-Augmented QA](s2g-rag_structured_sufficiency_and_gap_judging_for_iterative_retrieval-augmented.md)
-- [\[ACL 2026\] Quantifying and Improving the Robustness of Retrieval-Augmented Language Models Against Spurious Features in Grounding Data](quantifying_and_improving_the_robustness_of_retrieval-augmented_language_models_.md)
+- [\[ACL 2026\] MM-BizRAG: Rethinking Multimodal Retrieval-Augmented Generation for General Purpose Enterprise Q&A](mm-bizrag_rethinking_multimodal_retrieval-augmented_generation_for_general_purpo.md)
 
 </div>
 

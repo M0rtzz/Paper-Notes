@@ -1,6 +1,6 @@
 ---
 title: >-
-  [论文解读] Sketch-HARP: 分层自回归草图生成实现灵活笔画级绘制操控
+  [论文解读] Generating Sketches in a Hierarchical Auto-Regressive Process for Flexible Sketch Drawing Manipulation at Stroke-Level
 description: >-
   [AAAI 2026][机器人][草图生成] 提出 Sketch-HARP 分层自回归草图生成框架，通过三阶段层次化过程（预测笔画嵌入→确定画布位置→生成绘制动作序列），首次实现草图绘制过程中的灵活笔画级操控，在替换/擦除/扩展等任务上显著优于 SketchEdit。
 tags:
@@ -132,7 +132,7 @@ tags:
 - [\[NeurIPS 2025\] HiMaCon: Discovering Hierarchical Manipulation Concepts from Unlabeled Multi-Modal Data](../../NeurIPS2025/robotics/himacon_discovering_hierarchical_manipulation_concepts_from_unlabeled_multi-moda.md)
 - [\[ECCV 2024\] GraspXL: Generating Grasping Motions for Diverse Objects at Scale](../../ECCV2024/robotics/graspxl_generating_grasping_motions_for_diverse_objects_at_scale.md)
 - [\[ICLR 2026\] THOR: Tool-Integrated Hierarchical Optimization via RL for Mathematical Reasoning](../../ICLR2026/robotics/thor_tool-integrated_hierarchical_optimization_via_rl_for_mathematical_reasoning.md)
-- [\[CVPR 2026\] Pixel-level Scene Understanding in One Token: Visual States Need What-is-Where Composition](../../CVPR2026/robotics/pixel-level_scene_understanding_in_one_token_visual_states_need_what-is-where_co.md)
+- [\[ICML 2026\] BEAR: Dissecting Embodied Abilities in Multimodal Language Models through Skill-level Evaluation and Diagnosis](../../ICML2026/robotics/dissecting_embodied_abilities_in_multimodal_language_models_through_skill-level_.md)
 
 </div>
 

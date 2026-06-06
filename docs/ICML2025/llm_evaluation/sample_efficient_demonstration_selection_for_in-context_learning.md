@@ -121,10 +121,10 @@ tags:
 ## 相关论文
 
 - [\[ICLR 2026\] In-Context Learning for Pure Exploration](../../ICLR2026/llm_evaluation/in-context_learning_for_pure_exploration.md)
-- [\[ICML 2025\] Hyperband-based Bayesian Optimization for Black-box Prompt Selection](hyperband-based_bayesian_optimization_for_black-box_prompt_selection.md)
 - [\[CVPR 2025\] ConText-CIR: Learning from Concepts in Text for Composed Image Retrieval](../../CVPR2025/llm_evaluation/context-cir_learning_from_concepts_in_text_for_composed_image_retrieval.md)
 - [\[ICLR 2026\] In-Context Learning of Temporal Point Processes with Foundation Inference Models](../../ICLR2026/llm_evaluation/in-context_learning_of_temporal_point_processes_with_foundation_inference_models.md)
-- [\[ACL 2026\] Fine-tuning vs. In-context Learning in Large Language Models: A Formal Language Learning Perspective](../../ACL2026/llm_evaluation/fine-tuning_vs_in-context_learning_in_large_language_models_a_formal_language_le.md)
+- [\[ICML 2025\] Hyperband-based Bayesian Optimization for Black-box Prompt Selection](hyperband-based_bayesian_optimization_for_black-box_prompt_selection.md)
+- [\[ICML 2025\] The Best of Both Worlds: Bridging Quality and Diversity in Data Selection with Bipartite Graph](the_best_of_both_worlds_bridging_quality_and_diversity_in_data_selection_with_bi.md)
 
 </div>
 

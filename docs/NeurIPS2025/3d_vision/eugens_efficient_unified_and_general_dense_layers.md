@@ -140,10 +140,10 @@ NeRF 蒸馏可在不重训练的情况下实现高达 **26%** 推理加速。
 ## 相关论文
 
 - [\[CVPR 2025\] A Unified Image-Dense Annotation Generation Model for Underwater Scenes](../../CVPR2025/3d_vision/a_unified_image-dense_annotation_generation_model_for_underwater_scenes.md)
-- [\[ICCV 2025\] AllTracker: Efficient Dense Point Tracking at High Resolution](../../ICCV2025/3d_vision/alltracker_efficient_dense_point_tracking_at_high_resolution.md)
-- [\[ICCV 2025\] ArgMatch: Adaptive Refinement Gathering for Efficient Dense Matching](../../ICCV2025/3d_vision/argmatch_adaptive_refinement_gathering_for_efficient_dense_matching.md)
 - [\[CVPR 2025\] Generative Omnimatte: Learning to Decompose Video into Layers](../../CVPR2025/3d_vision/generative_omnimatte_learning_to_decompose_video_into_layers.md)
 - [\[NeurIPS 2025\] Locality-Sensitive Hashing-Based Efficient Point Transformer for Charged Particle Reconstruction](locality-sensitive_hashing-based_efficient_point_transformer_for_charged_particl.md)
+- [\[NeurIPS 2025\] On Geometry-Enhanced Parameter-Efficient Fine-Tuning for 3D Scene Segmentation](on_geometry-enhanced_parameter-efficient_fine-tuning_for_3d_scene_segmentation.md)
+- [\[CVPR 2025\] Flow-NeRF: Joint Learning of Geometry, Poses, and Dense Flow within Unified Neural Representations](../../CVPR2025/3d_vision/flow-nerf_joint_learning_of_geometry_poses_and_dense_flow_within_unified_neural_.md)
 
 </div>
 

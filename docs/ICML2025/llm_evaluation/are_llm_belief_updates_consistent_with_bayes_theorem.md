@@ -141,10 +141,10 @@ tags:
 ## 相关论文
 
 - [\[CVPR 2025\] VinaBench: Benchmark for Faithful and Consistent Visual Narratives](../../CVPR2025/llm_evaluation/vinabench_benchmark_for_faithful_and_consistent_visual_narratives.md)
-- [\[NeurIPS 2025\] Belief-Calibrated Multi-Agent Consensus Seeking for Complex NLP Tasks](../../NeurIPS2025/llm_evaluation/belief-calibrated_multi-agent_consensus_seeking_for_complex_nlp_tasks.md)
 - [\[NeurIPS 2025\] Consistent Supervised-Unsupervised Alignment for Generalized Category Discovery](../../NeurIPS2025/llm_evaluation/consistent_supervised-unsupervised_alignment_for_generalized_category_discovery.md)
+- [\[NeurIPS 2025\] Belief-Calibrated Multi-Agent Consensus Seeking for Complex NLP Tasks](../../NeurIPS2025/llm_evaluation/belief-calibrated_multi-agent_consensus_seeking_for_complex_nlp_tasks.md)
 - [\[NeurIPS 2025\] Ineq-Comp: Benchmarking Human-Intuitive Compositional Reasoning in Automated Theorem Proving on Inequalities](../../NeurIPS2025/llm_evaluation/ineq-comp_benchmarking_human-intuitive_compositional_reasoning_in_automated_theo.md)
-- [\[CVPR 2026\] SparseCam4D: Spatio-Temporally Consistent 4D Reconstruction from Sparse Cameras](../../CVPR2026/llm_evaluation/sparsecam4d_spatio-temporally_consistent_4d_reconstruction_from_sparse_cameras.md)
+- [\[ICML 2025\] LLM-SRBench: A New Benchmark for Scientific Equation Discovery with LLMs](llm-srbench_a_new_benchmark_for_scientific_equation_discovery_with_large_languag.md)
 
 </div>
 

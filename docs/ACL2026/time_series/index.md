@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 时间序列方向6篇论文解读
+  ACL2026 时间序列方向7篇论文解读
 description: >-
-  6篇ACL2026的时间序列方向论文解读，涵盖时序预测、推理、强化学习、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  7篇ACL2026的时间序列方向论文解读，涵盖时序预测、推理、问答、强化学习、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "时间序列"
@@ -10,6 +10,7 @@ tags:
   - "论文笔记"
   - "时序预测"
   - "推理"
+  - "问答"
   - "强化学习"
   - "LLM"
 ---
@@ -17,15 +18,19 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📈 时间序列
 
-**💬 ACL2026** · **6** 篇论文解读
+**💬 ACL2026** · **7** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (10)](../../ICML2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/time_series/index.md) · [🤖 AAAI2026 (35)](../../AAAI2026/time_series/index.md) · [🧠 NeurIPS2025 (56)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (32)](../../ICML2026/time_series/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/time_series/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/time_series/index.md) · [🤖 AAAI2026 (36)](../../AAAI2026/time_series/index.md) · [🧠 NeurIPS2025 (56)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md)
 
-🔥 **高频主题：** 时序预测 ×3 · 推理 ×2
+🔥 **高频主题：** 时序预测 ×4 · 推理 ×3
 
 **[A Unified Framework for Modeling Heterogeneous Financial Data via Dual-Granularity Prompting](a_unified_framework_for_modeling_heterogeneous_financial_data_via_dual-granulari.md)**
 
 :   提出FinLangNet框架，通过双模块架构（DeepFM处理静态特征 + 双粒度提示机制的Transformer处理时序行为）实现多尺度信用风险预测，在滴滴金融平台部署后实现KS提升6.3pp和坏账率下降9.9%。
+
+**[ODTQA-FoRe: An Open-Domain Tabular Question Answering Dataset for Future Data Forecasting and Reasoning](odtqa-fore_an_open-domain_tabular_question_answering_dataset_for_future_data_for.md)**
+
+:   ODTQA-FoRe 提出面向未来数值预测和预测后推理的开放域表格问答任务，并用 TimeFore 三代理框架把表格检索、SQL 取数、专用时间序列预测和答案规范化串成一个可评测 baseline。
 
 **[STK-Adapter: Incorporating Evolving Graph and Event Chain for Temporal Knowledge Graph Extrapolation](stk-adapter_incorporating_evolving_graph_and_event_chain_for_temporal_knowledge_.md)**
 

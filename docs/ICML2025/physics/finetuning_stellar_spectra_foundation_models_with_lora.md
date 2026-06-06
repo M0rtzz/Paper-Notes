@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Finetuning Stellar Spectra Foundation Models with LoRA
 description: >-
-  [ICML 2025][物理学][LoRA] 首次将 LoRA 应用于恒星光谱基础模型 SpecCLIP，实现以约 100-200 个标注样本将预训练在 LAMOST/Gaia XP 上的模型高效适配到 DESI 巡天数据，证明 LoRA 是跨光谱巡天迁移的轻量而有效策略。
+  [ICML 2025][物理/科学计算][LoRA] 首次将 LoRA 应用于恒星光谱基础模型 SpecCLIP，实现以约 100-200 个标注样本将预训练在 LAMOST/Gaia XP 上的模型高效适配到 DESI 巡天数据，证明 LoRA 是跨光谱巡天迁移的轻量而有效策略。
 tags:
   - "ICML 2025"
-  - "物理学"
+  - "物理/科学计算"
   - "LoRA"
   - "基础模型"
   - "恒星光谱"
@@ -131,10 +131,10 @@ tags:
 ## 相关论文
 
 - [\[NeurIPS 2025\] The Platonic Universe: Do Foundation Models See the Same Sky?](../../NeurIPS2025/physics/the_platonic_universe_do_foundation_models_see_the_same_sky.md)
+- [\[ICML 2025\] Differentiable Stellar Atmospheres with Physics-Informed Neural Networks](differentiable_stellar_atmospheres_with_physics-informed_neural_networks.md)
+- [\[ICML 2025\] OmniArch: Building Foundation Model For Scientific Computing](omniarch_building_foundation_model_for_scientific_computing.md)
 - [\[NeurIPS 2025\] Neural Deprojection of Galaxy Stellar Mass Profiles](../../NeurIPS2025/physics/neural_deprojection_of_galaxy_stellar_mass_profiles.md)
-- [\[ICML 2025\] Gravity-Bench-v1: A Benchmark on Gravitational Physics Discovery for Agents](gravity-bench-v1_a_benchmark_on_gravitational_physics_discovery_for_agents.md)
-- [\[ICML 2025\] Teaching LLMs to Speak Spectroscopy](teaching_llms_to_speak_spectroscopy.md)
-- [\[ICML 2026\] Softplus Attention with Re-weighting Boosts Length Extrapolation in Large Language Models](../../ICML2026/physics/softplus_attention_with_re-weighting_boosts_length_extrapolation_in_large_langua.md)
+- [\[ICML 2026\] Understanding Catastrophic Forgetting In LoRA via Mean-Field Attention Dynamics](../../ICML2026/physics/understanding_catastrophic_forgetting_in_lora_via_mean-field_attention_dynamics.md)
 
 </div>
 

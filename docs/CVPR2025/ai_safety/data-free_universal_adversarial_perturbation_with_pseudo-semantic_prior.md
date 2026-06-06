@@ -141,8 +141,8 @@ tags:
 - [\[ICCV 2025\] Semantic Alignment and Reinforcement for Data-Free Quantization of Vision Transformers](../../ICCV2025/ai_safety/semantic_alignment_and_reinforcement_for_data-free_quantization_of_vision_transf.md)
 - [\[CVPR 2025\] DEAL: Data-Efficient Adversarial Learning for High-Quality Infrared Imaging](deal_data-efficient_adversarial_learning_for_high-quality_infrared_imaging.md)
 - [\[CVPR 2025\] Towards Source-Free Machine Unlearning](towards_source-free_machine_unlearning.md)
-- [\[CVPR 2025\] Optimal Transport-Guided Source-Free Adaptation for Face Anti-Spoofing](optimal_transport-guided_source-free_adaptation_for_face_anti-spoofing.md)
 - [\[CVPR 2025\] A Simple Data Augmentation for Feature Distribution Skewed Federated Learning](a_simple_data_augmentation_for_feature_distribution_skewed_federated_learning.md)
+- [\[CVPR 2025\] Optimal Transport-Guided Source-Free Adaptation for Face Anti-Spoofing](optimal_transport-guided_source-free_adaptation_for_face_anti-spoofing.md)
 
 </div>
 

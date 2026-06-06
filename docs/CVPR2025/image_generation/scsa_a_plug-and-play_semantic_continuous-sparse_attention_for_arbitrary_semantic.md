@@ -127,7 +127,7 @@ SCSA 由语义连续注意力（SCA）和语义稀疏注意力（SSA）两部分
 - [\[CVPR 2025\] SaMam: Style-aware State Space Model for Arbitrary Image Style Transfer](samam_style-aware_state_space_model_for_arbitrary_image_style_transfer.md)
 - [\[CVPR 2025\] Noise Diffusion for Enhancing Semantic Faithfulness in Text-to-Image Synthesis](noise_diffusion_for_enhancing_semantic_faithfulness_in_text-to-image_synthesis.md)
 - [\[CVPR 2025\] Taming Score-Based Denoisers in ADMM: A Convergent Plug-and-Play Framework](taming_score-based_denoisers_in_admm_a_convergent_plug-and-play_framework.md)
-- [\[CVPR 2025\] UniCom: Unified Multimodal Modeling via Compressed Continuous Semantic Representations](unicom_unified_multimodal_modeling_via_compressed_continuous_semantic_representa.md)
+- [\[CVPR 2025\] StyleStudio: Text-Driven Style Transfer with Selective Control of Style Elements](stylestudio_text-driven_style_transfer_with_selective_control_of_style_elements.md)
 
 </div>
 

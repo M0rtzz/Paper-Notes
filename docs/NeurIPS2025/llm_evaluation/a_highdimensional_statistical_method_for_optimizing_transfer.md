@@ -122,7 +122,7 @@ tags:
 - [\[ICML 2025\] Function Encoders: A Principled Approach to Transfer Learning in Hilbert Spaces](../../ICML2025/llm_evaluation/function_encoders_a_principled_approach_to_transfer_learning_in_hilbert_spaces.md)
 - [\[ICCV 2025\] PHATNet: A Physics-guided Haze Transfer Network for Domain-adaptive Real-world Image Dehazing](../../ICCV2025/llm_evaluation/phatnet_a_physics-guided_haze_transfer_network_for_domain-adaptive_real-world_im.md)
 - [\[ICLR 2026\] Discount Model Search for Quality Diversity Optimization in High-Dimensional Measure Spaces](../../ICLR2026/llm_evaluation/discount_model_search_for_quality_diversity_optimization_in_high-dimensional_mea.md)
-- [\[ACL 2026\] SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction](../../ACL2026/llm_evaluation/sciimpact_a_multi-dimensional_multi-field_benchmark_for_scientific_impact_predic.md)
+- [\[NeurIPS 2025\] Learning Generalizable Shape Completion with SIM(3) Equivariance](learning_generalizable_shape_completion_with_sim3_equivariance.md)
 
 </div>
 

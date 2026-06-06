@@ -126,7 +126,7 @@ tags:
 - [\[ACL 2025\] Multi-Hop Question Generation via Dual-Perspective Keyword Guidance](multi-hop_question_generation_via_dual-perspective_keyword_guidance.md)
 - [\[ACL 2025\] Interlocking-free Selective Rationalization Through Genetic-based Learning](interlocking-free_selective_rationalization_through_genetic-based_learning.md)
 - [\[ACL 2025\] Bone Soups: A Seek-and-Soup Model Merging Approach for Controllable Multi-Objective Generation](bone_soups_multi_objective_gen.md)
-- [\[ACL 2025\] Learning to Align Multi-Faceted Evaluation: A Unified and Robust Framework](learning_to_align_multi-faceted_evaluation_a_unified_and_robust_framework.md)
+- [\[ACL 2025\] FEAT: A Preference Feedback Dataset through a Cost-Effective Auto-Generation and Labeling Framework for English AI Tutoring](feat_a_preference_feedback_dataset_through_a_cost-effective_auto-generation_and_.md)
 
 </div>
 

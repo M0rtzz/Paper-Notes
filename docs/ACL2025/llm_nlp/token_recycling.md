@@ -137,11 +137,11 @@ Token Recycling 在推理过程中维护一个轻量级邻接矩阵，记录 tok
 
 ## 相关论文
 
-- [\[ACL 2026\] From Static Inference to Dynamic Interaction: A Survey of Streaming Large Language Models](../../ACL2026/llm_nlp/from_static_inference_to_dynamic_interaction_a_survey_of_streaming_large_languag.md)
-- [\[ACL 2025\] The Impact of Token Granularity on the Predictive Power of Language Model Surprisal](token_granularity_impact.md)
 - [\[ICML 2026\] Compute as Teacher: Turning Inference Compute Into Reference-Free Supervision](../../ICML2026/llm_nlp/compute_as_teacher_turning_inference_compute_into_reference-free_supervision.md)
+- [\[ACL 2026\] From Static Inference to Dynamic Interaction: A Survey of Streaming Large Language Models](../../ACL2026/llm_nlp/from_static_inference_to_dynamic_interaction_a_survey_of_streaming_large_languag.md)
+- [\[ICML 2026\] dLLM-Cache: Accelerating Diffusion Large Language Models with Adaptive Caching](../../ICML2026/llm_nlp/dllm-cache_accelerating_diffusion_large_language_models_with_adaptive_caching.md)
 - [\[NeurIPS 2025\] StreamBridge: Turning Your Offline Video Large Language Model into a Proactive Streaming Model](../../NeurIPS2025/llm_nlp/streambridge_turning_your_offline_video_large_language_model_into_a_proactive_st.md)
-- [\[ACL 2025\] Classifying Unreliable Narrators with Large Language Models](classifying_unreliable_narrators.md)
+- [\[ACL 2025\] The Impact of Token Granularity on the Predictive Power of Language Model Surprisal](token_granularity_impact.md)
 
 </div>
 

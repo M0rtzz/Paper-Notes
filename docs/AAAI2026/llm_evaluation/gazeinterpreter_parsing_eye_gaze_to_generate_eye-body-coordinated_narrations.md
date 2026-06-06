@@ -189,9 +189,9 @@ GazeInterpreter 不需要传统意义上的模型训练，而是利用预训练 
 
 - [\[CVPR 2025\] Enhancing 3D Gaze Estimation in the Wild Using Weak Supervision with Gaze Following Labels](../../CVPR2025/llm_evaluation/enhancing_3d_gaze_estimation_in_the_wild_using_weak_supervision_with_gaze_follow.md)
 - [\[ICML 2025\] Fleet of Agents: Coordinated Problem Solving with Large Language Models](../../ICML2025/llm_evaluation/fleet_of_agents_coordinated_problem_solving_with_large_language_models.md)
+- [\[ACL 2026\] Large Language Models Are Bad Dice Players: LLMs Struggle to Generate Random Numbers from Statistical Distributions](../../ACL2026/llm_evaluation/large_language_models_are_bad_dice_players_llms_struggle_to_generate_random_numb.md)
 - [\[ACL 2025\] Help Me Write a Story: Evaluating LLMs' Ability to Generate Writing Feedback](../../ACL2025/llm_evaluation/help_write_story_feedback.md)
 - [\[AAAI 2026\] MindVote: When AI Meets the Wild West of Social Media Opinion](mindvote_when_ai_meets_the_wild_west_of_social_media_opinion.md)
-- [\[AAAI 2026\] Axis-Aligned Document Dewarping](axis-aligned_document_dewarping.md)
 
 </div>
 

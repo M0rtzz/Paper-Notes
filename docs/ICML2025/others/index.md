@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 其他方向92篇论文解读
+  ICML2025 其他方向89篇论文解读
 description: >-
-  92篇ICML2025的其他方向论文解读，涵盖对抗鲁棒、推理、Agent、少样本学习、域适应、生物分子等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  89篇ICML2025的其他方向论文解读，涵盖对抗鲁棒、推理、Agent、少样本学习、域适应等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "其他"
@@ -13,15 +13,14 @@ tags:
   - "Agent"
   - "少样本学习"
   - "域适应"
-  - "生物分子"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🧪 ICML2025** · **92** 篇论文解读
+**🧪 ICML2025** · **89** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (27)](../../ICML2026/others/index.md) · [📷 CVPR2026 (44)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (145)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (91)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (122)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (142)](../../NeurIPS2025/others/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×6
 
@@ -317,10 +316,6 @@ tags:
 
 :   首次将随机局部化 (Stochastic Localization, SL) 框架应用于一般二元二次分布 (BQD) 采样，证明经过足够SL迭代后后验分布几乎处处满足 Poincaré 不等式，从而保证离散 MCMC 采样器多项式时间混合，并在 QUBO 组合优化问题上验证了一致的采样效率提升。
 
-**[Scalable Equilibrium Sampling with Sequential Boltzmann Generators](scalable_equilibrium_sampling_with_sequential_boltzmann_generators.md)**
-
-:   SBG通过Transformer架构规范化流(TarFlow)和退火Langevin动力学的序列蒙特卡洛，首次在笛卡尔坐标系中实现六肽(66原子)系统的高效平衡采样。
-
 **[Score Matching with Missing Data](score_matching_with_missing_data.md)**
 
 :   本文将 score matching 及其主要扩展适配到缺失数据场景，提出两种变体——重要性加权（IW）方法和变分方法，在图模型估计等任务上展示了不同场景下各自的优势。
@@ -336,10 +331,6 @@ tags:
 **[Sparse Training from Random Initialization: Aligning Lottery Ticket Masks using Weight Symmetry](sparse_training_from_random_initialization_aligning_lottery_ticket_masks_using_w.md)**
 
 :   从权重对称性角度解释彩票假说(LTH)掩码不能迁移到新初始化的原因，并提出通过置换匹配对齐LTH掩码与新初始化的优化盆地来实现稀疏训练。
-
-**[SUICA: Learning Super-high Dimensional Sparse Implicit Neural Representations for Spatial Transcriptomics](suica_learning_super-high_dimensional_sparse_implicit_neural_representations_for.md)**
-
-:   提出 SUICA，通过图增强自编码器将超高维稀疏空间转录组数据压缩到紧凑嵌入空间，再用隐式神经表示（INR）建模坐标到嵌入的连续映射，实现跨多种 ST 平台的空间填补、基因填补和去噪。
 
 **[Suitability Filter: A Statistical Framework for Classifier Evaluation in Real-World Settings](suitability_filter_a_statistical_framework_for_classifier_evaluation_in_real-wor.md)**
 
@@ -388,7 +379,3 @@ tags:
 **[UnHiPPO: Uncertainty-Aware Initialization for State Space Models](unhippo_uncertainty-aware_initialization_for_state_space_models.md)**
 
 :   本文扩展了 HiPPO 理论以处理带噪声的测量数据，将 SSM 的初始化问题重新表述为线性随机控制问题，推导出不确定性感知的动力学初始化方案，在不增加运行时间的前提下显著提升 SSM 的噪声鲁棒性。
-
-**[WGFormer: An SE(3)-Transformer Driven by Wasserstein Gradient Flows for Molecular Generation](wgformer_an_se3-transformer_driven_by_wasserstein_gradient_flows_for_molecular_g.md)**
-
-:   本文提出 WGFormer，一种由 Wasserstein 梯度流驱动的 SE(3)-Transformer，在自编码器框架内通过最小化原子潜在混合模型上的能量函数来优化分子构象，在基态构象预测任务上一致超越 SOTA。

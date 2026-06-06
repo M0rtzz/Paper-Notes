@@ -143,8 +143,8 @@ $$d_c(x) = \min_{k \leq K_c} \sqrt{(x - \mu_{c,k})^\top \Sigma_{c,k}^{-1} (x - \
 - [\[ICCV 2025\] iManip: Skill-Incremental Learning for Robotic Manipulation](../../ICCV2025/robotics/imanip_skill-incremental_learning_for_robotic_manipulation.md)
 - [\[NeurIPS 2025\] Understanding Prompt Tuning and In-Context Learning via Meta-Learning](understanding_prompt_tuning_and_in-context_learning_via_meta-learning.md)
 - [\[NeurIPS 2025\] Learning Spatial-Aware Manipulation Ordering](learning_spatial-aware_manipulation_ordering.md)
-- [\[ICML 2025\] Efficient Robotic Policy Learning via Latent Space Backward Planning](../../ICML2025/robotics/efficient_robotic_policy_learning_via_latent_space_backward_planning.md)
 - [\[CVPR 2026\] AtomicVLA: Unlocking the Potential of Atomic Skill Learning in Robots](../../CVPR2026/robotics/atomicvla_unlocking_the_potential_of_atomic_skill_learning_in_robots.md)
+- [\[ICML 2025\] Efficient Robotic Policy Learning via Latent Space Backward Planning](../../ICML2025/robotics/efficient_robotic_policy_learning_via_latent_space_backward_planning.md)
 
 </div>
 

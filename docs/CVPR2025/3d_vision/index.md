@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 3D 视觉方向367篇论文解读
+  CVPR2025 3D 视觉方向365篇论文解读
 description: >-
-  367篇CVPR2025的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、三维重建、点云、语义分割、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  365篇CVPR2025的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、三维重建、点云、语义分割、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "3D 视觉"
@@ -19,9 +19,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**📷 CVPR2025** · **367** 篇论文解读
+**📷 CVPR2025** · **365** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (8)](../../ICML2026/3d_vision/index.md) · [📷 CVPR2026 (230)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (63)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (76)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (112)](../../NeurIPS2025/3d_vision/index.md) · [📹 ICCV2025 (263)](../../ICCV2025/3d_vision/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (62)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (76)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (112)](../../NeurIPS2025/3d_vision/index.md)
 
 🔥 **高频主题：** 3D 高斯渲染 ×61 · 扩散模型 ×27 · 三维重建 ×18 · 点云 ×16 · 语义分割 ×15
 
@@ -474,10 +474,6 @@ tags:
 **[Functionality Understanding and Segmentation in 3D Scenes](functionality_understanding_and_segmentation_in_3d_scenes.md)**
 
 :   Fun3DU 首次提出针对 3D 场景功能性理解的方法，通过 LLM 链式思维解析任务描述 + VLM 多视角分割功能性物体 + 2D-3D 投票聚合，在 SceneFun3D 上大幅超越开放词汇 3D 分割基线（mIoU +13.2）。
-
-**[GA3CE: Unconstrained 3D Gaze Estimation with Gaze-Aware 3D Context Encoding](ga3ce_unconstrained_3d_gaze_estimation_with_gaze-aware_3d_context_encoding.md)**
-
-:   提出 GA3CE 方法，通过将主体 3D 姿态和场景物体位置编码到以主体为中心的自我中心空间中，并设计方向-距离分解的 D3 位置编码，在 Transformer 中学习 3D 注视方向与场景上下文的空间关系，在无约束设置下将 3D 注视角度误差降低 13%–37%。
 
 **[GASP: Gaussian Avatars with Synthetic Priors](gasp_gaussian_avatars_with_synthetic_priors.md)**
 
@@ -1390,10 +1386,6 @@ tags:
 **[Towards Realistic Example-Based Modeling via 3D Gaussian Stitching](towards_realistic_example-based_modeling_via_3d_gaussian_stitching.md)**
 
 :   提出首个基于 3D 高斯表示的真实感示例建模方法，通过采样式克隆（S-phase）和聚类式调优（T-phase）实现多个 3D 高斯场的无缝拼接与和谐外观融合，支持交互式实时编辑。
-
-**[Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)**
-
-:   本文提出 World Scene Graph Generation (WSGG) 任务和 ActionGenome4D 数据集，将视频场景图从以帧为中心的 2D 表示升级为以世界为中心的 4D 表示，要求模型对所有物体（包括被遮挡或离开视野的不可见物体）在世界坐标系中进行 3D 定位和关系预测，并提出三种互补方法（PWG/MWAE/4DST）探索不同的不可见物体推理归纳偏置。
 
 **[TreeMeshGPT: Artistic Mesh Generation with Autoregressive Tree Sequencing](treemeshgpt_artistic_mesh_generation_with_autoregressive_tree_sequencing.md)**
 

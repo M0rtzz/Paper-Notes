@@ -139,7 +139,7 @@ CRTR 的核心改动极其简洁——仅修改对比学习中的负采样方式
 - [\[NeurIPS 2025\] The Complexity of Finding Local Optima in Contrastive Learning](the_complexity_of_finding_local_optima_in_contrastive_learning.md)
 - [\[CVPR 2025\] UniSTD: Towards Unified Spatio-Temporal Learning Across Diverse Disciplines](../../CVPR2025/self_supervised/unistd_towards_unified_spatio-temporal_learning_across_diverse_disciplines.md)
 - [\[ICLR 2026\] Temporal Slowness in Central Vision Drives Semantic Object Learning](../../ICLR2026/self_supervised/temporal_slowness_in_central_vision_drives_semantic_object_learning.md)
-- [\[ICML 2026\] Provable Accuracy Collapse in Embedding-Based Representations under Dimensionality Mismatch](../../ICML2026/self_supervised/provable_accuracy_collapse_in_embedding-based_representations_under_dimensionali.md)
+- [\[ICML 2025\] CLARIFY: Contrastive Preference Reinforcement Learning for Untangling Ambiguous Queries](../../ICML2025/self_supervised/clarify_contrastive_preference_reinforcement_learning_for_untangling_ambiguous_q.md)
 
 </div>
 

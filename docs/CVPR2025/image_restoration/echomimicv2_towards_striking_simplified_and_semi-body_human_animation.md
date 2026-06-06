@@ -116,10 +116,10 @@ PhD Loss = 按去噪时步加权的三段式损失。CelebV-HQ 视频训练。
 ## 相关论文
 
 - [\[ICLR 2026\] InterActHuman: Multi-Concept Human Animation with Layout-Aligned Audio Conditions](../../ICLR2026/image_restoration/interacthuman_multi-concept_human_animation_with_layout-aligned_audio_conditions.md)
+- [\[ICML 2026\] Semi-Supervised Neural Super-Resolution for Mesh-Based Simulations](../../ICML2026/image_restoration/semi-supervised_neural_super-resolution_for_mesh-based_simulations.md)
 - [\[CVPR 2025\] DiffFNO: Diffusion Fourier Neural Operator](difffno_diffusion_fourier_neural_operator.md)
 - [\[CVPR 2025\] Detail-Preserving Latent Diffusion for Stable Shadow Removal](detail-preserving_latent_diffusion_for_stable_shadow_removal.md)
 - [\[CVPR 2025\] INFP: Audio-Driven Interactive Head Generation in Dyadic Conversations](infp_audio-driven_interactive_head_generation_in_dyadic_conversations.md)
-- [\[CVPR 2025\] Pixel-level and Semantic-level Adjustable Super-resolution: A Dual-LoRA Approach](pixel-level_and_semantic-level_adjustable_super-resolution_a_dual-lora_approach.md)
 
 </div>
 

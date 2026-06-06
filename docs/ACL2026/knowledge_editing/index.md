@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 知识编辑方向7篇论文解读
+  ACL2026 知识编辑方向9篇论文解读
 description: >-
-  7篇ACL2026的知识编辑方向论文解读，涵盖 LLM、对齐/RLHF、对抗鲁棒、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  9篇ACL2026的知识编辑方向论文解读，涵盖 LLM、对齐/RLHF、对抗鲁棒、强化学习、人脸/视线等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "知识编辑"
@@ -12,14 +12,17 @@ tags:
   - "对齐/RLHF"
   - "对抗鲁棒"
   - "强化学习"
+  - "人脸/视线"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✏️ 知识编辑
 
-**💬 ACL2026** · **7** 篇论文解读
+**💬 ACL2026** · **9** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/knowledge_editing/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/knowledge_editing/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/knowledge_editing/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/knowledge_editing/index.md) · [🧠 NeurIPS2025 (6)](../../NeurIPS2025/knowledge_editing/index.md) · [🧪 ICML2025 (2)](../../ICML2025/knowledge_editing/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (8)](../../ICML2026/knowledge_editing/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/knowledge_editing/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/knowledge_editing/index.md) · [🤖 AAAI2026 (5)](../../AAAI2026/knowledge_editing/index.md) · [🧠 NeurIPS2025 (6)](../../NeurIPS2025/knowledge_editing/index.md) · [🧪 ICML2025 (2)](../../ICML2025/knowledge_editing/index.md)
+
+🔥 **高频主题：** LLM ×2
 
 **[Aligning Language Models with Real-time Knowledge Editing](aligning_language_models_with_real-time_knowledge_editing.md)**
 
@@ -41,6 +44,10 @@ tags:
 
 :   HiEdit 用分层强化学习把"终身模型编辑"拆成 high-level 选层 + low-level 算梯度更新两个子任务，让 hypernetwork 按知识自适应地只动一半的层，把强基线 RLEdit 平均再提 8.48%。
 
+**[One Mask to Rule Them All: On Hidden Facts after Editing and How to Find Them](one_mask_to_rule_them_all_on_hidden_facts_after_editing_and_how_to_find_them.md)**
+
+:   这篇论文发现 ROME / MEMIT 并没有真正覆盖旧知识，而是通过共享的过度注意力机制压制旧知识；一个稀疏二值 mask 就能反转多数编辑，并把新编辑成功率从 98% 降到 38%。
+
 **[Representation Interventions Enable Lifelong Knowledge Memory Control in LLMs](representation_interventions_enable_lifelong_knowledge_memory_control_in_llms.md)**
 
 :   这篇论文提出 RILKE，把终身知识编辑从“改模型权重”转成“在隐藏表示空间施加低秩干预”，通过鲁棒训练、查询自适应路由和共享子空间模块，在 1,000 次非结构化知识编辑后仍保持接近满分的编辑成功率和较好的泛化能力，同时显著降低存储开销。
@@ -48,3 +55,7 @@ tags:
 **[Spectral Characterization and Mitigation of Sequential Knowledge Editing Collapse](spectral_characterization_and_mitigation_of_sequential_knowledge_editing_collaps.md)**
 
 :   论文从 SVD 谱结构解释顺序知识编辑为何会让 LLM 一般能力崩溃，并提出 REVIVE，在原始权重的奇异向量基中滤除会干扰 dominant singular subspace 的更新分量，使 MEMIT、RECT、AlphaEdit 等编辑器在 10,000 到 20,000 次连续编辑下同时保持编辑成功率和通用能力。
+
+**[The Model Agreed, But Didn't Learn: Diagnosing Surface Compliance in Large Language Models](the_model_agreed_but_didn39t_learn_diagnosing_surface_compliance_in_large_langua.md)**
+
+:   提出 SA-MCQ 诊断框架揭示知识编辑中的"表面合规"现象——编辑器在标准基准上达到高分但并未真正覆写内部信念，模型在判别式自评中会回退到原始参数记忆，递归编辑还会累积表征残留导致认知不稳定。

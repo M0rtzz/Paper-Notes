@@ -128,10 +128,10 @@ tags:
 ## 相关论文
 
 - [\[AAAI 2026\] Beyond World Models: Rethinking Understanding in AI Models](beyond_world_models_rethinking_understanding_in_ai_models.md)
+- [\[ICML 2026\] Knowing Isn't Understanding: Re-Grounding Generative Proactivity with Epistemic and Behavioral Insight](../../ICML2026/others/knowing_isnt_understanding_re-grounding_generative_proactivity_with_epistemic_an.md)
 - [\[NeurIPS 2025\] 4DGT: Learning a 4D Gaussian Transformer Using Real-World Monocular Videos](../../NeurIPS2025/others/4dgt_learning_a_4d_gaussian_transformer_using_realworld_mono.md)
 - [\[ACL 2025\] Generating Synthetic Relational Tabular Data via Structural Causal Models](../../ACL2025/others/generating_synthetic_relational_tabular_data_via_structural_causal_models.md)
 - [\[ACL 2025\] Predicting Through Generation: Why Generation Is Better for Prediction](../../ACL2025/others/predicting_through_generation_why_generation_is_better_for_prediction.md)
-- [\[CVPR 2026\] Crowdsourcing of Real-world Image Annotation via Visual Properties](../../CVPR2026/others/crowdsourcing_of_real_world_image_annotation_via_visual_properties.md)
 
 </div>
 

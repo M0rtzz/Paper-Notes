@@ -2,11 +2,15 @@
 title: >-
   [论文解读] Efficient Test-Time Scaling via Temporal Reasoning Aggregation
 description: >-
-  [ACL 2026][LLM推理][待补充] 待深读论文后补充
+  [ACL 2026][LLM推理][测试时扩展] 提出 TRACE 框架，通过在滑动窗口内聚合多步答案一致性和置信度轨迹两种互补信号来判断推理是否收敛，实现无需训练的动态早退，在减少25-30% token 用量的同时准确率仅降1-2%。
 tags:
   - "ACL 2026"
   - "LLM推理"
-  - "待补充"
+  - "测试时扩展"
+  - "早退策略"
+  - "推理收敛"
+  - "多步聚合"
+  - "过度思考"
 ---
 
 # Efficient Test-Time Scaling via Temporal Reasoning Aggregation
@@ -113,33 +117,19 @@ TRACE 是无训练的推理时方法，直接应用于现成模型。在 Qwen3-8
 - 新颖性: ⭐⭐⭐⭐ 多步聚合的思路自然合理，ACS+CTS 的设计巧妙但技术上不复杂
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个数学基准+2个模型+多种基线+详细消融，非常充分
 - 写作质量: ⭐⭐⭐⭐ 动机通过实验清晰建立，方法描述简洁
-**代码**: 待确认  
-**领域**: llm_reasoning  
-**关键词**: 待补充
 
-## 一句话总结
-待深读论文后补充
+<!-- RELATED:START -->
 
-## 研究背景与动机
-待深读论文后补充
+<div class="related-papers" markdown="1">
 
-## 方法详解
-待深读论文后补充
+## 相关论文
 
-## 实验关键数据
-待深读论文后补充
+- [\[ICLR 2026\] Plan and Budget: Effective and Efficient Test-Time Scaling on Reasoning LLMs](../../ICLR2026/llm_reasoning/plan_and_budget_effective_and_efficient_test-time_scaling_on_reasoning_large_lan.md)
+- [\[ACL 2026\] ReProbe: Efficient Test-Time Scaling of Multi-Step Reasoning by Probing Internal States of Large Language Models](reprobe_efficient_test-time_scaling_of_multi-step_reasoning_by_probing_internal_.md)
+- [\[ACL 2026\] FS-Researcher: Test-Time Scaling for Long-Horizon Research Tasks with File-System-Based Agents](fs-researcher_test-time_scaling_for_long-horizon_research_tasks_with_file-system.md)
+- [\[ICLR 2026\] Efficient Test-Time Scaling for Small Vision-Language Models](../../ICLR2026/llm_reasoning/efficient_test-time_scaling_for_small_vision-language_models.md)
+- [\[ACL 2026\] Parallel Test-Time Scaling for Latent Reasoning Models](parallel_test-time_scaling_for_latent_reasoning_models.md)
 
-## 亮点与洞察
-待深读论文后补充
+</div>
 
-## 局限性 / 可改进方向
-待深读论文后补充
-
-## 相关工作与启发
-待深读论文后补充
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
+<!-- RELATED:END -->

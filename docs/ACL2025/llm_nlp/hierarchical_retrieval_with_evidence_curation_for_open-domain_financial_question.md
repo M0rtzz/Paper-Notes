@@ -175,7 +175,7 @@ HiREC + DeepSeek-14B (38.76) 超越 Dense + GPT-4o (29.22) 达 9%+，说明高�
 - [\[ACL 2025\] Enhancing Open-Domain Task-Solving Capability of LLMs via Autonomous Tool Integration from GitHub](paper_2312_17294.md)
 - [\[ACL 2025\] ATRIE: Automating Legal Interpretation with LLMs: Retrieval, Generation, and Evaluation](atrie_legal_interpretation.md)
 - [\[ACL 2025\] Investigating Context-Faithfulness in Large Language Models: The Roles of Memory Strength and Evidence Style](investigating_context-faithfulness_in_large_language_models_the_roles_of_memory_.md)
-- [\[ACL 2025\] Masking in Multi-hop QA: How LMs Perform with Context Permutation](masking_in_multi-hop_qa_an_analysis_of_how_language_models_perform_with_context_.md)
+- [\[ACL 2025\] TrimLLM: Progressive Layer Dropping for Domain-Specific LLMs](trimllm_layer_dropping.md)
 
 </div>
 

@@ -149,11 +149,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICLR 2026\] When Machine Learning Gets Personal: Evaluating Prediction and Explanation](../../ICLR2026/interpretability/when_machine_learning_gets_personal_evaluating_prediction_and_explanation.md)
-- [\[AAAI 2026\] GenePheno: Interpretable Gene Knockout-Induced Phenotype Abnormality Prediction Framework](../../AAAI2026/interpretability/genepheno_interpretable_gene_knockout-induced_phenotype_abnormality_prediction_f.md)
+- [\[ICML 2026\] PINE: Pruning Boosted Tree Ensembles with Conformal In-Distribution Prediction Equivalence](../../ICML2026/interpretability/pine_pruning_boosted_tree_ensembles_with_conformal_in-distribution_prediction_eq.md)
 - [\[ICML 2025\] Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
 - [\[ICML 2025\] Sum-of-Parts: Self-Attributing Neural Networks with End-to-End Learning of Feature Groups](sum-of-parts_self-attributing_neural_networks_with_end-to-end_learning_of_featur.md)
-- [\[ICML 2025\] Concept-Based Unsupervised Domain Adaptation](concept-based_unsupervised_domain_adaptation.md)
+- [\[ICML 2026\] ShaplEIG: Bayesian Experimental Design for Shapley Value Estimation](../../ICML2026/interpretability/shapleig_bayesian_experimental_design_for_shapley_value_estimation.md)
+- [\[ICML 2026\] Bridging the Knowledge-Prediction Gap in LLMs on Multiple-Choice Questions](../../ICML2026/interpretability/bridging_the_knowledge-prediction_gap_in_llms_on_multiple-choice_questions.md)
 
 </div>
 

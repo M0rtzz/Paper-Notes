@@ -121,12 +121,6 @@ Gemma2-9b 在 TriviaQA / MMLU 上的训练目标消融（ECE↓）：
 - 写作质量: ⭐⭐⭐⭐ 诊断-方法-验证三段式逻辑清晰，公式与 takeaway 段落突出。
 - 价值: ⭐⭐⭐⭐ 对部署黑盒 LLM 的可信化（医疗/法律）有直接帮助，且与 ConfTuner 等正交，可插拔。
 
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">

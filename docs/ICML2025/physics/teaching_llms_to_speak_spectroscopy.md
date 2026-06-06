@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Teaching LLMs to Speak Spectroscopy
 description: >-
-  [ICML 2025 (ML4Astro Workshop)][物理学][LLM 微调] 仅使用 16 GPU 小时和 0.04% 的参数适配，通过 LoRA 将 **LLaMA-3.1-8B** 改造为可从光谱数据预测星系红移的模型，同时保留 85%+ 的语言能力，证明通用 LLM 可高效适配非文本科学模态…
+  [ICML 2025 (ML4Astro Workshop)][物理/科学计算][LLM 微调] 仅使用 16 GPU 小时和 0.04% 的参数适配，通过 LoRA 将 **LLaMA-3.1-8B** 改造为可从光谱数据预测星系红移的模型，同时保留 85%+ 的语言能力…
 tags:
   - "ICML 2025 (ML4Astro Workshop)"
-  - "物理学"
+  - "物理/科学计算"
   - "LLM 微调"
   - "LoRA"
   - "光谱分析"
@@ -173,11 +173,11 @@ $$W + \Delta W = W + BA, \quad B \in \mathbb{R}^{d \times r}, A \in \mathbb{R}^{
 
 ## 相关论文
 
+- [\[ICML 2026\] Teaching Molecular Dynamics to a Non-Autoregressive Ionic Transport Predictor](../../ICML2026/physics/teaching_molecular_dynamics_to_a_non-autoregressive_ionic_transport_predictor.md)
 - [\[ICML 2025\] Finetuning Stellar Spectra Foundation Models with LoRA](finetuning_stellar_spectra_foundation_models_with_lora.md)
 - [\[ICML 2025\] Rethink the Role of Deep Learning towards Large-scale Quantum Systems](rethink_the_role_of_deep_learning_towards_large-scale_quantum_systems.md)
 - [\[ICML 2025\] Mixture-of-Expert Variational Autoencoders for Cross-Modality Embedding of Type Ia Supernova Data](mixture-of-expert_variational_autoencoders_for_cross-modality_embedding_of_type_.md)
 - [\[ICML 2025\] Compact Matrix Quantum Group Equivariant Neural Networks](compact_matrix_quantum_group_equivariant_neural_networks.md)
-- [\[ICML 2025\] Gravity-Bench-v1: A Benchmark on Gravitational Physics Discovery for Agents](gravity-bench-v1_a_benchmark_on_gravitational_physics_discovery_for_agents.md)
 
 </div>
 

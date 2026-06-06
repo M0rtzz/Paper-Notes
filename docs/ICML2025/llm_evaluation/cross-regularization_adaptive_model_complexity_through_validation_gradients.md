@@ -153,8 +153,8 @@ $$f_{\text{val}}(x) = \frac{1}{K} \sum_{k=1}^K f(x, \epsilon_k)$$
 - [\[CVPR 2025\] Uncertainty Weighted Gradients for Model Calibration](../../CVPR2025/llm_evaluation/uncertainty_weighted_gradients_for_model_calibration.md)
 - [\[ICML 2025\] Random Registers for Cross-Domain Few-Shot Learning](random_registers_for_cross-domain_few-shot_learning.md)
 - [\[ICML 2025\] CostFilter-AD: Enhancing Anomaly Detection through Matching Cost Filtering](costfilter-ad_enhancing_anomaly_detection_through_matching_cost_filtering.md)
-- [\[CVPR 2026\] ACE-Merging: Data-Free Model Merging with Adaptive Covariance Estimation](../../CVPR2026/llm_evaluation/ace-merging_data-free_model_merging_with_adaptive_covariance_estimation.md)
 - [\[ACL 2025\] Can External Validation Tools Improve Annotation Quality for LLM-as-a-Judge?](../../ACL2025/llm_evaluation/can_external_validation_tools_improve_annotation_quality_for_llm-as-a-judge.md)
+- [\[ACL 2025\] CuLEmo: Cultural Lenses on Emotion - Benchmarking LLMs for Cross-Cultural Emotion Understanding](../../ACL2025/llm_evaluation/culemo_cultural_lenses_on_emotion_-_benchmarking_llms_for_cross-cultural_emotion.md)
 
 </div>
 

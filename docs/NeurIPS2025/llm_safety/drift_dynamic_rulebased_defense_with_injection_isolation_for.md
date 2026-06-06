@@ -2,10 +2,10 @@
 title: >-
   [论文解读] DRIFT: Dynamic Rule-Based Defense with Injection Isolation for Securing LLM Agents
 description: >-
-  [NeurIPS 2025][LLM Agent][提示学习] 提出 DRIFT 系统级 Agent 安全框架，通过 Secure Planner（预规划函数轨迹+参数检查表）、Dynamic Validator（基于 Read/Write/Execute 权限的动态策略更新）和 Injection Isol…
+  [NeurIPS 2025][LLM安全][提示学习] 提出 DRIFT 系统级 Agent 安全框架，通过 Secure Planner（预规划函数轨迹+参数检查表）、Dynamic Validator（基于 Read/Write/Execute 权限的动态策略更新）和 Injection Isolator…
 tags:
   - "NeurIPS 2025"
-  - "LLM Agent"
+  - "LLM安全"
   - "提示学习"
   - "agent security"
   - "dynamic policy"
@@ -128,8 +128,8 @@ Planner 提供强安全但大幅牺牲 utility；Validator 恢复 utility（+22%
 
 - [\[ACL 2025\] Defense Against Prompt Injection Attack by Leveraging Attack Techniques](../../ACL2025/llm_safety/defense_prompt_injection.md)
 - [\[NeurIPS 2025\] Attractive Metadata Attack: Inducing LLM Agents to Invoke Malicious Tools](attractive_metadata_attack_inducing_llm_agents_to_invoke_malicious_tools.md)
-- [\[NeurIPS 2025\] AgentDAM: Privacy Leakage Evaluation for Autonomous Web Agents](agentdam_privacy_leakage_evaluation_for_autonomous_web_agent.md)
 - [\[NeurIPS 2025\] Securing the Language of Life: Inheritable Watermarks from DNA Language Models to Proteins](securing_the_language_of_life_inheritable_watermarks_from_dna_language_models_to.md)
+- [\[NeurIPS 2025\] AgentDAM: Privacy Leakage Evaluation for Autonomous Web Agents](agentdam_privacy_leakage_evaluation_for_autonomous_web_agent.md)
 - [\[NeurIPS 2025\] ReliabilityRAG: Effective and Provably Robust Defense for RAG-based Web-Search](reliabilityrag_effective_and_provably_robust_defense_for_rag-based_web-search.md)
 
 </div>

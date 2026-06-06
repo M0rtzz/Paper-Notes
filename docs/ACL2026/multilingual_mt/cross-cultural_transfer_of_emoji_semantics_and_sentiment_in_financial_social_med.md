@@ -134,24 +134,17 @@ TF-IDF+LR 走标准 L2 正则；XLM-R 和 ByT5 都做标准 cross-entropy 微调
 - 写作质量: ⭐⭐⭐⭐ 逻辑链清楚（分层度量 → 迁移验证），表格信息密度高；个别地方公式排版略乱（OCR 抽取的副作用）。
 - 价值: ⭐⭐⭐⭐ 对金融 NLP 系统、跨语言情感工具实际部署有直接指导意义；emoji-only 模型的极低 cross-platform gap 是非常 actionable 的工程结论。
 
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">
 
 ## 相关论文
 
+- [\[ACL 2026\] PluRule: A Benchmark for Moderating Pluralistic Communities on Social Media](plurule_a_benchmark_for_moderating_pluralistic_communities_on_social_media.md)
 - [\[ACL 2025\] Cross-Lingual Transfer of Cultural Knowledge: An Asymmetric Phenomenon](../../ACL2025/multilingual_mt/cross-lingual_transfer_of_cultural_knowledge_an_asymmetric_phenomenon.md)
 - [\[CVPR 2025\] SMTPD: A New Benchmark for Temporal Prediction of Social Media Popularity](../../CVPR2025/multilingual_mt/smtpd_a_new_benchmark_for_temporal_prediction_of_social_media_popularity.md)
 - [\[ACL 2026\] What Factors Affect LLMs and RLLMs in Financial Question Answering?](what_factors_affect_llms_and_rllms_in_financial_question_answering.md)
 - [\[ACL 2026\] Why Low-Resource NLP Needs More Than Cross-Lingual Transfer: Lessons Learned from Luxembourgish](why_low-resource_nlp_needs_more_than_cross-lingual_transfer_lessons_learned_from.md)
-- [\[ACL 2026\] Efficient Training for Cross-lingual Speech Language Models](efficient_training_for_cross-lingual_speech_language_models.md)
 
 </div>
 

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ModHiFi: Identifying High Fidelity Predictive Components for Model Modification
 description: >-
-  [NeurIPS 2025][模型压缩][model modification] 提出 Subset Fidelity 度量和 ModHiFi 框架，通过理论证明 Lipschitz 连续网络的局部重构误差线性上界全局误差，无需训练数据、损失函数或梯度，仅用合成数据即可识别模型中的高保真 (HiFi) 组件…
+  [NeurIPS 2025][LLM安全][model modification] 提出 Subset Fidelity 度量和 ModHiFi 框架，通过理论证明 Lipschitz 连续网络的局部重构误差线性上界全局误差，无需训练数据、损失函数或梯度，仅用合成数据即可识别模型中的高保真 (HiFi) 组件…
 tags:
   - "NeurIPS 2025"
-  - "模型压缩"
+  - "LLM安全"
   - "model modification"
   - "剪枝"
   - "machine unlearning"

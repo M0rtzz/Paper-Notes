@@ -137,7 +137,7 @@ tags:
 - [\[ECCV 2024\] Simple Unsupervised Knowledge Distillation With Space Similarity](simple_unsupervised_knowledge_distillation_with_space_similarity.md)
 - [\[ECCV 2024\] Improving Zero-Shot Generalization for CLIP with Variational Adapter](improving_zero-shot_generalization_for_clip_with_variational_adapter.md)
 - [\[ECCV 2024\] Leveraging Hierarchical Feature Sharing for Efficient Dataset Condensation](leveraging_hierarchical_feature_sharing_for_efficient_dataset_condensation.md)
-- [\[ICCV 2025\] Knowledge Distillation with Refined Logits](../../ICCV2025/model_compression/knowledge_distillation_with_refined_logits.md)
+- [\[AAAI 2026\] Distilling Cross-Modal Knowledge via Feature Disentanglement](../../AAAI2026/model_compression/distilling_cross-modal_knowledge_via_feature_disentanglement.md)
 
 </div>
 

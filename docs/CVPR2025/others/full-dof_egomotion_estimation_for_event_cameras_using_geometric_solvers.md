@@ -133,9 +133,9 @@ tags:
 
 - [\[CVPR 2025\] Order-One Rolling Shutter Cameras](order-one_rolling_shutter_cameras.md)
 - [\[AAAI 2026\] Spike Imaging Velocimetry: Dense Motion Estimation of Fluids Using Spike Cameras](../../AAAI2026/others/spike_imaging_velocimetry_dense_motion_estimation_of_fluids_using_spike_cameras.md)
-- [\[NeurIPS 2025\] OrthoLoC: UAV 6-DoF Localization and Calibration Using Orthographic Geodata](../../NeurIPS2025/others/ortholoc_uav_6-dof_localization_and_calibration_using_orthographic_geodata.md)
 - [\[ECCV 2024\] Event-based Mosaicing Bundle Adjustment](../../ECCV2024/others/event-based_mosaicing_bundle_adjustment.md)
 - [\[ICML 2025\] Lightspeed Geometric Dataset Distance via Sliced Optimal Transport](../../ICML2025/others/lightspeed_geometric_dataset_distance_via_sliced_optimal_transport.md)
+- [\[NeurIPS 2025\] Coreset for Robust Geometric Median: Eliminating Size Dependency on Outliers](../../NeurIPS2025/others/coreset_for_robust_geometric_median_eliminating_size_dependency_on_outliers.md)
 
 </div>
 

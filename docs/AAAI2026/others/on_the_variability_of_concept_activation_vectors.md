@@ -139,7 +139,7 @@ tags:
 - [\[ACL 2025\] Partial Colexifications Improve Concept Embeddings](../../ACL2025/others/partial_colexifications_improve_concept_embeddings.md)
 - [\[NeurIPS 2025\] FACE: Faithful Automatic Concept Extraction](../../NeurIPS2025/others/face_faithful_automatic_concept_extraction.md)
 - [\[ACL 2025\] Synthia: Novel Concept Design with Affordance Composition](../../ACL2025/others/synthia_novel_concept_design_with_affordance_composition.md)
-- [\[CVPR 2026\] U-F²-CBM: CLIP-Free, Label Free, Unsupervised Concept Bottleneck Models](../../CVPR2026/others/clipfree_label_free_unsupervised_concept_bottlenec.md)
+- [\[NeurIPS 2025\] Obliviator Reveals the Cost of Nonlinear Guardedness in Concept Erasure](../../NeurIPS2025/others/obliviator_reveals_the_cost_of_nonlinear_guardedness_in_concept_erasure.md)
 
 </div>
 

@@ -129,8 +129,8 @@ tags:
 - [\[ICCV 2025\] HiNeuS: High-fidelity Neural Surface Mitigating Low-texture and Reflective Ambiguity](../../ICCV2025/others/hineus_high-fidelity_neural_surface_mitigating_low-texture_and_reflective_ambigu.md)
 - [\[ECCV 2024\] PISR: Polarimetric Neural Implicit Surface Reconstruction for Textureless and Specular Objects](../../ECCV2024/others/pisr_polarimetric_neural_implicit_surface_reconstruction_for_textureless_and_spe.md)
 - [\[CVPR 2025\] Regor: Progressive Correspondence Regenerator for Robust 3D Registration](progressive_correspondence_regenerator_for_robust_3d_registration.md)
-- [\[NeurIPS 2025\] A Theoretical Framework for Grokking: Interpolation followed by Riemannian Norm Minimisation](../../NeurIPS2025/others/a_theoretical_framework_for_grokking_interpolation_followed_by_riemannian_norm_m.md)
 - [\[ICCV 2025\] Jigsaw++: Imagining Complete Shape Priors for Object Reassembly](../../ICCV2025/others/jigsaw_imagining_complete_shape_priors_for_object_reassembly.md)
+- [\[NeurIPS 2025\] A Theoretical Framework for Grokking: Interpolation followed by Riemannian Norm Minimisation](../../NeurIPS2025/others/a_theoretical_framework_for_grokking_interpolation_followed_by_riemannian_norm_m.md)
 
 </div>
 

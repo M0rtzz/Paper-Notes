@@ -148,10 +148,10 @@ $$\mathcal{L} = \|\hat{\mathbf{x}} - \mathbf{x}\|_2^2 + \lambda_1 \|\hat{\mathbf
 ## 相关论文
 
 - [\[NeurIPS 2025\] SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders](saemark_steering_personalized_multilingual_llm_watermarks_with_sparse_autoencode.md)
-- [\[ICML 2025\] Sorbet: A Neuromorphic Hardware-Compatible Transformer-Based Spiking Language Model](../../ICML2025/llm_safety/sorbet_a_neuromorphic_hardware-compatible_transformer-based_spiking_language_mod.md)
 - [\[NeurIPS 2025\] PatientSim: A Persona-Driven Simulator for Realistic Doctor-Patient Interactions](patientsim_a_persona-driven_simulator_for_realistic_doctor-patient_interactions.md)
+- [\[ICML 2025\] Sorbet: A Neuromorphic Hardware-Compatible Transformer-Based Spiking Language Model](../../ICML2025/llm_safety/sorbet_a_neuromorphic_hardware-compatible_transformer-based_spiking_language_mod.md)
+- [\[ICML 2026\] Gradient Transformer: Learning to Generate Updates for LLMs](../../ICML2026/llm_safety/gradient_transformer_learning_to_generate_updates_for_llms.md)
 - [\[AAAI 2026\] Hallucination Stations: On Some Basic Limitations of Transformer-Based Language Models](../../AAAI2026/llm_safety/hallucination_stations_on_some_basic_limitations_of_transformer-based_language_m.md)
-- [\[AAAI 2026\] Ghost in the Transformer: Detecting Model Reuse with Invariant Spectral Signatures](../../AAAI2026/llm_safety/ghost_in_the_transformer_detecting_model_reuse_with_invariant_spectral_signature.md)
 
 </div>
 

@@ -128,8 +128,8 @@ tags:
 
 - [\[NeurIPS 2025\] Learning Dynamics of RNNs in Closed-Loop Environments](learning_dynamics_of_rnns_in_closed-loop_environments.md)
 - [\[ICLR 2026\] Addressing Divergent Representations from Causal Interventions on Neural Networks](../../ICLR2026/others/addressing_divergent_representations_causal.md)
+- [\[ACL 2025\] ACT: Knowledgeable Agents to Design and Perform Complex Tasks](../../ACL2025/others/act_knowledgeable_agents_to_design_and_perform_complex_tasks.md)
 - [\[NeurIPS 2025\] An Empirical Investigation of Neural ODEs and Symbolic Regression for Dynamical Systems](an_empirical_investigation_of_neural_odes_and_symbolic_regression_for_dynamical_.md)
-- [\[ICML 2025\] SUICA: Learning Super-high Dimensional Sparse Implicit Neural Representations for Spatial Transcriptomics](../../ICML2025/others/suica_learning_super-high_dimensional_sparse_implicit_neural_representations_for.md)
 - [\[ICML 2025\] On the Importance of Gaussianizing Representations](../../ICML2025/others/on_the_importance_of_gaussianizing_representations.md)
 
 </div>

@@ -1,24 +1,27 @@
 ---
 title: >-
-  ACL2026 因果推理方向6篇论文解读
+  ACL2026 因果推理方向7篇论文解读
 description: >-
-  6篇ACL2026的因果推理方向论文解读，涵盖多模态、对抗鲁棒、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  7篇ACL2026的因果推理方向论文解读，涵盖 LLM、推理、多模态、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "因果推理"
   - "论文解读"
   - "论文笔记"
+  - "LLM"
+  - "推理"
   - "多模态"
   - "对抗鲁棒"
-  - "LLM"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔗 因果推理
 
-**💬 ACL2026** · **6** 篇论文解读
+**💬 ACL2026** · **7** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (3)](../../ICML2026/causal_inference/index.md) · [📷 CVPR2026 (3)](../../CVPR2026/causal_inference/index.md) · [🔬 ICLR2026 (17)](../../ICLR2026/causal_inference/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/causal_inference/index.md) · [🧠 NeurIPS2025 (21)](../../NeurIPS2025/causal_inference/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/causal_inference/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/causal_inference/index.md) · [📷 CVPR2026 (3)](../../CVPR2026/causal_inference/index.md) · [🔬 ICLR2026 (17)](../../ICLR2026/causal_inference/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/causal_inference/index.md) · [🧠 NeurIPS2025 (21)](../../NeurIPS2025/causal_inference/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/causal_inference/index.md)
+
+🔥 **高频主题：** LLM ×2
 
 **[Better and Worse with Scale: How Contextual Entrainment Diverges with Model Size](better_and_worse_with_scale_how_contextual_entrainment_diverges_with_model_size.md)**
 
@@ -27,6 +30,10 @@ tags:
 **[ClimateCause: Complex and Implicit Causal Structures in Climate Reports](climatecause_complex_and_implicit_causal_structures_in_climate_reports.md)**
 
 :   ClimateCause 构建了首个针对气候报告中复杂和隐式因果结构的专家标注数据集（874 条因果关系），支持嵌套因果、多事件拆解、相关性方向和时空语境标注，并提出基于因果图语义复杂度的可读性度量，LLM 基准测试显示因果链推理仍是重要挑战。
+
+**[Evaluating Counterfactual Strategic Reasoning in Large Language Models](evaluating_counterfactual_strategic_reasoning_in_large_language_models.md)**
+
+:   本文用重复囚徒困境和石头剪刀布的标签扰动、收益扰动与联合反事实版本评测 LLM 的策略适应能力，发现很多模型在熟悉博弈中看似会玩，但在收益结构改变后仍沿用模板化策略。
 
 **[Function Words as Statistical Cues for Language Learning](function_words_as_statistical_cues_for_language_learning.md)**
 

@@ -180,9 +180,9 @@ $\textsf{GF}\varphi$ 直接构造 vs 最先进约简方法（Table 2）：
 
 - [\[AAAI 2026\] DeepProofLog: Efficient Proving in Deep Stochastic Logic Programs](deepprooflog_efficient_proving_in_deep_stochastic_logic_programs.md)
 - [\[AAAI 2026\] Efficient Multiagent Planning via Shared Action Suggestions](efficient_multiagent_planning_via_shared_action_suggestions.md)
+- [\[ACL 2026\] Good Reasoning Makes Good Demonstrations: Implicit Reasoning Quality Supervision via In-Context Reinforcement Learning](../../ACL2026/reinforcement_learning/good_reasoning_makes_good_demonstrations_implicit_reasoning_quality_supervision_.md)
 - [\[NeurIPS 2025\] Horizon Reduction Makes RL Scalable](../../NeurIPS2025/reinforcement_learning/horizon_reduction_makes_rl_scalable.md)
-- [\[ICLR 2026\] SUSD: Structured Unsupervised Skill Discovery through State Factorization](../../ICLR2026/reinforcement_learning/susd_structured_unsupervised_skill_discovery_through_state_factorization.md)
-- [\[ICML 2026\] Stochastic Minimum-Cost Reach-Avoid Reinforcement Learning](../../ICML2026/reinforcement_learning/stochastic_minimum-cost_reach-avoid_reinforcement_learning.md)
+- [\[ICML 2026\] Laplacian Representations for Decision-Time Planning](../../ICML2026/reinforcement_learning/laplacian_representations_for_decision-time_planning.md)
 
 </div>
 

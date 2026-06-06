@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 LLM 推理方向64篇论文解读
+  ACL2026 LLM 推理方向80篇论文解读
 description: >-
-  64篇ACL2026的 LLM 推理方向论文解读，涵盖推理、LLM、对齐/RLHF、Agent、对抗鲁棒、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  80篇ACL2026的 LLM 推理方向论文解读，涵盖推理、LLM、强化学习、对齐/RLHF、对抗鲁棒、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2026"
   - "LLM 推理"
@@ -10,20 +10,20 @@ tags:
   - "论文笔记"
   - "推理"
   - "LLM"
-  - "对齐/RLHF"
-  - "Agent"
-  - "对抗鲁棒"
   - "强化学习"
+  - "对齐/RLHF"
+  - "对抗鲁棒"
+  - "压缩/编码"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💡 LLM 推理
 
-**💬 ACL2026** · **64** 篇论文解读
+**💬 ACL2026** · **80** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (20)](../../ICML2026/llm_reasoning/index.md) · [📷 CVPR2026 (12)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (63)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (66)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/llm_reasoning/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (62)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (66)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
 
-🔥 **高频主题：** 推理 ×43 · LLM ×15 · 对齐/RLHF ×4 · Agent ×4 · 对抗鲁棒 ×2
+🔥 **高频主题：** 推理 ×56 · LLM ×19 · 强化学习 ×6 · 对齐/RLHF ×4 · 对抗鲁棒 ×3
 
 **[Accurate Legal Reasoning at Scale: Neuro-Symbolic Offloading and Structural Auditability for Robust Legal Adjudication](accurate_legal_reasoning_at_scale_neuro-symbolic_offloading_and_structural_audit.md)**
 
@@ -49,6 +49,10 @@ tags:
 
 :   作者首先证明 GRPO 类算法的"奖励-only"advantage 估计等价于一个对 AUC 不一致的 surrogate（$\phi(t)=-t$，scale-不变性破坏），导致准确率上升的同时相对校准 (perplexity AUC) 持续退化；据此提出 CAPO：把 advantage 换成基于 logistic AUC consistent surrogate 的"成对、uncertainty-aware"形式，再用 reference-model PPL 做去噪 masking，在 Qwen2.5-Math 1.5B/7B 上实现校准 +15~25%、准确率持平或反超 GRPO，AIME 推理时缩放再涨 5%。
 
+**[Can Reasoning Path still be Effective as Input? Bridging Post-Reasoning to Chain-of-Thought Compression](can_reasoning_path_still_be_effective_as_input_bridging_post-reasoning_to_chain-.md)**
+
+:   本文提出 post-reasoning 与 UCoT：先由轻量 compressor 用单次前向生成表示推理路径的 soft tokens，再让 executor 把这些 soft tokens 当作输入上下文进行短输出推理，从而在保持推理准确率的同时显著减少 CoT token 与延迟。
+
 **[Chain-of-Thought as a Lens: Evaluating Structured Reasoning Alignment between Human Preferences and Large Language Models](chain-of-thought_as_a_lens_evaluating_structured_reasoning_alignment_between_hum.md)**
 
 :   本文提出 Alignment Score——一种基于语义熵矩阵的语义级指标，通过比较模型生成的思维链与人类偏好参考链的中间步骤来量化推理对齐度，发现 Alignment Score 与任务准确率、可读性和连贯性高度相关，且 2-hop 推理是对齐的峰值深度。
@@ -60,6 +64,14 @@ tags:
 **[CoAct: Co-Active LLM Preference Learning with Human-AI Synergy](coact_co-active_llm_preference_learning_with_human-ai_synergy.md)**
 
 :   CoAct 在偏好对齐中用自一致性把无标注样本切成"高一致 / 低一致"两堆，再用 k-NN 距离从高一致样本里挑出"自洽但可能错"的隐患样本送给 Oracle 标注，剩下的高一致样本直接当 AI 自标数据，最后用 oracle-verified 样本做 in-context demo 生成新指令，把人和 AI 的监督在一个 DPO 循环里捏成一团，在 GSM8K/MATH/WebInstruct 上比最强基线再涨 4–8 个点。
+
+**[CRISP: Compressing Redundancy in Chain-of-Thought via Intrinsic Saliency Pruning](crisp_compressing_redundancy_in_chain-of-thought_via_intrinsic_saliency_pruning.md)**
+
+:   提出 CRISP 框架，发现 `</think>` token 的注意力模式能可靠区分推理链中的关键步骤和冗余步骤，据此设计四种原子操作的贪心搜索压缩流水线，在保持准确率的同时减少50-60%的 token 用量。
+
+**[CSRP: Chain-of-Thought Reasoning for Chinese Text Correction via Reinforcement Learning with Efficiency-Aware Rewards](csrp_chain-of-thought_reasoning_for_chinese_text_correction_via_reinforcement_le.md)**
+
+:   CSRP 用 CPT、带 CoT rationale 的 SFT 和带 Efficiency-Aware Reward 的 GRPO 三阶段训练中文文本纠错模型，在 NACGEC 上达到 50.99 $F_{0.5}$、在 CSCD 上达到 59.61 F1，并通过显式奖励编辑效率显著缓解 LLM 纠错中的过纠正问题。
 
 **[Decoupling the Effect of Chain-of-Thought Reasoning: A Human Label Variation Perspective](decoupling_the_effect_of_chain-of-thought_reasoning_a_human_label_variation_pers.md)**
 
@@ -105,17 +117,25 @@ tags:
 
 :   提出 CPMI（Contrastive Pointwise Mutual Information），一种高效的自动步级奖励标注方法，通过对比推理步骤对正确答案和错误答案的条件概率变化量来估计步级贡献，比 Monte Carlo 估计减少 84% 构建时间和 98% token 生成量，同时在过程级评估和数学推理基准上取得更高准确率。
 
+**[Efficient Test-Time Scaling via Temporal Reasoning Aggregation](efficient_test-time_scaling_via_temporal_reasoning_aggregation.md)**
+
+:   提出 TRACE 框架，通过在滑动窗口内聚合多步答案一致性和置信度轨迹两种互补信号来判断推理是否收敛，实现无需训练的动态早退，在减少25-30% token 用量的同时准确率仅降1-2%。
+
 **[ETR: Entropy Trend Reward for Efficient Chain-of-Thought Reasoning](etr_entropy_trend_reward_for_efficient_chain-of-thought_reasoning.md)**
 
 :   提出 ETR (Entropy Trend Reward)：用动量加权的逐步熵下降作为 reward shaping 项加进 GRPO，让 LLM 的 CoT 自适应地在 "全局熵下降" 约束下提前收敛，相同正确性下平均压缩 CoT 长度 35–65%；在 DeepSeek-R1-Distill-7B 上带来 +9.9% 准确率同时减少 67% token。
 
-**[Explicit Trait Inference for Multi-Agent Coordination](explicit_trait_inference_for_multi-agent_coordination.md)**
+**[Evo-Attacker: Memory-Augmented Reinforcement Learning for Long-Horizon Tool Attacks on LLM-MAS](evo-attacker_memory-augmented_reinforcement_learning_for_long-horizon_tool_attac.md)**
 
-:   提出显式特质推理（ETI）方法，基于心理学中温暖和能力两个维度让LLM智能体推理并追踪合作伙伴的行为特征，在经济博弈中减少45-77%收益损失，在MultiAgentBench上提升3-29%任务表现。
+:   本文提出 Evo-Attacker，把面向 LLM 多智能体系统的工具返回篡改建模为带动态攻击记忆的长程强化学习问题，并用 Attack-Flow GRPO 优化检索、反思和修改决策，在多架构、多任务 benchmark 上显著降低系统成功率。
 
 **[Failure Modes in Multi-Hop QA: The Weakest Link Effect and the Recognition Bottleneck](failure_modes_in_multi-hop_qa_the_weakest_link_effect_and_the_recognition_bottle.md)**
 
 :   本文提出 Multi-Focus Attention Instruction (MFAI) 作为语义探针，揭示多跳 QA 中的"最弱链效应"——多跳推理性能由最不可见证据的绝对位置决定而非事实间距离，失败主要源于识别瓶颈而非推理缺陷，且 System-2 推理模型能有效抵御位置偏差和误导性注意力线索。
+
+**[FinReporting: An Agentic Workflow for Localized Reporting of Cross-Jurisdiction Financial Disclosures](finreporting_an_agentic_workflow_for_localized_reporting_of_cross-jurisdiction_f.md)**
+
+:   FinReporting 把跨美国、日本、中国财报本地化拆成“规则抽取 + 本体映射 + 受限 LLM 校验/修复 + 人工复核”的可审计 agent workflow，用统一 IS/BS/CF schema 缓解不同司法辖区财务披露格式和会计语义不一致的问题。
 
 **[FS-Researcher: Test-Time Scaling for Long-Horizon Research Tasks with File-System-Based Agents](fs-researcher_test-time_scaling_for_long-horizon_research_tasks_with_file-system.md)**
 
@@ -128,6 +148,10 @@ tags:
 **[HISR: Hindsight Information Modulated Segmental Process Rewards for Multi-turn Agentic Reinforcement Learning](hisr_hindsight_information_modulated_segmental_process_rewards_for_multi-turn_ag.md)**
 
 :   HISR 用 GPT-4o 把 agent 轨迹切成与 sub-goal 对齐的 segment，再让一个 hindsight 模型与 policy 模型的似然比给每段算一个 importance 分数，去 modulate 段级过程奖励——在 Alfworld / Virtualhome / Webshop 上把信用分配做得更靠谱，平均得分较 SPA 涨 5+。
+
+**[How Chain-of-Thought Works? Tracing Information Flow from Decoding, Projection, and Activation](how_chain-of-thought_works_tracing_information_flow_from_decoding_projection_and.md)**
+
+:   这篇论文从解码、概率投影和 FFN 激活三个层面反向追踪 CoT 的信息流，发现 CoT 可能主要通过约束答案结构、降低预测熵，并按任务类型调节神经元激活来提升推理表现，而不只是让模型“真的更会逻辑推理”。
 
 **[Is Chain-of-Thought Really Not Explainability? Chain-of-Thought Can Be Faithful without Hint Verbalization](is_chain-of-thought_really_not_explainability_chain-of-thought_can_be_faithful_w.md)**
 
@@ -145,6 +169,10 @@ tags:
 
 :   本文系统性地研究了大型推理模型（LRM）在 11 种语言上的潜在推理行为，发现潜在推理能力存在于多语言中但分布不均（高资源语言强、低资源弱），且内部推理动态趋于以英语为中心的共享路径。
 
+**[Learning to Edit Knowledge via Instruction-based Chain-of-Thought Prompting](learning_to_edit_knowledge_via_instruction-based_chain-of-thought_prompting.md)**
+
+:   CoT2Edit 提出通过 CoT 推理教 LLM 进行知识编辑的新范式——构建结构化和非结构化编辑的 CoT 指令数据，经 SFT 冷启动 + GRPO 优化训练，推理时结合 RAG 检索编辑事实，单次训练即在 6 个编辑基准上达到 SOTA 且具有强泛化能力。
+
 **[LegalDrill: Diagnosis-Driven Synthesis for Legal Reasoning in Small Language Models](legaldrill_diagnosis-driven_synthesis_for_legal_reasoning_in_small_language_mode.md)**
 
 :   LegalDrill 用 Audit Agent 诊断 0.6B/1.7B 小模型在法律推理上的具体错误模式，让强 teacher（GPT-4o / Qwen3-30B）按错误指令"刻意复现+修正"生成偏好对，再用学生自己的 forced-choice 概率算 Difficulty Score 过滤掉它已会的样本，迭代 SFT+DPO 后 1.7B 学生在 LegalBench 多个子集上逼近 30B teacher。
@@ -161,13 +189,21 @@ tags:
 
 :   本文发现 LLM 逻辑推理存在"逻辑相变"现象——性能在特定复杂度阈值处突然崩塌而非平滑退化，提出逻辑复杂度度量（LoCM）来量化这一现象，并设计神经符号课程调优框架（NSCT），通过自适应神经-符号对齐和复杂度感知课程优化，在五个基准上平均提升 naive prompting +1.26 和 CoT +3.95 准确率。
 
+**[Long-Context Reasoning Through Proxy-Based Chain-of-Thought Tuning](long-context_reasoning_through_proxy-based_chain-of-thought_tuning.md)**
+
+:   ProxyCoT 利用短而充分的 proxy context 先获得高质量推理轨迹，再把这些轨迹蒸馏到完整长上下文输入上，使 4B 模型在 SciTrek、HotpotQA 和 Loong 上显著提升长上下文推理，同时减少推理时 CoT token。
+
 **[MathAgent: Adversarial Evolution of Constraint Graphs for Mathematical Reasoning Data Synthesis](mathagent_adversarial_evolution_of_constraint_graphs_for_mathematical_reasoning_.md)**
 
 :   提出基于约束图对抗进化的分层数据合成框架 MathAgent，将数据合成从文本生成任务重构为约束图的无监督优化问题，通过 Legislator 三Agent系统进化问题骨架再由 Executor 实例化为自然语言，仅 1K 合成样本即超越 LIMO 和 s1K 在八个数学基准上的表现。
 
-**[Multi-Agent Reasoning Improves Compute Efficiency: Pareto-Optimal Test-Time Scaling](multi-agent_reasoning_improves_compute_efficiency_pareto-optimal_test-time_scali.md)**
+**[Merlin's Whisper: Enabling Efficient Reasoning in Large Language Models via Black-box Persuasive Prompting](merlin39s_whisper_enabling_efficient_reasoning_in_large_language_models_via_blac.md)**
 
-:   这篇论文把 self-consistency、self-refinement、multi-agent debate 和 Mixture-of-Agents 放到统一计算预算下比较，发现多智能体推理尤其是 MoA 在 Pareto 前沿上更高效，最高可在约 20 倍 CoT 预算下把 MMLU-Pro 准确率从 64.3% 提升到 71.4%。
+:   Whisper 把大推理模型的“少想但不降准确率”问题建模为黑盒 persuasive prompting，通过多视角自动生成和迭代筛选提示后缀，在 Qwen3、DeepSeek-R1-Distill 以及 Claude/Gemini API 上显著减少输出 token，同时基本保持推理准确率。
+
+**[MTR-Bench: A Comprehensive Benchmark for Multi-Turn Reasoning Evaluation](mtr-bench_a_comprehensive_benchmark_for_multi-turn_reasoning_evaluation.md)**
+
+:   MTR-Bench 构建了一个包含 4 类、40 个任务、3600 个实例的自动化多轮推理评测框架，显示当前前沿推理模型在交互式、动态反馈环境中仍远未可靠。
 
 **[On the Step Length Confounding in LLM Reasoning Data Selection](on_the_step_length_confounding_in_llm_reasoning_data_selection.md)**
 
@@ -217,6 +253,10 @@ tags:
 
 :   RSAT 用“结构化引用格式的 SFT + 以 NLI 忠实性为核心奖励的 GRPO”训练 1B-8B 小语言模型，让表格问答不只给答案，还能把每一步推理绑定到具体表格单元格，并把平均忠实性从 SFT 的 0.224 提升到 0.826。
 
+**[Scaling Evaluation-Time Compute with Reasoning Models as Evaluators](scaling_evaluation-time_compute_with_reasoning_models_as_evaluators.md)**
+
+:   这篇论文把 test-time scaling 从“生成答案”扩展到“评估答案”，发现让 reasoning model 在评估时生成更多推理 token、逐步检查过程并结合 outcome/process 分数，可以在 ProcessBench 和 Best-of-N 重排序中超过训练好的 PRM/ORM。
+
 **[Scaling Test-Time Compute to Achieve IOI Gold Medal with Open-Weight Models](scaling_test-time_compute_to_achieve_ioi_gold_medal_with_open-weight_models.md)**
 
 :   提出 GenCluster，一个可扩展的测试时计算框架，通过大规模并行生成→行为聚类→锦标赛排名→循环提交策略，首次使开源模型 gpt-oss-120b 在 IOI 2025 上达到金牌水平（446.75/600 分）。
@@ -228,6 +268,10 @@ tags:
 **[Self-Awareness before Action: Mitigating Logical Inertia via Proactive Cognitive Awareness](self-awareness_before_action_mitigating_logical_inertia_via_proactive_cognitive_.md)**
 
 :   本文提出 SABA 推理框架，通过"先感知再行动"的范式，在做出最终决策前显式构建和审计知识状态——利用信息融合 (IF) 将叙事整合为可验证的基线状态，再通过查询驱动的结构化推理 (QSR) 递归识别和解决缺失前提——在侦探推理和通用推理基准上均取得最佳表现。
+
+**[Self-Consistency from Only Two Samples: CoT-PoT Ensembling for Efficient LLM Reasoning](self-consistency_from_only_two_samples_cot-pot_ensembling_for_efficient_llm_reas.md)**
+
+:   提出 CoT-PoT 跨模态集成方法，利用链式推理（CoT）和程序化推理（PoT）两种根本不同推理模态的互补性，将自一致性所需的采样次数减少9.3倍，78.6%的问题仅需2个样本即可解决。
 
 **[Self-Reinforcing Controllable Synthesis of Rare Relational Data via Bayesian Calibration](self-reinforcing_controllable_synthesis_of_rare_relational_data_via_bayesian_cal.md)**
 
@@ -249,9 +293,21 @@ tags:
 
 :   这篇论文发现短上下文 GRPO 本身就会强烈压缩推理长度，但会因截断样本的错误信用分配导致训练不稳；作者提出 Step-level Advantage Selection，在推理步骤粒度选择性置零 advantage，在保持甚至提升 Pass@1 的同时显著减少推理 token。
 
+**[Step-GRPO: Internalizing Dynamic Early Exit for Efficient Reasoning](step-grpo_internalizing_dynamic_early_exit_for_efficient_reasoning.md)**
+
+:   提出 Step-GRPO，将动态早退能力内化到模型中——通过语义步骤而非原始 token 来度量推理复杂度，用动态截断 Rollout 暴露简短正确轨迹，配合步骤感知相对奖励引导模型学习在适当时机停止推理，在 Qwen3-8B 上减少32%的 token 消耗且无准确率下降。
+
 **[Stratagem: Learning Transferable Reasoning via Trajectory-Modulated Game Self-Play](stratagem_learning_transferable_reasoning_via_trajectory-modulated_game_self-pla.md)**
 
 :   Stratagem 在文本游戏自博弈中不再只按输赢强化模型，而是用“抽象可迁移性”和“推理演化”两个轨迹级信号调制 advantage，使从游戏中学到的策略更能迁移到数学、通用推理和代码生成任务。
+
+**[Strategy-Induct: Task-Level Strategy Induction for Instruction Generation](strategy-induct_task-level_strategy_induction_for_instruction_generation.md)**
+
+:   Strategy-Induct 提出一种仅需少量输入问题（无需标注答案）即可归纳任务级指令的框架：先为每个问题生成推理策略，再从策略-问题对中归纳出可复用的任务指令，在 BBH-Induct、Evals-Induct 和 Shift Cipher 三个基准上超越现有 SOTA 方法。
+
+**[TemplateRL: Structured Template-Guided Reinforcement Learning for LLM Reasoning](templaterl_structured_template-guided_reinforcement_learning_for_llm_reasoning.md)**
+
+:   TemplateRL 通过从小规模种子集合用 MCTS 抽象出结构化推理模板，在强化学习训练中引入这些模板作为显式指导，显著提升 LLM 多步推理效率和稳定性，在 AIME 上相比 GRPO 提升 99%。
 
 **[Think Outside the Policy: In-Context Steered Policy Optimization](think_outside_the_policy_in-context_steered_policy_optimization.md)**
 
@@ -260,6 +316,10 @@ tags:
 **[TIME: Temporally Intelligent Meta-Reasoning Engine for Context-Triggered Explicit Reasoning](time_temporally_intelligent_meta-reasoning_engine_for_context-triggered_explicit.md)**
 
 :   TIME 把显式推理从“始终开启的长思维链”改造成由时间和语篇线索触发的局部控制策略，通过 `time` 标签、tick 事件、短 `think` 块和四阶段 QLoRA 课程训练，让 Qwen3 系列在 TimeBench 上显著超过 thinking/no-thinking 基线，同时把推理 token 压缩到原来的约十分之一量级。
+
+**[TInR：探索大语言模型中的工具内化推理](tinr_exploring_tool-internalized_reasoning_in_large_language_models.md)**
+
+:   本文提出 TInR-U 框架，通过将工具知识内化到 LLM 参数中（而非依赖外部文档），实现高效且可靠的工具辅助推理，在域内和域外测试中均优于现有方法。
 
 **[ToolPRM: Fine-Grained Inference Scaling of Structured Outputs for Function Calling](toolprm_fine-grained_inference_scaling_of_structured_outputs_for_function_callin.md)**
 
@@ -272,6 +332,10 @@ tags:
 **[TrigReason: Trigger-Based Collaboration between Small and Large Reasoning Models](trigreason_trigger-based_collaboration_between_small_and_large_reasoning_models.md)**
 
 :   TrigReason 提出基于事件触发的大小推理模型协作框架，通过分析小模型三类推理风险（路径偏离、认知过载、恢复失能），设计策略引导、认知卸载和干预请求三种触发器替代逐步轮询验证，在保持 LRM 精度的同时将 1.70-4.79 倍更多推理步骤卸载给小模型，延迟降低 43.9%、API 成本降低 73.3%。
+
+**[Understanding and Mitigating Spurious Signal Amplification in Test-Time Reinforcement Learning for Math Reasoning](understanding_and_mitigating_spurious_signal_amplification_in_test-time_reinforc.md)**
+
+:   系统分析测试时强化学习（TTRL）中虚假信号的来源和放大机制——中频答案构成模糊区域是主要噪声源，GRPO 的组内归一化会放大这些虚假信号——提出 DDRL 框架通过均衡采样、固定优势值和共识离线精炼三管齐下缓解问题，在 Qwen2.5-Math-1.5B 上相对提升15.3%。
 
 **[When Is Thinking Enough? Early Exit via Sufficiency Assessment for Efficient Reasoning](when_is_thinking_enough_early_exit_via_sufficiency_assessment_for_efficient_reas.md)**
 

@@ -162,10 +162,10 @@ $$T_c \sim \mathcal{U}(-1, 1)^{256}, \quad c \in \{0, 1, 2\}$$
 ## 相关论文
 
 - [\[AAAI 2026\] Aggregating Diverse Cue Experts for AI-Generated Image Detection](aggregating_diverse_cue_experts_for_ai-generated_image_detec.md)
+- [\[ICML 2026\] OmniAID: Decoupling Semantic and Artifacts for Universal AI-Generated Image Detection in the Wild](../../ICML2026/image_generation/omniaid_decoupling_semantic_and_artifacts_for_universal_ai-generated_image_detec.md)
 - [\[CVPR 2025\] Co-Spy: Combining Semantic and Pixel Features to Detect Synthetic Images by AI](../../CVPR2025/image_generation/co-spy_combining_semantic_and_pixel_features_to_detect_synthetic_images_by_ai.md)
 - [\[AAAI 2026\] AEDR: Training-Free AI-Generated Image Attribution via Autoencoder Double-Reconstruction](aedr_training-free_ai-generated_image_attribution_via_autoen.md)
-- [\[AAAI 2026\] Exposing DeepFakes via Hyperspectral Domain Mapping](exposing_deepfakes_via_hyperspectral_domain_mapping.md)
-- [\[AAAI 2026\] CausalCLIP: Causally-Informed Feature Disentanglement and Filtering for Generalizable Detection of Generated Images](causalclip_causally-informed_feature_disentanglement_and_filtering_for_generaliz.md)
+- [\[CVPR 2026\] Beyond Pixel Simulation: Pathology Image Generation via Diagnostic Semantic Tokens and Prototype Control](../../CVPR2026/image_generation/beyond_pixel_simulation_pathology_image_generation_via_diagnostic_semantic_token.md)
 
 </div>
 

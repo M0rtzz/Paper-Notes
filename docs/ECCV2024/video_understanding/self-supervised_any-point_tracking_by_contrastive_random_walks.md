@@ -165,7 +165,7 @@ GMRW 在自监督方法中全面领先，Kubric AJ 超过 FlowWalk 4.8 点，DAV
 - [\[ECCV 2024\] Local All-Pair Correspondence for Point Tracking](local_all-pair_correspondence_for_point_tracking.md)
 - [\[CVPR 2025\] ETAP: Event-based Tracking of Any Point](../../CVPR2025/video_understanding/etap_event-based_tracking_of_any_point.md)
 - [\[ECCV 2024\] TimeCraft: Navigate Weakly-Supervised Temporal Grounded Video Question Answering via Bi-directional Reasoning](timecraft_navigate_weakly-supervised_temporal_grounded_video_question_answering_.md)
-- [\[ECCV 2024\] IAM-VFI: Interpolate Any Motion for Video Frame Interpolation with Motion Complexity Map](iam-vfi_interpolate_any_motion_for_video_frame_interpolation_with_motion_complex.md)
+- [\[ECCV 2024\] Exploring the Feature Extraction and Relation Modeling For Light-Weight Transformer Tracking](exploring_the_feature_extraction_and_relation_modeling_for_light-weight_transfor.md)
 
 </div>
 

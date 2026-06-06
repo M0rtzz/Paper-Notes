@@ -163,9 +163,9 @@ VQ_{M+R} 比 baseline 提升 7.45%。数据不足时（VQ_M）性能大幅下降
 
 - [\[ICCV 2025\] CoA-VLA: Improving Vision-Language-Action Models via Visual-Textual Chain-of-Affordance](coavla_improving_visionlanguageaction_models_via_visualtext.md)
 - [\[ICCV 2025\] Dita: Scaling Diffusion Transformer for Generalist Vision-Language-Action Policy](dita_scaling_diffusion_transformer_for_generalist_visionlang.md)
-- [\[CVPR 2026\] AVA-VLA: Improving Vision-Language-Action models with Active Visual Attention](../../CVPR2026/multimodal_vlm/ava_vla_improving_vision_language_action_models_with_active_visual_attention.md)
 - [\[NeurIPS 2025\] VLA-Cache: Efficient Vision-Language-Action Manipulation via Adaptive Token Caching](../../NeurIPS2025/multimodal_vlm/vla-cache_efficient_vision-language-action_manipulation_via_adaptive_token_cachi.md)
-- [\[ECCV 2024\] QUAR-VLA: Vision-Language-Action Model for Quadruped Robots](../../ECCV2024/multimodal_vlm/quar-vla_vision-language-action_model_for_quadruped_robots.md)
+- [\[CVPR 2026\] From Observation to Action: Latent Action-based Primitive Segmentation for VLA Pre-training in Industrial Settings](../../CVPR2026/multimodal_vlm/from_observation_to_action_latent_action-based_primitive_segmentation_for_vla_pr.md)
+- [\[AAAI 2026\] TTF-VLA: Temporal Token Fusion via Pixel-Attention Integration for Vision-Language-Action Models](../../AAAI2026/multimodal_vlm/ttf-vla_temporal_token_fusion_via_pixel-attention_integratio.md)
 
 </div>
 

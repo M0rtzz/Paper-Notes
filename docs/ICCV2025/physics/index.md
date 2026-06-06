@@ -1,21 +1,25 @@
 ---
 title: >-
-  ICCV2025 物理学方向1篇论文解读
+  ICCV2025 物理/科学计算方向2篇论文解读
 description: >-
-  1篇ICCV2025的物理学方向论文解读，收录 ResQ等。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  2篇ICCV2025的物理/科学计算方向论文解读，收录 JPEG Processing Neural Operato、ResQ等。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICCV2025"
-  - "物理学"
+  - "物理/科学计算"
   - "论文解读"
   - "论文笔记"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
-# ⚛️ 物理学
+# ⚛️ 物理/科学计算
 
-**📹 ICCV2025** · **1** 篇论文解读
+**📹 ICCV2025** · **2** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/physics/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/physics/index.md) · [🔬 ICLR2026 (2)](../../ICLR2026/physics/index.md) · [🤖 AAAI2026 (2)](../../AAAI2026/physics/index.md) · [🧠 NeurIPS2025 (18)](../../NeurIPS2025/physics/index.md) · [🧪 ICML2025 (6)](../../ICML2025/physics/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/physics/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/physics/index.md) · [🔬 ICLR2026 (12)](../../ICLR2026/physics/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/physics/index.md) · [🧠 NeurIPS2025 (41)](../../NeurIPS2025/physics/index.md) · [🧪 ICML2025 (14)](../../ICML2025/physics/index.md)
+
+**[JPEG Processing Neural Operator for Backward-Compatible Coding](jpeg_processing_neural_operator_for_backward-compatible_coding.md)**
+
+:   提出JPNeO，一个完全后向兼容JPEG格式的下一代编解码器，通过在编码和解码阶段分别引入神经算子(JENO和JDNO)以及可训练量化矩阵，显著提升JPEG重建质量（尤其是色度分量），同时保持低内存和少参数量的优势。
 
 **[ResQ: A Novel Framework to Implement Residual Neural Networks on Analog Rydberg Atom Quantum Computers](resq_a_novel_framework_to_implement_residual_neural_networks_on_analog_rydberg_a.md)**
 

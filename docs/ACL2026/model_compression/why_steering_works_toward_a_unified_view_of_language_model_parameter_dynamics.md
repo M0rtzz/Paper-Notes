@@ -140,11 +140,11 @@ SPLIT 在两种模型、三类干预形式上多数指标优于 SFT/RePS/DiffMea
 
 ## 相关论文
 
-- [\[ICML 2026\] Towards Steering without Sacrifice: Principled Training of Steering Vectors for Prompt-only Interventions](../../ICML2026/model_compression/towards_steering_without_sacrifice_principled_training_of_steering_vectors_for_p.md)
+- [\[ICML 2026\] The Bridge-Garden Dilemma in LLM Distillation: Why Mixing Hard and Soft Labels Works](../../ICML2026/model_compression/the_bridge-garden_dilemma_in_llm_distillation_why_mixing_hard_and_soft_labels_wo.md)
 - [\[ACL 2026\] Rethinking Parameter Sharing for LLM Fine-Tuning with Multiple LoRAs](rethinking_parameter_sharing_for_llm_fine-tuning_with_multiple_loras.md)
-- [\[ICML 2026\] Demystifying When Pruning Works via Representation Hierarchies](../../ICML2026/model_compression/demystifying_when_pruning_works_via_representation_hierarchies.md)
+- [\[ICML 2026\] An Algebraic View of the Expressivity of Recurrent Language Models](../../ICML2026/model_compression/an_algebraic_view_of_the_expressivity_of_recurrent_language_models.md)
+- [\[ICML 2026\] Towards Steering without Sacrifice: Principled Training of Steering Vectors for Prompt-only Interventions](../../ICML2026/model_compression/towards_steering_without_sacrifice_principled_training_of_steering_vectors_for_p.md)
 - [\[ACL 2026\] MTA: Multi-Granular Trajectory Alignment for Large Language Model Distillation](mta_multi-granular_trajectory_alignment_for_large_language_model_distillation.md)
-- [\[AAAI 2026\] Steering Pretrained Drafters during Speculative Decoding](../../AAAI2026/model_compression/steering_pretrained_drafters_during_speculative_decoding.md)
 
 </div>
 

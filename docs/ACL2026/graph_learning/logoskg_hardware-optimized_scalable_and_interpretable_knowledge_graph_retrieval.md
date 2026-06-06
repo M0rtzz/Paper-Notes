@@ -18,7 +18,7 @@ tags:
 **会议**: ACL 2026  
 **arXiv**: [2604.18913](https://arxiv.org/abs/2604.18913)  
 **代码**: [GitHub](https://github.com/LARK-NLP-Lab/LogosKG)  
-**领域**: 医学图像  
+**领域**: 图学习/知识图谱  
 **关键词**: 知识图谱检索, 硬件对齐优化, 多跳遍历, 稀疏矩阵运算, KG-LLM交互
 
 ## 一句话总结

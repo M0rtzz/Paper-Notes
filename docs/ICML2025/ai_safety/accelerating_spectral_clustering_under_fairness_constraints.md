@@ -114,11 +114,11 @@ tags:
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Fairness under Competition](../../NeurIPS2025/ai_safety/fairness_under_competition.md)
-- [\[NeurIPS 2025\] Unifying Proportional Fairness in Centroid and Non-Centroid Clustering](../../NeurIPS2025/ai_safety/unifying_proportional_fairness_in_centroid_and_non-centroid_clustering.md)
+- [\[ICML 2026\] Optimal Transport under Group Fairness Constraints](../../ICML2026/ai_safety/optimal_transport_under_group_fairness_constraints.md)
 - [\[ICML 2025\] Relative Error Fair Clustering in the Weak-Strong Oracle Model](relative_error_fair_clustering_in_the_weak-strong_oracle_model.md)
-- [\[AAAI 2026\] Truth, Justice, and Secrecy: Cake Cutting Under Privacy Constraints](../../AAAI2026/ai_safety/truth_justice_and_secrecy_cake_cutting_under_privacy_constraints.md)
-- [\[NeurIPS 2025\] Cost Efficient Fairness Audit Under Partial Feedback](../../NeurIPS2025/ai_safety/cost_efficient_fairness_audit_under_partial_feedback.md)
+- [\[NeurIPS 2025\] Unifying Proportional Fairness in Centroid and Non-Centroid Clustering](../../NeurIPS2025/ai_safety/unifying_proportional_fairness_in_centroid_and_non-centroid_clustering.md)
+- [\[NeurIPS 2025\] Fairness under Competition](../../NeurIPS2025/ai_safety/fairness_under_competition.md)
+- [\[ICML 2025\] Improving the Variance of Differentially Private Randomized Experiments through Clustering](improving_the_variance_of_differentially_private_randomized_experiments_through_.md)
 
 </div>
 

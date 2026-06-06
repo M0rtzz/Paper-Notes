@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 图学习方向21篇论文解读
+  ACL2026 图学习方向23篇论文解读
 description: >-
-  21篇ACL2026的图学习方向论文解读，涵盖 RAG、推理、强化学习、对抗鲁棒、LLM、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  23篇ACL2026的图学习方向论文解读，涵盖 RAG、推理、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "图学习"
@@ -10,20 +10,17 @@ tags:
   - "论文笔记"
   - "RAG"
   - "推理"
-  - "强化学习"
-  - "对抗鲁棒"
-  - "LLM"
-  - "对齐/RLHF"
+  - "Agent"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🕸️ 图学习
 
-**💬 ACL2026** · **21** 篇论文解读
+**💬 ACL2026** · **23** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (9)](../../ICML2026/graph_learning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/graph_learning/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/graph_learning/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/graph_learning/index.md) · [🧠 NeurIPS2025 (52)](../../NeurIPS2025/graph_learning/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/graph_learning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (31)](../../ICML2026/graph_learning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/graph_learning/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/graph_learning/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/graph_learning/index.md) · [🧠 NeurIPS2025 (52)](../../NeurIPS2025/graph_learning/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/graph_learning/index.md)
 
-🔥 **高频主题：** RAG ×4 · 推理 ×2
+🔥 **高频主题：** RAG ×5 · 推理 ×4 · Agent ×2
 
 **[AgentGL: Towards Agentic Graph Learning with LLMs via Reinforcement Learning](agentgl_towards_agentic_graph_learning_with_llms_via_reinforcement_learning.md)**
 
@@ -57,6 +54,10 @@ tags:
 
 :   ComplianceNLP 是一个端到端的金融监管合规系统，把 12,847 条 SEC / MiFID II / Basel III 法规构造成知识图谱来增强 RAG 检索，配合 LEGAL-BERT 的多任务义务抽取和门槛打分的差距分析，在 RegObligation / GapBench 上以 87.7 F1 击败 GPT-4o+RAG 3.5 个点，并通过领域知识蒸馏 + Medusa 推测解码实现 $2.8\times$ 推理加速；4 个月并行运行处理了 9,847 条更新，达到 96.0% 召回率和 3.1× 分析师效率提升。
 
+**[CRAFTQA: A Code-Driven Adaptive Framework for Complex Structured Data Reasoning](craftqa_a_code-driven_adaptive_framework_for_complex_structured_data_reasoning.md)**
+
+:   CRAFTQA 用 CodeSTEP 生成可执行的逐步 Python 推理代码，并在预定义操作不够时由 CRAFT 动态生成自定义函数，从而显著提升表格、知识图谱和时序知识图谱上的复杂结构化数据问答能力，GPT-4o 版本在复杂推理 Overall 上达到 76.6%。
+
 **[EA-Agent: A Structured Multi-Step Reasoning Agent for Entity Alignment](ea-agent_a_structured_multi-step_reasoning_agent_for_entity_alignment.md)**
 
 :   提出 EA-Agent，将实体对齐（EA）分解为结构化多步推理过程，通过工具池（三元组选择器+对齐工具+反思器）的规划和执行实现可解释的对齐决策，配合奖励引导的离线策略优化持续改进规划能力，在 DBP15K 上 Hits@1 提升高达 3.17%，同时减少冗余三元组带来的效率问题。
@@ -80,6 +81,10 @@ tags:
 **[IndustryAssetEQA: A Neurosymbolic Operational Intelligence System for Embodied Question Answering in Industrial Asset Maintenance](industryasseteqa_a_neurosymbolic_operational_intelligence_system_for_embodied_qu.md)**
 
 :   本文把工业资产维护问答重新建模成"具身决策"任务，提出由 episode 化遥测、FMEA 知识图谱、参数化反事实风险模拟器、provenance 校验和安全门组成的神经符号系统 IndustryAssetEQA，在 4 个工业数据集上把结构有效性、反事实方向准确率、解释蕴含率分别提升最多 0.51 / 0.47 / 0.64，并把专家判定的严重过度断言从 28% 压到 2%。
+
+**[LegalGraphRAG: Multi-Agent Graph Retrieval-Augmented Generation for Reliable Legal Reasoning](legalgraphrag_multi-agent_graph_retrieval-augmented_generation_for_reliable_lega.md)**
+
+:   LegalGraphRAG 用事实图、 ontology 图和规则图构成层级法律图谱，再用 Researcher-Auditor-Adjudicator 三代理流程完成检索、验证和裁决，在法律判决生成中提升准确性与证据可追溯性。
 
 **[LLMs Underperform Graph-Based Parsers on Supervised Relation Extraction for Complex Graphs](llms_underperform_graph-based_parsers_on_supervised_relation_extraction_for_comp.md)**
 

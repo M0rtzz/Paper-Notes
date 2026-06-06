@@ -149,8 +149,8 @@ CDG 在 Differentiation (+3.64) 和 Comparison (+2.36) 上提升最为显著，�
 - [\[CVPR 2026\] Exploring Conditions for Diffusion Models in Robotic Control](exploring_conditions_for_diffusion_models_in_robotic_control.md)
 - [\[CVPR 2026\] Guiding a Diffusion Transformer with the Internal Dynamics of Itself](guiding_a_diffusion_transformer_with_the_internal_dynamics_of_itself.md)
 - [\[CVPR 2026\] Guiding a Diffusion Model by Swapping Its Tokens](guiding_a_diffusion_model_by_swapping_its_tokens.md)
+- [\[CVPR 2026\] Anchoring and Rescaling Attention for Semantically Coherent Inbetweening](anchoring_and_rescaling_attention_for_semantically_coherent_inbetweening.md)
 - [\[NeurIPS 2025\] Diffusion Classifiers Understand Compositionality, but Conditions Apply](../../NeurIPS2025/image_generation/diffusion_classifiers_understand_compositionality_but_condit.md)
-- [\[ICCV 2025\] Guiding Noisy Label Conditional Diffusion Models with Score-based Discriminator Correction](../../ICCV2025/image_generation/guiding_noisy_label_conditional_diffusion_models_with_score-based_discriminator_.md)
 
 </div>
 

@@ -137,9 +137,9 @@ tags:
 ## 相关论文
 
 - [\[NeurIPS 2025\] HouseLayout3D: A Benchmark and Training-Free Baseline for 3D Layout Estimation in the Wild](houselayout3d_a_benchmark_and_training-free_baseline_for_3d_layout_estimation_in.md)
-- [\[ACL 2025\] Navigating Rifts in Human-LLM Grounding: Study and Benchmark](../../ACL2025/llm_evaluation/navigating_rifts_in_human-llm_grounding_study_and_benchmark.md)
 - [\[ICML 2025\] LLM-SRBench: A New Benchmark for Scientific Equation Discovery with LLMs](../../ICML2025/llm_evaluation/llm-srbench_a_new_benchmark_for_scientific_equation_discovery_with_large_languag.md)
 - [\[NeurIPS 2025\] Exploiting Task Relationships in Continual Learning via Transferability-Aware Task Embeddings](exploiting_task_relationships_in_continual_learning_via_transferability-aware_ta.md)
+- [\[ACL 2025\] Navigating Rifts in Human-LLM Grounding: Study and Benchmark](../../ACL2025/llm_evaluation/navigating_rifts_in_human-llm_grounding_study_and_benchmark.md)
 - [\[ACL 2025\] McBE: A Multi-task Chinese Bias Evaluation Benchmark for Large Language Models](../../ACL2025/llm_evaluation/mcbe_a_multi-task_chinese_bias_evaluation_benchmark_for_large_language_models.md)
 
 </div>

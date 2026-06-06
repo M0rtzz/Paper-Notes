@@ -185,7 +185,7 @@ $$\mathcal{I}(z_j) = -\sum_{z \in T/V} \nabla_{\hat{\theta}} \ell(z; \hat{\theta
 - [\[ECCV 2024\] YOLOv9: Learning What You Want to Learn Using Programmable Gradient Information](../../ECCV2024/object_detection/yolov9_learning_what_you_want_to_learn_using_programmable_gradient_information.md)
 - [\[ICML 2026\] EARL: Towards a Unified Analysis-Guided Reinforcement Learning Framework for Egocentric Interaction Reasoning and Pixel Grounding](../../ICML2026/object_detection/earl_towards_a_unified_analysis-guided_reinforcement_learning_framework_for_egoc.md)
 - [\[ICML 2025\] Open-Det: An Efficient Learning Framework for Open-Ended Detection](open-det_an_efficient_learning_framework_for_open-ended_detection.md)
-- [\[ICML 2025\] Self-Organizing Visual Prototypes for Non-Parametric Representation Learning](self-organizing_visual_prototypes_for_non-parametric_representation_learning.md)
+- [\[ICCV 2025\] Uncertainty-Aware Gradient Stabilization for Small Object Detection](../../ICCV2025/object_detection/uncertainty-aware_gradient_stabilization_for_small_object_detection.md)
 
 </div>
 

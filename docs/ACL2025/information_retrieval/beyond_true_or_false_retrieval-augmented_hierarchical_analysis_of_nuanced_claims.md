@@ -158,10 +158,10 @@ $$n(s_i, T_{\neq i}^h) = 0.5 \times \text{mean}_j(p(s_i, W_j)) + 0.5 \times \max
 ## 相关论文
 
 - [\[ACL 2025\] Hierarchical Document Refinement for Long-context Retrieval-augmented Generation](hierarchical_document_refinement_for_long-context_retrieval-augmented_generation.md)
-- [\[ACL 2025\] When Claims Evolve: Evaluating and Enhancing the Robustness of Embedding Models Against Misinformation Edits](when_claims_evolve_evaluating_and_enhancing_the_robustness_of_embedding_models_a.md)
 - [\[NeurIPS 2025\] Hierarchical Retrieval: The Geometry and a Pretrain-Finetune Recipe](../../NeurIPS2025/information_retrieval/hierarchical_retrieval_the_geometry_and_a_pretrain-finetune_recipe.md)
+- [\[ACL 2025\] When Claims Evolve: Evaluating and Enhancing the Robustness of Embedding Models Against Misinformation Edits](when_claims_evolve_evaluating_and_enhancing_the_robustness_of_embedding_models_a.md)
 - [\[ICML 2026\] Hierarchical Abstract Tree for Cross-Document Retrieval-Augmented Generation](../../ICML2026/information_retrieval/hierarchical_abstract_tree_for_cross-document_retrieval-augmented_generation.md)
-- [\[ACL 2026\] Beyond Explicit Refusals: Soft-Failure Attacks on Retrieval-Augmented Generation](../../ACL2026/information_retrieval/beyond_explicit_refusals_soft-failure_attacks_on_retrieval-augmented_generation.md)
+- [\[ACL 2025\] Pandora's Box or Aladdin's Lamp: A Comprehensive Analysis Revealing the Role of RAG Noise in Large Language Models](pandora_box_rag_noise.md)
 
 </div>
 

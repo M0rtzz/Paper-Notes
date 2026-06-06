@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SATTC: Structure-Aware Label-Free Test-Time Calibration for Cross-Subject EEG-to-Image Retrieval
 description: >-
-  [CVPR 2026][LLM评测][EEG解码] 提出SATTC，一个无标签的测试时校准头，通过几何专家（被试自适应白化+自适应CSLS）和结构专家（互最近邻+双向top-k排名+类别流行度）的乘积专家融合，在冻结的EEG和图像编码器上直接操作相似度矩阵…
+  [CVPR 2026][医学图像][EEG解码] 提出SATTC，一个无标签的测试时校准头，通过几何专家（被试自适应白化+自适应CSLS）和结构专家（互最近邻+双向top-k排名+类别流行度）的乘积专家融合，在冻结的EEG和图像编码器上直接操作相似度矩阵…
 tags:
   - "CVPR 2026"
-  - "LLM评测"
+  - "医学图像"
   - "EEG解码"
   - "跨被试检索"
   - "无标签校准"
